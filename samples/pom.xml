@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <version>3.3</version>
+    <artifactId>datanucleus-test-samples</artifactId>
+    <name>DataNucleus TestSamples</name>
+    <description><![CDATA[
+        DataNucleus Test Samples, providing the basic samples used in testing.
+        ]]></description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-test-framework</artifactId>
+            <version>3.3</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- For the defaults of Maven 2.0.x see http://maven.apache.org/pom.html#The_Super_POM -->
+        <sourceDirectory>src/java</sourceDirectory>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/java</directory>
+                <includes>
+                    <include>**/plugin.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/conf</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE.txt</include>
+                    <include>NOTICE.txt</include>
+                    <include>README.txt</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>ISO-8859-1</encoding>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

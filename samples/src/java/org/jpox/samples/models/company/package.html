@@ -1,0 +1,14 @@
+<BODY>
+    This package provides a few simple classes based around an organisation or company. They provide inheritance, composition, and relationships.
+    <UL>
+        <LI><B>Person</B> - base class for all people</LI>
+        <LI><B>Employee</B> - extends Person, representing the people in a company. 
+            Many-One (bi) relation with Manager. One-One (uni) relation with Account.</LI>
+        <LI><B>Manager</B> - a manager of Employees, extending Employee. 
+            One-Many (bi) relation with Department. One-Many (bi) relation with Employee.</LI>
+        <LI><B>Department</B> - an organisational unit of a company. 
+            Many-One (bi) relation with Manager</LI>
+        <LI><B>Account</B> - a login account for an Employee.</LI>
+        <LI><B>Office</B> - an office. Set of departments.</LI>
+    </UL>
+</BODY>
