@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DataNucleus test.framework
+Bundle-SymbolicName: test.framework
+Bundle-Version: 1.0.0.m1
+Bundle-Localization: plugin
+Require-Bundle: org.datanucleus,
+ org.datanucleus.api.jdo;bundle-version="3.0.0"
+Bundle-Vendor: DataNucleus
+Import-Package: javax.jdo,
+ javax.jdo.datastore,
+ javax.jdo.identity,
+ javax.jdo.listener,
+ javax.jdo.spi,
+ javax.persistence,
+ javax.persistence.spi
+Export-Package: org.datanucleus.tests
