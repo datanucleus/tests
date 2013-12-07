@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.one_many.unidir">
+        <class name="Computer" schema="/root/test/elements/computers">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="LaptopComputer" schema="/root/test/elements/laptopcomputers">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="DesktopComputer" schema="/root/test/elements/desktopcomputers">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="Office" schema="/root/test/elements/offices">
+            <inheritance strategy="new-table"/>
+            <field name="computers" column="office_computers">
+                <element column="computer"/>
+            </field>
+        </class>
+    </package>
+</orm>
