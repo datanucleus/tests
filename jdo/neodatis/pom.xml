@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <artifactId>datanucleus-test-jdo-neodatis</artifactId>
+    <name>org.datanucleus.test.jdo.neodatis</name>
+    <description><![CDATA[
+        DataNucleus Tests for NeoDatis.
+        ]]></description>
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>3.3</version>
+        <relativePath>../../maven.parent</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-neodatis</artifactId>
+            <version>[3.0, )</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neodatis.odb</groupId>
+            <artifactId>neodatis-odb</artifactId>
+            <version>1.9.30.689</version>
+        </dependency>    
+    </dependencies>
+
+    <profiles>
+        <!-- Really want to override the active profiles but M2 inheritance doesnt work -->
+    </profiles>
+</project>

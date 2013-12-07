@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.one_one.unidir">
+        <class name="Login" identity-type="datastore" detachable="true">
+            <field name="id" persistence-modifier="none"/>
+            <field name="userName"/>
+            <field name="password"/>
+        </class>
+
+        <class name="LoginAccount" identity-type="datastore" detachable="true">
+            <field name="id" persistence-modifier="none"/>
+            <field name="firstName"/>
+            <field name="lastName"/>
+            <field name="login" persistence-modifier="persistent" dependent="true"/>
+        </class>
+    </package>
+</jdo>

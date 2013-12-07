@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.one_many.unidir">
+        <class name="Computer" detachable="true">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="ipAddress"/>
+            <field name="operatingSystem"/>
+        </class>
+
+        <class name="LaptopComputer">
+            <field name="batteryLife"/>
+            <field name="numberOfPcmcia"/>
+        </class>
+
+        <class name="DesktopComputer">
+            <field name="numberOfProcessors"/>
+        </class>
+
+        <class name="Office">
+            <field name="name" primary-key="true"/>
+            <field name="computers">
+                <collection element-type="Computer"/>
+            </field>
+        </class>
+    </package>
+</jdo>
