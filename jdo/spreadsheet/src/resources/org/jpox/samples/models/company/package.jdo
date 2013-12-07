@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.models.company">
+        <class name="Person" detachable="true" table="People">
+            <!--extension vendor-name="datanucleus" key="include-column-headers" value="true"/-->
+            <field name="globalNum" primary-key="true">
+                <column position="1"/>
+            </field>
+            <field name="personNum" >
+                <column position="0"/>
+            </field>
+            <field name="firstName">
+                <column position="2"/>
+            </field>
+            <field name="lastName">
+                <column position="3"/>
+            </field>
+            <field name="emailAddress">
+                <column position="4"/>
+            </field>
+            <field name="age">
+                <column position="5"/>
+            </field>
+            <field name="birthDate">
+                <column position="6"/>
+            </field>
+            
+            <field name="bestFriend" persistence-modifier="none"/>
+            <field name="phoneNumbers" persistence-modifier="none"/> <!-- Not currently mapped -->
+
+            <fetch-group name="groupA">
+                <field name="firstName"/>
+                <field name="lastName"/>
+            </fetch-group>
+            <fetch-group name="groupB">
+                <field name="firstName"/>
+            </fetch-group>
+        </class>
+
+        <class name="Employee" detachable="true" table="Employees">
+            <inheritance strategy="new-table"/>
+            <field name="serialNo"/>
+            <field name="salary"/>
+            <field name="salaryCurrency"/>
+            <field name="manager" persistence-modifier="none"/> <!-- Not currently mapped -->
+            <field name="account" persistence-modifier="none"/> <!-- Not currently mapped -->
+            <field name="yearsInCompany" default-fetch-group="false"/>
+        </class>
+
+        <class name="Qualification" detachable="true">
+            <field name="name" primary-key="true"/>
+            <field name="person" persistence-modifier="none"/> <!-- Relations not allowed -->
+            <field name="date" persistence-modifier="persistent"/>
+            <field name="organisation"/>
+        </class>
+
+        <class name="Organisation" detachable="true">
+            <field name="name" primary-key="true"/>
+        </class>
+
+        <class name="Project" detachable="true" table="Projects">
+            <datastore-identity strategy="uuid-hex"/>
+        </class>
+    </package>
+</jdo>

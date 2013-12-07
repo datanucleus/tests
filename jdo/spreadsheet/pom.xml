@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <version>3.3</version>
+    <artifactId>datanucleus-test-jdo-spreadsheet</artifactId>
+    <name>DataNucleus Spreadsheet</name>
+    <description><![CDATA[
+        DataNucleus Tests for JDO (Spreadsheet-specific).
+        Run using "excel", "ooxml" or "odf"
+        ]]></description>
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>3.3</version>
+        <relativePath>../../maven.parent</relativePath>
+    </parent>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+    </dependencies>
+</project>
