@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <artifactId>datanucleus-test-jdo-xml</artifactId>
+    <name>DataNucleus XML</name>
+    <description><![CDATA[
+        DataNucleus Tests for JDO (XML-specific).
+        ]]></description>
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>3.3</version>
+        <relativePath>../../maven.parent</relativePath>
+    </parent>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+    </dependencies>
+</project>

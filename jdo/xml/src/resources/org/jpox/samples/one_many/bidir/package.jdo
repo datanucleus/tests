@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+  	<package name="org.jpox.samples.one_many.bidir">
+        <class name="Animal" detachable="true" schema="/root/test/elements/animals" table="theanimal">
+            <field name="name" primary-key="true"/>
+            <field name="farm"/>
+        </class>
+
+        <class name="Poultry" detachable="true" schema="/root/test/elements/poultries" table="thepoultry">
+        </class>
+
+        <class name="Cattle" detachable="true" schema="/root/test/elements/cattles" table="thecattle">
+        </class>
+
+        <class name="Farm" detachable="true" schema="/root/test/elements/farms" table="thefarm">
+            <field name="name" primary-key="true"/>
+            <field name="animals" mapped-by="farm" column="animals">
+                <collection element-type="Animal"/>
+                <element column="animal"/>
+            </field>
+            <field name="pet"/>
+        </class>
+
+        <class name="DairyFarm" detachable="true" schema="/root/test/elements/dairyfarms" table="thedairyfarm">
+        </class>
+    </package>
+</jdo>

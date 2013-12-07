@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.one_one.unidir">
+        <class name="Login" detachable="true" schema="/root/test/elements/logins">
+            <field name="id"/>
+            <field name="userName" primary-key="true"/>
+            <field name="password"/>
+        </class>
+
+        <class name="LoginAccount" detachable="true" schema="/root/test/elements/loginaccounts">
+            <field name="id"/>
+            <field name="firstName"/>
+            <field name="lastName" primary-key="true"/> <!-- Temporary fix for JAXB -->
+            <field name="login" persistence-modifier="persistent"/>
+        </class>
+    </package>
+</jdo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.models.company">
+
+        <class name="Person" detachable="true" schema="/root/test/elements/people">
+        	<!--extension vendor-name="datanucleus" key="namespace" value="mynamespace"/-->
+        	<extension vendor-name="datanucleus" key="xpath" value="/root/test/elements/people"/>
+            <field name="personNum" >
+                <extension vendor-name="datanucleus" key="XmlAttribute" value="true"/>
+            </field>
+            <field name="globalNum"/>
+
+            <field name="firstName" primary-key="true"/>
+            <field name="lastName">
+            </field>
+            <field name="emailAddress">
+            </field>
+            <field name="age">
+            </field>
+
+            <field name="bestFriend"/>
+            <field name="phoneNumbers" persistence-modifier="none"/> <!-- Not currently mapped -->
+
+			<fetch-group name="groupA">
+				<field name="firstName"/>
+				<field name="lastName"/>
+			</fetch-group>
+			<fetch-group name="groupB">
+				<field name="firstName"/>
+			</fetch-group>
+        </class>
+
+        <class name="Account" detachable="true" schema="/root/test/elements/accounts">
+            <field name="id"/>
+            <field name="enabled" null-value="exception"/>
+            <field name="username" primary-key="true"/> <!-- Temporary fix for JAXB -->
+        </class>
+        
+		<!-- do not specify xpath or schema, since we test non defined metadata using this -->
+        <class name="Project" detachable="true" identity-type="application">
+            <field name="name" primary-key="true"/>
+            <field name="budget"/>
+        </class>
+        
+        <class name="Department" detachable="true" identity-type="application">
+            <field name="manager"/>
+            <field name="name" primary-key="true" value-strategy="generate-id"/>
+            <field name="projects">
+                <collection element-type="Project"/>
+                <join/>
+            </field>
+        </class>        
+                
+        <class name="Employee" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="serialNo"/>
+            <field name="salary"/>
+            <field name="salaryCurrency"/>
+            <field name="manager" embedded="false" default-fetch-group="true"/>
+            <field name="account" persistence-modifier="persistent"/>
+            <field name="yearsInCompany" default-fetch-group="false"/>
+        </class>
+
+        <class name="Manager" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="departments" mapped-by="manager">
+                <collection element-type="org.jpox.samples.models.company.Department"/>
+            </field>
+            <field name="subordinates">
+                <collection element-type="org.jpox.samples.models.company.Employee"/>
+                <join/>
+            </field>
+            <fetch-group name="groupSubordinates">
+                <field name="subordinates"/>
+            </fetch-group>
+        </class>
+                        
+    </package>
+</jdo>

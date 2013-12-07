@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.map">
+        <class name="MapHolderXML" schema="/root/test/mapxml">
+            <field name="id" primary-key="true"/>
+            <field name="map">
+            </field>
+        </class>
+    </package>
+</jdo>
