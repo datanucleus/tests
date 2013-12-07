@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jdoconfig xmlns="http://xmlns.jcp.org/xml/ns/jdo/jdoconfig"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="http://xmlns.jcp.org/xml/ns/jdo/jdoconfig">
+
+   <persistence-manager-factory name="transactions-optional">
+       <property name="javax.jdo.option.ConnectionDriverName" value="org.hsqldb.jdbcDriver"/>
+       <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:nucleus"/>
+       <property name="javax.jdo.option.ConnectionUserName" value="sa"/>
+       <property name="javax.jdo.option.ConnectionPassword" value=""/>
+
+       <property name="javax.jdo.option.RetainValues" value="true"/>
+       <property name="datanucleus.autoCreateSchema" value="true"/>
+   </persistence-manager-factory>
+</jdoconfig>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.models.company">
+        <class name="Person" detachable="true" identity-type="application" objectid-class="Person$Id">
+            <field name="personNum" primary-key="true"/>
+            <field name="globalNum" primary-key="true"/>
+            <field name="firstName"/>
+            <field name="lastName"/>
+            <field name="emailAddress"/>
+            <field name="age"/>
+            <field name="bestFriend" persistence-modifier="persistent"/>
+            <field name="phoneNumbers" persistence-modifier="none"/>  <!-- Not currently mapped -->
+        </class>
+
+        <class name="PhoneNumber" detachable="true">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="name"/>
+            <field name="number"/>
+        </class>
+
+        <class name="Account" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="enabled" null-value="exception"/>
+            <field name="username"/>
+        </class>
+
+        <class name="Department" detachable="true" identity-type="application">
+            <field name="manager"/>
+            <field name="name" primary-key="true"/>
+            <field name="projects">
+                <collection element-type="Project"/>
+                <join/>
+            </field>
+        </class>
+
+        <class name="InsuranceDepartment" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="someInfo1"/>
+            <field name="someInfo2"/>
+        </class>
+
+        <class name="Project" detachable="true" identity-type="application">
+            <field name="name" primary-key="true"/>
+            <field name="budget"/>
+        </class>
+
+        <class name="Employee" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="serialNo"/>
+            <field name="salary"/>
+            <field name="salaryCurrency"/>
+            <field name="manager" embedded="false" default-fetch-group="true"/>
+            <field name="account" persistence-modifier="persistent"/>
+            <field name="yearsInCompany" default-fetch-group="false"/>
+        </class>
+
+        <class name="Developer" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="SKILL"/>
+        </class>
+
+        <class name="Manager" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="departments" mapped-by="manager">
+                <collection element-type="org.jpox.samples.models.company.Department"/>
+            </field>
+            <field name="subordinates">
+                <collection element-type="org.jpox.samples.models.company.Employee"/>
+                <join/>
+            </field>
+            <fetch-group name="groupSubordinates">
+                <field name="subordinates"/>
+            </fetch-group>
+        </class>
+
+        <class name="Qualification" detachable="true">
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="person" persistence-modifier="persistent"/>
+            <field name="date" persistence-modifier="persistent"/>
+            <field name="organisation" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Organisation" detachable="true">
+            <field name="name"/>
+        </class>
+
+        <class name="Office" detachable="true" identity-type="application" objectid-class="Office$Id">
+            <field name="floor" primary-key="true"/>
+            <field name="roomName" primary-key="true"/>
+            <field name="description"/>
+            <field name="departments">
+                <collection element-type="Department"/>
+                <join/>
+            </field>
+        </class>
+    </package>
+</jdo>

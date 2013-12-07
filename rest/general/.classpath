@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="src" path="src/test"/>
+	<classpathentry kind="src" path="src/resources"/>
+	<classpathentry kind="src" path="src/conf"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/local.repository/junit/jars/junit-3.8.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/test.samples"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/test.framework"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
+	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-client-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-sslengine-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-util-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/local.repository/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
+	<classpathentry kind="lib" path="/local.repository/javax.servlet/jars/servlet-api-2.5.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/datanucleus-api-rest"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
