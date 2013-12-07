@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.dependentfield">
+        <class name="DependentHolder" detachable="true">
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="description"/>
+
+            <field name="element" persistence-modifier="persistent" dependent="true"/>
+            <field name="intf" persistence-modifier="persistent" dependent="true">
+                <foreign-key delete-action="restrict"/>
+            </field>
+
+            <field name="setDependent1" persistence-modifier="persistent">
+                <collection element-type="DependentElement" dependent-element="true"/>
+                <join/>
+            </field>
+            <field name="setDependent2" persistence-modifier="persistent" mapped-by="owner">
+                <collection element-type="DependentElement1" dependent-element="true"/>
+            </field>
+            <field name="setNonDependent1" persistence-modifier="persistent">
+                <collection element-type="DependentElement" dependent-element="false"/>
+                <join/>
+            </field>
+            <field name="setNonDependent2" persistence-modifier="persistent" mapped-by="owner">
+                <collection element-type="DependentElement2" dependent-element="false"/>
+            </field>
+
+            <field name="listDependent1" persistence-modifier="persistent">
+                <collection element-type="DependentElement" dependent-element="true"/>
+                <join/>
+            </field>
+            <field name="listDependent2" persistence-modifier="persistent" mapped-by="owner">
+                <collection element-type="DependentElement3" dependent-element="true"/>
+            </field>
+            <field name="listNonDependent1" persistence-modifier="persistent">
+                <collection element-type="DependentElement" dependent-element="false"/>
+                <join/>
+            </field>
+            <field name="listNonDependent2" persistence-modifier="persistent" mapped-by="owner">
+                <collection element-type="DependentElement4" dependent-element="false"/>
+            </field>
+
+            <field name="mapDependentValues1" persistence-modifier="persistent">
+                <map key-type="DependentElement" value-type="DependentElement" 
+                    dependent-value="true" dependent-key="false"/>
+                <join/>
+            </field>
+            <field name="mapDependentValues2" persistence-modifier="persistent" mapped-by="owner">
+                <map key-type="DependentElement5" value-type="DependentElement5" 
+                    dependent-value="true" dependent-key="false"/>
+                <key mapped-by="key"/>
+            </field>
+            <field name="mapNonDependentValues1" persistence-modifier="persistent">
+                <map key-type="DependentElement" value-type="DependentElement" 
+                    dependent-value="false" dependent-key="false"/>
+                <join/>
+            </field>
+            <field name="mapNonDependentValues2" persistence-modifier="persistent" mapped-by="owner">
+                <map key-type="DependentElement6" value-type="DependentElement6" 
+                    dependent-value="false" dependent-key="false"/>
+                <key mapped-by="key"/>
+            </field>
+            <field name="mapDependentKeys1" persistence-modifier="persistent">
+                <map key-type="DependentElement" value-type="DependentElement" 
+                    dependent-value="false" dependent-key="true"/>
+                <join/>
+            </field>
+            <field name="mapDependentKeys2" persistence-modifier="persistent" mapped-by="owner">
+                <map key-type="DependentElement7" value-type="DependentElement7" 
+                    dependent-value="false" dependent-key="true"/>
+                <key mapped-by="key"/>
+            </field>
+            <field name="mapNonDependentKeys1" persistence-modifier="persistent">
+                <map key-type="DependentElement" value-type="DependentElement" 
+                    dependent-value="false" dependent-key="false"/>
+                <join/>
+            </field>
+            <field name="mapNonDependentKeys2" persistence-modifier="persistent" mapped-by="owner">
+                <map key-type="DependentElement8" value-type="DependentElement8" 
+                    dependent-value="false" dependent-key="false"/>
+                <key mapped-by="key"/>
+            </field>
+            <field name="mapDependent1" persistence-modifier="persistent">
+                <map key-type="DependentElement" value-type="DependentElement" 
+                    dependent-value="true" dependent-key="true"/>
+                <join/>
+            </field>
+            <field name="mapDependent2" persistence-modifier="persistent" mapped-by="owner">
+                <map key-type="DependentElement9" value-type="DependentElement9" 
+                    dependent-value="true" dependent-key="true"/>
+                <key mapped-by="key"/>
+            </field>
+            <field name="mapNonDependent1" persistence-modifier="persistent">
+                <map key-type="DependentElement" value-type="DependentElement" 
+                    dependent-value="false" dependent-key="false"/>
+                <join/>
+            </field>
+            <field name="mapNonDependent2" persistence-modifier="persistent" mapped-by="owner">
+                <map key-type="DependentElement10" value-type="DependentElement10" 
+                    dependent-value="false" dependent-key="false"/>
+                <key mapped-by="key"/>
+            </field>
+
+            <field name="arrayDependent1" persistence-modifier="persistent">
+                <array element-type="DependentElement" dependent-element="true"/>
+                <join/>
+            </field>
+            <field name="arrayNonDependent1" persistence-modifier="persistent">
+                <array element-type="DependentElement" dependent-element="false"/>
+                <join/>
+            </field>
+        </class>
+
+        <class name="DependentElement" detachable="true">
+            <primary-key name="DEP_FLD_1_PK"/>
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent">
+                <foreign-key name="DEP_FLD_1_OWN_FK"/>
+            </field>
+            <field name="key" persistence-modifier="persistent">
+                <foreign-key name="DEP_FLD_1_KEY_FK"/>
+            </field>
+        </class>
+
+        <class name="DepInterfaceImpl1">
+            <implements name="DepInterface"/>
+        </class>
+
+        <class name="DepInterfaceImpl2">
+            <implements name="DepInterface"/>
+        </class>
+
+        <class name="DependentElement1">
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="DependentElement2">
+            <primary-key name="DEP_FLD_2_PK"/>
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="DependentElement3">
+            <primary-key name="DEP_FLD_3_PK"/>
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="DependentElement4">
+            <primary-key name="DEP_FLD_4_PK"/>
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>    
+
+        <class name="DependentElement5">
+            <primary-key name="DEP_FLD_5_PK"/>
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>    
+
+        <class name="DependentElement6">
+            <primary-key name="DEP_FLD_6_PK"/>
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="DependentElement7">
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>    
+
+        <class name="DependentElement8">
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="DependentElement9">
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="DependentElement10">
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="owner" persistence-modifier="persistent"/>
+            <field name="key" persistence-modifier="persistent"/>
+        </class>
+
+    </package>
+</jdo>

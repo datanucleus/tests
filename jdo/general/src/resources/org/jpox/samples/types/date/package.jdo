@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
+    "http://java.sun.com/dtd/jdo_2_0.dtd">
+<jdo>
+    <package name="org.jpox.samples.types.date">
+        <class name="DateHolderC" detachable="true" requires-extent="true">
+            <field name="key" persistence-modifier="persistent" primary-key="true">
+                <column name="key" jdbc-type="varchar"/>
+                <!-- Key as VARCHAR so that TimeZone tests against field Value2
+                     don't fail due to database specific issues. This should not
+                     effect the validity of non-TimeZone tests against field Value -->
+            </field>
+            <field name="value" persistence-modifier="persistent">
+                <column name="value"/>
+                <!-- Used to test database default handling of dates -->
+            </field>
+            <field name="value2" persistence-modifier="persistent">
+                <column name="value2" jdbc-type="varchar"/>
+                <!-- Used to test the specific VARCHAR mapping of dates, which we
+                     have somewhat more control over -->
+            </field>
+
+            <fetch-group name="group">
+            	<field name="key"/>
+            	<field name="value"/>
+            	<field name="value2"/>
+            </fetch-group>
+        </class>
+
+        <class name="DateHolderA" detachable="true" requires-extent="true">
+            <inheritance strategy="new-table">
+                <discriminator strategy="value-map" value="AAA">
+                    <column name="discriminator" length="31" allows-null="false"/>
+                </discriminator>
+            </inheritance>
+            <field name="key" persistence-modifier="persistent" primary-key="true">
+                <column name="key"/>
+            </field>
+        </class>
+
+        <class name="DateHolderB" detachable="true" requires-extent="true">
+            <inheritance strategy="new-table">
+                <discriminator strategy="value-map" value="AAA">
+                    <column name="discriminator" length="31" allows-null="false"/>
+                </discriminator>
+            </inheritance>
+            <field name="key" persistence-modifier="persistent" primary-key="true">
+                <column name="key" jdbc-type="varchar"/>
+            </field>
+        </class>
+    </package>
+</jdo>

@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.interfaces">
+        <class name="Rectangle" identity-type="application" objectid-class="Rectangle$Oid">
+            <implements name="Shape"/>
+            <field null-value="exception" name="id" primary-key="true" column="RECTANGLE_ID"/>
+            <field name="length"/>
+            <field name="width"/>
+        </class>
+
+        <class name="Circle" identity-type="application" objectid-class="Circle$Oid">
+            <implements name="Shape"/>
+            <field null-value="exception" name="id" primary-key="true" column="CIRCLE_ID"/>
+            <field name="radius"/>
+        </class>
+
+        <class name="Square" identity-type="application" objectid-class="Square$Oid">
+            <implements name="Shape"/>
+            <field null-value="exception" name="id" primary-key="true" column="SQUARE_ID"/>
+        </class>
+
+        <class name="Triangle" identity-type="application" objectid-class="Triangle$Oid">
+            <implements name="Shape"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field null-value="exception" name="composed" primary-key="true" column="TRIANGLE_ID"/>
+        </class>
+
+        <class name="ShapeHolder" identity-type="application" objectid-class="ShapeHolder$Oid">
+            <field null-value="exception" name="id" primary-key="true" column="SHAPEHOLDER_ID"/>
+            <field name="shape1" persistence-modifier="persistent"/>
+            <field name="shape2" persistence-modifier="persistent"/>
+            <field name="shapeSet1" persistence-modifier="persistent">
+                <collection element-type="Shape"/>
+                <join/>
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle,Rectangle,Square, Triangle"/>
+            </field>
+            <field name="shapeList1" persistence-modifier="persistent">
+                <collection element-type="Shape"/>
+                <join/>
+                <order/>
+            </field>
+        </class>
+
+        <class name="ShapeHolder2" identity-type="application" objectid-class="ShapeHolder2$Oid">
+            <field null-value="exception" name="id" primary-key="true"/>
+            <!-- Field with duplicated implementations -->
+            <field name="shape1" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="implementation-classes"
+                    value="Circle,Rectangle,Circle,Triangle"/>
+            </field>
+            <!-- Field with complete set of implementations and their columns (ORM only) -->
+            <field name="shape2" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle,Rectangle,Square,Triangle"/>
+                <column name="SHAPE_CIRCLE_ID"/>
+                <column name="SHAPE_RECTANGLE_ID"/>
+                <column name="SHAPE_SQUARE_ID"/>
+                <column name="SHAPE_TRIANGLE_ID"/>
+                <column name="SHAPE_TRIANGLE_COMPOSED_ID"/>
+            </field>
+        </class>
+
+        <class name="Rectangle3" identity-type="application" >
+            <implements name="ShapeInverse"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="length"/>
+            <field name="width"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Circle3" identity-type="application">
+            <implements name="ShapeInverse"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="radius"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Square3" identity-type="application">
+            <implements name="ShapeInverse"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="ShapeHolder3" identity-type="application">
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="shapeSet" persistence-modifier="persistent" mapped-by="shapeHolder">
+                <collection element-type="ShapeInverse"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle3,Rectangle3,Square3"/>
+            </field>
+        </class>
+
+        <class name="Rectangle3b" identity-type="application" >
+            <implements name="ShapeInverseB"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="length"/>
+            <field name="width"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Circle3b" identity-type="application">
+            <implements name="ShapeInverseB"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="radius"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Square3b" identity-type="application">
+            <implements name="ShapeInverseB"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="ShapeHolder3b" identity-type="application">
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="shapeList" persistence-modifier="persistent" mapped-by="shapeHolder">
+                <collection element-type="ShapeInverseB"/>
+                <order mapped-by="listOrder"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle3b,Rectangle3b,Square3b"/>
+            </field>
+        </class>
+
+        <class name="Steak">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+        </class>
+
+        <class name="Salad">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+        </class>
+
+        <class name="Cereal">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+        </class>
+
+        <class name="Diet">
+            <field name="id" primary-key="true" column="DIET_ID"/>
+            <field name="favouriteFood" persistence-modifier="persistent">
+                <column name="FAVOURITE" length="1024"/>
+                <extension vendor-name="datanucleus" key="mapping-strategy" value="identity"/>
+            </field>
+            <field name="foods" persistence-modifier="persistent">
+                <collection element-type="org.jpox.samples.interfaces.Food"/>
+                <element>
+                    <column name="FOOD" length="1024"/>
+                </element>
+                <join/>
+                <extension vendor-name="datanucleus" key="mapping-strategy" value="identity"/>
+            </field>
+        </class>
+
+        <class name="Shape5Rectangle" identity-type="application">
+            <implements name="Shape5"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="length"/>
+            <field name="width"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Shape5Circle" identity-type="application">
+            <implements name="Shape5"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="radius"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Shape5Square" identity-type="application">
+            <implements name="Shape5"/>
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Shape5Holder" identity-type="application">
+            <field null-value="exception" name="id" primary-key="true"/>
+            <field name="shapeSet" persistence-modifier="persistent" mapped-by="shapeHolder">
+                <collection element-type="Shape5"/>
+                <join/>
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Shape5Circle,Shape5Rectangle,Shape5Square"/>
+            </field>
+        </class>
+
+    </package>
+</jdo>

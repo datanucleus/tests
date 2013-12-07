@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<!--
+  #######################################################
+  this metadata file is for testing correctly declared
+  metadata files
+  #######################################################
+-->
+<jdo>
+    <package name="org.datanucleus.samples.metadata.user">
+        <!-- test one - use the persistence modifier attribute for the primary key -->
+        <class name="User1" objectid-class="UserId1" identity-type="application">
+            <field name="id" primary-key="true" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="UserGroup1" persistence-capable-superclass="org.datanucleus.samples.metadata.user.User1">
+            <inheritance strategy="new-table"/>
+            <field name="userGroupName" persistence-modifier="persistent"/>
+        </class>
+
+        <!-- test two - don't use the persistence modifier attribute for the primary key -->
+        <class name="User2" objectid-class="UserId2" identity-type="application">
+            <field name="id" primary-key="true"/>
+            <field name="name"/>
+        </class>
+
+        <class name="UserGroup2" persistence-capable-superclass="org.datanucleus.samples.metadata.user.User2">
+            <inheritance strategy="new-table"/>
+            <field name="userGroupName"/>
+        </class>
+
+        <!-- test three - redefining the object-id class in subclasses -->
+        <!-- this test should raise a warning -->
+        <class name="User3" objectid-class="UserId3" identity-type="application">
+            <field name="id" primary-key="true"/>
+            <field name="name"/>
+        </class>
+
+        <class name="UserGroup3" objectid-class="UserId3" identity-type="application" 
+                persistence-capable-superclass="org.datanucleus.samples.metadata.user.User3">
+            <inheritance strategy="new-table"/>
+            <field name="userGroupName"/>
+        </class>
+    </package>
+</jdo>

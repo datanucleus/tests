@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.types.enums">
+        <class name="Palette">
+            <field name="id" primary-key="true" value-strategy="uuid-hex"/>
+            <field name="amount"/>
+            <field name="colour" persistence-modifier="persistent" serialized="false">
+                <column>
+                    <extension vendor-name="datanucleus" key="enum-check-constraint" value="true"/>
+            	</column>
+            </field>
+            <field name="colourOrdinal" persistence-modifier="persistent" serialized="false">
+            	<column jdbc-type="INTEGER"/>
+            </field>
+            <field name="colourSerialized" persistence-modifier="persistent" serialized="true"/>
+            <field name="colours" persistence-modifier="persistent">
+                <collection element-type="Colour"/>
+                <join/>
+            </field>
+            <field name="coloursAsInts" persistence-modifier="persistent">
+                <collection element-type="Colour"/>
+                <join/>
+                <element>
+                    <column jdbc-type="INTEGER"/>
+                </element>
+            </field>
+        </class>
+
+        <class name="AlternativePalette">
+            <field name="id" primary-key="true" value-strategy="uuid-hex"/>
+            <field name="amount"/>
+            <field name="colour" persistence-modifier="persistent" serialized="false">
+                <column jdbc-type="INTEGER">
+                    <extension vendor-name="datanucleus" key="enum-check-constraint" value="true"/>
+            	</column>
+                <extension vendor-name="datanucleus" key="enum-getter-by-value" value="getEnumByValue"/>
+                <extension vendor-name="datanucleus" key="enum-value-getter" value="getValue"/>
+            </field>
+        </class>
+    </package>
+</jdo>

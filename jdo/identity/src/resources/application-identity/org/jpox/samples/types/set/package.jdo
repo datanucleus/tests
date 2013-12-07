@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.types.set">
+        <class name="Set1" detachable="true" identity-type="application" objectid-class="Set1$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent">
+            	<collection element-type="org.jpox.samples.types.container.ContainerItem"/>
+                <join/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Set1Child" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Set2" detachable="true" identity-type="application" objectid-class="Set2$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+        	<field name="items" persistence-modifier="persistent" mapped-by="container">
+                <collection element-type="Set2Item"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Set2Item" detachable="true" identity-type="application" objectid-class="Set2Item$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Set2ItemChild" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="code" persistence-modifier="persistent">
+                <column length="10" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Set3" detachable="true" identity-type="datastore">
+            <field name="items" persistence-modifier="persistent" mapped-by="container"
+                default-fetch-group="true">
+                <collection element-type="Set3Item"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Set3Item" detachable="true" identity-type="datastore">
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+    </package>
+</jdo>

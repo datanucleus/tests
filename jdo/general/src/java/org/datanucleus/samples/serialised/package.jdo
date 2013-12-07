@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.serialised">
+        <class name="SerialisedHolder" detachable="true" table="SERIALISED_HOLDER">
+            <datastore-identity>
+                <column name="SERIALISED_HOLDER_ID"/>
+            </datastore-identity>
+            <field name="name" column="NAME"/>
+            <field name="pc" serialized="true" persistence-modifier="persistent" column="SERIALISED_PC" default-fetch-group="true"/>
+        </class>
+
+        <class name="SerialisedObject" detachable="true"/>
+    </package>
+</jdo>

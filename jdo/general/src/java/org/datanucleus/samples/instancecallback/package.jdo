@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.instancecallback">
+        <class name="InstanceCallbackTester">
+            <datastore-identity strategy="increment"/>
+            <field name="transientValue" persistence-modifier="none"/>
+            <field name="persistentValue">
+        		<column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="InstanceCallbackContainer">
+            <datastore-identity strategy="increment"/>
+            <field name="icTesters">
+                <collection element-type="InstanceCallbackTester"/>
+                <join/>                
+            </field>
+            <field name="icTestersByPersistentValue">
+                <map key-type="java.lang.String" value-type="InstanceCallbackTester"/>
+		        <join/>                
+            </field>
+        </class>
+
+        <class name="AttachDetachCallbackTester" detachable="true">
+            <field name="value">
+        		<column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+    </package>
+</jdo>

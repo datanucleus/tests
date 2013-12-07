@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.enhancer.samples">
+        <!-- this metadata is correct, but MappedByOwner which refers to it is not -->
+        <class name="MappedByChild"/>
+    </package>
+</jdo>

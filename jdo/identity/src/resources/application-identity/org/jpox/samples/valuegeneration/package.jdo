@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.valuegeneration">
+        <class name="MaxGeneratorItem" identity-type="application" objectid-class="MaxGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="max"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="TableGeneratorItem" identity-type="application" objectid-class="TableGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="increment">
+                <extension vendor-name="jpox" key="key-cache-size" value="10"/>
+                <extension vendor-name="JPOX" key="sequence-table-name" value="SEQTABLE"/>
+                <extension vendor-name="JPOX" key="sequence-name-column-name" value="SEQNAME"/>
+                <extension vendor-name="JPOX" key="sequence-nextval-column-name" value="NEXTSEQ"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="AUIDGeneratorItem" identity-type="application" objectid-class="AUIDGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="auid">
+                <column length="36" jdbc-type="CHAR"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="UUIDStringGeneratorItem" identity-type="application" objectid-class="UUIDStringGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="uuid-string">
+                <column length="16" jdbc-type="CHAR"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="UUIDHexGeneratorItem" identity-type="application" objectid-class="UUIDHexGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="uuid-hex">
+                <column length="32" jdbc-type="CHAR"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="UUIDGeneratorItem" identity-type="application">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="uuid">
+                <column length="36" jdbc-type="CHAR"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="SequenceGeneratorItem" identity-type="application" objectid-class="SequenceGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="sequence" sequence="JPOXSequence">
+                <extension vendor-name="jpox" key="key-cache-size" value="10"/>
+                <extension vendor-name="jpox" key="key-initial-value" value="100"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="IdentityGeneratorItem" identity-type="application" objectid-class="IdentityGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="identity"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="IdentityGeneratorItemNoField" identity-type="application">
+            <field name="id" persistence-modifier="persistent" primary-key="true" value-strategy="identity"/>
+        </class>
+
+        <class name="IdentityGeneratorItemSub">
+            <inheritance strategy="subclass-table"/>
+            <field name="extra" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="IdentityGeneratorItemSub1">
+            <inheritance strategy="new-table"/>
+            <field name="extra1" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="IdentityGeneratorItemSub2">
+            <inheritance strategy="new-table"/>
+            <field name="extra2" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="IdentityGeneratorItemContainer" identity-type="datastore">
+            <field name="members" persistence-modifier="persistent">
+                <collection element-type="IdentityGeneratorItem"/>
+                <join/>
+                <order/>
+            </field>
+        </class>
+
+        <class name="MixedGeneratorItem" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="increment"/>
+            <field name="baseField" persistence-modifier="persistent" value-strategy="uuid-hex">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="MixedGeneratorItemSub" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="subField" persistence-modifier="persistent" value-strategy="max"/>
+        </class>
+    </package>
+</jdo>

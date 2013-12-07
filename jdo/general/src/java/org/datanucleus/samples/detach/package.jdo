@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.detach">
+        <class name="ClassOwner" detachable="true">
+            <field name="description" persistence-modifier="persistent"/>
+            <field name="elements" persistence-modifier="persistent">
+                <collection element-type="ClassElements"/>
+                <join/>
+            </field>
+            <field name="mapToCheckPrefetch" persistence-modifier="persistent">
+                <map key-type="java.lang.String" value-type="ClassElements"/>
+                <join/>
+                <key mapped-by="name"/>
+            </field>
+            <field name="listToCheckPrefetch" persistence-modifier="transactional">
+            </field>
+            <fetch-group name="collection">
+                <field name="elements"/>
+                <field name="mapToCheckPrefetch"/>
+                <field name="listToCheckPrefetch"/>
+            </fetch-group>        
+        </class>
+
+        <class name="Owner" detachable="true">
+            <datastore-identity strategy="increment"/>
+            <field name="elements" persistence-modifier="persistent">
+                <collection element-type="java.lang.String"/>
+                <join/>
+            </field>
+            <field name="setElements" persistence-modifier="persistent">
+                <collection element-type="java.lang.String"/>
+                <join/>
+            </field>
+            <fetch-group name="collection">
+                <field name="elements"/>
+                <field name="setElements"/>
+            </fetch-group>        
+        </class>
+
+        <class name="ClassSuperElements" detachable="true">
+            <datastore-identity strategy="increment"/>
+            <field name="toCheckPrefetchInSuper" persistence-modifier="persistent">
+                <collection element-type="ClassSuperElements"/>
+                <join/>
+            </field>
+            <fetch-group name="collection">
+                <field name="toCheckPrefetchInSuper"/>
+            </fetch-group>        
+        </class>
+
+        <class name="ClassElements" detachable="true" persistence-capable-superclass="ClassSuperElements">
+            <inheritance strategy="new-table"/>
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="toCheckPrefetch" persistence-modifier="persistent">
+                <collection element-type="ClassElements"/>
+                <join/>
+            </field>
+            <field name="listCheckPrefetchInverse" persistence-modifier="persistent" mapped-by="owner">
+                <collection element-type="ClassMoreElements"/>
+            </field>
+            <field name="mapCheckPrefetchInverse" persistence-modifier="persistent" mapped-by="owner">
+                <map key-type="java.lang.String" value-type="ClassMoreElements"/>
+                <key mapped-by="name"/>
+            </field>
+            <field name="toCheckPrefetch2" persistence-modifier="transactional">
+            </field>
+            <field name="listCheckPrefetchInverse2" persistence-modifier="transactional">
+            </field>
+            <field name="mapCheckPrefetchInverse2" persistence-modifier="transactional">
+            </field>
+            <fetch-group name="collection">
+                <field name="toCheckPrefetch"/>
+                <field name="toCheckPrefetchInSuper"/>
+                <field name="listCheckPrefetchInverse"/>
+                <field name="mapCheckPrefetchInverse"/>
+                <field name="toCheckPrefetch2"/>
+                <field name="listCheckPrefetchInverse2"/>
+                <field name="mapCheckPrefetchInverse2"/>
+            </fetch-group>        
+        </class>
+
+        <class name="ClassMoreElements" detachable="true">
+            <field name="name" persistence-modifier="persistent"/>
+            <fetch-group name="collection">
+                <field name="name"/>
+            </fetch-group>        
+        </class>
+        
+        <class name="ClassWithTransactionalField" detachable="true">
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="transactional" default-fetch-group="false" persistence-modifier="transactional"/>
+            <fetch-group name="detach">
+                <field name="name"/>
+                <field name="transactional"/>
+            </fetch-group>
+        </class>
+        
+        <class name="DetachParent" detachable="true">
+            <field name="fieldA" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="fieldB" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="fieldC" persistence-modifier="persistent" default-fetch-group="false"/>
+            <fetch-group name="group1">
+                <field name="fieldA"/>
+                <field name="fieldB"/>
+            </fetch-group>
+        </class>
+
+        <class name="DetachChildA" detachable="true" persistence-capable-superclass="DetachParent">
+            <inheritance strategy="new-table"/>
+            <field name="fieldD" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="fieldE" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="fieldF" persistence-modifier="persistent" default-fetch-group="false"/>
+            <fetch-group name="group1">
+                <field name="fieldE"/>
+            </fetch-group>
+        </class>
+        
+        <class name="DetachChildB" detachable="true" persistence-capable-superclass="DetachParent">
+            <inheritance strategy="new-table"/>
+            <field name="fieldG" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="fieldH" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="fieldI" persistence-modifier="persistent" default-fetch-group="false"/>
+        </class>
+
+        <class name="ClassWithNonPCCollection" detachable="true">
+            <datastore-identity strategy="increment"/>
+            <field name="elements" persistence-modifier="persistent">
+                <collection element-type="java.lang.String"/>
+                <join/>
+            </field>
+            <fetch-group name="detach">
+                <field name="elements"/>
+            </fetch-group>
+        </class>
+
+        <class name="DetachDates" detachable="true">
+            <field name="utilDate" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="sqlDate" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="sqlTime" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="sqlTimestamp" persistence-modifier="persistent" default-fetch-group="false"/>
+
+            <fetch-group name="dates">
+                <field name="utilDate"/>
+                <field name="sqlDate"/>
+                <field name="sqlTime"/>
+                <field name="sqlTimestamp"/>
+            </fetch-group>
+        </class>
+
+        <class name="DetachList" detachable="true">
+            <field name="name"/>
+            <field name="elements" default-fetch-group="true">
+                <collection element-type="DetachListElement"/>
+                <join/>
+            </field>
+        </class>
+        <class name="DetachListElement" detachable="true">
+            <field name="name"/>
+        </class>
+    </package>
+</jdo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.datanucleus.samples.ann_xml.override">
+        <class name="Account">
+            <field name="id" value-strategy="sequence" sequence="ACCOUNT_SEQ"/>
+        </class>
+        <class name="Person" table="T_Person">
+            <field name="emailAddress">
+                <!-- Overriding must be complete! So:
+                     <column length="100" jdbc-type="CHAR">
+                     won't inherit the 'name' specified in .jdo! -->
+                <column name="EMAIL_ADDRESS" length="100" jdbc-type="CHAR"/>
+            </field>
+            <field name="dateOfBirth">
+                <column name="DATE_OF_BIRTH" jdbc-type="DATE"/>
+                <extension vendor-name="datanucleus" key="insert-function" value="CURRENT_TIMESTAMP"/>
+            </field>
+            <query name="NumberOfPeople" language="javax.jdo.query.SQL" unique="true" result-class="org.datanucleus.samples.nondurable.TableSize">
+            <![CDATA[
+            SELECT COUNT(ALL) AS THESIZE FROM PERSON
+            ]]>
+            </query>
+        </class>
+    </package>
+</orm>

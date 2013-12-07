@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.ann_xml.override">
+        <class name="Person" detachable="true" table="PERSON">
+            <datastore-identity>
+                <column name="PERSON_ID"/>
+            </datastore-identity>
+            <unique>
+                <column name="LASTNAME"/>
+                <column name="FIRSTNAME"/>
+                <column name="EMAILADDRESS"/>
+            </unique>
+            <field name="personNum">
+                <column name="PERSON_ID"/>
+            </field>
+            <field name="globalNum">
+                <column name="PERSON_GLOB_ID"/>
+            </field>
+            <field name="firstName">
+                <column name="FIRSTNAME" length="32" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="lastName">
+                <column name="LASTNAME" length="64" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="emailAddress">
+                <column name="EMAILADDRESS" length="128" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="age">
+                <index name="PERSON_AGE_IDX"/>
+            </field>
+            <field name="bestFriend"/>
+            <field name="phoneNumbers"/> <!-- Not currently mapped -->
+            <field name="dateOfBirth">
+                <column name="DATEOFBIRTH" jdbc-type="TIMESTAMP"/>
+            </field>
+            <field name="mood" persistence-modifier="persistent"/> <!-- Quick fix: correcting a bug at deployment -->
+
+            <query name="NumberOfPeople" language="javax.jdo.query.SQL" unique="true" result-class="org.datanucleus.samples.nondurable.TableSize">
+            <![CDATA[
+            SELECT count(*) AS THESIZE FROM PERSON
+            ]]>
+            </query>
+            <query name="PeopleCalledSmith" language="javax.jdo.query.SQL">
+            <![CDATA[
+            SELECT PERSON_ID FROM PERSON WHERE LASTNAME = 'Smith'
+            ]]>
+            </query>
+
+            <fetch-group name="groupA">
+                <field name="firstName"/>
+                <field name="lastName"/>
+            </fetch-group>
+            <fetch-group name="groupB">
+                <field name="firstName"/>
+            </fetch-group>
+        </class>
+
+        <class name="PhoneNumber">
+            <field name="id"/>
+            <field name="name"/>
+            <field name="number"/>
+        </class>
+
+        <class name="Account">
+            <field name="id" value-strategy="identity"/>
+            <field name="enabled"/>
+            <field name="username">
+                <column length="32" jdbc-type="CHAR"/>
+            </field>
+        </class>
+
+        <class name="Department" table="DEPARTMENT">
+            <field name="name">
+                <column name="NAME" length="20" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="manager" default-fetch-group="true"/> <!-- Quick fix: correcting a bug at deployment -->
+            <field name="projects"/>
+        </class>
+
+        <class name="Project" table="JDO_AN_PROJECT">
+            <field name="name">
+                <column length="60" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="budget"/>
+        </class>
+
+        <class name="Employee">
+            <field name="serialNo">
+                <column length="12" jdbc-type="CHAR"/>
+            </field>
+            <field name="salary"/>
+            <field name="salaryCurrency"/>
+            <field name="manager"/>
+            <field name="account"/>
+            <field name="yearsInCompany"/>
+
+            <query name="SalaryBelow12" language="javax.jdo.query.JDOQL">
+            <![CDATA[
+            SELECT FROM org.jpox.samples.models.company.Employee WHERE salary < 12 ORDER BY salary ASCENDING
+            ]]>
+            </query>
+            <query name="SerialNoStartsWith" language="javax.jdo.query.JDOQL">
+            <![CDATA[
+            SELECT FROM org.jpox.samples.models.company.Employee WHERE serialNo.startsWith(value) PARAMETERS String value
+            ]]>
+            </query>
+
+            <fetch-group name="groupA">
+                <field name="serialNo"/>
+                <field name="salary"/>
+                <field name="manager"/>
+            </fetch-group>
+            <fetch-group name="groupB">
+                <field name="salary"/>
+            </fetch-group>
+            <fetch-group name="groupC">
+                <field name="account"/>
+            </fetch-group>
+        </class>
+
+        <class name="Manager">
+            <field name="departments"/>
+            <field name="subordinates"/>
+
+            <fetch-group name="groupSubordinates">
+                <field name="subordinates"/>
+            </fetch-group>
+            <fetch-group name="groupDepartments">
+                <field name="departments"/>
+            </fetch-group>
+        </class>
+    </package>
+</jdo>

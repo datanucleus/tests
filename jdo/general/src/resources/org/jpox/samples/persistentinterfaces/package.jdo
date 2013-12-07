@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.persistentinterfaces">
+        <interface name="ILocation">
+            <property name="position"/>
+            <property name="name"/>
+        </interface>
+
+        <interface name="IPopulace">
+            <property name="population"/>
+        </interface>
+
+        <interface name="ICity">
+            <property name="country"/>
+        </interface>
+
+        <class name="Country">
+            <field name="name"/>
+        </class>
+    </package>
+</jdo>

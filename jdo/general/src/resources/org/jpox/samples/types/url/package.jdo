@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
+    "http://java.sun.com/dtd/jdo_2_0.dtd">
+<jdo>
+    <package name="org.jpox.samples.types.url">
+        <class name="URLHolder" detachable="true">
+            <field name="url" persistence-modifier="persistent">
+                <column length="254" jdbc-type="VARCHAR"/>
+            </field>
+            <fetch-group name="group">
+            	<field name="url"/>
+            </fetch-group>
+        </class>
+    </package>
+</jdo>

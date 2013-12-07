@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.types.map">
+        <class name="Map1" detachable="true" identity-type="application" objectid-class="Map1$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent">
+            	<map key-type="java.lang.String" value-type="org.jpox.samples.types.container.ContainerItem"/>
+		        <join/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Map2" detachable="true" identity-type="application" objectid-class="Map2$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+        	<field name="items" persistence-modifier="persistent" mapped-by="container">
+                <map key-type="java.lang.String" value-type="Map2Item"/>
+                <key mapped-by="key"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>          
+
+        <class name="Map2Item" detachable="true" identity-type="application" objectid-class="Map2Item$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="key" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Map2ItemChild" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="code" persistence-modifier="persistent">
+                <column length="10" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Map3" detachable="true" identity-type="application" objectid-class="Map3$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent" mapped-by="container">
+                <map key-type="org.jpox.samples.types.container.ContainerItem" value-type="Map3Item"/>
+                <key mapped-by="key"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Map3Item" detachable="true" identity-type="application" objectid-class="Map3Item$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="key" persistence-modifier="persistent"/>
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Map4" detachable="true" identity-type="application" objectid-class="Map4$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent">
+                <map key-type="org.jpox.samples.types.container.ContainerItem" 
+                     value-type="org.jpox.samples.types.container.ContainerItem"/>
+                <join/> 
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Map5" detachable="true" identity-type="application" objectid-class="Map5$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent">
+                <map key-type="java.lang.String" value-type="java.lang.String"/>
+                <join/>                
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Map5Child" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+    </package>
+</jdo>

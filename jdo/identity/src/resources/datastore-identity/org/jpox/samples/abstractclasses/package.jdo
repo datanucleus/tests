@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.abstractclasses">
+        <class name="AbstractSimpleBase" identity-type="datastore">
+        </class>
+
+        <class name="ConcreteSimpleSub1">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="ConcreteSimpleSub2">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="AbstractSimpleClassHolder" identity-type="datastore">
+            <field name="abstract1"/>
+            <field name="abstract2"/>
+            <field name="abstractList1">
+                <collection element-type="AbstractSimpleBase"/>
+                <join/>
+                <order/>
+            </field>
+            <field name="abstractSet1">
+                <collection element-type="AbstractSimpleBase"/>
+                <join/>
+            </field>
+        </class>
+
+    </package>
+</jdo>

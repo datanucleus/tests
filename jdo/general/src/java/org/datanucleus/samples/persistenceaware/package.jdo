@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.persistenceaware">
+        <class name="PublicFields" identity-type="datastore">
+            <field name="stringField" default-fetch-group="false" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="intField" default-fetch-group="false" persistence-modifier="persistent"/>
+            <field name="objectField" default-fetch-group="false" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="AccessPublicFields" persistence-modifier="persistence-aware"/>
+    </package>
+</jdo>

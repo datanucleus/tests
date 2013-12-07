@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.lifecyclelistener">
+        <class name="LifeListener">
+            <field name="ownerID"/>
+            <field name="index" persistence-modifier="transactional" default-fetch-group="false"/>
+        </class>
+    </package>
+</jdo>

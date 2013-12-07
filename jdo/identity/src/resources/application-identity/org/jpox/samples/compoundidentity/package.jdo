@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.compoundidentity">
+        <class name="CompoundHolder" detachable="true" objectid-class="CompoundHolder$Id">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="name" primary-key="true"/>
+            <field name="list1" persistence-modifier="persistent"> <!-- 1-N uni join table -->
+                <collection element-type="CompoundSingleTarget" dependent-element="true"/>
+                <join/>
+            </field>
+            <field name="list2" persistence-modifier="persistent"> <!-- 1-N uni join table -->
+                <collection element-type="CompoundDoubleTarget" dependent-element="true"/>
+                <join/>
+            </field>
+            <field name="list3" persistence-modifier="persistent" mapped-by="holder"> <!-- 1-N uni FK -->
+                <collection element-type="CompoundDoubleTarget" dependent-element="true"/>
+            </field>
+            <field name="map1" persistence-modifier="persistent" mapped-by="holder"> <!-- 1-N bi FK (key in value) -->
+                <map key-type="java.lang.String" value-type="CompoundMapTarget" dependent-value="true"/>
+                <key mapped-by="name"/>
+            </field>
+            <field name="map2" persistence-modifier="persistent" mapped-by="holder"> <!-- 1-N bi FK (value in key) -->
+                <map key-type="CompoundMapTarget2" value-type="java.lang.Double" dependent-key="true"/>
+                <value mapped-by="value"/>
+            </field>
+
+            <fetch-group name="detach">
+                <field name="list1"/>
+                <field name="list2"/>
+                <field name="list3"/>
+                <field name="map1"/>
+            </fetch-group>
+        </class>
+
+        <class name="CompoundSingleTarget" detachable="true" objectid-class="CompoundSingleTarget$Id">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="holder" primary-key="true"/>
+            <field name="value"/>
+        </class>
+
+        <class name="CompoundDoubleTarget" detachable="true" objectid-class="CompoundDoubleTarget$Id">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="holder" primary-key="true"/>
+            <field name="related" primary-key="true"/>
+            <field name="value"/>
+        </class>
+
+        <class name="CompoundMapTarget" detachable="true" objectid-class="CompoundMapTarget$Id">
+            <field name="name" primary-key="true"/>
+            <field name="holder" primary-key="true"/>
+            <field name="value"/>
+        </class>
+
+        <class name="CompoundMapTarget2" detachable="true" objectid-class="CompoundMapTarget2$Id">
+            <field name="name" primary-key="true"/>
+            <field name="holder" primary-key="true"/>
+            <field name="value"/>
+        </class>
+
+        <class name="CompoundRelated" detachable="true" objectid-class="CompoundRelated$Id">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="name" primary-key="true"/>
+        </class>
+
+        <class name="CompoundAbstractBase" objectid-class="CompoundAbstractBase$Id" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="related" primary-key="true" />
+            <field name="name" primary-key="true" />
+        </class>
+
+        <class name="CompoundConcreteSub" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="value"/>
+        </class>
+
+        <!-- 1-1 bi but with one side having only an FK -->
+        <class name="CompoundBiSource1" detachable="true" objectid-class="CompoundBiSource1$Id">
+            <field name="id" primary-key="true"/>
+            <field name="target" mapped-by="source"/>
+        </class>
+
+        <class name="CompoundBiTarget1" detachable="true" objectid-class="CompoundBiTarget1$Id">
+            <field name="source" primary-key="true"/>
+        </class>
+
+        <!-- 1-1 bi relations down to 4 levels -->
+        <class name="CompoundSourceL1" detachable="true" objectid-class="CompoundSourceL1$Id">
+            <field name="id" primary-key="true"/>
+        </class>
+
+        <class name="CompoundSourceL2" detachable="true" objectid-class="CompoundSourceL2$Id">
+            <field name="source" primary-key="true"/>
+        </class>
+
+        <class name="CompoundSourceL3" detachable="true" objectid-class="CompoundSourceL3$Id">
+            <field name="source" primary-key="true"/>
+        </class>
+
+        <class name="CompoundSourceL4" detachable="true" objectid-class="CompoundSourceL4$Id">
+            <field name="source" primary-key="true"/>
+            <field name="name" primary-key="true"/>
+        </class>
+
+        <class name="CompoundSourceL5" detachable="true" objectid-class="CompoundSourceL5$Id">
+            <field name="source" primary-key="true"/>
+            <field name="source2" primary-key="true"/>
+        </class>
+
+        <!-- 1-1 bi -->
+        <class name="CompoundSource1" objectid-class="CompoundSource1$Id">
+            <field name="idAttr" primary-key="true"/>
+            <field name="address1Attr" null-value="none"/>
+            <field name="address2Attr" null-value="none"/>
+            <field name="billingFlagAttr" null-value="none"/>
+            <field name="cityAttr" null-value="none"/>
+            <field name="stateAttr" null-value="none"/>
+            <field name="zipAttr" null-value="none"/>
+            <field name="target" persistence-modifier="persistent" null-value="none" mapped-by="source"/>
+        </class>
+
+        <class name="CompoundTarget1" objectid-class="CompoundTarget1$Id">
+            <field name="source" primary-key="true"/>
+            <field name="zipPlusFourAttr"/>
+        </class>
+
+        <!-- Chain of 4 classes using compound id and 1-N relations -->
+        <class name="CompoundX1" detachable="true" table="COMPOUND_X1" objectid-class="CompoundX1$Id">
+            <field name="x1Name" primary-key="true" column="X1_NAME"/>
+            <field name="x1Version" primary-key="true" column="X1_VERSION"/>
+
+            <field name="setX2" persistence-modifier="persistent" mapped-by="x1">
+                <collection element-type="CompoundX2"/>
+            </field>
+        </class>
+
+        <class name="CompoundX2" detachable="true" table="COMPOUND_X2" objectid-class="CompoundX2$Id">
+            <field name="x2NameA" primary-key="true" column="X2_NAME_A"/>
+            <field name="x2NameB" primary-key="true" column="X2_NAME_B"/>
+            <field name="x1" primary-key="true">
+                <column name="X1_NAME"></column>
+                <column name="X1_VERSION"></column>
+            </field>
+
+            <field name="setX3" persistence-modifier="persistent" mapped-by="x2">
+                <collection element-type="CompoundX3"/>
+            </field>
+        </class>
+
+        <class name="CompoundX3" detachable="true" table="COMPOUND_X3" objectid-class="CompoundX3$Id">
+            <field name="x3Task" primary-key="true" column="X3_TASK"/>
+            <field name="x2" primary-key="true">
+                <column name="X1_NAME" target="X1_NAME"></column>
+                <column name="X1_VERSION" target="X1_VERSION"></column>
+                <column name="X2_NAME_A" target="X2_NAME_A"></column>
+                <column name="X2_NAME_B" target="X2_NAME_B"></column>
+            </field>
+
+            <field name="setX4" persistence-modifier="persistent" mapped-by="x3">
+                <collection element-type="CompoundX4"></collection>
+            </field>
+        </class>
+
+        <class name="CompoundX4" detachable="true" table="COMPOUND_X4" objectid-class="CompoundX4$Id">
+            <field name="x4Name" primary-key="true" column="X4_NAME"/>
+            <field name="x3" primary-key="true">
+                <column name="X1_NAME" target="X1_NAME"></column>
+                <column name="X1_VERSION" target="X1_VERSION"></column>
+                <column name="X2_NAME_A" target="X2_NAME_A"></column>
+                <column name="X2_NAME_B" target="X2_NAME_B"></column>
+                <column name="X3_TASK" target="X3_TASK"></column>
+            </field>
+        </class>
+    </package>
+</jdo>

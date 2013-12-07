@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.versioned">
+        <!-- Versioned, using "version-number" strategy in surrogate version column -->
+        <class name="Trade1" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="increment"/>
+            <version strategy="version-number"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="person"/>
+            <field name="value"/>
+            <field name="date"/>
+        </class>
+
+        <class name="Trade1Holder" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="increment"/>
+            <version strategy="version-number"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="name"/>
+            <field name="trades">
+                <collection element-type="Trade1"/>
+                <join/>
+            </field>
+        </class>
+
+        <!-- Versioned, using "none" strategy in surrogate version column -->
+        <class name="Trade3" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="increment"/>
+            <version strategy="none"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="person"/>
+            <field name="value"/>
+            <field name="date"/>
+        </class>
+
+        <!-- Versioned, using "version-number" strategy in "version field" -->
+        <class name="Trade4" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="increment"/>
+            <version strategy="version-number">
+                <extension vendor-name="jpox" key="field-name" value="version"/>
+            </version>
+            <field name="id" persistence-modifier="none"/>
+            <field name="version"/>
+            <field name="person"/>
+            <field name="value"/>
+            <field name="date"/>
+        </class>
+
+        <!-- Subclass of Versioned, using "version-number" strategy in "version field" -->
+        <class name="Trade4Sub" detachable="true">
+            <field name="subName"/>
+        </class>
+
+        <!-- Subclass versioned using "version-number" and to test inheritance -->
+        <class name="Trade5Base">
+            <inheritance strategy="new-table"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="person"/>
+            <field name="value"/>
+            <field name="date"/>
+        </class>
+
+        <class name="Trade5Sub">
+            <inheritance strategy="new-table"/>
+            <version strategy="version-number"/>
+        </class>
+
+        <class name="Trade5SubSub">
+            <inheritance strategy="new-table"/>
+            <field name="name"/>
+        </class>
+
+        <!-- Versioned, using "version-number" strategy in surrogate version column -->
+        <class name="Trade6" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="identity"/>
+            <version strategy="version-number"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="person"/>
+            <field name="value"/>
+            <field name="date"/>
+            <field name="holder"/>
+        </class>
+
+        <class name="Trade6Holder" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="identity"/>
+            <version strategy="version-number"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="name"/>
+            <field name="trades" mapped-by="holder">
+                <collection element-type="Trade6"/>
+                <join/>
+            </field>
+        </class>
+
+        <class name="Trade7Base">
+            <inheritance strategy="new-table"/>
+            <version strategy="version-number">
+                <extension vendor-name="datanucleus" key="field-name" value="version"/>
+            </version>
+        </class>
+
+        <class name="Trade7Sub">
+            <inheritance strategy="new-table"/>
+            <field name="subValue"/>
+        </class>
+    </package>
+</jdo>

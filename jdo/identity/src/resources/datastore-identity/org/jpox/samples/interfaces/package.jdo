@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.interfaces">
+        <class name="Rectangle">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+
+        <class name="Circle">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+
+        <class name="Square">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+
+        <class name="Triangle">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+
+        <class name="ShapeHolder">
+            <field name="id" persistence-modifier="none"/>
+            <field name="shape1" persistence-modifier="persistent"/>
+            <field name="shape2" persistence-modifier="persistent"/>
+            <field name="shapeSet1" persistence-modifier="persistent">
+                <collection element-type="org.jpox.samples.interfaces.Shape"/>
+                <join/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="Circle,Rectangle,Square, Triangle"/>
+            </field>
+            <field name="shapeList1" persistence-modifier="persistent">
+                <collection element-type="Shape"/>
+                <join/>
+                <order/>
+            </field>
+        </class>
+
+        <class name="ShapeHolder2">
+            <!-- Field with duplicated implementations -->
+            <field name="shape1" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle,Rectangle,Circle,Triangle"/>
+            </field>
+            <!-- Field with complete set of implementations and their columns (ORM only) -->
+            <field name="shape2" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle , Rectangle, Square, Triangle"/>
+                <column name="SHAPE_CIRCLE_ID"/>
+                <column name="SHAPE_RECTANGLE_ID"/>
+                <column name="SHAPE_SQUARE_ID"/>
+                <column name="SHAPE_TRIANGLE_ID"/>
+            </field>
+        </class>
+
+        <class name="Rectangle3">
+            <implements name="org.jpox.samples.interfaces.ShapeInverse"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Circle3">
+            <implements name="org.jpox.samples.interfaces.ShapeInverse"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Square3">
+            <implements name="org.jpox.samples.interfaces.ShapeInverse"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="ShapeHolder3">
+            <field name="shapeSet" persistence-modifier="persistent" mapped-by="shapeHolder">
+                <collection element-type="ShapeInverse"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle3,Rectangle3,Square3"/>
+            </field>
+        </class>
+
+        <class name="Rectangle3b">
+            <implements name="org.jpox.samples.interfaces.ShapeInverseB"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Circle3b">
+            <implements name="org.jpox.samples.interfaces.ShapeInverseB"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Square3b">
+            <implements name="org.jpox.samples.interfaces.ShapeInverseB"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="ShapeHolder3b">
+            <field name="shapeList" persistence-modifier="persistent" mapped-by="shapeHolder">
+                <collection element-type="ShapeInverseB"/>
+                <order mapped-by="containerListOrder"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Circle3b,Rectangle3b,Square3b"/>
+            </field>
+        </class>
+
+        <class name="Steak">
+            <field name="id" persistence-modifier="none"/>
+        </class>
+
+        <class name="Salad">
+            <field name="id" persistence-modifier="none"/>
+        </class>
+
+        <class name="Cereal">
+            <field name="id" persistence-modifier="none"/>
+        </class>
+
+        <class name="Diet">
+            <field name="id" persistence-modifier="none"/>
+            <field name="favouriteFood" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="mapping-strategy" value="identity"/>
+                <column name="FAVOURITE" length="1024"/>
+            </field>
+            <field name="foods" persistence-modifier="persistent" table="DIET_FOODS">
+                <collection element-type="org.jpox.samples.interfaces.Food"/>
+                <element>
+                    <column name="FOOD" length="1024"/>
+                </element>
+                <join/>
+                <extension vendor-name="datanucleus" key="mapping-strategy" value="identity"/>
+            </field>
+        </class>
+
+        <class name="Shape5Rectangle">
+            <implements name="org.jpox.samples.interfaces.Shape5"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Shape5Circle">
+            <implements name="org.jpox.samples.interfaces.Shape5"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+        <class name="Shape5Square">
+            <implements name="org.jpox.samples.interfaces.Shape5"/>
+            <field name="shapeHolder" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Shape5Holder">
+            <field name="shapeSet" persistence-modifier="persistent" mapped-by="shapeHolder">
+                <collection element-type="Shape5"/>
+                <join/>
+                <extension vendor-name="datanucleus" key="implementation-classes" 
+                    value="Shape5Circle,Shape5Rectangle,Shape5Square"/>
+            </field>
+        </class>
+
+    </package>
+</jdo>

@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.widget">
+        <class name="Primitive" detachable="true">
+            <field name="booleanField" null-value="exception"/>
+            <field name="booleanObjField"/>
+            <field name="byteField" null-value="exception"/>
+            <field name="byteObjField"/>
+            <field name="charField" null-value="exception"/>
+            <field name="charObjField"/>
+            <field name="shortField" null-value="exception"/>
+            <field name="shortObjField"/>
+            <field name="intField" null-value="exception"/>
+            <field name="intObjField"/>
+            <field name="longField" null-value="exception"/>
+            <field name="longObjField"/>
+            <field name="floatField" null-value="exception"/>
+            <field name="floatObjField"/>
+            <field name="doubleField" null-value="exception"/>
+            <field name="doubleObjField"/>
+            <field name="fixedLengthStringField"/>
+            <field name="bigDecimalField" persistence-modifier="persistent"/>
+            <field name="bigIntegerField" persistence-modifier="persistent"/>
+            <field name="utilDateField"/>
+            <field name="sqlDateField" persistence-modifier="persistent" default-fetch-group="true" />
+            <!--
+            TODO in my judgment, java.sql.Time and java.sql.Timestamp are not in the DFG by default as described
+            in the JDO SPEC, but the JDORI consider them as in the DFG. (see the flags for the enhanced files)
+            Here, we make sure that java.sql.Time and java.sql.Timestamp fields are not in the DFG
+            -->
+            <field name="sqlTimeField" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="sqlTimestampField" persistence-modifier="persistent" default-fetch-group="false"/>
+
+            <field name="transientField" persistence-modifier="none"/>
+        </class>
+
+        <class name="InversePrimitive">
+            <inheritance strategy="new-table"/>
+            <field name="tester">
+            </field>
+        </class>
+
+        <class name="CollectionFieldTester">
+            <datastore-identity strategy="increment"/>
+
+            <!-- for testing mutable collection elements -->
+            <field name="personSet">
+                <collection element-type="org.jpox.samples.models.company.Person"/>
+                <join/>
+            </field>
+
+            <field name="personCollection">
+                <collection element-type="org.jpox.samples.models.company.Person"/>
+                <join/>
+            </field>
+
+            <field name="primitiveCollection">
+                <collection element-type="Primitive"/>
+                <join/>
+            </field>
+
+            <field name="objectCollection">
+                <collection element-type="java.lang.Object" serialized-element="true"/>
+                <join/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="Primitive"/>
+            </field>
+
+            <!-- Not yet supported
+            <field name="interfaceCollection">
+                <collection element-type="PrimitiveInterface"/>
+            </field>
+            -->
+
+            <field name="inversePrimitiveCollection" mapped-by="tester">
+                <collection element-type="InversePrimitive">
+                </collection>
+            </field>
+            <fetch-group name="fgTester">
+            	<field name="personSet"/>
+            </fetch-group>
+            
+        </class>
+
+        <class name="InverseListValue">
+            <field name="owner">
+            </field>
+            <field name="objField" default-fetch-group="true" persistence-modifier="persistent"/>
+        </class>
+        
+        <class name="InverseListFieldTester">
+            <field name="inverseList" mapped-by="owner">
+                <collection element-type="InverseListValue">
+                </collection>
+            </field>
+        </class>
+                
+        <class name="InverseSetValue">
+            <field name="owner"/>
+            <field name="objField" default-fetch-group="true" persistence-modifier="persistent"/>
+        </class>
+        
+        <class name="InverseSetFieldTester">
+            <datastore-identity strategy="increment"/>
+            <field name="elements" mapped-by="owner">
+                <collection element-type="InverseSetValue"/>
+            </field>
+        </class>
+
+        
+        <class name="Widget">
+            <field name="booleanField" null-value="exception"/>
+            <field name="booleanObjField"/>
+            <field name="byteField" null-value="exception"/>
+            <field name="byteObjField"/>
+            <field name="charField" null-value="exception"/>
+            <field name="charObjField"/>
+            <field name="shortField" null-value="exception"/>
+            <field name="shortObjField"/>
+            <field name="intField" null-value="exception"/>
+            <field name="intObjField"/>
+            <field name="longField" null-value="exception"/>
+            <field name="longObjField"/>
+        </class>
+
+        <class name="WidgetAverages" identity-type="nondurable" requires-extent="false">
+            <extension vendor-name="datanucleus" key="requires-table" value="false"/>
+        </class>
+
+        <class name="ElementWidget">
+            <inheritance strategy="new-table"/>
+            <field name="owner"/>
+        </class>
+
+        <class name="SetWidget">
+            <inheritance strategy="new-table"/>
+            <field name="normalSet">
+                <collection element-type="Widget"/>
+                <join/>                
+            </field>
+            <field name="inverseSet" mapped-by="owner">
+                <collection element-type="ElementWidget"/>
+            </field>
+        </class>
+
+        <class name="StringWidget">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="OwnerWidget">
+            <!-- NOTE: These fields needs to be explicitly declared persistent -->
+            <!-- per section 18.4 of the JDO 1.0 spec.                         -->
+	        <field name="cloneable" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="implementation-classes" value="Widget,ElementWidget,SetWidget,StringWidget,HashSetWidget,FloatWidget,DecimalWidget,DateWidget"/>
+	        </field>
+	        <field name="testObject" persistence-modifier="persistent"/>
+	    </class>
+
+        <class name="HashSetWidget">
+            <inheritance strategy="new-table"/>
+            <field name="normalSet">
+                <collection element-type="Widget"/>
+                <join/>                
+            </field>
+        </class>
+
+        <class name="FloatWidget">
+            <inheritance strategy="new-table"/>
+            <field name="floatField" null-value="exception"/>
+            <field name="floatObjField"/>
+            <field name="doubleField" null-value="exception"/>
+            <field name="doubleObjField"/>
+        </class>
+
+        <class name="DecimalWidget">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="DateWidget">
+            <inheritance strategy="new-table"/>
+            <field name="dateField"/>
+            <field name="sqlDateField" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="sqlTimestampField" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="dateJdbcTimestampField" persistence-modifier="persistent" default-fetch-group="true">
+                <extension vendor-name="datanucleus" key="mapping-class" value="org.datanucleus.store.rdbms.mapping.java.SqlTimestampMapping"/>
+                <column>
+                    <extension vendor-name="datanucleus" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampRDBMSMapping"/>
+                </column>
+            </field>
+        </class>
+
+        <class name="StringBlobWidget">
+            <inheritance strategy="new-table"/>
+            <field name="hugeString" serialized="true" default-fetch-group="false"/>
+        </class>
+
+        <class name="StringClobWidget">
+            <inheritance strategy="new-table"/>
+            <field name="anotherHugeString" default-fetch-group="false"/>
+        </class>
+    </package>
+</jdo>

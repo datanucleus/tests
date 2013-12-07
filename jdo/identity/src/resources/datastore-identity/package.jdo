@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<!-- This is an example of MetaData stored in a non-class location
+    and can be used as a test for picking up named queries that aren't scoped by a candidate class -->
+
+<jdo>
+    <query name="DeveloperWithSkillForResultDescoped" language="javax.jdo.query.SQL" 
+        result-class="org.jpox.samples.models.company.DeveloperRC">
+        <![CDATA[
+        SELECT DEVELOPER_ID as id, SKILL FROM DEVELOPER WHERE SKILL = ?
+        ]]>
+    </query>
+</jdo>

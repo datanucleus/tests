@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.types.arraylist">
+        <class name="ArrayList1" detachable="true" identity-type="application" 
+            objectid-class="ArrayList1$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent">
+                <collection element-type="org.jpox.samples.types.container.ContainerItem"/>
+                <join/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="ArrayList1Child" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="ArrayList2" detachable="true" identity-type="application"
+            objectid-class="ArrayList2$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent" mapped-by="container">
+                <collection element-type="ArrayList2Item"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="ArrayList2Item" detachable="true" identity-type="application" 
+            objectid-class="ArrayList2Item$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="ArrayList2ItemChild" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="code" persistence-modifier="persistent">
+                <column length="10" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+    </package>
+</jdo>

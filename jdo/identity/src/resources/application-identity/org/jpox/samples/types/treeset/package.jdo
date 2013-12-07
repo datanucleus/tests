@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.types.treeset">
+        <class name="TreeSet1" detachable="true" identity-type="application" objectid-class="TreeSet1$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent">
+            	<collection element-type="org.jpox.samples.types.container.ContainerItem">
+                    <extension vendor-name="jpox" key="comparatorName" value="MyComparator"/>
+                </collection>
+                <join/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="TreeSet1Child" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="TreeSet2" detachable="true" identity-type="application" objectid-class="TreeSet2$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+        	<field name="items" persistence-modifier="persistent" mapped-by="container">
+                <collection element-type="TreeSet2Item"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="TreeSet2Item" detachable="true" identity-type="application" objectid-class="TreeSet2Item$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="TreeSet2ItemChild" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="code" persistence-modifier="persistent">
+                <column length="10" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+    </package>
+</jdo>

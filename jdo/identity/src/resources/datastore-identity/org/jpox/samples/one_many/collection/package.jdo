@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.one_many.collection">
+        <class name="PCJoinElement"/>
+
+        <class name="PCEmbedded"/>
+
+        <class name="PCFKSetElement" table="PCFKSETELEMENT">
+            <datastore-identity column="PCFKSETELEMENT_ID"/>
+            <field name="name" column="NAME"/>
+        </class>
+
+        <class name="PCFKSetElementSub1" table="PCFKSETELEMENTSUB1">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="PCFKSetElementSub2" table="PCFKSETELEMENTSUB2">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="PCFKListElement" table="PCFKLISTELEMENT">
+            <datastore-identity column="PCFKLISTELEMENT_ID"/>
+            <field name="name" column="NAME"/>
+        </class>
+
+        <class name="PCFKListElementSub1" table="PCFKLISTELEMENTSUB1">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="PCFKListElementSub2" table="PCFKLISTELEMENTSUB2">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="PCFKSetElementShared" table="PCFKSETELEMENTSHARE">
+            <datastore-identity column="PCFKSETELEMENTSHARE_ID"/>
+            <field name="name" column="NAME"/>
+        </class>
+
+        <class name="PCFKListElementShared" table="PCFKLISTELEMENTSHARE">
+            <datastore-identity column="PCFKLISTELEMENTSHARE_ID"/>
+            <field name="name" column="NAME"/>
+        </class>
+
+        <!-- Class with all possible types of Set fields -->
+        <class name="SetHolder" table="SETHOLDER">
+            <datastore-identity column="SETHOLDER_ID"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="name" column="NAME"/>
+
+            <field name="joinSetPC" table="SETHOLDER_PC">
+                <collection element-type="PCJoinElement"/>
+                <join column="SETHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_ID"/>
+            </field>
+            <field name="joinSetNonPC1" table="SETHOLDER_NONPC1">
+                <collection element-type="java.lang.String"/>
+                <join column="SETHOLDER_ID_OID"/>
+                <element column="STRING_ELEMENT"/>
+            </field>
+            <field name="joinSetNonPC2" table="SETHOLDER_NONPC2">
+                <collection element-type="java.util.Date"/>
+                <join column="SETHOLDER_ID_OID"/>
+                <element column="DATE_ELEMENT"/>
+            </field>
+            <field name="joinSetNonPC3" table="SETHOLDER_NONPC3">
+                <collection element-type="java.lang.String"/>
+                <join/>
+            </field>
+            <field name="joinSetPCSerial" table="SETHOLDER_PCSERIAL">
+                <collection element-type="PCJoinElement" serialized-element="true"/>
+                <join column="SETHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_SERIAL"/>
+                <order column="IDX"/> <!-- To be part of the PK of the join table -->
+            </field>
+            <field name="joinSetPCShared1" table="SETHOLDER_SHARED">
+                <collection element-type="PCJoinElement"/>
+                <join column="SETHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_ID"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+            </field>
+            <field name="joinSetPCShared2" table="SETHOLDER_SHARED">
+                <collection element-type="PCJoinElement"/>
+                <join column="SETHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_ID"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+            </field>
+
+            <field name="fkSetPC">
+                <collection element-type="PCFKSetElement"/>
+                <element column="SETHOLDER_ID_OID"/>
+            </field>
+            <field name="fkSetPC2">
+                <collection element-type="SetHolder"/>
+                <element column="SETHOLDER_FK2_ID_OID"/>
+            </field>
+            <field name="fkSetPCShared1">
+                <collection element-type="PCFKSetElementShared"/>
+                <element column="SETHOLDER_ID_OID"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+            </field>
+            <field name="fkSetPCShared2">
+                <collection element-type="PCFKSetElementShared"/>
+                <element column="SETHOLDER_ID_OID"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+            </field>
+
+            <field name="setNonPCSerial1" serialized="true" column="SETNONPC_SERIAL_1">
+                <collection element-type="java.lang.String"/>
+            </field>
+            <field name="setNonPCSerial2" serialized="true" column="SETNONPC_SERIAL_2">
+                <collection element-type="java.util.Date"/>
+            </field>
+
+            <field name="setNonPC1" column="SETNONPC_1">
+                <collection element-type="java.lang.String"/>
+            </field>
+            <field name="setNonPC2" column="SETNONPC_2">
+                <collection element-type="java.util.Date"/>
+            </field>
+
+            <field name="setPCEmbedded" column="SETPC_EMBEDDED">
+                <collection element-type="PCEmbedded" embedded-element="true"/>
+            </field>
+        </class>
+
+        <!-- Class with all possible types of List fields -->
+        <class name="ListHolder" table="LISTHOLDER" detachable="true">
+            <datastore-identity column="LISTHOLDER_ID"/>
+            <field name="id" persistence-modifier="none"/>
+
+            <field name="joinListPC" table="LISTHOLDER_PC">
+                <collection element-type="PCJoinElement"/>
+                <join column="LISTHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_ID"/>
+                <order column="IDX"/>
+            </field>
+            <field name="joinListNonPC1" table="LISTHOLDER_NONPC1">
+                <collection element-type="java.lang.String"/>
+                <join column="LISTHOLDER_ID_OID"/>
+                <element column="STRING_ELEMENT"/>
+                <order column="IDX"/>
+            </field>
+            <field name="joinListNonPC2" table="LISTHOLDER_NONPC2">
+                <collection element-type="java.util.Date"/>
+                <join column="LISTHOLDER_ID_OID"/>
+                <element column="DATE_ELEMENT"/>
+                <order column="IDX"/>
+            </field>
+            <field name="joinListPCSerial" table="LISTHOLDER_PCSERIAL">
+                <collection element-type="PCJoinElement" serialized-element="true"/>
+                <join column="LISTHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_SERIAL"/>
+                <order column="IDX"/>
+            </field>
+            <field name="joinListPCShared1" table="LISTHOLDER_SHARED">
+                <collection element-type="PCJoinElement"/>
+                <join column="LISTHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_ID"/>
+                <order column="IDX"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+            </field>
+            <field name="joinListPCShared2" table="LISTHOLDER_SHARED">
+                <collection element-type="PCJoinElement"/>
+                <join column="LISTHOLDER_ID_OID"/>
+                <element column="PCJOINELEMENT_ID"/>
+                <order column="IDX"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+            </field>
+
+            <field name="fkListPC">
+                <collection element-type="PCFKListElement"/>
+                <element column="LISTHOLDER_ID_OID"/>
+                <order column="IDX"/>
+            </field>
+            <field name="fkListPC2">
+                <collection element-type="ListHolder"/>
+                <element column="LISTHOLDER_FK2_ID_OID"/>
+                <order column="LISTHOLDER_FK2_IDX"/>
+            </field>
+            <field name="fkListPCShared1">
+                <collection element-type="PCFKListElementShared"/>
+                <element column="LISTHOLDER_ID_OID"/>
+                <order column="IDX"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+            </field>
+            <field name="fkListPCShared2">
+                <collection element-type="PCFKListElementShared"/>
+                <element column="LISTHOLDER_ID_OID"/>
+                <order column="IDX"/>
+                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+            </field>
+            <field name="fkListPCOrdered">
+                <collection element-type="PCFKListElement"/>
+                <element column="LISTHOLDER2_ID_OID"/>
+                <order>
+                    <extension vendor-name="jpox" key="list-ordering" value="name ASC"/>
+                </order>
+            </field>
+
+            <field name="listNonPCSerial1" serialized="true" column="LISTNONPC_SERIAL_1">
+                <collection element-type="java.lang.String"/>
+            </field>
+            <field name="listNonPCSerial2" serialized="true" column="LISTNONPC_SERIAL_2">
+                <collection element-type="java.util.Date"/>
+            </field>
+
+            <field name="listNonPC1" column="LISTNONPC_1">
+                <collection element-type="java.lang.String"/>
+            </field>
+            <field name="listNonPC2" column="LISTNONPC_2">
+                <collection element-type="java.util.Date"/>
+            </field>
+
+            <field name="listPCEmbedded" column="LISTPC_EMBEDDED">
+                <collection element-type="PCEmbedded" embedded-element="true"/>
+            </field>
+        </class>
+    </package>
+</jdo>

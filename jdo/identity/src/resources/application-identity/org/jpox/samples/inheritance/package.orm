@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.inheritance">
+        <!-- Sample "L", new-table + new-table, use of field overrides -->
+        <class name="LBase" table="L_BASE">
+            <datastore-identity column="ID"/>
+            <inheritance strategy="new-table"/>
+            <field name="name" column="NAME"/>
+            <field name="level" column="LEVEL"/>
+        </class>
+
+        <class name="LSub" table="L_SUB">
+            <datastore-identity column="ID"/>
+            <inheritance strategy="new-table"/>
+            <field name="LBase.name" column="OVERRIDE_NAME"/>
+            <field name="value" column="VALUE"/>
+        </class>
+
+        <!-- Sample "M", subclass-table + new-table, use of field overrides -->
+        <class name="MBase">
+            <inheritance strategy="subclass-table"/>
+            <field name="name" column="NAME"/>
+            <field name="related" column="RELATED_ID"/>
+        </class>
+
+        <class name="MSub1" table="M_SUB1_OVERRIDE">
+            <datastore-identity column="ID"/>
+            <inheritance strategy="new-table"/>
+            <field name="value1" column="VALUE"/>
+            <field name="MBase.name">
+                <column name="BASE_2A_NAME"/>
+            </field>
+            <field name="MBase.related">
+                <column name="BASE_2A_RELATED_ID"/>
+            </field>
+        </class>
+
+        <class name="MSub2" table="M_SUB2_OVERRIDE">
+            <datastore-identity column="ID"/>
+            <inheritance strategy="new-table"/>
+            <field name="value2" column="VALUE"/>
+            <field name="MBase.name" column="BASE_2B_NAME"/>
+            <field name="MBase.related" column="BASE_2B_RELATED_ID"/>
+        </class>
+
+        <class name="MRelated" table="M_RELATED_OVERRIDE">
+            <datastore-identity column="ID"/>
+            <inheritance strategy="new-table"/>
+            <field name="description" column="DESC"/>
+        </class>
+
+        <!-- Sample "N", new-table + superclass-table, use of field overrides -->
+        <class name="NBase" table="N_BASE_OVERRIDE">
+            <datastore-identity column="ID"/>
+            <inheritance strategy="new-table">
+                <discriminator strategy="class-name">
+                    <column name="TYPE"/>
+                </discriminator>
+            </inheritance>
+            <field name="name" column="NAME"/>
+            <field name="level" column="LEVEL"/>
+        </class>
+
+        <class name="NSub">
+            <inheritance strategy="superclass-table"/>
+            <field name="NBase.name" column="OVERRIDE_NAME"/>
+            <field name="value" column="VALUE"/>
+        </class>
+    </package>
+</orm>

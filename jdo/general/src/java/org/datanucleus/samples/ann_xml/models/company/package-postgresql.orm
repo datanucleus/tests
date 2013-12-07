@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.datanucleus.samples.ann_xml.models.company">
+        <class name="Person">
+            <field name="dateOfBirth">
+                <extension vendor-name="datanucleus" key="insert-function" value="CURRENT_TIMESTAMP"/>
+            </field>
+        </class>
+    </package>
+</orm>

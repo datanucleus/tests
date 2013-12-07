@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
+    "http://java.sun.com/dtd/jdo_2_0.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.metadata.animal">
+        <class name="Animal" identity-type="application">
+            <inheritance strategy="subclass-table"></inheritance>
+            <field name="id" primary-key="true"/>
+        </class>
+        <class name="Dog">
+            <inheritance strategy="new-table"></inheritance>
+            <field name="Animal.id" primary-key="true"/>
+            <field name="color" persistence-modifier="persistent"/>
+            <field name="Animal.name" persistence-modifier="persistent" column="dog"/>
+        </class>
+        <class name="Cat">
+            <inheritance strategy="new-table"></inheritance>
+            <field name="Animal.id" primary-key="true"/>
+            <field name="color" persistence-modifier="persistent"/>
+            <field name="Animal.name" persistence-modifier="persistent" column="cat"/>
+        </class>        
+    </package>
+</jdo>

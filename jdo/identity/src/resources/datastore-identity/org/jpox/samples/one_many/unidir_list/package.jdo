@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.one_many.unidir_list">
+        <class name="SoftwareProject" detachable="true">
+            <field name="id" persistence-modifier="none"/>
+            <field name="name"/>
+            <field name="donations">
+                <collection element-type="Donation"/>
+                <order mapped-by="donationNumber"/>
+            </field>
+        </class>
+
+        <class name="Donation" detachable="true">
+            <field name="id" persistence-modifier="none"/>
+            <field name="donorName"/>
+            <field name="donationNumber"/>
+            <field name="amount"/>
+        </class>
+    </package>
+</jdo>

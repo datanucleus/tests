@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test of DTD as JDO2 in JPOX JAR -->
+<!DOCTYPE jdo SYSTEM "file:/org/datanucleus/api/jdo/jdo_2_0.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.metadata.dtd">
+        <class name="DTDFile2" identity-type="datastore">
+            <field name="name" persistence-modifier="persistent"/>
+        </class>
+    </package>
+</jdo>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.models.voting">
+        <class name="Vote" identity-type="application">
+            <field name="id" primary-key="true"/>
+            <field name="topic"/>
+            <field name="meeting"/>
+        </class>
+
+        <class name="Topic" identity-type="application">
+            <field name="id" primary-key="true"/>
+            <field name="voteHistory" null-value="exception" mapped-by="topic">
+                <collection element-type="Vote"/>
+            </field>
+        </class>
+
+        <class name="Meeting" identity-type="application">
+            <field name="id" primary-key="true"/>
+            <field name="votes" null-value="none" mapped-by="meeting">
+                <collection element-type="Vote"/>
+            </field>
+        </class>
+
+        <class name="Category" identity-type="application">
+            <field name="id" primary-key="true"/>               
+            <field name="votes" null-value="none" mapped-by="category">
+                <collection element-type="Vote"/>
+            </field>
+        </class>
+    </package>
+</jdo>

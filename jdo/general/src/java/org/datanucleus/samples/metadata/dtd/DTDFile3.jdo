@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test of DTD as external URL -->
+<!-- This line below should really be used, but if not connected to the internet, or www.jpox.org is dead then it hangs! -->
+<!-- !DOCTYPE jdo SYSTEM "http://www.jpox.org/dtd/jdo_1_0.dtd"-->
+<!DOCTYPE jdo SYSTEM "file:/org/datanucleus/api/jdo/jdo_1_0.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.metadata.dtd">
+        <class name="DTDFile3" identity-type="datastore">
+            <field name="name" persistence-modifier="persistent"/>
+        </class>
+    </package>
+</jdo>

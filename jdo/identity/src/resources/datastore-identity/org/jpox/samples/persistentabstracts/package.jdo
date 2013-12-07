@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.persistentabstracts">
+        <class name="ALocation">
+            <property name="position"/>
+            <property name="name"/>
+        </class>
+
+        <class name="APopulace">
+            <inheritance strategy="new-table"/>
+            <property name="population"/>
+        </class>
+
+        <class name="ACity">
+            <inheritance strategy="new-table"/>
+            <property name="country"/>
+        </class>
+
+        <class name="Country" table="ACOUNTRY">
+            <field name="name"/>
+        </class>
+    </package>
+</jdo>

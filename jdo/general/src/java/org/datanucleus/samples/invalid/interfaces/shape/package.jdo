@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.invalid.interfaces.shape">
+        <class name="ShapeHolderMissing">
+            <field name="shape" persistence-modifier="persistent">
+                <!-- Only 1 column specified for the implementations so we should get an error here. -->
+                <column name="IMPL_ID"/>
+            </field>
+        </class>
+    </package>
+</jdo>

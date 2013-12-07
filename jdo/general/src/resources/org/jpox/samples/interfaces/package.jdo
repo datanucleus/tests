@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.interfaces">
+        <class name="Rectangle">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+        <class name="Circle">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+        <class name="Square">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+        <class name="Triangle">
+            <implements name="org.jpox.samples.interfaces.Shape"/>
+        </class>
+
+        <class name="ShapeHolder">
+            <field name="id" persistence-modifier="persistent"/>
+            <field name="shape1" persistence-modifier="persistent"/>
+            <field name="shape2" persistence-modifier="persistent" serialized="true"/>
+
+            <!-- List using join table -->
+            <field name="shapeList1" persistence-modifier="persistent">
+                <collection element-type="Shape"/>
+                <join/>
+                <order/>
+            </field>
+            <!-- Set using join table -->
+            <field name="shapeSet1" persistence-modifier="persistent">
+                <collection element-type="Shape"/>
+                <join/>
+                <extension vendor-name="jpox" key="implementation-classes" value="Circle,Rectangle,Square, Triangle"/>
+            </field>
+        </class>
+    </package>
+</jdo>

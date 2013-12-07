@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN" 
+    "http://java.sun.com/dtd/jdo_2_0.dtd">
+<jdo>
+    <package name="org.jpox.samples.models.nightlabs_product">
+        <class name="Transfer" objectid-class="TransferID" detachable="true">
+            <inheritance strategy="new-table"></inheritance>
+            <field name="organisationID" primary-key="true"> 
+                <column length="100"/>
+            </field>
+            <field name="transferTypeID" primary-key="true"> 
+                <column length="100"/>
+            </field>
+            <field name="transferID" primary-key="true"/>
+        </class>
+        <class name="ProductTransfer" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="products">
+	            <collection element-type="Product"/>
+	            <join/>
+            </field>
+        </class>
+
+        <class name="ProductType" objectid-class="ProductTypeID" detachable="true">
+            <inheritance strategy="new-table"></inheritance>
+            <field name="organisationID" primary-key="true"> 
+                <column length="100"/>
+            </field>
+            <field name="productTypeID" primary-key="true"> 
+                <column length="100"/>
+            </field>
+        </class>
+
+        <class name="Product" objectid-class="ProductID" detachable="true">
+            <inheritance strategy="new-table"></inheritance>
+            <field name="organisationID" primary-key="true"> 
+                <column length="100"/>
+            </field>
+            <field name="productID" primary-key="true"/>
+        </class>
+    </package> 
+</jdo>

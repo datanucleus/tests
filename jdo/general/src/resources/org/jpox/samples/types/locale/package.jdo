@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.types.locale">
+        <class name="LocaleHolder" detachable="true">
+            <field name="locale" persistence-modifier="persistent" default-fetch-group="true"/>
+        </class>
+    </package>
+</jdo>

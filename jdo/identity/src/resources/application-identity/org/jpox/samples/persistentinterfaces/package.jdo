@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.persistentinterfaces">
+        <interface name="ILocation">
+            <property name="position" primary-key="true"/>
+            <property name="name"/>
+        </interface>
+
+        <interface name="IPopulace">
+            <property name="population"/>
+        </interface>
+
+        <interface name="ICity">
+            <property name="country"/>
+        </interface>
+
+        <class name="Country" table="ICOUNTRY">
+            <field name="name" primary-key="true"/>
+        </class>
+
+        <interface name="ComputerPeripheral">
+            <property name="id" primary-key="true"/>
+            <property name="manufacturer"/>
+            <property name="model"/>
+        </interface>
+
+        <class name="Mouse" table="COMPUTER_MOUSE">
+            <property name="id" primary-key="true"/>
+            <property name="manufacturer"/>
+            <property name="model"/>
+        </class>
+
+        <class name="Keyboard" table="COMPUTER_KEYBOARD">
+            <property name="id" primary-key="true"/>
+            <property name="manufacturer"/>
+            <property name="model"/>
+        </class>
+    </package>
+</jdo>

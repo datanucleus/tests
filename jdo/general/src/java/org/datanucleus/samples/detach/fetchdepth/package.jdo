@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+	<package name="org.datanucleus.samples.detach.fetchdepth">
+		<class name="A" detachable="true">
+		    <datastore-identity strategy="increment"/>
+			<field name="b"/>
+			<fetch-group name="includingB">
+                <field name="b"/>
+            </fetch-group>
+		</class>
+
+		<class name="B" detachable="true">
+		    <datastore-identity strategy="increment"/>
+    		<field name="c"/>
+            <fetch-group name="includingC">
+                <field name="c"/>
+            </fetch-group>
+		</class>
+
+		<class name="C" detachable="true">
+		    <datastore-identity strategy="increment"/>
+    		<field name="a"/>
+    		<fetch-group name="includingA">
+                <field name="a"/>
+            </fetch-group>
+		</class>
+
+        <class name="Directory" detachable="true">
+            <field name="parent"/>
+            <field name="children" mapped-by="parent">
+                <collection element-type="Directory"/>
+                <join/>
+            </field>
+
+            <fetch-group name="groupA">
+                <field name="parent" recursion-depth="-1"/>
+                <field name="children" recursion-depth="2"/>
+            </fetch-group>
+        </class>
+	</package>
+</jdo>

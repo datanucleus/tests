@@ -1,0 +1,90 @@
+<jdo xmlns="http://java.sun.com/xml/ns/jdo/jdo"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdo
+        http://java.sun.com/xml/ns/jdo/jdo_2_1.xsd">
+    <package name="org.datanucleus.samples.fetchplan">
+        <class name="FP1Base">
+            <fetch-group name="0">
+                <field name="name"/>
+            </fetch-group>
+        </class>
+
+        <class name="FP1Sub">
+            <fetch-group name="1">
+                <field name="room"/>
+                <fetch-group name="0"/>
+            </fetch-group>
+        </class>
+
+        <class name="FP2Base" identity-type="application">
+            <field name="piece1" primary-key="true" persistence-modifier="persistent"/>
+            <field name="piece2" persistence-modifier="persistent"/>
+            <field name="piece3" persistence-modifier="persistent"/>
+            <field name="piece4" persistence-modifier="persistent"/>
+            <field name="piece5" persistence-modifier="persistent"/>
+            <field name="piece6" persistence-modifier="persistent"/>
+            <field name="piece7" persistence-modifier="persistent"/>
+            <field name="piece8" persistence-modifier="persistent"/>
+            <field name="piece9" persistence-modifier="persistent"/>
+            <field name="piece10" persistence-modifier="persistent"/>
+            <field name="piece11" persistence-modifier="persistent" default-fetch-group="true" serialized="true"/>
+            <field name="piece12" persistence-modifier="persistent" default-fetch-group="false"/>
+            <field name="piece13" persistence-modifier="none"/>
+            <field name="piece14" persistence-modifier="transactional" default-fetch-group="false"/>
+
+            <query name="FP2_ALL" language="javax.jdo.query.JDOQL" fetch-plan="NAMED_FP_1">
+            SELECT FROM org.datanucleus.samples.fetchplan.FP2Base
+            </query>
+            <fetch-group name="groupAll">
+                <fetch-group name="groupA"/>
+                <fetch-group name="groupB"/>
+                <fetch-group name="groupC"/>
+                <fetch-group name="groupD"/>
+            </fetch-group>
+            <fetch-group name="groupA">
+                <field name="piece1"/>
+                <field name="piece2"/>
+                <field name="piece3"/>
+            </fetch-group>
+            <fetch-group name="groupB">
+                <field name="piece4"/>
+                <field name="piece5"/>
+                <field name="piece6"/>
+            </fetch-group>
+            <fetch-group name="groupC">
+                <field name="piece7"/>
+                <field name="piece8"/>
+                <field name="piece9"/>
+            </fetch-group>
+            <fetch-group name="groupD" post-load="true">
+                <field name="piece10"/>
+                <field name="piece11"/>
+                <field name="piece12"/>
+            </fetch-group>
+            <fetch-group name="groupIntersection">
+                <field name="piece1"/>
+                <field name="piece4"/>
+                <field name="piece7"/>
+                <field name="piece10"/>
+            </fetch-group>
+            <fetch-group name="defaultPlus12">
+                <fetch-group name="default"/>
+                <field name="piece12"/>
+            </fetch-group>
+        </class>
+
+        <class name="FP2Sub" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="piece22" persistence-modifier="persistent" serialized="true"/>
+        </class>
+
+        <class name="FP3Base" identity-type="application">
+            <field name="room1" primary-key="true" persistence-modifier="persistent"/>
+        </class>
+    </package>
+
+    <fetch-plan name="NAMED_FP_1">
+        <fetch-group name="groupA"/>
+        <fetch-group name="groupB"/>
+    </fetch-plan>
+</jdo>

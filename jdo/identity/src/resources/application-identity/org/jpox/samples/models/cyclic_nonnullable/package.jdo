@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
+  "http://java.sun.com/dtd/jdo_2_0.dtd">
+<jdo>
+  <package name="org.jpox.samples.models.cyclic_nonnullable">
+    <class name="NullInverseEntity" requires-extent="true" detachable="true">
+      <field name="id" primary-key="true" null-value="exception">
+        <column name="id" allows-null="false" />
+      </field>
+      <field name="other" persistence-modifier="persistent" table="null_inverse_join">
+        <map key-type="String" value-type="NullInverseEntity2"/>
+        <join/>
+      </field>
+    </class>
+   
+    <class name="NullInverseEntity2" requires-extent="true" detachable="true">
+      <field name="inverse" persistence-modifier="persistent" null-value="exception">
+        <column name="inverse" allows-null="false"/>
+      </field>
+      <field name="forward" persistence-modifier="persistent" null-value="exception">
+        <column name="forward" allows-null="false"/>
+      </field>
+      <field name="values" persistence-modifier="persistent">
+        <embedded owner-field="owner">
+          <field name="name" persistence-modifier="persistent" default-fetch-group="true">
+            <column name="name"/>
+          </field>
+        </embedded>
+      </field>
+    </class>
+   
+    <class name="NullInverseEntity3" requires-extent="true" detachable="true">
+      <field name="id" primary-key="true" null-value="exception">
+        <column name="id"/>
+      </field>
+      <field name="owner" persistence-modifier="persistent" mapped-by="forward"/>
+    </class>
+    
+    <class name="CompoundType" requires-extent="true" detachable="true">
+      <field name="owner" persistence-modifier="persistent" null-value="exception">
+        <extension vendor-name="jpox" key="implementation-classes" value="org.jpox.samples.models.cyclic_nonnullable.NullInverseEntity2"/>
+      </field>
+      <field name="name" persistence-modifier="persistent"/>
+    </class>
+  </package>
+</jdo>

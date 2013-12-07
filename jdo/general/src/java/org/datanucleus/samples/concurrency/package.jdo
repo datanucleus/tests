@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.concurrency">
+        <class name="Transfer" identity-type="datastore" table="SAMPLETRANSFER">
+            <field name="fromAccount" persistence-modifier="persistent"/>
+            <field name="toAccount" persistence-modifier="persistent"/>
+            <field name="amount" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Account" identity-type="datastore" table="SAMPLEACCOUNT">
+            <field name="name" persistence-modifier="persistent"/>
+            <field name="saldo" persistence-modifier="persistent"/>
+        </class>
+    </package>
+</jdo>

@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo PUBLIC
+"-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
+"http://java.sun.com/dtd/jdo_2_0.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.store">
+        <class name="Product" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="increment"/>
+            <field name="id" persistence-modifier="persistent"></field>
+            <field name="name" persistence-modifier="persistent"></field>
+            <field name="description" persistence-modifier="persistent"></field>
+            <field name="imageUrl" persistence-modifier="persistent"></field>
+            <field name="currency" persistence-modifier="persistent"></field>
+            <field name="price" persistence-modifier="persistent"></field>
+            <field name="oldPrice" persistence-modifier="persistent"></field>
+            <field name="listPrice" persistence-modifier="persistent"></field>
+            <field name="taxPercent" persistence-modifier="persistent"></field>
+            <field name="statusId" persistence-modifier="persistent"></field>
+        </class>
+
+        <class name="Book" detachable="true" identity-type="datastore"
+           persistence-capable-superclass="Product">
+           <inheritance strategy="new-table"/>
+            <field name="isbn" persistence-modifier="persistent"></field>
+            <field name="author" persistence-modifier="persistent"></field>
+            <field name="title" persistence-modifier="persistent"></field>
+            <field name="editionNo" persistence-modifier="persistent"></field>
+            <field name="publisher" persistence-modifier="persistent"></field>
+        </class>
+
+        <class name="CompactDisc" detachable="true" identity-type="datastore"
+           persistence-capable-superclass="Product">
+            <inheritance strategy="new-table"/>
+            <field name="artist" persistence-modifier="persistent"></field>
+            <field name="title" persistence-modifier="persistent"></field>
+            <field name="year" persistence-modifier="persistent"></field>
+            <field name="producer" persistence-modifier="persistent"></field>
+            <field name="publisher" persistence-modifier="persistent"></field>
+        </class>
+
+        <class name="YourCompactDisc" detachable="true" identity-type="datastore"
+           persistence-capable-superclass="CompactDisc">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="MyCompactDisc" detachable="true" identity-type="datastore"
+           persistence-capable-superclass="CompactDisc">
+            <inheritance strategy="new-table"/>
+            <field name="location" persistence-modifier="persistent"></field>
+        </class>
+
+        <class name="Inventory" detachable="true" identity-type="datastore">
+            <field name="products" persistence-modifier="persistent">
+                <collection element-type="Product"/>
+            </field>
+        </class>
+
+        <class name="User" detachable="true" identity-type="datastore">
+            <field name="login"></field>
+            <field name="password"></field>
+            <field name="details" persistence-modifier="persistent" dependent="true"/>
+        </class>
+
+        <class name="UserDetails" detachable="true" identity-type="datastore">
+            <field name="forename"></field>
+            <field name="surname"></field>
+            <field name="user" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Supplier" detachable="true" identity-type="datastore">
+            <field name="name" persistence-modifier="persistent">
+                <column length="100" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="customers" persistence-modifier="persistent" table="CUSTOMER_SUPPLIER">
+                <collection element-type="Customer"/>
+                <join column="SUPPLIER_ID"/>
+                <element column="CUSTOMER_ID"/>
+            </field>
+
+            <fetch-group name="supplier_default">
+                <field name="name"/>
+                <field name="customers"/>
+            </fetch-group>
+        </class>
+
+        <class name="Customer" detachable="true" identity-type="datastore">
+            <field name="name" persistence-modifier="persistent">
+                <column length="100" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="suppliers" persistence-modifier="persistent" mapped-by="customers">
+                <collection element-type="Supplier"/>
+            </field>
+
+            <fetch-group name="customer_default">
+                <field name="name"/>
+                <field name="suppliers"/>
+            </fetch-group>
+        </class>
+
+        <sequence name="ProductSequence" datastore-sequence="PRODUCT_SEQ" strategy="contiguous"/>
+        <sequence name="ProductSequenceNontrans" datastore-sequence="PRODUCT_SEQ_NONTRANS" strategy="nontransactional"/>
+        <sequence name="ProductSequenceFactory" strategy="nontransactional" factory-class="org.datanucleus.samples.store.SimpleSequenceFactory"/>
+        <sequence name="JDO2SimpleSequenceFactory" strategy="nontransactional" factory-class="javax.jdo.datastore.SimpleSequenceFactory"/>
+    </package>
+</jdo>

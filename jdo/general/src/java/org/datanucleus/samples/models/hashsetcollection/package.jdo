@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.models.hashsetcollection">
+        <class name="Circon" detachable="true">
+            <datastore-identity strategy="native"/>
+            <field name="masters" mapped-by="circon">
+                <collection element-type="Master"/>
+            </field>
+            <fetch-group name="all">
+            	<field name="masters"/>
+            	<field name="detail"/>
+            </fetch-group>
+            
+        </class>
+
+        <class name="Master" detachable="true">
+            <datastore-identity strategy="native"/>
+            <field name="circon"/>
+            <field name="details" mapped-by="master">
+                <collection element-type="Detail"/>
+            </field>
+            <field name="otherDetails" mapped-by="master">
+                <collection element-type="OtherDetail"/>
+            </field>
+            <fetch-group name="all">
+            	<field name="circon"/>
+            	<field name="details"/>
+            	<field name="otherDetails"/>
+            </fetch-group>
+        </class>
+
+        <class name="Detail" detachable="true">
+            <datastore-identity strategy="native"/>
+            <field name="circons" mapped-by="detail">
+                <collection element-type="Circon"/>
+            </field>
+            <fetch-group name="all">
+            	<field name="master"/>
+            	<field name="circons"/>
+            </fetch-group>
+        </class>
+
+        <class name="OtherDetail" detachable="true">
+            <fetch-group name="all">
+            	<field name="master"/>
+            </fetch-group>
+        </class>
+    </package>
+</jdo>

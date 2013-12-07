@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo PUBLIC
+"-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
+"http://java.sun.com/dtd/jdo_2_0.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.objects">
+        <class name="ObjectHolder" detachable="true" identity-type="datastore" table="OBJECT_HOLDER">
+            <datastore-identity column="ID"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="name" column="NAME"/>
+            <field name="object1" persistence-modifier="persistent" column="EMBEDDEDOBJECT" embedded="true"/>
+            <field name="object2" persistence-modifier="persistent" column="SERIALISEDOBJECT" serialized="true"/>
+            <field name="object3" persistence-modifier="persistent"
+                field-type="org.jpox.samples.objects.ObjectImpl1,org.jpox.samples.objects.ObjectImpl2">
+                <column name="NONSERIALISED_IMPL1_ID"/>
+                <column name="NONSERIALISED_IMPL2_ID"/>
+            </field>
+            <field name="set1" table="OBJECT_SET1_OBJECTS">
+                <collection element-type="java.lang.Object"/>
+                <join column="HOLDER_ID"/>
+                <element column="OBJECT_IMPL_1_ID"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="org.jpox.samples.objects.ObjectImpl1"/>
+            </field>
+        </class>
+
+        <class name="ObjectImpl1" table="OBJECT_IMPL_1">
+            <field name="id" persistence-modifier="none"/>
+            <field name="name" column="NAME"/>
+        </class>
+
+        <class name="ObjectImpl2" table="OBJECT_IMPL_2">
+            <field name="id" persistence-modifier="none"/>
+            <field name="value" column="VALUE"/>
+        </class>
+    </package>
+</jdo>

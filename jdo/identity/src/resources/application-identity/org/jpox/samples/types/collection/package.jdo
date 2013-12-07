@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.types.collection">
+        <class name="Collection1" detachable="true" identity-type="application" 
+            objectid-class="Collection1$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent">
+            	<collection element-type="org.jpox.samples.types.container.ContainerItem"/>
+                <join/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Collection1Child" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Collection2" detachable="true" identity-type="application" objectid-class="Collection2$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+        	<field name="items" persistence-modifier="persistent" mapped-by="container">
+                <collection element-type="Collection2Item"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Collection2Item" detachable="true" identity-type="application" objectid-class="Collection2Item$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Collection2ItemChild" detachable="true" identity-type="application">
+            <inheritance strategy="new-table"/>
+            <field name="code" persistence-modifier="persistent">
+                <column length="10" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Collection3" detachable="true" identity-type="application">
+            <field name="identifier" primary-key="true"/>
+            <field name="items" persistence-modifier="persistent" serialized="true">
+            	<collection element-type="org.jpox.samples.types.container.ContainerItem"/>
+                <join/>
+            </field>
+
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Collection4" detachable="true" identity-type="application" objectid-class="Collection4$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+        	<field name="items" persistence-modifier="persistent" mapped-by="container">
+                <collection element-type="Collection4Item"/>
+            </field>
+            <fetch-group name="items">
+                <field name="items"/>
+            </fetch-group>
+        </class>
+
+        <class name="Collection4Item" detachable="true" identity-type="application" objectid-class="Collection4Item$Oid">
+            <field name="identifierA" primary-key="true"/>
+            <field name="identifierB" primary-key="true"/>
+            <field name="container" persistence-modifier="persistent"/>
+        </class>
+    </package>
+</jdo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.reachability">
+        <class name="ReachableHolder">
+            <field name="name"/>
+            <field name="item1" persistence-modifier="persistent">
+                <extension vendor-name="jpox" key="cascade-persist" value="false"/>
+            </field>
+            <field name="set1" persistence-modifier="persistent">
+                <collection element-type="ReachableItem"/>
+                <join/>
+                <extension vendor-name="jpox" key="cascade-persist" value="false"/>
+            </field>
+        </class>
+
+        <class name="ReachableItem">
+            <field name="name"/>
+        </class>
+    </package>
+</jdo>

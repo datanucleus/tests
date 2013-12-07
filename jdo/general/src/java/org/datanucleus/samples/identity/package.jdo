@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.identity">
+        <class name="ComposedStringID" identity-type="application"
+            objectid-class="org.datanucleus.samples.identity.ComposedStringIDKey">
+            <field null-value="exception" name="code" primary-key="true">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>        
+            <field null-value="default" name="name">
+                <column length="200" jdbc-type="VARCHAR"/>
+            </field>        
+            <field null-value="exception" name="composed" primary-key="true">
+                <column length="127" jdbc-type="VARCHAR"/>
+            </field>        
+            <field null-value="default" name="description">
+                <column length="200" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="ComposedIntID" identity-type="application" 
+            objectid-class="org.datanucleus.samples.identity.ComposedIntIDKey">
+            <field null-value="exception" name="code" primary-key="true"/>
+            <field null-value="default" name="name">
+                <column length="200" jdbc-type="VARCHAR"/>
+            </field>        
+            <field null-value="exception" name="composed" primary-key="true"/>
+            <field null-value="default" name="description">
+                <column length="200" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="SingleFieldLongID" identity-type="application">
+            <field name="code" primary-key="true"/>
+            <field null-value="default" name="description">
+                <column length="200" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="SimpleDatastoreID">
+        </class>
+    </package>
+</jdo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.widget">
+        <!-- This class is stored at the level below this MetaData file so we use this as a test 
+            of picking up different MetaData file locations -->
+        <class name="LevelAboveWidget" identity-type="datastore">
+            <field name="normalString">
+                <column length="20" jdbc-type="CHAR"/>
+            </field>
+        </class>
+    </package>
+</jdo>
