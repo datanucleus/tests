@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.directory">
+        <class name="Group" detachable="true">
+            <version strategy="version-number" column="version_num"/>
+            <field name="name" primary-key="true"/>
+            <field name="users">
+            	<collection element-type="Person"/>
+            </field>
+            <field name="roles" persistence-modifier="persistent"/>
+            <field name="roleMap" persistence-modifier="persistent"/>
+		</class>
+
+        <class name="GroupUnique" detachable="true">
+            <datastore-identity strategy="uuid-hex" column="GROUP_IDENTITY"/>
+            <field name="name"/>
+            <field name="member"/>
+		</class>
+
+        <class name="Person" detachable="true">
+        	<extension vendor-name="datanucleus" key="url" value="/DataNucleus.Test.Person/"/>
+            <field name="personNum"/>
+            <field name="globalNum" primary-key="true"/>
+
+            <field name="firstName"/>
+            <field name="lastName"/>
+            <field name="emailAddress"/>
+            <field name="age"/>
+            <field name="bestFriend" persistence-modifier="persistent"/>
+            <field name="phoneNumbers" persistence-modifier="persistent"/>
+
+			<fetch-group name="groupA">
+				<field name="firstName"/>
+				<field name="lastName"/>
+			</fetch-group>
+			<fetch-group name="groupB">
+				<field name="firstName"/>
+			</fetch-group>
+        </class>
+
+        <class name="PhoneNumber" detachable="true">
+        	<extension vendor-name="datanucleus" key="url" value="/DataNucleus.Test.PhoneNumber/"/>
+            <field name="id" primary-key="true"/>
+            <field name="name"/>
+            <field name="number"/>
+        </class>
+
+    </package>
+</jdo>
