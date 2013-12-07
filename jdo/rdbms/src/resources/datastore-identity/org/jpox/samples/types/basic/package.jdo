@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.types.basic">
+        <class name="BasicTypeHolder">
+            <inheritance strategy="new-table"/>
+            <field name="booleanField" null-value="exception"/>
+            <field name="booleanObjField"/>
+            <field name="byteField" null-value="exception"/>
+            <field name="byteObjField"/>
+            <field name="charField" null-value="exception"/>
+            <field name="charObjField"/>
+            <field name="shortField" null-value="exception"/>
+            <field name="shortObjField"/>
+            <field name="intField" null-value="exception"/>
+            <field name="intObjField"/>
+            <field name="longField" null-value="exception"/>
+            <field name="longObjField"/>
+        </class>
+
+        <class name="DateHolder">
+            <inheritance strategy="new-table"/>
+            <field name="dateField"/>
+            <field name="sqlDateField" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="sqlTimeField" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="sqlTimestampField" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="dateJdbcTimestampField" persistence-modifier="persistent" default-fetch-group="true">
+                <extension vendor-name="datanucleus" key="mapping-class" value="org.datanucleus.store.rdbms.mapping.java.SqlTimestampMapping"/>
+                <column>
+                    <extension vendor-name="datanucleus" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampRDBMSMapping"/>
+                </column>
+            </field>
+        </class>
+
+        <class name="DecimalHolder">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="FloatHolder">
+            <inheritance strategy="new-table"/>
+            <field name="floatField" null-value="exception"/>
+            <field name="floatObjField"/>
+            <field name="doubleField" null-value="exception"/>
+            <field name="doubleObjField"/>
+        </class>
+
+        <class name="StringHolder">
+            <inheritance strategy="new-table"/>
+        </class>
+    </package>
+</jdo>

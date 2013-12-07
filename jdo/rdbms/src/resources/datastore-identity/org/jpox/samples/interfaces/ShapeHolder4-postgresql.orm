@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.interfaces">
+        <class name="ShapeHolder4">
+            <datastore-identity column="ID"/>
+            <field name="shape1" persistence-modifier="persistent">
+                <!-- Only 1 column specified for the implementations so we should get an error here. -->
+                <extension vendor-name="jpox" key="implementation-classes" 
+                    value="Circle,Rectangle,Square,Triangle"/>
+                <column name="IMPL_ID"/>
+            </field>
+        </class>
+    </package>
+</orm>

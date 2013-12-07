@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <!-- In own file since some RDBMS dont support this strategy (e.g MySQL) -->
+    <package name="org.jpox.samples.versioned">
+        <!-- Versioned, using "date-time" strategy in surrogate version column -->
+        <class name="Trade2" detachable="true" identity-type="datastore">
+            <datastore-identity strategy="increment"/>
+            <version strategy="date-time"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="person"/>
+            <field name="value"/>
+            <field name="date"/>
+        </class>
+    </package>
+</jdo>

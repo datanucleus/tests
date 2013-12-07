@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+	<package name="org.datanucleus.samples.rdbms.application">
+        <class name="ConflictRole" identity-type="application">
+            <field name="role" primary-key="true">
+                <column name="roleid"/>
+            </field>
+        </class>
+
+		<class name="ConflictUser" identity-type="application">
+			<field name="user" primary-key="true">
+				<column name="userid"/>
+			</field>
+			<field name="roleid">
+				<column name="roleid"/>
+			</field>
+			<field name="role">
+				<column name="roleid"/>
+			</field>
+		</class>
+
+		<!-- test conflict of user defined column-name vs column name we created for associations -->
+		<class name="ConflictAssociation" identity-type="application">
+			<field name="association" primary-key="true">
+				<column name="associationid"/>
+			</field>
+			<field name="roleid">
+				<!-- this column name will conflict -->
+				<column name="ROLE_ROLEID_OID"/>
+			</field>
+		</class>
+	</package>
+</jdo>

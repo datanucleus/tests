@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.rdbms.types">
+        <class name="MSSQLTypes">
+            <field name="uuid" value-strategy="datastore-uuid-hex">
+                <column sql-type="UNIQUEIDENTIFIER"/>
+                <extension vendor-name="datanucleus" key="strategy-when-notnull" value="false"/>
+            </field>
+            <field name="anotherString" persistence-modifier="persistent" value-strategy="datastore-uuid-hex">
+                <extension vendor-name="datanucleus" key="strategy-when-notnull" value="false"/>
+            </field>
+            <field name="anotherString2" persistence-modifier="persistent">
+                <column sql-type="UNIQUEIDENTIFIER"/>
+            </field>
+        </class>
+    </package>
+</orm>

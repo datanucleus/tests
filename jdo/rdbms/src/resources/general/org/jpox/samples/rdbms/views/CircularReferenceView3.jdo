@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.rdbms.views">
+        <class name="CircularReferenceView3" identity-type="nondurable">
+            <field name="widget" persistence-modifier="persistent"/>
+            <field name="myInt"/>
+            <extension vendor-name="datanucleus" key="view-imports" value="
+                import org.jpox.samples.widget.Widget;
+                import org.jpox.samples.rdbms.views.CircularReferenceView1;" />
+
+            <!-- This is the "generic" SQL92 version of the view. -->
+            <extension vendor-name="datanucleus" key="view-definition" value="
+CREATE VIEW {this}
+(
+    {this.widget},
+    {this.myInt}
+) AS SELECT {Widget}.{Widget.this}, {CircularReferenceView1}.{CircularReferenceView1.myInt}
+     FROM {Widget}
+     INNER JOIN {CircularReferenceView1}
+     ON {Widget}.{Widget.this} = {CircularReferenceView1}.{CircularReferenceView1.widget}"/>
+        </class>
+    </package>
+</jdo>

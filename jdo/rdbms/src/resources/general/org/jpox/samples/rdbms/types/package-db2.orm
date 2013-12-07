@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.rdbms.types">
+        <class name="DB2Types">
+            <field name="dataLinkString">
+                <column sql-type="DATALINK"/>
+            </field>
+            <field name="dataLinkString2">
+                <column sql-type="DATALINK"/>
+                <extension vendor-name="datanucleus" key="select-function" value="DLURLPATH(?)"/>
+            </field>
+        </class>
+    </package>
+</orm>

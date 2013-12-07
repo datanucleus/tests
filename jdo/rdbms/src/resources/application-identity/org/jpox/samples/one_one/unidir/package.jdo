@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.one_one.unidir">
+        <class name="Login" requires-extent="false" detachable="true">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="userName" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="password" persistence-modifier="persistent">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="LoginAccount" detachable="true">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="firstName">
+                <column length="30" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="lastName">
+                <column length="30" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="login" persistence-modifier="persistent">
+                <column name="LOGIN_ID_OID"/>
+            	<foreign-key name="LOGIN_FK"/>
+            </field>
+        </class>
+    </package>
+</jdo>

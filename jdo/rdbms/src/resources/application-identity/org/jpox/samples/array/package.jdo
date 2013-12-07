@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo PUBLIC
+"-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
+"http://java.sun.com/dtd/jdo_2_0.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.array">
+        <class name="BooleanArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="BOOLEANARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_BOOLEANARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="BOOLEAN_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="ByteArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="BYTEARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_BYTEARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="BYTE_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>        
+
+        <class name="CharArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="CHARARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_CHARARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="CHAR_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="DoubleArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="DOUBLEARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_DOUBLEARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="DOUBLE_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="FloatArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="FLOATARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_FLOATARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="FLOAT_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="IntArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="INTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_INTARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="INT_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="LongArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="LONGARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_LONGARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="LONG_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="ShortArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="SHORTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_SHORTARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="SHORT_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="BooleanObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="BOOLEANOBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_BOOLEANOBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="BOOLEAN_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="ByteObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="BYTEOBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_BYTEOBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="BYTE_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>        
+
+        <class name="CharObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="CHAROBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_CHAROBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="CHAR_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="DoubleObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="DOUBLEOBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_DOUBLEOBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="DOUBLE_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="FloatObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="FLOATOBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_FLOATOBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="FLOAT_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="IntObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="INTOBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_INTOBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="INT_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="LongObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="LONGOBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_LONGOBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="LONG_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="ShortObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="SHORTOBJECTARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_SHORTOBJARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="SHORT_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="BigIntegerArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="BIGINTEGERARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_BIGINTEGERARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="BIGINTEGER_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="BigDecimalArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="BIGDECIMALARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_BIGDECIMALARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="BIGDECIMAL_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="DateArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="DATEARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_DATEARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="DATE_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="LocaleArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="LOCALEARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_LOCALEARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="LOCALE_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="StringArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="STRINGARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_STRINGARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="STRING_VALUE"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="InterfaceArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="INTERFACEARRAY_ID"/>
+            <field name="array1" persistence-modifier="persistent" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_INTERFACEARRAY">
+                <array element-type="org.jpox.samples.interfaces.Rectangle"/>
+                <join column="ARRAY_ID_OID"/>
+                <order column="IDX"/>
+                <extension vendor-name="jpox" key="implementation-classes" value="org.jpox.samples.interfaces.Rectangle"/>
+            </field>
+        </class>
+
+        <class name="PersistableArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="PERSISTABLEARRAY_ID"/>
+            <field name="array1" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_PERSISTABLEARRAY">
+                <array/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="ELEMENT_ID_EID"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="ObjectArray" detachable="true" identity-type="application">
+            <field name="id" primary-key="true" column="OBJECTARRAY_ID"/>
+            <field name="array1" persistence-modifier="persistent" serialized="true">
+                <array/>
+            </field>
+            <field name="array2" persistence-modifier="persistent" table="ARRAY_OBJECTARRAY">
+                <array element-type="org.jpox.samples.array.ArrayElement"/>
+                <join column="ARRAY_ID_OID"/>
+                <element column="ELEMENT_ID_EID"/>
+                <order column="IDX"/>
+            </field>
+        </class>
+
+        <class name="ArrayElement" detachable="true" identity-type="application" table="ARRAYELEMENT">
+            <field name="id" primary-key="true" column="ARRAYELEMENT_ID"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="100" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+    </package>
+</jdo>

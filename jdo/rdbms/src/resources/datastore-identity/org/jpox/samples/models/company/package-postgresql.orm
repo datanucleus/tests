@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.models.company">
+        <class name="Person">
+            <datastore-identity column="person_id"/>
+            <field name="personNum" column="personnum"/>
+            <field name="globalNum" column="globalnum"/>
+            <field name="firstName">
+                <column name="firstname" length="32" jdbc-type="VARCHAR" allows-null="false"/>
+            </field>
+            <field name="lastName">
+                <column name="lastname" length="32" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="emailAddress">
+                <column name="EMAIL_ADDRESS" length="64" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="age" column="age"/>
+
+            <query name="NumberOfPeople" language="javax.jdo.query.SQL" unique="true" 
+                result-class="org.jpox.samples.resultclass.TableSize">
+                <![CDATA[
+                SELECT count(*) AS THESIZE FROM PERSON
+                ]]>
+            </query>
+            <query name="PeopleCalledSmith" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT person_id FROM PERSON WHERE LASTNAME = 'Smith'
+                ]]>
+            </query>
+            <query name="PeopleWithEmail" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT person_id FROM PERSON WHERE EMAIL_ADDRESS = ?
+                ]]>
+            </query>
+            <query name="PersonDetails" language="javax.jdo.query.SQL" 
+                result-class="org.jpox.samples.models.company.PersonalDetails">
+                <![CDATA[
+                SELECT firstname, lastname, age FROM PERSON
+                ]]>
+            </query>
+        </class>
+
+        <class name="Account">
+            <field name="username">
+                <column length="32" jdbc-type="CHAR"/>
+            </field>
+        </class>
+
+        <class name="Department">
+            <field name="name">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Employee">
+            <datastore-identity column="EMPLOYEE_ID"/>
+            <inheritance strategy="new-table"/>
+            <field name="serialNo">
+                <column name="SERIAL_NO" length="12" jdbc-type="CHAR"/>
+                <unique name="UNIQUE_SER_NO"/>
+            </field>
+            <field name="salary">
+                <column name="SALARY" length="10" scale="2" jdbc-type="DOUBLE"/>
+            </field>
+            <field name="salaryCurrency" null-value="default">
+                <column name="SALARY_CURRENCY" default-value="GBP"/>
+            </field>
+            <field name="manager"/>
+            <field name="yearsInCompany" column="YRS_IN_COMPANY"/>
+
+            <query name="SalaryBelow12" language="javax.jdo.query.JDOQL">
+                <![CDATA[
+                SELECT FROM org.jpox.samples.models.company.Employee WHERE salary < 12 ORDER BY salary ASCENDING
+                ]]>
+            </query>
+            <query name="SerialNoStartsWith" language="javax.jdo.query.JDOQL">
+                <![CDATA[
+                SELECT FROM org.jpox.samples.models.company.Employee WHERE serialNo.startsWith(value) PARAMETERS String value
+                ]]>
+            </query>
+        </class>
+
+        <class name="Developer" table="DEVELOPER">
+            <datastore-identity column="DEVELOPER_ID"/>
+            <inheritance strategy="new-table"/>
+            <field name="SKILL">
+                <column name="SKILL" length="30" jdbc-type="VARCHAR"/>
+            </field>
+
+            <query name="DeveloperWithSkill" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT DEVELOPER_ID, SKILL FROM DEVELOPER WHERE SKILL = ?
+                ]]>
+            </query>
+
+            <query name="DeveloperWithSkillUsingJoin" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT DEVELOPER_ID, SKILL, GLOBALNUM
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.DEVELOPER_ID = PERSON.PERSON_ID
+                WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillForResult" language="javax.jdo.query.SQL" 
+                result-class="org.jpox.samples.models.company.DeveloperRC">
+                <![CDATA[
+                SELECT DEVELOPER_ID as id, SKILL FROM DEVELOPER WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillUsingJoinForResult" language="javax.jdo.query.SQL" 
+                result-class="org.jpox.samples.models.company.DeveloperRC">
+                <![CDATA[
+                SELECT DEVELOPER_ID as id, SKILL, PERSONNUM, GLOBALNUM, SALARY
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.DEVELOPER_ID = PERSON.PERSON_ID
+                INNER JOIN EMPLOYEE ON DEVELOPER.DEVELOPER_ID = EMPLOYEE.EMPLOYEE_ID
+                WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillUsingJoinForResultHashMap" language="javax.jdo.query.SQL" 
+                result-class="java.util.HashMap">
+                <![CDATA[
+                SELECT DEVELOPER_ID as id, SKILL, PERSONNUM, GLOBALNUM, salary
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.DEVELOPER_ID = PERSON.PERSON_ID
+                INNER JOIN EMPLOYEE ON DEVELOPER.DEVELOPER_ID = EMPLOYEE.EMPLOYEE_ID
+                WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillUsingJoinForResultMap" language="javax.jdo.query.SQL" 
+                result-class="java.util.Map">
+                <![CDATA[
+                SELECT DEVELOPER_ID as id, SKILL, PERSONNUM, GLOBALNUM, SALARY
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.DEVELOPER_ID = PERSON.PERSON_ID
+                INNER JOIN EMPLOYEE ON DEVELOPER.DEVELOPER_ID = EMPLOYEE.EMPLOYEE_ID
+                WHERE SKILL = ?
+                ]]>
+            </query>
+        </class>
+    </package>
+</orm>

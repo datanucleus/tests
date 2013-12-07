@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.one_many.map">
+        <!-- Holder of all types of Map fields -->
+        <class name="MapHolder" table="MAPHOLDER" identity-type="application" detachable="true">
+            <field name="id" primary-key="true" column="MAPHOLDER_ID" value-strategy="increment"/>
+            <field name="name" column="NAME"/>
+
+            <field name="joinMapNonNon" table="MAPHOLDER_NON_NON">
+                <map key-type="java.lang.String" value-type="java.lang.String"/>
+                <join column="MAPHOLDER_ID_OID"/>
+                <key column="KEY"/>
+                <value column="VALUE"/>
+            </field>
+            <field name="joinMapNonNon2" table="MAPHOLDER_NON_NON2">
+                <map key-type="java.lang.String" value-type="java.lang.String"/>
+                <join/>
+            </field>
+            <field name="joinMapNonPC" table="MAPHOLDER_NON_PC">
+                <map key-type="java.lang.String" value-type="MapValueItem"/>
+                <join column="MAPHOLDER_ID_OID"/>
+                <key column="KEY"/>
+                <value column="VALUE_ID"/>
+            </field>
+            <field name="joinMapPCNon" table="MAPHOLDER_PC_NON">
+                <map key-type="MapKeyItem" value-type="java.lang.String"/>
+                <join column="MAPHOLDER_ID_OID"/>
+                <key column="KEY_ID"/>
+                <value column="VALUE"/>
+            </field>
+            <field name="joinMapPCPC" table="MAPHOLDER_PC_PC">
+                <map key-type="MapKeyItem" value-type="MapValueItem"/>
+                <join column="MAPHOLDER_ID_OID"/>
+                <key column="KEY_ID"/>
+                <value column="VALUE_ID"/>
+            </field>
+            <field name="joinMapNonPCSerial" table="MAPHOLDER_NON_PCSERIAL">
+                <map key-type="java.lang.String" value-type="MapValueItem" serialized-value="true"/>
+                <join column="MAPHOLDER_ID_OID"/>
+                <key column="KEY"/>
+                <value column="VALUE_SERIAL"/>
+            </field>
+
+            <field name="fkMapKey">
+                <map key-type="java.lang.String" value-type="MapFKValueItem"/>
+                <key mapped-by="key"/>
+                <value column="MAPHOLDER_ID_OID"/>
+            </field>
+            <field name="fkMapKey2">
+                <map key-type="java.lang.String" value-type="MapHolder"/>
+                <key mapped-by="name"/>
+                <value column="MAPHOLDER_FK2_ID_OID"/>
+            </field>
+            <field name="fkMapValue">
+                <map key-type="MapFKKeyItem" value-type="java.lang.String"/>
+                <key column="MAPHOLDER_ID_OID"/>
+                <value mapped-by="value"/>
+            </field>
+
+            <field name="mapNonNon" column="MAPNONNON">
+                <map key-type="java.lang.String" value-type="java.lang.String"/>
+                <!-- No join so should be serialised, ... or error -->
+            </field>
+            <field name="mapSerial" serialized="true" column="MAPSERIAL">
+                <map key-type="java.lang.String" value-type="java.lang.String"/>
+            </field>
+        </class>
+
+        <class name="MapKeyItem" table="MAPKEYITEM" identity-type="application" detachable="true">
+            <field name="id" primary-key="true" column="MAPKEYITEM_ID" value-strategy="increment"/>
+            <field name="name" column="KEY_NAME"/>
+            <field name="description" column="KEY_DESC"/>
+        </class>
+
+        <class name="MapValueItem" table="MAPVALUEITEM" identity-type="application" detachable="true">
+            <field name="id" primary-key="true" column="MAPVALUEITEM_ID" value-strategy="increment"/>
+            <field name="name" column="VALUE_NAME"/>
+            <field name="description" column="VALUE_DESC"/>
+        </class>
+
+        <class name="MapFKKeyItem" table="MAPFKKEYITEM" identity-type="application" detachable="true">
+            <field name="id" primary-key="true" column="MAPFKKEYITEM_ID" value-strategy="increment"/>
+            <field name="name" column="NAME"/>
+            <field name="description" column="DESC"/>
+            <field name="value" column="VALUE"/>
+        </class>
+
+        <class name="MapFKValueItem" table="MAPFKVALUEITEM" identity-type="application" detachable="true">
+            <field name="id" primary-key="true" column="MAPFKVALUEITEM_ID" value-strategy="increment"/>
+            <field name="name" column="NAME"/>
+            <field name="description" column="DESC"/>
+            <field name="key" column="KEY"/>
+        </class>
+    </package>
+</jdo>

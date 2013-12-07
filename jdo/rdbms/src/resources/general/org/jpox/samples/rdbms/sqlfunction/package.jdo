@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.rdbms.sqlfunction">
+        <class name="SQLFunction">
+            <field name="text" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="select-function" value="UPPER(?)"/>
+            </field>
+            <field name="text1" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="insert-function" value="UPPER(?)"/>
+            </field>
+            <field name="text2" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="insert-function" value="'valuei'"/>
+                <extension vendor-name="datanucleus" key="update-function" value="'valueu'"/>
+            </field>
+            <field name="text3" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="insert-function" value="UPPER(?)"/>
+                <extension vendor-name="datanucleus" key="update-function" value="text"/>
+            </field>
+        </class>
+    </package>
+</jdo>

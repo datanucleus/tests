@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+	<package name="org.datanucleus.samples.rdbms.datastore">
+		<class name="Isnullable">
+		    <datastore-identity strategy="increment"/>
+			<field name="nullMetaDataDflt" null-value="default"/>
+			<field name="nonnullMetaDataDflt" null-value="default"/>
+			<field name="nullDfltMetaDataDflt" null-value="default">
+			    <column default-value="7"/>
+			</field>
+			<field name="nonnullDfltMetaDataDflt" null-value="default">
+			    <column default-value="8"/>
+			</field>
+
+			<field name="nullMetaDataExc" null-value="exception"/>
+			<field name="nonnullMetaDataExc" null-value="exception"/>
+			<field name="nullDfltMetaDataExc" null-value="exception">
+			    <column default-value="11"/>
+			</field>
+			<field name="nonnullDfltMetaDataExc" null-value="exception">
+			    <column default-value="12"/>
+			</field>
+		</class>
+
+		<class name="Absolute">
+			<field name="user"/>
+		</class>
+
+        <class name="Unmapped" table="UNMAPPED">
+            <field name="name" column="NAME"/>
+            <field name="value" column="VALUE"/>
+            <column name="UNMAPPED_VARCHAR_1" jdbc-type="VARCHAR" insert-value=""/>
+            <column name="UNMAPPED_VARCHAR_2" jdbc-type="VARCHAR" length="20" insert-value=""/>
+            <column name="UNMAPPED_INTEGER" jdbc-type="INTEGER" insert-value="0"/>
+            <column name="UNMAPPED_CHAR" jdbc-type="CHAR" length="5" insert-value="XXXXX"/>
+        </class>
+
+        <class name="KeywordConflict"/>
+
+        <class name="AReallyObnoxiouslyLongWindedNamedObject">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="TableReuse1" identity-type="datastore" table="TABLEREUSE">
+            <datastore-identity strategy="increment" column="TABLEREUSE_ID"/>
+            <primary-key name="TABLEREUSE_PK"/>
+            <field name="name" column="NAME"/>
+        </class>
+
+        <class name="TableReuse2" identity-type="datastore" table="TABLEREUSE">
+            <datastore-identity strategy="identity">
+                <column name="TABLEREUSE_ID"/>
+            </datastore-identity>
+            <field name="name">
+                <column name="NAME"/>
+            </field>
+        </class>
+
+        <class name="TableReuse3" identity-type="datastore" table="TABLEREUSE">
+            <datastore-identity strategy="identity" column="TABLEREUSE_ID"/>
+            <field name="name" column="NAME"/>
+        </class>
+	</package>
+</jdo>

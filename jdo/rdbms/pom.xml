@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <version>3.3</version>
+    <artifactId>datanucleus-test-jdo-rdbms</artifactId>
+    <name>org.datanucleus.test.jdo.rdbms</name>
+    <description><![CDATA[
+        DataNucleus Tests for JDO (RDBMS).
+        ]]></description>
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>3.3</version>
+        <relativePath>../../test.maven.parent</relativePath>
+    </parent>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>datanucleus-maven-plugin</artifactId>
+                <executions>
+                    <!-- The enhancer runs one time for each identity type 
+                        with their respective metadata file definitions, generating a copy of the 
+                        datanucleus-test-samples classes into separated directories. It also runs 
+                        for the classes that are using annotation in the src/java directory of this 
+                        project which will go to the default target. -->
+                    <execution>
+                        <!-- Classes using annotation -->
+                        <id>default</id>
+                        <configuration>
+                            <metadataIncludes>**/*.class</metadataIncludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enhance-general</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                        <configuration>
+                            <metadataDirectory>${project.build.outputDirectory}/general</metadataDirectory>
+                            <targetDirectory>${project.build.outputDirectory}/general</targetDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enhance-application-identity</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                        <configuration>
+                            <metadataDirectory>${project.build.outputDirectory}/application-identity</metadataDirectory>
+                            <targetDirectory>${project.build.outputDirectory}/application-identity</targetDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enhance-datastore-identity</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                        <configuration>
+                            <metadataDirectory>${project.build.outputDirectory}/datastore-identity</metadataDirectory>
+                            <targetDirectory>${project.build.outputDirectory}/datastore-identity</targetDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>org.datanucleus.tests.TestRunListener</value>
+                        </property>
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- Disable default execution -->
+                        <id>default-test</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>general</id>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/application/*.java</exclude>
+                                <exclude>**/datastore/*.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>application-identity</id>
+                        <configuration>
+                            <includes>
+                                <include>**/application/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>datastore-identity</id>
+                        <configuration>
+                            <includes>
+                                <include>**/datastore/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>test-framework-maven</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>run-tests</goal>
+                        </goals>
+                        <configuration>
+                            <executionRefs>
+                                <executionRef>general</executionRef>
+                                <executionRef>application-identity</executionRef>
+                                <executionRef>datastore-identity</executionRef>
+                            </executionRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
