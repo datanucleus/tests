@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <version>3.3</version>
+    <artifactId>datanucleus-test-jdo-typesafe</artifactId>
+    <name>org.datanucleus.test.jdo.typesafe</name>
+    <description><![CDATA[
+        DataNucleus Tests for JDO Typesafe Queries
+        ]]></description>
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>3.3</version>
+        <relativePath>../../test-framework/maven.parent</relativePath>
+    </parent>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-jdo-query</artifactId>
+            <version>[3.0, )</version>
+        </dependency>
+    </dependencies>
+</project>

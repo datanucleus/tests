@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+	<package name="org.datanucleus.samples.aogeometry">
+		<extension vendor-name="datanucleus" key="spatial-dimension" value="2"/>
+		<extension vendor-name="datanucleus" key="spatial-srid" value="4326"/>
+	
+        <class name="SampleGeometry" table="sampleaogeometry" detachable="true">
+            <field name="id"/>
+            <field name="name"/>
+        </class>
+
+		<class name="SamplePoint" table="sampleaopoint" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleLine" table="sampleaoline" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleMultipoint" table="sampleaomultiline" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SamplePath" table="sampleaopath" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleRing" table="sampleaoring" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleEnvelope" table="sampleaoenvelope" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SamplePolyline" table="sampleaopolyline" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SamplePolygon" table="sampleaopolygon" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleGeometryBag" table="sampleaogeometrybag" detachable="true">
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+	</package>
+</jdo>

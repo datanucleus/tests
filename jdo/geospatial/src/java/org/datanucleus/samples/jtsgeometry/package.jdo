@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+	<package name="org.datanucleus.samples.jtsgeometry">
+        <extension vendor-name="datanucleus" key="spatial-dimension" value="2"/>
+        <extension vendor-name="datanucleus" key="spatial-srid" value="4326"/>
+
+        <class name="SampleGeometry" table="samplejtsgeometry" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent">
+				<extension vendor-name="datanucleus" key="mapping" value="no-userdata"/>
+			</field>
+		</class>
+		
+		<class name="SamplePoint" table="samplejtspoint" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleLinearRing" table="samplejtslinearring" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleLineString" table="samplejtslinestring" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SamplePolygon" table="samplejtspolygon" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleMultiPoint" table="samplejtsmultipoint" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleMultiLineString" table="samplejtsmultilinestring" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleMultiPolygon" table="samplejtsmultipolygon" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleGeometryCollection" table="samplejtsgeometrycollection" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleGeometryCollectionM" table="samplejtsgeometrycollectionm" detachable="true">
+			<extension vendor-name="datanucleus" key="spatial-srid" value="-1"/>
+			<extension vendor-name="datanucleus" key="spatial-dimension" value="2"/>
+			<extension vendor-name="datanucleus" key="postgis-hasMeasure" value="true"/>
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleGeometryCollection3D" table="samplejtsgeometrycollection3d" detachable="true">
+			<extension vendor-name="datanucleus" key="spatial-srid" value="-1"/>
+			<extension vendor-name="datanucleus" key="spatial-dimension" value="3"/>
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+	</package>
+</jdo>

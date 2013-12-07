@@ -1,0 +1,48 @@
+<initial-context>
+    <reference name="javax.transaction.TransactionManager">
+        <className>org.objectweb.jotm.Current</className>
+        <factoryClassName>org.omj.jta.jndi.JotmTransactionManagerJndiFactory</factoryClassName>
+        <refAddr name="jotm.timeout" value="30"/>
+    </reference>
+
+    <!-- environment initialization -->
+    <context name="java:comp">
+        <reference name="UserTransaction">
+            <className>org.objectweb.jotm.Current</className>
+            <factoryClassName>org.omj.jta.jndi.JotmTransactionManagerJndiFactory</factoryClassName>
+            <refAddr name="jotm.timeout" value="300"/>
+        </reference>
+
+        <reference name="TransactionManager">
+            <className>org.objectweb.jotm.Current</className>
+            <factoryClassName>org.omj.jta.jndi.JotmTransactionManagerJndiFactory</factoryClassName>
+            <refAddr name="jotm.timeout" value="30"/>
+        </reference>
+
+        <context name="env">
+            <reference name="NucleusDS">
+                <className>javax.sql.DataSource</className>
+                <factoryClassName>org.omj.jta.datasource.JotmJtaDataSourceFactory</factoryClassName>
+                <refAddr name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+                <refAddr name="url" value="jdbc:hsqldb:mem:nucleus"/>
+                <refAddr name="username" value="sa"/>
+                <refAddr name="password" value=""/>
+                <refAddr name="useConnectionHandle" value="true"/>
+            </reference>
+
+            <reference name="NucleusDSRaw">
+                <className>javax.sql.DataSource</className>
+                <factoryClassName>org.datanucleus.tests.jta.util.DataSourceDriverAdapterObjectFactory</factoryClassName>
+                <refAddr name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+                <refAddr name="url" value="jdbc:hsqldb:mem:nucleus"/>
+                <refAddr name="username" value="sa"/>
+                <refAddr name="password" value=""/>
+            </reference>
+
+            <context name="jdbc"/>
+            <context name="jms"/>
+            <context name="mail"/>
+            <context name="url"/>
+        </context>
+    </context>
+</initial-context>

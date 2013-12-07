@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="src" path="src/test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/test.framework"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/test.samples"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
+	<classpathentry kind="lib" path="/local.repository/junit/jars/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="/local.repository/postgis/jars/postgis-jdbc-1.1.5.jar"/>
+	<classpathentry kind="lib" path="/local.repository/postgis/jars/postgis-jdbc-jts-1.1.5.jar"/>
+	<classpathentry kind="lib" path="/local.repository/postgresql/jars/postgresql-8.1-407.jdbc3.jar"/>
+	<classpathentry kind="lib" path="/local.repository/oracle/jars/sdoapi-1.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/store.rdbms"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/api.jdo"/>
+	<classpathentry kind="lib" path="/local.repository/com.vividsolutions/jars/jts-1.12.jar"/>
+	<classpathentry kind="lib" path="/local.repository/com.vividsolutions/jars/jtsio-1.12.jar"/>
+	<classpathentry kind="lib" path="/local.repository/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/datanucleus-geospatial"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

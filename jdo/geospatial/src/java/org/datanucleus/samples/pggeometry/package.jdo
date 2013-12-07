@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+	<package name="org.datanucleus.samples.pggeometry">
+
+		<extension vendor-name="datanucleus" key="spatial-dimension" value="2"/>
+		<extension vendor-name="datanucleus" key="spatial-srid" value="4326"/>
+	
+		<class name="SampleGeometry" table="samplepggeometry" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SamplePoint" table="samplepgpoint" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+
+		<class name="SampleLinearRing" table="samplepglinearring" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleLineString" table="samplepglinestring" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SamplePolygon" table="samplepgpolygon" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleMultiPoint" table="samplepgmultipoint" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleMultiLineString" table="samplepgmultilinestring" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleMultiPolygon" table="samplepgmultipolygon" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleGeometryCollection" table="samplepggeometrycollection" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleGeometryCollectionM" table="samplepggeometrycollectionm" detachable="true">
+			<extension vendor-name="datanucleus" key="spatial-srid" value="-1"/>
+			<extension vendor-name="datanucleus" key="spatial-dimension" value="2"/>
+			<extension vendor-name="datanucleus" key="postgis-hasMeasure" value="true"/>
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleGeometryCollection3D" table="samplepggeometrycollection3" detachable="true">
+			<extension vendor-name="datanucleus" key="spatial-srid" value="-1"/>
+			<extension vendor-name="datanucleus" key="spatial-dimension" value="3"/>
+			<field name="id"/>
+			<field name="name"/>
+			<field name="geom" persistence-modifier="persistent"/>
+		</class>
+		
+		<class name="SampleBox" table="samplepgbox" detachable="true">
+			<field name="id"/>
+			<field name="name"/>
+			<field name="pgbox2d" persistence-modifier="persistent"/>
+			<field name="pgbox3d" persistence-modifier="persistent"/>
+		</class>		
+		
+	</package>
+</jdo>

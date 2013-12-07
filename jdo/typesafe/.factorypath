@@ -1,0 +1,6 @@
+<factorypath>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/org/datanucleus/datanucleus-jdo-query/3.0.2/datanucleus-jdo-query-3.0.2.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/javax/jdo/jdo-api/3.1-rc1/jdo-api-3.1-rc1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/org/datanucleus/datanucleus-core/3.2.9/datanucleus-core-3.2.9.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/org/datanucleus/datanucleus-api-jdo/3.2.5/datanucleus-api-jdo-3.2.5.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>

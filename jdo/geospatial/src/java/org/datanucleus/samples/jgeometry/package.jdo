@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.jgeometry">
+        <extension vendor-name="datanucleus" key="spatial-dimension" value="2"/>
+    	<extension vendor-name="datanucleus" key="spatial-srid" value="4326"/>
+        
+        <class name="SampleGeometry" table="SAMPLEJGEOMETRY" detachable="true">
+            <field name="id"/>
+            <field name="name"/>
+            <field name="geom" persistence-modifier="persistent" serialized="false"/>
+        </class>
+        
+        <class name="SampleGeometryM" table="SAMPLEJGEOMETRYM" detachable="true">
+            <extension vendor-name="datanucleus" key="postgis-hasMeasure" value="true"/>
+            <extension vendor-name="datanucleus" key="postgis-srid" value="-1"/>
+            <field name="id"/>
+            <field name="name"/>
+            <field name="geom" persistence-modifier="persistent" serialized="false"/>
+        </class>
+        
+        <class name="SampleGeometry3D" table="SAMPLEJGEOMETRY3D" detachable="true">
+        	<extension vendor-name="datanucleus" key="spatial-dimension" value="3"/>
+        	<extension vendor-name="datanucleus" key="spatial-srid" value="-1"/>
+            <field name="id"/>
+            <field name="name"/>
+            <field name="geom" persistence-modifier="persistent" serialized="false"/>
+        </class>
+        
+    </package>
+</jdo>

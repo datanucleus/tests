@@ -1,0 +1,4 @@
+/bin
+/testDB.h2.db
+/datanucleus.log
+target/

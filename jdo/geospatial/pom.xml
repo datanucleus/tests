@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <version>3.3</version>
+    <artifactId>datanucleus-test-jdo-spatial</artifactId>
+    <name>org.datanucleus.test.jdo.rdbms.spatial</name>
+    <description><![CDATA[
+        DataNucleus Tests for JDO RDBMS Spatial.
+        ]]></description>
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>3.3</version>
+        <relativePath>../../test-framework/maven.parent</relativePath>
+    </parent>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-spatial</artifactId>
+            <version>[3.0, )</version>
+        </dependency>
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>ojdbc14_g</artifactId>
+            <version>10.2.0.4</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>sdoapi</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>sdoutl</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jts</artifactId>
+            <version>1.12</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jtsio</artifactId>
+            <version>1.12</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>postgis</groupId>
+            <artifactId>postgis-jdbc</artifactId>
+            <version>1.1.5</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>postgis</groupId>
+            <artifactId>postgis-jdbc-jts</artifactId>
+            <version>1.1.5</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

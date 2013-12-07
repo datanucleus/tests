@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.models.company">
+        <class name="Account">
+            <field name="username">
+                <column length="32" allows-null="false" jdbc-type="CHAR"/>
+            </field>
+        </class>
+    </package>
+</orm>

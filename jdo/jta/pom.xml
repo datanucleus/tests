@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.datanucleus</groupId>
+    <version>3.3</version>
+    <artifactId>datanucleus-test-jdo-jta</artifactId>
+    <name>org.datanucleus.test.jdo.jta</name>
+    <description><![CDATA[
+        DataNucleus Tests for JDO (jta).
+        ]]></description> 
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>3.3</version>
+        <relativePath>../../test-framework/maven.parent</relativePath>
+    </parent>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>javax.resource</groupId>
+            <artifactId>connector-api</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <!-- OMJJTA is required to turn the HSQL JDBC connection into a proper XA capable one -->
+        <dependency>
+            <groupId>omjjta</groupId>
+            <artifactId>omjjta</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>oocjndi</groupId>
+            <artifactId>shiftone-oocjndi</artifactId>
+            <version>1.2</version>            
+        </dependency>
+        <dependency>
+            <groupId>oocjndi</groupId>
+            <artifactId>shiftone-arbor</artifactId>
+            <version>1.4</version>              
+        </dependency>
+        <dependency>
+        	<groupId>org.ow2.jotm</groupId>
+        	<artifactId>jotm-standalone</artifactId>
+        	<version>2.1.4</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                    <phase>compile</phase>
+                    <configuration>
+                        <tasks>
+                        <copy file="${basedir}/src/conf/ooc-jndi-${maven.datanucleus.datastore}.xml"
+                            tofile="${project.build.outputDirectory}/ooc-jndi.xml" overwrite="true"/>              
+                        </tasks>
+                    </configuration>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
