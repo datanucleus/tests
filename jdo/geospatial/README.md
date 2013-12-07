@@ -10,8 +10,8 @@ To run these tests
 
 
 To generate a PostGIS datastore you need PostgreSQL and PostGIS installed and
-1. `createdb nucleus`
-2. `psql -d nucleus -f /usr/share/postgresql/contrib/postgis-1.5/postgis.sql`
-3. `psql -d nucleus -f /usr/share/postgresql/contrib/postgis-1.5/spatial_ref_sys.sql`
+* `createdb nucleus`
+* `psql -d nucleus -f /usr/share/postgresql/contrib/postgis-1.5/postgis.sql`
+* `psql -d nucleus -f /usr/share/postgresql/contrib/postgis-1.5/spatial_ref_sys.sql`
 
 Note that these may need to be done as user "postgres"
