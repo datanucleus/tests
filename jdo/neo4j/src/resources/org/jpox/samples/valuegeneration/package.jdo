@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.valuegeneration">
+        <class name="AUIDGeneratorItem" identity-type="datastore">
+            <datastore-identity strategy="auid">
+                <column length="36" jdbc-type="CHAR"/>
+            </datastore-identity>
+            <field name="identifier" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="UUIDStringGeneratorItem" identity-type="datastore">
+            <datastore-identity strategy="uuid-string">
+                <column length="16" jdbc-type="CHAR"/>
+            </datastore-identity>
+            <field name="identifier" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="UUIDHexGeneratorItem" identity-type="datastore">
+            <datastore-identity strategy="uuid-hex">
+                <column length="32" jdbc-type="CHAR"/>
+            </datastore-identity>
+            <field name="identifier" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="UUIDGeneratorItem" identity-type="datastore">
+            <datastore-identity strategy="uuid">
+                <column length="36" jdbc-type="CHAR"/>
+            </datastore-identity>
+            <field name="identifier" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="IdentityStringGeneratorItem" identity-type="datastore">
+            <datastore-identity strategy="identity"/>
+            <field name="identifier" persistence-modifier="persistent"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="TableGeneratorItem" identity-type="datastore">
+            <datastore-identity strategy="increment"/>
+            <field name="identifier"/>
+            <field name="name"/>
+        </class>
+    </package>
+</jdo>
