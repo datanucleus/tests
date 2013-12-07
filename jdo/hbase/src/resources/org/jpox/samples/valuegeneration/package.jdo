@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.jpox.samples.valuegeneration">
+        <class name="TableGeneratorItem" identity-type="application" objectid-class="TableGeneratorItem$Oid">
+            <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="increment">
+                <extension vendor-name="datanucleus" key="key-cache-size" value="10"/>
+                <extension vendor-name="datanucleus" key="key-initial-value" value="1"/>
+                <extension vendor-name="datanucleus" key="sequence-table-name" value="SEQTABLE"/>
+                <extension vendor-name="datanucleus" key="sequence-name-column-name" value="SEQNAME"/>
+                <extension vendor-name="datanucleus" key="sequence-nextval-column-name" value="NEXTSEQ"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+    </package>
+</jdo>
