@@ -2,7 +2,6 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
-    <version>3.3</version>
     <artifactId>datanucleus-test-jdo-general</artifactId>
     <name>org.datanucleus.test.jdo.general</name>
     <description><![CDATA[
