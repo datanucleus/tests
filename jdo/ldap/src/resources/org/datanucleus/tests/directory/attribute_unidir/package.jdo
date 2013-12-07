@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.tests.directory.attribute_unidir">
+    
+        <class name="Department" detachable="true" table="ou=Departments,dc=example,dc=com" schema="top,organizationalUnit">
+            <field name="name" primary-key="true" column="ou" />
+            <field name="members">
+                <column name="description" />
+                <join column="cn" />
+                <extension vendor-name="datanucleus" key="empty-value" value="uid=admin,ou=system"/>
+            </field>
+            <fetch-group name="members">
+                <field name="members"/>
+            </fetch-group>
+        </class>
+        
+        <class name="Person" detachable="true" table="ou=Persons,dc=example,dc=com" schema="top,person,organizationalPerson,inetOrgPerson">
+            <field name="fullName" primary-key="true" column="cn" />
+            <field name="firstName" column="givenName" />
+            <field name="lastName" column="sn" />
+            <field name="accounts">
+                <collection element-type="Account" dependent-element="true" />
+                <join column="cn" />
+                <element column="ou" />
+            </field>
+            <field name="computer">
+                <join column="cn" />
+                <element column="o" />
+            </field>
+            <field name="address" dependent="true">
+                <column name="displayName" />
+                <join column="l" />
+            </field>
+            
+        </class>
+        
+        <class name="Account" detachable="true" table="ou=Accounts,dc=example,dc=com" schema="top,account,simpleSecurityObject">
+            <field name="uid" primary-key="true" column="uid" />
+            <field name="password" column="userPassword" />
+        </class>
+        
+        <class name="Address" detachable="true" table="ou=Addresses,dc=example,dc=com" schema="top,locality">
+            <field name="city" primary-key="true" column="l" />
+            <field name="street" column="street" />
+        </class>
+        
+        <class name="Computer" detachable="true" table="ou=Computers,dc=example,dc=com" schema="top,device">
+            <field name="serialNumber" primary-key="true" column="serialNumber" />
+            <field name="name" column="cn" />
+        </class>
+        
+    </package>
+</jdo>

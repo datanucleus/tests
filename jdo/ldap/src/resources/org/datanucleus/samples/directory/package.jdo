@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.directory">
+        <class name="Group" detachable="true">
+            <extension vendor-name="datanucleus" key="dn" value="ou=Groups,dc=example,dc=com"/>
+            <extension vendor-name="datanucleus" key="objectClass" value="groupOfNames,top"/>
+            <field name="name" primary-key="true">
+                <extension vendor-name="datanucleus" key="dn" value="cn"/>
+            </field>
+            <field name="users">
+                <collection element-type="Person"/>
+                <extension vendor-name="datanucleus" key="dn" value="member"/>
+                <extension vendor-name="datanucleus" key="empty-value" value="uid=admin,ou=system"/>
+            </field>
+        </class>
+
+        <class name="GroupUnique" detachable="true">
+            <extension vendor-name="datanucleus" key="dn" value="ou=Groups,dc=example,dc=com"/>
+            <extension vendor-name="datanucleus" key="objectClass" value="groupOfUniqueNames,top"/>
+            <field name="name" primary-key="true" value-strategy="uuid-hex">
+                <extension vendor-name="datanucleus" key="dn" value="cn"/>
+            </field>
+            <field name="member">
+                <extension vendor-name="datanucleus" key="dn" value="uniqueMember"/>
+                <extension vendor-name="datanucleus" key="empty-value" value="uid=admin,ou=system"/>
+            </field>
+        </class>
+
+        <class name="Person" detachable="true">
+            <extension vendor-name="datanucleus" key="dn" value="ldap:///ou=Users,dc=example,dc=com???(!(userPassword=*))"/>
+            <extension vendor-name="datanucleus" key="objectClass" value="person,top,organizationalPerson,inetOrgPerson"/>
+            <field name="personNum" primary-key="true" >
+                <extension vendor-name="datanucleus" key="attribute" value="uid"/>
+            </field>
+
+            <field name="firstName">
+                <extension vendor-name="datanucleus" key="attribute" value="cn"/>
+            </field>
+            <field name="lastName">
+                <extension vendor-name="datanucleus" key="attribute" value="sn"/>
+            </field>
+            <field name="emailAddress">
+                <extension vendor-name="datanucleus" key="attribute" value="mail"/>
+            </field>
+            <field name="age">
+                <extension vendor-name="datanucleus" key="attribute" value="employeeNumber"/>
+            </field>
+            <field name="gender">
+                <extension vendor-name="datanucleus" key="attribute" value="initials"/>
+            </field>
+            <field name="bestFriend" persistence-modifier="persistent"/>
+            <field name="phoneNumbers" persistence-modifier="none"/> <!-- Not currently mapped -->
+
+            <fetch-group name="groupA">
+                <field name="firstName"/>
+                <field name="lastName"/>
+            </fetch-group>
+            <fetch-group name="groupB">
+                <field name="firstName"/>
+            </fetch-group>
+        </class>
+        
+        <class name="PersonWithPassword" detachable="true">
+            <extension vendor-name="datanucleus" key="dn" value="ldap:///ou=Users,dc=example,dc=com???(userPassword=*)"/>
+            <extension vendor-name="datanucleus" key="objectClass" value="person,top,organizationalPerson,inetOrgPerson"/>        
+            <field name="password">
+                <extension vendor-name="datanucleus" key="attribute" value="userPassword"/>
+            </field>    
+        </class>
+
+        <class name="TypeHolder" table="ou=Misc,dc=example,dc=com" schema="top,organization,extensibleObject" detachable="true">
+            <field name="primaryKey" primary-key="true" column="o" />
+            <field name="theString" column="ou" />
+            <field name="anotherString" column="userPassword" />
+            <field name="theFloat" column="employeeNumber" />
+            <field name="theFloatObj" column="employeeType" />
+            <field name="theDouble" column="departmentNumber" />
+            <field name="theDoubleObj" column="displayName" />
+            <field name="theChar" column="description" />
+            <field name="theCharObj" column="initials" />
+            <field name="theBoolean" column="krb5AccountDisabled" />
+            <field name="theBooleanObj" column="krb5AccountLockedOut" />
+            <field name="theByte" column="l" />
+            <field name="theByteObj" column="preferredLanguage" />
+            <field name="theShort" column="st" />
+            <field name="theShortObj" column="title" />
+            <field name="theInt" column="givenName" />
+            <field name="theIntObj" column="roomNumber" />
+            <field name="theLong" column="sn" />
+            <field name="theLongObj" column="postOfficeBox" />
+            <field name="theBigInteger" column="street" />
+            <field name="theBigDecimal" column="postalCode" />
+            <field name="theCurrency" column="host" />
+            <field name="theLocale" column="c" />
+            <field name="theTimeZone" column="drink" persistence-modifier="persistent" />
+            <field name="theUUID" column="uid" persistence-modifier="persistent" />
+            <field name="theDate" column="krb5ValidEnd" persistence-modifier="persistent" />
+            <field name="theCalendar" column="krb5ValidStart" persistence-modifier="persistent" />
+            <field name="theEnum" column="cn" persistence-modifier="persistent" />
+        </class>
+        
+        <class name="ArrayHolder" table="ou=Misc,dc=example,dc=com" schema="top,organization,extensibleObject" detachable="true">
+            <field name="primaryKey" primary-key="true" column="o" persistence-modifier="persistent" />
+            <field name="theStringArray" column="ou" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="anotherStringArray" column="userPassword" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theFloatArray" column="carLicense" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theFloatObjArray" column="employeeType" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theDoubleArray" column="departmentNumber" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theDoubleObjArray" column="documentPublisher" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theCharArray" column="description" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theCharObjArray" column="initials" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theBooleanArray" column="businessCategory" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theBooleanObjArray" column="documentIdentifier" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theStreamedBooleanObjArray" column="cACertificate" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theByteArray" column="l" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theStreamedByteArray" column="userCertificate" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theByteObjArray" column="documentLocation" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theShortArray" column="st" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theShortObjArray" column="title" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theIntArray" column="givenName" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theIntObjArray" column="roomNumber" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theLongArray" column="sn" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theLongObjArray" column="postOfficeBox" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theBigIntegerArray" column="street" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theBigDecimalArray" column="postalCode" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theCurrencyArray" column="host" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theLocaleArray" column="documentTitle" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theTimeZoneArray" column="drink" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theUUIDArray" column="uid" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theDateArray" column="documentVersion" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="theCalendarArray" column="info" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+            <field name="orderedIntArray" column="organizationalStatus" persistence-modifier="persistent" default-fetch-group="true">
+                <join />
+                <order />
+            </field>
+            <field name="theEnumArray" column="cn" persistence-modifier="persistent" default-fetch-group="true"><join/></field>
+        </class>
+        <class name="SetHolder" table="ou=Misc,dc=example,dc=com" schema="top,organization,extensibleObject" detachable="true">
+            <field name="primaryKey" primary-key="true" column="o" />
+            <field name="theStrings" column="ou" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="anotherStrings" column="userPassword" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theFloats" column="employeeType" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theDoubles" column="documentPublisher" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theCharacters" column="initials" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theBooleans" column="documentIdentifier" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theBytes" column="documentLocation" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theShorts" column="title" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theIntegers" column="roomNumber" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theLongs" column="postOfficeBox" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theBigIntegers" column="street" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theBigDecimals" column="postalCode" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theCurrencies" column="host" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theLocales" column="documentTitle" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theTimeZones" column="drink" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theUUIDs" column="uid" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theDates" column="documentVersion" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theCalendars" column="info" persistence-modifier="persistent" default-fetch-group="true" />
+            <field name="theEnums" column="cn" persistence-modifier="persistent" default-fetch-group="true" />
+        </class>
+        <class name="ListHolder" table="ou=Misc,dc=example,dc=com" schema="top,organization,extensibleObject" detachable="true">
+            <field name="primaryKey" primary-key="true" column="o" />
+            <field name="theStrings" column="ou" persistence-modifier="persistent" />
+            <field name="anotherStrings" column="userPassword" persistence-modifier="persistent" />
+            <field name="theFloats" column="employeeType" persistence-modifier="persistent" />
+            <field name="theDoubles" column="documentPublisher" persistence-modifier="persistent" />
+            <field name="theCharacters" column="initials" persistence-modifier="persistent" />
+            <field name="theBooleans" column="documentIdentifier" persistence-modifier="persistent" />
+            <field name="theBytes" column="documentLocation" persistence-modifier="persistent" />
+            <field name="theShorts" column="title" persistence-modifier="persistent" />
+            <field name="theIntegers" column="roomNumber" persistence-modifier="persistent" />
+            <field name="theLongs" column="postOfficeBox" persistence-modifier="persistent" />
+            <field name="theBigIntegers" column="street" persistence-modifier="persistent" />
+            <field name="theBigDecimals" column="postalCode" persistence-modifier="persistent" />
+            <field name="theCurrencies" column="host" persistence-modifier="persistent" />
+            <field name="theLocales" column="documentTitle" persistence-modifier="persistent" />
+            <field name="theTimeZones" column="drink" persistence-modifier="persistent" />
+            <field name="theUUIDs" column="uid" persistence-modifier="persistent" />
+            <field name="theDates" column="documentVersion" persistence-modifier="persistent" />
+            <field name="theCalendars" column="info" persistence-modifier="persistent" />
+            <field name="orderedStrings" column="personalTitle" persistence-modifier="persistent">
+                <order />
+            </field>
+            <field name="orderedLongs" column="organizationalStatus" persistence-modifier="persistent">
+                <order />
+            </field>
+            <field name="theEnums" column="cn" persistence-modifier="persistent" default-fetch-group="true" />
+        </class>
+
+        <class name="Singleton" table="ldap:///ou=Singleton,dc=example,dc=com??base" schema="top,organizationalUnit" detachable="true">
+            <field name="name" primary-key="true" column="ou"  />
+            <field name="description" column="description" />
+        </class>
+
+    </package>
+</jdo>

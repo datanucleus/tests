@@ -1,0 +1,108 @@
+#
+#  Licensed to the Apache Software Foundation (ASF) under one
+#  or more contributor license agreements.  See the NOTICE file
+#  distributed with this work for additional information
+#  regarding copyright ownership.  The ASF licenses this file
+#  to you under the Apache License, Version 2.0 (the
+#  "License"); you may not use this file except in compliance
+#  with the License.  You may obtain a copy of the License at
+#  
+#    http://www.apache.org/licenses/LICENSE-2.0
+#  
+#  Unless required by applicable law or agreed to in writing,
+#  software distributed under the License is distributed on an
+#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+#  specific language governing permissions and limitations
+#  under the License. 
+#  
+#
+#
+#   EXAMPLE.COM is freely and reserved for testing according to this RFC:
+#
+#   http://www.rfc-editor.org/rfc/rfc2606.txt
+#
+#
+
+dn: dc=example,dc=com
+objectClass: domain
+objectClass: extensibleObject
+objectClass: top
+dc: example
+
+dn: ou=Users,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Users
+
+dn: ou=Groups,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Groups
+
+dn: ou=Accounts,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Accounts
+
+dn: ou=Addresses,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Addresses
+
+dn: ou=Computers,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Computers
+
+dn: ou=Departments,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Departments
+
+dn: ou=Persons,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Persons
+
+dn: ou=Security Groups,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Security Groups
+
+dn: ou=Projects,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Projects
+
+dn: ou=Misc,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Misc
+
+
+dn: ou=Mixed,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Mixed
+
+dn: c=FR,ou=Mixed,dc=example,dc=com
+objectClass: country
+objectClass: top
+c: FR
+
+dn: ou=Users,c=FR,ou=Mixed,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Users
+
+dn: c=US,ou=Mixed,dc=example,dc=com
+objectClass: country
+objectClass: top
+c: US
+
+dn: ou=Users,c=US,ou=Mixed,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Users
+

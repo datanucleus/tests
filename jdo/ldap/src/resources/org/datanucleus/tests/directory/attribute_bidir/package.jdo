@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.tests.directory.attribute_bidir">
+    
+        <class name="SecurityGroup" detachable="true" table="ou=Security Groups,dc=example,dc=com" schema="top, organization,organizationalUnit,pilotOrganization">
+            <field name="name" primary-key="true" column="ou" />
+            <field name="members">
+                <column name="o" />
+                <join column="cn" />
+                <extension vendor-name="datanucleus" key="empty-value" value="uid=admin,ou=system"/>
+            </field>
+        </class>
+        
+        <class name="Project" detachable="true" table="ldap:///ou=Projects,dc=example,dc=com???(!(description=*))" schema="top,organizationalUnit">
+            <field name="name" primary-key="true" column="ou" />
+            <field name="members" mapped-by="projects" />
+        </class>
+        <class name="ProjectWithBudget" detachable="true" table="ldap:///ou=Projects,dc=example,dc=com???(description=*)" schema="top,organizationalUnit">
+            <field name="budget" column="description" />
+        </class>
+        
+        <class name="Department" detachable="true" table="ou=Departments,dc=example,dc=com" schema="top,organizationalUnit">
+            <field name="name" primary-key="true" column="ou" />
+            <field name="members" mapped-by="department" />
+        </class>
+        
+        <class name="Person" detachable="true" table="ou=Persons,dc=example,dc=com" schema="top,person,organizationalPerson,inetOrgPerson">
+            <field name="fullName" primary-key="true" column="cn" />
+            <field name="firstName" column="givenName" />
+            <field name="lastName" column="sn" />
+            <field name="groups" mapped-by="members" default-fetch-group="true" />
+            <field name="projects" column="ou">
+                <join column="ou" />
+            </field>
+            <field name="department" column="departmentNumber">
+                <join column="ou" />
+            </field>
+            <field name="accounts" column="uid">
+                <collection element-type="Account" dependent-element="true" />
+                <join column="uid" />
+            </field>
+            <field name="computer" column="carLicense">
+                <join column="serialNumber" />
+            </field>
+            <field name="address" mapped-by="person" dependent="true" />
+        </class>
+        
+        <class name="Account" detachable="true" table="ldap:///ou=Accounts,dc=example,dc=com???(!(objectClass=simpleSecurityObject))" schema="top,account">
+            <field name="uid" primary-key="true" column="uid" />
+            <field name="owner" mapped-by="accounts" default-fetch-group="true" />
+        </class>
+        
+        <class name="AccountWithPassword" detachable="true" table="ou=Accounts,dc=example,dc=com" schema="top,account,simpleSecurityObject">
+            <field name="password" column="userPassword" />
+        </class>
+        
+        <class name="Address" detachable="true" table="ou=Addresses,dc=example,dc=com" schema="top,locality">
+            <field name="city" primary-key="true" column="l" />
+            <field name="street" column="street" />
+            <field name="person" column="description" default-fetch-group="true">
+                <join column="cn" />
+            </field>
+        </class>
+        
+        <class name="Computer" detachable="true" table="ou=Computers,dc=example,dc=com" schema="top,device">
+            <field name="serialNumber" primary-key="true" column="serialNumber" />
+            <field name="name" column="cn" />
+            <field name="owner" mapped-by="computer" />
+        </class>
+        
+    </package>
+</jdo>

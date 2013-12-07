@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.tests.directory.embedded">
+    
+        <class name="Person" detachable="true" table="ou=Persons,dc=example,dc=com" schema="top,person,organizationalPerson,inetOrgPerson">
+            <field name="fullName" primary-key="true" column="cn" />
+            <field name="firstName" column="givenName" />
+            <field name="lastName" column="sn" />
+            <field name="account" default-fetch-group="true">
+                <embedded null-indicator-column="uid">
+                    <field name="uid" column="uid" />
+                    <field name="password" column="userPassword" />
+                </embedded>
+            </field>
+            <field name="contactData" default-fetch-group="true">
+                <embedded owner-field="person">
+                    <field name="address" default-fetch-group="true">
+                        <embedded null-indicator-column="l">
+                            <field name="zip" column="postalCode" />
+                            <field name="city" column="l" />
+                            <field name="street" column="street" />
+                        </embedded>
+                    </field>
+                    <field name="phoneNumbers" column="telephoneNumber" persistence-modifier="persistent" />
+                </embedded>
+            </field>
+            <field name="notebook" default-fetch-group="true">
+                <embedded owner-field="owner" />
+            </field>
+            <field name="computers" default-fetch-group="true">
+                <element>
+                    <embedded />
+                </element>
+            </field>
+        </class>
+        
+        <class name="Account" detachable="true" embedded-only="true">
+            <field name="uid" />
+            <field name="password" />
+        </class>
+        
+        <class name="Address" detachable="true" embedded-only="true">
+            <field name="zip" />
+            <field name="city" />
+            <field name="street" />
+        </class>
+        
+        <class name="ContactData" detachable="true" embedded-only="true">
+            <field name="address" />
+            <field name="phoneNumbers" />
+        </class>
+        
+        
+        <class name="AbstractComputer" detachable="true">
+            <field name="serialNumber" primary-key="true" column="serialNumber" />
+            <field name="name" column="cn" />
+            <field name="cards" default-fetch-group="true">
+                <element>
+                    <embedded />
+                </element>
+            </field>
+            <field name="operatingSystem" default-fetch-group="true">
+                <embedded />
+            </field>
+        </class>
+        <class name="Computer" detachable="true" table="ldap:///???(serialNumber=PC*)" embedded-only="true" schema="top,device">
+        </class>
+        <class name="Notebook" detachable="true" table="ldap:///???(serialNumber=M*)" embedded-only="true" schema="top,device">
+            <field name="owner" />
+        </class>
+        <class name="ComputerCard" detachable="true" embedded-only="true" schema="top,device">
+            <field name="name" primary-key="true" column="cn" />
+            <field name="description" column="description" />
+        </class>
+        <class name="OperatingSystem" detachable="true" embedded-only="true" schema="top,organizationalUnit">
+            <field name="name" primary-key="true" column="ou" />
+            <field name="version" column="description" />
+        </class>
+
+    </package>
+</jdo>

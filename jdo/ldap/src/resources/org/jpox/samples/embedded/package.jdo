@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.embedded">
+
+        <class name="DigitalCamera" identity-type="application" table="ou=Misc,dc=example,dc=com" schema="device,extensibleObject,top" detachable="true">
+            <field name="id" primary-key="true" column="cn"/>
+            <field name="make" column="description" />
+            <field name="model" column="ou" />
+            <field name="memory" persistence-modifier="persistent" default-fetch-group="true">
+                <embedded null-indicator-column="givenName" null-indicator-value="0">
+                    <field name="chip">
+                        <embedded null-indicator-column="telephoneNumber" null-indicator-value="0">
+                            <field name="thickness" column="telephoneNumber" />
+                        </embedded>
+                    </field>
+                    <field name="size" column="givenName" />
+                    <field name="type" column="sn" />
+                    <field name="voltage" column="mail" />
+                </embedded>
+            </field>
+        </class>
+
+        <class name="Memory" embedded-only="true" detachable="true">
+            <field name="type"/>
+            <field name="size"/>
+            <field name="voltage"/>
+            <field name="chip" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Chip" embedded-only="true" detachable="true">
+            <field name="thickness"/>
+        </class>
+
+    </package>
+</jdo>

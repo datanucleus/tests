@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.tests.directory.hierarchical_at_child_bidir">
+    
+        <class name="Company" detachable="true" table="ou=Misc,dc=example,dc=com" schema="top,organization">
+            <field name="name" primary-key="true" column="o" />
+            <field name="departments" mapped-by="company" />
+            <fetch-group name="departments_of_company">
+                <field name="departments"/>
+            </fetch-group>
+        </class>
+        
+        <class name="Department" detachable="true" table="{company}" schema="top,organizationalUnit">
+            <field name="name" primary-key="true" column="ou" />
+            <field name="company" default-fetch-group="true" />
+            <field name="persons" mapped-by="department"/>
+            <fetch-group name="persons_of_department">
+                <field name="persons"/>
+            </fetch-group>
+        </class>
+        
+        <class name="Person" detachable="true" table="{department}" schema="top,person,organizationalPerson,inetOrgPerson">
+            <field name="fullName" primary-key="true" column="cn" />
+            <field name="firstName" column="givenName" />
+            <field name="lastName" column="sn" />
+            <field name="account" mapped-by="person" default-fetch-group="true" />
+            <field name="address" mapped-by="person" default-fetch-group="true" />
+            <field name="department" default-fetch-group="true" />
+        </class>
+        
+        <class name="Account" detachable="true" table="ldap:///{person}???(!(objectClass=simpleSecurityObject))" schema="top,account">
+            <field name="uid" primary-key="true" column="uid" />
+            <field name="person" default-fetch-group="true" />
+        </class>
+        
+        <class name="AccountWithPassword" detachable="true" table="{person}" schema="top,account,simpleSecurityObject">
+            <field name="password" column="userPassword" />
+        </class>
+        
+        <class name="Address" detachable="true" table="{person}" schema="top,locality">
+            <field name="city" primary-key="true" column="l" />
+            <field name="street" column="street" />
+            <field name="person" default-fetch-group="true" />
+        </class>
+        
+    </package>
+</jdo>

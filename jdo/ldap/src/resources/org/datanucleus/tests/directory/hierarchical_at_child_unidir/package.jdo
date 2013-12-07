@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.tests.directory.hierarchical_at_child_unidir">
+    
+        <class name="Department" detachable="true" table="{superDepartment}|ou=Departments,dc=example,dc=com" schema="top,organizationalUnit">
+            <field name="name" primary-key="true" column="ou" />
+            <field name="superDepartment" default-fetch-group="true" recursion-depth="10" />
+        </class>
+        
+        <class name="OrgUnit" detachable="true" table="ou=Misc,dc=example,dc=com" schema="top,organizationalUnit">
+            <field name="name" primary-key="true" column="ou" />
+        </class>
+        
+        <class name="Person" detachable="true" table="{orgUnit}" schema="top,person,organizationalPerson,inetOrgPerson">
+            <field name="fullName" primary-key="true" column="cn" />
+            <field name="firstName" column="givenName" />
+            <field name="lastName" column="sn" />
+            <field name="orgUnit" default-fetch-group="true" />
+        </class>
+        
+        <class name="Account" detachable="true" table="{person}" schema="top,account,simpleSecurityObject">
+            <field name="uid" primary-key="true" column="uid" />
+            <field name="password" column="userPassword" />
+            <field name="person" default-fetch-group="true" />
+        </class>
+        
+    </package>
+</jdo>

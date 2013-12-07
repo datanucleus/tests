@@ -1,0 +1,51 @@
+Bidirectional mapping of relationships using attribute value
+------------------------------------------------------------
+
+1) N-M relationship (using Collection(Set):
+2.1) The side with the collection is owner of the relation (mv-attribute, default)
+2.2) The referenced object is owner of the relation (mv-attribute, "foreign-key", <element>)
+
+2) 1-N relationship (using Collection/Set):
+2.1) The side with the collection is owner of the relation (mv-attribute, default)
+2.2) The referenced object is owner of the relation (sv-attribute, "foreign-key", <element>)
+
+3) 1-1 relationship:
+3.1) The side with the object reference is owner of the relation (default)
+3.2) The referenced object is owner of the relation ("foreign-key", <element>)
+
+
+SecurityGroup-(N)---------------------(M)-Person
+- The SecurityGroup class has a Collection<Person> members
+- The Person class has a Collection<SecurityGroup> groups, this relation is mapped-by
+- In LDAP the relation is stored at the SecurityGroup side (attribute o, multi-valued)
+
+Project-(N)---------------------------(M)-Person
+- The Project class has a Collection<Person> members
+- The Person class has a Collection<Project> groups, this relation is mapped-by
+- In LDAP the relation is stored at the *Person* side (attribute ou, multi-valued)
+
+Department-(1)------------------------(N)-Person
+- The Department class has a Collection<Person> members, this relation is mapped-by
+- The Person class has a reference to its Department
+- In LDAP the relation is stored at the Person side (attribute departmentNumber, single-valued)
+
+Person-(1)----------------------------(N)-Account
+- The Person class has a Collection<Account> accounts
+- The Account class has a reference to its Person, this relation is mapped-by
+- In LDAP the relation is stored at the Addres side (attribute uid, muliti-valued)
+
+Person-(1)----------------------------(1)-Address
+- The Person class has a reference to Address
+- The Account class has a reference to its Person, this relation is mapped-by
+- In LDAP the relation is stored at the Address side (attribute description)
+
+Person-(1)----------------------------(1)-Computer
+- The Person class has a reference to Computer, this relation is mapped-by
+- The Computer class has a reference to its Person
+- In LDAP the relation is stored at the Person side (attribute carLicense)
+
+
+
+
+
+

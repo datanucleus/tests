@@ -1,0 +1,33 @@
+Unidirectional mapping of relationships using DN
+------------------------------------------------
+
+1) 1-N relationship (using Collection/Set):
+1.1) The side with the collection is owner of the relation (mv-attribute, default)
+1.2) The referenced object is owner of the relation (sv-attribute, "foreign-key", <element>)
+
+2) 1-1 relationship:
+2.1) The side with the object reference is owner of the relation (default)
+2.2) The referenced object is owner of the relation ("foreign-key", <element>)
+
+
+Department-(1)------------------------(N)-Person
+- The Department class has a Collection<Person> members
+- In LDAP the relation is stored at the Department side (attribute member, multi-valued)
+
+Person-(1)----------------------------(N)-Account
+- The Person class has a Collection<Account> accounts
+- In LDAP the relation is stored at the *Account* side (attribute seeAlso, single-valued)
+
+Person-(1)----------------------------(1)-Address
+- The Person class has a reference to Address
+- In LDAP the relation is stored at the Person side (attribute seeAlso)
+
+Person-(1)----------------------------(1)-Computer
+- The Person class has a reference to Computer
+- In LDAP the relation is stored at the *Computer* side (attribute owner)
+
+
+
+
+
+
