@@ -1,4 +1,6 @@
-test-framework
-==============
+tests
+=====
 
-Framework utilities for testing DataNucleus (test-jdo, test-jpa, test-rest)
+Test suites for testing DataNucleus using JDO, JPA and REST APIs.
+
+Build "framework", "framework.maven" and "samples" first, then use the tests for the API in question.
