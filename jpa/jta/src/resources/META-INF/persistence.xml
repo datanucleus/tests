@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" version="2.1">
+
+    <!-- Unit using RESOURCE_LOCAL (JNDI) transaction -->
+    <persistence-unit name="TEST_RESOURCELOCAL" transaction-type="RESOURCE_LOCAL">
+        <non-jta-data-source>java:comp/env/NucleusDSRaw</non-jta-data-source>
+        <class>org.datanucleus.samples.annotations.Person</class>
+    </persistence-unit>
+
+    <!-- Unit using JTA (JNDI) transaction -->
+    <persistence-unit name="TEST_JTA" transaction-type="JTA">
+        <jta-data-source>java:comp/env/NucleusDS</jta-data-source>
+        <class>org.datanucleus.samples.annotations.Person</class>
+        <properties>
+            <property name="datanucleus.jtaLocator" value="custom_jndi"/>
+            <property name="datanucleus.jtaJndiLocation" value="java:comp/TransactionManager"/>
+            <property name="datanucleus.storeManagerType" value="rdbms"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

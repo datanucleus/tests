@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+
+    <!-- Persistence-unit for testing. Gets properties from properties file -->
+    <persistence-unit name="TEST">
+    </persistence-unit>
+
+    <!-- Persistence-unit for enhancement -->
+    <persistence-unit name="JPATest">
+        <class>org.datanucleus.samples.jpa.query.Person</class>
+        <class>org.datanucleus.samples.jpa.query.Manager</class>
+        <class>org.datanucleus.samples.jpa.query.Coach</class>
+        <class>org.datanucleus.samples.jpa.query.Player</class>
+        <class>org.datanucleus.samples.jpa.query.Team</class>
+        <class>org.datanucleus.samples.annotations.one_many.bidir.Farm</class>
+        <class>org.datanucleus.samples.annotations.one_many.bidir.Animal</class>
+        <class>org.datanucleus.samples.annotations.models.company.Manager</class>
+        <class>org.datanucleus.samples.annotations.models.company.Employee</class>
+        <class>org.datanucleus.samples.annotations.models.company.Account</class>
+        <class>org.datanucleus.samples.annotations.models.company.PhoneNumber</class>
+        <class>org.datanucleus.samples.annotations.models.company.Person</class>
+        <class>org.datanucleus.samples.annotations.models.company.Project</class>
+        <class>org.datanucleus.samples.annotations.models.company.Department</class>
+        <class>org.datanucleus.samples.annotations.models.company.DepartmentPK</class>
+        <class>org.datanucleus.samples.annotations.models.company.WebSite</class>
+        <class>org.datanucleus.samples.annotations.models.company.MyListener</class>
+    </persistence-unit>
+
+</persistence>

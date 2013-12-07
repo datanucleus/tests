@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" version="2.1">
+
+    <!-- TEST "unit" -->
+    <persistence-unit name="TEST">
+        <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
+        <class>org.jpox.samples.typeconversion.ComplicatedType2</class>
+    </persistence-unit>
+
+    <!-- TEST2 "unit" -->
+    <persistence-unit name="TEST2">
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:nucleus"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+        </properties>
+    </persistence-unit>
+
+    <!-- Unit with invalid provider for our use, so we can test its rejection. -->
+    <persistence-unit name="Invalid Provider">
+        <provider>com.jpa.CrapCommercialProvider</provider>
+    </persistence-unit>
+
+    <!-- Test "unit", containing all classes so we can enhance the lot -->
+    <persistence-unit name="JPATest">
+        <mapping-file>org/jpox/samples/abstractclasses/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/compoundidentity/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/many_many/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/one_many/unidir_2/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/one_one/unidir/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/one_one/bidir/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/models/company/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
+
+        <mapping-file>org/jpox/samples/ann_xml/many_many/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/ann_xml/one_one/unidir/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/ann_xml/one_one/bidir/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/ann_xml/models/company/orm.xml</mapping-file>
+
+        <class>org.jpox.samples.annotations.array.ByteArray</class>
+        <class>org.jpox.samples.annotations.types.enums.EnumHolder</class>
+        <class>org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase</class>
+        <class>org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub1</class>
+        <class>org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub2</class>
+        <class>org.jpox.samples.annotations.compoundidentity.CompoundHolder</class>
+        <class>org.jpox.samples.annotations.compoundidentity.CompoundSingleTarget</class>
+        <class>org.jpox.samples.annotations.one_one.unidir.Login</class>
+        <class>org.jpox.samples.annotations.one_one.unidir.LoginAccount</class>
+        <class>org.jpox.samples.annotations.one_one.bidir.Equipment</class>
+        <class>org.jpox.samples.annotations.one_one.bidir.Boiler</class>
+        <class>org.jpox.samples.annotations.one_one.bidir.Timer</class>
+        <class>org.jpox.samples.annotations.many_many.PetroleumSupplier</class>
+        <class>org.jpox.samples.annotations.many_many.OilSupplier</class>
+        <class>org.jpox.samples.annotations.many_many.GasSupplier</class>
+        <class>org.jpox.samples.annotations.many_many.PetroleumCustomer</class>
+        <class>org.jpox.samples.annotations.many_many.OneOffCustomer</class>
+        <class>org.jpox.samples.annotations.many_many.AccountCustomer</class>
+        <class>org.jpox.samples.annotations.one_many.bidir.Farm</class>
+        <class>org.jpox.samples.annotations.one_many.bidir.Animal</class>
+        <class>org.jpox.samples.annotations.one_many.bidir_2.House</class>
+        <class>org.jpox.samples.annotations.one_many.bidir_2.Window</class>
+        <class>org.jpox.samples.annotations.one_many.collection.ListHolder</class>
+        <class>org.jpox.samples.annotations.one_many.collection.PCFKListElement</class>
+        <class>org.jpox.samples.annotations.one_many.unidir_2.ExpertGroupMember</class>
+        <class>org.jpox.samples.annotations.one_many.unidir_2.GroupMember</class>
+        <class>org.jpox.samples.annotations.one_many.unidir_2.MemberDetails</class>
+        <class>org.jpox.samples.annotations.one_many.unidir_2.ModeratedUserGroup</class>
+        <class>org.jpox.samples.annotations.one_many.unidir_2.UserGroup</class>
+        <class>org.jpox.samples.annotations.secondarytable.Printer</class>
+        <class>org.jpox.samples.annotations.idclass.IdClassAccessors</class>
+        <class>org.jpox.samples.annotations.idclass.IdClassPrivateModifier</class>
+        <class>org.jpox.samples.annotations.callbacks.CallbackBase</class>
+        <class>org.jpox.samples.annotations.callbacks.CallbackSub1</class>
+        <class>org.jpox.samples.annotations.callbacks.CallbackSub1Sub1</class>
+        <class>org.jpox.samples.annotations.callbacks.CallbackSub1Sub2</class>
+        <class>org.jpox.samples.annotations.callbacks.CallbackSub2</class>
+
+        <class>org.jpox.samples.annotations.models.company.Manager</class>
+        <class>org.jpox.samples.annotations.models.company.Employee</class>
+        <class>org.jpox.samples.annotations.models.company.Account</class>
+        <class>org.jpox.samples.annotations.models.company.PhoneNumber</class>
+        <class>org.jpox.samples.annotations.models.company.Person</class>
+        <class>org.jpox.samples.annotations.models.company.Project</class>
+        <class>org.jpox.samples.annotations.models.company.Department</class>
+        <class>org.jpox.samples.annotations.models.company.DepartmentPK</class>
+        <class>org.jpox.samples.annotations.models.company.WebSite</class>
+        <class>org.jpox.samples.annotations.models.company.MyListener</class>
+
+        <class>org.jpox.samples.annotations.types.basic.TypeHolder</class>
+        <class>org.jpox.samples.annotations.types.basic.DateHolder</class>
+
+        <class>org.jpox.samples.jpa.datastoreid.MyDatastoreId</class>
+
+        <class>org.jpox.samples.ann_xml.models.company.Account</class>
+        <class>org.jpox.samples.ann_xml.models.company.Employee</class>
+        <class>org.jpox.samples.ann_xml.models.company.Manager</class>
+        <class>org.jpox.samples.ann_xml.models.company.WebSite</class>
+        <class>org.jpox.samples.ann_xml.models.company.Person</class>
+        <class>org.jpox.samples.ann_xml.models.company.Project</class>
+        <class>org.jpox.samples.ann_xml.models.company.Department</class>
+        <class>org.jpox.samples.ann_xml.models.company.PhoneNumber</class>
+
+        <class>org.jpox.samples.validation.ValidatedPerson</class>
+        <class>org.jpox.samples.validation.ValidatedPerson2</class>
+        <class>org.jpox.samples.validation.ValidatedOwner</class>
+        <class>org.jpox.samples.validation.ValidatedPet</class>
+
+        <class>org.datanucleus.samples.types.interfaces.Rectangle</class>
+        <class>org.datanucleus.samples.types.interfaces.Circle</class>
+        <class>org.datanucleus.samples.types.interfaces.Square</class>
+        <class>org.datanucleus.samples.types.interfaces.Triangle</class>
+
+        <class>org.datanucleus.samples.annotations.entitygraph.GraphBase</class>
+        <class>org.datanucleus.samples.annotations.entitygraph.GraphRelated</class>
+
+        <class>org.jpox.samples.typeconversion.ComplicatedType2</class>
+    </persistence-unit>
+
+</persistence>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+    <description>JPA MetaData</description>
+    <persistence-unit-metadata>
+        <xml-mapping-metadata-complete></xml-mapping-metadata-complete>
+    </persistence-unit-metadata>
+    <package>org.jpox.samples.versioned</package>
+
+    <entity class="org.jpox.samples.versioned.Trade4">
+        <attributes>
+            <id name="id"/>
+            <basic name="person"/>
+            <basic name="value"/>
+            <basic name="date"/>
+            <version name="version"/>
+        </attributes>
+    </entity>
+
+</entity-mappings>

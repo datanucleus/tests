@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+
+    <!-- Test "unit", containing all classes so we can enhance the lot -->
+    <persistence-unit name="TEST">
+        <class>org.jpox.samples.annotations.inheritance.InheritA</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritA1</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritA2</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritA2a</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritB</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritB1</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritB2</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritC</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritC1</class>
+        <class>org.jpox.samples.annotations.inheritance.InheritC2</class>
+        <class>org.jpox.samples.annotations.models.company.Account</class>
+    </persistence-unit>
+</persistence>

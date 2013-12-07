@@ -1,0 +1,6 @@
+<factorypath>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/javax/jdo/jdo-api/3.1-rc1/jdo-api-3.1-rc1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/org/eclipse/persistence/javax.persistence/2.1.0/javax.persistence-2.1.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/org/datanucleus/datanucleus-core/3.2.9/datanucleus-core-3.2.9.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/usr/local/maven2-repository/org/datanucleus/datanucleus-jpa-query/3.0.3/datanucleus-jpa-query-3.0.3.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>
