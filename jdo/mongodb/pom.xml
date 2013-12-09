@@ -1,14 +1,5 @@
 <?xml version="1.0"?>
 <project>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.datanucleus</groupId>
-    <version>3.3</version>
-    <artifactId>datanucleus-test-jdo-mongodb</artifactId>
-    <name>DataNucleus MongoDB</name>
-    <description><![CDATA[
-        DataNucleus Tests for MongoDB.
-        ]]></description>
-
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
@@ -16,7 +7,19 @@
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>datanucleus-test-jdo-mongodb</artifactId>
+    <name>DataNucleus MongoDB</name>
+    <description><![CDATA[
+        DataNucleus Tests for MongoDB.
+        ]]></description>
+
     <!-- Software Dependencies -->
     <dependencies>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
 </project>
