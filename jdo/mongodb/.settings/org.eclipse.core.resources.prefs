@@ -1,3 +1,6 @@
-#Wed Feb 02 09:39:07 GMT 2011
 eclipse.preferences.version=1
+encoding//src/java=UTF-8
+encoding//src/resources=UTF-8
 encoding//src/resources/org/jpox/samples/valuegeneration/package.jdo=UTF-8
+encoding//src/test=UTF-8
+encoding/<project>=UTF-8

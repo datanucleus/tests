@@ -38,7 +38,7 @@
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
-            <version>1.0.2</version>
+            <version>1.1</version>
         </dependency>
         <dependency> <!-- Maven2 seems to need this cos it includes some old version otherwise. Go figure -->
             <groupId>xerces</groupId>

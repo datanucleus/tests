@@ -7,12 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" path="src/conf"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins">
-		<accessrules>
-			<accessrule kind="accessible" pattern="javax/persistence/*"/>
-			<accessrule kind="accessible" pattern="javax/persistence/spi/*"/>
-		</accessrules>
-	</classpathentry>
 	<classpathentry kind="lib" path="/eclipse-build/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
 	<classpathentry kind="lib" path="/eclipse-build/org.eclipse.persistence/jars/javax.persistence-2.1.0.jar"/>
 	<classpathentry kind="lib" path="/eclipse-build/junit/jars/junit-4.10.jar"/>
@@ -24,6 +18,12 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
