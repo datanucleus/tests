@@ -9,7 +9,6 @@ import org.mortbay.jetty.servlet.ServletHolder;
 
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
-
 public class JSONTestCase extends JDOPersistenceTestCase
 {
     static Server server;
