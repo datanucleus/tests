@@ -5,14 +5,14 @@
 	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
-	<classpathentry kind="lib" path="/local.repository/junit/jars/junit-3.8.1.jar"/>
-	<classpathentry kind="lib" path="/local.repository/jersey/jars/jersey-core-1.0.3.jar"/>
-	<classpathentry kind="lib" path="/local.repository/javax.ws.rs/jars/jsr311-api-1.1.jar"/>
-	<classpathentry kind="lib" path="/local.repository/jersey/jars/jersey-server-1.0.3.jar"/>
-	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-6.1.26.jar"/>
-	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-util-6.1.26.jar"/>
-	<classpathentry kind="lib" path="/local.repository/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
-	<classpathentry kind="lib" path="/local.repository/javax.servlet/jars/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/junit/jars/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/jersey/jars/jersey-core-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/javax.ws.rs/jars/jsr311-api-1.1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/jersey/jars/jersey-server-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/org.mortbay.jetty/jars/jetty-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/org.mortbay.jetty/jars/jetty-util-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/javax.servlet/jars/servlet-api-2.5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/test-framework"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/test-samples"/>
 	<classpathentry kind="output" path="bin"/>

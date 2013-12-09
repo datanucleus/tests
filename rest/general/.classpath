@@ -5,14 +5,14 @@
 	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="src" path="src/conf"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/local.repository/junit/jars/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/junit/jars/junit-4.10.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
-	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-6.1.26.jar"/>
-	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-client-6.1.26.jar"/>
-	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-sslengine-6.1.26.jar"/>
-	<classpathentry kind="lib" path="/local.repository/org.mortbay.jetty/jars/jetty-util-6.1.26.jar"/>
-	<classpathentry kind="lib" path="/local.repository/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
-	<classpathentry kind="lib" path="/local.repository/javax.servlet/jars/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/org.mortbay.jetty/jars/jetty-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/org.mortbay.jetty/jars/jetty-client-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/org.mortbay.jetty/jars/jetty-sslengine-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/org.mortbay.jetty/jars/jetty-util-6.1.26.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/javax.servlet/jars/servlet-api-2.5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/datanucleus-api-rest"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/test-framework"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/test-samples"/>

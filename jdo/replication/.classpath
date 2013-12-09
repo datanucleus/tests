@@ -4,12 +4,12 @@
 	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
-	<classpathentry kind="lib" path="/local.repository/junit/jars/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/junit/jars/junit-3.8.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/store.rdbms"/>
-	<classpathentry kind="lib" path="/local.repository/javax.transaction/jars/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/javax.transaction/jars/jta-1.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/api.jdo"/>
-	<classpathentry kind="lib" path="/local.repository/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
-	<classpathentry kind="lib" path="/local.repository/org.eclipse.persistence/jars/javax.persistence-2.1.0.jar" sourcepath="/usr/local/maven2-repository/org/eclipse/persistence/javax.persistence/2.1.0/javax.persistence-2.1.0-sources.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/javax.jdo/jars/jdo-api-3.1-rc1.jar"/>
+	<classpathentry kind="lib" path="/eclipse-build/org.eclipse.persistence/jars/javax.persistence-2.1.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/test-framework"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/test-samples"/>
 	<classpathentry kind="output" path="bin"/>
