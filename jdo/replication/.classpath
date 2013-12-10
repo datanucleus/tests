@@ -7,11 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" path="src/resources"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/store.rdbms"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/api.jdo"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/test-framework"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/test-samples"/>
 	<classpathentry kind="src" output="target/classes" path="src/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
