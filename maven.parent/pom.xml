@@ -232,8 +232,8 @@
                 <version>3.0</version>
                 <configuration>
                     <encoding>ISO-8859-1</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -287,7 +287,7 @@
             <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>datanucleus-maven-plugin</artifactId>
-                <version>3.3.0-release</version>
+                <version>3.3.2-SNAPSHOT</version>
                 <configuration>
                     <fork>false</fork>
                     <verbose>false</verbose>
