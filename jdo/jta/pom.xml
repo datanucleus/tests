@@ -3,8 +3,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.datanucleus</groupId>
-    <version>3.3</version>
     <artifactId>datanucleus-test-jdo-jta</artifactId>
     <name>org.datanucleus.test.jdo.jta</name>
     <description><![CDATA[
