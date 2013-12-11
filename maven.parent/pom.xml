@@ -34,31 +34,29 @@
     </pluginRepositories>
 
     <modules>
-        <module>../test.framework/</module>
-        <module>../test.samples/</module>
+        <module>../framework/</module>
+        <module>../samples/</module>
 
-        <module>../test.jdo.general/</module>
-        <module>../test.jdo.application/</module>
-        <module>../test.jdo.datastore/</module>
-        <module>../test.jdo.jta/</module>
-        <module>../test.jdo.typesafe/</module>
+        <module>../jdo/general/</module>
+        <module>../jdo/identity/</module>
+        <module>../jdo/jta/</module>
+        <module>../jdo/typesafe/</module>
 
-        <module>../test.jdo.rdbms/</module>
-        <module>../test.jdo.rdbms.application/</module>
-        <module>../test.jdo.rdbms.datastore/</module>
-        <module>../test.jdo.spreadsheet/</module>
-        <module>../test.jdo.ldap/</module>
-        <module>../test.jdo.neodatis/</module>
-        <module>../test.jdo.xml/</module>
-        <module>../test.jdo.hbase/</module>
-        <module>../test.jdo.mongodb/</module>
-        <module>../test.jdo.neo4j/</module>
+        <module>../jdo/rdbms/</module>
+        <module>../jdo/spreadsheet/</module>
+        <module>../jdo/ldap/</module>
+        <module>../jdo/neodatis/</module>
+        <module>../jdo/xml/</module>
+        <module>../jdo/hbase/</module>
+        <module>../jdo/mongodb/</module>
+        <module>../jdo/neo4j/</module>
     
-        <module>../test.jpa.general/</module>
-        <module>../test.jpa.rdbms/</module>
-        <module>../test.jpa.criteria/</module>
-    
-        <module>../testrunner.j2ee/</module>
+        <module>../jpa/general/</module>
+        <module>../jpa/rdbms/</module>
+        <module>../jpa/criteria/</module>
+        
+        <!-- TODO Test removed? -->
+        <!-- <module>../testrunner.j2ee/</module> -->
     </modules>
 
     <dependencies>
@@ -294,7 +292,7 @@
                     <!-- 
                         write all enhanced classes to target/classes, since by default enhancer
                         tries to write them where it read them from, which doesn't work for jars
-                        (e.g. in test.jdo.general, we're enhancing class files from test.samples)
+                        (e.g. in jdo/general, we're enhancing class files from test.samples)
                      -->
                     <targetDirectory>${project.build.outputDirectory}</targetDirectory>
                 </configuration>
@@ -339,14 +337,11 @@
               <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>../test.jdo.general/</module>
-                <module>../test.jdo.application/</module>
-                <module>../test.jdo.datastore/</module>
-                <module>../test.jdo.rdbms/</module>
-                <module>../test.jdo.rdbms.application/</module>
-                <module>../test.jdo.rdbms.datastore/</module>
-                <module>../test.jpa.general/</module>
-                <module>../test.jpa.rdbms/</module>
+                <module>../jdo/general/</module>
+                <module>../jdo/identity/</module>
+                <module>../jdo/rdbms/</module>
+                <module>../jpa/general/</module>
+                <module>../jpa/rdbms/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -539,7 +534,7 @@
         <profile>
             <id>neodatis</id>
             <modules>
-                <module>../test.jdo.neodatis/</module>
+                <module>../jdo/neodatis/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -561,7 +556,7 @@
         <profile>
             <id>excel</id>
             <modules>
-                <module>../test.jdo.spreadsheet/</module>
+                <module>../jdo/spreadsheet/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -583,7 +578,7 @@
         <profile>
             <id>xls</id>
             <modules>
-                <module>../test.jdo.spreadsheet/</module>
+                <module>../jdo/spreadsheet/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -605,7 +600,7 @@
         <profile>
             <id>ooxml</id>
             <modules>
-                <module>../test.jdo.spreadsheet/</module>
+                <module>../jdo/spreadsheet/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -632,7 +627,7 @@
         <profile>
             <id>odf</id>
             <modules>
-                <module>../test.jdo.spreadsheet/</module>
+                <module>../jdo/spreadsheet/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -654,7 +649,7 @@
         <profile>
             <id>hbase</id>
             <modules>
-                <module>../test.jdo.hbase/</module>
+                <module>../jdo/hbase/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -702,7 +697,7 @@
         <profile>
             <id>neo4j</id>
             <modules>
-                <module>../test.jdo.neo4j/</module>
+                <module>../jdo/neo4j/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -725,7 +720,7 @@
         <profile>
             <id>mongodb</id>
             <modules>
-                <module>../test.jdo.mongodb/</module>
+                <module>../jdo/mongodb/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -748,7 +743,7 @@
         <profile>
             <id>json</id>
             <modules>
-                <module>../test.jdo.json/</module>
+                <module>../jdo/json/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -833,7 +828,7 @@
         <profile>
             <id>amazons3</id>
             <modules>
-                <module>../test.jdo.json/</module>
+                <module>../jdo/json/</module>
             </modules>
             <properties>
                 <maven.datanucleus.datastore>amazons3</maven.datanucleus.datastore>
@@ -843,7 +838,7 @@
         <profile>
             <id>googlestorage</id>
             <modules>
-                <module>../test.jdo.json/</module>
+                <module>../jdo/json/</module>
             </modules>
             <properties>
                 <maven.datanucleus.datastore>googlestorage</maven.datanucleus.datastore>
@@ -853,7 +848,7 @@
         <profile>
             <id>xml</id>
             <modules>
-                <module>../test.jdo.xml/</module>
+                <module>../jdo/xml/</module>
             </modules>
             <dependencies>
                 <dependency>
@@ -885,7 +880,7 @@
         <profile>
             <id>ldap</id>
             <modules>
-                <module>../test.jdo.ldap/</module>
+                <module>../jdo/ldap/</module>
             </modules>
             <dependencies>
                 <dependency>
