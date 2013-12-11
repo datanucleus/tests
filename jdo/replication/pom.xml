@@ -2,15 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.datanucleus</groupId>
-    <version>3.3</version>
-    <artifactId>datanucleus-test-jdo-replicate</artifactId>
-    <name>org.datanucleus.test.jdo.replicate</name>
-    <description><![CDATA[
-        Tests for JDO replication.
-        ]]></description>  
-
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
@@ -18,8 +9,25 @@
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>datanucleus-test-jdo-replicate</artifactId>
+    <name>org.datanucleus.test.jdo.replicate</name>
+    <description><![CDATA[
+        Tests for JDO replication.
+        ]]></description>
+
     <!-- Software Dependencies -->
     <dependencies>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-odf</artifactId>
+            <version>[3.1.99, )</version>
+        </dependency>
+        <dependency>
+            <groupId>org.odftoolkit</groupId>
+            <artifactId>odfdom-java</artifactId>
+            <version>0.8.7</version>
+        </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-xml</artifactId>
