@@ -8,7 +8,7 @@ Build "framework", "framework.maven" and "samples" first, then use the tests for
 Running tests
 =============
 
-Tests are run using [framework.maven][1] which is a custom maven plugin that allows the tests to be executed for different configurations e.g. optimistic, pessimistic. It will create several Maven Surefire executions dynamically to test different configurations. Some test projects also have more than one execution, allowing tests to be run for different identity types as well i.e. application or datastore.
+Tests are run using [framework.maven][1] which is a custom maven plugin that allows the tests to be executed for different configurations e.g. optimistic, pessimistic. It will create several Maven Surefire executions dynamically to test different configurations. Some test projects also have more than one execution configured, allowing tests to be run for different identity types as well i.e. application or datastore.
 
 Here are few examples on how to run the tests:
 
@@ -17,6 +17,7 @@ Here are few examples on how to run the tests:
 
 - Run all the executions with optimistic and pessimistic configuration
 >mvn -Dtest.configs=optimistic,pessimistic clean test
+
 On test.jdo.identity this will trigger 4 different executions, each configuration is run for each execution.
 
 - Run the CollectionTest, skippking application identity execution and only optimistic configuration
