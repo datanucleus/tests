@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>datanucleus-test-jdo-spatial</artifactId>
-    <name>org.datanucleus.test.jdo.rdbms.spatial</name>
+    <artifactId>datanucleus-test-jdo-geospatial</artifactId>
+    <name>org.datanucleus.test.jdo.rdbms.geospatial</name>
     <description><![CDATA[
-        DataNucleus Tests for JDO RDBMS Spatial.
+        DataNucleus Tests for JDO RDBMS Geospatial.
         ]]></description>
 
     <parent>
@@ -19,7 +19,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <dependencies>
         <dependency>
             <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-spatial</artifactId>
+            <artifactId>datanucleus-geospatial</artifactId>
             <version>[3.0, )</version>
         </dependency>
         <dependency>
