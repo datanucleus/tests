@@ -155,6 +155,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
             suite.addTest(new PgGeometrySpatialTest("testMPolyFromText"));
             suite.addTest(new PgGeometrySpatialTest("testGeomCollFromText"));
             suite.addTest(new PgGeometrySpatialTest("testGeomFromWKB"));
+            suite.addTest(new PgGeometrySpatialTest("testTransform"));
             suite.addTest(new PgGeometrySpatialTest("testGeographicMethods"));
             suite.addTest(new PgGeometrySpatialTest("testPointFromWKB"));
             suite.addTest(new PgGeometrySpatialTest("testLineFromWKB"));
@@ -388,6 +389,26 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
             Point geom = new Point("SRID=4326;POINT(10 10)");
             Query query = pm.newQuery(SamplePoint.class,
                 "geom != null && Spatial.equals(geom, Spatial.geomFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)))");
+            List list = (List) query.execute(geom);
+            assertEquals("Wrong number of geometries with a given wkb returned", 1, list.size());
+            assertTrue("Point 1 should be in the list of geometries with a given wkb", list.contains(getSamplePoint(1)));
+        }
+        finally
+        {
+            tx.commit();
+        }
+    }
+    
+    public void testTransform() throws SQLException
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            Point geom = new Point("SRID=4326;POINT(10 10)");
+            Query query = pm.newQuery(SamplePoint.class,
+                "geom != null && Spatial.equals(geom, Spatial.transform(Spatial.geomFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)), 4326))");
             List list = (List) query.execute(geom);
             assertEquals("Wrong number of geometries with a given wkb returned", 1, list.size());
             assertTrue("Point 1 should be in the list of geometries with a given wkb", list.contains(getSamplePoint(1)));
