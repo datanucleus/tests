@@ -32,6 +32,7 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.ParameterExpression;
@@ -433,6 +434,13 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
 
             CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
+            Set<Join<Manager, ?>> joins = candidate.getJoins();
+            assertNotNull(joins); // Make sure joins returns empty set
+            assertEquals(0, joins.size());
+            Set<Fetch<Manager, ?>> fetches = candidate.getFetches();
+            assertNotNull(fetches); // Make sure fetches returns empty set
+            assertEquals(0, fetches.size());
+
             candidate.alias("m");
             crit.multiselect(candidate.get(Manager_.firstName), candidate.get(Manager_.lastName));
 
