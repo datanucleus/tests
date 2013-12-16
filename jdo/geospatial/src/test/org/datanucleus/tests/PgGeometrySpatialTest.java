@@ -39,8 +39,6 @@ import org.datanucleus.samples.pggeometry.SamplePoint;
 import org.datanucleus.samples.pggeometry.SamplePolygon;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
 import org.postgis.Geometry;
 import org.postgis.GeometryCollection;
@@ -157,7 +155,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
             suite.addTest(new PgGeometrySpatialTest("testMPolyFromText"));
             suite.addTest(new PgGeometrySpatialTest("testGeomCollFromText"));
             suite.addTest(new PgGeometrySpatialTest("testGeomFromWKB"));
-            suite.addTest(new PgGeometrySpatialTest("testGeographicFunctions"));
+            suite.addTest(new PgGeometrySpatialTest("testGeographicMethods"));
             suite.addTest(new PgGeometrySpatialTest("testPointFromWKB"));
             suite.addTest(new PgGeometrySpatialTest("testLineFromWKB"));
             suite.addTest(new PgGeometrySpatialTest("testPolyFromWKB"));
@@ -400,7 +398,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    public void testGeographicFunctions() throws SQLException
+    public void testGeographicMethods() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
