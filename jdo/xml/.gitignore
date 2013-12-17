@@ -1,3 +1,4 @@
 /bin
 datanucleus.log
 target/
+/test.xml
