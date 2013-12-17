@@ -39,8 +39,6 @@ import org.datanucleus.samples.pggeometry.SamplePoint;
 import org.datanucleus.samples.pggeometry.SamplePolygon;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
 import org.postgis.Geometry;
 import org.postgis.GeometryCollection;
@@ -157,6 +155,8 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
             suite.addTest(new PgGeometrySpatialTest("testMPolyFromText"));
             suite.addTest(new PgGeometrySpatialTest("testGeomCollFromText"));
             suite.addTest(new PgGeometrySpatialTest("testGeomFromWKB"));
+            suite.addTest(new PgGeometrySpatialTest("testTransform"));
+            suite.addTest(new PgGeometrySpatialTest("testGeographicMethods"));
             suite.addTest(new PgGeometrySpatialTest("testPointFromWKB"));
             suite.addTest(new PgGeometrySpatialTest("testLineFromWKB"));
             suite.addTest(new PgGeometrySpatialTest("testPolyFromWKB"));
@@ -398,6 +398,48 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
             tx.commit();
         }
     }
+    
+    public void testTransform() throws SQLException
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            Point geom = new Point("SRID=4326;POINT(10 10)");
+            Query query = pm.newQuery(SamplePoint.class,
+                "geom != null && Spatial.equals(geom, Spatial.transform(Spatial.geomFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)), 4326))");
+            List list = (List) query.execute(geom);
+            assertEquals("Wrong number of geometries with a given wkb returned", 1, list.size());
+            assertTrue("Point 1 should be in the list of geometries with a given wkb", list.contains(getSamplePoint(1)));
+        }
+        finally
+        {
+            tx.commit();
+        }
+    }
+    
+    public void testGeographicMethods() throws SQLException
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            String strGeom = "SRID=4326;POINT(10 10)";
+            Query query = pm.newQuery(SamplePoint.class,
+                "geom != null && Spatial.distance(Spatial.geogFromText(:strGeom), Spatial.geogFromWKB(Spatial.asBinary(geom))) == 0");
+            List list = (List) query.execute(strGeom);
+            assertEquals("Wrong number of g"
+                    + "eometries with a given wkb returned", 1, list.size());
+            assertTrue("Point 1 should be in the list of geometries with a given wkb", list.contains(getSamplePoint(1)));
+        }
+        finally
+        {
+            tx.commit();
+        }
+    }
+
 
     public void testPointFromWKB() throws SQLException
     {
