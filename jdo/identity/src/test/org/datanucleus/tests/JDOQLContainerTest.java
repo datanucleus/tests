@@ -56,6 +56,8 @@ import org.jpox.samples.models.fitness.Wardrobe;
 import org.jpox.samples.one_many.bidir.Animal;
 import org.jpox.samples.one_many.bidir.DairyFarm;
 import org.jpox.samples.one_many.bidir.Farm;
+import org.jpox.samples.one_many.bidir_2.House;
+import org.jpox.samples.one_many.bidir_2.Window;
 import org.jpox.samples.one_many.map.MapHolder;
 
 /**
@@ -83,6 +85,126 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     Animal.class
                 });
             initialised = true;
+        }
+    }
+
+    /**
+     * Tests use of bulk-fetch on collection via FK.
+     */
+    public void testBulkFetchUsingFK()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            // Create some data
+            tx.begin();
+
+            Farm farm1 = new Farm("Jones Farm");
+            Animal animal1 = new Animal("Dog");
+            Animal animal2 = new Animal("Cow 1");
+            Animal animal3 = new Animal("Cow 2");
+            farm1.getAnimals().add(animal2);
+            farm1.getAnimals().add(animal3);
+            farm1.getAnimals().add(animal1);
+            animal1.setFarm(farm1);
+            animal2.setFarm(farm1);
+            animal3.setFarm(farm1);
+            farm1.setPet(animal1);
+
+            Farm farm2 = new Farm("Smith Farm");
+            Animal animal4 = new Animal("Pig 1");
+            Animal animal5 = new Animal("Pig 2");
+            farm2.getAnimals().add(animal4);
+            farm2.getAnimals().add(animal5);
+            animal4.setFarm(farm2);
+            animal5.setFarm(farm2);
+
+            pm.makePersistent(farm1);
+            pm.makePersistent(farm2);
+            pm.flush();
+
+            // Query the data with bulk-fetch enabled
+            // Note : this doesn't actually check how many SQL were issued just that it passes
+            Query q = pm.newQuery("SELECT FROM " + Farm.class.getName() + " WHERE name == :farmName");
+            q.addExtension("datanucleus.multivaluedFetch", "bulk-fetch");
+            q.getFetchPlan().setGroup("all");
+            List results = (List) q.execute("Jones Farm");
+            assertEquals(1, results.size());
+            assertEquals("Jones Farm", ((Farm)results.get(0)).getName());
+
+            tx.rollback();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown during test", e);
+            fail("Exception thrown while performing test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Tests use of bulk-fetch on collection via JoinTable.
+     */
+    public void testBulkFetchUsingJoinTable()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            // Create some data
+            tx.begin();
+
+            House house1 = new House(101, "Downing Street");
+            Window win1 = new Window(400, 300, house1);
+            Window win2 = new Window(200, 300, house1);
+            Window win3 = new Window(400, 300, house1);
+            house1.addWindow(win1);
+            house1.addWindow(win2);
+            house1.addWindow(win3);
+
+            House house2 = new House(102, "Downing Street");
+            Window win4 = new Window(600, 300, house2);
+            Window win5 = new Window(500, 300, house2);
+            house2.addWindow(win4);
+            house2.addWindow(win5);
+
+            pm.makePersistent(house1);
+            pm.makePersistent(house2);
+            pm.flush();
+
+            // Query the data with bulk-fetch enabled
+            // Note : this doesn't actually check how many SQL were issued just that it passes
+            Query q = pm.newQuery("SELECT FROM " + House.class.getName() + " WHERE number == 101");
+            q.addExtension("datanucleus.multivaluedFetch", "bulk-fetch");
+            q.getFetchPlan().setGroup("all");
+            List<House> results = (List<House>) q.execute();
+            assertEquals(1, results.size());
+            House house = results.get(0);
+            assertEquals("Downing Street", house.getStreet());
+            assertEquals(3, house.getWindows().size());
+
+            tx.rollback();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown during test", e);
+            fail("Exception thrown while performing test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
 
