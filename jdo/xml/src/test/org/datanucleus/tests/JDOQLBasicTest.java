@@ -18,6 +18,7 @@ Contributors :
 ***********************************************************************/
 package org.datanucleus.tests;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +41,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
     protected void setUp() throws Exception
     {
         super.setUp();
+
+        // Delete the file so each test starts from nothing
+        File file = new File("test.xml");
+        if (file.exists())
+        {
+            file.delete();
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try

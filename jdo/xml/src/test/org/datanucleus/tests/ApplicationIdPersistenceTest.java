@@ -67,13 +67,14 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
     @Override
     protected void setUp() throws Exception
     {
+        super.setUp();
+
+        // Delete the file so each test starts from nothing
         File file = new File("test.xml");
         if (file.exists())
         {
             file.delete();
         }
-
-        super.setUp();
     }
 
     public void testFindNoXpathDefinedOnNewFile() throws Exception
