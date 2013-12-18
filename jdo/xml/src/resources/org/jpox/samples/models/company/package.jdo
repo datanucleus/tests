@@ -45,7 +45,7 @@
         
         <class name="Department" detachable="true" identity-type="application">
             <field name="manager"/>
-            <field name="name" primary-key="true" value-strategy="generate-id"/>
+            <field name="name" primary-key="true"/>
             <field name="projects">
                 <collection element-type="Project"/>
                 <join/>
