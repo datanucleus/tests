@@ -61,15 +61,25 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
         super(name);
     }
 
+    /* (non-Javadoc)
+     * @see org.datanucleus.tests.PersistenceTestCase#setUp()
+     */
+    @Override
+    protected void setUp() throws Exception
+    {
+        File file = new File("test.xml");
+        if (file.exists())
+        {
+            file.delete();
+        }
+
+        super.setUp();
+    }
+
     public void testFindNoXpathDefinedOnNewFile() throws Exception
     {
         try
         {
-            File file = new File("test.xml");
-            if (file.exists())
-            {
-                file.delete();
-            }
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             try
@@ -99,7 +109,6 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(Project.class);
         }
     }
 
@@ -107,11 +116,6 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
     {
         try
         {
-            File file = new File("test.xml");
-            if (file.exists())
-            {
-                file.delete();
-            }
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             try
@@ -141,7 +145,6 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(Project.class);
         }
     }
 
