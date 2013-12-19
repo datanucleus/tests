@@ -40,7 +40,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.util.StringUtils;
 import org.jpox.samples.linkedlist.DoubleLink;
 import org.jpox.samples.linkedlist.ParentChildLink;
 import org.jpox.samples.linkedlist.SingleLink;
