@@ -145,10 +145,10 @@ public class ExtentTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Extent ex = pm.getExtent(org.datanucleus.samples.store.Product.class, false);
+            Extent<Product> ex = pm.getExtent(Product.class, false);
             ex.closeAll();	// none open
 
-            Iterator i = ex.iterator();
+            Iterator<Product> i = ex.iterator();
             ex.closeAll();	// one open
             assertEquals("iterator.hasNext() after extent.closeAll", false, i.hasNext());
 
@@ -214,9 +214,9 @@ public class ExtentTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Extent e = pm.getExtent(Product.class, true);
+                Extent<Product> e = pm.getExtent(Product.class, true);
                 int number = 0;
-                Iterator iter = e.iterator();
+                Iterator<Product> iter = e.iterator();
                 while (iter.hasNext())
                 {
                     iter.next();
@@ -291,9 +291,9 @@ public class ExtentTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Extent e = pm.getExtent(MediaWork.class, true);
+                Extent<MediaWork> e = pm.getExtent(MediaWork.class, true);
                 int number = 0;
-                Iterator iter = e.iterator();
+                Iterator<MediaWork> iter = e.iterator();
                 while (iter.hasNext())
                 {
                     iter.next();
@@ -346,9 +346,9 @@ public class ExtentTest extends JDOPersistenceTestCase
                 pm.flush();
 
                 // test subclasses argument == false (should contain Employee only)
-                Extent extent = pm.getExtent(Employee.class, false);
-                java.util.Iterator it = extent.iterator();
-                Employee empl2 = (Employee) it.next();
+                Extent<Employee> extent = pm.getExtent(Employee.class, false);
+                java.util.Iterator<Employee> it = extent.iterator();
+                Employee empl2 = it.next();
                 assertEquals(empl.getPersonNum(), empl2.getPersonNum());
                 assertEquals(false, it.hasNext());
 
@@ -358,7 +358,7 @@ public class ExtentTest extends JDOPersistenceTestCase
                 tx.begin();
                 extent = pm.getExtent(Employee.class, true);
                 it = extent.iterator();
-                empl2 = (Employee) it.next();
+                empl2 = it.next();
                 if (empl2 instanceof Manager)
                 {
                     assertEquals(1, empl2.getPersonNum());
