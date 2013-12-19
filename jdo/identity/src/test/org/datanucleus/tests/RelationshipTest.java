@@ -40,6 +40,7 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
+import org.datanucleus.util.StringUtils;
 import org.jpox.samples.linkedlist.DoubleLink;
 import org.jpox.samples.linkedlist.ParentChildLink;
 import org.jpox.samples.linkedlist.SingleLink;
@@ -1443,6 +1444,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
 
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
 
             // Retrieve a few customers/suppliers and check the data
             pm = pmf.getPersistenceManager();

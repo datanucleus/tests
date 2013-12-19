@@ -6,6 +6,7 @@
 <jdo>
     <package name="org.jpox.samples.many_many">
         <class name="PetroleumSupplier" identity-type="datastore" table="PETROLEUM_SUPPLIER">
+            <datastore-identity strategy="increment"/>
             <field name="id" persistence-modifier="none"/>
             <field name="name" persistence-modifier="persistent">
                 <column length="100" jdbc-type="VARCHAR"/>
@@ -29,6 +30,7 @@
         </class>
 
         <class name="PetroleumCustomer" identity-type="datastore" table="PETROLEUM_CUSTOMER">
+            <datastore-identity strategy="increment"/>
             <field name="id" persistence-modifier="none"/>
             <field name="name" persistence-modifier="persistent">
                 <column length="100" jdbc-type="VARCHAR"/>
