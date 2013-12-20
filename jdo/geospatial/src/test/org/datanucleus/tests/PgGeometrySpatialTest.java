@@ -29,7 +29,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
@@ -40,6 +39,8 @@ import org.datanucleus.samples.pggeometry.SamplePolygon;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.util.StringUtils;
+import org.junit.runner.RunWith;
+import org.junit.runners.AllTests;
 import org.postgis.Geometry;
 import org.postgis.GeometryCollection;
 import org.postgis.LineString;
@@ -52,9 +53,8 @@ import org.postgis.Polygon;
 /**
  * Series of spatial tests for PostGis functions.
  * Run on MySQL and Postgresql.
- *
- * @version $Revision: 1.3 $
  */
+@RunWith(AllTests.class)
 public class PgGeometrySpatialTest extends JDOPersistenceTestCase
 {
     public PgGeometrySpatialTest(String name)
@@ -62,7 +62,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         super(name);
     }
 
-    static public Test suite()
+    static public TestSuite suite()
     {
         // Extract the datastore being run
         String datastoreVendor = null;

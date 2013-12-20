@@ -29,7 +29,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
@@ -42,6 +41,8 @@ import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
+import org.junit.runner.RunWith;
+import org.junit.runners.AllTests;
 import org.postgis.MultiLineString;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -60,6 +61,7 @@ import com.vividsolutions.jts.io.WKTReader;
  * Series of tests for JTS spatial functions.
  * Apply to MySQL and Postgresql.
  */
+@RunWith(AllTests.class)
 public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
 {
     private static final WKTReader wktReader = new WKTReader(new GeometryFactory(new PrecisionModel(), 4326));
@@ -69,7 +71,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         super(name);
     }
 
-    static public Test suite()
+    static public TestSuite suite()
     {
         // Extract the datastore being run
         String datastoreVendor = null;
