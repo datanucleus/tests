@@ -48,5 +48,33 @@
         <class name="AccountCustomer" table="PETROLEUM_FID_CUSTOMER">
 			<inheritance strategy="new-table"/>
         </class>
+
+        <class name="Provider" table="PROVIDER">
+            <field name="id" primary-key="true"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="100" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="consumers" table="PROVIDERS_CONSUMERS">
+                <collection element-type="Consumer"/>
+                <order>
+                    <extension vendor-name="datanucleus" key="list-ordering" value="id ASC"/>
+                </order>
+                <join column="PROVIDER_ID"/>
+                <element column="CONSUMER_ID"/>
+            </field>
+        </class>
+        <class name="Consumer" table="CONSUMER">
+            <field name="id" primary-key="true"/>
+            <field name="name" persistence-modifier="persistent">
+                <column length="100" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="providers" mapped-by="consumers">
+                <collection element-type="Provider"/>
+                <order>
+                    <extension vendor-name="datanucleus" key="list-ordering" value="id ASC"/>
+                </order>
+                <join/>
+            </field>
+        </class>
     </package>
 </jdo>

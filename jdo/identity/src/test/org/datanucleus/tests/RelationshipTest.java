@@ -44,11 +44,13 @@ import org.jpox.samples.linkedlist.DoubleLink;
 import org.jpox.samples.linkedlist.ParentChildLink;
 import org.jpox.samples.linkedlist.SingleLink;
 import org.jpox.samples.many_many.AccountCustomer;
+import org.jpox.samples.many_many.Consumer;
 import org.jpox.samples.many_many.GasSupplier;
 import org.jpox.samples.many_many.OilSupplier;
 import org.jpox.samples.many_many.OneOffCustomer;
 import org.jpox.samples.many_many.PetroleumCustomer;
 import org.jpox.samples.many_many.PetroleumSupplier;
+import org.jpox.samples.many_many.Provider;
 import org.jpox.samples.many_one.unidir.CarRental;
 import org.jpox.samples.many_one.unidir.HireCar;
 import org.jpox.samples.models.currency.Currency;
@@ -1830,6 +1832,140 @@ public class RelationshipTest extends JDOPersistenceTestCase
             clean(OneOffCustomer.class);
             clean(AccountCustomer.class);
             clean(PetroleumCustomer.class);
+        }
+    }
+
+    /**
+     * Test case for M-N ordered list relationship.
+     **/
+    public void testMtoNUsingOrderedList()
+    throws Exception
+    {
+        try
+        {
+            Object[] provider_ids = null;
+            Object[] consumer_ids = null;
+
+            PersistenceManager pm=pmf.getPersistenceManager();
+            pm.setProperty(PropertyNames.PROPERTY_MANAGE_RELATIONSHIPS, "" + manageRelationships);
+            Transaction tx=pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                // Create a few Providers
+                Provider provider1 = new Provider(1, "Smegma Enterprises");
+                pm.makePersistent(provider1);
+                Provider provider2 = new Provider(2, "Amazonia");
+                pm.makePersistent(provider2);
+                Provider provider3 = new Provider(3, "Chorus plc");
+                pm.makePersistent(provider3);
+                Provider provider4 = new Provider(4, "Hnos Hernandez s.a.");
+                pm.makePersistent(provider4);
+
+                // Create a few Consumers
+                Consumer consumer1 = new Consumer(101, "Joe Smith");
+                pm.makePersistent(consumer1);
+                Consumer consumer2 = new Consumer(102, "Juan Fernandez");
+                pm.makePersistent(consumer2);
+                Consumer consumer3 = new Consumer(103, "Marie-Claude Bezier");
+                pm.makePersistent(consumer3);
+
+                // Assign a few relationships
+                // Since we are sharing the join table we add only once
+                provider1.getConsumers().add(consumer1);
+                provider1.getConsumers().add(consumer3);
+                provider2.getConsumers().add(consumer1);
+                provider4.getConsumers().add(consumer2);
+                provider4.getConsumers().add(consumer3);
+
+                tx.commit();
+                provider_ids = new Object[4];
+                provider_ids[0] = JDOHelper.getObjectId(provider1);
+                provider_ids[1] = JDOHelper.getObjectId(provider2);
+                provider_ids[2] = JDOHelper.getObjectId(provider3);
+                provider_ids[3] = JDOHelper.getObjectId(provider4);
+
+                consumer_ids = new Object[3];
+                consumer_ids[0] = JDOHelper.getObjectId(consumer1);
+                consumer_ids[1] = JDOHelper.getObjectId(consumer2);
+                consumer_ids[2] = JDOHelper.getObjectId(consumer3);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while creating M-N relationship data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve a few customers/suppliers and check the data
+            pm = pmf.getPersistenceManager();
+            pm.setProperty(PropertyNames.PROPERTY_MANAGE_RELATIONSHIPS, "" + manageRelationships);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                int[] provider_consumer_numbers=new int[] {2,1,0,2};
+                for (int i=0;i<4;i++)
+                {
+                    Provider provider = (Provider)pm.getObjectById(provider_ids[i]);
+
+                    List<Consumer> consumers = provider.getConsumers();
+                    assertTrue("Supplier " + (i+1) + " has wrong number of consumers (" + consumers.size() + ") : should have been " + provider_consumer_numbers[i], 
+                        consumers.size() == provider_consumer_numbers[i]);
+
+                    Iterator<Consumer> iter = consumers.iterator();
+                    while (iter.hasNext())
+                    {
+                        Consumer consumer = iter.next();
+                        int no_of_providers = consumer.getProviders().size();
+                        if (JDOHelper.getObjectId(consumer) == consumer_ids[0])
+                        {
+                            assertTrue("Customer has wrong number of providers (" + no_of_providers + ") : should have been 2",no_of_providers == 2);
+                        }
+                        else if (JDOHelper.getObjectId(consumer) == consumer_ids[1])
+                        {
+                            assertTrue("Customer has wrong number of providers (" + no_of_providers + ") : should have been 1",no_of_providers == 1);
+                        }
+                        else if (JDOHelper.getObjectId(consumer) == consumer_ids[2])
+                        {
+                            assertTrue("Customer has wrong number of providers (" + no_of_providers + ") : should have been 2",no_of_providers == 2);
+                        }
+                    }
+                }
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while interrogating M-N relationship data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(Provider.class);
+            clean(Consumer.class);
         }
     }
 
