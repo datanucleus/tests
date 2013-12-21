@@ -15,7 +15,7 @@
  Contributors:
  ...
  **********************************************************************/
-package org.datanucleus.tests;
+package org.datanucleus.tests.newfeatures;
 
 import java.sql.SQLException;
 
@@ -25,7 +25,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.samples.jtsgeometry.SampleGeometryCollection3D;
 import org.datanucleus.samples.jtsgeometry.SampleGeometryCollectionM;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -37,11 +36,16 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.io.ParseException;
+import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Series of JTS 3D geometry tests.
  * Run for Mysql/Postgresql only currently.
- *
+ * According to information in TEST-19 this test moved to here
+ * JTS is an implementation of the OGC Simple Features for SQL Specification
+ * (ie SFSQL). It covers 2D constructs like Point, Line and Polygon. JTS is
+ * willing to carry a 3rd point around but does not use it for calculations 
+ * - making it a 2.5D solution for cartesian space. 
  * @version $Revision: 1.2 $
  */
 public class JtsGeometry3dMappingTest extends JDOPersistenceTestCase
@@ -82,7 +86,6 @@ public class JtsGeometry3dMappingTest extends JDOPersistenceTestCase
         Object id = null;
         try
         {
-            tx.begin();
             Point point = geomFactory.createPoint(new Coordinate(10.0, 10.0, 100.0));
             LineString linestring = geomFactory.createLineString(new Coordinate[]{new Coordinate(0.0, 50.0, 100.0),
                     new Coordinate(100.0, 50.0, 100.0)});
