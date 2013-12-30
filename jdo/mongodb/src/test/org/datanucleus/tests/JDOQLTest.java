@@ -1137,15 +1137,15 @@ public class JDOQLTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q1 = pm.newQuery("SELECT FROM " + Person.class.getName() + " ORDER BY firstName RANGE 1,3");
+                Query q1 = pm.newQuery("SELECT FROM " + Person.class.getName() + " ORDER BY firstName RANGE 2,4");
                 List<Person> results1 = (List<Person>)q1.execute(null);
                 assertEquals(2, results1.size());
                 Person p1 = results1.get(0);
                 Person p2 = results1.get(1);
-                assertEquals("Bugs", p1.getFirstName());
-                assertEquals("1", p1.getGlobalNum());
-                assertEquals("Daffy", p2.getFirstName());
-                assertEquals("2", p2.getGlobalNum());
+                assertEquals("Daffy", p1.getFirstName());
+                assertEquals("2", p1.getGlobalNum());
+                assertEquals("Fred", p2.getFirstName());
+                assertEquals("3", p2.getGlobalNum());
 
                 tx.commit();
             }
