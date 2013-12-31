@@ -285,7 +285,7 @@
             <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>datanucleus-maven-plugin</artifactId>
-                <version>3.3.2-SNAPSHOT</version>
+                <version>3.3.2</version>
                 <configuration>
                     <fork>false</fork>
                     <verbose>false</verbose>
