@@ -15,7 +15,7 @@ limitations under the License.
 Contributors:
     ...
 **********************************************************************/
-package org.datanucleus.tests.types;
+package org.datanucleus.tests;
 
 import java.awt.Point;
 import java.util.List;
@@ -31,14 +31,14 @@ import org.jpox.samples.types.point.PointHolder;
 /**
  * Tests for SCO mutable type java.awt.Point.
  */
-public class PointTest extends JDOPersistenceTestCase
+public class AwtGeomPointTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
 
     /**
      * @param name
      */
-    public PointTest(String name)
+    public AwtGeomPointTest(String name)
     {
         super(name);
         if (!initialised)
