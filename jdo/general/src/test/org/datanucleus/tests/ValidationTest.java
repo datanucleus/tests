@@ -24,6 +24,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 import javax.validation.ConstraintViolationException;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.validation.ValidatedPerson;
 import org.datanucleus.samples.validation.ValidatedPerson2;
 import org.datanucleus.samples.validation.ValidatedPerson3;
@@ -60,7 +61,7 @@ public class ValidationTest extends JDOPersistenceTestCase
     public void testNotNull()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.validation.mode", "auto");
+        userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
         PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -100,7 +101,7 @@ public class ValidationTest extends JDOPersistenceTestCase
     public void testSize()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.validation.mode", "auto");
+        userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
         PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -142,7 +143,7 @@ public class ValidationTest extends JDOPersistenceTestCase
     public void testNonPersistentNotNull()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.validation.mode", "auto");
+        userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
         PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -207,7 +208,7 @@ public class ValidationTest extends JDOPersistenceTestCase
     public void testTransactionalNotNull()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.validation.mode", "auto");
+        userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
         PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
 
         try
