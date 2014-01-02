@@ -78,9 +78,6 @@ public class GeneralTest extends JDOPersistenceTestCase
         }
         catch (Throwable t)
         {}
-        
-        PersistenceManagerFactory lpmf = TestHelper.getPMF(2, null);
-        clean(lpmf, Account.class);
         super.tearDown();
     }
 
@@ -95,315 +92,343 @@ public class GeneralTest extends JDOPersistenceTestCase
      */
     public void testBasicJTAViaJDOTransaction() throws Exception
     {
-        UserTransaction ut = getUserTransaction();
-        ut.setTransactionTimeout(300);
-
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        assertEquals("Transaction type is not JTA!", "JTA", pmf.getTransactionType());
-
-        int totals = 0;
         try
         {
-            // Demarcate the txn using JDO txn
-            tx.begin();
+            UserTransaction ut = getUserTransaction();
+            ut.setTransactionTimeout(300);
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            assertEquals("Transaction type is not JTA!", "JTA", pmf.getTransactionType());
+
+            int totals = 0;
             try
             {
-                // Try to start the UserTransaction now (should have been started by JDO txn)
-                ut.begin();
-                fail("Attempted call to UserTransaction.begin after starting JDO txn directly worked!!");
-            }
-            catch (Exception e)
-            {
-                // Expected since the JDO txn started the user transaction
-            }
-            assertTrue("Transaction is not active after starting UserTransaction", tx.isActive());
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
-            totals = c.size();
-            q.closeAll();
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.info(">> Exception thrown ", e);
-            fail("Exception thrown during use of JTA via JDO Transaction");
-        }
-        finally
-        {
-            pm.close();
-        }
-
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            tx.begin();
-            Account accnt = new Account();
-            accnt.setUsername("jpox");
-            pm.makePersistent(accnt);
-            tx.commit();
-        }
-        finally
-        {
-            pm.close();
-        }
-
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            tx.begin();
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
-            try
-            {
-                Assert.assertTrue(c.size() == (totals + 1));
-            }
-            finally
-            {
+                // Demarcate the txn using JDO txn
+                tx.begin();
+                try
+                {
+                    // Try to start the UserTransaction now (should have been started by JDO txn)
+                    ut.begin();
+                    fail("Attempted call to UserTransaction.begin after starting JDO txn directly worked!!");
+                }
+                catch (Exception e)
+                {
+                    // Expected since the JDO txn started the user transaction
+                }
+                assertTrue("Transaction is not active after starting UserTransaction", tx.isActive());
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                totals = c.size();
                 q.closeAll();
                 tx.commit();
             }
+            catch (Exception e)
+            {
+                LOG.info(">> Exception thrown ", e);
+                fail("Exception thrown during use of JTA via JDO Transaction");
+            }
+            finally
+            {
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            try
+            {
+                tx.begin();
+                Account accnt = new Account();
+                accnt.setUsername("jpox");
+                pm.makePersistent(accnt);
+                tx.commit();
+            }
+            finally
+            {
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            try
+            {
+                tx.begin();
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                try
+                {
+                    Assert.assertTrue(c.size() == (totals + 1));
+                }
+                finally
+                {
+                    q.closeAll();
+                    tx.commit();
+                }
+            }
+            finally
+            {
+                pm.close();
+            }
         }
         finally
         {
-            pm.close();
+            clean(Account.class);
         }
     }
 
     public void testBasicJTA() throws Exception
     {
-        UserTransaction ut = getUserTransaction();
-        ut.setTransactionTimeout(300);
-
-        int totals = 0;
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        tx.setOptimistic(true);
         try
         {
-            ut.begin();
-            assertTrue("Transaction is not active after starting UserTransaction", tx.isActive());
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
-            totals = c.size();
-            q.closeAll();
-            ut.commit();
-        }
-        finally
-        {
-            pm.close();
-        }
+            UserTransaction ut = getUserTransaction();
+            ut.setTransactionTimeout(300);
 
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            ut.begin();
-            Account accnt = new Account();
-            accnt.setUsername("jpox");
-            pm.makePersistent(accnt);
-            ut.commit();
-        }
-        finally
-        {
-            pm.close();
-        }
-
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            ut.begin();
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
+            int totals = 0;
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             try
             {
-                Assert.assertTrue(c.size() == (totals + 1));
-            }
-            finally
-            {
+                ut.begin();
+                assertTrue("Transaction is not active after starting UserTransaction", tx.isActive());
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                totals = c.size();
                 q.closeAll();
                 ut.commit();
             }
+            finally
+            {
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            try
+            {
+                ut.begin();
+                Account accnt = new Account();
+                accnt.setUsername("jpox");
+                pm.makePersistent(accnt);
+                ut.commit();
+            }
+            finally
+            {
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            try
+            {
+                ut.begin();
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                try
+                {
+                    Assert.assertTrue(c.size() == (totals + 1));
+                }
+                finally
+                {
+                    q.closeAll();
+                    ut.commit();
+                }
+            }
+            finally
+            {
+                pm.close();
+            }
         }
         finally
         {
-            pm.close();
+            clean(Account.class);
         }
     }
 
     public void testMultiTxnJTA() throws Exception
     {
-        UserTransaction ut = getUserTransaction();
-        ut.setTransactionTimeout(300);
-
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        tx.setOptimistic(true);
         try
         {
-            ut.begin();
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
+            UserTransaction ut = getUserTransaction();
+            ut.setTransactionTimeout(300);
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             try
             {
-                Assert.assertEquals("should have no elements in db",0,c.size());
+                ut.begin();
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                try
+                {
+                    Assert.assertEquals("should have no elements in db",0,c.size());
+                }
+                finally
+                {
+                    q.closeAll();
+                    ut.commit();
+                }
             }
             finally
             {
-                q.closeAll();
-                ut.commit();
+                pm.close();
             }
-        }
-        finally
-        {
-            pm.close();
-        }
 
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            ut.begin();
-            Account accnt = new Account();
-            accnt.setUsername("jpox");
-            pm.makePersistent(accnt);
-            ut.commit();
-        }
-        finally
-        {
-            pm.close();
-        }
-        //db has now 1 element
-        
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            ut.begin();
-            Account accnt = new Account();
-            accnt.setUsername("jpox2");
-            pm.makePersistent(accnt);
-            pm.flush();
-            ut.rollback();
-        }
-        finally
-        {
-            pm.close();
-        }
-        //db should still have 1 element
-        
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            ut.begin();
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             try
             {
-                Assert.assertEquals(1,c.size());
+                ut.begin();
+                Account accnt = new Account();
+                accnt.setUsername("jpox");
+                pm.makePersistent(accnt);
+                ut.commit();
             }
             finally
             {
-                q.closeAll();
-                ut.commit();
+                pm.close();
+            }
+            //db has now 1 element
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            try
+            {
+                ut.begin();
+                Account accnt = new Account();
+                accnt.setUsername("jpox2");
+                pm.makePersistent(accnt);
+                pm.flush();
+                ut.rollback();
+            }
+            finally
+            {
+                pm.close();
+            }
+            //db should still have 1 element
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            try
+            {
+                ut.begin();
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                try
+                {
+                    Assert.assertEquals(1,c.size());
+                }
+                finally
+                {
+                    q.closeAll();
+                    ut.commit();
+                }
+            }
+            finally
+            {
+                pm.close();
             }
         }
         finally
         {
-            pm.close();
+            clean(Account.class);
         }
     }
 
     public void testDelayedFlushExceptionJTA() throws Exception
     {
-        UserTransaction ut = getUserTransaction();
-        ut.setTransactionTimeout(300);
-
-        int totals = 0;
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        tx.setOptimistic(true);
         try
         {
-            ut.begin();
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
-            totals = c.size();
-            q.closeAll();
-            ut.commit();
-        }
-        finally
-        {
-            pm.close();
-        }
+            UserTransaction ut = getUserTransaction();
+            ut.setTransactionTimeout(300);
 
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        boolean rbk = false;
-        try
-        {
-            ut.begin();
-            Account accnt = new Account();
-            accnt.setUsername(null);
-            pm.makePersistent(accnt);
-            ut.commit();
-        }
-        // e.g. JBoss wraps the NucleusDataStoreException
-        catch (Exception e)
-        {
-            // Expected
-            if (isRollbackDueToDatastoreException(e))
-            {
-                rbk = true;
-            }
-        }
-        finally
-        {
-            Assert.assertTrue("Not Rolledback", rbk);
-            Assert.assertTrue("UserTransaction should not be active anymore?!", ut.getStatus()==Status.STATUS_NO_TRANSACTION);
-            if (pm.currentTransaction().isActive() && ut.getClass().getName().startsWith("org.objectweb.jotm"))
-            {
-                // see http://www.jpox.org/servlet/jira/browse/NUCCORE-224
-                fail("JOTM bug: when an exception is thrown during Synchronization.beforeCompletion(), the UserTransaction's status is " +
-                    "STATUS_NO_TRANSCTION, but there was no callback to Synchronization.afterCompletion()");
-            }
-            pm.close();
-        }
-
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true);
-        try
-        {
-            ut.begin();
-            Query q = pm.newQuery(Account.class);
-            Collection c = (Collection) q.execute();
+            int totals = 0;
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             try
             {
-                Assert.assertTrue(c.size() == (totals));
-            }
-            finally
-            {
+                ut.begin();
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                totals = c.size();
                 q.closeAll();
                 ut.commit();
             }
+            finally
+            {
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            boolean rbk = false;
+            try
+            {
+                ut.begin();
+                Account accnt = new Account();
+                accnt.setUsername(null);
+                pm.makePersistent(accnt);
+                ut.commit();
+            }
+            // e.g. JBoss wraps the NucleusDataStoreException
+            catch (Exception e)
+            {
+                // Expected
+                if (isRollbackDueToDatastoreException(e))
+                {
+                    rbk = true;
+                }
+            }
+            finally
+            {
+                Assert.assertTrue("Not Rolledback", rbk);
+                Assert.assertTrue("UserTransaction should not be active anymore?!", ut.getStatus()==Status.STATUS_NO_TRANSACTION);
+                if (pm.currentTransaction().isActive() && ut.getClass().getName().startsWith("org.objectweb.jotm"))
+                {
+                    // see http://www.jpox.org/servlet/jira/browse/NUCCORE-224
+                    fail("JOTM bug: when an exception is thrown during Synchronization.beforeCompletion(), the UserTransaction's status is " +
+                            "STATUS_NO_TRANSCTION, but there was no callback to Synchronization.afterCompletion()");
+                }
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true);
+            try
+            {
+                ut.begin();
+                Query q = pm.newQuery(Account.class);
+                Collection c = (Collection) q.execute();
+                try
+                {
+                    Assert.assertTrue(c.size() == (totals));
+                }
+                finally
+                {
+                    q.closeAll();
+                    ut.commit();
+                }
+            }
+            finally
+            {
+                pm.close();
+            }
         }
         finally
         {
-            pm.close();
+            clean(Account.class);
         }
     }
 
@@ -419,119 +444,133 @@ public class GeneralTest extends JDOPersistenceTestCase
 	
     public void testAddDeleteJTA() throws Exception
     {
-        boolean opt = false;
-        UserTransaction ut = getUserTransaction();
-        ut.setTransactionTimeout(300);
-
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        tx.setOptimistic(opt);
-        ut.begin();
-        Query q = pm.newQuery(Account.class);
-        Collection c = (Collection) q.execute();
-        c.size();
-        q.closeAll();
-        ut.commit();
-        pm.close();
-
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(opt);
-        ut.begin();
-        Account accnt = new Account();
-        accnt.setUsername("jpox");
-        pm.makePersistent(accnt);
-        Object oid = pm.getObjectId(accnt);
-        ut.commit();
-        pm.close();
-
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(opt);
-        ut.begin();
-        accnt = (Account) pm.getObjectById(oid);
-        pm.deletePersistent(accnt);
-        ut.commit();
-        pm.close();
-
-        pm = pmf.getPersistenceManager();
-        pm.currentTransaction().setOptimistic(opt);
-        ut.begin();
         try
         {
+            boolean opt = false;
+            UserTransaction ut = getUserTransaction();
+            ut.setTransactionTimeout(300);
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            tx.setOptimistic(opt);
+            ut.begin();
+            Query q = pm.newQuery(Account.class);
+            Collection c = (Collection) q.execute();
+            c.size();
+            q.closeAll();
+            ut.commit();
+            pm.close();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(opt);
+            ut.begin();
+            Account accnt = new Account();
+            accnt.setUsername("jpox");
+            pm.makePersistent(accnt);
+            Object oid = pm.getObjectId(accnt);
+            ut.commit();
+            pm.close();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(opt);
+            ut.begin();
             accnt = (Account) pm.getObjectById(oid);
-            System.err.println(accnt);
-            Assert.assertTrue("accnt still in db:"+pm.getObjectId(accnt), false);
-        }
-        catch (javax.jdo.JDOObjectNotFoundException ex)
-        {
+            pm.deletePersistent(accnt);
+            ut.commit();
+            pm.close();
+
+            pm = pmf.getPersistenceManager();
+            pm.currentTransaction().setOptimistic(opt);
+            ut.begin();
+            try
+            {
+                accnt = (Account) pm.getObjectById(oid);
+                System.err.println(accnt);
+                Assert.assertTrue("accnt still in db:"+pm.getObjectId(accnt), false);
+            }
+            catch (javax.jdo.JDOObjectNotFoundException ex)
+            {
+            }
+            finally
+            {
+                ut.commit();
+                pm.close();
+            }
         }
         finally
         {
-            ut.commit();
-            pm.close();
+            clean(Account.class);
         }
     }
 
     public void testAddDeleteJTANoBatch() throws Exception
     {
-        boolean opt = false;
-        UserTransaction ut = getUserTransaction();
-        ut.setTransactionTimeout(300);
-
-        Properties props = new Properties();
-        props.put("datanucleus.rdbms.statementBatchLimit", "0");
-        PersistenceManagerFactory lpmf = TestHelper.getPMF(1, props);
-        PersistenceManager pm = null;
-        Transaction tx;
-
-        pm = lpmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(opt);
-        ut.begin();
-        Query q = pm.newQuery(Account.class);
-        Collection c = (Collection) q.execute();
-        c.size();
-        q.closeAll();
-        ut.commit();
-        pm.close();
-
-        pm = lpmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(opt);
-        ut.begin();
-        Account accnt = new Account();
-        accnt.setUsername("jpox");
-        pm.makePersistent(accnt);
-        Object oid = pm.getObjectId(accnt);
-        ut.commit();
-        pm.close();
-
-        pm = lpmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(opt);
-        ut.begin();
-        accnt = (Account) pm.getObjectById(oid);
-        pm.deletePersistent(accnt);
-        ut.commit();
-        pm.close();
-
-        pm = lpmf.getPersistenceManager();
-        pm.currentTransaction().setOptimistic(opt);
-        ut.begin();
+        PersistenceManagerFactory myPMF = null;
         try
         {
+            boolean opt = false;
+            UserTransaction ut = getUserTransaction();
+            ut.setTransactionTimeout(300);
+
+            // Create PMF with no batching
+            Properties props = new Properties();
+            props.put("datanucleus.rdbms.statementBatchLimit", "0");
+            myPMF = TestHelper.getPMF(1, props);
+
+            PersistenceManager pm = myPMF.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            tx.setOptimistic(opt);
+            ut.begin();
+            Query q = pm.newQuery(Account.class);
+            Collection c = (Collection) q.execute();
+            c.size();
+            q.closeAll();
+            ut.commit();
+            pm.close();
+
+            pm = myPMF.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(opt);
+            ut.begin();
+            Account accnt = new Account();
+            accnt.setUsername("jpox");
+            pm.makePersistent(accnt);
+            Object oid = pm.getObjectId(accnt);
+            ut.commit();
+            pm.close();
+
+            pm = myPMF.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(opt);
+            ut.begin();
             accnt = (Account) pm.getObjectById(oid);
-            System.err.println(accnt);
-            Assert.assertTrue("accnt still in db:"+pm.getObjectId(accnt), false);
-        }
-        catch (javax.jdo.JDOObjectNotFoundException ex)
-        {
+            pm.deletePersistent(accnt);
+            ut.commit();
+            pm.close();
+
+            pm = myPMF.getPersistenceManager();
+            pm.currentTransaction().setOptimistic(opt);
+            ut.begin();
+            try
+            {
+                accnt = (Account) pm.getObjectById(oid);
+                System.err.println(accnt);
+                Assert.assertTrue("accnt still in db:"+pm.getObjectId(accnt), false);
+            }
+            catch (javax.jdo.JDOObjectNotFoundException ex)
+            {
+            }
+            finally
+            {
+                ut.commit();
+                pm.close();
+            }
         }
         finally
         {
-            ut.commit();
-            pm.close();
+            clean(myPMF, Account.class);
         }
     }
 
@@ -736,66 +775,73 @@ public class GeneralTest extends JDOPersistenceTestCase
     public void testCloseOnTxnCompletion()
     throws Exception
     {
-        PersistenceManager pm = null;
-        pm = pmf.getPersistenceManager();
-        new PersistenceManagerDisposer(pm);
-        pm.currentTransaction().begin();
-        Account accnt = new Account();
-        accnt.setUsername("jpox");
-        pm.makePersistent(accnt);
-        Object oid = pm.getObjectId(accnt);
-        pm.currentTransaction().commit();
-        assertTrue("The PersistenceManager is still open", pm.isClosed());
-
-        
-        pm = pmf.getPersistenceManager();
-        new PersistenceManagerDisposer(pm);
-        pm.currentTransaction().begin();
-        accnt = (Account) pm.getObjectById(oid);
-        pm.deletePersistent(accnt);
-        pm.currentTransaction().commit();
-        assertTrue("The PersistenceManager is still open", pm.isClosed());
-
-        
-        pm = pmf.getPersistenceManager();
-        new PersistenceManagerDisposer(pm);
-        pm.currentTransaction().begin();
-        accnt = new Account();
-        accnt.setUsername("jpox");
-        pm.makePersistent(accnt);
-        pm.currentTransaction().rollback();
-        assertTrue("The PersistenceManager is still open", pm.isClosed());
-
-        UserTransaction ut = getUserTransaction();
-        ut.begin();
-        pm = pmf.getPersistenceManager();
-        new PersistenceManagerDisposer(pm);
-        accnt = new Account();
-        accnt.setUsername("jpox");
-        pm.makePersistent(accnt);
-        oid = pm.getObjectId(accnt);
-        ut.commit();
-        assertTrue("The PersistenceManager is still open", pm.isClosed());
+        try
+        {
+            PersistenceManager pm = null;
+            pm = pmf.getPersistenceManager();
+            new PersistenceManagerDisposer(pm);
+            pm.currentTransaction().begin();
+            Account accnt = new Account();
+            accnt.setUsername("jpox");
+            pm.makePersistent(accnt);
+            Object oid = pm.getObjectId(accnt);
+            pm.currentTransaction().commit();
+            assertTrue("The PersistenceManager is still open", pm.isClosed());
 
 
-        ut.begin();
-        pm = pmf.getPersistenceManager();
-        new PersistenceManagerDisposer(pm);
-        accnt = (Account) pm.getObjectById(oid);
-        pm.deletePersistent(accnt);
-        ut.commit();
-        assertTrue("The PersistenceManager is still open", pm.isClosed());
+            pm = pmf.getPersistenceManager();
+            new PersistenceManagerDisposer(pm);
+            pm.currentTransaction().begin();
+            accnt = (Account) pm.getObjectById(oid);
+            pm.deletePersistent(accnt);
+            pm.currentTransaction().commit();
+            assertTrue("The PersistenceManager is still open", pm.isClosed());
 
-        
-        ut.begin();
-        pm = pmf.getPersistenceManager();
-        new PersistenceManagerDisposer(pm);
-        accnt = new Account();
-        accnt.setUsername("jpox");
-        pm.makePersistent(accnt);
-        oid = pm.getObjectId(accnt);
-        ut.rollback();
-        assertTrue("The PersistenceManager is still open", pm.isClosed());
+
+            pm = pmf.getPersistenceManager();
+            new PersistenceManagerDisposer(pm);
+            pm.currentTransaction().begin();
+            accnt = new Account();
+            accnt.setUsername("jpox");
+            pm.makePersistent(accnt);
+            pm.currentTransaction().rollback();
+            assertTrue("The PersistenceManager is still open", pm.isClosed());
+
+            UserTransaction ut = getUserTransaction();
+            ut.begin();
+            pm = pmf.getPersistenceManager();
+            new PersistenceManagerDisposer(pm);
+            accnt = new Account();
+            accnt.setUsername("jpox");
+            pm.makePersistent(accnt);
+            oid = pm.getObjectId(accnt);
+            ut.commit();
+            assertTrue("The PersistenceManager is still open", pm.isClosed());
+
+
+            ut.begin();
+            pm = pmf.getPersistenceManager();
+            new PersistenceManagerDisposer(pm);
+            accnt = (Account) pm.getObjectById(oid);
+            pm.deletePersistent(accnt);
+            ut.commit();
+            assertTrue("The PersistenceManager is still open", pm.isClosed());
+
+
+            ut.begin();
+            pm = pmf.getPersistenceManager();
+            new PersistenceManagerDisposer(pm);
+            accnt = new Account();
+            accnt.setUsername("jpox");
+            pm.makePersistent(accnt);
+            oid = pm.getObjectId(accnt);
+            ut.rollback();
+            assertTrue("The PersistenceManager is still open", pm.isClosed());
+        }
+        finally
+        {
+            clean(Account.class);
+        }
     }
 
     /**
@@ -913,7 +959,7 @@ public class GeneralTest extends JDOPersistenceTestCase
 //        	assertTrue("The UserTransaction's status is STATUS_NO_TRANSACTION but afterCompletion() wasn't called", afterCompletionCalled[0]==true);
 //        }
 //    }    
-    
+
     private UserTransaction getUserTransaction() 
     throws NamingException
     {
