@@ -3,5 +3,6 @@ encoding//src/java=UTF-8
 encoding//src/java/org/datanucleus/samples/jgeometry/package.jdo=UTF-8
 encoding//src/java/org/datanucleus/samples/jtsgeometry/package.jdo=UTF-8
 encoding//src/java/org/datanucleus/samples/pggeometry/package.jdo=UTF-8
+encoding//src/resources=UTF-8
 encoding//src/test=UTF-8
 encoding/<project>=UTF-8
