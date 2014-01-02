@@ -75,8 +75,11 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
     {
         // Extract the datastore being run
         String datastoreVendor = null;
-        JDOPersistenceManagerFactory pmf = (JDOPersistenceManagerFactory)TestHelper.getPMF(1, null);
-        StoreManager storeMgr = pmf.getNucleusContext().getStoreManager();
+        if (pmf == null)
+        {
+            pmf = TestHelper.getPMF(1, null);
+        }
+        StoreManager storeMgr = ((JDOPersistenceManagerFactory)pmf).getNucleusContext().getStoreManager();
         if (!(storeMgr instanceof RDBMSStoreManager))
         {
             return null;
