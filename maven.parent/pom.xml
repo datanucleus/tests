@@ -18,10 +18,22 @@
         <repository>
             <id>DN_M2_Repo</id>
             <url>http://www.datanucleus.org/downloads/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>DN_Nightly_M2_Repo</id>
             <url>http://www.datanucleus.org/downloads/maven2-nightly/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
