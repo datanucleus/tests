@@ -67,8 +67,6 @@
         <module>../jpa/rdbms/</module>
         <module>../jpa/criteria/</module>
         
-        <!-- TODO Test removed? -->
-        <!-- <module>../testrunner.j2ee/</module> -->
     </modules>
 
     <dependencies>
