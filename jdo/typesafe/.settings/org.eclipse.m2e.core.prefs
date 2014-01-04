@@ -1,4 +1,6 @@
 activeProfiles=
 eclipse.preferences.version=1
-resolveWorkspaceProjects=true
+# Eclipse JDT APT can't resolve processor from the workspace
+# See https://github.com/jbosstools/m2e-apt/issues/15
+resolveWorkspaceProjects=false
 version=1

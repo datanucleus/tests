@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>datanucleus-test-jdo-typesafe</artifactId>
     <name>org.datanucleus.test.jdo.typesafe</name>
@@ -14,13 +13,32 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <version>3.3</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
+    
+    <properties>
+        <dn.jdo.query.version>[3.0, )</dn.jdo.query.version>
+    </properties>
 
-    <!-- Software Dependencies -->
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <dependencies>
+                    <!-- This is required so m2e-apt can calculate the dependencies for the .factorypath correctly -->
+                    <dependency>
+                        <groupId>org.datanucleus</groupId>
+                        <artifactId>datanucleus-jdo-query</artifactId>
+                        <version>${dn.jdo.query.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jdo-query</artifactId>
-            <version>[3.0, )</version>
+            <version>${dn.jdo.query.version}</version>
         </dependency>
     </dependencies>
 </project>
