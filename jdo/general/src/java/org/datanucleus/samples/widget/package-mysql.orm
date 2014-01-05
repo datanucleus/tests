@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.datanucleus.samples.widget">
+        <class name="Primitive">
+            <field name="fixedLengthStringField">
+                <column length="20" jdbc-type="CHAR"/>
+            </field>
+            <field name="normalStringField">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="bigDecimalField">
+                <!-- Should we have to add this ? Needed for MySQL -->
+                <column scale="5" length="20"/>
+            </field>
+        </class>
+
+        <class name="InverseListValue">
+            <field name="strField">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="InverseSetValue">
+            <field name="strField">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="StringWidget">
+            <field name="fixedLengthString">
+    			<column length="20" jdbc-type="CHAR"/>
+            </field>
+            <field name="normalString">
+    			<column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="DecimalWidget">
+            <field name="bigIntegerField">
+    			<column length="18"/>
+            </field>
+            <field name="bigDecimalField">
+    			<column scale="2" length="18"/>
+            </field>
+        </class>
+
+        <class name="StringBlobWidget">
+            <field name="hugeString">
+    			<column jdbc-type="BLOB"/>
+            </field>
+        </class>
+        <class name="StringClobWidget">
+            <field name="anotherHugeString">
+    			<column jdbc-type="CLOB"/>
+            </field>
+        </class>
+    </package>
+</orm>

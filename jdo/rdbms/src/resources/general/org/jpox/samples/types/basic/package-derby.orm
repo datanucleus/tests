@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.types.basic">
+        <class name="DateHolder">
+            <inheritance strategy="new-table"/>
+            <field name="dateField">
+                <column jdbc-type="DATE"/>
+            </field>
+        </class>
+    </package>
+</orm>

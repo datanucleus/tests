@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+
+<orm>
+    <package name="org.datanucleus.samples.store">
+        <class name="Product">
+            <primary-key name="MY_PRODUCT_PK"/>
+            <inheritance strategy="new-table"/>
+            <field name="id">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="name">
+                <column length="100" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="description">
+                <column length="255" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="imageUrl">
+                <column length="255" jdbc-type="VARCHAR" allows-null="false"/>
+            </field>
+            <field name="currency">
+                <column length="4" jdbc-type="VARCHAR" default-value="GBP"/>
+            </field>
+            <field name="price">
+                <column default-value="10.00"/>
+            </field>
+        </class>
+
+        <class name="Book">
+            <inheritance strategy="new-table"/>
+            <field name="isbn">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="author">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="title">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="publisher">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="editionNo">
+                <column default-value="1"/>
+            </field>
+        </class>
+
+        <class name="CompactDisc">
+            <inheritance strategy="new-table"/>
+            <index name="ARTIST_TITLE" unique="true">
+                <column name="ARTIST"/>
+                <column name="TITLE"/>
+            </index>
+            <field name="artist">
+                <column name="ARTIST" length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="title">
+                <column name="TITLE" length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="producer">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="publisher">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="MyCompactDisc">
+            <inheritance strategy="new-table"/>
+            <field name="location">
+                <column length="40" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Inventory">
+            <field name="products" table="PRODUCTS_IN_INVENTORY">
+                <join>
+                    <column name="INVENTORY_ID"/>
+                </join>
+                <element>
+                    <column name="PRODUCT_ID"/>
+                </element>
+            </field>
+        </class>
+
+        <class name="User">
+            <field name="login">
+                <column length="20" jdbc-type="VARCHAR"/>
+                <index name="MY_LOGIN_INDEX" unique="true"/>
+            </field>
+            <field name="password">
+                <column length="12" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="UserDetails">
+            <field name="forename">
+                <column length="30" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="surname">
+                <column length="30" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+    </package>
+</orm>

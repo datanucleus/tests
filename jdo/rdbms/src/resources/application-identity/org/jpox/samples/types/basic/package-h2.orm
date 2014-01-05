@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.types.basic">
+        <class name="StringHolder">
+            <field name="fixedLengthString">
+    			<column length="20" jdbc-type="CHAR"/>
+            </field>
+            <field name="normalString">
+    			<column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="DecimalHolder">
+            <field name="bigIntegerField">
+    			<column length="18"/>
+            </field>
+            <field name="bigDecimalField">
+    			<column scale="2" length="18"/>
+            </field>
+        </class>
+    </package>
+</orm>

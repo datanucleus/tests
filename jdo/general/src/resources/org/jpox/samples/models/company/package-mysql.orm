@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.jpox.samples.models.company">
+        <class name="Person">
+            <datastore-identity column="PERSON_ID" strategy="increment"/>
+            <field name="personNum" column="PERSONNUM"/>
+            <field name="globalNum" column="GLOBALNUM"/>
+            <field name="firstName">
+                <column name="FIRSTNAME" length="32" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="lastName">
+                <column name="LASTNAME" length="32" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="emailAddress">
+                <column name="EMAIL_ADDRESS" length="64" jdbc-type="VARCHAR"/>
+            </field>
+
+            <query name="NumberOfPeople" language="javax.jdo.query.SQL" unique="true" result-class="org.jpox.samples.nondurable.TableSize">
+                <![CDATA[
+                SELECT count(*) AS THESIZE FROM PERSON
+                ]]>
+            </query>
+            <query name="PeopleCalledSmith" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT PERSONNUM, GLOBALNUM FROM PERSON WHERE LASTNAME = 'Smith'
+                ]]>
+            </query>
+            <query name="PeopleWithEmail" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT PERSONNUM, GLOBALNUM FROM PERSON WHERE EMAIL_ADDRESS = ?
+                ]]>
+            </query>
+        </class>
+
+        <class name="Account">
+            <field name="username">
+                <column length="32" jdbc-type="CHAR"/>
+            </field>
+        </class>
+
+        <class name="Department">
+            <field name="name">
+                <column length="20" jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+
+        <class name="Employee">
+            <datastore-identity column="EMPLOYEE_ID" strategy="increment"/>
+            <inheritance strategy="new-table"/>
+            <field name="serialNo">
+                <column length="12" jdbc-type="CHAR"/>
+            </field>
+            <field name="salary"/>
+            <field name="manager"/>
+            <field name="yearsInCompany"/>
+
+            <query name="SalaryBelow12" language="javax.jdo.query.JDOQL">
+                <![CDATA[
+                SELECT FROM org.jpox.samples.models.company.Employee WHERE salary < 12 ORDER BY salary ASCENDING
+                ]]>
+            </query>
+            <query name="SerialNoStartsWith" language="javax.jdo.query.JDOQL">
+                <![CDATA[
+                SELECT FROM org.jpox.samples.models.company.Employee WHERE serialNo.startsWith(value) PARAMETERS String value
+                ]]>
+            </query>
+        </class>
+
+        <class name="Developer" table="DEVELOPER">
+            <datastore-identity column="DEVELOPER_ID" strategy="increment"/>
+            <inheritance strategy="new-table"/>
+            <field name="SKILL">
+                <column name="SKILL" length="30" jdbc-type="VARCHAR"/>
+            </field>
+
+            <query name="DeveloperWithSkill" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT PERSONNUM, GLOBALNUM, SKILL FROM DEVELOPER WHERE SKILL = ?
+                ]]>
+            </query>
+
+            <query name="DeveloperWithSkillUsingJoin" language="javax.jdo.query.SQL">
+                <![CDATA[
+                SELECT PERSON.PERSONNUM, PERSON.GLOBALNUM, SKILL
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.PERSONNUM = PERSON.PERSONNUM AND DEVELOPER.GLOBALNUM = PERSON.GLOBALNUM
+                WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillForResult" language="javax.jdo.query.SQL" result-class="org.jpox.samples.models.company.DeveloperRC">
+                <![CDATA[
+                SELECT PERSONNUM as id, GLOBALNUM, SKILL FROM DEVELOPER WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillUsingJoinForResult" language="javax.jdo.query.SQL" result-class="org.jpox.samples.models.company.DeveloperRC">
+                <![CDATA[
+                SELECT PERSON.PERSONNUM as id, SKILL, PERSON.PERSONNUM, PERSON.GLOBALNUM, salary
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.PERSONNUM = PERSON.PERSONNUM AND DEVELOPER.GLOBALNUM = PERSON.GLOBALNUM
+                INNER JOIN EMPLOYEE ON DEVELOPER.PERSONNUM = EMPLOYEE.PERSONNUM AND DEVELOPER.GLOBALNUM = EMPLOYEE.PERSONNUM 
+                WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillUsingJoinForResultHashMap" language="javax.jdo.query.SQL" result-class="java.util.HashMap">
+                <![CDATA[
+                SELECT PERSON.PERSONNUM as ID, SKILL, PERSON.PERSONNUM, PERSON.GLOBALNUM, salary
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.PERSONNUM = PERSON.PERSONNUM AND DEVELOPER.GLOBALNUM = PERSON.GLOBALNUM
+                INNER JOIN EMPLOYEE ON DEVELOPER.PERSONNUM = EMPLOYEE.PERSONNUM AND DEVELOPER.GLOBALNUM = EMPLOYEE.PERSONNUM 
+                WHERE SKILL = ?
+                ]]>
+            </query>
+            <query name="DeveloperWithSkillUsingJoinForResultMap" language="javax.jdo.query.SQL" result-class="java.util.Map">
+                <![CDATA[
+                SELECT PERSON.PERSONNUM as ID, SKILL, PERSON.PERSONNUM, PERSON.GLOBALNUM, salary
+                FROM DEVELOPER
+                INNER JOIN PERSON ON DEVELOPER.PERSONNUM = PERSON.PERSONNUM AND DEVELOPER.GLOBALNUM = PERSON.GLOBALNUM
+                INNER JOIN EMPLOYEE ON DEVELOPER.PERSONNUM = EMPLOYEE.PERSONNUM AND DEVELOPER.GLOBALNUM = EMPLOYEE.PERSONNUM 
+                WHERE SKILL = ?
+                ]]>
+            </query>
+        </class>
+    </package>
+</orm>
