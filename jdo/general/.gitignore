@@ -1,3 +1,6 @@
 /bin
 datanucleus.log
 target/
+/testDB
+/testDB2
+/derby.log
