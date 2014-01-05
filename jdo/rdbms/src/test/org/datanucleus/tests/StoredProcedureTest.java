@@ -40,6 +40,7 @@ import org.jpox.samples.models.company.Person;
 /**
  * Series of tests for stored procedures.
  * Any datastores that don't support stored procs will omit these tests.
+ * TODO Generalise the stored proc creation/drop to work with all RDBMS
  */
 public class StoredProcedureTest extends JDOPersistenceTestCase
 {
