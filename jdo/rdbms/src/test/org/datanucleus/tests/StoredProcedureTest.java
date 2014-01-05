@@ -90,6 +90,7 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
         }
         catch (SQLException sqle)
         {
+            LOG.error("Exception in drop+create of stored proc", sqle);
             fail("Exception in drop-create of stored procedure : " + sqle.getMessage());
         }
         finally
@@ -199,6 +200,7 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
         }
         catch (SQLException sqle)
         {
+            LOG.error("Exception in drop+create of stored proc", sqle);
             fail("Exception in drop-create of stored procedure : " + sqle.getMessage());
         }
         finally
@@ -306,6 +308,7 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
         }
         catch (SQLException sqle)
         {
+            LOG.error("Exception in drop+create of stored proc", sqle);
             fail("Exception in drop-create of stored procedure : " + sqle.getMessage());
         }
         finally
