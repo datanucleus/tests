@@ -37,68 +37,75 @@ public class TypeConversionTest extends JPAPersistenceTestCase
 
     public void testBasicConversion()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            TypeHolder holder = new TypeHolder(1, "First holder");
-            ComplicatedType com = new ComplicatedType("String 45", "Number 23");
-            holder.setDetails(com);
-            ComplicatedType2 com2 = new ComplicatedType2("String 78", "Number 34");
-            holder.setDetails2(com2);
-            ComplicatedType com3 = new ComplicatedType("String 90", "Number 45");
-            holder.setDetails3(com3);
-            em.persist(holder);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error(">> Exception thrown during persist when using type converter", e);
-            fail("Failure on persist with type converter : " + e.getMessage());
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                TypeHolder holder = new TypeHolder(1, "First holder");
+                ComplicatedType com = new ComplicatedType("String 45", "Number 23");
+                holder.setDetails(com);
+                ComplicatedType2 com2 = new ComplicatedType2("String 78", "Number 34");
+                holder.setDetails2(com2);
+                ComplicatedType com3 = new ComplicatedType("String 90", "Number 45");
+                holder.setDetails3(com3);
+                em.persist(holder);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during persist when using type converter", e);
+                fail("Failure on persist with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                TypeHolder p1 = em.find(TypeHolder.class, 1);
+                ComplicatedType comp = p1.getDetails();
+                assertNotNull(comp);
+                assertEquals("String 45", comp.getName1());
+                assertEquals("Number 23", comp.getName2());
+                ComplicatedType2 comp2 = p1.getDetails2();
+                assertNotNull(comp2);
+                assertEquals("String 78", comp2.getName1());
+                assertEquals("Number 34", comp2.getName2());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during retrieve when using type converter", e);
+                fail("Failure on retrieve with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
-        }
-        if (emf.getCache() != null)
-        {
-            emf.getCache().evictAll();
-        }
-
-        em = getEM();
-        tx = em.getTransaction();
-        try
-        {
-            tx.begin();
-            TypeHolder p1 = em.find(TypeHolder.class, 1);
-            ComplicatedType comp = p1.getDetails();
-            assertNotNull(comp);
-            assertEquals("String 45", comp.getName1());
-            assertEquals("Number 23", comp.getName2());
-            ComplicatedType2 comp2 = p1.getDetails2();
-            assertNotNull(comp2);
-            assertEquals("String 78", comp2.getName1());
-            assertEquals("Number 34", comp2.getName2());
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error(">> Exception thrown during retrieve when using type converter", e);
-            fail("Failure on retrieve with type converter : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(TypeHolder.class);
         }
     }
 }
