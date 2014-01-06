@@ -481,7 +481,7 @@
                 <dependency>
                     <groupId>com.nuodb.jdbc</groupId>
                     <artifactId>nuodb-jdbc</artifactId>
-                    <version>2.0</version>
+                    <version>2.0.2</version>
                 </dependency>
                 <dependency>
                     <groupId>org.datanucleus</groupId>
