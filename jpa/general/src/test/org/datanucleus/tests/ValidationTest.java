@@ -40,98 +40,119 @@ public class ValidationTest extends JPAPersistenceTestCase
 
     public void testInsertNotNull()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            ValidatedPerson p1 = new ValidatedPerson(1, "Fred", null);
-            em.persist(p1);
-            tx.commit();
-            fail("Should have thrown ConstraintViolationException");
-        }
-        catch (ConstraintViolationException cve)
-        {
-            // Expected
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                ValidatedPerson p1 = new ValidatedPerson(1, "Fred", null);
+                em.persist(p1);
+                tx.commit();
+                fail("Should have thrown ConstraintViolationException");
+            }
+            catch (ConstraintViolationException cve)
+            {
+                // Expected
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(ValidatedPerson.class);
         }
     }
 
     public void testUpdateNotNull()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            ValidatedPerson p1 = new ValidatedPerson(1, "Fred", "Smith");
-            em.persist(p1);
-            tx.commit();
-        }
-        finally
-        {
-            if (tx.isActive())
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
             {
-                tx.rollback();
+                tx.begin();
+                ValidatedPerson p1 = new ValidatedPerson(1, "Fred", "Smith");
+                em.persist(p1);
+                tx.commit();
             }
-            em.close();
-        }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
 
-        em = getEM();
-        tx = em.getTransaction();
-        try
-        {
-            tx.begin();
-            ValidatedPerson p1 = (ValidatedPerson)em.find(ValidatedPerson.class, new Long(1));
-            p1.setSurname(null);
-            tx.commit();
-            fail("Should have thrown a ConstraintViolationException on update");
-        }
-        catch (ConstraintViolationException cve)
-        {
-            // Expected
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                ValidatedPerson p1 = (ValidatedPerson)em.find(ValidatedPerson.class, new Long(1));
+                p1.setSurname(null);
+                tx.commit();
+                fail("Should have thrown a ConstraintViolationException on update");
+            }
+            catch (ConstraintViolationException cve)
+            {
+                // Expected
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(ValidatedPerson.class);
         }
     }
 
     public void testInsertSize()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            ValidatedPerson p1 = new ValidatedPerson(1, "Fred", "Smith");
-            p1.setLogin("012345678901");
-            em.persist(p1);
-            tx.commit();
-            fail("Should have thrown ConstraintViolationException");
-        }
-        catch (ConstraintViolationException cve)
-        {
-            // Expected
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                ValidatedPerson p1 = new ValidatedPerson(1, "Fred", "Smith");
+                p1.setLogin("012345678901");
+                em.persist(p1);
+                tx.commit();
+                fail("Should have thrown ConstraintViolationException");
+            }
+            catch (ConstraintViolationException cve)
+            {
+                // Expected
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(ValidatedPerson.class);
         }
     }
 
