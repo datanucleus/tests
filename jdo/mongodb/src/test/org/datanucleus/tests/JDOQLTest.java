@@ -1169,4 +1169,91 @@ public class JDOQLTest extends JDOPersistenceTestCase
             clean(Person.class);
         }
     }
+
+    /**
+     * Query that returns an empty list, and calling next on its iterator.
+     * @throws Exception
+     */
+    public void testNextOnEmptyIterator() throws Exception
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Person p1 = new Person();
+                p1.setPersonNum(1);
+                p1.setGlobalNum("1");
+                p1.setFirstName("Bugs");
+                p1.setLastName("Bunny");
+
+                Person p2 = new Person();
+                p2.setPersonNum(2);
+                p2.setGlobalNum("2");
+                p2.setFirstName("Daffy");
+                p2.setLastName("Duck");
+
+                Employee e3 = new Employee();
+                e3.setFirstName("Barney");
+                e3.setLastName("Rubble");
+                e3.setPersonNum(103);
+                e3.setGlobalNum("103");
+                e3.setSalary(124.50f);
+
+                pm.makePersistent(p1);
+                pm.makePersistent(p2);
+                pm.makePersistent(e3);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception during persist", e);
+                fail("Exception thrown when running test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query q1 = pm.newQuery("SELECT FROM " + Person.class.getName() +
+                    " WHERE firstName == 'Doofy'");
+                List<Person> results1 = (List<Person>)q1.execute();
+                Iterator<Person> iter = results1.iterator();
+                assertFalse(iter.hasNext());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception during query", e);
+                fail("Exception thrown when running test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(Employee.class);
+            clean(Person.class);
+        }
+    }
 }
