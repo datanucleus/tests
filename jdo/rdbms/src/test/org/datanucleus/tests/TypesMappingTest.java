@@ -286,6 +286,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
 
     /**
      * Test for Oracles XMLType.
+     * TODO Need to have Oracle XMLType in CLASSPATH for this
      */
     public void testXMLType()
     {

@@ -92,6 +92,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             officeIds[1] = pm.getObjectId(o2);
             officeIds[2] = pm.getObjectId(o3);
 
+            // TODO This throws an exception about "JDOQL query has result clause PrimaryExpression{roomName} but this is invalid (see JDO spec 14.6.10). When specified with grouping should be aggregate, or grouping expression"
             tx.begin();
             Query q = pm.newQuery(Office.class);
             q.setGrouping("Analysis.rollup({roomName})");
