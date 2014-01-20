@@ -70,18 +70,17 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
                 p.setAge(34);
                 em.persist(p);
+                em.flush();
 
                 // Check the results
-                List result = em.createNativeQuery(
-                "SELECT P.PERSON_ID FROM JPA_AN_PERSON P WHERE P.AGE_COL=34").getResultList();
+                List result = em.createNativeQuery("SELECT P.PERSON_ID FROM JPA_AN_PERSON P WHERE P.AGE_COL=34").getResultList();
                 assertEquals(1, result.size());
                 Iterator iter = result.iterator();
                 while (iter.hasNext())
                 {
-                    // Should be a Long (type of "PERSON_ID" column, Person.personNum field)
+                    // Should be a Long or equivalent (type of "PERSON_ID" column (Person.personNum field)); Oracle returns BigDecimal
                     Object obj = iter.next();
-                    // TODO Oracle returns BigDecimal
-                    assertEquals("SQL query has returned an object of an incorrect type", Long.class, obj.getClass());
+                    assertTrue("SQL query has returned an object of an incorrect type", Number.class.isAssignableFrom(obj.getClass()));
                 }
 
                 tx.rollback(); // Dont persist the data
@@ -141,16 +140,14 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 tx.begin();
 
                 // Check the results
-                List result = em.createNativeQuery(
-                "SELECT P.PERSON_ID FROM JPA_AN_PERSON P WHERE P.AGE_COL=34").getResultList();
+                List result = em.createNativeQuery("SELECT P.PERSON_ID FROM JPA_AN_PERSON P WHERE P.AGE_COL=34").getResultList();
                 assertEquals(1, result.size());
                 Iterator iter = result.iterator();
                 while (iter.hasNext())
                 {
-                    // Should be a Long (type of "PERSON_ID" column (Person.personNum field))
+                    // Should be a Long or equivalent (type of "PERSON_ID" column (Person.personNum field)); Oracle returns BigDecimal
                     Object obj = iter.next();
-                    // TODO Oracle returns BigDecimal
-                    assertEquals("SQL query has returned an object of an incorrect type", Long.class, obj.getClass());
+                    assertTrue("SQL query has returned an object of an incorrect type", Number.class.isAssignableFrom(obj.getClass()));
                 }
 
                 tx.rollback();
@@ -191,6 +188,7 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
                 p.setAge(34);
                 em.persist(p);
+                em.flush();
 
                 // Check the results
                 Query q = em.createNativeQuery("SELECT P.PERSON_ID FROM JPA_AN_PERSON P WHERE P.AGE_COL=?1");
@@ -200,10 +198,9 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 Iterator iter = result.iterator();
                 while (iter.hasNext())
                 {
-                    // Should be a Long (type of "PERSON_ID" column, Person.personNum field)
+                    // Should be a Long or equivalent (type of "PERSON_ID" column (Person.personNum field)); Oracle returns BigDecimal
                     Object obj = iter.next();
-                    // TODO Oracle returns BigDecimal
-                    assertEquals("SQL query has returned an object of an incorrect type", Long.class, obj.getClass());
+                    assertTrue("SQL query has returned an object of an incorrect type", Number.class.isAssignableFrom(obj.getClass()));
                 }
 
                 tx.rollback(); // Dont persist the data
