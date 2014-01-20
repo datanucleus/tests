@@ -526,8 +526,8 @@
             <dependencies>
                 <dependency>
                     <groupId>oracle</groupId>
-                    <artifactId>ojdbc14_g</artifactId>
-                    <version>10.2.0.4</version>
+                    <artifactId>ojdbc6</artifactId>
+                    <version>11.2.0.3</version>
                     <optional>true</optional>
                 </dependency>
                 <dependency>
@@ -942,8 +942,8 @@
                         <dependencies>
                             <dependency>
                                 <groupId>oracle</groupId>
-                                <artifactId>ojdbc14_g</artifactId>
-                                <version>10.2.0.4</version>
+                                <artifactId>ojdbc6</artifactId>
+                                <version>11.2.0.3</version>
                                 <optional>true</optional>
                             </dependency>
                         </dependencies>
