@@ -80,6 +80,7 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 {
                     // Should be a Long (type of "PERSON_ID" column, Person.personNum field)
                     Object obj = iter.next();
+                    // TODO Oracle returns BigDecimal
                     assertEquals("SQL query has returned an object of an incorrect type", Long.class, obj.getClass());
                 }
 
@@ -148,6 +149,7 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 {
                     // Should be a Long (type of "PERSON_ID" column (Person.personNum field))
                     Object obj = iter.next();
+                    // TODO Oracle returns BigDecimal
                     assertEquals("SQL query has returned an object of an incorrect type", Long.class, obj.getClass());
                 }
 
@@ -200,6 +202,7 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 {
                     // Should be a Long (type of "PERSON_ID" column, Person.personNum field)
                     Object obj = iter.next();
+                    // TODO Oracle returns BigDecimal
                     assertEquals("SQL query has returned an object of an incorrect type", Long.class, obj.getClass());
                 }
 
