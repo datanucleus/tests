@@ -1957,6 +1957,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 q.executeUpdate();
                 tx.commit();
             }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception performing UPDATE, nulling out bestFriend field", e);
+                fail("Error in cleanup : " + e.getMessage());
+            }
             finally
             {
                 if (tx.isActive())
