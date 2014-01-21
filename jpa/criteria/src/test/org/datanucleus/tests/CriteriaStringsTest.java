@@ -512,6 +512,66 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test basic generation of query with candidate and alias and filter (using AND with OR).
+     */
+    public void testBasicWithFilterAndOr()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
+            Root<Person> candidate = crit.from(Person.class);
+            candidate.alias("p");
+            crit.select(candidate);
+
+            Path firstNameField = candidate.get("firstName");
+            Predicate firstName1 = cb.equal(firstNameField, "Fred");
+            Predicate firstName2 = cb.equal(firstNameField, "Pebbles");
+            Predicate eitherFirstClause = cb.or(firstName1, firstName2);
+
+            Path lastNameField = candidate.get("lastName");
+            Predicate lastNameClause = cb.equal(lastNameField, "Flintstone");
+
+            crit.where(eitherFirstClause, lastNameClause);
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT p FROM org.datanucleus.samples.annotations.models.company.Person p WHERE" +
+                " ((p.firstName = 'Fred') OR (p.firstName = 'Pebbles')) AND (p.lastName = 'Flintstone')",
+                crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Person> results = q.getResultList();
+
+            assertNotNull("Null results returned!", results);
+            assertEquals("Number of results is incorrect", 1, results.size());
+            Person pers = results.iterator().next();
+            if (pers.getFirstName().equals("Fred") && pers.getLastName().equals("Flintstone") && pers.getPersonNum() == 101)
+            {
+            }
+            else
+            {
+                fail("Fred was not returned!");
+            }
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
      * Test basic generation of query with candidate and alias, with ordering.
      */
     public void testBasicWithOrder()
