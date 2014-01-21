@@ -66,7 +66,9 @@ import org.jpox.samples.interfaces.Diet;
 import org.jpox.samples.interfaces.ShapeHolder;
 import org.jpox.samples.many_many.PetroleumCustomer;
 import org.jpox.samples.many_many.PetroleumSupplier;
+import org.jpox.samples.models.company.Developer;
 import org.jpox.samples.models.company.Employee;
+import org.jpox.samples.models.company.Manager;
 import org.jpox.samples.models.company.Person;
 import org.jpox.samples.objects.ObjectHolder;
 import org.jpox.samples.one_many.collection.ListHolder;
@@ -395,6 +397,8 @@ public class SchemaTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
+                pm.getExtent(Developer.class); // Make sure our read-write PMF has schema for this class
+                pm.getExtent(Manager.class); // Make sure our read-write PMF has schema for this class
                 Employee e = new Employee(123, "Barney", "Rubble", "barney.rubble@warnerbros.com", 
                     (float)123.45, "1245C");
                 pm.makePersistent(e);
