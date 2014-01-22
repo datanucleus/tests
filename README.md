@@ -26,4 +26,9 @@ On test.jdo.identity this will trigger 4 different executions, each configuratio
 - Run all the executions with optimisitc using Mysql database
 >mvn -Pmysql -Dtest.configs=optimistic clean test
 
+## Database cleanup
+
+Before running each test set execution the databased will be cleaned up automatically. This clean up can be skipped by setting `maven.datanucleus.test.skip.reset` property to `true`.
+>mvn -Pmysql -Dmaven.datanucleus.test.skip.reset=true clean test
+
 [1]: ../../tree/master/framework.maven
