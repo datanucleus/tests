@@ -15,6 +15,22 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
+    <dependencies>
+        <!-- Oracle XMLTYPE dependencies -->
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>xdb</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>xmlparser</artifactId>
+            <version>2.0</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
