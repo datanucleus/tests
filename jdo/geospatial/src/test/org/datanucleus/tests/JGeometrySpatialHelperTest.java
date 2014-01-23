@@ -20,8 +20,8 @@ package org.datanucleus.tests;
 import java.sql.SQLException;
 
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
+import org.datanucleus.jdo.spatial.JgeomSpatialHelper;
 import org.datanucleus.jdo.spatial.SpatialHelper;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 public class JGeometrySpatialHelperTest extends JDOPersistenceTestCase
 {
@@ -39,7 +39,7 @@ public class JGeometrySpatialHelperTest extends JDOPersistenceTestCase
 
     protected void setUp() throws Exception
     {
-        helper = new SpatialHelper((JDOPersistenceManagerFactory)pmf);
+        helper = new JgeomSpatialHelper((JDOPersistenceManagerFactory) pmf);
         super.setUp();
     }
 

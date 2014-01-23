@@ -35,9 +35,9 @@ import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 
 /**
- * Series of tests for JGeometry spatial functions.
- * Run for Oracle only currently.
- *
+ * Series of tests for JGeometry spatial functions. Run for Oracle only
+ * currently.
+ * 
  * @version $Revision: 1.2 $
  */
 public class JGeometrySpatialTest extends JDOPersistenceTestCase
@@ -234,15 +234,16 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Short srid = new Short((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 1000 && id < 2000 && Spatial.overlaps(geom, Spatial.mPointFromText(:wkt, :srid))"); // Oracle's
-                                                                                                            // geometryN
-                                                                                                            // on
-                                                                                                            // multipoint
-                                                                                                            // returns a
-                                                                                                            // multipoint
+                                                                                                          // geometryN
+                                                                                                          // on
+                                                                                                          // multipoint
+                                                                                                          // returns
+                                                                                                          // a
+                                                                                                          // multipoint
             List list = (List) query.execute(wkt, srid);
             assertEquals("Wrong number of geometries whitch overlap a multipoint constructed from given wkt returned", 1, list.size());
-            assertTrue("Point 1 should be in the list of geometries whitch overlap a multipoint constructed from given wkt", list
-                    .contains(getSamplePoint(1)));
+            assertTrue("Point 1 should be in the list of geometries whitch overlap a multipoint constructed from given wkt",
+                list.contains(getSamplePoint(1)));
         }
         finally
         {
@@ -447,8 +448,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 "id > 1000 && id < 2000 && Spatial.overlaps(geom, Spatial.mPointFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)))");
             List list = (List) query.execute(geom);
             assertEquals("Wrong number of geometries whitch overlap a multipoint constructed from given wkb returned", 1, list.size());
-            assertTrue("Point 1 should be in the list of geometries whitch overlap a multipoint constructed from given wkb", list
-                    .contains(getSamplePoint(1)));
+            assertTrue("Point 1 should be in the list of geometries whitch overlap a multipoint constructed from given wkb",
+                list.contains(getSamplePoint(1)));
         }
         finally
         {
@@ -751,10 +752,10 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 "id > 2000 && id < 3000 && Spatial.isEmpty(Spatial.intersection(geom, :linestring))");
             List list = (List) query.execute(lineString);
             assertEquals("Wrong number of geometries that do not intersect with a given linestring returned", 2, list.size());
-            assertTrue("LineString 2 should be in the list of geometries that do not intersect with a given linestring", list
-                    .contains(getSampleLineString(2)));
-            assertTrue("LineString 3 should be in the list of geometries that do not intersect with a given linestring", list
-                    .contains(getSampleLineString(3)));
+            assertTrue("LineString 2 should be in the list of geometries that do not intersect with a given linestring",
+                list.contains(getSampleLineString(2)));
+            assertTrue("LineString 3 should be in the list of geometries that do not intersect with a given linestring",
+                list.contains(getSampleLineString(3)));
         }
         finally
         {
@@ -833,8 +834,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.equals(geom, :polygon)");
             List list = (List) query.execute(polygon);
             assertEquals("Wrong number of geometries which are equal to a given polygon returned", 1, list.size());
-            assertTrue("Polygon 2 should be in the list of geometries which are equal to a given polygon", list
-                    .contains(getSamplePolygon(2)));
+            assertTrue("Polygon 2 should be in the list of geometries which are equal to a given polygon",
+                list.contains(getSamplePolygon(2)));
         }
         finally
         {
@@ -859,8 +860,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.disjoint(geom, :polygon)");
             List list = (List) query.execute(polygon);
             assertEquals("Wrong number of geometries which are disjoint from a given polygon returned", 1, list.size());
-            assertTrue("Polygon 2 should be in the list of geometries which are disjoint from a given polygon", list
-                    .contains(getSamplePolygon(2)));
+            assertTrue("Polygon 2 should be in the list of geometries which are disjoint from a given polygon",
+                list.contains(getSamplePolygon(2)));
         }
         finally
         {
@@ -885,8 +886,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.intersects(geom, :polygon)");
             List list = (List) query.execute(polygon);
             assertEquals("Wrong number of geometries which intersect with a given polygon returned", 1, list.size());
-            assertTrue("Polygon 1 should be in the list of geometries which intersect with a given polygon", list
-                    .contains(getSamplePolygon(1)));
+            assertTrue("Polygon 1 should be in the list of geometries which intersect with a given polygon",
+                list.contains(getSamplePolygon(1)));
         }
         finally
         {
@@ -910,10 +911,10 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.touches(:point, geom)");
             List list = (List) query.execute(point);
             assertEquals("Wrong number of geometries which are touched by a given point returned", 2, list.size());
-            assertTrue("Polygon 1 should be in the list of geometries which are touched by a given point", list
-                    .contains(getSamplePolygon(1)));
-            assertTrue("Polygon 2 should be in the list of geometries which are touched by a given point", list
-                    .contains(getSamplePolygon(2)));
+            assertTrue("Polygon 1 should be in the list of geometries which are touched by a given point",
+                list.contains(getSamplePolygon(1)));
+            assertTrue("Polygon 2 should be in the list of geometries which are touched by a given point",
+                list.contains(getSamplePolygon(2)));
         }
         finally
         {
@@ -937,8 +938,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 2000 && id < 3000 && Spatial.crosses(geom, :lineString)");
             List list = (List) query.execute(lineString);
             assertEquals("Wrong number of geometries which are crossed by a given linestring returned", 1, list.size());
-            assertTrue("LineString 1 should be in the list of geometries which are crossed by a given linestring", list
-                    .contains(getSampleLineString(1)));
+            assertTrue("LineString 1 should be in the list of geometries which are crossed by a given linestring",
+                list.contains(getSampleLineString(1)));
         }
         finally
         {
@@ -1036,8 +1037,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 2000 && id < 3000 && Spatial.relate(geom, :lineString, :pattern)");
             List list = (List) query.execute(lineString, pattern);
             assertEquals("Wrong number of geometries which are related to a given linestring returned (crosses)", 1, list.size());
-            assertTrue("LineString 1 should be in the list of geometries which are related to a given linestring (crosses)", list
-                    .contains(getSampleLineString(1)));
+            assertTrue("LineString 1 should be in the list of geometries which are related to a given linestring (crosses)",
+                list.contains(getSampleLineString(1)));
         }
         finally
         {
@@ -1093,8 +1094,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 "id > 1000 && id < 2000 && Spatial.within(geom, Spatial.buffer(:point, 1000.0))");
             List list = (List) query.execute(point);
             assertEquals("Wrong number of geometries which are within the buffer of a given point returned", 1, list.size());
-            assertTrue("Point 1 should be in the list of geometries which are within the buffer of a given point", list
-                    .contains(getSamplePoint(1)));
+            assertTrue("Point 1 should be in the list of geometries which are within the buffer of a given point",
+                list.contains(getSamplePoint(1)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.buffer(geom, 1000.0)");
@@ -1154,8 +1155,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 2000 && id < 3000 && Spatial.intersection(geom, :lineString) != null");
             List list = (List) query.execute(lineString);
             assertEquals("Wrong number of geometries which intersect a given linestring returned", 1, list.size());
-            assertTrue("LineSting 1 should be in the list of geometries which intersect a given linestring", list
-                    .contains(getSampleLineString(1)));
+            assertTrue("LineSting 1 should be in the list of geometries which intersect a given linestring",
+                list.contains(getSampleLineString(1)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.intersection(geom, Spatial.geomFromText('LINESTRING(25.0 25.0, 25.0 75.0)', 4326))");
@@ -1217,14 +1218,13 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.symDifference(geom, :polygon) != null");
             List list = (List) query.execute(polygon);
             assertEquals("Wrong number of geometries whose symDifference to a given polygon is not null returned", 2, list.size());
-            assertTrue("Polygon 1 should be in the list of geometries whose symDifference to a given polygon is not null", list
-                    .contains(getSamplePolygon(1)));
-            assertTrue("Polygon 2 should be in the list of geometries whose symDifference to a given polygon is not null", list
-                    .contains(getSamplePolygon(2)));
+            assertTrue("Polygon 1 should be in the list of geometries whose symDifference to a given polygon is not null",
+                list.contains(getSamplePolygon(1)));
+            assertTrue("Polygon 2 should be in the list of geometries whose symDifference to a given polygon is not null",
+                list.contains(getSamplePolygon(2)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
-            query
-                    .setResult("Spatial.symDifference(geom, Spatial.geomFromText('POLYGON((20.0 20.0,30.0 20.0,30.0 30.0,20.0 30.0,20.0 20.0))', 4326))");
+            query.setResult("Spatial.symDifference(geom, Spatial.geomFromText('POLYGON((20.0 20.0,30.0 20.0,30.0 30.0,20.0 30.0,20.0 20.0))', 4326))");
             query.setUnique(true);
             JGeometry symDifference_read = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
             assertTrue("Returned symDifference should be a multipolygon", symDifference_read.getType() == JGeometry.GTYPE_MULTIPOLYGON);
@@ -1252,14 +1252,13 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.difference(geom, :polygon) != null");
             List list = (List) query.execute(polygon);
             assertEquals("Wrong number of geometries whose difference from a given polygon is not null returned", 2, list.size());
-            assertTrue("Polygon 1 should be in the list of geometries whose difference from a given polygon is not null", list
-                    .contains(getSamplePolygon(1)));
-            assertTrue("Polygon 2 should be in the list of geometries whose difference from a given polygon is not null", list
-                    .contains(getSamplePolygon(2)));
+            assertTrue("Polygon 1 should be in the list of geometries whose difference from a given polygon is not null",
+                list.contains(getSamplePolygon(1)));
+            assertTrue("Polygon 2 should be in the list of geometries whose difference from a given polygon is not null",
+                list.contains(getSamplePolygon(2)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
-            query
-                    .setResult("Spatial.difference(geom, Spatial.geomFromText('POLYGON((20.0 20.0,30.0 20.0,30.0 30.0,20.0 30.0,20.0 20.0))', 4326))");
+            query.setResult("Spatial.difference(geom, Spatial.geomFromText('POLYGON((20.0 20.0,30.0 20.0,30.0 30.0,20.0 30.0,20.0 20.0))', 4326))");
             query.setUnique(true);
             JGeometry difference_read = (JGeometry) query.execute(new Long(getSamplePolygon(2).getId()));
             assertTrue("Returned difference should be a polygon", difference_read.getType() == JGeometry.GTYPE_POLYGON);
@@ -1518,8 +1517,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 "id > 2000 && id < 3000 && Spatial.numPoints(geom) >= :n && Spatial.equals(Spatial.pointN(geom, :n), :point)");
             List list = (List) query.execute(n, point);
             assertEquals("Wrong number of geometries whose point no. " + n + " equals a given point returned", 1, list.size());
-            assertTrue("LineString 3 should be in the list of geometries whose point no. " + n + " equals a given point", list
-                    .contains(getSampleLineString(3)));
+            assertTrue("LineString 3 should be in the list of geometries whose point no. " + n + " equals a given point",
+                list.contains(getSampleLineString(3)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.pointN(geom, 3)");
@@ -1731,10 +1730,10 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 7000 && id < 8000 && Spatial.numGeometries(geom) == :num");
             List list = (List) query.execute(num);
             assertEquals("Wrong number of collections with " + num + " geometries returned", 2, list.size());
-            assertTrue("Collection 1 should be in the list of collections with " + num + " geometries", list
-                    .contains(getSampleGeometryCollection(1)));
-            assertTrue("Collection 2 should be in the list of collections with " + num + " geometries", list
-                    .contains(getSampleGeometryCollection(2)));
+            assertTrue("Collection 1 should be in the list of collections with " + num + " geometries",
+                list.contains(getSampleGeometryCollection(1)));
+            assertTrue("Collection 2 should be in the list of collections with " + num + " geometries",
+                list.contains(getSampleGeometryCollection(2)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.numGeometries(geom)");
@@ -1765,10 +1764,10 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 "id > 7000 && id < 8000 && Spatial.geometryType(Spatial.geometryN(geom, 1)).toUpperCase() == 'POINT'");
             List list = (List) query.execute();
             assertEquals("Wrong number of collections whose first geometry is equal to a given point returned", 2, list.size());
-            assertTrue("Collection 1 should be in the list of collections whose first geometry is a point", list
-                    .contains(getSampleGeometryCollection(2)));
-            assertTrue("Collection 2 should be in the list of collections whose first geometry is a point", list
-                    .contains(getSampleGeometryCollection(2)));
+            assertTrue("Collection 1 should be in the list of collections whose first geometry is a point",
+                list.contains(getSampleGeometryCollection(2)));
+            assertTrue("Collection 2 should be in the list of collections whose first geometry is a point",
+                list.contains(getSampleGeometryCollection(2)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.geometryN(geom, 1)");
@@ -1798,8 +1797,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.bboxTest(geom, :point)");
             List list = (List) query.execute(point);
             assertEquals("Wrong number of geometries which pass the bbox test with a given point returned", 1, list.size());
-            assertTrue("Polygon 2 should be in the list of geometries which pass the bbox test with a given point", list
-                    .contains(getSamplePolygon(2)));
+            assertTrue("Polygon 2 should be in the list of geometries which pass the bbox test with a given point",
+                list.contains(getSamplePolygon(2)));
         }
         finally
         {
