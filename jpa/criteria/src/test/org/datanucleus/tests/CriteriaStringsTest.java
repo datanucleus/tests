@@ -532,7 +532,8 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             Path firstNameField = candidate.get("firstName");
             Predicate firstName1 = cb.equal(firstNameField, "Fred");
             Predicate firstName2 = cb.equal(firstNameField, "Pebbles");
-            Predicate eitherFirstClause = cb.or(firstName1, firstName2);
+            Predicate firstName3 = cb.equal(firstNameField, "Wilma");
+            Predicate eitherFirstClause = cb.or(firstName1, firstName2, firstName3);
 
             Path lastNameField = candidate.get("lastName");
             Predicate lastNameClause = cb.equal(lastNameField, "Flintstone");
@@ -542,7 +543,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
                 "SELECT p FROM org.datanucleus.samples.annotations.models.company.Person p WHERE" +
-                " ((p.firstName = 'Fred') OR (p.firstName = 'Pebbles')) AND (p.lastName = 'Flintstone')",
+                " ((p.firstName = 'Fred') OR (p.firstName = 'Pebbles') OR (p.firstName = 'Wilma')) AND (p.lastName = 'Flintstone')",
                 crit.toString());
 
             Query q = em.createQuery(crit);
