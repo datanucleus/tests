@@ -23,6 +23,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Qualification of a person.
@@ -34,6 +36,8 @@ public class Qualification implements Serializable
     private String name;
     private Person person;
     private Organisation organisation;
+
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     /**

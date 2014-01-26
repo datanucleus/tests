@@ -17,7 +17,10 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -107,9 +110,18 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             emp1.setAccount(acc1);
             emp2.setAccount(acc2);
             Qualification q1 = new Qualification("BSc");
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.set(Calendar.YEAR, 2001);
+            cal.set(Calendar.MONTH, 5);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            q1.setDate(cal.getTime());
             q1.setPerson(emp1);
             Qualification q2 = new Qualification("MSc");
             q2.setPerson(emp2);
+            cal.set(Calendar.YEAR, 2011);
+            cal.set(Calendar.MONTH, 4);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            q2.setDate(cal.getTime());
             em.persist(emp1);
             em.persist(emp2);
             em.persist(q1);
@@ -370,6 +382,57 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
                 }
             }
             assertTrue("Fred was not returned!", fredFlintstonePresent);
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test basic generation of query with candidate and alias and filter (<).
+     */
+    public void testBasicWithFilterLessThanDateLiteral()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Qualification> crit = qb.createQuery(Qualification.class);
+            Root<Qualification> candidate = crit.from(Qualification.class);
+            candidate.alias("q");
+            crit.select(candidate);
+
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.set(Calendar.YEAR, 2006);
+            cal.set(Calendar.MONTH, 1);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            Date date = new Date(cal.getTime().getTime());
+            Path dateField = candidate.get("date");
+            Predicate dateLessThan = qb.lessThan(dateField, date);
+            crit.where(dateLessThan);
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT q FROM org.datanucleus.samples.annotations.models.company.Qualification q WHERE (q.date < {d '2006-02-01'})", crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Qualification> results = q.getResultList();
+
+            assertNotNull("Null results returned!", results);
+            assertEquals("Number of results is incorrect", 1, results.size());
+            Qualification qual = results.iterator().next();
+            assertEquals("BSc", qual.getName());
 
             tx.rollback();
         }
