@@ -19,6 +19,8 @@ package org.datanucleus.tests;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -63,41 +65,75 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             {
                 tx.commit();
             }
+
             Connection sqlConn = null;
             try
             {
-                tx.begin();
                 sqlConn = (Connection) pm.getDataStoreConnection();
-                String fileName = "sample_sdo_geometry.sql";
-                File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
-                StringBuffer sb = new StringBuffer();
-                InputStream is = new FileInputStream(file);
-                int c;
-                while ((c = is.read()) != -1)
-                {
-                    sb.append((char) c);
-                }
-                int start = sb.indexOf("--");
-                int end = -1;
-                while ((start > 0 && sb.charAt(start - 1) == '\n') || start == 0)
-                {
-                    end = Math.min(sb.indexOf("\n", start) + 1, sb.length() - 1);
-                    sb.delete(start, end);
-                    start = sb.indexOf("--", start);
-                }
-                String ss[] = StringUtils.split(sb.toString(), ";");
-                for (int i = 0; i < ss.length; i++)
-                {
-                    sqlConn.createStatement().execute(ss[i]);
-                }
-                is.close();
+
+                String dropFileName = "sample_sdo_geometry_drops.sql";
+                executeOracleSqlFile(dropFileName, tx, sqlConn, false);
+
+                String createFileName = "sample_sdo_geometry.sql";
+                executeOracleSqlFile(createFileName, tx, sqlConn, true);
             }
             finally
             {
                 sqlConn.close();
-                tx.commit();
+                pm.close();
             }
+
         }
+    }
+
+    private void executeOracleSqlFile(String fileName, Transaction tx, Connection sqlConn, boolean failOnException)
+        throws FileNotFoundException,
+        IOException,
+        SQLException
+    {
+
+        try
+        {
+            tx.begin();
+
+            File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
+            StringBuffer sb = new StringBuffer();
+            InputStream is = new FileInputStream(file);
+            int c;
+            while ((c = is.read()) != -1)
+            {
+                sb.append((char) c);
+            }
+            int start = sb.indexOf("--");
+            int end = -1;
+            while ((start > 0 && sb.charAt(start - 1) == '\n') || start == 0)
+            {
+                end = Math.min(sb.indexOf("\n", start) + 1, sb.length() - 1);
+                sb.delete(start, end);
+                start = sb.indexOf("--", start);
+            }
+            String ss[] = StringUtils.split(sb.toString(), ";");
+            for (int i = 0; i < ss.length; i++)
+            {
+                try
+                {
+                    sqlConn.createStatement().execute(ss[i]);
+                }
+                catch (SQLException sQLException)
+                {
+                    if (failOnException)
+                    {
+                        throw sQLException;
+                    }
+                }
+            }
+            is.close();
+        }
+        finally
+        {
+            tx.commit();
+        }
+
     }
 
     protected void tearDown() throws Exception
@@ -1799,6 +1835,10 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             assertEquals("Wrong number of geometries which pass the bbox test with a given point returned", 1, list.size());
             assertTrue("Polygon 2 should be in the list of geometries which pass the bbox test with a given point",
                 list.contains(getSamplePolygon(2)));
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
         }
         finally
         {
