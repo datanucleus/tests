@@ -66,32 +66,32 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 tx.commit();
             }
 
-            Connection sqlConn = null;
             try
             {
-                sqlConn = (Connection) pm.getDataStoreConnection();
 
                 // String dropFileName = "sample_sdo_geometry_drops.sql";
                 // executeOracleSqlFile(dropFileName, tx, sqlConn, false);
 
                 String createFileName = "sample_sdo_geometry.sql";
-                executeOracleSqlFile(createFileName, tx, sqlConn, true);
+                executeOracleSqlFile(createFileName, pm, true);
             }
             finally
             {
-                sqlConn.close();
+
                 pm.close();
             }
 
         }
     }
 
-    private void executeOracleSqlFile(String fileName, Transaction tx, Connection sqlConn, boolean failOnException)
+    private void executeOracleSqlFile(String fileName, PersistenceManager pm, boolean failOnException)
         throws FileNotFoundException,
         IOException,
         SQLException
     {
 
+        Transaction tx = pm.currentTransaction();
+        Connection sqlConn = (Connection) pm.getDataStoreConnection();
         try
         {
             tx.begin();
@@ -113,6 +113,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 start = sb.indexOf("--", start);
             }
             String ss[] = StringUtils.split(sb.toString(), ";");
+
             for (int i = 0; i < ss.length; i++)
             {
                 try
@@ -132,6 +133,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         finally
         {
             tx.commit();
+            sqlConn.close();
         }
 
     }
