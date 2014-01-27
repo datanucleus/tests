@@ -132,8 +132,9 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         }
         finally
         {
-            tx.commit();
             sqlConn.close();
+            tx.commit();
+
         }
 
     }
