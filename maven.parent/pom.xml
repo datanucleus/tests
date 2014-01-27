@@ -47,6 +47,7 @@
 
     <modules>
         <module>../framework/</module>
+        <module>../framework.maven/</module>
         <module>../samples/</module>
 
         <module>../jdo/general/</module>
