@@ -71,8 +71,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             {
                 sqlConn = (Connection) pm.getDataStoreConnection();
 
-                String dropFileName = "sample_sdo_geometry_drops.sql";
-                executeOracleSqlFile(dropFileName, tx, sqlConn, false);
+                // String dropFileName = "sample_sdo_geometry_drops.sql";
+                // executeOracleSqlFile(dropFileName, tx, sqlConn, false);
 
                 String createFileName = "sample_sdo_geometry.sql";
                 executeOracleSqlFile(createFileName, tx, sqlConn, true);
