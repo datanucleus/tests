@@ -16,5 +16,11 @@
         <class>org.jpox.samples.annotations.inheritance.InheritC1</class>
         <class>org.jpox.samples.annotations.inheritance.InheritC2</class>
         <class>org.jpox.samples.annotations.models.company.Account</class>
+        <class>org.jpox.samples.annotations.models.company.Person</class>
+        <class>org.jpox.samples.annotations.models.company.Employee</class>
+        <class>org.jpox.samples.annotations.models.company.Manager</class>
+        <class>org.jpox.samples.annotations.models.company.Department</class>
+        <class>org.jpox.samples.annotations.models.company.Project</class>
+        <class>org.jpox.samples.annotations.models.company.PhoneNumber</class>
     </persistence-unit>
 </persistence>
