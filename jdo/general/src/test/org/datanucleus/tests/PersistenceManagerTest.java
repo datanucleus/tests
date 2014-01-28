@@ -4298,6 +4298,18 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 txEvents.add("rolledback");
             }
+            public void transactionSetSavepoint(String name)
+            {
+                txEvents.add("setSavepoint");
+            }
+            public void transactionReleaseSavepoint(String name)
+            {
+                txEvents.add("releaseSavepoint");
+            }
+            public void transactionRollbackToSavepoint(String name)
+            {
+                txEvents.add("rollbackToSavepoint");
+            }
         });
 
         try
