@@ -69,6 +69,7 @@
         <module>../jpa/general/</module>
         <module>../jpa/rdbms/</module>
         <module>../jpa/criteria/</module>
+        <module>../jpa/jta/</module>
         
     </modules>
 
