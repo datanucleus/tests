@@ -25,9 +25,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Project;
 import org.neodatis.odb.OdbConfiguration;
 
 public class JDOQLBasicTest extends JDOPersistenceTestCase
@@ -346,45 +344,6 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             assertEquals(1, c.size());
             Iterator it = c.iterator();
             assertEquals("Ana", ((Person)it.next()).getFirstName());
-            tx.commit();
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-    }
-
-    public void testCollectionContains()
-    {
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            Department dept1 = new Department("Marketing");
-            Department dept2 = new Department("Sales");
-            Project prj1 = new Project("Project X", 150000);
-            Project prj2 = new Project("Project Y", 200000);
-            Project prj3 = new Project("Project Z", 500000);
-            dept1.addProject(prj1);
-            dept2.addProject(prj2);
-            dept2.addProject(prj3);
-            pm.makePersistent(dept1);
-            pm.makePersistent(dept2);
-            tx.commit();
-
-            tx.begin();
-            Query q = pm.newQuery(Department.class);
-            q.setFilter("projects.contains(prj) && prj.name == 'Project Y'");
-            q.declareVariables(Project.class.getName() + " prj");
-            Collection c = (Collection) q.execute();
-            assertEquals(1, c.size());
-            Iterator it = c.iterator();
-            assertEquals("Sales", ((Department)it.next()).getName());
             tx.commit();
         }
         finally
