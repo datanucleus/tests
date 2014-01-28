@@ -54,6 +54,7 @@
         <module>../jdo/identity/</module>
         <module>../jdo/jta/</module>
         <module>../jdo/typesafe/</module>
+        <module>../jdo/replication/</module>
 
         <module>../jdo/rdbms/</module>
         <module>../jdo/spreadsheet/</module>
