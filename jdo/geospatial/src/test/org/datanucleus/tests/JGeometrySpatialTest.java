@@ -34,6 +34,7 @@ import oracle.spatial.geometry.JGeometry;
 
 import org.datanucleus.samples.jgeometry.SampleGeometry;
 import org.datanucleus.tests.JDOPersistenceTestCase;
+import static org.datanucleus.tests.JDOPersistenceTestCase.pmf;
 import org.datanucleus.util.StringUtils;
 
 /**
@@ -65,77 +66,68 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             {
                 tx.commit();
             }
-
+            Connection sqlConn = null;
             try
             {
+                tx.begin();
+                sqlConn = (Connection) pm.getDataStoreConnection();
+                String ss[] = getArrayOfSqlStringsFromFile("sample_sdo_geometry_drops.sql");
+                for (int i = 0; i < ss.length; i++)
+                {
+                    try
+                    {
+                        sqlConn.createStatement().execute(ss[i]);
+                    }
+                    catch (SQLException sQLException)
+                    {
+                    }
+                }
 
-                // String dropFileName = "sample_sdo_geometry_drops.sql";
-                // executeOracleSqlFile(dropFileName, tx, sqlConn, false);
-
-                String createFileName = "sample_sdo_geometry.sql";
-                executeOracleSqlFile(createFileName, pm, true);
             }
             finally
             {
-
-                pm.close();
+                sqlConn.close();
+                tx.commit();
             }
-
-        }
-    }
-
-    private void executeOracleSqlFile(String fileName, PersistenceManager pm, boolean failOnException)
-        throws FileNotFoundException,
-        IOException,
-        SQLException
-    {
-
-        Transaction tx = pm.currentTransaction();
-        Connection sqlConn = (Connection) pm.getDataStoreConnection();
-        try
-        {
-            tx.begin();
-
-            File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
-            StringBuffer sb = new StringBuffer();
-            InputStream is = new FileInputStream(file);
-            int c;
-            while ((c = is.read()) != -1)
+            try
             {
-                sb.append((char) c);
-            }
-            int start = sb.indexOf("--");
-            int end = -1;
-            while ((start > 0 && sb.charAt(start - 1) == '\n') || start == 0)
-            {
-                end = Math.min(sb.indexOf("\n", start) + 1, sb.length() - 1);
-                sb.delete(start, end);
-                start = sb.indexOf("--", start);
-            }
-            String ss[] = StringUtils.split(sb.toString(), ";");
-
-            for (int i = 0; i < ss.length; i++)
-            {
-                try
+                tx.begin();
+                sqlConn = (Connection) pm.getDataStoreConnection();
+                String ss[] = getArrayOfSqlStringsFromFile("sample_sdo_geometry.sql");
+                for (int i = 0; i < ss.length; i++)
                 {
                     sqlConn.createStatement().execute(ss[i]);
                 }
-                catch (SQLException sQLException)
-                {
-                    if (failOnException)
-                    {
-                        throw sQLException;
-                    }
-                }
-            }
-            is.close();
-        }
-        finally
-        {
-            sqlConn.close();
-            tx.commit();
 
+            }
+            finally
+            {
+                sqlConn.close();
+                tx.commit();
+            }
         }
+    }
+
+    private String[] getArrayOfSqlStringsFromFile(String fileName) throws FileNotFoundException, IOException
+    {
+        File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
+        StringBuilder sb = new StringBuilder();
+        InputStream is = new FileInputStream(file);
+        int c;
+        while ((c = is.read()) != -1)
+        {
+            sb.append((char) c);
+        }
+        int start = sb.indexOf("--");
+        int end = -1;
+        while ((start > 0 && sb.charAt(start - 1) == '\n') || start == 0)
+        {
+            end = Math.min(sb.indexOf("\n", start) + 1, sb.length() - 1);
+            sb.delete(start, end);
+            start = sb.indexOf("--", start);
+        }
+        is.close();
+        return StringUtils.split(sb.toString(), ";");
 
     }
 
@@ -1833,6 +1825,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             JGeometry point = new JGeometry(90.0, 90.0, 4326);
+
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.bboxTest(geom, :point)");
             List list = (List) query.execute(point);
             assertEquals("Wrong number of geometries which pass the bbox test with a given point returned", 1, list.size());
