@@ -65,7 +65,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jodatime</artifactId>
-            <version>[3.0, )</version>
+            <version>[3.0, 3.9)</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
