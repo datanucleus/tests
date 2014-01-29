@@ -31,7 +31,7 @@ import javax.jdo.Transaction;
 import org.datanucleus.ExecutionContext;
 import org.datanucleus.FetchPlan;
 import org.datanucleus.ClassLoaderResolverImpl;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.FetchPlanForClass;
 import org.datanucleus.api.jdo.JDOFetchPlan;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
@@ -235,7 +235,7 @@ public class FetchPlanTest extends JDOPersistenceTestCase
     public void testFetchPlan()
     {
         FetchPlan fp = getFetchPlan();
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager metaMgr = new JDOMetaDataManager(nucleusCtx);
         AbstractClassMetaData cmd = metaMgr.getMetaDataForClass(FP2Base.class, new ClassLoaderResolverImpl());
 
@@ -605,7 +605,7 @@ public class FetchPlanTest extends JDOPersistenceTestCase
     throws Exception
     {
         FetchPlan fp = getFetchPlan();
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager metaMgr = new JDOMetaDataManager(nucleusCtx);
         AbstractClassMetaData cmd = metaMgr.getMetaDataForClass(FP2Base.class, new ClassLoaderResolverImpl());
         
@@ -902,7 +902,7 @@ public class FetchPlanTest extends JDOPersistenceTestCase
     public void testFetchPlanInheritance()
     {
         FetchPlan fp = getFetchPlan();
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager metaMgr = new JDOMetaDataManager(nucleusCtx);
         //test parent with fetch-group = group1
         AbstractClassMetaData cmd = metaMgr.getMetaDataForClass(DetachParent.class, new ClassLoaderResolverImpl());
@@ -983,7 +983,7 @@ public class FetchPlanTest extends JDOPersistenceTestCase
     throws Exception
     {
         FetchPlan fp = getFetchPlan();
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager metaMgr = new JDOMetaDataManager(nucleusCtx);
         AbstractClassMetaData cmd = metaMgr.getMetaDataForClass(FP2Base.class, new ClassLoaderResolverImpl());
         fp.addGroup("defaultPlus12");
@@ -1000,7 +1000,7 @@ public class FetchPlanTest extends JDOPersistenceTestCase
     public void testNestedFetchGroupsAgain()
     {
         FetchPlan fp = getFetchPlan();
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager metaMgr = new JDOMetaDataManager(nucleusCtx);
 
         //test parent with fetch-group = group1

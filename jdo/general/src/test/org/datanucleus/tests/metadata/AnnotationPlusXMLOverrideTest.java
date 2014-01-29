@@ -20,7 +20,7 @@ package org.datanucleus.tests.metadata;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
@@ -50,7 +50,7 @@ import org.datanucleus.tests.JDOPersistenceTestCase;
  */
 public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
 {
-    private NucleusContext nucleusCtx;
+    private PersistenceNucleusContextImpl nucleusCtx;
     private MetaDataManager metaDataMgr;
     private ClassLoaderResolver clr;
 
@@ -64,7 +64,7 @@ public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
     {
         super.setUp();
 
-        nucleusCtx = new NucleusContext("JDO", null);
+        nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         metaDataMgr = new JDOMetaDataManager(nucleusCtx);
         clr = new ClassLoaderResolverImpl();
     }

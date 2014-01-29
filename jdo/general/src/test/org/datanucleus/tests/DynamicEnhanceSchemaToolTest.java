@@ -23,7 +23,7 @@ import javax.jdo.metadata.PackageMetadata;
 import javax.jdo.metadata.VersionMetadata;
 
 import org.datanucleus.ClassLoaderResolver;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.asm.ClassWriter;
 import org.datanucleus.asm.FieldVisitor;
@@ -307,7 +307,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         Set<String> classNames = new HashSet();
         classNames.add("test.Client");
 
-        NucleusContext nucCtx = pmf.getNucleusContext();
+        PersistenceNucleusContext nucCtx = pmf.getNucleusContext();
         StoreManager storeMgr = nucCtx.getStoreManager();
         if (!(storeMgr instanceof SchemaAwareStoreManager))
         {

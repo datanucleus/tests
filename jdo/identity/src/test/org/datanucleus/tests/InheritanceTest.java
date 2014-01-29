@@ -33,7 +33,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.ClassLoaderResolverImpl;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.jpox.samples.inheritance.ABase;
 import org.jpox.samples.inheritance.ASub1;
@@ -2181,7 +2181,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
      */
     public void testSubclassInformation()
     {
-        JDOMetaDataManager mgr = new JDOMetaDataManager(new NucleusContext("JDO", null));
+        JDOMetaDataManager mgr = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
 
         // initialize metadata
         mgr.getMetaDataForClass(JBase.class, new ClassLoaderResolverImpl());

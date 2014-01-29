@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
@@ -65,7 +65,7 @@ import org.datanucleus.tests.JDOPersistenceTestCase;
  */
 public class AnnotationTest extends JDOPersistenceTestCase
 {
-    private NucleusContext nucleusCtx;
+    private PersistenceNucleusContextImpl nucleusCtx;
     private MetaDataManager metaDataMgr;
     private ClassLoaderResolver clr;
 
@@ -78,7 +78,7 @@ public class AnnotationTest extends JDOPersistenceTestCase
     protected void setUp() throws Exception
     {
         super.setUp();
-        nucleusCtx = new NucleusContext("JDO", null);
+        nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         metaDataMgr = new JDOMetaDataManager(nucleusCtx);
         clr = new ClassLoaderResolverImpl();
     }

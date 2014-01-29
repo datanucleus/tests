@@ -19,6 +19,7 @@ package org.datanucleus.tests.newfeatures;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jpa.metadata.JPAMetaDataManager;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.MetaDataManager;
@@ -41,7 +42,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testMapKeyColumn()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");

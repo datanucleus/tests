@@ -30,7 +30,7 @@ import junit.framework.Assert;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.AbstractMemberMetaData;
@@ -234,7 +234,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testMetaDataManager()
     {
-        MetaDataManager mgr = new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         org.datanucleus.metadata.AbstractClassMetaData cmd=mgr.getMetaDataForClass(Inventory.class, new ClassLoaderResolverImpl());
         if (cmd == null)
@@ -254,7 +254,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testMetaDataMultithreaded()
     {
-        final MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        final MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
 
         ThreadGroup group = new ThreadGroup("tgroup");
@@ -334,7 +334,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testLoadingMetaDataForPackage()
     {
-        MetaDataManager mmgr = new NucleusContext("JDO", null).getMetaDataManager();
+        MetaDataManager mmgr = new PersistenceNucleusContextImpl("JDO", null).getMetaDataManager();
         ClassLoaderResolver clr = new ClassLoaderResolverImpl();
 
         // Validate metadata for DateWidget
@@ -413,7 +413,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testLoadingMetaDataFileLocations()
     {
-        MetaDataManager mmgr = new NucleusContext("JDO", null).getMetaDataManager();
+        MetaDataManager mmgr = new PersistenceNucleusContextImpl("JDO", null).getMetaDataManager();
         ClassLoaderResolver clr = new ClassLoaderResolverImpl();
 
         // Check for a class defined in its own MetaData file
@@ -479,7 +479,7 @@ public class BasicTest extends JDOPersistenceTestCase
     public void testMetaDataManagerI18N()
     {
         String filename = "/org/jpox/samples/i18n/UTF8.jdo";
-        MetaDataManager mmgr1 = new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mmgr1 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         MetaDataParser parser1 = new MetaDataParser(mmgr1, mmgr1.getNucleusContext().getPluginManager(), true);
         mmgr1.setValidate(false);
         FileMetaData fmd = (FileMetaData)parser1.parseMetaDataStream(MetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
@@ -489,7 +489,7 @@ public class BasicTest extends JDOPersistenceTestCase
         cmd1.populate(new ClassLoaderResolverImpl(), null, mmgr1);
         cmd1.initialise(new ClassLoaderResolverImpl(), mmgr1);
 
-        MetaDataManager mmgr2 = new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mmgr2 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mmgr2.setValidate(false);
         org.datanucleus.metadata.AbstractClassMetaData cmd = mmgr2.getMetaDataForClass(UTF8.class, new ClassLoaderResolverImpl());
         if (!cmd.toString().equals(cmd1.toString()))
@@ -498,14 +498,14 @@ public class BasicTest extends JDOPersistenceTestCase
         }
 
         filename = "/org/jpox/samples/i18n/ISO8859_2.jdo";
-        MetaDataManager mmgr3 = new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mmgr3 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         MetaDataParser parser3 = new MetaDataParser(mmgr3, mmgr3.getNucleusContext().getPluginManager(), true);
         mmgr3.setValidate(false);
         fmd = (FileMetaData)parser3.parseMetaDataStream(MetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
         fmd.getPackage("org.jpox.samples.i18n").getClass("ISO8859_2");
         fmd.setMetaDataManager(mmgr3);
 
-        MetaDataManager mmgr4 = new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mmgr4 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mmgr4.setValidate(false);
         
         cmd1=fmd.getPackage("org.jpox.samples.i18n").getClass("ISO8859_2");
@@ -523,7 +523,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testDatastoreIdentityMetadata()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmdD0 = mgr.getMetaDataForClass(D0.class, new ClassLoaderResolverImpl());
         AbstractClassMetaData cmdD1 = mgr.getMetaDataForClass(D1.class, new ClassLoaderResolverImpl());
@@ -543,7 +543,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testFieldColumnMetadata()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmdD0 = mgr.getMetaDataForClass(D0.class, new ClassLoaderResolverImpl());
         AbstractClassMetaData cmdD1 = mgr.getMetaDataForClass(D1.class, new ClassLoaderResolverImpl());
@@ -559,7 +559,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testFieldForeignKeyMetadata()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmdD0 = mgr.getMetaDataForClass(D0.class, new ClassLoaderResolverImpl());
         AbstractClassMetaData cmdD1 = mgr.getMetaDataForClass(D1.class, new ClassLoaderResolverImpl());
@@ -588,7 +588,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testPrimaryKeyMetadata()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmdD0 = mgr.getMetaDataForClass(D0.class, new ClassLoaderResolverImpl());
 
@@ -601,7 +601,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testFieldDeclaredInSubClassMetadata()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmdD0 = mgr.getMetaDataForClass(Animal.class, new ClassLoaderResolverImpl());
         AbstractClassMetaData cmdD1 = mgr.getMetaDataForClass(Dog.class, new ClassLoaderResolverImpl());
@@ -618,7 +618,7 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testDependent()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmdInh2 = mgr.getMetaDataForClass(Container.class, new ClassLoaderResolverImpl());
         AbstractMemberMetaData fmd = cmdInh2.getMetaDataForMember("members");
@@ -651,7 +651,7 @@ public class BasicTest extends JDOPersistenceTestCase
     
     public void testPersistentProperties()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmd = mgr.getMetaDataForClass(Vampire.class, new ClassLoaderResolverImpl());
         assertEquals(FieldPersistenceModifier.NONE,cmd.getMetaDataForMember("_age").getPersistenceModifier());
@@ -666,7 +666,7 @@ public class BasicTest extends JDOPersistenceTestCase
     
     public void testPersistentPropertiesFieldPropertyClash()
     {
-        MetaDataManager mgr=new JDOMetaDataManager(new NucleusContext("JDO", null));
+        MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
         AbstractClassMetaData cmd = mgr.getMetaDataForClass(Phantom.class, new ClassLoaderResolverImpl());
         assertNull(cmd.getMetaDataForMember("_name"));

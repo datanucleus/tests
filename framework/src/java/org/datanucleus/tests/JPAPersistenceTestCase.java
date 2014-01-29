@@ -23,7 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.datanucleus.ClassLoaderResolver;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.exceptions.ClassNotResolvedException;
 
 /**
@@ -66,7 +66,7 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
     protected synchronized EntityManagerFactory getEMF(String unitName, Properties userProps)
     {
         emf = TestHelper.getEMF(1, unitName, userProps);
-        storeMgr = emf.unwrap(NucleusContext.class).getStoreManager();
+        storeMgr = emf.unwrap(PersistenceNucleusContext.class).getStoreManager();
 
         ClassLoaderResolver clr = storeMgr.getNucleusContext().getClassLoaderResolver(null);
         try

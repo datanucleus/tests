@@ -24,6 +24,7 @@ import javax.persistence.PreRemove;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jpa.metadata.JPAMetaDataManager;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
@@ -68,7 +69,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testOneToOneUni()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -95,7 +96,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testOneToOneBi()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -128,7 +129,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testOneToManyBiFK()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -164,7 +165,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testOneToManyUniJoin()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -230,7 +231,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testOneToManyBiJoin()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -277,7 +278,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testManyToMany()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -324,7 +325,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testOneToManyUniMapFK()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -351,7 +352,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testTableGenerator()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -376,7 +377,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testSequenceGenerator()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
@@ -399,7 +400,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
      */
     public void testEventListeners()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
         PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");

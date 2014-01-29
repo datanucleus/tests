@@ -5,7 +5,7 @@ import java.util.Properties;
 
 import javax.jdo.Constants;
 
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.util.NucleusLogger;
@@ -40,8 +40,7 @@ public class TestRunListener extends RunListener
             JDOPersistenceManagerFactory pmf =
                     (JDOPersistenceManagerFactory) TestHelper.getPMF(1, null);
 
-            NucleusContext ctx = pmf.getNucleusContext();
-
+            PersistenceNucleusContext ctx = pmf.getNucleusContext();
             if (ctx.getStoreManager() instanceof RDBMSStoreManager)
             {
                 cleanupRDBMSdatastore();

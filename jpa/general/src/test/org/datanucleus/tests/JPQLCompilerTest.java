@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jpa.metadata.JPAMetaDataManager;
 import org.datanucleus.exceptions.NucleusException;
 import org.datanucleus.exceptions.NucleusUserException;
@@ -63,7 +64,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterInvalidField()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         // Test use of invalid field in filter
@@ -86,7 +87,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparison()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -148,7 +149,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAnd()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -202,7 +203,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOr()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -291,7 +292,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOrMissingBrace()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         try
@@ -313,7 +314,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithStringEqualsLiteral()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -350,7 +351,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithStringIndexOfLiteral()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -393,7 +394,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithNegateExpression()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -437,7 +438,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFromInExpression()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -492,7 +493,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFromInExpressionErroneousPrimary()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -516,7 +517,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterUnaryMinus()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -541,7 +542,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithExistsSubquery()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -572,7 +573,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFromMemberOfExpression()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -611,7 +612,7 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testUpdateSimple()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JPA", null);
+        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
 
         // Test use of UPDATE clause

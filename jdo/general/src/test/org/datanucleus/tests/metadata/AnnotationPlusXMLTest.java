@@ -21,7 +21,7 @@ package org.datanucleus.tests.metadata;
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.NucleusContext;
-import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.ColumnMetaData;
@@ -65,8 +65,8 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
     protected void setUp() throws Exception
     {
         super.setUp();
-        nucleusCtx = new NucleusContext("JDO", null);
-        metaDataMgr = new JDOMetaDataManager(nucleusCtx);
+        nucleusCtx = new PersistenceNucleusContextImpl("JDO", null); // Don't initialise this since the store manager will be undefined due to no URL
+        metaDataMgr = nucleusCtx.getMetaDataManager();
         clr = new ClassLoaderResolverImpl();
     }
 

@@ -30,7 +30,7 @@ import javax.persistence.Query;
 import javax.persistence.Subgraph;
 
 import org.datanucleus.FetchGroup;
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.api.jpa.JPAEntityGraph;
 import org.datanucleus.api.jpa.JPAEntityManagerFactory;
 import org.datanucleus.api.jpa.JPAQuery;
@@ -100,7 +100,7 @@ public class EntityGraphTest extends JPAPersistenceTestCase
             assertTrue("relation not present", relationPresent);
 
             // Should have been registered as dynamic FetchGroups
-            NucleusContext nucCtx = emf.unwrap(NucleusContext.class);
+            PersistenceNucleusContext nucCtx = emf.unwrap(PersistenceNucleusContext.class);
             Set<FetchGroup> fgs = nucCtx.getFetchGroupManager().getFetchGroupsWithName("baseGraph");
             assertEquals(2, fgs.size());
         }

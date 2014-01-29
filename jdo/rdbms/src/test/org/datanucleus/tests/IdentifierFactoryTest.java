@@ -27,7 +27,7 @@ import javax.jdo.PersistenceManagerFactory;
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.ExecutionContext;
-import org.datanucleus.PersistenceConfiguration;
+import org.datanucleus.Configuration;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.metadata.AbstractClassMetaData;
@@ -168,7 +168,7 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
         {
             JDOPersistenceManagerFactory thePMF = (JDOPersistenceManagerFactory)pmf;
             Map props = new HashMap();
-            PersistenceConfiguration conf = getConfigurationForPMF(thePMF);
+            Configuration conf = getConfigurationForPMF(thePMF);
             if (conf.getStringProperty("datanucleus.mapping.Catalog") != null)
             {
                 props.put("DefaultCatalog", conf.getStringProperty("datanucleus.mapping.Catalog"));

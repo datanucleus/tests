@@ -23,6 +23,7 @@ import junit.framework.TestCase;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.plugin.PluginManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.store.rdbms.adapter.DatabaseMetaData;
@@ -39,7 +40,7 @@ public class RDBMSAdapterFactoryTest extends TestCase
     protected void setUp() throws Exception
     {
         super.setUp();
-        NucleusContext ctxt = new NucleusContext("JDO", null);
+        NucleusContext ctxt = new PersistenceNucleusContextImpl("JDO", null);
         pluginMgr = ctxt.getPluginManager();
         clr = ctxt.getClassLoaderResolver(null);
 

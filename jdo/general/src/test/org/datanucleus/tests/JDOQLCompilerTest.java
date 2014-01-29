@@ -25,7 +25,7 @@ import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.exceptions.NucleusException;
 import org.datanucleus.exceptions.NucleusUserException;
@@ -64,7 +64,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterImplicitVariable()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         // Test use of implicit variable in filter
@@ -100,7 +100,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterImplicitParameter()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         // Test use of implicit variable in filter
@@ -136,7 +136,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterExplicitParameter()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         // Test use of implicit variable in filter
@@ -172,7 +172,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparison()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -234,7 +234,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAnd()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -289,7 +289,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOr()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -379,7 +379,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOrMissingBrace()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         try
@@ -401,7 +401,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithStringEqualsLiteral()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -438,7 +438,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithStringIndexOfLiteral()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -481,7 +481,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterCollectionContainsVariable()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -558,7 +558,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithNegateExpression()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -602,7 +602,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterUnaryMinus()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -627,7 +627,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithStringLiteralStartsWith()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -666,7 +666,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithCast()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -739,7 +739,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterExplicitParameterAsImplicit()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -764,7 +764,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testResultGroupingForMethods()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         JavaQueryCompiler compiler = null;
@@ -800,7 +800,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testExpressionSerializable()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         // Test use of implicit variable in filter
@@ -891,7 +891,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testQueryCompilationSerializable()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         // Test use of implicit variable in filter
@@ -974,7 +974,7 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testOrderNulls()
     {
-        NucleusContext nucleusCtx = new NucleusContext("JDO", null);
+        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
         MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
 
         // Test use of implicit variable in filter

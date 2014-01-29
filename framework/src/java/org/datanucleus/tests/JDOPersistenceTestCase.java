@@ -25,7 +25,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 
 import org.datanucleus.ClassLoaderResolver;
-import org.datanucleus.PersistenceConfiguration;
+import org.datanucleus.Configuration;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.exceptions.ClassNotResolvedException;
 
@@ -146,8 +146,8 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
         TestHelper.clean(pmf,cls);
     }
 
-    protected PersistenceConfiguration getConfigurationForPMF(PersistenceManagerFactory pmf)
+    protected Configuration getConfigurationForPMF(PersistenceManagerFactory pmf)
     {
-        return ((JDOPersistenceManagerFactory)pmf).getNucleusContext().getPersistenceConfiguration();
+        return ((JDOPersistenceManagerFactory)pmf).getNucleusContext().getConfiguration();
     }
 }

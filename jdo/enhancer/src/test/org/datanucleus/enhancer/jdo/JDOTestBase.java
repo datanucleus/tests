@@ -33,6 +33,7 @@ import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.NucleusContext;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.enhancer.ClassEnhancer;
+import org.datanucleus.enhancer.EnhancementNucleusContextImpl;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.FileMetaData;
 import org.datanucleus.metadata.MetaDataManager;
@@ -161,7 +162,7 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
             throw new IllegalArgumentException("Contents of file is null");
         }
 
-        NucleusContext context = new NucleusContext("JDO", NucleusContext.ContextType.ENHANCEMENT, null);
+        NucleusContext context = new EnhancementNucleusContextImpl("JDO", null);
         MetaDataManager mgr = new JDOMetaDataManager(context);
         MetaDataParser parser = new MetaDataParser(mgr, context.getPluginManager(), true);
         ClassLoaderResolverImpl clr = new ClassLoaderResolverImpl();
