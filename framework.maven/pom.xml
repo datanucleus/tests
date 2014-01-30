@@ -4,7 +4,7 @@
     <groupId>org.datanucleus</groupId>
     <artifactId>test-framework-maven</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>4.0</version>
     <description>Plugin that helps run the DataNucleus tests for different configurations</description>
     <dependencies>
         <dependency>
