@@ -77,12 +77,12 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-framework</artifactId>
-            <version>3.3</version>
+            <version>4.0</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-samples</artifactId>
-            <version>3.3</version>
+            <version>4.0</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
