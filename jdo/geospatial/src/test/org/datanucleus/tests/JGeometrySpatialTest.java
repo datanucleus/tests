@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,13 +30,18 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import junit.framework.TestSuite;
 
 import oracle.spatial.geometry.JGeometry;
+import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 
 import org.datanucleus.samples.jgeometry.SampleGeometry;
-import org.datanucleus.tests.JDOPersistenceTestCase;
+import org.datanucleus.store.StoreManager;
+import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import static org.datanucleus.tests.JDOPersistenceTestCase.pmf;
 import org.datanucleus.util.StringUtils;
+import org.junit.runner.RunWith;
+import org.junit.runners.AllTests;
 
 /**
  * Series of tests for JGeometry spatial functions. Run for Oracle only
@@ -43,6 +49,7 @@ import org.datanucleus.util.StringUtils;
  * 
  * @version $Revision: 1.2 $
  */
+@RunWith(AllTests.class)
 public class JGeometrySpatialTest extends JDOPersistenceTestCase
 {
     public JGeometrySpatialTest(String name)
@@ -50,11 +57,48 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         super(name);
     }
 
+    static public TestSuite suite()
+    {
+        // Extract the datastore being run
+        String datastoreVendor = null;
+        if (pmf == null)
+        {
+            pmf = TestHelper.getPMF(1, null);
+        }
+        StoreManager storeMgr = ((JDOPersistenceManagerFactory) pmf).getNucleusContext().getStoreManager();
+        if (!(storeMgr instanceof RDBMSStoreManager))
+        {
+            return null;
+        }
+        RDBMSStoreManager srm = (RDBMSStoreManager) storeMgr;
+        if (srm.getDatastoreAdapter() != null)
+        {
+            // RDBMS datastores have a vendor id
+            datastoreVendor = srm.getDatastoreAdapter().getVendorID();
+        }
+
+        TestSuite suite = new TestSuite();
+        if (datastoreVendor.equalsIgnoreCase("oracle"))
+        {
+            // Oracle
+            Method[] methods = JGeometrySpatialTest.class.getMethods();
+            for (Method method : methods)
+            {
+                if (method.getName().startsWith("test"))
+                {
+                    suite.addTest(new JGeometrySpatialTest(method.getName()));
+                }
+            }
+
+        }
+
+        return suite;
+    }
+
     protected void setUp() throws Exception
     {
         super.setUp();
-        if (runTestsForDatastore())
-        {
+        
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             try
@@ -105,54 +149,19 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 sqlConn.close();
                 tx.commit();
             }
-        }
-    }
-
-    private String[] getArrayOfSqlStringsFromFile(String fileName) throws FileNotFoundException, IOException
-    {
-        File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
-        StringBuilder sb = new StringBuilder();
-        InputStream is = new FileInputStream(file);
-        int c;
-        while ((c = is.read()) != -1)
-        {
-            sb.append((char) c);
-        }
-        int start = sb.indexOf("--");
-        int end = -1;
-        while ((start > 0 && sb.charAt(start - 1) == '\n') || start == 0)
-        {
-            end = Math.min(sb.indexOf("\n", start) + 1, sb.length() - 1);
-            sb.delete(start, end);
-            start = sb.indexOf("--", start);
-        }
-        is.close();
-        return StringUtils.split(sb.toString(), ";");
-
+        
     }
 
     protected void tearDown() throws Exception
     {
-        if (runTestsForDatastore())
-        {
-            clean(SampleGeometry.class);
-        }
+        
+        clean(SampleGeometry.class);
+        
         super.tearDown();
-    }
-
-    boolean runTestsForDatastore()
-    {
-        // Run for Oracle only
-        return (vendorID.equalsIgnoreCase("oracle"));
     }
 
     public void testGeomFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -173,11 +182,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testPointFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -199,11 +203,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testLineFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -225,11 +224,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testPolyFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -251,20 +245,15 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testMPointFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
-            String wkt = "MULTIPOINT((10.0 10.0),(20.0 20.0))"; // Oracle syntax
+            String wkt = "MULTIPOINT((80.0 76.0),(90.0 77.0))"; // Oracle syntax
             Short srid = new Short((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class,
-                "id > 1000 && id < 2000 && Spatial.overlaps(geom, Spatial.mPointFromText(:wkt, :srid))"); // Oracle's
+                "id > 3000 && id < 4000 && Spatial.contains(geom, Spatial.mPointFromText(:wkt, :srid))"); // Oracle's
                                                                                                           // geometryN
                                                                                                           // on
                                                                                                           // multipoint
@@ -273,8 +262,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                                                                                                           // multipoint
             List list = (List) query.execute(wkt, srid);
             assertEquals("Wrong number of geometries whitch overlap a multipoint constructed from given wkt returned", 1, list.size());
-            assertTrue("Point 1 should be in the list of geometries whitch overlap a multipoint constructed from given wkt",
-                list.contains(getSamplePoint(1)));
+            assertTrue("Polygon 2 should be in the list of geometries whitch overlap a multipoint constructed from given wkt",
+                list.contains(getSamplePolygon(2)));
         }
         finally
         {
@@ -284,11 +273,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testMLineFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -311,11 +295,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testMPolyFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -338,11 +317,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testGeomCollFromText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -364,11 +338,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testGeomFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -389,11 +358,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testPointFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -414,11 +378,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testLineFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -439,11 +398,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testPolyFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -464,23 +418,18 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testMPointFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
-            JGeometry geom = JGeometry.createMultiPoint(new Object[]{new double[]{10.0, 10.0}, new double[]{20.0, 20.0}}, 2, 4326);
+            JGeometry geom = JGeometry.createMultiPoint(new Object[]{new double[]{80.0, 76.0}, new double[]{90.0, 77.0}}, 2, 4326);
             Query query = pm.newQuery(SampleGeometry.class,
-                "id > 1000 && id < 2000 && Spatial.overlaps(geom, Spatial.mPointFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)))");
+                "id > 3000 && id < 4000 && Spatial.contains(geom, Spatial.mPointFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)))");
             List list = (List) query.execute(geom);
             assertEquals("Wrong number of geometries whitch overlap a multipoint constructed from given wkb returned", 1, list.size());
-            assertTrue("Point 1 should be in the list of geometries whitch overlap a multipoint constructed from given wkb",
-                list.contains(getSamplePoint(1)));
+            assertTrue("Polygon 2 should be in the list of geometries whitch overlap a multipoint constructed from given wkb",
+                list.contains(getSamplePolygon(2)));
         }
         finally
         {
@@ -490,11 +439,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testMLineFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -518,11 +462,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testMPolyFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -550,11 +489,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testGeomCollFromWKB() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -579,11 +513,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testDimension() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -611,17 +540,12 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testGeometryType() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
-            String type = "POINT";
+            String type = "ST_POINT";
             Query query = pm.newQuery(SampleGeometry.class, "geom != null && Spatial.geometryType(geom) == :type");
             List list = (List) query.execute(type);
             assertEquals("Wrong number of geometries with type " + type + " returned", 2, list.size());
@@ -643,11 +567,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testSrid() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -675,11 +594,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testEnvelope() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -709,11 +623,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testAsText() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         SampleGeometry point1 = getSamplePoint(1);
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -743,11 +652,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testAsBinary() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -768,11 +672,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testIsEmpty() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -796,11 +695,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testIsSimple() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -820,11 +714,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testBoundary() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -850,11 +739,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testEquals() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -876,11 +760,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testDisjoint() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -902,11 +781,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testIntersects() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -928,11 +802,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testTouches() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -955,11 +824,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testCrosses() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -980,11 +844,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testWithin() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1004,11 +863,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testContains() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1028,11 +882,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testOverlaps() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1053,11 +902,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testRelate() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1079,11 +923,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testDistance() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1110,11 +949,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testBuffer() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
+        
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1143,11 +978,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testConvexHull() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1172,11 +1002,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testIntersection() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1203,11 +1028,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testUnion() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1234,11 +1054,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testSymDifference() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1268,11 +1083,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testDifference() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1302,11 +1112,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testX() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1333,11 +1138,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testY() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1364,11 +1164,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testStartPoint() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1394,11 +1189,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testEndPoint() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1424,11 +1214,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testIsRing() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1446,11 +1231,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testIsClosed() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1468,11 +1248,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testLength() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1500,11 +1275,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testNumPoints() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1532,11 +1302,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testPointN() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1565,11 +1330,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testArea() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1596,11 +1356,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testCentroid() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1626,24 +1381,20 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testPointOnSurfaceMethod() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
-            Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.pointOnSurface(geom) != null");
-            List list = (List) query.execute();
+            double tolerance = 0.005;
+            Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.pointOnSurface(geom, :tolerance) != null");
+            List list = (List) query.execute(tolerance);
             assertEquals("Wrong number of geometries with a point on the surface returned", 2, list.size());
             assertTrue("Polygon 1 should be in the list of geometries with a point on the surface", list.contains(getSamplePolygon(1)));
             assertTrue("Polygon 2 should be in the list of geometries with a point on the surface", list.contains(getSamplePolygon(2)));
 
             query = pm.newQuery(SampleGeometry.class, "id == :id");
-            query.setResult("Spatial.pointOnSurface(geom)");
+            query.setResult("Spatial.pointOnSurface(geom, 0.005)");
             query.setUnique(true);
             JGeometry pointOnSurface = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
             assertNotNull("Polygon 1 should have a point on the surface", pointOnSurface);
@@ -1657,11 +1408,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testExteriorRingMethod() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1677,7 +1423,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.exteriorRing(geom)");
             query.setUnique(true);
             JGeometry exteriorRing_read = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
-            assertTrue("Exterior ring of Polygon 1 should be a polygon", exteriorRing_read.getType() == JGeometry.GTYPE_POLYGON);
+            assertTrue("Exterior ring of Polygon 1 should be a line or curve JGeometry.GTYPE_CURVE",
+                exteriorRing_read.getType() == JGeometry.GTYPE_CURVE);
         }
         finally
         {
@@ -1687,11 +1434,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testNumInteriorRingMethod() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1717,11 +1459,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testInteriorRingNMethod() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1747,11 +1484,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testNumGeometries() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1781,18 +1513,13 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testGeometryN() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
             Query query = pm.newQuery(SampleGeometry.class,
-                "id > 7000 && id < 8000 && Spatial.geometryType(Spatial.geometryN(geom, 1)).toUpperCase() == 'POINT'");
+                "id > 7000 && id < 8000 && Spatial.geometryType(Spatial.geometryN(geom, 1)).toUpperCase() == 'ST_POINT'");
             List list = (List) query.execute();
             assertEquals("Wrong number of collections whose first geometry is equal to a given point returned", 2, list.size());
             assertTrue("Collection 1 should be in the list of collections whose first geometry is a point",
@@ -1814,27 +1541,18 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testBboxTest() throws SQLException
     {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
-            JGeometry point = new JGeometry(90.0, 90.0, 4326);
-
-            Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.bboxTest(geom, :point)");
-            List list = (List) query.execute(point);
+            JGeometry polygon = JGeometry.createLinearPolygon(new Object[]{new double[]{80.0, 80.0, 20.0, 80.0, 20.0, 20.0, 80.0, 20.0,
+                    80.0, 80.0}}, 2, 4326);
+            Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.bboxTest(geom, :polygon)");
+            List list = (List) query.execute(polygon);
             assertEquals("Wrong number of geometries which pass the bbox test with a given point returned", 1, list.size());
             assertTrue("Polygon 2 should be in the list of geometries which pass the bbox test with a given point",
                 list.contains(getSamplePolygon(2)));
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
         }
         finally
         {
@@ -1917,5 +1635,28 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
                 return new SampleGeometry(7003, "Collection 3", new JGeometry(gtype, srid, elemInfo, ordinates));
         }
         return null;
+    }
+    
+    private String[] getArrayOfSqlStringsFromFile(String fileName) throws FileNotFoundException, IOException
+    {
+        File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
+        StringBuilder sb = new StringBuilder();
+        InputStream is = new FileInputStream(file);
+        int c;
+        while ((c = is.read()) != -1)
+        {
+            sb.append((char) c);
+        }
+        int start = sb.indexOf("--");
+        int end = -1;
+        while ((start > 0 && sb.charAt(start - 1) == '\n') || start == 0)
+        {
+            end = Math.min(sb.indexOf("\n", start) + 1, sb.length() - 1);
+            sb.delete(start, end);
+            start = sb.indexOf("--", start);
+        }
+        is.close();
+        return StringUtils.split(sb.toString(), ";");
+
     }
 }
