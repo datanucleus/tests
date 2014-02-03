@@ -321,8 +321,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
             schematool.setDdlFile("target/schema.ddl");
             schematool.setCompleteDdl(true);
             SchemaAwareStoreManager schemaStoreMgr = (SchemaAwareStoreManager) nucCtx.getStoreManager();
-            // TODO In 4.0 this needs updating to "createSchemaForClasses"
-            schematool.createSchema(schemaStoreMgr, classNames);
+            schematool.createSchemaForClasses(schemaStoreMgr, classNames);
         }
         catch (Exception e)
         {
