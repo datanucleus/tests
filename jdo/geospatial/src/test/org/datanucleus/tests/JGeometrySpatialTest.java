@@ -38,7 +38,6 @@ import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.samples.jgeometry.SampleGeometry;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import static org.datanucleus.tests.JDOPersistenceTestCase.pmf;
 import org.datanucleus.util.StringUtils;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
