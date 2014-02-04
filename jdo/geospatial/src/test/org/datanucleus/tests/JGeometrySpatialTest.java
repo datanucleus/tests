@@ -79,7 +79,6 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         TestSuite suite = new TestSuite();
         if (datastoreVendor.equalsIgnoreCase("oracle"))
         {
-            // Oracle
             Method[] methods = JGeometrySpatialTest.class.getMethods();
             for (Method method : methods)
             {
@@ -97,65 +96,65 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
     protected void setUp() throws Exception
     {
         super.setUp();
-        
-            PersistenceManager pm = pmf.getPersistenceManager();
-            Transaction tx = pm.currentTransaction();
-            try
-            {
-                tx.begin();
-                pm.newQuery(SampleGeometry.class).deletePersistentAll();
-            }
-            finally
-            {
-                tx.commit();
-            }
-            Connection sqlConn = null;
-            try
-            {
-                tx.begin();
-                sqlConn = (Connection) pm.getDataStoreConnection();
-                String ss[] = getArrayOfSqlStringsFromFile("sample_sdo_geometry_drops.sql");
-                for (int i = 0; i < ss.length; i++)
-                {
-                    try
-                    {
-                        sqlConn.createStatement().execute(ss[i]);
-                    }
-                    catch (SQLException sQLException)
-                    {
-                    }
-                }
 
-            }
-            finally
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            pm.newQuery(SampleGeometry.class).deletePersistentAll();
+        }
+        finally
+        {
+            tx.commit();
+        }
+        Connection sqlConn = null;
+        try
+        {
+            tx.begin();
+            sqlConn = (Connection) pm.getDataStoreConnection();
+            String ss[] = getArrayOfSqlStringsFromFile("sample_sdo_geometry_drops.sql");
+            for (int i = 0; i < ss.length; i++)
             {
-                sqlConn.close();
-                tx.commit();
-            }
-            try
-            {
-                tx.begin();
-                sqlConn = (Connection) pm.getDataStoreConnection();
-                String ss[] = getArrayOfSqlStringsFromFile("sample_sdo_geometry.sql");
-                for (int i = 0; i < ss.length; i++)
+                try
                 {
                     sqlConn.createStatement().execute(ss[i]);
                 }
+                catch (SQLException sQLException)
+                {
+                }
+            }
 
-            }
-            finally
+        }
+        finally
+        {
+            sqlConn.close();
+            tx.commit();
+        }
+        try
+        {
+            tx.begin();
+            sqlConn = (Connection) pm.getDataStoreConnection();
+            String ss[] = getArrayOfSqlStringsFromFile("sample_sdo_geometry.sql");
+            for (int i = 0; i < ss.length; i++)
             {
-                sqlConn.close();
-                tx.commit();
+                sqlConn.createStatement().execute(ss[i]);
             }
-        
+
+        }
+        finally
+        {
+            sqlConn.close();
+            tx.commit();
+        }
+
     }
 
     protected void tearDown() throws Exception
     {
-        
+
         clean(SampleGeometry.class);
-        
+
         super.tearDown();
     }
 
@@ -948,7 +947,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
 
     public void testBuffer() throws SQLException
     {
-        
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1545,13 +1544,18 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            JGeometry polygon = JGeometry.createLinearPolygon(new Object[]{new double[]{80.0, 80.0, 20.0, 80.0, 20.0, 20.0, 80.0, 20.0,
-                    80.0, 80.0}}, 2, 4326);
-            Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.bboxTest(geom, :polygon)");
-            List list = (List) query.execute(polygon);
+            JGeometry polygon = JGeometry.createLinearPolygon(
+                new Object[]{new double[]{86.0, 76.0, 120.0, 86.0, 120.0, 120.0, 86.0, 76.0}}, 2, 4326);
+            Double tolerance = 0.005;
+            Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.bboxTest(geom, :polygon, :tolerance)");
+            List list = (List) query.execute(polygon, tolerance);
             assertEquals("Wrong number of geometries which pass the bbox test with a given point returned", 1, list.size());
             assertTrue("Polygon 2 should be in the list of geometries which pass the bbox test with a given point",
                 list.contains(getSamplePolygon(2)));
+            JGeometry polygon2 = JGeometry.createLinearPolygon(
+                new Object[]{new double[]{75.0, 75.0, 100.0, 75.0, 100.0, 55.0, 75.0, 75.0}}, 2, 4326);
+            list = (List) query.execute(polygon2, tolerance);
+            assertEquals("Intersecting polygons should not be validated as a valid bboxtest", 0, list.size());
         }
         finally
         {
@@ -1635,7 +1639,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         }
         return null;
     }
-    
+
     private String[] getArrayOfSqlStringsFromFile(String fileName) throws FileNotFoundException, IOException
     {
         File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
