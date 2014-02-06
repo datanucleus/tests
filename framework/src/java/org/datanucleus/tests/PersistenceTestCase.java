@@ -84,7 +84,7 @@ public abstract class PersistenceTestCase extends TestCase
         {
             throw new IllegalArgumentException("storeMgr is null");
         }
-        storeMgr.addClasses(classNames, new ClassLoaderResolverImpl());
+        storeMgr.manageClasses(new ClassLoaderResolverImpl(), classNames);
     }
 
     /**
@@ -92,6 +92,6 @@ public abstract class PersistenceTestCase extends TestCase
      */
     protected void dropAllClassesFromSchema()
     {
-        storeMgr.removeAllClasses(new ClassLoaderResolverImpl());
+        storeMgr.unmanageAllClasses(new ClassLoaderResolverImpl());
     }
 }
