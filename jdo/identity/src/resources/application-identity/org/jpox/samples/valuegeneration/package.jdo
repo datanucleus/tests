@@ -12,10 +12,10 @@
 
         <class name="TableGeneratorItem" identity-type="application" objectid-class="TableGeneratorItem$Oid">
             <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="increment">
-                <extension vendor-name="jpox" key="key-cache-size" value="10"/>
-                <extension vendor-name="JPOX" key="sequence-table-name" value="SEQTABLE"/>
-                <extension vendor-name="JPOX" key="sequence-name-column-name" value="SEQNAME"/>
-                <extension vendor-name="JPOX" key="sequence-nextval-column-name" value="NEXTSEQ"/>
+                <extension vendor-name="datanucleus" key="key-cache-size" value="10"/>
+                <extension vendor-name="datanucleus" key="sequence-table-name" value="SEQTABLE"/>
+                <extension vendor-name="datanucleus" key="sequence-name-column-name" value="SEQNAME"/>
+                <extension vendor-name="datanucleus" key="sequence-nextval-column-name" value="NEXTSEQ"/>
             </field>
             <field name="name" persistence-modifier="persistent">
                 <column length="40" jdbc-type="VARCHAR"/>
@@ -60,8 +60,8 @@
 
         <class name="SequenceGeneratorItem" identity-type="application" objectid-class="SequenceGeneratorItem$Oid">
             <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="sequence" sequence="JPOXSequence">
-                <extension vendor-name="jpox" key="key-cache-size" value="10"/>
-                <extension vendor-name="jpox" key="key-initial-value" value="100"/>
+                <extension vendor-name="datanucleus" key="key-cache-size" value="10"/>
+                <extension vendor-name="datanucleus" key="key-initial-value" value="100"/>
             </field>
             <field name="name" persistence-modifier="persistent">
                 <column length="40" jdbc-type="VARCHAR"/>

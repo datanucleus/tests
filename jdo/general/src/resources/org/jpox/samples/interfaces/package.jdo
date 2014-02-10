@@ -31,7 +31,7 @@
             <field name="shapeSet1" persistence-modifier="persistent">
                 <collection element-type="Shape"/>
                 <join/>
-                <extension vendor-name="jpox" key="implementation-classes" value="Circle,Rectangle,Square, Triangle"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="Circle,Rectangle,Square, Triangle"/>
             </field>
         </class>
     </package>

@@ -78,17 +78,17 @@
                 <collection element-type="PCJoinElement"/>
                 <join column="SETHOLDER_ID_OID"/>
                 <element column="PCJOINELEMENT_ID"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll1"/>
             </field>
             <field name="joinSetPCShared2" table="SETHOLDER_SHARED">
                 <collection element-type="PCJoinElement"/>
                 <join column="SETHOLDER_ID_OID"/>
                 <element column="PCJOINELEMENT_ID"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll2"/>
             </field>
 
             <field name="fkSetPC">
@@ -102,14 +102,14 @@
             <field name="fkSetPCShared1">
                 <collection element-type="PCFKSetElementShared"/>
                 <element column="SETHOLDER_ID_OID"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll1"/>
             </field>
             <field name="fkSetPCShared2">
                 <collection element-type="PCFKSetElementShared"/>
                 <element column="SETHOLDER_ID_OID"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll2"/>
             </field>
 
             <field name="setNonPCSerial1" serialized="true" column="SETNONPC_SERIAL_1">
@@ -165,24 +165,24 @@
                 <join column="LISTHOLDER_ID_OID"/>
                 <element column="PCJOINELEMENT_ID"/>
                 <order column="IDX"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll1"/>
             </field>
             <field name="joinListPCShared2" table="LISTHOLDER_SHARED">
                 <collection element-type="PCJoinElement"/>
                 <join column="LISTHOLDER_ID_OID"/>
                 <element column="PCJOINELEMENT_ID"/>
                 <order column="IDX"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-pk" value="true"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-pk" value="true"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll2"/>
             </field>
             <field name="fkListPCOrdered">
                 <collection element-type="PCFKListElement"/>
                 <element column="LISTHOLDER2_ID_OID"/>
                 <order>
-                    <extension vendor-name="jpox" key="list-ordering" value="name ASC"/>
+                    <extension vendor-name="datanucleus" key="list-ordering" value="name ASC"/>
                 </order>
             </field>
             <field name="fkListPC">
@@ -199,15 +199,15 @@
                 <collection element-type="PCFKListElementShared"/>
                 <element column="LISTHOLDER_ID_OID"/>
                 <order column="IDX"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll1"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll1"/>
             </field>
             <field name="fkListPCShared2">
                 <collection element-type="PCFKListElementShared"/>
                 <element column="LISTHOLDER_ID_OID"/>
                 <order column="IDX"/>
-                <extension vendor-name="jpox" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
-                <extension vendor-name="jpox" key="relation-discriminator-value" value="coll2"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-column" value="COLLECTION_TYPE"/>
+                <extension vendor-name="datanucleus" key="relation-discriminator-value" value="coll2"/>
             </field>
 
             <field name="listNonPCSerial1" serialized="true" column="LISTNONPC_SERIAL_1">

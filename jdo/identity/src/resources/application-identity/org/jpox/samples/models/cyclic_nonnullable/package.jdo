@@ -39,7 +39,7 @@
     
     <class name="CompoundType" requires-extent="true" detachable="true">
       <field name="owner" persistence-modifier="persistent" null-value="exception">
-        <extension vendor-name="jpox" key="implementation-classes" value="org.jpox.samples.models.cyclic_nonnullable.NullInverseEntity2"/>
+        <extension vendor-name="datanucleus" key="implementation-classes" value="org.jpox.samples.models.cyclic_nonnullable.NullInverseEntity2"/>
       </field>
       <field name="name" persistence-modifier="persistent"/>
     </class>

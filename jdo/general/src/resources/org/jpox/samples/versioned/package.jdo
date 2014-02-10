@@ -47,7 +47,7 @@
         <class name="Trade4" detachable="true" identity-type="datastore">
             <datastore-identity strategy="increment"/>
             <version strategy="version-number">
-                <extension vendor-name="jpox" key="field-name" value="version"/>
+                <extension vendor-name="datanucleus" key="field-name" value="version"/>
             </version>
             <field name="id" persistence-modifier="none"/>
             <field name="version"/>

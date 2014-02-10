@@ -6,7 +6,7 @@
         <class name="TreeSet1" detachable="true" identity-type="datastore">
             <field name="items" persistence-modifier="persistent">
                 <collection element-type="org.jpox.samples.types.container.ContainerItem">
-                    <extension vendor-name="jpox" key="comparatorName" value="MyComparator"/>
+                    <extension vendor-name="datanucleus" key="comparatorName" value="MyComparator"/>
                 </collection>
                 <join/>
             </field>

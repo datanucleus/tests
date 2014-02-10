@@ -64,7 +64,7 @@
             <field name="objectCollection">
                 <collection element-type="java.lang.Object" serialized-element="true"/>
                 <join/>
-                <extension vendor-name="jpox" key="implementation-classes" value="org.jpox.samples.widget.Primitive"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="org.jpox.samples.widget.Primitive"/>
             </field>
 
             <!-- Not yet supported
@@ -148,7 +148,7 @@
             <!-- NOTE: These fields needs to be explicitly declared persistent -->
             <!-- per section 18.4 of the JDO 1.0 spec.                         -->
 	        <field name="cloneable" persistence-modifier="persistent">
-                <extension vendor-name="jpox" key="implementation-classes" value="org.jpox.samples.widget.Widget,org.jpox.samples.widget.ElementWidget,org.jpox.samples.widget.SetWidget,org.jpox.samples.widget.StringWidget,org.jpox.samples.widget.HashSetWidget,org.jpox.samples.widget.FloatWidget,org.jpox.samples.widget.DecimalWidget,org.jpox.samples.widget.DateWidget"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="org.jpox.samples.widget.Widget,org.jpox.samples.widget.ElementWidget,org.jpox.samples.widget.SetWidget,org.jpox.samples.widget.StringWidget,org.jpox.samples.widget.HashSetWidget,org.jpox.samples.widget.FloatWidget,org.jpox.samples.widget.DecimalWidget,org.jpox.samples.widget.DateWidget"/>
 	        </field>
 	        <field name="testObject" persistence-modifier="persistent"/>
 	    </class>
@@ -179,9 +179,9 @@
             <field name="sqlDateField" persistence-modifier="persistent" default-fetch-group="true" />
             <field name="sqlTimestampField" persistence-modifier="persistent" default-fetch-group="true" />
             <field name="dateJdbcTimestampField" persistence-modifier="persistent" default-fetch-group="true">
-                <extension vendor-name="jpox" key="mapping-class" value="org.datanucleus.store.rdbms.mapping.java.SqlTimestampMapping"/>
+                <extension vendor-name="datanucleus" key="mapping-class" value="org.datanucleus.store.rdbms.mapping.java.SqlTimestampMapping"/>
                 <column>
-                    <extension vendor-name="jpox" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampRDBMSMapping"/>
+                    <extension vendor-name="datanucleus" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampRDBMSMapping"/>
                 </column>
             </field>
         </class>

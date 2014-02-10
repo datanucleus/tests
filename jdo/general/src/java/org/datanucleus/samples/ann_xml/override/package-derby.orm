@@ -14,7 +14,7 @@
             </field>
             <field name="dateOfBirth">
                 <column name="DATE_OF_BIRTH" jdbc-type="DATE"/>
-                <extension vendor-name="jpox" key="insert-function" value="CURRENT_TIMESTAMP"/>
+                <extension vendor-name="datanucleus" key="insert-function" value="CURRENT_TIMESTAMP"/>
             </field>
             <query name="NumberOfPeople" language="javax.jdo.query.SQL" unique="true" result-class="org.datanucleus.samples.nondurable.TableSize">
             <![CDATA[

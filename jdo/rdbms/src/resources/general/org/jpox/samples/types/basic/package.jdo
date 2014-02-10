@@ -26,9 +26,9 @@
             <field name="sqlTimeField" persistence-modifier="persistent" default-fetch-group="true" />
             <field name="sqlTimestampField" persistence-modifier="persistent" default-fetch-group="true" />
             <field name="dateJdbcTimestampField" persistence-modifier="persistent" default-fetch-group="true">
-                <extension vendor-name="jpox" key="mapping-class" value="org.datanucleus.store.rdbms.mapping.java.SqlTimestampMapping"/>
+                <extension vendor-name="datanucleus" key="mapping-class" value="org.datanucleus.store.rdbms.mapping.java.SqlTimestampMapping"/>
                 <column>
-                    <extension vendor-name="jpox" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampRDBMSMapping"/>
+                    <extension vendor-name="datanucleus" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampRDBMSMapping"/>
                 </column>
             </field>
         </class>

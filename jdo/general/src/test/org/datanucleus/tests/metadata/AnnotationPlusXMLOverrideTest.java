@@ -127,7 +127,7 @@ public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
         assertNotNull(prefix + "extension info is null!", extmds);
         assertEquals(prefix + "incorrect number of extensions", 1, extmds.length);
         assertEquals(prefix + "extension vendor incorrect",
-                     "jpox", extmds[0].getVendorName());
+                     "datanucleus", extmds[0].getVendorName());
         assertEquals(prefix + "extension key incorrect",
                      "insert-function", extmds[0].getKey());
         assertEquals(prefix + "extension value incorrect",

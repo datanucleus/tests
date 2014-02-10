@@ -5,17 +5,17 @@
     <package name="org.jpox.samples.i18n">
         <class name="UTF8" identity-type="datastore">
             <field name="lowercase">
-                <extension vendor-name="jpox" key="length" value="max 20"/>
+                <extension vendor-name="datanucleus" key="length" value="max 20"/>
             </field>
             <field name="UPPERCASE"> 
-                <extension vendor-name="jpox" key="length" value="max 20"/>
+                <extension vendor-name="datanucleus" key="length" value="max 20"/>
             </field>
             <field name="numeral_12345"/>
             <field name="accented_áÉíÓúñ">
-                <extension vendor-name="jpox" key="length" value="max 20"/>
+                <extension vendor-name="datanucleus" key="length" value="max 20"/>
             </field>
             <field name="íÓúñ_accented_prefix">
-                <extension vendor-name="jpox" key="length" value="max 20"/>
+                <extension vendor-name="datanucleus" key="length" value="max 20"/>
             </field>
         </class>
     </package>

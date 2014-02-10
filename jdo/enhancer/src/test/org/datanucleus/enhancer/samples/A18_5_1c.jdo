@@ -6,7 +6,7 @@
 			identity-type="application" 
 			objectid-class="AppIdentityOkKey">
             <field name="field00" primary-key="true"/>
-            <extension vendor-name="jpox" key="param_without_value"/>
+            <extension vendor-name="datanucleus" key="param_without_value"/>
         </class>
 	</package>
 </jdo>

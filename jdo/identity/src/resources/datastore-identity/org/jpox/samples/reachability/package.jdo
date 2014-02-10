@@ -5,12 +5,12 @@
         <class name="ReachableHolder">
             <field name="name"/>
             <field name="item1" persistence-modifier="persistent">
-                <extension vendor-name="jpox" key="cascade-persist" value="false"/>
+                <extension vendor-name="datanucleus" key="cascade-persist" value="false"/>
             </field>
             <field name="set1" persistence-modifier="persistent">
                 <collection element-type="ReachableItem"/>
                 <join/>
-                <extension vendor-name="jpox" key="cascade-persist" value="false"/>
+                <extension vendor-name="datanucleus" key="cascade-persist" value="false"/>
             </field>
         </class>
 

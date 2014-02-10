@@ -287,7 +287,7 @@
                 <array element-type="org.jpox.samples.interfaces.Rectangle"/>
                 <join column="ARRAY_ID_OID"/>
                 <order column="IDX"/>
-                <extension vendor-name="jpox" key="implementation-classes" value="org.jpox.samples.interfaces.Rectangle"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="org.jpox.samples.interfaces.Rectangle"/>
             </field>
         </class>
 

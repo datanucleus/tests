@@ -34,7 +34,7 @@
         <!-- Versioned, using "version-number" strategy in "version field" -->
         <class name="Trade4" detachable="true" identity-type="application">
             <version strategy="version-number">
-                <extension vendor-name="jpox" key="field-name" value="version"/>
+                <extension vendor-name="datanucleus" key="field-name" value="version"/>
             </version>
             <field name="id" primary-key="true" value-strategy="increment"/>
             <field name="person"/>

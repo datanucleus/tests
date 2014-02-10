@@ -14,14 +14,14 @@
             <field name="object3" persistence-modifier="persistent">
                 <column name="NONSERIALISED_IMPL1_ID"/>
                 <column name="NONSERIALISED_IMPL2_ID"/>
-                <extension vendor-name="jpox" key="implementation-classes" 
+                <extension vendor-name="datanucleus" key="implementation-classes" 
                     value="org.jpox.samples.objects.ObjectImpl1,org.jpox.samples.objects.ObjectImpl2"/>
             </field>
             <field name="set1" table="OBJECT_SET1_OBJECTS">
                 <collection element-type="java.lang.Object"/>
                 <join column="HOLDER_ID"/>
                 <element column="OBJECT_IMPL_1_ID"/>
-                <extension vendor-name="jpox" key="implementation-classes" value="org.jpox.samples.objects.ObjectImpl1"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="org.jpox.samples.objects.ObjectImpl1"/>
             </field>
         </class>
 

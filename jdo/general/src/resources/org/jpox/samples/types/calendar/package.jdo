@@ -11,7 +11,7 @@
             </field>
             <field name="cal2" persistence-modifier="persistent">
                 <column name="CAL2"/>
-                <extension vendor-name="jpox" key="calendar-one-column" value="true"/>
+                <extension vendor-name="datanucleus" key="calendar-one-column" value="true"/>
             </field>
 
             <fetch-group name="calendar">
