@@ -38,6 +38,7 @@ import org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub1;
 import org.jpox.samples.annotations.models.company.Employee;
 import org.jpox.samples.annotations.models.company.Manager;
+import org.jpox.samples.annotations.models.company.Organisation;
 import org.jpox.samples.annotations.models.company.Person;
 import org.jpox.samples.annotations.models.company.Person1;
 import org.jpox.samples.annotations.models.company.Person2;
@@ -73,7 +74,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         {
             addClassesToSchema(new Class[]
                 {
-                    Person.class, Employee.class, Manager.class, Animal.class, Farm.class,
+                    Person.class, Employee.class, Manager.class, Qualification.class, Organisation.class, 
+                    Animal.class, Farm.class,
                     House.class, Window.class, Boiler.class, Timer.class, Login.class, LoginAccount.class,
                     UserGroup.class, GroupMember.class, ModeratedUserGroup.class, ExpertGroupMember.class
                 });
