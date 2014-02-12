@@ -21,12 +21,18 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.NucleusContext;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.metadata.AbstractClassMetaData;
+import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.MetaDataManager;
+import org.datanucleus.samples.annotations.embedded.EmbCls1;
+import org.datanucleus.samples.annotations.embedded.EmbCls2;
+import org.datanucleus.samples.annotations.embedded.EmbCls3;
 import org.datanucleus.store.schema.naming.ColumnType;
 import org.datanucleus.store.schema.naming.DN2NamingFactory;
 import org.datanucleus.store.schema.naming.NamingCase;
 import org.datanucleus.store.schema.naming.SchemaComponent;
 import org.jpox.samples.array.BooleanArray;
+import org.jpox.samples.embedded.Computer;
+import org.jpox.samples.embedded.ComputerCard;
 import org.jpox.samples.models.fitness.Gym;
 import org.jpox.samples.one_many.unidir_2.UserGroup;
 import org.jpox.samples.versioned.Trade1;
@@ -105,5 +111,58 @@ public class DN2NamingFactoryTest extends JDOPersistenceTestCase
         factory.setMaximumLength(SchemaComponent.COLUMN, 128);
         factory.setNamingCase(NamingCase.LOWER_CASE);
         assertEquals("Column name for datastore-id is incorrect", "gym_id", factory.getColumnName(cmd1, ColumnType.DATASTOREID_COLUMN));
+    }
+
+    public void testEmbeddedPCColumnNames()
+    {
+        JDOPersistenceManagerFactory jdoPMF = (JDOPersistenceManagerFactory) pmf;
+        NucleusContext nucCtx = jdoPMF.getNucleusContext();
+        ClassLoaderResolver clr = nucCtx.getClassLoaderResolver(null);
+        MetaDataManager mmgr = nucCtx.getMetaDataManager();
+        DN2NamingFactory factory = new DN2NamingFactory(nucCtx);
+        factory.setMaximumLength(SchemaComponent.COLUMN, 128);
+        factory.setNamingCase(NamingCase.LOWER_CASE);
+
+        AbstractClassMetaData compCmd = mmgr.getMetaDataForClass(Computer.class, clr);
+        AbstractMemberMetaData graphicsMmd = compCmd.getMetaDataForMember("graphicsCard");
+        AbstractClassMetaData cardCmd = mmgr.getMetaDataForClass(ComputerCard.class, clr);
+        AbstractMemberMetaData makerMmd = cardCmd.getMetaDataForMember("makerName");
+        String colName = factory.getColumnName(graphicsMmd, new AbstractMemberMetaData[]{makerMmd}, 0);
+        assertEquals("graphics_maker", colName); // Comes from EmbeddedMetaData override
+    }
+
+    /**
+     * Test where the sample classes have no EmbeddedMetaData overriding the column names, so we just get generated names for embedded class and nested embedded class.
+     */
+    public void testNestedEmbeddedPCColumnNames()
+    {
+        JDOPersistenceManagerFactory jdoPMF = (JDOPersistenceManagerFactory) pmf;
+        NucleusContext nucCtx = jdoPMF.getNucleusContext();
+        ClassLoaderResolver clr = nucCtx.getClassLoaderResolver(null);
+        MetaDataManager mmgr = nucCtx.getMetaDataManager();
+        DN2NamingFactory factory = new DN2NamingFactory(nucCtx);
+        factory.setMaximumLength(SchemaComponent.COLUMN, 128);
+        factory.setNamingCase(NamingCase.LOWER_CASE);
+
+        AbstractClassMetaData emb1Cmd = mmgr.getMetaDataForClass(EmbCls1.class, clr);
+        AbstractMemberMetaData embCls2aMmd = emb1Cmd.getMetaDataForMember("embCls2a");
+        AbstractMemberMetaData embCls2bMmd = emb1Cmd.getMetaDataForMember("embCls2b");
+
+        AbstractClassMetaData emb2Cmd = mmgr.getMetaDataForClass(EmbCls2.class, clr);
+        AbstractMemberMetaData embCls3Mmd = emb2Cmd.getMetaDataForMember("embCls3");
+        AbstractMemberMetaData cls2NameMmd = emb2Cmd.getMetaDataForMember("cls2Name");
+
+        AbstractClassMetaData emb3Cmd = mmgr.getMetaDataForClass(EmbCls3.class, clr);
+        AbstractMemberMetaData cls3NameMmd = emb3Cmd.getMetaDataForMember("cls3Name");
+
+        String colName = factory.getColumnName(embCls2aMmd, new AbstractMemberMetaData[]{cls2NameMmd}, 0);
+        assertEquals("embcls2a_cls2name", colName);
+        colName = factory.getColumnName(embCls2bMmd, new AbstractMemberMetaData[]{cls2NameMmd}, 0);
+        assertEquals("embcls2b_cls2name", colName);
+
+        colName = factory.getColumnName(embCls2aMmd, new AbstractMemberMetaData[]{embCls3Mmd, cls3NameMmd}, 0);
+        assertEquals("embcls2a_embcls3_cls3name", colName);
+        colName = factory.getColumnName(embCls2bMmd, new AbstractMemberMetaData[]{embCls3Mmd, cls3NameMmd}, 0);
+        assertEquals("embcls2b_embcls3_cls3name", colName);
     }
 }
