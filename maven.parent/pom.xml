@@ -963,9 +963,7 @@
         <profile>
             <id>non-coverage</id>
             <activation>
-                <property>
-                    <name>!coverage</name>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <!-- Define empty so tests do not fail to run -->
