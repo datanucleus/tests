@@ -38,10 +38,13 @@
     </repositories>
 
     <pluginRepositories>
-        <!-- repository for emma plugin -->
         <pluginRepository>
-           <id>snapshots.repository.codehaus.org</id>
-           <url>http://snapshots.repository.codehaus.org</url>
+            <!-- For JaCoCo plugin-->
+            <id>oss-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
 
@@ -903,37 +906,6 @@
             </properties>
         </profile>
 
-        <profile>
-            <id>emma</id>
-            <build>
-                <plugins>
-                    <plugin>      
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>emma-maven-plugin</artifactId>
-                        <version>1.0-SNAPSHOT</version>
-                        <inherited>true</inherited>          
-                        <executions>
-                          <execution>                
-                            <goals>
-                              <goal>instrument</goal>
-                            </goals>
-                          </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <reporting>
-                <plugins>
-                    <plugin>      
-                      <groupId>org.codehaus.mojo</groupId>
-                      <artifactId>emma-maven-plugin</artifactId>
-                      <version>1.0-SNAPSHOT</version>
-                      <inherited>true</inherited>          
-                    </plugin>
-                </plugins>
-            </reporting>
-        </profile>
-        
         <profile>
             <id>coverage</id>
             <activation>
