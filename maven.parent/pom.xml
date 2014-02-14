@@ -272,7 +272,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.16</version>
                 <configuration>
-                    <argLine>-Xmx256m -Djava.util.logging.config.file=logging.properties</argLine>
+                    <argLine>${argLine} -Xmx256m -Djava.util.logging.config.file=logging.properties</argLine>
 
                     <!-- continue running tests if there are failures for one project -->
                     <testFailureIgnore>true</testFailureIgnore>
