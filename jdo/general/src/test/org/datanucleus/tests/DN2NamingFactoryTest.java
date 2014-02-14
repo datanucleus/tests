@@ -127,7 +127,7 @@ public class DN2NamingFactoryTest extends JDOPersistenceTestCase
         AbstractMemberMetaData graphicsMmd = compCmd.getMetaDataForMember("graphicsCard");
         AbstractClassMetaData cardCmd = mmgr.getMetaDataForClass(ComputerCard.class, clr);
         AbstractMemberMetaData makerMmd = cardCmd.getMetaDataForMember("makerName");
-        String colName = factory.getColumnName(graphicsMmd, new AbstractMemberMetaData[]{makerMmd}, 0);
+        String colName = factory.getColumnName(new AbstractMemberMetaData[]{graphicsMmd, makerMmd}, 0);
         assertEquals("graphics_maker", colName); // Comes from EmbeddedMetaData override
     }
 
@@ -155,14 +155,14 @@ public class DN2NamingFactoryTest extends JDOPersistenceTestCase
         AbstractClassMetaData emb3Cmd = mmgr.getMetaDataForClass(EmbCls3.class, clr);
         AbstractMemberMetaData cls3NameMmd = emb3Cmd.getMetaDataForMember("cls3Name");
 
-        String colName = factory.getColumnName(embCls2aMmd, new AbstractMemberMetaData[]{cls2NameMmd}, 0);
+        String colName = factory.getColumnName(new AbstractMemberMetaData[]{embCls2aMmd, cls2NameMmd}, 0);
         assertEquals("embcls2a_cls2name", colName);
-        colName = factory.getColumnName(embCls2bMmd, new AbstractMemberMetaData[]{cls2NameMmd}, 0);
+        colName = factory.getColumnName(new AbstractMemberMetaData[]{embCls2bMmd, cls2NameMmd}, 0);
         assertEquals("embcls2b_cls2name", colName);
 
-        colName = factory.getColumnName(embCls2aMmd, new AbstractMemberMetaData[]{embCls3Mmd, cls3NameMmd}, 0);
+        colName = factory.getColumnName(new AbstractMemberMetaData[]{embCls2aMmd, embCls3Mmd, cls3NameMmd}, 0);
         assertEquals("embcls2a_embcls3_cls3name", colName);
-        colName = factory.getColumnName(embCls2bMmd, new AbstractMemberMetaData[]{embCls3Mmd, cls3NameMmd}, 0);
+        colName = factory.getColumnName(new AbstractMemberMetaData[]{embCls2bMmd, embCls3Mmd, cls3NameMmd}, 0);
         assertEquals("embcls2b_embcls3_cls3name", colName);
     }
 }
