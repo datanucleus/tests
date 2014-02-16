@@ -24,6 +24,7 @@ import javax.jdo.metadata.VersionMetadata;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.PersistenceNucleusContext;
+import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.asm.ClassWriter;
 import org.datanucleus.asm.FieldVisitor;
@@ -288,10 +289,10 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         Properties properties = TestHelper.getPropertiesForDatastore(1);
         props.putAll(properties);
         props.put("javax.jdo.PersistenceManagerFactoryClass","org.datanucleus.api.jdo.JDOPersistenceManagerFactory");
-        props.put("datanucleus.autoCreateSchema","true");
-        props.put("datanucleus.autoCreateTables","true");
-        props.put("datanucleus.autoCreateColumns","true");
-        props.put("datanucleus.primaryClassLoader",runtimeCL);
+        props.put(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_ALL,"true");
+        props.put(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES,"true");
+        props.put(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_COLUMNS,"true");
+        props.put(PropertyNames.PROPERTY_CLASSLOADER_PRIMARY,runtimeCL);
         return props;
     }
 

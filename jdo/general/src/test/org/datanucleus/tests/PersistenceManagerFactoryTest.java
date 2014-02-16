@@ -32,6 +32,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
@@ -83,7 +84,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
             super();
             this.setProperty("javax.jdo.PersistenceManagerFactoryClass",
                              "org.datanucleus.api.jdo.JDOPersistenceManagerFactory");
-            this.setProperty("datanucleus.autoStartMechanism", "None");
+            this.setProperty(PropertyNames.PROPERTY_AUTOSTART_MECHANISM, "None");
         }
 
         public void setOptimistic(boolean b)
@@ -166,25 +167,25 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         public void setValidateTables(boolean b)
         {
             this.validateTables = b;
-            this.setProperty("datanucleus.validateTables", new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_TABLES, new Boolean(b).toString());
         }
 
         public void setValidateConstraints(boolean b)
         {
             this.validateConstraints = b;
-            this.setProperty("datanucleus.validateConstraints", new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_CONSTRAINTS, new Boolean(b).toString());
         }
 
         public void setAutoCreateTables(boolean b)
         {
             this.autoCreateTables = b;
-            this.setProperty("datanucleus.autoCreateTables", new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES, new Boolean(b).toString());
         }
 
         public void setAutoCreateConstraints(boolean b)
         {
             this.autoCreateConstraints = b;
-            this.setProperty("datanucleus.autoCreateConstraints", new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_CONSTRAINTS, new Boolean(b).toString());
         }
 
         public void setTransactionIsolation(int i)
@@ -220,11 +221,11 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
             else if (!factory2Name.equals(pmf.getConnectionFactory2Name())) return false;
 
             JDOPersistenceManagerFactory myPMF = (JDOPersistenceManagerFactory)pmf;
-            if (validateTables != getConfigurationForPMF(myPMF).getBooleanProperty("datanucleus.validateTables")) return false;
-            if (validateConstraints != getConfigurationForPMF(myPMF).getBooleanProperty("datanucleus.validateConstraints")) return false;
-            if (autoCreateTables != getConfigurationForPMF(myPMF).getBooleanProperty("datanucleus.autoCreateTables")) return false;
-            if (autoCreateConstraints != getConfigurationForPMF(myPMF).getBooleanProperty("datanucleus.autoCreateConstraints")) return false;
-            int pmfIsolLevel = TransactionUtils.getTransactionIsolationLevelForName(getConfigurationForPMF(myPMF).getStringProperty("datanucleus.transactionIsolation"));
+            if (validateTables != getConfigurationForPMF(myPMF).getBooleanProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_TABLES)) return false;
+            if (validateConstraints != getConfigurationForPMF(myPMF).getBooleanProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_CONSTRAINTS)) return false;
+            if (autoCreateTables != getConfigurationForPMF(myPMF).getBooleanProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES)) return false;
+            if (autoCreateConstraints != getConfigurationForPMF(myPMF).getBooleanProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_CONSTRAINTS)) return false;
+            int pmfIsolLevel = TransactionUtils.getTransactionIsolationLevelForName(getConfigurationForPMF(myPMF).getStringProperty(PropertyNames.PROPERTY_TRANSACTION_ISOLATION));
             if (isolationLevel != pmfIsolLevel) return false;
 
             return true;

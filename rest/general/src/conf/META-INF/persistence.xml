@@ -11,7 +11,7 @@
             <property name="javax.jdo.option.ConnectionUserName" value="sa"/>
             <property name="javax.jdo.option.ConnectionPassword" value=""/>
             <property name="javax.jdo.option.RetainValues" value="true"/>
-            <property name="datanucleus.autoCreateSchema" value="true"/>
+            <property name="datanucleus.schema.autoCreateAll" value="true"/>
         </properties>
     </persistence-unit>
 
@@ -20,7 +20,7 @@
         <properties>
             <property name="javax.jdo.option.ConnectionURL" value="hbase:"/>
             <property name="javax.jdo.option.RetainValues" value="true"/>
-            <property name="datanucleus.autoCreateSchema" value="true"/>
+            <property name="datanucleus.schema.autoCreateAll" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

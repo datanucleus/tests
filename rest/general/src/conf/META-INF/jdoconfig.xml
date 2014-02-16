@@ -10,6 +10,6 @@
        <property name="javax.jdo.option.ConnectionPassword" value=""/>
 
        <property name="javax.jdo.option.RetainValues" value="true"/>
-       <property name="datanucleus.autoCreateSchema" value="true"/>
+       <property name="datanucleus.schema.autoCreateAll" value="true"/>
    </persistence-manager-factory>
 </jdoconfig>

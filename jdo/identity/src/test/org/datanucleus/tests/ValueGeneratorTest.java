@@ -30,6 +30,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.valuegeneration.AUIDGeneratorItem;
 import org.jpox.samples.valuegeneration.IdentityGeneratorItem;
@@ -701,7 +702,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
         try
         {
             // must use PM connection, otherwise would cause deadlock
-            getConfigurationForPMF(pmf).setProperty("datanucleus.valuegeneration.transactionAttribute", "UsePM");
+            getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "UsePM");
 
             HashSet idSet = new HashSet();
             Class idClass = null;
@@ -749,7 +750,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 {
                     tx.rollback();
                 }
-                getConfigurationForPMF(pmf).setProperty("datanucleus.valuegeneration.transactionAttribute", "New");
+                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "New");
                 pm.close();
             }
             
@@ -1166,7 +1167,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
             Transaction tx=pm.currentTransaction();
             try
             {
-                getConfigurationForPMF(pmf).setProperty("datanucleus.valuegeneration.transactionAttribute", "UsePM");
+                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "UsePM");
                 tx.begin();
 
                 // Create a few objects.
@@ -1193,7 +1194,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 {
                     tx.rollback();
                 }
-                getConfigurationForPMF(pmf).setProperty("datanucleus.valuegeneration.transactionAttribute", "New");
+                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "New");
                 pm.close();
             }
 
