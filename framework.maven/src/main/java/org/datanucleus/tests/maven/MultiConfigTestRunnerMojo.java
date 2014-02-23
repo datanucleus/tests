@@ -138,8 +138,7 @@ public class MultiConfigTestRunnerMojo
                 element("classesDirectory", "${project.build.outputDirectory}/" + executionId),
                 element("additionalClasspathElements",
                     element("additionalClasspathElement", "${project.build.outputDirectory}")),
-                //element("reportsDirectory", "${project.build.directory}/surefire-reports/" + executionId + "-" + configName));
-                    element("reportsDirectory", "${project.build.directory}/surefire-reports/"));
+                element("reportsDirectory", "${project.build.directory}/surefire-reports/" + executionId + "-" + configName));
         }
 
         Xpp3Dom existingConfiguration = getExistingConfiguration(executionId);
