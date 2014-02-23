@@ -111,36 +111,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                  <execution>
-                    <phase>test</phase>
-                    <configuration>
-                      <target>
-        
-                        <junitreport todir="${project.build.directory}/surefire-reports">
-                          <fileset dir="${project.build.directory}/surefire-reports">
-                            <include name="**/TEST-*.xml"/>
-                          </fileset>
-                        </junitreport>
-        
-                      </target>
-                    </configuration>
-                    <goals>
-                      <goal>run</goal>
-                    </goals>
-                  </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-junit</artifactId>
-                        <version>1.9.3</version>
-                    </dependency>
-                </dependencies>
-              </plugin>
         </plugins>
     </build>
 </project>
