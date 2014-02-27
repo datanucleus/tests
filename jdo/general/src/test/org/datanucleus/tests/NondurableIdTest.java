@@ -48,10 +48,10 @@ public class NondurableIdTest extends JDOPersistenceTestCase
         super(name);
         if (!initialised)
         {
-            addClassesToSchema(new Class[]
-                {
-                    LogEntry.class
-                });
+            if (storeMgr.getSupportedOptions().contains("NonDurableIdentity"))
+            {
+                addClassesToSchema(new Class[] {LogEntry.class});
+            }
             initialised = true;
         }
     }
