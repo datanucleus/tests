@@ -24,6 +24,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.secondarytable.Printer;
 
@@ -45,11 +46,10 @@ public class SecondaryTableTest extends JDOPersistenceTestCase
         
         if (!initialised)
         {
-            addClassesToSchema(new Class[]
-                {
-                    Printer.class   // Performs schema generation test
-                }
-            );
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SECONDARY_TABLE))
+            {
+                addClassesToSchema(new Class[] {Printer.class});
+            }
             initialised = true;
         }
     }
@@ -75,6 +75,11 @@ public class SecondaryTableTest extends JDOPersistenceTestCase
     public void testSecondaryTable() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SECONDARY_TABLE))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         String make = "Hewlett-Packard";
@@ -333,6 +338,11 @@ public class SecondaryTableTest extends JDOPersistenceTestCase
     public void testQuerySecondaryTable() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SECONDARY_TABLE))
+        {
+            return;
+        }
+
         // Persist a record to use in JDOQL queries
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();

@@ -26,6 +26,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.store.StoreManager;
 import org.jpox.samples.embedded.Bath;
 import org.jpox.samples.embedded.Battery;
 import org.jpox.samples.embedded.Chip;
@@ -53,17 +54,20 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
         super(name);
         if (!initialised)
         {
-            addClassesToSchema(new Class[]
-                {
-                    Computer.class,
-                    ComputerCard.class,
-                    Manufacturer.class,
-                    DigitalCamera.class,
-                    MusicPlayer.class,
-                    FittedKitchen.class, Oven.class, MultifunctionOven.class,
-                    FittedBathroom.class, Bath.class, ShowerBath.class,
-                }
-            );
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+            {
+                addClassesToSchema(new Class[]
+                        {
+                        Computer.class,
+                        ComputerCard.class,
+                        Manufacturer.class,
+                        DigitalCamera.class,
+                        MusicPlayer.class,
+                        FittedKitchen.class, Oven.class, MultifunctionOven.class,
+                        FittedBathroom.class, Bath.class, ShowerBath.class,
+                        }
+                        );
+            }
             initialised = true;
         }
     }
@@ -75,6 +79,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObject() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -312,6 +321,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObjectWithLinkToNonEmbedded() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -422,6 +436,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObjectNullValue() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -574,6 +593,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedObjectPersist() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -702,6 +726,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObjectDetachAttach() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -912,6 +941,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedOnly() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -1209,6 +1243,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testNestedEmbeddedPCObjects() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -1515,6 +1554,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedOnlyWithQuery() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -1597,6 +1641,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObjectWithInheritance() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -1701,6 +1750,11 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObjectWithInheritanceValueMap() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();

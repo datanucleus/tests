@@ -26,6 +26,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.store.StoreManager;
 import org.jpox.samples.embedded.Device;
 import org.jpox.samples.embedded.Film;
 import org.jpox.samples.embedded.FilmLibrary;
@@ -45,13 +46,14 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
         super(name);
         if (!initialised)
         {
-            addClassesToSchema(new Class[]
-                {
-                    FilmLibrary.class, Film.class,
-                    Network.class, Device.class,
-                    Processor.class, Job.class,
-                }
-            );
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+            {
+                addClassesToSchema(new Class[] {Network.class, Device.class, Processor.class, Job.class});
+            }
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+            {
+                addClassesToSchema(new Class[] {FilmLibrary.class, Film.class});
+            }
             initialised = true;
         }
     }
@@ -63,6 +65,11 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
     public void testEmbeddedCollection() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -399,6 +406,11 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
     public void testEmbeddedCollectionQuery() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -550,6 +562,11 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
     public void testEmbeddedList() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -692,6 +709,11 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
     public void testEmbeddedMap()
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
