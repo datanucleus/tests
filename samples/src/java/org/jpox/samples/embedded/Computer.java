@@ -20,7 +20,6 @@ package org.jpox.samples.embedded;
 
 /**
  * Representation of a Computer.
- * @version $Revision: 1.1 $
  */
 public class Computer
 {
@@ -37,7 +36,15 @@ public class Computer
     {
         this.operatingSystem = osName;
         this.graphicsCard = graphics;
+        if (this.graphicsCard != null)
+        {
+            this.graphicsCard.setComputer(this);
+        }
         this.soundCard = sound;
+        if (this.soundCard != null)
+        {
+            this.soundCard.setComputer(this);
+        }
     }
 
     public long getId()
