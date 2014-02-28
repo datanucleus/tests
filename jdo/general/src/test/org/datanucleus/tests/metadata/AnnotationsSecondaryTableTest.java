@@ -30,7 +30,6 @@ import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Simple tests for secondary table handling.
- * @version $Revision: 1.1 $
  */
 public class AnnotationsSecondaryTableTest extends JDOPersistenceTestCase
 {
@@ -59,7 +58,10 @@ public class AnnotationsSecondaryTableTest extends JDOPersistenceTestCase
     {
         super.tearDown();
 
-        clean(Printer.class);
+        if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SECONDARY_TABLE))
+        {
+            clean(Printer.class);
+        }
     }
 
     /**

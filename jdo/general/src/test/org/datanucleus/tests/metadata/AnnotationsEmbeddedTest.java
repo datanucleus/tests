@@ -53,16 +53,18 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
         
         if (!initialised)
         {
-            addClassesToSchema(new Class[]
-                {
-                    Computer.class,
-                    ComputerCard.class,
-                    FilmLibrary.class,
-                    Film.class,
-                    Network.class,
-                    Device.class,
-                }
-            );
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+            {
+                addClassesToSchema(new Class[]{Computer.class, ComputerCard.class});
+            }
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+            {
+                addClassesToSchema(new Class[]{Network.class, Device.class});
+            }
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+            {
+                addClassesToSchema(new Class[]{FilmLibrary.class, Film.class,});
+            }
             initialised = true;
         }
     }
@@ -125,6 +127,7 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 // Retrieve the object with both embedded subobjects
+//                LOG.info(">> getObjectById");
                 Computer comp = (Computer)pm.getObjectById(comp_id);
                 assertTrue("Unable to retrieve object with embedded object(s)", comp != null);
                 assertTrue("Retrieved object with embedded object(s) has incorrect operating system field",
@@ -135,6 +138,7 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
                     comp.getGraphicsCard().getManufacturer().equals("ATI"));
                 assertTrue("Retrieved object with embedded object(s) has incorrect embedded object : graphics card type is wrong", 
                     comp.getGraphicsCard().getType() == ComputerCard.AGP_CARD);
+//                LOG.info(">> card.computer=" + comp.getGraphicsCard().getComputer());
                 assertTrue("Embedded graphics card doesn't have its owner field set",
                     comp.getGraphicsCard().getComputer() != null);
                 assertTrue("Embedded graphics card has its owner field set incorrectly",
