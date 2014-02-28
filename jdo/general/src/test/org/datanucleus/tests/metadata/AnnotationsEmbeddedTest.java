@@ -37,6 +37,7 @@ import org.datanucleus.samples.annotations.embedded.Film;
 import org.datanucleus.samples.annotations.embedded.FilmLibrary;
 import org.datanucleus.samples.annotations.embedded.MusicPlayer;
 import org.datanucleus.samples.annotations.embedded.Network;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
@@ -73,6 +74,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObject() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -310,6 +316,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObjectNullValue() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -462,6 +473,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedObjectPersist() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -590,6 +606,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedPCObjectDetachAttach() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -761,6 +782,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedOnly() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -1058,6 +1084,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedCollection() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -1393,6 +1424,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedCollectionQuery() 
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -1544,6 +1580,11 @@ public class AnnotationsEmbeddedTest extends JDOPersistenceTestCase
     public void testEmbeddedMap()
     throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
