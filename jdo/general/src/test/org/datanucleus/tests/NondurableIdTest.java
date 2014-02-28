@@ -29,6 +29,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.nondurable.LogEntry;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.NucleusLogger;
 
@@ -48,7 +49,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
         super(name);
         if (!initialised)
         {
-            if (storeMgr.getSupportedOptions().contains("NonDurableIdentity"))
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_NONDURABLE_ID))
             {
                 addClassesToSchema(new Class[] {LogEntry.class});
             }
@@ -61,7 +62,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
      */
     public void testPersist()
     {
-        if (!storeMgr.getSupportedOptions().contains("NonDurableIdentity"))
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_NONDURABLE_ID))
         {
             return;
         }
@@ -176,7 +177,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
      */
     public void testUpdate()
     {
-        if (!storeMgr.getSupportedOptions().contains("NonDurableIdentity"))
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_NONDURABLE_ID))
         {
             return;
         }
@@ -292,7 +293,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
      */
     public void testDelete()
     {
-        if (!storeMgr.getSupportedOptions().contains("NonDurableIdentity"))
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_NONDURABLE_ID))
         {
             return;
         }
