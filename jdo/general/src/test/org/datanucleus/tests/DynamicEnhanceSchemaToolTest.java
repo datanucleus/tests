@@ -31,6 +31,7 @@ import org.datanucleus.asm.FieldVisitor;
 import org.datanucleus.asm.Label;
 import org.datanucleus.asm.MethodVisitor;
 import org.datanucleus.asm.Opcodes;
+import org.datanucleus.enhancer.EnhanceUtils;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.schema.SchemaAwareStoreManager;
 import org.datanucleus.store.schema.SchemaTool;
@@ -113,7 +114,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         FieldVisitor fv;
 
         String classNameASM = className.replace('.', '/');
-        cw.visit(Opcodes.V1_5, Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, classNameASM, null, 
+        cw.visit(EnhanceUtils.getAsmVersionForJRE(), Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, classNameASM, null, 
             "java/lang/Object", new String[]{});
 
         fv = cw.visitField(Opcodes.ACC_PRIVATE, "name", "Ljava/lang/String;", null, null);
