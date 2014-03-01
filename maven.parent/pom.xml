@@ -319,7 +319,7 @@
             <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>datanucleus-maven-plugin</artifactId>
-                <version>4.0.0-m1-SNAPSHOT</version>
+                <version>4.0.0-m1</version>
                 <configuration>
                     <fork>false</fork>
                     <verbose>false</verbose>
