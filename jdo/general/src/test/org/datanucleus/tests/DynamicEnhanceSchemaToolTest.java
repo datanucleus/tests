@@ -114,7 +114,9 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         FieldVisitor fv;
 
         String classNameASM = className.replace('.', '/');
-        cw.visit(EnhanceUtils.getAsmVersionForJRE(), Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, classNameASM, null, 
+
+        // TODO Use getAsmVersionForJRE instead of V1_6 (requires proper stack map)
+        cw.visit(Opcodes.V1_6, Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, classNameASM, null, 
             "java/lang/Object", new String[]{});
 
         fv = cw.visitField(Opcodes.ACC_PRIVATE, "name", "Ljava/lang/String;", null, null);
