@@ -31,7 +31,6 @@ import org.datanucleus.asm.FieldVisitor;
 import org.datanucleus.asm.Label;
 import org.datanucleus.asm.MethodVisitor;
 import org.datanucleus.asm.Opcodes;
-import org.datanucleus.enhancer.EnhanceUtils;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.schema.SchemaAwareStoreManager;
 import org.datanucleus.store.schema.SchemaTool;
