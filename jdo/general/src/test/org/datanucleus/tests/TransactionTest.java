@@ -28,13 +28,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 import javax.transaction.Synchronization;
 
+import org.datanucleus.store.StoreManager;
 import org.jpox.samples.models.company.Person;
 import org.jpox.samples.one_one.unidir.Login;
 import org.jpox.samples.one_one.unidir.LoginAccount;
 
 /**
  * Series of tests for Transaction behaviour.
- * @version $Revision: 1.10 $
  */
 public class TransactionTest extends JDOPersistenceTestCase
 {
@@ -48,6 +48,12 @@ public class TransactionTest extends JDOPersistenceTestCase
      */
     public void testAutomaticRollback()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_FOREIGN_KEYS))
+        {
+            // No foreign keys with this datastore so cannot pass this test
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -185,11 +191,11 @@ public class TransactionTest extends JDOPersistenceTestCase
                 }
                 catch (JDOFatalDataStoreException fde)
                 {
-                    // Should come through here (outside J2EE container)
+                    // Should come through here (outside JavaEE container)
                 }
                 catch (JDOUserException fue)
                 {
-                    // Should come through here (inside J2EE container)
+                    // Should come through here (inside JavaEE container)
                 }
                 
                 try
@@ -203,7 +209,7 @@ public class TransactionTest extends JDOPersistenceTestCase
                 }
                 catch (JDOUserException fue)
                 {
-                    // Should come through here (inside J2EE container)
+                    // Should come through here (inside JavaEE container)
                 }
             }
             finally
