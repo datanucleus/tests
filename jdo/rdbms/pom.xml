@@ -89,12 +89,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <reuseForks>true</reuseForks>
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>org.datanucleus.tests.TestRunListener</value>
-                        </property>
-                    </properties>
                 </configuration>
                 <executions>
                     <execution>

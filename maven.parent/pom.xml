@@ -292,6 +292,12 @@
                      -->
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>org.datanucleus.tests.TestRunListener</value>
+                        </property>
+                    </properties>
                     <systemProperties>
                         <property>
                             <name>datanucleus.test1.properties</name>
