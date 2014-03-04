@@ -259,6 +259,11 @@ public class TestHelper
 
             tx.commit();
         }
+        catch (RuntimeException e)
+        {
+            LOG.error("Exception in clean", e);
+            throw e;
+        }
         finally
         {
             if (tx.isActive())
