@@ -948,51 +948,6 @@
                 <maven.datanucleus.datastore>ldap</maven.datanucleus.datastore>
             </properties>
         </profile>
-
-        <profile>
-            <!-- we must throw away all tables prior to running each scenario since they have different mappings -->
-            <id>scrapSchemaOracleHudson</id>
-            <build>
-                <plugins>
-                    <plugin>
-                      <groupId>org.codehaus.mojo</groupId>
-                      <artifactId>sql-maven-plugin</artifactId>
-                      <inherited>true</inherited>
-                        <dependencies>
-                            <dependency>
-                                <groupId>oracle</groupId>
-                                <artifactId>ojdbc6</artifactId>
-                                <version>11.2.0.3</version>
-                                <optional>true</optional>
-                            </dependency>
-                        </dependencies>
-                      
-                      <!-- common configurations -->
-                      <configuration>
-                        <driver>oracle.jdbc.driver.OracleDriver</driver>
-                        <url>jdbc:oracle:thin:@homer:1522:oraHudson</url>
-                        <username>SYSTEM</username>
-                        <password>oraHudson</password>
-                      </configuration>
-
-                      <executions>                    
-                        <execution>
-                          <phase>process-test-classes</phase>
-                          <goals>
-                            <goal>execute</goal>
-                          </goals>
-                          <!-- specific configurations -->
-                          <configuration>
-                            <srcFiles>
-                                <srcFile>../../../../tools/hudson/scrapSchemaOracle.sql</srcFile>
-                            </srcFiles>
-                          </configuration>
-                        </execution>
-                      </executions>
-                    </plugin>
-                
-                </plugins>
-            </build>    
-        </profile>
+        
     </profiles>
 </project>
