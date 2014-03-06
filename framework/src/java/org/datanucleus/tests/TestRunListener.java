@@ -1,9 +1,15 @@
 package org.datanucleus.tests;
 
 import java.io.File;
-import java.util.Properties;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
-import javax.jdo.Constants;
+import javax.jdo.PersistenceManager;
+import javax.jdo.datastore.JDOConnection;
+import javax.sql.DataSource;
 
 import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
@@ -33,34 +39,70 @@ public class TestRunListener extends RunListener
      */
     private void prepareDatastore()
     {
+        LOG.info("Preparing datastore for test run");
+
         boolean skipDatastoreReset = Boolean.getBoolean("maven.datanucleus.test.skip.reset");
 
         if (!skipDatastoreReset)
         {
-            JDOPersistenceManagerFactory pmf =
-                    (JDOPersistenceManagerFactory) TestHelper.getPMF(1, null);
-
-            PersistenceNucleusContext ctx = pmf.getNucleusContext();
-            if (ctx.getStoreManager() instanceof RDBMSStoreManager)
-            {
-                cleanupRDBMSdatastore();
-            }
-            else
-            {
-                // TODO Support cleanup of mongodb, Cassandra, Excel, ODF etc
-                LOG.info("Datastore clean up not supported");
-            }
+            cleanupDatastore(skipDatastoreReset);
         }
     }
 
-    private void cleanupRDBMSdatastore()
+    private void cleanupDatastore(boolean skipDatastoreReset)
+    {
+        JDOPersistenceManagerFactory pmf =
+                (JDOPersistenceManagerFactory) TestHelper.getPMF(1, null);
+
+        PersistenceNucleusContext ctx = pmf.getNucleusContext();
+
+        if (ctx.getStoreManager() instanceof RDBMSStoreManager)
+        {
+            PersistenceManager pm = null;
+            JDOConnection jdoConnection = null;
+            Connection nativeConnection = null;
+
+            try
+            {
+                pm = pmf.getPersistenceManager();
+                jdoConnection = pm.getDataStoreConnection();
+
+                // Obtain the connection via PM instead of using the PMF properties so we support DataSource too
+                nativeConnection = (Connection) jdoConnection.getNativeConnection();
+
+                cleanupRDBMSdatastore(nativeConnection);
+            }
+            catch (SQLException e)
+            {
+                LOG.error("Error during datastore clean up", e);
+            }
+            finally
+            {
+                if (jdoConnection != null)
+                {
+                    jdoConnection.close();
+                }
+
+                if (pm != null)
+                {
+                    pm.close();
+                }
+            }
+        }
+        else
+        {
+            // TODO Support cleanup of mongodb, Cassandra, Excel, ODF etc
+            LOG.info("Datastore clean up not supported");
+        }
+
+        pmf.close();
+    }
+
+    private void cleanupRDBMSdatastore(Connection connection) throws SQLException
     {
         LOG.info("Cleaning up datastore before running the tests");
 
-        Properties properties = TestHelper.getPropertiesForDatastore(1);
-        String url = properties.getProperty(Constants.PROPERTY_CONNECTION_URL);
-        String user = properties.getProperty(Constants.PROPERTY_CONNECTION_USER_NAME);
-        String password = properties.getProperty(Constants.PROPERTY_CONNECTION_PASSWORD);
+        String url = connection.getMetaData().getURL();
 
         if (url.contains("sqlite"))
         {
@@ -72,7 +114,7 @@ public class TestRunListener extends RunListener
         {
             // Use Flyway to clean up RDBMS instances
             Flyway flyway = new Flyway();
-            flyway.setDataSource(url, user, password);
+            flyway.setDataSource(new ConnectionWrapperDataSource(connection));
             flyway.clean();
         }
     }
@@ -83,5 +125,73 @@ public class TestRunListener extends RunListener
         String filename = url.substring(url.lastIndexOf(":") + 1);
         File file = new File(filename);
         file.delete();
+    }
+
+    /*
+     * A connection wrapper so we can use the connection obtained via PM on Flyway.
+     */
+    public class ConnectionWrapperDataSource implements DataSource
+    {
+        public ConnectionWrapperDataSource(Connection connection)
+        {
+            super();
+            this.connection = connection;
+        }
+
+        private final Connection connection;
+
+        @Override
+        public PrintWriter getLogWriter() throws SQLException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void setLogWriter(PrintWriter out) throws SQLException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void setLoginTimeout(int seconds) throws SQLException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int getLoginTimeout() throws SQLException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public <T> T unwrap(Class<T> iface) throws SQLException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isWrapperFor(Class<?> iface) throws SQLException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Connection getConnection() throws SQLException
+        {
+            return connection;
+        }
+
+        @Override
+        public Connection getConnection(String username, String password) throws SQLException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Logger getParentLogger() throws SQLFeatureNotSupportedException
+        {
+            throw new UnsupportedOperationException();
+        }
     }
 }
