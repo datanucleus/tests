@@ -973,39 +973,45 @@ public class GeneralTest extends JDOPersistenceTestCase
      */
     public void testConnectionAccessDuringAfterCompletion() throws NamingException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException 
     {
-        final PersistenceManager pm = pmf.getPersistenceManager();
-        
-        // prepare a persistent object to be found later on
-        pm.currentTransaction().begin();
-        Account accnt = new Account();
-        accnt.setUsername("jpox");
-        pm.makePersistent(accnt);
-        pm.currentTransaction().commit();
-        final boolean[] success = new boolean[1];
-
-        // register a Synchronization object that accesses the DB during afterCompletion()
-        pm.currentTransaction().setSynchronization(new Synchronization()
+        try
         {
+            final PersistenceManager pm = pmf.getPersistenceManager();
+            
+            // prepare a persistent object to be found later on
+            pm.currentTransaction().begin();
+            Account accnt = new Account();
+            accnt.setUsername("jpox");
+            pm.makePersistent(accnt);
+            pm.currentTransaction().commit();
+            final boolean[] success = new boolean[1];
 
-            public void beforeCompletion()
+            // register a Synchronization object that accesses the DB during afterCompletion()
+            pm.currentTransaction().setSynchronization(new Synchronization()
             {
 
-            }
+                public void beforeCompletion()
+                {
 
-            public void afterCompletion(int arg0)
-            {
-                // access a DB connection acquired previously during the transaction
-                dbConnectionAccess(pm);
-                success[0] = true;
-            }
-        });
+                }
 
-        UserTransaction ut = getUserTransaction();
-        ut.begin();
-        // acquire a db connection for the ongoing transaction
-        dbConnectionAccess(pm);
-        ut.commit();
-        assertTrue("accessing the DB connection during afterCompletion() wasn't successful", success[0]);
+                public void afterCompletion(int arg0)
+                {
+                    // access a DB connection acquired previously during the transaction
+                    dbConnectionAccess(pm);
+                    success[0] = true;
+                }
+            });
+
+            UserTransaction ut = getUserTransaction();
+            ut.begin();
+            // acquire a db connection for the ongoing transaction
+            dbConnectionAccess(pm);
+            ut.commit();
+            assertTrue("accessing the DB connection during afterCompletion() wasn't successful", success[0]);
+        }
+        finally{
+            clean(Account.class);
+        }
     }
 
     /**
