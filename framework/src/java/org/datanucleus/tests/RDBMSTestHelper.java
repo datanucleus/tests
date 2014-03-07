@@ -28,7 +28,7 @@ import junit.framework.Assert;
 
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.store.rdbms.identifier.IdentifierCase;
+import org.datanucleus.store.schema.naming.NamingCase;
 import org.datanucleus.util.StringUtils;
 
 /**
@@ -92,20 +92,20 @@ public class RDBMSTestHelper
             RDBMSStoreManager srm = (RDBMSStoreManager)storeMgr;
             StringBuffer str = new StringBuffer();
             if (quote &&
-                (srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.LOWER_CASE_QUOTED ||
-                 srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.MIXED_CASE_QUOTED ||
-                 srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.UPPER_CASE_QUOTED))
+                (srm.getIdentifierFactory().getNamingCase() == NamingCase.LOWER_CASE_QUOTED ||
+                 srm.getIdentifierFactory().getNamingCase() == NamingCase.MIXED_CASE_QUOTED ||
+                 srm.getIdentifierFactory().getNamingCase() == NamingCase.UPPER_CASE_QUOTED))
             {
                 str.append(srm.getDatastoreAdapter().getIdentifierQuoteString());
             }
 
-            if (srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.LOWER_CASE ||
-                srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.LOWER_CASE_QUOTED)
+            if (srm.getIdentifierFactory().getNamingCase() == NamingCase.LOWER_CASE ||
+                srm.getIdentifierFactory().getNamingCase() == NamingCase.LOWER_CASE_QUOTED)
             {
                 str.append(identifier.toLowerCase());
             }
-            else if (srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.UPPER_CASE ||
-                srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.UPPER_CASE_QUOTED)
+            else if (srm.getIdentifierFactory().getNamingCase() == NamingCase.UPPER_CASE ||
+                srm.getIdentifierFactory().getNamingCase() == NamingCase.UPPER_CASE_QUOTED)
             {
                 str.append(identifier.toUpperCase());
             }
@@ -115,9 +115,9 @@ public class RDBMSTestHelper
             }
 
             if (quote &&
-                (srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.LOWER_CASE_QUOTED ||
-                 srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.MIXED_CASE_QUOTED ||
-                 srm.getIdentifierFactory().getIdentifierCase() == IdentifierCase.UPPER_CASE_QUOTED))
+                (srm.getIdentifierFactory().getNamingCase() == NamingCase.LOWER_CASE_QUOTED ||
+                 srm.getIdentifierFactory().getNamingCase() == NamingCase.MIXED_CASE_QUOTED ||
+                 srm.getIdentifierFactory().getNamingCase() == NamingCase.UPPER_CASE_QUOTED))
             {
                 str.append(srm.getDatastoreAdapter().getIdentifierQuoteString());
             }
