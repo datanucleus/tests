@@ -55,11 +55,6 @@
             <field name="shape2" persistence-modifier="persistent">
                 <extension vendor-name="datanucleus" key="implementation-classes" 
                     value="Circle,Rectangle,Square,Triangle"/>
-                <column name="SHAPE_CIRCLE_ID"/>
-                <column name="SHAPE_RECTANGLE_ID"/>
-                <column name="SHAPE_SQUARE_ID"/>
-                <column name="SHAPE_TRIANGLE_ID"/>
-                <column name="SHAPE_TRIANGLE_COMPOSED_ID"/>
             </field>
         </class>
 

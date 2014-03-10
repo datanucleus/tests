@@ -75,8 +75,7 @@ import org.jpox.samples.inheritance.QBSub;
 
 /**
  * Test the handling of inheritance strategies.
- *
- * @version $Revision: 1.2 $ 
+ * TODO Add checks on tests so that they only run when the StoreManager supports that inheritance
  */
 public class InheritanceTest extends JDOPersistenceTestCase
 {
