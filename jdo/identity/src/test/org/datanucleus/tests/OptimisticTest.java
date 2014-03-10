@@ -123,7 +123,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            LOG.error("Exception in test", ex);
             fail("Exception thrown during test of conflictTransactions: " + ex.getMessage());
         }
         finally
@@ -285,7 +285,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            LOG.error("Exception in test", ex);
             fail("Exception thrown during test of conflictTransactions: " + ex.getMessage());
         }
         finally
