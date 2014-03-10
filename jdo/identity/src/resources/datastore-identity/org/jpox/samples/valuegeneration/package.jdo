@@ -122,7 +122,7 @@
 
         <class name="MixedGeneratorItemSub" identity-type="datastore">
             <inheritance strategy="new-table"/>
-            <field name="subField" persistence-modifier="persistent" value-strategy="max"/>
+            <field name="subField" persistence-modifier="persistent" value-strategy="increment"/>
         </class>
     </package>
 </jdo>
