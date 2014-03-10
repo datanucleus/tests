@@ -47,7 +47,6 @@ import org.jpox.samples.valuegeneration.IdentityGeneratorItemNoField;
 
 /**
  * Series of tests for persistence of "complicated" object models.
- * @version $Revision: 1.4 $
  */
 public class PersistenceModelsTest extends JDOPersistenceTestCase
 {
@@ -81,6 +80,11 @@ public class PersistenceModelsTest extends JDOPersistenceTestCase
      */
     public void testClassWithoutFields()
     {
+        if (!storeMgr.supportsValueStrategy("identity"))
+        {
+            return;
+        }
+
         try
         {
             IdentityGeneratorItemNoField objs[] = new IdentityGeneratorItemNoField[5];
@@ -148,7 +152,7 @@ public class PersistenceModelsTest extends JDOPersistenceTestCase
             }
             catch( Exception e )
             {
-                e.printStackTrace();
+                LOG.error("Exception in test", e);
                 fail(e.toString());
             }
             finally
