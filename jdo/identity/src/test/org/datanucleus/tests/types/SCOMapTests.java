@@ -718,7 +718,7 @@ public class SCOMapTests
 
             // Get all Maps that are empty
             // TODO : remove the MySQL omittal when it supports subqueries 
-            if (!db_vendor_id.equals("mysql"))
+            if (db_vendor_id == null || !db_vendor_id.equals("mysql"))
             {
                 Extent e3=pm.getExtent(container_class,true);
                 Query  q3=pm.newQuery(e3,"items.isEmpty()");
@@ -845,7 +845,7 @@ public class SCOMapTests
 
             // Get all Maps that are empty
             // TODO : remove the MySQL omittal when it supports subqueries 
-            if (!db_vendor_id.equals("mysql"))
+            if (db_vendor_id == null || !db_vendor_id.equals("mysql"))
             {
                 Extent e3=pm.getExtent(container_class,true);
                 Query  q3=pm.newQuery(e3,"items.isEmpty()");

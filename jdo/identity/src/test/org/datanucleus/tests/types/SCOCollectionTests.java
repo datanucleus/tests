@@ -1435,7 +1435,7 @@ public class SCOCollectionTests
 
             // Get all containers that are empty
             // TODO : Remove this restriction when MySQL supports subqueries 
-            if (!db_vendor_id.equals("mysql")) 
+            if (db_vendor_id == null || !db_vendor_id.equals("mysql")) 
             {
                 Extent e1=pm.getExtent(container_class,true);
                 Query  q1=pm.newQuery(e1,"items.isEmpty()");
