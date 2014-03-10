@@ -32,6 +32,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.store.StoreManager;
 import org.jpox.samples.dependentfield.DepInterfaceImpl1;
 import org.jpox.samples.dependentfield.DepInterfaceImpl2;
 import org.jpox.samples.dependentfield.DependentElement;
@@ -1824,36 +1825,39 @@ public class DependentFieldTest extends JDOPersistenceTestCase
             }
 
             // Try to delete the implementations (checks if any FKs are created)
-            pm = pmf.getPersistenceManager();
-            tx = pm.currentTransaction();
-            try
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_FOREIGN_KEYS))
             {
-                tx.begin();
-
-                Query q = pm.newQuery(DepInterfaceImpl2.class);
-                List results = (List)q.execute();
-                Iterator resultsIter = results.iterator();
-                while (resultsIter.hasNext())
+                pm = pmf.getPersistenceManager();
+                tx = pm.currentTransaction();
+                try
                 {
-                    DepInterfaceImpl2 sq = (DepInterfaceImpl2)resultsIter.next();
-                    pm.deletePersistent(sq);
-                }
+                    tx.begin();
 
-                tx.commit();
-                fail("JPOX managed to delete a DepInterfaceImpl2 object that was referenced by another object. " + 
-                "This should not have happened due to FK constraints. Maybe this RDBMS doesnt manage FKs correctly");
-            }
-            catch (Exception e)
-            {
-                // Should come through here since it should throw an exception due to FK constraints
-            }
-            finally
-            {
-                if (tx.isActive())
-                {
-                    tx.rollback();
+                    Query q = pm.newQuery(DepInterfaceImpl2.class);
+                    List results = (List)q.execute();
+                    Iterator resultsIter = results.iterator();
+                    while (resultsIter.hasNext())
+                    {
+                        DepInterfaceImpl2 sq = (DepInterfaceImpl2)resultsIter.next();
+                        pm.deletePersistent(sq);
+                    }
+
+                    tx.commit();
+                    fail("Managed to delete a DepInterfaceImpl2 object that was referenced by another object. " + 
+                            "This should not have happened due to FK constraints. Maybe this RDBMS doesnt manage FKs correctly, or not an RDBMS?");
                 }
-                pm.close();
+                catch (Exception e)
+                {
+                    // Should come through here since it should throw an exception due to FK constraints
+                }
+                finally
+                {
+                    if (tx.isActive())
+                    {
+                        tx.rollback();
+                    }
+                    pm.close();
+                }
             }
 
             // Delete the holders. This *should* delete the Shapes as well
@@ -1912,8 +1916,7 @@ public class DependentFieldTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-                LOG.error(e);
+                LOG.error("Exception in test", e);
                 fail("Exception thrown while checking interface dependent objects : " + e.getMessage());
             }
             finally
