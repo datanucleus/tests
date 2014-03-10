@@ -73,6 +73,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testNullQuery()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         // Try a null query
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -103,6 +108,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testInvalidQuery()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         // Try an invalid query
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -138,6 +148,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testSelectStarQuery()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         try
         {
             // Persist something to select
@@ -207,6 +222,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithCandidateClassWithoutResultClass()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -311,6 +331,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithCandidateClassWithResultClass()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -524,6 +549,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithoutCandidateClassWithoutResultClass() 
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         // Do a simple count(*) query
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -583,6 +613,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithoutCandidateClassWithResultClass()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -732,6 +767,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithoutCandidatesClassWithParameters() 
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -822,6 +862,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithoutCandidatesWithParametersInMap() 
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -876,6 +921,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testNamedQueries()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -935,6 +985,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testNamedQueriesDescoped()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -987,6 +1042,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testQueryWithTimeout()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         // Try a query
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -1026,6 +1086,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testQueryFromJdoqueryFile()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1072,6 +1137,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testInvalidQueryAllowedByConfiguration()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         addClassesToSchema(new Class[]{Person.class, Manager.class, Employee.class, Developer.class});
 
         // Try a query
@@ -1106,6 +1176,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testQueryWithEndOfLineChars()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         // Try a query
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -1134,6 +1209,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithoutCandidatesClassWithParametersMultipleExecution()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1215,6 +1295,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testNumberedParameters()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1292,6 +1377,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testNamedParameters()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1371,6 +1461,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
      */
     public void testTimestampQueryOnOracle()
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
@@ -1403,6 +1498,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testSQLUpdateStatement()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         pm.setProperty(PropertyNames.PROPERTY_QUERY_SQL_ALLOWALL, "true");
         Transaction tx = pm.currentTransaction();
@@ -1472,6 +1572,11 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     public void testWithCandidateClassWithComments()
     throws Exception
     {
+        if (!storeMgr.supportsQueryLanguage("SQL"))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
