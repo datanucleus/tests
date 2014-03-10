@@ -5,32 +5,26 @@
 
 <jdo>
     <package name="org.jpox.samples.objects">
-        <class name="ObjectHolder" detachable="true" table="OBJECT_HOLDER">
-            <field name="id" primary-key="true" column="ID" value-strategy="increment"/>
-            <field name="name" column="NAME"/>
-            <field name="object1" persistence-modifier="persistent" column="EMBEDDEDOBJECT" embedded="true"/>
-            <field name="object2" persistence-modifier="persistent" column="SERIALISEDOBJECT" serialized="true"/>
-            <field name="object3" persistence-modifier="persistent" 
-                field-type="org.jpox.samples.objects.ObjectImpl1,org.jpox.samples.objects.ObjectImpl2">
-                <column name="NONSERIALISED_IMPL1_ID"/>
-                <column name="NONSERIALISED_IMPL2_ID"/>
-            </field>
-            <field name="set1" table="OBJECT_SET1_OBJECTS">
+        <class name="ObjectHolder" detachable="true">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="name"/>
+            <field name="object1" persistence-modifier="persistent" embedded="true"/>
+            <field name="object2" persistence-modifier="persistent" serialized="true"/>
+            <field name="object3" persistence-modifier="persistent" field-type="org.jpox.samples.objects.ObjectImpl1,org.jpox.samples.objects.ObjectImpl2"/>
+            <field name="set1">
                 <collection element-type="java.lang.Object"/>
-                <join column="HOLDER_ID"/>
-                <element column="OBJECT_IMPL_1_ID"/>
                 <extension vendor-name="datanucleus" key="implementation-classes" value="org.jpox.samples.objects.ObjectImpl1"/>
             </field>
         </class>
 
-        <class name="ObjectImpl1" table="OBJECT_IMPL_1">
-            <field name="id" primary-key="true" column="OBJECT_IMPL_1_ID" value-strategy="increment"/>
-            <field name="name" column="NAME"/>
+        <class name="ObjectImpl1">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="name"/>
         </class>
 
-        <class name="ObjectImpl2" table="OBJECT_IMPL_2">
-            <field name="id" primary-key="true" column="OBJECT_IMPL_1_ID" value-strategy="increment"/>
-            <field name="value" column="VALUE"/>
+        <class name="ObjectImpl2">
+            <field name="id" primary-key="true" value-strategy="increment"/>
+            <field name="value"/>
         </class>
     </package>
 </jdo>

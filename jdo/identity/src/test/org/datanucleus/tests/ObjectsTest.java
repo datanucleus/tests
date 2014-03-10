@@ -1,4 +1,3 @@
-package org.datanucleus.tests;
 /**********************************************************************
 Copyright (c) 2005 Andy Jefferson and others. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +16,7 @@ limitations under the License.
 Contributions :
     ...
 ***********************************************************************/
-
+package org.datanucleus.tests;
 
 import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
@@ -31,8 +30,6 @@ import org.jpox.samples.models.referenceMapping.Folder;
 
 /**
  * Series of tests for the use of java.lang.Object.
- * 
- * @version $Revision: 1.1 $
  */
 public class ObjectsTest extends JDOPersistenceTestCase
 {
