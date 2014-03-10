@@ -699,6 +699,11 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testMaxGenerator()
     throws Exception
     {
+        if (!storeMgr.supportsValueStrategy("max"))
+        {
+            return;
+        }
+
         try
         {
             // must use PM connection, otherwise would cause deadlock
