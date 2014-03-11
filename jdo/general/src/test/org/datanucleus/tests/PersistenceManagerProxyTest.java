@@ -28,6 +28,7 @@ import org.datanucleus.samples.lifecyclelistener.BasicListener;
 import org.datanucleus.samples.lifecyclelistener.LifecycleListenerSpecification;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.NucleusLogger;
+import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Developer;
 import org.jpox.samples.models.company.Manager;
@@ -281,119 +282,126 @@ public class PersistenceManagerProxyTest extends JDOPersistenceTestCase
         pmf.addInstanceLifecycleListener(listener, null);
         TestHelper.freezePMF(pmf);
 
-        PersistenceManager pm = pmf.getPersistenceManagerProxy();
-        Transaction tx = pm.currentTransaction();
-        int i = 0;
         try
         {
-            tx.begin();
-
-            // Persist an object and check the events
-            Person person = new Person(12345, "Fred", "Smith", "Fred.Smith@jpox.org");
-            pm.makePersistent(person);
-
-            // Persist related objects and check the events
-            // Manager has a 1-N (FK) with Department
-            Manager manager = new Manager(12346, "George", "Bush", "george.bush@thewhitehouse.com", 2000000, "ABC-DEF");
-            Department dept1 = new Department("Invasions");
-            Department dept2 = new Department("Propaganda");
-            Department dept3 = new Department("Lies");
-            manager.addDepartment(dept1);
-            manager.addDepartment(dept2);
-            manager.addDepartment(dept3);
-            dept1.setManager(manager);
-            dept2.setManager(manager);
-            dept3.setManager(manager);
-
-            pm.makePersistent(manager);
-            pm.flush();
-            Integer[] events = listener.getRegisteredEventsAsArray();
-
-            assertEquals("Wrong number of lifecycle events", 15, events.length);
-            if (tx.getOptimistic())
-            {
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Manager
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 3
-
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
-
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
-            }
-            else
-            {
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
-
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Manager
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
-            }
-
-            tx.rollback();
-            listener.getRegisteredEvents().clear();
-
-            PersistenceManager pm2 = pmf.getPersistenceManager();
-            Transaction tx2 = pm.currentTransaction();
+            PersistenceManager pm = pmf.getPersistenceManagerProxy();
+            Transaction tx = pm.currentTransaction();
+            int i = 0;
             try
             {
-    
-                tx2.begin();
-    
+                tx.begin();
+
                 // Persist an object and check the events
+                Person person = new Person(12345, "Fred", "Smith", "Fred.Smith@jpox.org");
                 pm.makePersistent(person);
+
+                // Persist related objects and check the events
+                // Manager has a 1-N (FK) with Department
+                Manager manager = new Manager(12346, "George", "Bush", "george.bush@thewhitehouse.com", 2000000, "ABC-DEF");
+                Department dept1 = new Department("Invasions");
+                Department dept2 = new Department("Propaganda");
+                Department dept3 = new Department("Lies");
+                manager.addDepartment(dept1);
+                manager.addDepartment(dept2);
+                manager.addDepartment(dept3);
+                dept1.setManager(manager);
+                dept2.setManager(manager);
+                dept3.setManager(manager);
+
+                pm.makePersistent(manager);
                 pm.flush();
-                
-                events = listener.getRegisteredEventsAsArray();
-                i=0;
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
-                
-                tx2.rollback();
+                Integer[] events = listener.getRegisteredEventsAsArray();
+
+                assertEquals("Wrong number of lifecycle events", 15, events.length);
+                if (tx.getOptimistic())
+                {
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue());
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Manager
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 2
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 3
+
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue());
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
+
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 3
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 3
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
+                }
+                else
+                {
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue());
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue());
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
+
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Manager
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 2
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 3
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 3
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 3
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
+                }
+
+                tx.rollback();
+                listener.getRegisteredEvents().clear();
+
+                PersistenceManager pm2 = pmf.getPersistenceManager();
+                Transaction tx2 = pm.currentTransaction();
+                try
+                {
+
+                    tx2.begin();
+
+                    // Persist an object and check the events
+                    pm.makePersistent(person);
+                    pm.flush();
+
+                    events = listener.getRegisteredEventsAsArray();
+                    i=0;
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue());
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue());
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
+
+                    tx2.rollback();
+                }
+                finally
+                {
+                    if (tx2.isActive())
+                    {
+                        tx2.rollback();
+                    }
+                    pm2.close();
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception while running lifecycle listener simple object test", e);
+                fail("Exception thrown while running lifecycle listener simple object test : " + e.getMessage());
             }
             finally
             {
-                if (tx2.isActive())
+                if (tx.isActive())
                 {
-                    tx2.rollback();
+                    tx.rollback();
                 }
-                pm2.close();
+                pm.close();
+                listener.getRegisteredEvents().clear();
             }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception while running lifecycle listener simple object test", e);
-            fail("Exception thrown while running lifecycle listener simple object test : " + e.getMessage());
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-            listener.getRegisteredEvents().clear();
+            CompanyHelper.clearCompanyData(pmf);
             pmf.close();
         }
     }
