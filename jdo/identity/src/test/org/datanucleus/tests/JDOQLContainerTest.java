@@ -147,6 +147,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.rollback();
             }
             pm.close();
+            clean(Farm.class);
+            clean(Animal.class);
         }
     }
 
@@ -209,6 +211,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.rollback();
             }
             pm.close();
+            clean(Farm.class);
+            clean(Animal.class);
         }
     }
 
@@ -267,6 +271,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.rollback();
             }
             pm.close();
+            clean(House.class);
+            clean(Window.class);
         }
     }
 
@@ -325,6 +331,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.rollback();
             }
             pm.close();
+            clean(House.class);
+            clean(Window.class);
         }
     }
 
@@ -384,6 +392,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.rollback();
             }
             pm.close();
+            clean(Farm.class);
+            clean(Animal.class);
         }
     }
 
@@ -445,6 +455,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.rollback();
             }
             pm.close();
+            clean(Farm.class);
+            clean(Animal.class);
         }
     }
 
@@ -1164,44 +1176,52 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
      */
     public void testContainsInSetFields()
     {
-        Object managerId = null;
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
-            Manager manager = new Manager(1, "John", "Doe", "john.doe@acme.com", 10000f, "1");
-            Department dept1 = new Department("accounting");
-            Department dept2 = new Department("entertainment");
-            Employee emp1 = new Employee(2, "Harvey", "Hacker", "harvey.hacker@acme.com", 500f, "2");
-            Employee emp2 = new Employee(3, "Geoffrey", "Gimp", "geoffrey.gimp@acme.com", 500f, "3");
-            pm.makePersistentAll(new Object[]{manager, dept1, dept2, emp1, emp2});
-            managerId = JDOHelper.getObjectId(manager);
-            
-            Set depts = manager.getDepartments();
-            depts.add(dept1);
-            depts.add(dept2);
-            Set emps = manager.getSubordinates();
-            emps.add(emp1);
-            emps.add(emp2);
-            pm.flush();
+            Object managerId = null;
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Manager manager = new Manager(1, "John", "Doe", "john.doe@acme.com", 10000f, "1");
+                Department dept1 = new Department("accounting");
+                Department dept2 = new Department("entertainment");
+                Employee emp1 = new Employee(2, "Harvey", "Hacker", "harvey.hacker@acme.com", 500f, "2");
+                Employee emp2 = new Employee(3, "Geoffrey", "Gimp", "geoffrey.gimp@acme.com", 500f, "3");
+                pm.makePersistentAll(new Object[]{manager, dept1, dept2, emp1, emp2});
+                managerId = JDOHelper.getObjectId(manager);
 
-            Query q = pm.newQuery(Manager.class,"departments.contains(d) && subordinates.contains(e)");
-            q.declareParameters(Department.class.getName() + " d, " + Employee.class.getName() + " e");
-            q.compile();
-            
-            Collection c = (Collection) q.execute(dept1, emp1);
-            assertEquals(1,c.size());
-            assertEquals(managerId,JDOHelper.getObjectId(c.iterator().next()));
-            tx.rollback();
+                Set depts = manager.getDepartments();
+                depts.add(dept1);
+                depts.add(dept2);
+                Set emps = manager.getSubordinates();
+                emps.add(emp1);
+                emps.add(emp2);
+                pm.flush();
+
+                Query q = pm.newQuery(Manager.class,"departments.contains(d) && subordinates.contains(e)");
+                q.declareParameters(Department.class.getName() + " d, " + Employee.class.getName() + " e");
+                q.compile();
+
+                Collection c = (Collection) q.execute(dept1, emp1);
+                assertEquals(1,c.size());
+                assertEquals(managerId,JDOHelper.getObjectId(c.iterator().next()));
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            // Clean out our data
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -5931,6 +5951,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.rollback();
             }
             pm.close();
+            clean(Person.class);
         }
     }
 }
