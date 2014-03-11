@@ -32,6 +32,7 @@ import javax.jdo.listener.LoadLifecycleListener;
 import javax.jdo.listener.StoreLifecycleListener;
 
 import org.datanucleus.util.NucleusLogger;
+import org.datanucleus.util.StringUtils;
 
 /**
  * Basic lifecycle listener, listening for changes in the lifecycle states of other objects.
@@ -99,7 +100,7 @@ public class BasicListener implements CreateLifecycleListener, DeleteLifecycleLi
         addLifecycleEvent(LifecycleListenerSpecification.EVENT_POST_LOAD);
         if (logging)
         {
-            NucleusLogger.PERSISTENCE.debug("BasicListener.postLoad");
+            NucleusLogger.PERSISTENCE.debug("BasicListener.postLoad for " + StringUtils.toJVMIDString(event.getPersistentInstance()));
         }
     }
 

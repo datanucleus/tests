@@ -2598,7 +2598,8 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         }
         catch (Exception e)
         {
-            LOG.error(">> Exception thrown in test", e);
+            LOG.error("Exception thrown in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -3103,6 +3104,11 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_DELETE, events[i++].intValue());
+                if (vendorID == null)
+                {
+                    // Not present for RDBMS
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
+                }
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_DELETE, events[i++].intValue());
             }
 
@@ -3252,6 +3258,14 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
 
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_DIRTY, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_DIRTY, events[i++].intValue()); // Department 2
+
+                if (vendorID == null)
+                {
+                    // Not needed on RDBMS for some reason
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue()); // Department 3
+                }
+
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_DIRTY, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_DIRTY, events[i++].intValue()); // Manager
 
@@ -3273,14 +3287,26 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             }
             else
             {
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
+                if (vendorID != null)
+                {
+                    // RDBMS loads here
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
+                }
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue()); // Department 2
+                if (vendorID == null)
+                {
+                    // Clear the other 2 departments
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue()); // Department 1
+                    assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Department 3
+                    assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue()); // Department 3
+                }
             }
 
             assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length,
@@ -3290,7 +3316,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         }
         catch (Exception e)
         {
-            LOG.error(">> Exception thrown in test", e);
+            LOG.error("Exception thrown in test", e);
             fail("Exception thrown while running lifecycle listener collection test : " + e.getMessage());
         }
         finally
