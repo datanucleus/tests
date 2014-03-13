@@ -21,8 +21,7 @@ import java.io.Serializable;
 import java.util.StringTokenizer;
 
 /**
- * Sample target class with another PC object as part of the PK (1-1 uni relation).
- * @version $Revision: 1.1 $
+ * Sample target class with another PC object as part of the PK (1-1/1-N uni relation).
  */
 public class CompoundSingleTarget
 {
@@ -80,7 +79,6 @@ public class CompoundSingleTarget
         public Id(String s)
         {
             StringTokenizer token = new StringTokenizer(s,"::");
-            
             this.id = Integer.valueOf(token.nextToken()).intValue();
             this.holder = new CompoundHolder.Id(token.nextToken());
         }

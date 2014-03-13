@@ -60,14 +60,14 @@ public class CompoundRelated
 
         public Id(String s)
         {
-            StringTokenizer token = new StringTokenizer(s, "::");
+            StringTokenizer token = new StringTokenizer(s, "_");
             this.id = Integer.valueOf(token.nextToken()).intValue();
             this.name = token.nextToken();
         }
 
         public String toString()
         {
-            return "" + id + "::" + name;
+            return "" + id + "_" + name;
         }
 
         public int hashCode()

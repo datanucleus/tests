@@ -93,7 +93,6 @@ public class CompoundDoubleTarget
         public Id(String s)
         {
             StringTokenizer token = new StringTokenizer(s,"::");
-            
             this.id = Integer.valueOf(token.nextToken()).intValue();
             this.holder = new CompoundHolder.Id(token.nextToken());
             this.related = new CompoundRelated.Id(token.nextToken());

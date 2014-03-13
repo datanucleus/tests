@@ -26,7 +26,6 @@ import java.util.StringTokenizer;
 
 /**
  * Holder for compound identity relationships.
- * @version $Revision: 1.1 $
  */
 public class CompoundHolder
 {
@@ -95,14 +94,14 @@ public class CompoundHolder
 
         public Id(String s)
         {
-            StringTokenizer token = new StringTokenizer(s, "::");
+            StringTokenizer token = new StringTokenizer(s, "-");
             this.id = Integer.valueOf(token.nextToken()).intValue();
             this.name = token.nextToken();
         }
 
         public String toString()
         {
-            return "" + id + "::" + name;
+            return "" + id + "-" + name;
         }
 
         public int hashCode()
