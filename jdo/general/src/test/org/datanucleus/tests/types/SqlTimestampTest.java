@@ -28,6 +28,8 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.store.rdbms.RDBMSStoreManager;
+import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.types.sqltimestamp.SqlTimestampHolder;
 
@@ -106,6 +108,15 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
     public void testBasicPersistence()
     throws Exception
     {
+        if (vendorID != null)
+        {
+            DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
+            if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
+            {
+                return;
+            }
+        }
+
         try
         {
             Timestamp keyTs = Timestamp.valueOf("2014-03-05 01:10:25.599000001");
@@ -125,7 +136,6 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
                 holder.setKey(keyTs);
                 holder.setValue(ts1);
                 holder.setValue2(ts2);
-                LOG.info(">> Persist of object");
                 pm.makePersistent(holder);
                 pm.flush();
                 id = JDOHelper.getObjectId(holder);
@@ -173,10 +183,7 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                LOG.info(">> getObjectById");
                 SqlTimestampHolder holder = (SqlTimestampHolder) pm.getObjectById(id,true);
-                LOG.info(">> ts1=" + ts1.toString());
-                LOG.info(">> holder.val=" + holder.getValue().toString());
                 assertEquals(ts1.toString(), holder.getValue().toString());
                 assertEquals(ts2.toString(), holder.getValue2().toString());
 
@@ -360,13 +367,21 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
     public void testQuery()
     throws Exception
     {
+        if (vendorID != null)
+        {
+            DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
+            if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
+            {
+                return;
+            }
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            LOG.info(">> persist of 4 objects");
             pm.makePersistent(getOneObject());
             pm.makePersistent(getOneObject());
             pm.makePersistent(getOneObject());
@@ -379,7 +394,6 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
             pm.flush();
 
             // Query when stored in "native"
-            LOG.info(">> query.execute p=" + holder.getValue());
             Query q = pm.newQuery(SqlTimestampHolder.class, "value == p");
             q.declareParameters("java.sql.Timestamp p");
             List<SqlTimestampHolder> c = (List<SqlTimestampHolder>) q.execute(holder.getValue());
@@ -397,6 +411,11 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
             assertEquals(holder.getValue2(), queryHolder.getValue2());
 
             tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
