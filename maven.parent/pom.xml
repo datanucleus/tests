@@ -749,6 +749,9 @@
             </dependencies>
             <properties>
                 <maven.datanucleus.datastore>neo4j</maven.datanucleus.datastore>
+                <!-- If enabled, tests fail because clean up is keeping the database 
+                    open. Schema removal is also currently not supported. -->
+                <maven.datanucleus.test.skip.reset>true</maven.datanucleus.test.skip.reset>
             </properties>
         </profile>
 
