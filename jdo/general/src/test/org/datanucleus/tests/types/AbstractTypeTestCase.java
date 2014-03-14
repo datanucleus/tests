@@ -92,7 +92,7 @@ public abstract class AbstractTypeTestCase extends JDOPersistenceTestCase
                 pm.close();
             }
 
-            for( int i=0; i<getNumberOfMutabilityChecks(); i++)
+            for (int i=0; i<getNumberOfMutabilityChecks(); i++)
             {
                 // Check the mutability
                 pm = pmf.getPersistenceManager();
@@ -109,8 +109,7 @@ public abstract class AbstractTypeTestCase extends JDOPersistenceTestCase
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
-                    LOG.error(e);
+                    LOG.error("Exception in test", e);
                     fail("Error updating the object : " + e.getMessage());
                 }
                 finally
@@ -134,8 +133,7 @@ public abstract class AbstractTypeTestCase extends JDOPersistenceTestCase
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
-                    LOG.error(e);
+                    LOG.error("Exception in test", e);
                     fail("Error updating the object : " + e.getMessage());
                 }
                 finally
@@ -207,6 +205,7 @@ public abstract class AbstractTypeTestCase extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
+                LOG.error("Exception in test", e);
                 fail("Error whilst attaching object : " + e.getMessage());
             }
             finally
@@ -277,6 +276,7 @@ public abstract class AbstractTypeTestCase extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
+                LOG.error("Exception in test", e);
                 fail("Error whilst attaching object : " + e.getMessage());
             }
             finally
