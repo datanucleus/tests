@@ -65,8 +65,10 @@ import org.jpox.samples.models.leftright.LeftSub;
 import org.jpox.samples.models.leftright.RightBase;
 import org.jpox.samples.models.leftright.RightSub;
 import org.jpox.samples.one_many.bidir.Animal;
+import org.jpox.samples.one_many.bidir.Cattle;
 import org.jpox.samples.one_many.bidir.DairyFarm;
 import org.jpox.samples.one_many.bidir.Farm;
+import org.jpox.samples.one_many.bidir.Poultry;
 import org.jpox.samples.one_many.bidir_2.House;
 import org.jpox.samples.one_many.bidir_2.Window;
 import org.jpox.samples.one_many.bidir_3.Cloud;
@@ -120,30 +122,15 @@ public class RelationshipTest extends JDOPersistenceTestCase
             addClassesToSchema(
                 new Class[]
                 {
-                    SetHolder.class,
-                    PCFKSetElement.class,
-                    PCFKSetElementSub1.class,
-                    PCFKSetElementSub2.class,
-                    ListHolder.class,
-                    PCFKListElement.class,
-                    PCFKListElementSub1.class,
-                    PCFKListElementSub2.class,
-                    MapHolder.class,
-                    MapFKValueItem.class,
-                    Farm.class,
-                    Animal.class,
-                    PetroleumSupplier.class,
-                    PetroleumCustomer.class, 
-                    GasSupplier.class,
-                    OilSupplier.class,
-                    OneOffCustomer.class,
-                    AccountCustomer.class,
-                    LeftBase.class,
-                    RightBase.class,
-                    LeftSub.class,
-                    RightSub.class,
+                    SetHolder.class, PCFKSetElement.class, PCFKSetElementSub1.class, PCFKSetElementSub2.class,
+                    ListHolder.class, PCFKListElement.class, PCFKListElementSub1.class, PCFKListElementSub2.class,
+                    MapHolder.class, MapFKValueItem.class,
+                    Farm.class, Animal.class, Poultry.class, Cattle.class, DairyFarm.class,
+                    PetroleumSupplier.class, PetroleumCustomer.class, GasSupplier.class, OilSupplier.class, OneOffCustomer.class, AccountCustomer.class,
+                    LeftBase.class, RightBase.class, LeftSub.class, RightSub.class,
                     MapFKHolder.class, MapFKValue.class,
                     Sky.class, Cloud.class,
+                    JdoGraph.class, JdoGraphEntity.class, JdoGraphEntityClass.class,
                 });
             if (storeMgr.supportsValueStrategy("identity"))
             {
