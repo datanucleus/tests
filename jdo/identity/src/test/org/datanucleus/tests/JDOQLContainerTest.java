@@ -44,6 +44,7 @@ import org.jpox.samples.many_many.PetroleumSupplier;
 import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Employee;
+import org.jpox.samples.models.company.InsuranceDepartment;
 import org.jpox.samples.models.company.Manager;
 import org.jpox.samples.models.company.Office;
 import org.jpox.samples.models.company.Person;
@@ -54,9 +55,15 @@ import org.jpox.samples.models.fitness.Gym;
 import org.jpox.samples.models.fitness.GymEquipment;
 import org.jpox.samples.models.fitness.Wardrobe;
 import org.jpox.samples.one_many.bidir.Animal;
+import org.jpox.samples.one_many.bidir.Cattle;
 import org.jpox.samples.one_many.bidir.DairyFarm;
 import org.jpox.samples.one_many.bidir.Farm;
+import org.jpox.samples.one_many.bidir.Poultry;
+import org.jpox.samples.one_many.bidir_2.Bungalow;
+import org.jpox.samples.one_many.bidir_2.DoubleGlazedWindow;
 import org.jpox.samples.one_many.bidir_2.House;
+import org.jpox.samples.one_many.bidir_2.SingleGlazedWindow;
+import org.jpox.samples.one_many.bidir_2.TerracedHouse;
 import org.jpox.samples.one_many.bidir_2.Window;
 import org.jpox.samples.one_many.map.MapHolder;
 
@@ -74,15 +81,10 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
         {
             addClassesToSchema(new Class[]
                 {
-                    PetroleumCustomer.class,
-                    PetroleumSupplier.class,
-                    AccountCustomer.class,
-                    OneOffCustomer.class,
-                    GasSupplier.class,
-                    OilSupplier.class,
-                    Farm.class,
-                    DairyFarm.class,
-                    Animal.class
+                    PetroleumCustomer.class, PetroleumSupplier.class, AccountCustomer.class, OneOffCustomer.class, GasSupplier.class, OilSupplier.class,
+                    Farm.class, DairyFarm.class, Animal.class, Cattle.class, Poultry.class,
+                    InsuranceDepartment.class, Department.class, Employee.class, Manager.class, Person.class,
+                    Bungalow.class, House.class, Window.class, TerracedHouse.class, SingleGlazedWindow.class, DoubleGlazedWindow.class,
                 });
             initialised = true;
         }
