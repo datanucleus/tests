@@ -41,7 +41,6 @@ public class TestRunListener extends RunListener
     private void prepareDatastore()
     {
         LOG.info("Preparing datastore for test run");
-        System.out.println("#########Preparing datastore for test run");
 
         boolean skipDatastoreReset = Boolean.getBoolean("maven.datanucleus.test.skip.reset");
 
