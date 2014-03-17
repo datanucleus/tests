@@ -45,14 +45,15 @@ public class TestRunListener extends RunListener
 
         if (!skipDatastoreReset)
         {
-            cleanupDatastore(skipDatastoreReset);
+            cleanupDatastore(1);
+            cleanupDatastore(2);
         }
     }
 
-    private void cleanupDatastore(boolean skipDatastoreReset)
+    private void cleanupDatastore(int number)
     {
         JDOPersistenceManagerFactory pmf =
-                (JDOPersistenceManagerFactory) TestHelper.getPMF(1, null);
+                (JDOPersistenceManagerFactory) TestHelper.getPMF(number, null);
 
         PersistenceNucleusContext ctx = pmf.getNucleusContext();
 
@@ -188,7 +189,6 @@ public class TestRunListener extends RunListener
             throw new UnsupportedOperationException();
         }
 
-        @Override
         public Logger getParentLogger() throws SQLFeatureNotSupportedException
         {
             throw new UnsupportedOperationException();
