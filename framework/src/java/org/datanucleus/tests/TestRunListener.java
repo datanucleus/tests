@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
+import javax.jdo.JDOFatalUserException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.datastore.JDOConnection;
 import javax.sql.DataSource;
@@ -40,13 +41,23 @@ public class TestRunListener extends RunListener
     private void prepareDatastore()
     {
         LOG.info("Preparing datastore for test run");
+        System.out.println("#########Preparing datastore for test run");
 
         boolean skipDatastoreReset = Boolean.getBoolean("maven.datanucleus.test.skip.reset");
 
         if (!skipDatastoreReset)
         {
             cleanupDatastore(1);
-            cleanupDatastore(2);
+            
+            try
+            {
+                // TODO Find a better solution to determine if it should cleanup the 2nd datastore
+                cleanupDatastore(2);
+            }
+            catch (JDOFatalUserException e)
+            {
+                // Some datastores won't have the 2nd  
+            }
         }
     }
 
