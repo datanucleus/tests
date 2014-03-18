@@ -73,6 +73,20 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <reuseForks>true</reuseForks>
+                    <systemProperties>
+                        <property>
+                            <name>datanucleus.test1.properties</name>
+                            <value>datanucleus-${maven.datanucleus.datastore}.1.properties</value>
+                        </property>
+                        <property>
+                            <name>datanucleus.test2.properties</name>
+                            <value>datanucleus-${maven.datanucleus.datastore}.2.properties</value>
+                        </property>
+                        <property>
+                            <name>maven.datanucleus.test.skip.reset</name>
+                            <value>true</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>
