@@ -19,7 +19,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.metadata.animal;
 
-public class Cat extends Animal
+public class Cat extends Pet
 {
 
     String color;

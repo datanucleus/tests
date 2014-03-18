@@ -43,7 +43,7 @@ import org.datanucleus.metadata.NullValue;
 import org.datanucleus.metadata.xml.MetaDataParser;
 import org.datanucleus.samples.haunted.Phantom;
 import org.datanucleus.samples.haunted.Vampire;
-import org.datanucleus.samples.metadata.animal.Animal;
+import org.datanucleus.samples.metadata.animal.Pet;
 import org.datanucleus.samples.metadata.animal.Cat;
 import org.datanucleus.samples.metadata.animal.Dog;
 import org.datanucleus.samples.metadata.datastoreidentity.D0;
@@ -603,7 +603,7 @@ public class BasicTest extends JDOPersistenceTestCase
     {
         MetaDataManager mgr=new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mgr.setValidate(false);
-        AbstractClassMetaData cmdD0 = mgr.getMetaDataForClass(Animal.class, new ClassLoaderResolverImpl());
+        AbstractClassMetaData cmdD0 = mgr.getMetaDataForClass(Pet.class, new ClassLoaderResolverImpl());
         AbstractClassMetaData cmdD1 = mgr.getMetaDataForClass(Dog.class, new ClassLoaderResolverImpl());
         AbstractClassMetaData cmdD2 = mgr.getMetaDataForClass(Cat.class, new ClassLoaderResolverImpl());
         assertNotNull(cmdD0.getMetaDataForMember("name"));

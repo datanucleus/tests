@@ -19,7 +19,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.metadata.animal;
 
-public abstract class Animal
+public abstract class Pet
 {
     String id;
     String name;
@@ -39,7 +39,4 @@ public abstract class Animal
     {
         this.name = name;
     }
-    
-
-
 }
