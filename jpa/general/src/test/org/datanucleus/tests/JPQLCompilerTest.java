@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.datanucleus.NucleusContext;
-import org.datanucleus.PersistenceNucleusContextImpl;
-import org.datanucleus.api.jpa.metadata.JPAMetaDataManager;
 import org.datanucleus.exceptions.NucleusException;
 import org.datanucleus.exceptions.NucleusUserException;
 import org.datanucleus.metadata.MetaDataManager;
@@ -49,28 +47,33 @@ import org.datanucleus.util.NucleusLogger;
 import org.jpox.samples.annotations.models.company.Department;
 import org.jpox.samples.annotations.models.company.Project;
 
-import junit.framework.TestCase;
-
 /**
  * Tests for generic JPQL query compiler.
  * These are really unit tests for code in "core" but we need enhanced classes to run it so is placed here.
  * [adding as a unit test to "core" would mean that "core" is dependent on "enhancer", hence cyclic]
  * Also note that this is JPQL but under a JDO environment not that this should impact on the tests here.
  */
-public class JPQLCompilerTest extends TestCase
+public class JPQLCompilerTest extends JPAPersistenceTestCase
 {
+    protected static NucleusContext nucCtx;
+    protected static MetaDataManager mmgr;
+
+    public JPQLCompilerTest(String name)
+    {
+        super(name);
+        nucCtx = storeMgr.getNucleusContext();
+        mmgr = nucCtx.getMetaDataManager();
+    }
+
     /**
      * Test for use of invalid field name in the filter.
      */
     public void testFilterInvalidField()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         // Test use of invalid field in filter
         try
         {
-            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "illegalField = 2", null, null, null, null, null, 
                 null, null);
             compiler.compile(null, null);
@@ -87,14 +90,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparison()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "budget = 2", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -119,7 +119,7 @@ public class JPQLCompilerTest extends TestCase
 
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "100.0 > budget", null, null, null, null, null, 
                 null, null);
         }
@@ -149,14 +149,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAnd()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "budget = 2 AND 'Sales' = name", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -203,14 +200,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOr()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "(budget = 2 AND 'Sales' = name) OR (budget >= 50 AND name = 'Marketing')", 
                 null, null, null, null, null, null, null);
             compilation = compiler.compile(null, null);
@@ -292,12 +286,9 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOrMissingBrace()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         try
         {
-            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "(budget = 2 AND 'Sales' == name) OR (budget >= 50 AND name == 'Marketing'", 
                 null, null, null, null, null, null, null);
             compiler.compile(null, null);
@@ -314,14 +305,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithStringEqualsLiteral()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "name.equals(\"Kettle\")", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -351,14 +339,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithStringIndexOfLiteral()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "name.indexOf(\"nd\", 3)", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -394,14 +379,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithNegateExpression()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "NOT (budget > 32)", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -438,14 +420,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFromInExpression()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 Department.class.getName() + " d, IN(d.projects) n",
                 null, null, null, null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -493,13 +472,10 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFromInExpressionErroneousPrimary()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 Department.class.getName() + " d," +
                 "IN(d.products) n",
                 null, null, null, null, null, null, null, null, null, null);
@@ -517,14 +493,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterUnaryMinus()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "1 > -1", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -542,14 +515,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFilterWithExistsSubquery()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "EXISTS (SUBQ_1)", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -573,14 +543,11 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testFromMemberOfExpression()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Department.class, null, ":param MEMBER OF projects",
                 null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -612,13 +579,10 @@ public class JPQLCompilerTest extends TestCase
      */
     public void testUpdateSimple()
     {
-        NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
-        MetaDataManager mmgr = new JPAMetaDataManager(nucleusCtx);
-
         // Test use of UPDATE clause
         try
         {
-            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, null, null, null, null, null, null, 
                 null, "name = \"Sample Name\"");
             QueryCompilation compilation = compiler.compile(null, null);
