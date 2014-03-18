@@ -33,8 +33,7 @@ import org.jpox.samples.i18n.ISO8859_2;
 import org.jpox.samples.i18n.UTF8;
 
 /**
- * Test the use of Internationalised code with JPOX.
- * @version $Revision: 1.3 $
+ * Test the use of Internationalised code (classes/fields with accented characters).
  */
 public class I18NTest extends JDOPersistenceTestCase
 {
@@ -47,16 +46,10 @@ public class I18NTest extends JDOPersistenceTestCase
         super(name);
     }
 
-    protected void tearDown() throws Exception
-    {
-        super.tearDown();
-    }
- 
     /**
      * Simple test to load up the ISO8859-1 class.
-     * This class contains fields that have names using accented characters
-     * such as tose found in Locale "es".
-     **/
+     * This class contains fields that have names using accented characters such as those found in Locale "es".
+     */
     public void testISO8859_1()
     throws Exception
     {
@@ -81,7 +74,7 @@ public class I18NTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                ISO8859_1 obj=new ISO8859_1("lower","UPPER",12345,"áéíóÚñ");
+                ISO8859_1 obj=new ISO8859_1("lower","UPPER",12345,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 pm.makePersistent(obj);
 
                 tx.commit();
@@ -167,7 +160,7 @@ public class I18NTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                ISO8859_2 obj=new ISO8859_2("äòðé","ÇÊÕÉ");
+                ISO8859_2 obj=new ISO8859_2("ï¿½ï¿½ï¿½ï¿½","ï¿½ï¿½ï¿½ï¿½");
                 pm.makePersistent(obj);
 
                 tx.commit();
@@ -254,7 +247,7 @@ public class I18NTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                UTF8 obj=new UTF8("lower","UPPER",12345,"áéíóÚñ");
+                UTF8 obj=new UTF8("lower","UPPER",12345,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 pm.makePersistent(obj);
 
                 tx.commit();
@@ -279,15 +272,15 @@ public class I18NTest extends JDOPersistenceTestCase
 
                 Extent e=pm.getExtent(org.jpox.samples.i18n.UTF8.class,false);
                 Query q=pm.newQuery(e);
-                Collection c=(Collection)q.execute();
+                Collection<UTF8> c = (Collection)q.execute();
                 LOG.info("No of UTF8 objects=" + c.size());
 
                 assertTrue("Number of UTF8 objects is incorrect (" + c.size() + ") : should have been 1",c.size() == 1);
 
-                Iterator iter=c.iterator();
+                Iterator<UTF8> iter=c.iterator();
                 while (iter.hasNext())
                 {
-                    UTF8   obj=(UTF8)iter.next();
+                    UTF8 obj = iter.next();
                     LOG.info(obj);
                 }
 

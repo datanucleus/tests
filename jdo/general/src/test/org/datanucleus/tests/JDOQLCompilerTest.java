@@ -25,8 +25,7 @@ import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-import org.datanucleus.PersistenceNucleusContextImpl;
-import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
+import org.datanucleus.NucleusContext;
 import org.datanucleus.exceptions.NucleusException;
 import org.datanucleus.exceptions.NucleusUserException;
 import org.datanucleus.metadata.MetaDataManager;
@@ -50,29 +49,34 @@ import org.datanucleus.util.NucleusLogger;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.models.company.Person;
 
-import junit.framework.TestCase;
-
 /**
  * Tests for generic JDOQL query compiler.
  * These are really unit tests for code in "core" but we need enhanced classes to run it so is placed here.
  * [adding as a unit test to "core" would mean that "core" is dependent on "enhancer", hence cyclic]
  */
-public class JDOQLCompilerTest extends TestCase
+public class JDOQLCompilerTest extends JDOPersistenceTestCase
 {
+    protected static NucleusContext nucCtx = null;
+    protected static MetaDataManager mmgr = null;
+
+    public JDOQLCompilerTest(String name)
+    {
+        super(name);
+        nucCtx = storeMgr.getNucleusContext();
+        mmgr = nucCtx.getMetaDataManager();
+    }
+
     /**
      * Test for use of an implicit variable in the filter.
      */
     public void testFilterImplicitVariable()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         // Test use of implicit variable in filter
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "notaField == 2", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(null, null);
@@ -100,15 +104,12 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterImplicitParameter()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         // Test use of implicit variable in filter
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == :param1", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(null, null);
@@ -136,15 +137,12 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterExplicitParameter()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         // Test use of implicit variable in filter
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compilation = compiler.compile(null, null);
@@ -172,14 +170,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparison()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "statusId == 2", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -204,7 +199,7 @@ public class JDOQLCompilerTest extends TestCase
 
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "100.0 > price", null, null, null, null, null, 
                 null, null, null);
         }
@@ -234,14 +229,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAnd()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "statusId == 2 && 100.0 > price", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -289,14 +281,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOr()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "(statusId == 2 && 100.0 > price) || (price >= 50 && price <= 95)", 
                 null, null, null, null, null, null, null, null);
             compilation = compiler.compile(null, null);
@@ -379,12 +368,9 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterComparisonWithAndOrMissingBrace()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         try
         {
-            JDOQLCompiler compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            JDOQLCompiler compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "(statusId == 2 && 100.0 > price) || (price >= 50 && price <= 95", 
                 null, null, null, null, null, null, null, null);
             compiler.compile(null, null);
@@ -401,14 +387,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithStringEqualsLiteral()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name.equals(\"Kettle\")", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -438,14 +421,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithStringIndexOfLiteral()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name.indexOf(\"nd\", 3)", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -481,14 +461,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterCollectionContainsVariable()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Inventory.class, null, "products.contains(element) && element.price < 200", 
                 null, null, null, null, null, null, Product.class.getName() + " element", null);
             compilation = compiler.compile(new HashMap(), null);
@@ -558,14 +535,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithNegateExpression()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "!(price > 32)", null, null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -602,14 +576,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterUnaryMinus()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Inventory.class, null, "1 > -1", null, null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -627,14 +598,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithStringLiteralStartsWith()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "\"SomeString\".startsWith(name)", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -666,14 +634,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterWithCast()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "((Book)this).author == 'Tolkien'", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -711,14 +676,11 @@ public class JDOQLCompilerTest extends TestCase
      */
     /*public void testSubquery()
     {
-        NucleusContext nucleusCtx = new NucleusContext(new PersistenceConfiguration(){});
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Employee.class, null,
                 "salary > (SELECT avg(salary) FROM " + Employee.class.getName() + " e)", 
                 null, null, null, null, null, null, null);
@@ -739,13 +701,10 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testFilterExplicitParameterAsImplicit()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == :param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compiler.compile(null, null);
@@ -764,13 +723,10 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testResultGroupingForMethods()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         JavaQueryCompiler compiler = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Person.class, null, null, null, null, "birthDate.getYear() AS YEAR", 
                 "birthDate.getYear()", null, null, null, null);
             compiler.compile(null, null);
@@ -783,7 +739,7 @@ public class JDOQLCompilerTest extends TestCase
 
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Person.class, null, null, null, null, "birthDate.getYear()/10", 
                 "birthDate.getYear()/10", null, null, null, null);
             compiler.compile(null, null);
@@ -800,15 +756,12 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testExpressionSerializable()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         // Test use of implicit variable in filter
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compilation = compiler.compile(null, null);
@@ -891,15 +844,12 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testQueryCompilationSerializable()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         // Test use of implicit variable in filter
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compilation = compiler.compile(null, null);
@@ -974,15 +924,12 @@ public class JDOQLCompilerTest extends TestCase
      */
     public void testOrderNulls()
     {
-        PersistenceNucleusContextImpl nucleusCtx = new PersistenceNucleusContextImpl("JDO", null);
-        MetaDataManager mmgr = new JDOMetaDataManager(nucleusCtx);
-
         // Test use of implicit variable in filter
         JavaQueryCompiler compiler = null;
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, null, null, "name ASC", null, null, null, 
                 null, null, null);
             compilation = compiler.compile(null, null);
@@ -1004,7 +951,7 @@ public class JDOQLCompilerTest extends TestCase
         // Test use of NULLS
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucleusCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, null, null, "name ASC NULLS FIRST", null, null, null, 
                 null, null, null);
             compilation = compiler.compile(null, null);
