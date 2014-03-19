@@ -67,7 +67,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             addClassesToSchema(new Class[]
                 {
-                    Person.class, Employee.class, Account.class, Animal.class, Farm.class
+                    Person.class, Employee.class, Account.class, Animal.class, Farm.class, Qualification.class
                 });
         }
     }
