@@ -128,7 +128,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
             Label l0 = new Label();
             mv.visitLabel(l0);
             mv.visitVarInsn(Opcodes.ALOAD, 0);
-            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V");
+            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
             mv.visitInsn(Opcodes.RETURN);
 
             Label l1 = new Label();
@@ -188,7 +188,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
             mv.visitLabel(l1);
             mv.visitVarInsn(Opcodes.ALOAD, 1);
             mv.visitLdcInsn("name");
-            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z");
+            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z", false);
             Label l2 = new Label();
             mv.visitJumpInsn(Opcodes.IFEQ, l2);
             Label l3 = new Label();
@@ -217,7 +217,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
             mv.visitLabel(l0);
             mv.visitVarInsn(Opcodes.ALOAD, 1);
             mv.visitLdcInsn("name");
-            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z");
+            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z", false);
             Label l1 = new Label();
             mv.visitJumpInsn(Opcodes.IFEQ, l1);
             Label l2 = new Label();
