@@ -18,10 +18,9 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -1380,7 +1379,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             candidate.alias("p");
             crit.select(candidate);
 
-            Collection<String> nameOptions = new HashSet<String>();
+            List<String> nameOptions = new ArrayList<String>();
             nameOptions.add("Fred");
             nameOptions.add("George");
             Path firstNameField = candidate.get("firstName");
