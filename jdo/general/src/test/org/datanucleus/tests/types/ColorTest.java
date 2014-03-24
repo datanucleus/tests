@@ -85,6 +85,7 @@ public class ColorTest  extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
             
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
