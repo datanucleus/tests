@@ -54,12 +54,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.apache.bval</groupId>
             <artifactId>bval-jsr303</artifactId>
-            <version>0.3-incubating</version>
+            <version>0.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.bval</groupId>
             <artifactId>bval-core</artifactId>
-            <version>0.3-incubating</version>
+            <version>0.5</version>
         </dependency>
     </dependencies>
 
