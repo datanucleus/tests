@@ -50,11 +50,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
     <!-- Software Dependencies -->
     <dependencies>
-        <!-- Remove this when we move to JDK 1.8 -->
         <dependency>
-            <groupId>javax.time</groupId>
-            <artifactId>time-api</artifactId>
-            <version>[0.6, )</version>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-java8</artifactId>
+            <version>(3.9, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>

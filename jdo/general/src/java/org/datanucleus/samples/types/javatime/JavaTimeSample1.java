@@ -15,25 +15,25 @@ limitations under the License.
 Contributors:
    ...
 **********************************************************************/
-package org.datanucleus.samples.types.javaxtime;
+package org.datanucleus.samples.types.javatime;
 
-import javax.time.calendar.LocalTime;
+import java.time.LocalDateTime;
 
 /**
- * Sample using LocalTime.
+ * Sample using LocalDateTime.
  */
-public class JavaxtimeSample3
+public class JavaTimeSample1
 {
     private long id;
 
-    private LocalTime localTime1;
-    private LocalTime localTime2;
+    private LocalDateTime dateTime1;
+    private LocalDateTime dateTime2;
 
-    public JavaxtimeSample3(long id, LocalTime lt1, LocalTime lt2)
+    public JavaTimeSample1(long id, LocalDateTime dt1, LocalDateTime dt2)
     {
         this.id = id;
-        this.localTime1 = lt1;
-        this.localTime2 = lt2;
+        this.dateTime1 = dt1;
+        this.dateTime2 = dt2;
     }
 
     public long getId()
@@ -46,23 +46,23 @@ public class JavaxtimeSample3
         this.id = id;
     }
 
-    public LocalTime getLocalTime1()
+    public LocalDateTime getDateTime1()
     {
-        return localTime1;
+        return dateTime1;
     }
 
-    public void setLocalTime1(LocalTime lt)
+    public void setDateTime1(LocalDateTime dt)
     {
-        this.localTime1 = lt;
+        this.dateTime1 = dt;
     }
 
-    public LocalTime getLocalTime2()
+    public LocalDateTime getDateTime2()
     {
-        return localTime2;
+        return dateTime2;
     }
 
-    public void setLocalTime2(LocalTime lt)
+    public void setDateTime2(LocalDateTime dt)
     {
-        this.localTime2 = lt;
+        this.dateTime2 = dt;
     }
 }

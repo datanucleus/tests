@@ -22,20 +22,21 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import javax.time.calendar.LocalDateTime;
-import javax.time.calendar.LocalDate;
-import javax.time.calendar.LocalTime;
-import javax.time.calendar.MonthOfYear;
 
-import org.datanucleus.samples.types.javaxtime.JavaxtimeSample1;
-import org.datanucleus.samples.types.javaxtime.JavaxtimeSample2;
-import org.datanucleus.samples.types.javaxtime.JavaxtimeSample3;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
+
+import org.datanucleus.samples.types.javatime.JavaTimeSample1;
+import org.datanucleus.samples.types.javatime.JavaTimeSample2;
+import org.datanucleus.samples.types.javatime.JavaTimeSample3;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
- * Tests for persistence of javax.time types.
+ * Tests for persistence of java.time types.
  */
-public class JavaxTimeTest extends JDOPersistenceTestCase
+public class JavaTimeTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
 
@@ -43,16 +44,16 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
      * Constructor.
      * @param name Name of the test (not used)
      */
-    public JavaxTimeTest(String name)
+    public JavaTimeTest(String name)
     {
         super(name);
         if (!initialised)
         {
             addClassesToSchema(new Class[]
                 {
-                    JavaxtimeSample1.class,
-                    JavaxtimeSample2.class,
-                    JavaxtimeSample3.class,
+                    JavaTimeSample1.class,
+                    JavaTimeSample2.class,
+                    JavaTimeSample3.class,
                 });
             initialised = true;
         }
@@ -75,7 +76,7 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                JavaxtimeSample1 s = new JavaxtimeSample1(1, dateTime1, dateTime2);
+                JavaTimeSample1 s = new JavaTimeSample1(1, dateTime1, dateTime2);
                 pm.makePersistent(s);
                 tx.commit();
                 id = pm.getObjectId(s);
@@ -101,25 +102,25 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                JavaxtimeSample1 s = (JavaxtimeSample1)pm.getObjectById(id);
+                JavaTimeSample1 s = (JavaTimeSample1)pm.getObjectById(id);
 
                 LocalDateTime dt1 = s.getDateTime1();
                 assertNotNull("Retrieved DateTime was null!", dt1);
                 assertEquals("Timestamp : Year was wrong", 2008, dt1.getYear());
-                assertEquals("Timestamp : Month was wrong", MonthOfYear.MARCH, dt1.getMonthOfYear());
+                assertEquals("Timestamp : Month was wrong", Month.MARCH, dt1.getMonth());
                 assertEquals("Timestamp : Day was wrong", 14, dt1.getDayOfMonth());
-                assertEquals("Timestamp : Hour was wrong", 15, dt1.getHourOfDay());
-                assertEquals("Timestamp : Minute was wrong", 9, dt1.getMinuteOfHour());
-                assertEquals("Timestamp : Second was wrong", 26, dt1.getSecondOfMinute());
+                assertEquals("Timestamp : Hour was wrong", 15, dt1.getHour());
+                assertEquals("Timestamp : Minute was wrong", 9, dt1.getMinute());
+                assertEquals("Timestamp : Second was wrong", 26, dt1.getSecond());
 
                 LocalDateTime dt2 = s.getDateTime2();
                 assertNotNull("Retrieved DateTime was null!", dt2);
                 assertEquals("String : Year was wrong", 2009, dt2.getYear());
-                assertEquals("String : Month was wrong", MonthOfYear.MAY, dt2.getMonthOfYear());
+                assertEquals("String : Month was wrong", Month.MAY, dt2.getMonth());
                 assertEquals("String : Day was wrong", 13, dt2.getDayOfMonth());
-                assertEquals("String : Hour was wrong", 7, dt2.getHourOfDay());
-                assertEquals("String : Minute was wrong", 9, dt2.getMinuteOfHour());
-                assertEquals("String : Second was wrong", 26, dt2.getSecondOfMinute());
+                assertEquals("String : Hour was wrong", 7, dt2.getHour());
+                assertEquals("String : Minute was wrong", 9, dt2.getMinute());
+                assertEquals("String : Second was wrong", 26, dt2.getSecond());
 
                 tx.commit();
             }
@@ -139,7 +140,7 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(JavaxtimeSample1.class);
+            clean(JavaTimeSample1.class);
         }
     }
 
@@ -160,7 +161,7 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                JavaxtimeSample2 s = new JavaxtimeSample2(1, localDate1, localDate2);
+                JavaTimeSample2 s = new JavaTimeSample2(1, localDate1, localDate2);
                 pm.makePersistent(s);
                 tx.commit();
                 id = pm.getObjectId(s);
@@ -186,18 +187,18 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                JavaxtimeSample2 s = (JavaxtimeSample2)pm.getObjectById(id);
+                JavaTimeSample2 s = (JavaTimeSample2)pm.getObjectById(id);
 
                 LocalDate ld1 = s.getLocalDate1();
                 assertNotNull("Retrieved LocalDate was null!", ld1);
                 assertEquals("Year was wrong", 2008, ld1.getYear());
-                assertEquals("Month was wrong", MonthOfYear.MARCH, ld1.getMonthOfYear());
+                assertEquals("Month was wrong", Month.MARCH, ld1.getMonth());
                 assertEquals("Day was wrong", 14, ld1.getDayOfMonth());
 
                 LocalDate ld2 = s.getLocalDate2();
                 assertNotNull("Retrieved LocalDate was null!", ld2);
                 assertEquals("Year was wrong", 2009, ld2.getYear());
-                assertEquals("Month was wrong", MonthOfYear.JUNE, ld2.getMonthOfYear());
+                assertEquals("Month was wrong", Month.JUNE, ld2.getMonth());
                 assertEquals("Day was wrong", 16, ld2.getDayOfMonth());
 
                 tx.commit();
@@ -218,7 +219,7 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(JavaxtimeSample2.class);
+            clean(JavaTimeSample2.class);
         }
     }
 
@@ -239,7 +240,7 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                JavaxtimeSample3 s = new JavaxtimeSample3(1, localTime1, localTime2);
+                JavaTimeSample3 s = new JavaTimeSample3(1, localTime1, localTime2);
                 pm.makePersistent(s);
                 tx.commit();
                 id = pm.getObjectId(s);
@@ -265,19 +266,19 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                JavaxtimeSample3 s = (JavaxtimeSample3)pm.getObjectById(id);
+                JavaTimeSample3 s = (JavaTimeSample3)pm.getObjectById(id);
 
                 LocalTime lt1 = s.getLocalTime1();
                 assertNotNull("Retrieved LocalTime was null!", lt1);
-                assertEquals("Hour was wrong", 15, lt1.getHourOfDay());
-                assertEquals("Minute was wrong", 9, lt1.getMinuteOfHour());
-                assertEquals("Second was wrong", 26, lt1.getSecondOfMinute());
+                assertEquals("Hour was wrong", 15, lt1.getHour());
+                assertEquals("Minute was wrong", 9, lt1.getMinute());
+                assertEquals("Second was wrong", 26, lt1.getSecond());
 
                 LocalTime lt2 = s.getLocalTime2();
                 assertNotNull("Retrieved LocalTime was null!", lt2);
-                assertEquals("Hour was wrong", 7, lt2.getHourOfDay());
-                assertEquals("Minute was wrong", 9, lt2.getMinuteOfHour());
-                assertEquals("Second was wrong", 26, lt2.getSecondOfMinute());
+                assertEquals("Hour was wrong", 7, lt2.getHour());
+                assertEquals("Minute was wrong", 9, lt2.getMinute());
+                assertEquals("Second was wrong", 26, lt2.getSecond());
 
                 tx.commit();
             }
@@ -297,7 +298,7 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(JavaxtimeSample3.class);
+            clean(JavaTimeSample3.class);
         }
     }
 
@@ -317,9 +318,9 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                JavaxtimeSample3 s1 = new JavaxtimeSample3(1, localTime1, localTime1);
+                JavaTimeSample3 s1 = new JavaTimeSample3(1, localTime1, localTime1);
                 pm.makePersistent(s1);
-                JavaxtimeSample3 s2 = new JavaxtimeSample3(2, localTime2, localTime2);
+                JavaTimeSample3 s2 = new JavaTimeSample3(2, localTime2, localTime2);
                 pm.makePersistent(s2);
                 tx.commit();
             }
@@ -344,17 +345,17 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + JavaxtimeSample3.class.getName() +
+                Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() +
                     " WHERE localTime1 < :timeParam");
                 LocalTime timeParam = LocalTime.of(11, 9, 26);
-                List<JavaxtimeSample3> results = (List<JavaxtimeSample3>) q.execute(timeParam);
+                List<JavaTimeSample3> results = (List<JavaTimeSample3>) q.execute(timeParam);
                 assertEquals("Number of results is wrong", 1, results.size());
-                JavaxtimeSample3 s = results.get(0);
+                JavaTimeSample3 s = results.get(0);
                 LocalTime lt1 = s.getLocalTime1();
                 assertNotNull("Retrieved LocalTime was null!", lt1);
-                assertEquals("Hour was wrong", 7, lt1.getHourOfDay());
-                assertEquals("Minute was wrong", 9, lt1.getMinuteOfHour());
-                assertEquals("Second was wrong", 26, lt1.getSecondOfMinute());
+                assertEquals("Hour was wrong", 7, lt1.getHour());
+                assertEquals("Minute was wrong", 9, lt1.getMinute());
+                assertEquals("Second was wrong", 26, lt1.getSecond());
 
                 tx.commit();
             }
@@ -374,7 +375,7 @@ public class JavaxTimeTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(JavaxtimeSample3.class);
+            clean(JavaTimeSample3.class);
         }
     }
 }

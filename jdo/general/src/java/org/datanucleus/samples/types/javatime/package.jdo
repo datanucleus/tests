@@ -2,8 +2,8 @@
 <!DOCTYPE jdo PUBLIC "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
 "http://java.sun.com/dtd/jdo_2_0.dtd">
 <jdo>
-    <package name="org.datanucleus.samples.types.javaxtime">
-        <class name="JavaxtimeSample1" identity-type="application" detachable="true">
+    <package name="org.datanucleus.samples.types.javatime">
+        <class name="JavaTimeSample1" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
             <field name="dateTime1" persistence-modifier="persistent"/>
@@ -11,7 +11,7 @@
                 <column jdbc-type="VARCHAR"/>
             </field>
         </class>
-        <class name="JavaxtimeSample2" identity-type="application" detachable="true">
+        <class name="JavaTimeSample2" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
             <field name="localDate1" persistence-modifier="persistent"/>
@@ -19,7 +19,7 @@
                 <column jdbc-type="VARCHAR"/>
             </field>
         </class>
-        <class name="JavaxtimeSample3" identity-type="application" detachable="true">
+        <class name="JavaTimeSample3" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
             <field name="localTime1" persistence-modifier="persistent"/>
