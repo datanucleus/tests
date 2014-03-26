@@ -6,10 +6,10 @@
     <package name="org.jpox.samples.types.color">
         <class name="ColorHolder">
             <field name="colorA" persistence-modifier="persistent">
-               <column name="col1"/>
-               <column name="col2"/>
-               <column name="col3"/>
-               <column name="col4"/>
+               <column name="color_red"/>
+               <column name="color_green"/>
+               <column name="color_blue"/>
+               <column name="color_alpha"/>
             </field>
         </class>
     </package>
