@@ -38,17 +38,6 @@
         </repository>
     </repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <!-- For JaCoCo plugin -->
-            <id>oss-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
     <modules>
         <module>../framework/</module>
         <module>../framework.maven/</module>
@@ -255,7 +244,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.6.5-SNAPSHOT</version>
+                <version>0.7.0.201403182114</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
