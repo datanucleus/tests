@@ -62,11 +62,15 @@ public class TestRunListener extends RunListener
 
     private void cleanupDatastore(int number)
     {
-        JDOPersistenceManagerFactory pmf =
-                (JDOPersistenceManagerFactory) TestHelper.getPMF(number, null);
+        String datastoreProtocol = TestHelper.getDatastorePluginProtocol(number);
+        if (datastoreProtocol != null && !datastoreProtocol.equals("jdbc")) // Avoid creating PMF when clean up may not be supported
+        {
+            LOG.info("Datastore clean up not supported for datastore=" + datastoreProtocol);
+            return;
+        }
 
+        JDOPersistenceManagerFactory pmf = (JDOPersistenceManagerFactory) TestHelper.getPMF(number, null);
         PersistenceNucleusContext ctx = pmf.getNucleusContext();
-
         if (ctx.getStoreManager() instanceof RDBMSStoreManager)
         {
             PersistenceManager pm = null;

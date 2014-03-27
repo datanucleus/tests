@@ -128,7 +128,7 @@ public class TestHelper
         InputStream in = TestHelper.class.getClassLoader().getResourceAsStream(filename);
         if (in == null)
         {
-            LOG.debug("PMF/EMF couldn't be created using " + filename);
+            LOG.debug("Could not obtain PMF/EMF properties using " + filename);
 
             // Try "datanucleus.test{num}.properties"
             filename = System.getProperty("datanucleus.test" + number + ".properties");
@@ -154,7 +154,7 @@ public class TestHelper
                         try
                         {
                             in = new FileInputStream(file);
-                            LOG.info("PMF created using " + filename);
+                            LOG.info("PMF/EMF properties obtained using " + filename);
                         }
                         catch (FileNotFoundException e)
                         {
@@ -162,7 +162,7 @@ public class TestHelper
                     }
                     if (in == null)
                     {
-                        LOG.debug("PMF/EMF couldn't be created using " + filename);
+                        LOG.debug("PMF/EMF properties couldn't be obtained using " + filename);
                         System.out.println("PMF could not be created using supported property file locations");
                         filename = "datanucleus-hsql." + number + ".properties";
                         in = getResourceAsStream(filename);
@@ -181,7 +181,7 @@ public class TestHelper
         }
         else
         {
-            LOG.info("PMF created using " + filename);
+            LOG.info("PMF/EMF properties obtained using " + filename);
         }
 
         Properties props = new Properties();
@@ -317,6 +317,14 @@ public class TestHelper
         String url = props.getProperty("javax.jdo.option.ConnectionURL");
         StringTokenizer tokeniser = new StringTokenizer(url, ":");
         tokeniser.nextToken();
+        return tokeniser.nextToken();
+    }
+
+    public static String getDatastorePluginProtocol(int number)
+    {
+        Properties props = getPropertiesForDatastore(number);
+        String url = props.getProperty("javax.jdo.option.ConnectionURL");
+        StringTokenizer tokeniser = new StringTokenizer(url, ":");
         return tokeniser.nextToken();
     }
 
