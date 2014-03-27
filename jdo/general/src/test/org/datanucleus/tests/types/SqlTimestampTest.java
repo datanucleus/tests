@@ -46,6 +46,16 @@ import org.jpox.samples.types.sqltimestamp.SqlTimestampHolder;
  */
 public class SqlTimestampTest extends JDOPersistenceTestCase
 {
+    public SqlTimestampTest()
+    {
+        super("SqlTimestampTest");
+    }
+
+    public SqlTimestampTest(String name)
+    {
+        super(name);
+    }
+
     public void tearDown() throws Exception
     {
         clean(SqlTimestampHolder.class);

@@ -55,6 +55,16 @@ public class DateTest extends AbstractTypeTestCase
 
     public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
+    public DateTest()
+    {
+        super("DateTest");
+    }
+
+    public DateTest(String name)
+    {
+        super(name);
+    }
+
     /* Save the current TimeZone and cleanup from any previous tests.
      * Cleanup is done here, and not at test completion, so that the
      * database can be examined when tests fail.

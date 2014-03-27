@@ -42,6 +42,16 @@ import org.jpox.samples.types.sqltime.SqlTimeHolder;
  */
 public class SqlTimeTest extends AbstractTypeTestCase
 {
+    public SqlTimeTest()
+    {
+        super("SqlTimeTest");
+    }
+    
+    public SqlTimeTest(String name)
+    {
+        super(name);
+    }
+
     public void tearDown() throws Exception
     {
         clean(SqlTimeHolder.class);

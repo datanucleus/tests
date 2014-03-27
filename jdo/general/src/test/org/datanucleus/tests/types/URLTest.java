@@ -33,6 +33,16 @@ import org.jpox.samples.types.url.URLHolder;
 public class URLTest extends AbstractTypeTestCase
 {
 
+    public URLTest()
+    {
+        super("URLTest");
+    }
+
+    public URLTest(String name)
+    {
+        super(name);
+    }
+
     public void testQuery() throws Exception
     {
         try

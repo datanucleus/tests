@@ -13,8 +13,9 @@ public abstract class AbstractTypeTestCase extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
 
-    protected AbstractTypeTestCase()
+    protected AbstractTypeTestCase(String name)
     {
+        super(name);
         if (!initialised)
         {
             addClassesToSchema(new Class[]

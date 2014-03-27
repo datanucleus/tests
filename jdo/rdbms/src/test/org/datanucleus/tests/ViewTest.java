@@ -31,6 +31,9 @@ import javax.jdo.Transaction;
 import org.datanucleus.exceptions.NucleusDataStoreException;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
+import org.datanucleus.tests.JDOPersistenceTestCase;
+import org.datanucleus.tests.StorageTester;
+import org.datanucleus.tests.TestObject;
 import org.jpox.samples.rdbms.views.CircularReferenceView1;
 import org.jpox.samples.rdbms.views.CircularReferenceView2;
 import org.jpox.samples.rdbms.views.CircularReferenceView3;
@@ -46,7 +49,6 @@ import org.jpox.samples.widget.HashSetWidget;
 import org.jpox.samples.widget.SetWidget;
 import org.jpox.samples.widget.StringWidget;
 import org.jpox.samples.widget.Widget;
-import org.junit.BeforeClass;
 
 /**
  * Tests the functionality of view objects.
@@ -57,17 +59,12 @@ public class ViewTest extends JDOPersistenceTestCase
     private static boolean initialised = false;
 
     StorageTester tester = null;
-    
-    @BeforeClass
-    public static void runTests() {
-        skipWhen(!supportsViews(),"Database [" + vendorID + "] does not support views, view tests not run");
-    } 
 
     public ViewTest(String name)
     {
         super(name);
 
-        if (!initialised)
+        if (supportsViews() && !initialised)
         {
             addClassesToSchema(new Class[]
                 {
@@ -96,7 +93,23 @@ public class ViewTest extends JDOPersistenceTestCase
         tester = new StorageTester(pmf);
     }
 
-    protected static boolean supportsViews() 
+    /**
+     * Only run the test if the db supports views.
+     */
+    protected void runTest()
+    throws Throwable
+    {
+        if (supportsViews())
+        {
+            super.runTest();
+        }
+        else
+        {
+            LOG.warn("Database [" + vendorID + "] does not support views, view tests not run");
+        }
+    }
+
+    protected boolean supportsViews() 
     {
         return ((RDBMSStoreManager)storeMgr).getDatastoreAdapter().supportsOption(DatastoreAdapter.VIEWS);
     }
