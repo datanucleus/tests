@@ -51,18 +51,6 @@ public class SqlDateTest extends AbstractTypeTestCase
     private TimeZone savedTz;
 
 
-    public SqlDateTest()
-    {
-        super("SqlDateTest");
-    }
-    
-    public SqlDateTest(String name)
-    {
-        super(name);
-    }
-
-
-
     /* Save the current TimeZone and cleanup from any previous tests.
      * Cleanup is done here, and not at test completion, so that the
      * database can be examined when tests fail.

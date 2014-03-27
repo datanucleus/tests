@@ -77,10 +77,6 @@ public class ClassLoaderTest extends JDOPersistenceTestCase
     {
         initOnCreate = false;
     }
-    public ClassLoaderTest()
-    {
-        super("unset");
-    }
 
     /**
      * Used by the JUnit framework to construct tests.

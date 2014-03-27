@@ -33,16 +33,6 @@ import org.jpox.samples.types.uri.URIHolder;
 public class URITest extends AbstractTypeTestCase
 {
     
-    public URITest()
-    {
-        super("URITest");
-    }
-    
-    public URITest(String name)
-    {
-        super(name);
-    }
-
     /**
      * Test for querying of URI fields.
      * @throws Exception

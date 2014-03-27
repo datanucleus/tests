@@ -40,6 +40,14 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
     /** Local PersistenceManager. */
     protected PersistenceManager pm = null;
 
+    /**
+     *  Allow tests with no Constructor
+     */
+    public JDOPersistenceTestCase()
+    {
+        init(null);
+    }
+
     public JDOPersistenceTestCase(String name)
     {
         this(name, null);
@@ -131,7 +139,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
      * Convenience method to help cleaning the database in teardown
      * @param cls The class whose instances to remove
      */
-    protected void clean(Class cls)
+    protected void clean(Class<?> cls)
     {
         clean(pmf, cls);
     }
@@ -141,7 +149,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
      * @param pmf PersistenceManagerFactory from which to remove the instances
      * @param cls The class whose instances to remove
      */
-    protected void clean(PersistenceManagerFactory pmf, Class cls)
+    protected void clean(PersistenceManagerFactory pmf, Class<?> cls)
     {
         TestHelper.clean(pmf,cls);
     }

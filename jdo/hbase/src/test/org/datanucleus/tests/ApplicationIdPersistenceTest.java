@@ -951,9 +951,9 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 BasicTypeHolder basic1 = new BasicTypeHolder();
-                basic1.setIntObjectField(new Integer(1));
+                basic1.setIntObjField(new Integer(1));
                 BasicTypeHolder basic2 = new BasicTypeHolder();
-                basic2.setIntObjectField(null);
+                basic2.setIntObjField(null);
                 pm.makePersistent(basic1);
                 pm.makePersistent(basic2);
                 tx.commit();
