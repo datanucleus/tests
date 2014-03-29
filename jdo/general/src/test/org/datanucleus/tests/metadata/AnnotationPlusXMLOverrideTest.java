@@ -28,6 +28,7 @@ import org.datanucleus.metadata.ColumnMetaData;
 import org.datanucleus.metadata.ExtensionMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
 import org.datanucleus.metadata.IdentityStrategy;
+import org.datanucleus.metadata.JdbcType;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.metadata.QueryMetaData;
 import org.datanucleus.samples.ann_xml.override.Account;
@@ -119,8 +120,7 @@ public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
         ColumnMetaData[] colmds = fmd.getColumnMetaData();
         assertEquals("column identifier incorrect",
                      "DATE_OF_BIRTH", colmds[0].getName());
-        assertEquals("column JDBC type incorrect",
-                     "DATE", colmds[0].getJdbcType());
+        assertEquals("column JDBC type incorrect", JdbcType.DATE, colmds[0].getJdbcType());
 
         // package.orm (additional)
         ExtensionMetaData[] extmds = fmd.getExtensions();
@@ -141,8 +141,7 @@ public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
                      "EMAIL_ADDRESS", colmds[0].getName());
         assertEquals(prefix + "column length incorrect",
                      new Integer(100), colmds[0].getLength());
-        assertEquals(prefix + "column JDBC type incorrect",
-                     "CHAR", colmds[0].getJdbcType());
+        assertEquals(prefix + "column JDBC type incorrect", JdbcType.CHAR, colmds[0].getJdbcType());
     }
 
     /**

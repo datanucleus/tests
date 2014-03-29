@@ -31,6 +31,7 @@ import org.datanucleus.metadata.IdentityStrategy;
 import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.InheritanceMetaData;
 import org.datanucleus.metadata.InheritanceStrategy;
+import org.datanucleus.metadata.JdbcType;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.samples.ann_xml.models.company.Account;
 import org.datanucleus.samples.ann_xml.models.company.Department;
@@ -305,8 +306,7 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
                      "LASTNAME", colmds[0].getName());
         assertEquals(prefix + "column length incorrect",
                      new Integer(64), colmds[0].getLength());
-        assertEquals(prefix + "column JDBC type incorrect",
-                     "VARCHAR", colmds[0].getJdbcType());
+        assertEquals(prefix + "column JDBC type incorrect", JdbcType.VARCHAR, colmds[0].getJdbcType());
 
         // "firstName"
         fmd = cmd.getMetaDataForMember("firstName");
@@ -315,8 +315,7 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
                      "FIRSTNAME", colmds[0].getName());
         assertEquals(prefix + "column length incorrect",
                      new Integer(32), colmds[0].getLength());
-        assertEquals(prefix + "column JDBC type incorrect",
-                     "VARCHAR", colmds[0].getJdbcType());
+        assertEquals(prefix + "column JDBC type incorrect", JdbcType.VARCHAR, colmds[0].getJdbcType());
 
         // "emailAddress"
         fmd = cmd.getMetaDataForMember("emailAddress");
@@ -325,16 +324,14 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
                      "EMAILADDRESS", colmds[0].getName());
         assertEquals(prefix + "column length incorrect",
                      new Integer(128), colmds[0].getLength());
-        assertEquals(prefix + "column JDBC type incorrect",
-                     "VARCHAR", colmds[0].getJdbcType());
+        assertEquals(prefix + "column JDBC type incorrect", JdbcType.VARCHAR, colmds[0].getJdbcType());
 
         // "dateOfBirth"
         fmd = cmd.getMetaDataForMember("dateOfBirth");
         colmds = fmd.getColumnMetaData();
         assertEquals("column identifier incorrect",
                      "DATEOFBIRTH", colmds[0].getName());
-        assertEquals("column JDBC type incorrect",
-                     "TIMESTAMP", colmds[0].getJdbcType());
+        assertEquals("column JDBC type incorrect", JdbcType.TIMESTAMP, colmds[0].getJdbcType());
 
         // package.orm (additional)
         ExtensionMetaData[] extmds = fmd.getExtensions();

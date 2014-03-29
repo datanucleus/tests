@@ -39,6 +39,7 @@ import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.IndexMetaData;
 import org.datanucleus.metadata.InheritanceMetaData;
 import org.datanucleus.metadata.InheritanceStrategy;
+import org.datanucleus.metadata.JdbcType;
 import org.datanucleus.metadata.JoinMetaData;
 import org.datanucleus.metadata.KeyMetaData;
 import org.datanucleus.metadata.MapMetaData;
@@ -413,7 +414,7 @@ public class AnnotationTest extends JDOPersistenceTestCase
         AbstractMemberMetaData fmd = cmd1.getMetaDataForMember("make");
         assertEquals(1, fmd.getColumnMetaData().length);
         assertEquals("MAKE", fmd.getColumnMetaData()[0].getName());
-        assertEquals("VARCHAR", fmd.getColumnMetaData()[0].getJdbcType());
+        assertEquals(JdbcType.VARCHAR, fmd.getColumnMetaData()[0].getJdbcType());
         assertEquals(40, fmd.getColumnMetaData()[0].getLength().intValue());
     }
 
