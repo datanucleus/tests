@@ -37,6 +37,7 @@ import org.datanucleus.metadata.IdentityStrategy;
 import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.InheritanceMetaData;
 import org.datanucleus.metadata.InheritanceStrategy;
+import org.datanucleus.metadata.JdbcType;
 import org.datanucleus.metadata.JoinMetaData;
 import org.datanucleus.metadata.KeyMetaData;
 import org.datanucleus.metadata.MapMetaData;
@@ -830,10 +831,10 @@ public class AnnotationTest extends JPAPersistenceTestCase
         ClassLoaderResolver clr = new ClassLoaderResolverImpl();
         ClassMetaData cmd1 = (ClassMetaData)metaDataMgr.getMetaDataForClass(EnumHolder.class.getName(), clr);
         AbstractMemberMetaData mmd1 = cmd1.getMetaDataForMember("colour1");
-        assertEquals("INTEGER", mmd1.getColumnMetaData()[0].getJdbcType());
+        assertEquals(JdbcType.INTEGER, mmd1.getColumnMetaData()[0].getJdbcType());
         assertEquals(FieldPersistenceModifier.PERSISTENT, mmd1.getPersistenceModifier());
         AbstractMemberMetaData mmd2 = cmd1.getMetaDataForMember("colour2");
-        assertEquals("VARCHAR", mmd2.getColumnMetaData()[0].getJdbcType());
+        assertEquals(JdbcType.VARCHAR, mmd2.getColumnMetaData()[0].getJdbcType());
         assertEquals(FieldPersistenceModifier.PERSISTENT, mmd2.getPersistenceModifier());
     }
 
