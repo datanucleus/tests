@@ -315,8 +315,16 @@ public class TestHelper
     {
         Properties props = getPropertiesForDatastore(number);
         String url = props.getProperty("javax.jdo.option.ConnectionURL");
+        if (url == null)
+        {
+            return null;
+        }
         StringTokenizer tokeniser = new StringTokenizer(url, ":");
-        tokeniser.nextToken();
+        String pluginProtocol = tokeniser.nextToken();
+        if (!pluginProtocol.equals("jdbc"))
+        {
+            return null;
+        }
         return tokeniser.nextToken();
     }
 
