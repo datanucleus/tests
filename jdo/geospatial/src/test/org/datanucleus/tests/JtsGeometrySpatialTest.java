@@ -17,6 +17,9 @@
  **********************************************************************/
 package org.datanucleus.tests;
 
+import static org.datanucleus.tests.Datastore.DatastoreKey.mysql;
+import static org.datanucleus.tests.Datastore.DatastoreKey.postgresql;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,20 +32,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import junit.framework.TestSuite;
-
-import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.samples.jtsgeometry.SampleGeometryCollection;
 import org.datanucleus.samples.jtsgeometry.SampleLineString;
 import org.datanucleus.samples.jtsgeometry.SamplePoint;
 import org.datanucleus.samples.jtsgeometry.SamplePolygon;
-import org.datanucleus.store.StoreManager;
-import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
-import org.junit.runner.RunWith;
-import org.junit.runners.AllTests;
 import org.postgis.MultiLineString;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -61,164 +55,10 @@ import com.vividsolutions.jts.io.WKTReader;
  * Series of tests for JTS spatial functions.
  * Apply to MySQL and Postgresql.
  */
-@RunWith(AllTests.class)
+@Datastore({postgresql, mysql})
 public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
 {
     private static final WKTReader wktReader = new WKTReader(new GeometryFactory(new PrecisionModel(), 4326));
-
-    public JtsGeometrySpatialTest(String name)
-    {
-        super(name);
-    }
-
-    static public TestSuite suite()
-    {
-        // Extract the datastore being run
-        String datastoreVendor = null;
-        if (pmf == null)
-        {
-            pmf = TestHelper.getPMF(1, null);
-        }
-        StoreManager storeMgr = ((JDOPersistenceManagerFactory)pmf).getNucleusContext().getStoreManager();
-        if (!(storeMgr instanceof RDBMSStoreManager))
-        {
-            return null;
-        }
-        RDBMSStoreManager srm = (RDBMSStoreManager)storeMgr;
-        if (srm.getDatastoreAdapter() != null)
-        {
-            // RDBMS datastores have a vendor id
-            datastoreVendor = srm.getDatastoreAdapter().getVendorID();
-        }
-
-        TestSuite suite = new TestSuite();
-        if (datastoreVendor.equalsIgnoreCase("mysql"))
-        {
-            // MySQL
-            suite.addTest(new JtsGeometrySpatialTest("testGeomFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testPointFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testLineFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testPolyFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPointFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testMLineFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPolyFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeomCollFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeomFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testPointFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testLineFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testPolyFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPointFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testMLineFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPolyFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeomCollFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testDimension")); 
-            suite.addTest(new JtsGeometrySpatialTest("testGeometryType"));
-            suite.addTest(new JtsGeometrySpatialTest("testSrid"));
-            suite.addTest(new JtsGeometrySpatialTest("testEnvelope"));
-            suite.addTest(new JtsGeometrySpatialTest("testAsText"));
-            suite.addTest(new JtsGeometrySpatialTest("testAsBinary"));
-//            suite.addTest(new JtsGeometrySpatialTest("testIsEmpty"));
-//            suite.addTest(new JtsGeometrySpatialTest("testIsSimple"));
-//            suite.addTest(new JtsGeometrySpatialTest("testBoundary"));
-            suite.addTest(new JtsGeometrySpatialTest("testEquals"));
-            suite.addTest(new JtsGeometrySpatialTest("testDisjoint"));
-            suite.addTest(new JtsGeometrySpatialTest("testIntersects"));
-            suite.addTest(new JtsGeometrySpatialTest("testTouches"));
-//            suite.addTest(new JtsGeometrySpatialTest("testCrosses"));
-            suite.addTest(new JtsGeometrySpatialTest("testWithin"));
-            suite.addTest(new JtsGeometrySpatialTest("testContains"));
-            suite.addTest(new JtsGeometrySpatialTest("testOverlaps"));
-//            suite.addTest(new JtsGeometrySpatialTest("testRelate"));
-//            suite.addTest(new JtsGeometrySpatialTest("testDistance"));
-//            suite.addTest(new JtsGeometrySpatialTest("testBuffer"));
-//            suite.addTest(new JtsGeometrySpatialTest("testConvexHull"));
-//            suite.addTest(new JtsGeometrySpatialTest("testIntersection"));
-//            suite.addTest(new JtsGeometrySpatialTest("testUnion"));
-//            suite.addTest(new JtsGeometrySpatialTest("testSymDifference"));
-//            suite.addTest(new JtsGeometrySpatialTest("testDifference"));
-            suite.addTest(new JtsGeometrySpatialTest("testX"));
-            suite.addTest(new JtsGeometrySpatialTest("testY"));
-            suite.addTest(new JtsGeometrySpatialTest("testStartPoint"));
-            suite.addTest(new JtsGeometrySpatialTest("testEndPoint"));
-//            suite.addTest(new JtsGeometrySpatialTest("testIsRing"));
-            suite.addTest(new JtsGeometrySpatialTest("testIsClosed"));
-            suite.addTest(new JtsGeometrySpatialTest("testLength"));
-            suite.addTest(new JtsGeometrySpatialTest("testNumPoints"));
-            suite.addTest(new JtsGeometrySpatialTest("testPointN"));
-            suite.addTest(new JtsGeometrySpatialTest("testArea"));
-//            suite.addTest(new JtsGeometrySpatialTest("testCentroid"));
-//            suite.addTest(new JtsGeometrySpatialTest("testPointOnSurfaceMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testExteriorRingMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testNumInteriorRingMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testInteriorRingNMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testNumGeometries"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeometryN"));
-        }
-        else if (datastoreVendor.equalsIgnoreCase("postgresql"))
-        {
-            // Postgresql
-            suite.addTest(new JtsGeometrySpatialTest("testGeomFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testPointFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testLineFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testPolyFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPointFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testMLineFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPolyFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeomCollFromText"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeomFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testPointFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testLineFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testPolyFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPointFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testMLineFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testMPolyFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeomCollFromWKB"));
-            suite.addTest(new JtsGeometrySpatialTest("testDimension")); 
-            suite.addTest(new JtsGeometrySpatialTest("testGeometryType"));
-            suite.addTest(new JtsGeometrySpatialTest("testSrid"));
-            suite.addTest(new JtsGeometrySpatialTest("testEnvelope"));
-            suite.addTest(new JtsGeometrySpatialTest("testAsText"));
-            suite.addTest(new JtsGeometrySpatialTest("testAsBinary"));        
-            suite.addTest(new JtsGeometrySpatialTest("testIsEmpty"));
-            suite.addTest(new JtsGeometrySpatialTest("testIsSimple"));
-            suite.addTest(new JtsGeometrySpatialTest("testBoundary"));
-            suite.addTest(new JtsGeometrySpatialTest("testEquals"));
-            suite.addTest(new JtsGeometrySpatialTest("testDisjoint"));
-            suite.addTest(new JtsGeometrySpatialTest("testIntersects"));
-            suite.addTest(new JtsGeometrySpatialTest("testTouches"));
-            suite.addTest(new JtsGeometrySpatialTest("testCrosses"));
-            suite.addTest(new JtsGeometrySpatialTest("testWithin"));
-            suite.addTest(new JtsGeometrySpatialTest("testContains"));
-            suite.addTest(new JtsGeometrySpatialTest("testOverlaps"));
-            suite.addTest(new JtsGeometrySpatialTest("testRelate"));
-            suite.addTest(new JtsGeometrySpatialTest("testDistance"));
-            suite.addTest(new JtsGeometrySpatialTest("testBuffer"));
-            suite.addTest(new JtsGeometrySpatialTest("testConvexHull"));
-            suite.addTest(new JtsGeometrySpatialTest("testIntersection"));
-            suite.addTest(new JtsGeometrySpatialTest("testUnion"));
-            suite.addTest(new JtsGeometrySpatialTest("testSymDifference"));
-            suite.addTest(new JtsGeometrySpatialTest("testDifference"));
-            suite.addTest(new JtsGeometrySpatialTest("testX"));
-            suite.addTest(new JtsGeometrySpatialTest("testY"));
-            suite.addTest(new JtsGeometrySpatialTest("testStartPoint"));
-            suite.addTest(new JtsGeometrySpatialTest("testEndPoint"));
-            suite.addTest(new JtsGeometrySpatialTest("testIsRing"));
-            suite.addTest(new JtsGeometrySpatialTest("testIsClosed"));
-            suite.addTest(new JtsGeometrySpatialTest("testLength"));
-            suite.addTest(new JtsGeometrySpatialTest("testNumPoints"));
-            suite.addTest(new JtsGeometrySpatialTest("testPointN"));
-            suite.addTest(new JtsGeometrySpatialTest("testArea"));
-            suite.addTest(new JtsGeometrySpatialTest("testCentroid"));
-            suite.addTest(new JtsGeometrySpatialTest("testPointOnSurfaceMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testExteriorRingMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testNumInteriorRingMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testInteriorRingNMethod"));
-            suite.addTest(new JtsGeometrySpatialTest("testNumGeometries"));
-            suite.addTest(new JtsGeometrySpatialTest("testGeometryN"));
-            suite.addTest(new JtsGeometrySpatialTest("testBboxTest"));
-        }
-        return suite;
-    }
 
     public void testGeomFromText() throws SQLException, ParseException
     {
@@ -696,7 +536,8 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
             tx.commit();
         }
     }
-
+    
+    @Datastore(postgresql)
     public void testIsEmpty() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -726,6 +567,8 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+
+    @Datastore(postgresql)
     public void testIsSimple() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -752,6 +595,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testBoundary() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -889,6 +733,8 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+
+    @Datastore(postgresql)
     public void testCrosses() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -994,6 +840,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testRelate() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1022,6 +869,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testDistance() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1050,6 +898,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testBuffer() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1078,6 +927,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testConvexHull() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1105,6 +955,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testIntersection() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1132,6 +983,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testUnion() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1162,6 +1014,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testSymDifference() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1194,6 +1047,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testDifference() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1330,6 +1184,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testIsRing() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1487,6 +1342,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testCentroid() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1512,6 +1368,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testPointOnSurfaceMethod() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1679,6 +1536,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
+    @Datastore(postgresql)
     public void testBboxTest() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();

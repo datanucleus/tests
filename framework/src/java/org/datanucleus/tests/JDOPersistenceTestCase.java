@@ -28,17 +28,29 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.Configuration;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.exceptions.ClassNotResolvedException;
+import org.junit.Rule;
 
 /**
  * Abstract base class for all JDO unit tests needing access to a persistence manager factory.
  */
 public abstract class JDOPersistenceTestCase extends PersistenceTestCase
 {
+    @Rule
+    public DatanucleusTestWatcher testWatcher = new DatanucleusTestWatcher();
+    
     /** The PersistenceManagerFactory to use for all tests. */
     protected static PersistenceManagerFactory pmf;
 
     /** Local PersistenceManager. */
     protected PersistenceManager pm = null;
+
+    /**
+     *  Allow tests with no Constructor
+     */
+    public JDOPersistenceTestCase()
+    {
+        init(null);
+    }
 
     public JDOPersistenceTestCase(String name)
     {
@@ -51,8 +63,8 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
         super(name);
         init(userProps);
     }
-
-    protected synchronized void init(Properties userProps)
+    
+    protected static synchronized void init(Properties userProps)
     {
         if (pmf == null && initOnCreate)
         {
@@ -67,7 +79,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
      * @param userProps The custom PMF props to use when creating the PMF
      * @return The PMF (also stored in the local "pmf" variable)
      */
-    protected synchronized PersistenceManagerFactory getPMF(Properties userProps)
+    protected static synchronized PersistenceManagerFactory getPMF(Properties userProps)
     {
         if (pmf != null)
         {
@@ -131,7 +143,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
      * Convenience method to help cleaning the database in teardown
      * @param cls The class whose instances to remove
      */
-    protected void clean(Class cls)
+    protected void clean(Class<?> cls)
     {
         clean(pmf, cls);
     }
@@ -141,7 +153,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
      * @param pmf PersistenceManagerFactory from which to remove the instances
      * @param cls The class whose instances to remove
      */
-    protected void clean(PersistenceManagerFactory pmf, Class cls)
+    protected void clean(PersistenceManagerFactory pmf, Class<?> cls)
     {
         TestHelper.clean(pmf,cls);
     }

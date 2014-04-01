@@ -1,5 +1,13 @@
 package org.datanucleus.tests;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -129,9 +137,12 @@ public class MultiConfigRunner extends Runner
     {
         final private String config;
 
+        private Class<?> klass;
+
         public JUnit4ConfigRunner(Class<?> klass, String config) throws InitializationError
         {
             super(klass);
+            this.klass = klass;
             this.config = config;
         }
 
@@ -140,6 +151,70 @@ public class MultiConfigRunner extends Runner
         {
             return Description.createTestDescription(getTestClass().getJavaClass(),
                 testName(method) + "[" + config + "]", method.getAnnotations());
+        }
+
+        @Override
+        protected void validateInstanceMethods(List<Throwable> errors)
+        {
+            // Avoid failing when no @Test is present. Do nothing since super is already deprecated.
+        }
+
+        /**
+         * Relax constructors rules to be able to run legacy JUnit3 style tests. We can put it back when all tests have been migrated.
+         **/
+        @Override
+        protected void validateOnlyOneConstructor(List<Throwable> errors)
+        {
+            // Do not validated it
+        }
+
+        @Override
+        protected void validateZeroArgConstructor(List<Throwable> errors)
+        {
+            // Do not validated it
+        }
+
+        @Override
+        protected Object createTest() throws Exception
+        {
+            Constructor<?> constructor = getTestClass().getOnlyConstructor();
+
+            return constructor.getParameterTypes().length == 0 ? constructor.newInstance() : constructor.newInstance("");
+        }
+
+        /*
+         * Allow JUnit4 to support the "test" prefix convention
+         */
+        @Override
+        protected List<FrameworkMethod> computeTestMethods()
+        {
+            Set<FrameworkMethod> testMethods = new HashSet<>(super.computeTestMethods());
+
+            for (Class<?> eachClass : getSuperClasses(klass))
+            {
+                for (Method eachMethod : eachClass.getDeclaredMethods())
+                {
+                    if (eachMethod.getName().startsWith("test")
+                            && Modifier.isPublic(eachMethod.getModifiers()))
+                    {
+                        testMethods.add(new FrameworkMethod(eachMethod));
+                    }
+                }
+            }
+
+            return new ArrayList<>(testMethods);
+        }
+
+        private List<Class<?>> getSuperClasses(Class<?> testClass)
+        {
+            ArrayList<Class<?>> results = new ArrayList<Class<?>>();
+            Class<?> current = testClass;
+            while (current != null)
+            {
+                results.add(current);
+                current = current.getSuperclass();
+            }
+            return results;
         }
     }
 }

@@ -17,12 +17,13 @@
  **********************************************************************/
 package org.datanucleus.tests;
 
+import static org.datanucleus.tests.Datastore.DatastoreKey.oracle;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -30,68 +31,20 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import junit.framework.TestSuite;
 
 import oracle.spatial.geometry.JGeometry;
-import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 
 import org.datanucleus.samples.jgeometry.SampleGeometry;
-import org.datanucleus.store.StoreManager;
-import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.util.StringUtils;
-import org.junit.runner.RunWith;
-import org.junit.runners.AllTests;
 
 /**
  * Series of tests for JGeometry spatial functions. Run for Oracle only
  * currently.
- * 
  * @version $Revision: 1.2 $
  */
-@RunWith(AllTests.class)
+@Datastore(oracle)
 public class JGeometrySpatialTest extends JDOPersistenceTestCase
 {
-    public JGeometrySpatialTest(String name)
-    {
-        super(name);
-    }
-
-    static public TestSuite suite()
-    {
-        // Extract the datastore being run
-        String datastoreVendor = null;
-        if (pmf == null)
-        {
-            pmf = TestHelper.getPMF(1, null);
-        }
-        StoreManager storeMgr = ((JDOPersistenceManagerFactory) pmf).getNucleusContext().getStoreManager();
-        if (!(storeMgr instanceof RDBMSStoreManager))
-        {
-            return null;
-        }
-        RDBMSStoreManager srm = (RDBMSStoreManager) storeMgr;
-        if (srm.getDatastoreAdapter() != null)
-        {
-            // RDBMS datastores have a vendor id
-            datastoreVendor = srm.getDatastoreAdapter().getVendorID();
-        }
-
-        TestSuite suite = new TestSuite();
-        if (datastoreVendor.equalsIgnoreCase("oracle"))
-        {
-            Method[] methods = JGeometrySpatialTest.class.getMethods();
-            for (Method method : methods)
-            {
-                if (method.getName().startsWith("test"))
-                {
-                    suite.addTest(new JGeometrySpatialTest(method.getName()));
-                }
-            }
-
-        }
-
-        return suite;
-    }
 
     protected void setUp() throws Exception
     {
