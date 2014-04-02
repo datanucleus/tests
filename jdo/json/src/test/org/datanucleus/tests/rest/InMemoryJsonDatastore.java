@@ -18,7 +18,6 @@ Contributors :
 ***********************************************************************/
 package org.datanucleus.tests.rest;
 
-
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,15 +34,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.datanucleus.util.NucleusLogger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 // The Java class will be hosted at the URI path "/"
 @Path("/")
-public class InMemoryJsonDatastore {
-    
-
+public class InMemoryJsonDatastore 
+{
     static Map objects = new Hashtable();
 
     @Context Response response;
@@ -52,21 +51,45 @@ public class InMemoryJsonDatastore {
     @Path("/{clazz}/{itemid}")
     public void post(@PathParam("clazz") String clazz, @PathParam("itemid") String itemid, String content)
     {
-        put(clazz,itemid,content);
+        put(clazz, itemid, content);
     }
 
     @PUT
     @Path("/{clazz}/{itemid}")
     public void put(@PathParam("clazz") String clazz, @PathParam("itemid") String itemid, String content)
     {
+        NucleusLogger.GENERAL.info(">> JsonDB.put " + clazz + " id=" + itemid + " content=" + content);
         try
         {
             JSONObject obj = new JSONObject(content);
-            update(obj, clazz, itemid);
+
+            synchronized (objects)
+            {
+                JSONObject objectInMap = (JSONObject) objects.get(clazz+ "/"+itemid);
+                if (objectInMap == null)
+                {
+                    objects.put(clazz+ "/"+itemid, obj);
+                }
+                else
+                {
+                    String[] names = JSONObject.getNames(obj);
+                    for( int i=0; i<names.length; i++)
+                    {
+                        try
+                        {
+                            objectInMap.put(names[i], obj.get(names[i]));
+                        }
+                        catch (JSONException e)
+                        {
+                            NucleusLogger.GENERAL.error("Exception putting JSON in DB", e);
+                        }
+                    }
+                }
+            }
         }
         catch (JSONException e)
         {
-            e.printStackTrace();
+            NucleusLogger.GENERAL.error("Exception putting JSON in DB", e);
         }
     }
     
@@ -75,9 +98,9 @@ public class InMemoryJsonDatastore {
     @Path("/{clazz}/{itemid}")
     public String get(@PathParam("clazz") String clazz, @PathParam("itemid") String itemid)
     {
-        JSONObject obj;
-        obj = (JSONObject)objects.get(clazz + "/" + itemid);
-        if (obj==null)
+        NucleusLogger.GENERAL.info(">> JsonDB.get " + clazz + " id=" + itemid);
+        JSONObject obj = (JSONObject)objects.get(clazz + "/" + itemid);
+        if (obj == null)
         {
             throw new WebApplicationException(Status.NOT_FOUND.getStatusCode());
         }
@@ -89,6 +112,7 @@ public class InMemoryJsonDatastore {
     @Path("/{clazz}")
     public String extent(@PathParam("clazz") String clazz)
     {
+        NucleusLogger.GENERAL.info(">> JsonDB.extent " + clazz);
         JSONArray jsonarray = new JSONArray();
         synchronized (objects)
         {
@@ -109,33 +133,7 @@ public class InMemoryJsonDatastore {
     @Path("/{clazz}/{itemid}")
     public void delete(@PathParam("clazz") String clazz, @PathParam("itemid") String itemid)
     {
+        NucleusLogger.GENERAL.info(">> JsonDB.delete " + clazz + " id=" + itemid);
         objects.remove(clazz + "/"+ itemid);
-    }
-    
-    private void update(JSONObject obj, String clazz, String key) throws JSONException
-    {
-        synchronized (objects)
-        {
-            JSONObject objectInMap = (JSONObject) objects.get(clazz+ "/"+key);
-            if (objectInMap==null)
-            {
-                objects.put(clazz+ "/"+key, obj);
-            }
-            else
-            {
-                String[] names = JSONObject.getNames(obj);
-                for( int i=0; i<names.length; i++)
-                {
-                    try
-                    {
-                        objectInMap.put(names[i], obj.get(names[i]));
-                    }
-                    catch (JSONException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
     }
 }
