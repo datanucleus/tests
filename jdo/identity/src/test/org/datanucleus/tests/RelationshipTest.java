@@ -3158,7 +3158,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                fail();
+                fail("Exception in test : " + e.getMessage());
             }
             finally
             {
@@ -3248,7 +3248,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                fail();
+                fail("Exception in test : " + e.getMessage());
             }
             finally
             {
@@ -4220,7 +4220,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error(">> Exception thrown retrieving singly-linked objects : ", e);
-                fail();
+                fail("Exception in test : " + e.getMessage());
             }
             finally
             {

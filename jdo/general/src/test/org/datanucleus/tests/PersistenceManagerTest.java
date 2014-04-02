@@ -2228,7 +2228,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 {
                     tx.rollback();
                     pm.close();
-                    fail();
+                    fail("Failed to persist object and commit transaction");
                 }
 
                 pm.close();
@@ -2291,7 +2291,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 {
                     tx.rollback();
                     pm.close();
-                    fail();
+                    fail("Failed to persist object and commit transaction");
                 }
                 pm.close();
             }
@@ -2425,7 +2425,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 pm.currentTransaction().rollback();
                 pm.close();
-                fail();
+                fail("Failed to persist object and commit transaction");
             }
 
             pm.close();
@@ -2493,7 +2493,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 pm.deletePersistent(emp1);
                 tx.commit();
-                fail();
+                fail("Commit transaction was successful but shouldn't have been");
             }
             catch (javax.jdo.JDODataStoreException e)
             {
@@ -2507,7 +2507,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 tx.rollback();
                 pm.close();
-                fail();
+                fail("Failed to perform test");
             }
 
             pm.close();
@@ -2543,7 +2543,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 tx.rollback();
                 pm.close();
-                fail();
+                fail("Failed to persist object and commit transaction");
             }
 
             pm.close();
@@ -2607,7 +2607,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 tx.rollback();
                 pm.close();
-                fail();
+                fail("Failed to persist object and commit transaction");
             }
 
             pm.close();
@@ -2642,7 +2642,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 tx.rollback();
                 pm.close();
-                fail();
+                fail("Failed to persist object and commit transaction");
             }
 
             pm.close();
@@ -2878,7 +2878,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 tx.rollback();
                 pm.close();
-                fail();
+                fail("Failed to persist object and commit transaction");
             }
 
             pm.close();
@@ -2941,7 +2941,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 {
                     tx.rollback();
                     pm.close();
-                    fail();
+                    fail("Failed to persist object and commit transaction");
                 }
 
                 pm.close();
@@ -3568,7 +3568,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 {
                     tester.setTransientValue(null);
                     pm.deletePersistent(tester);
-                    fail();
+                    fail("Delete persistent didn't fail but should have");
                 }
                 catch (JDOUserCallbackException e)
                 {
