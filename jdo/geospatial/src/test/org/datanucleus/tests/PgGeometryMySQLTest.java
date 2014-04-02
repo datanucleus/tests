@@ -80,7 +80,7 @@ public class PgGeometryMySQLTest extends JDOPersistenceTestCase
                 {
                     fileName = "sample_pg_mysql.sql";
                 }
-                File file = new File(JtsGeometryMySQLTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
+                File file = new File(JtsGeometryMySQLTest.class.getResource("/org/datanucleus/samples/data/" + fileName).toURI());
                 String s = "";
                 InputStream is = new FileInputStream(file);
                 int c;

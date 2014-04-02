@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -1705,7 +1706,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         return null;
     }
 
-    private void loadData() throws SQLException, IOException
+    private void loadData() throws SQLException, IOException, URISyntaxException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -1732,7 +1733,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
             {
                 fileName = "sample_pg_mysql.sql";
             }
-            File file = new File(PgGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
+            File file = new File(PgGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).toURI());
             StringBuffer sb = new StringBuffer();
             InputStream is = new FileInputStream(file);
             int c;

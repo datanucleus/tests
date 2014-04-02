@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -1593,9 +1594,9 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         return null;
     }
 
-    private String[] getArrayOfSqlStringsFromFile(String fileName) throws FileNotFoundException, IOException
+    private String[] getArrayOfSqlStringsFromFile(String fileName) throws FileNotFoundException, IOException, URISyntaxException
     {
-        File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).getFile());
+        File file = new File(JGeometrySpatialTest.class.getResource("/org/datanucleus/samples/data/" + fileName).toURI());
         StringBuilder sb = new StringBuilder();
         InputStream is = new FileInputStream(file);
         int c;
