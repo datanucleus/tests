@@ -48,7 +48,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <version>2.5</version>
         </dependency>
         <!-- For when we use javax.json instead of org.json -->
-        <dependency>
+        <!-- dependency>
             <groupId>javax.json</groupId>
             <artifactId>javax.json-api</artifactId>
             <version>1.0</version>
@@ -57,7 +57,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
             <version>1.0.4</version>
-        </dependency>
+        </dependency-->
     </dependencies>
 
 	<build/>
