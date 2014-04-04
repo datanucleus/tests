@@ -136,7 +136,17 @@ public class BasicTypeHolder extends TestObject implements Serializable
         this.booleanObjField = fld;
     }
 
-    public void setIntObjectField(Integer fld)
+    public void setShortObjField(Short shortObjField)
+    {
+        this.shortObjField = shortObjField;
+    }
+    
+    public void setLongObjField(Long longObjField)
+    {
+        this.longObjField = longObjField;
+    }
+
+    public void setIntObjField(Integer fld)
     {
         this.intObjField = fld;
     }

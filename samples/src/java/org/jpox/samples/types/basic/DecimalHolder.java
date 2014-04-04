@@ -49,6 +49,16 @@ public class DecimalHolder extends TestObject
         return bigDecimalField;
     }
 
+    public void setBigIntegerField(BigInteger bigIntegerField)
+    {
+        this.bigIntegerField = bigIntegerField;
+    }
+    
+    public void setBigDecimalField(BigDecimal bigDecimalField)
+    {
+        this.bigDecimalField = bigDecimalField;
+    }
+
     /**
      * Fills all of the object's fields with random data values. Any non-primitive fields (with the 
      * exception of <code>id</code>) will also be assigned <code>null</code> on a random basis.

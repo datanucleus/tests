@@ -92,6 +92,26 @@ public class FloatHolder extends TestObject
         return doubleObjField;
     }
 
+    public void setFloatField(float floatField)
+    {
+        this.floatField = floatField;
+    }
+    
+    public void setFloatObjField(Float floatObjField)
+    {
+        this.floatObjField = floatObjField;
+    }
+    
+    public void setDoubleField(double doubleField)
+    {
+        this.doubleField = doubleField;
+    }
+    
+    public void setDoubleObjField(Double doubleObjField)
+    {
+        this.doubleObjField = doubleObjField;
+    }
+
     private float nextFloat()
     {
         float f;
