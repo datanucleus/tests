@@ -125,6 +125,12 @@ public class TestRunListener extends RunListener
             // https://github.com/flyway/flyway/issues/76
             cleanupSQLite(url);
         }
+        else if (url.contains("postgresql")) {
+            // Flyway will fail if PostGIS is installed
+            // https://github.com/flyway/flyway/issues/100
+            // TODO Use SchemaAwareStoreManager, then fallback to Flyway  
+            connection.createStatement().execute("drop schema public cascade; create schema public;");
+        }
         else
         {
             // Use Flyway to clean up RDBMS instances
