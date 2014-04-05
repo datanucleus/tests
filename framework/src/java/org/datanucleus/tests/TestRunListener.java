@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Statement;
 import java.util.logging.Logger;
 
 import javax.jdo.JDOFatalUserException;
@@ -47,7 +48,7 @@ public class TestRunListener extends RunListener
         if (!skipDatastoreReset)
         {
             cleanupDatastore(1);
-            
+
             try
             {
                 // TODO Find a better solution to determine if it should cleanup the 2nd datastore
@@ -55,7 +56,7 @@ public class TestRunListener extends RunListener
             }
             catch (JDOFatalUserException e)
             {
-                // Some datastores won't have the 2nd  
+                // Some datastores won't have the 2nd
             }
         }
     }
@@ -125,11 +126,17 @@ public class TestRunListener extends RunListener
             // https://github.com/flyway/flyway/issues/76
             cleanupSQLite(url);
         }
-        else if (url.contains("postgresql")) {
+        else if (url.contains("postgresql"))
+        {
             // Flyway will fail if PostGIS is installed
             // https://github.com/flyway/flyway/issues/100
-            // TODO Use SchemaAwareStoreManager, then fallback to Flyway  
-            connection.createStatement().execute("drop schema public cascade; create schema public;");
+            // TODO Use SchemaAwareStoreManager, then fallback to Flyway
+            try (Statement stmt = connection.createStatement())
+            {
+                stmt.execute("drop schema public cascade;");
+                stmt.execute("create schema public;");
+                connection.commit();
+            }
         }
         else
         {
