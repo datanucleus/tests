@@ -20,7 +20,7 @@ package org.datanucleus.tests;
 import java.sql.SQLException;
 
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
-import org.datanucleus.store.types.geospatial.jdo.spatial.SpatialHelper;
+import org.datanucleus.store.types.geospatial.jdo.SpatialHelper;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 public class PgGeometrySpatialHelperTest extends JDOPersistenceTestCase

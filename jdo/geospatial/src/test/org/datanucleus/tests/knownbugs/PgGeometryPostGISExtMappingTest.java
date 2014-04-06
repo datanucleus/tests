@@ -17,7 +17,6 @@
  **********************************************************************/
 package org.datanucleus.tests.knownbugs;
 
-import org.datanucleus.tests.*;
 import java.sql.SQLException;
 
 import javax.jdo.JDOHelper;
@@ -29,14 +28,9 @@ import org.datanucleus.samples.pggeometry.SampleGeometryCollection3D;
 import org.datanucleus.samples.pggeometry.SampleGeometryCollectionM;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.postgis.GeometryCollection;
-import org.postgis.PGbox2d;
-import org.postgis.PGbox3d;
-import org.postgis.Point;
 
 /**
  * Series of mapping tests for Postgis using Postgresql extensions.
- *
- * @version $Revision: 1.2 $
  */
 public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
 {
