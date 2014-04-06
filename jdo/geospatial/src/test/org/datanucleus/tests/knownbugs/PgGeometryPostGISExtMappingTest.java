@@ -15,8 +15,9 @@
  Contributors:
  ...
  **********************************************************************/
-package org.datanucleus.tests;
+package org.datanucleus.tests.knownbugs;
 
+import org.datanucleus.tests.*;
 import java.sql.SQLException;
 
 import javax.jdo.JDOHelper;
@@ -60,79 +61,32 @@ public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
         return (vendorID.equalsIgnoreCase("postgresql"));
     }
 
-    public void testBoxMapping() throws SQLException
+    // TODO this test should be running successfully after using 
+    // 2.1.3 or alter postgis jdbc jars from OSSRH rep
+    // when they are available.
+    public void testGeometryCollectionMMapping() throws SQLException
     {
         if (!runTestsForDatastore())
         {
             return;
         }
 
-        PGbox2d pgbox2d = new PGbox2d(new Point(10, 10), new Point(20, 20));
-        PGbox3d pgbox3d = new PGbox3d(new Point(20, 20, 100), new Point(30, 30, 100));
-        SampleBox sampleBox;
-        SampleBox sampleBox_read;
+        SampleGeometryCollectionM sampleGeometryCollection;
+        SampleGeometryCollectionM sampleGeometryCollection_read;
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         Object id = null;
         try
         {
             tx.begin();
-            sampleBox = new SampleBox(1001, "PGboxes", pgbox2d, pgbox3d);
-            pm.makePersistent(sampleBox);
-            id = JDOHelper.getObjectId(sampleBox);
-            sampleBox = (SampleBox) pm.detachCopy(sampleBox);
-            tx.commit();
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            sampleBox_read = (SampleBox) pm.getObjectById(id, true);
-            assertEquals(sampleBox, sampleBox_read);
-            tx.commit();
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-    }
-
-    public void testGeometryCollection3DMapping() throws SQLException
-    {
-        if (!runTestsForDatastore())
-        {
-            return;
-        }
-
-        SampleGeometryCollection3D sampleGeometryCollection;
-        SampleGeometryCollection3D sampleGeometryCollection_read;
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        Object id = null;
-        try
-        {
-            tx.begin();
-            sampleGeometryCollection = new SampleGeometryCollection3D(
-                    7101,
-                    "Collection of 3-dimensional geometries",
+            sampleGeometryCollection = new SampleGeometryCollectionM(
+                    7201,
+                    "Collection of geometries with measure",
                     new GeometryCollection(
-                            "SRID=-1;GEOMETRYCOLLECTION(POINT(10 10 100),LINESTRING(0 50 100, 100 50 100),POLYGON((25 25 100,75 25 100,75 75 100,25 75 100,25 25 100),(45 45 100,55 45 100,55 55 100,45 55 100,45 45 100)))"));
+                            "SRID=-1;GEOMETRYCOLLECTIONM(POINTM(10 10 100),LINESTRINGM(0 50 100, 100 50 100),POLYGONM((25 25 100,75 25 100,75 75 100,25 75 100,25 25 100),(45 45 100,55 45 100,55 55 100,45 55 100,45 45 100)))"));
             pm.makePersistent(sampleGeometryCollection);
             id = JDOHelper.getObjectId(sampleGeometryCollection);
-            sampleGeometryCollection = (SampleGeometryCollection3D) pm.detachCopy(sampleGeometryCollection);
+            sampleGeometryCollection = (SampleGeometryCollectionM) pm.detachCopy(sampleGeometryCollection);
             tx.commit();
         }
         finally
@@ -148,7 +102,7 @@ public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            sampleGeometryCollection_read = (SampleGeometryCollection3D) pm.getObjectById(id, true);
+            sampleGeometryCollection_read = (SampleGeometryCollectionM) pm.getObjectById(id, true);
             assertEquals(sampleGeometryCollection, sampleGeometryCollection_read);
             tx.commit();
         }
@@ -161,5 +115,4 @@ public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
             pm.close();
         }
     }
-
 }

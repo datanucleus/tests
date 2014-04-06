@@ -39,9 +39,9 @@ public class SpatialAdaptersTest extends JDOPersistenceTestCase
 
         DatastoreAdapterFactory factory = DatastoreAdapterFactory.getInstance();
         
-        assertEquals("org.datanucleus.store.rdbms.adapter.MySQLSpatialAdapter", factory.getAdapterClass(pluginMgr, null, "MySQL", clr).getName());
-        assertEquals("org.datanucleus.store.rdbms.adapter.OracleSpatialAdapter", factory.getAdapterClass(pluginMgr, null, "Oracle", clr).getName());
-        assertEquals("org.datanucleus.store.rdbms.adapter.PostGISAdapter", factory.getAdapterClass(pluginMgr, null, "PostgreSQL", clr).getName());
+        assertEquals("org.datanucleus.store.types.geospatial.rdbms.adapter.MySQLSpatialAdapter", factory.getAdapterClass(pluginMgr, null, "MySQL", clr).getName());
+        assertEquals("org.datanucleus.store.types.geospatial.rdbms.adapter.OracleSpatialAdapter", factory.getAdapterClass(pluginMgr, null, "Oracle", clr).getName());
+        assertEquals("org.datanucleus.store.types.geospatial.rdbms.adapter.PostGISAdapter", factory.getAdapterClass(pluginMgr, null, "PostgreSQL", clr).getName());
     }
 
 }
