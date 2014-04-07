@@ -19,6 +19,8 @@ package org.datanucleus.tests.types;
 
 import java.util.List;
 
+import javax.jdo.JDOHelper;
+import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
@@ -376,6 +378,109 @@ public class JavaTimeTest extends JDOPersistenceTestCase
         finally
         {
             clean(JavaTimeSample3.class);
+        }
+    }
+
+    /**
+     * Test the use of the Date.getDay(), Date.getMonth(), Date.getYear(), Time.getHour(), Time.getMinute(), Time.getSecond() methods.
+     */
+    public void testDateTimeMethods()
+    {
+        try
+        {
+            LocalDateTime dateTime1 = LocalDateTime.of(2008, 3, 17, 15, 9, 0, 0);
+            LocalDateTime dateTime2 = LocalDateTime.of(2009, 5, 13, 7, 9, 26, 0);
+            JavaTimeSample1 s1a = new JavaTimeSample1(1, dateTime1, dateTime2);
+
+            LocalDateTime dateTime3 = LocalDateTime.of(2011, 10, 14, 1, 0, 15, 0);
+            LocalDateTime dateTime4 = LocalDateTime.of(2012, 11, 1, 7, 9, 0, 0);
+            JavaTimeSample1 s1b = new JavaTimeSample1(2, dateTime3, dateTime4);
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            Object id1 = null;
+            Object id2 = null;
+            try
+            {
+                tx.begin();
+                pm.makePersistent(s1a);
+                pm.makePersistent(s1b);
+                tx.commit();
+                id1 = JDOHelper.getObjectId(s1a);
+                id2 = JDOHelper.getObjectId(s1b);
+
+                tx.begin();
+                try
+                {
+                    Query q = pm.newQuery(JavaTimeSample1.class);
+                    q.setFilter("dateTime1.getDayOfMonth() == 17");
+                    List results = (List)q.execute();
+                    assertEquals("Received incorrect number of results for LocalDateTime.getDayOfMonth()", 1, results.size());
+                    JavaTimeSample1 first = (JavaTimeSample1)results.iterator().next();
+                    assertEquals("Retrieved object for getDayOfMonth() is incorrect", id1, JDOHelper.getObjectId(first));
+                    q.closeAll();
+
+                    q = pm.newQuery(JavaTimeSample1.class);
+                    q.setFilter("dateTime1.getMonthValue() == 10");
+                    results = (List)q.execute();
+                    assertEquals("Received incorrect number of results for LocalDateTime.getMonthValue", 1, results.size());
+                    first = (JavaTimeSample1)results.iterator().next();
+                    assertEquals("Retrieved object for getMonth() is incorrect", id2, JDOHelper.getObjectId(first));
+                    q.closeAll();
+
+                    q = pm.newQuery(JavaTimeSample1.class);
+                    q.setFilter("dateTime1.getYear() == 2008");
+                    results = (List)q.execute();
+                    assertEquals("Received incorrect number of results for LocalDateTime.getYear", 1, results.size());
+                    first = (JavaTimeSample1)results.iterator().next();
+                    assertEquals("Retrieved object for getYear() is incorrect", id1, JDOHelper.getObjectId(first));
+                    q.closeAll();
+
+                    // TODO sample can be persisted with timezone info resulting in H2 returning incorrect value for the test
+                    /*q = pm.newQuery(JavaTimeSample1.class);
+                    q.setFilter("dateTime1.getHour() == 1");
+                    results = (List)q.execute();
+                    assertEquals("Received incorrect number of results for LocalDateTime.getHour", 1, results.size());
+                    first = (JavaTimeSample1)results.iterator().next();
+                    assertEquals("Retrieved object for getHour() is incorrect", id2, JDOHelper.getObjectId(first));
+                    q.closeAll();*/
+
+                    q = pm.newQuery(JavaTimeSample1.class);
+                    q.setFilter("dateTime1.getMinute() == 9");
+                    results = (List)q.execute();
+                    assertEquals("Received incorrect number of results for LocalDateTime.getMinute", 1, results.size());
+                    first = (JavaTimeSample1)results.iterator().next();
+                    assertEquals("Retrieved object for getMinute() is incorrect", id1, JDOHelper.getObjectId(first));
+                    q.closeAll();
+
+                    q = pm.newQuery(JavaTimeSample1.class);
+                    q.setFilter("dateTime1.getSecond() == 0");
+                    results = (List)q.execute();
+                    assertEquals("Received incorrect number of results for LocalDateTime.getSecond", 1, results.size());
+                    first = (JavaTimeSample1)results.iterator().next();
+                    assertEquals("Retrieved object for getSecond() is incorrect", id1, JDOHelper.getObjectId(first));
+                    q.closeAll();
+                }
+                catch (JDOUserException e)
+                {
+                    LOG.error("Exception during test", e);
+                    fail(e.getMessage());
+                }
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(JavaTimeSample1.class);
         }
     }
 }
