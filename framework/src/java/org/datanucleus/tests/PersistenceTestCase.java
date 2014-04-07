@@ -25,6 +25,7 @@ import org.datanucleus.util.NucleusLogger;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -33,6 +34,9 @@ import org.junit.runner.RunWith;
 @RunWith(MultiConfigRunner.class)
 public abstract class PersistenceTestCase
 {
+    @Rule
+    public DatanucleusTestWatcher testWatcher = new DatanucleusTestWatcher();
+    
     /** Log for unit testing. */
     protected static final NucleusLogger LOG = NucleusLogger.getLoggerInstance("DataNucleus.Test");
 
@@ -43,7 +47,7 @@ public abstract class PersistenceTestCase
 
     /** The unique string identifying the datastore. */
     protected static String vendorID;
-
+    
     public PersistenceTestCase()
     {
         super();
@@ -62,7 +66,7 @@ public abstract class PersistenceTestCase
 
     protected void setUp() throws Exception
     {
-        LOG.info("********** " + toString() + " [setUp] **********");
+        LOG.info("********** " + testWatcher.getTestName() + " [setUp] **********");
     }
 
     @After
@@ -73,7 +77,7 @@ public abstract class PersistenceTestCase
 
     protected void tearDown() throws Exception
     {
-        LOG.info("********** " + toString() + " [tearDown] **********");
+        LOG.info("********** " + testWatcher.getTestName() + " [tearDown] **********");
     }
 
     protected static void skipWhen(boolean predicate, String message)

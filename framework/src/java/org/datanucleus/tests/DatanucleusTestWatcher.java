@@ -13,18 +13,26 @@ import org.junit.runner.Description;
 public class DatanucleusTestWatcher extends TestWatcher
 {
 
+    private Description description;
+    
+    public String getTestName() {
+        return description.getMethodName();
+    }
+
     @Override
     protected void starting(Description description)
     {
+        this.description = description;
+        
         Class<?> testClass = description.getTestClass();
 
         if (JDOPersistenceTestCase.class.isAssignableFrom(testClass))
         {
-            filterDatastores(description, testClass);
+            filterDatastores(testClass);
         }
     }
 
-    private void filterDatastores(Description description, Class<?> testClass)
+    private void filterDatastores(Class<?> testClass)
     {
         // Use class level annotation as default if present
         final DatastoreKey[] defaultDatastores = testClass.isAnnotationPresent(Datastore.class)

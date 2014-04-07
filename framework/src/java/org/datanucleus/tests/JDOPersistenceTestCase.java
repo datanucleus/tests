@@ -28,16 +28,12 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.Configuration;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.exceptions.ClassNotResolvedException;
-import org.junit.Rule;
 
 /**
  * Abstract base class for all JDO unit tests needing access to a persistence manager factory.
  */
 public abstract class JDOPersistenceTestCase extends PersistenceTestCase
 {
-    @Rule
-    public DatanucleusTestWatcher testWatcher = new DatanucleusTestWatcher();
-    
     /** The PersistenceManagerFactory to use for all tests. */
     protected static PersistenceManagerFactory pmf;
 
