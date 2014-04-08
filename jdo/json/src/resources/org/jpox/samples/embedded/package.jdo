@@ -11,7 +11,7 @@
                 <column name="MODEL" length="60" jdbc-type="VARCHAR"/>
             </field>
             <field name="memory" persistence-modifier="persistent" default-fetch-group="true">
-                <extension vendor-name="datanucleus" key="nested" value="false"/>
+                <extension vendor-name="datanucleus" key="nested" value="true"/>
                 <embedded null-indicator-column="MEMORY_SIZE" null-indicator-value="0">
                     <field name="chip">
                         <embedded null-indicator-column="MEMORY_CHIP_THICKNESS" null-indicator-value="0">
@@ -37,7 +37,9 @@
             <field name="type"/>
             <field name="size"/>
             <field name="voltage"/>
-            <field name="chip" persistence-modifier="persistent"/>
+            <field name="chip" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="nested" value="true"/>
+            </field>
         </class>
 
         <class name="Chip" embedded-only="true" detachable="true">
