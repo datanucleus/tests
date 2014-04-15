@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.MapKey;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,6 +40,7 @@ import javax.persistence.StoredProcedureParameter;
 
 @NamedStoredProcedureQuery(name="myNamedSP", procedureName="DN_PROC_NAMED_RS", 
     parameters={@StoredProcedureParameter(name="PARAM1", type=String.class, mode=ParameterMode.IN)})
+@NamedQuery(name="PeopleOfName", query="SELECT p FROM Person_Ann p WHERE p.firstName = :name")
 @Entity(name="Person_Ann")
 @Table(name="JPA_AN_PERSON")
 @IdClass(Person.PK.class)

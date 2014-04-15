@@ -3169,4 +3169,51 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             em.close();
         }
     }
+
+    /**
+     * Test for named queries.
+     */
+    public void testNamedQuery()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@gmail.com");
+            em.persist(p1);
+
+            Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@gmail.com");
+            em.persist(p2);
+
+            em.flush();
+
+            Query q1 = em.createNamedQuery("PeopleOfName");
+            q1.setParameter("name", "Fred");
+            List<Person> results1 = q1.getResultList();
+            assertEquals(1, results1.size());
+            assertEquals("Flintstone", ((Person)results1.iterator().next()).getLastName());
+
+            q1.setParameter("name", "Barney");
+            results1 = q1.getResultList();
+            assertEquals(1, results1.size());
+            assertEquals("Rubble", ((Person)results1.iterator().next()).getLastName());
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in Named Query test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
 }
