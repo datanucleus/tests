@@ -35,6 +35,7 @@ import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.enhancer.ClassEnhancer;
 import org.datanucleus.enhancer.EnhancementNucleusContextImpl;
 import org.datanucleus.enhancer.ClassEnhancerImpl;
+import org.datanucleus.enhancer.JDOEnhancementNamer;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.FileMetaData;
 import org.datanucleus.metadata.MetaDataManager;
@@ -113,7 +114,7 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
      */
     public ClassEnhancer getClassEnhancer(ClassMetaData cmd, MetaDataManager mmgr)
     {
-        return new ClassEnhancerImpl(cmd, new ClassLoaderResolverImpl(), mmgr);
+        return new ClassEnhancerImpl(cmd, new ClassLoaderResolverImpl(), mmgr, JDOEnhancementNamer.getInstance());
     }
 
     /**
