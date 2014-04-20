@@ -342,7 +342,7 @@ public class BasicTest extends JDOPersistenceTestCase
         assertNotNull("ClassMetaData is null!", cmd);
         assertEquals("Class name", DateWidget.class.getName(), cmd.getFullClassName());
         assertEquals("Package name", "org.datanucleus.samples.widget", cmd.getPackageName());
-        assertEquals("Superclass", Widget.class.getName(), cmd.getPersistenceCapableSuperclass());
+        assertEquals("Superclass", Widget.class.getName(), cmd.getPersistableSuperclass());
         assertEquals("Identity type", IdentityType.DATASTORE, cmd.getIdentityType());
         assertNull("Identity class", cmd.getObjectidClass());
         assertNotNull("Inheritance", cmd.getInheritanceMetaData());
@@ -375,7 +375,7 @@ public class BasicTest extends JDOPersistenceTestCase
         assertNotNull("Metadata", cmd);
         assertEquals("Class name", FloatWidget.class.getName(), cmd.getFullClassName());
         assertEquals("Package name", "org.datanucleus.samples.widget", cmd.getPackageName());
-        assertEquals("Superclass", Widget.class.getName(), cmd.getPersistenceCapableSuperclass());
+        assertEquals("Superclass", Widget.class.getName(), cmd.getPersistableSuperclass());
         assertEquals("Identity type", IdentityType.DATASTORE, cmd.getIdentityType());
         assertNull("Identity class", cmd.getObjectidClass());
         sortedFieldNames = new String[]
@@ -422,7 +422,7 @@ public class BasicTest extends JDOPersistenceTestCase
         assertNotNull("Metadata", cmd);
         assertEquals(PackageClassWidget.class.getName(), cmd.getFullClassName());
         assertEquals("org.datanucleus.samples.widget", cmd.getPackageName());
-        assertNull("Superclass", cmd.getPersistenceCapableSuperclass());
+        assertNull("Superclass", cmd.getPersistableSuperclass());
         assertEquals("Identity type", IdentityType.DATASTORE, cmd.getIdentityType());
         assertNull("Identity class", cmd.getObjectidClass());
         String[] sortedFieldNames = new String[]
@@ -450,7 +450,7 @@ public class BasicTest extends JDOPersistenceTestCase
         assertNotNull("Metadata", cmd);
         assertEquals(LevelAboveWidget.class.getName(), cmd.getFullClassName());
         assertEquals("org.datanucleus.samples.widget", cmd.getPackageName());
-        assertNull("Superclass", cmd.getPersistenceCapableSuperclass());
+        assertNull("Superclass", cmd.getPersistableSuperclass());
         assertEquals("Identity type", IdentityType.DATASTORE, cmd.getIdentityType());
         assertNull("Identity class", cmd.getObjectidClass());
         sortedFieldNames = new String[]
