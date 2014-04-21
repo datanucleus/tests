@@ -18,8 +18,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.enhancer.jdo;
 
-import javax.jdo.spi.PersistenceCapable;
-
+import org.datanucleus.enhancer.Persistable;
 import org.datanucleus.metadata.InvalidMetaDataException;
 
 /**
@@ -56,8 +55,8 @@ public class TestA06_3_1 extends JDOTestBase
     {
         Class[] classes = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/ClassInnerClassOwningClassPersistent.jdo");
         assertEquals(2, classes.length);
-        assertTrue(PersistenceCapable.class.isAssignableFrom(classes[0]));
-        assertTrue(PersistenceCapable.class.isAssignableFrom(classes[1]));
+        assertTrue(Persistable.class.isAssignableFrom(classes[0]));
+        assertTrue(Persistable.class.isAssignableFrom(classes[1]));
     }
 
     /**
@@ -67,7 +66,7 @@ public class TestA06_3_1 extends JDOTestBase
     {
         Class[] classes = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/ClassInnerClassOwningClassNotPersistent.jdo");
         assertEquals(1, classes.length);
-        assertTrue(PersistenceCapable.class.isAssignableFrom(classes[0]));
+        assertTrue(Persistable.class.isAssignableFrom(classes[0]));
     }
 
     /**
@@ -78,6 +77,6 @@ public class TestA06_3_1 extends JDOTestBase
     {
         Class[] classes = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/ClassDualInnerClassOwningClassNotPersistent.jdo");
         assertEquals(1, classes.length);
-        assertTrue(PersistenceCapable.class.isAssignableFrom(classes[0]));
+        assertTrue(Persistable.class.isAssignableFrom(classes[0]));
     }
 }

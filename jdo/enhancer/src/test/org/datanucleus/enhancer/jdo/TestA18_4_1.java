@@ -1,6 +1,6 @@
 package org.datanucleus.enhancer.jdo;
 
-import javax.jdo.spi.RegisterClassEvent;
+import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
 
 /**
  */

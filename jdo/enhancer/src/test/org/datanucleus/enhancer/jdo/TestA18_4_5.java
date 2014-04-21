@@ -1,9 +1,10 @@
 package org.datanucleus.enhancer.jdo;
 
-import javax.jdo.spi.PersistenceCapable;
-import javax.jdo.spi.RegisterClassEvent;
+import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
+import org.datanucleus.enhancer.Persistable;
 
 /**
+ * 
  */
 public class TestA18_4_5 extends JDOTestBase
 {
@@ -22,23 +23,23 @@ public class TestA18_4_5 extends JDOTestBase
                 {
                     assertEquals(
                         "field " + i + " test",
-                        PersistenceCapable.CHECK_READ,
-                        fieldFlags[i] & PersistenceCapable.CHECK_READ);
+                        Persistable.CHECK_READ,
+                        fieldFlags[i] & Persistable.CHECK_READ);
                     assertEquals(
                         "field " + i + " test",
-                        PersistenceCapable.CHECK_WRITE,
-                        fieldFlags[i] & PersistenceCapable.CHECK_WRITE);
+                        Persistable.CHECK_WRITE,
+                        fieldFlags[i] & Persistable.CHECK_WRITE);
                 }
                 else
                 {
                     assertEquals(
                         "field " + i + " test",
-                        PersistenceCapable.MEDIATE_READ,
-                        fieldFlags[i] & PersistenceCapable.MEDIATE_READ);
+                        Persistable.MEDIATE_READ,
+                        fieldFlags[i] & Persistable.MEDIATE_READ);
                     assertEquals(
                         "field " + i + " test",
-                        PersistenceCapable.MEDIATE_WRITE,
-                        fieldFlags[i] & PersistenceCapable.MEDIATE_WRITE);
+                        Persistable.MEDIATE_WRITE,
+                        fieldFlags[i] & Persistable.MEDIATE_WRITE);
                 }
             }
         }
@@ -62,12 +63,12 @@ public class TestA18_4_5 extends JDOTestBase
             {
                 assertEquals(
                     "field " + i + " CHECK_READ",
-                    PersistenceCapable.CHECK_READ,
-                    fieldFlags[i] & PersistenceCapable.CHECK_READ);
+                    Persistable.CHECK_READ,
+                    fieldFlags[i] & Persistable.CHECK_READ);
                 assertEquals(
                     "field " + i + " CHECK_WRITE",
-                    PersistenceCapable.CHECK_WRITE,
-                    fieldFlags[i] & PersistenceCapable.CHECK_WRITE);
+                    Persistable.CHECK_WRITE,
+                    fieldFlags[i] & Persistable.CHECK_WRITE);
             }
         }
         catch (Throwable e)
@@ -90,12 +91,12 @@ public class TestA18_4_5 extends JDOTestBase
             {
                 assertEquals(
                     "field " + i + " MEDIATE_READ",
-                    PersistenceCapable.MEDIATE_READ,
-                    fieldFlags[i] & PersistenceCapable.MEDIATE_READ);
+                    Persistable.MEDIATE_READ,
+                    fieldFlags[i] & Persistable.MEDIATE_READ);
                 assertEquals(
                     "field " + i + " MEDIATE_WRITE",
-                    PersistenceCapable.MEDIATE_WRITE,
-                    fieldFlags[i] & PersistenceCapable.MEDIATE_WRITE);
+                    Persistable.MEDIATE_WRITE,
+                    fieldFlags[i] & Persistable.MEDIATE_WRITE);
             }
         }
         catch (Throwable e)
@@ -117,8 +118,8 @@ public class TestA18_4_5 extends JDOTestBase
             for (int i = 1; i < 2; i++)
             {
                 assertEquals("field " + i + " MEDIATE_WRITE",
-                    PersistenceCapable.MEDIATE_WRITE,
-                    fieldFlags[i] & PersistenceCapable.MEDIATE_WRITE);
+                    Persistable.MEDIATE_WRITE,
+                    fieldFlags[i] & Persistable.MEDIATE_WRITE);
             }
         }
         catch (Throwable e)

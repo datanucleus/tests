@@ -25,14 +25,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.jdo.spi.JDOImplHelper;
-import javax.jdo.spi.RegisterClassEvent;
-import javax.jdo.spi.RegisterClassListener;
-
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.NucleusContext;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.enhancer.ClassEnhancer;
+import org.datanucleus.enhancer.EnhancementHelper;
+import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
+import org.datanucleus.enhancer.EnhancementHelper.RegisterClassListener;
 import org.datanucleus.enhancer.EnhancementNucleusContextImpl;
 import org.datanucleus.enhancer.ClassEnhancerImpl;
 import org.datanucleus.enhancer.JDOEnhancementNamer;
@@ -57,7 +56,7 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
 	public JDOTestBase()
     {
         // All classes registered with JDOImplHelper are registered here
-		JDOImplHelper.getInstance().addRegisterClassListener(this);
+		EnhancementHelper.getInstance().addRegisterClassListener(this);
 	}
 
 	/**
@@ -67,7 +66,7 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
 	public JDOTestBase(String name)
     {
 		super(name);
-		JDOImplHelper.getInstance().addRegisterClassListener(this);
+		EnhancementHelper.getInstance().addRegisterClassListener(this);
 	}
 
 	public Class findClass(final Class c[], final String name) 
@@ -102,7 +101,7 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
 	protected void tearDown() throws Exception 
     {
         // Deregister this class as a listener for newly enhanced classes
-		JDOImplHelper.getInstance().removeRegisterClassListener(this);
+		EnhancementHelper.getInstance().removeRegisterClassListener(this);
 
 		super.tearDown();
 	}

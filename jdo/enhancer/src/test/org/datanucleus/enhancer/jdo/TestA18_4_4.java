@@ -2,8 +2,8 @@ package org.datanucleus.enhancer.jdo;
 
 import java.lang.reflect.Method;
 
-import javax.jdo.spi.PersistenceCapable;
-import javax.jdo.spi.RegisterClassEvent;
+import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
+import org.datanucleus.enhancer.Persistable;
 
 /**
  */
@@ -60,20 +60,20 @@ public class TestA18_4_4 extends JDOTestBase
             RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
             byte fieldFlags[] = ev.getFieldFlags();
             int expectedValue;
-            int serializeSupport = PersistenceCapable.SERIALIZABLE;
+            int serializeSupport = Persistable.SERIALIZABLE;
             for (int i = 0; i < fieldFlags.length; i++)
             {
                 if (i < 22) // Was 21 if use strict JDO default persistent flags
                 {
-                    expectedValue = (PersistenceCapable.CHECK_READ | PersistenceCapable.CHECK_WRITE | serializeSupport);
+                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
                 }
                 else if ((i > 29) && (i < 35))
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
                 }
                 else
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE | serializeSupport);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
                 }
                 assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
             }
@@ -98,7 +98,7 @@ public class TestA18_4_4 extends JDOTestBase
             for (int i = 0; i < methods.length; i++)
             {
                 String name = methods[i].getName();
-                if (name.startsWith("jdoSet"))
+                if (name.startsWith("dnSet"))
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try
@@ -110,8 +110,8 @@ public class TestA18_4_4 extends JDOTestBase
                         //do nothing
                     }
                 }
-                else if ((name.startsWith("jdoGet")) ||
-                         (name.startsWith("jdoIs")))
+                else if ((name.startsWith("dnGet")) ||
+                         (name.startsWith("dnIs")))
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try
@@ -144,7 +144,7 @@ public class TestA18_4_4 extends JDOTestBase
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
             targetClass.newInstance();
             RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            assertEquals("jdo field num is 55", 55, ev.getFieldFlags().length);
+            assertEquals("field num is 55", 55, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -188,20 +188,20 @@ public class TestA18_4_4 extends JDOTestBase
             RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
             byte fieldFlags[] = ev.getFieldFlags();
             int expectedValue;
-            int serializeSupport = PersistenceCapable.SERIALIZABLE;
+            int serializeSupport = Persistable.SERIALIZABLE;
             for (int i = 0; i < fieldFlags.length; i++)
             {
                 if (i < 22) // Was 21 if use strict JDO default persistent flags
                 {
-                    expectedValue = (PersistenceCapable.CHECK_READ | PersistenceCapable.CHECK_WRITE | serializeSupport);
+                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
                 }
                 else if ((i > 29) && (i < 35))
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
                 }
                 else
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE | serializeSupport);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
                 }
                 assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
             }
@@ -226,7 +226,7 @@ public class TestA18_4_4 extends JDOTestBase
             for (int i = 0; i < methods.length; i++)
             {
                 String name = methods[i].getName();
-                if (name.startsWith("jdoSet"))
+                if (name.startsWith("dnSet"))
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try
@@ -238,8 +238,8 @@ public class TestA18_4_4 extends JDOTestBase
                         //do nothing
                     }
                 }
-                else if ((name.startsWith("jdoGet")) ||
-                         (name.startsWith("jdoIs")))
+                else if ((name.startsWith("dnGet")) ||
+                         (name.startsWith("dnIs")))
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try
@@ -273,7 +273,7 @@ public class TestA18_4_4 extends JDOTestBase
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
             targetClass.newInstance();
             RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            assertEquals("jdo field num is 55", 55, ev.getFieldFlags().length);
+            assertEquals("field num is 55", 55, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -317,20 +317,20 @@ public class TestA18_4_4 extends JDOTestBase
             RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
             byte fieldFlags[] = ev.getFieldFlags();
             int expectedValue;
-            int serializeSupport = PersistenceCapable.SERIALIZABLE;
+            int serializeSupport = Persistable.SERIALIZABLE;
             for (int i = 0; i < fieldFlags.length; i++)
             {
                 if (i < 22) // Was 21 if use strict JDO default persistent flags
                 {
-                    expectedValue = (PersistenceCapable.CHECK_READ | PersistenceCapable.CHECK_WRITE | serializeSupport);
+                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
                 }
                 else if ((i > 29) && (i < 35))
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
                 }
                 else
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE | serializeSupport);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
                 }
                 assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
             }
@@ -355,7 +355,7 @@ public class TestA18_4_4 extends JDOTestBase
             for (int i = 0; i < methods.length; i++)
             {
                 String name = methods[i].getName();
-                if (name.startsWith("jdoSet"))
+                if (name.startsWith("dnSet"))
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try
@@ -367,8 +367,8 @@ public class TestA18_4_4 extends JDOTestBase
                         //do nothing
                     }
                 }
-                else if ((name.startsWith("jdoGet")) ||
-                         (name.startsWith("jdoIs")))
+                else if ((name.startsWith("dnGet")) ||
+                         (name.startsWith("dnIs")))
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try
@@ -402,7 +402,7 @@ public class TestA18_4_4 extends JDOTestBase
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
             targetClass.newInstance();
             RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            assertEquals("jdo field num is 55", 55, ev.getFieldFlags().length);
+            assertEquals("field num is 55", 55, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -446,20 +446,20 @@ public class TestA18_4_4 extends JDOTestBase
             RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
             byte fieldFlags[] = ev.getFieldFlags();
             int expectedValue;
-            int serializeSupport = PersistenceCapable.SERIALIZABLE;
+            int serializeSupport = Persistable.SERIALIZABLE;
             for (int i = 0; i < fieldFlags.length; i++)
             {
                 if (i < 22) // Was 21 if use strict JDO default persistent flags
                 {
-                    expectedValue = (PersistenceCapable.CHECK_READ | PersistenceCapable.CHECK_WRITE | serializeSupport);
+                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
                 }
                 else if ((i > 29) && (i < 35))
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
                 }
                 else
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE | serializeSupport);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
                 }
                 assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
             }
@@ -484,7 +484,7 @@ public class TestA18_4_4 extends JDOTestBase
             for (int i = 0; i < methods.length; i++)
             {
                 String name = methods[i].getName();
-                if (name.startsWith("jdoSet")) 
+                if (name.startsWith("dnSet")) 
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try
@@ -496,8 +496,8 @@ public class TestA18_4_4 extends JDOTestBase
                         //do nothing
                     }
                 }
-                else if ((name.startsWith("jdoGet")) ||
-                         (name.startsWith("jdoIs"))) 
+                else if ((name.startsWith("dnGet")) ||
+                         (name.startsWith("dnIs"))) 
                 {
                     String sufix = name.substring(name.length() - 2, name.length());
                     try

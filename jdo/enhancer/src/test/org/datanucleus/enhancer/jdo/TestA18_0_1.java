@@ -1,7 +1,7 @@
 package org.datanucleus.enhancer.jdo;
 
-import javax.jdo.spi.PersistenceCapable;
-import javax.jdo.spi.RegisterClassEvent;
+import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
+import org.datanucleus.enhancer.Persistable;
 
 /**
  */
@@ -97,20 +97,20 @@ public class TestA18_0_1 extends JDOTestBase
             RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
             byte fieldFlags[] = ev.getFieldFlags();
             int expectedValue;
-            int serializeSupport = PersistenceCapable.SERIALIZABLE;
+            int serializeSupport = Persistable.SERIALIZABLE;
             for (int i = 0; i < fieldFlags.length; i++)
             {
                 if (i < 22) // Was 21 if use strict JDO default persistent flags
                 {
-                    expectedValue = (PersistenceCapable.CHECK_READ | PersistenceCapable.CHECK_WRITE | serializeSupport);
+                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
                 }
                 else if ((i > 29) && (i < 35))
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
                 }
                 else
                 {
-                    expectedValue = (PersistenceCapable.MEDIATE_READ | PersistenceCapable.MEDIATE_WRITE | serializeSupport);
+                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
                 }
                 assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
             }

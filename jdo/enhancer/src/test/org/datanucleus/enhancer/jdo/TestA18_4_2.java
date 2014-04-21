@@ -2,7 +2,7 @@ package org.datanucleus.enhancer.jdo;
 
 import java.lang.reflect.Method;
 
-import javax.jdo.spi.RegisterClassEvent;
+import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
 
 /**
  * With these tests, only field34 should be given a get/set/is method.
