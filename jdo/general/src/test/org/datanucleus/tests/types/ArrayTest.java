@@ -33,8 +33,8 @@ import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import javax.jdo.spi.PersistenceCapable;
 
+import org.datanucleus.enhancer.Persistable;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.array.ArrayElement;
 import org.jpox.samples.array.ArrayHolderInterface;
@@ -733,7 +733,7 @@ public class ArrayTest extends JDOPersistenceTestCase
             clean(arrayHolder.getClass());
 
             Class arrayElementType = arrayType.getComponentType();
-            if (PersistenceCapable.class.isAssignableFrom(arrayElementType))
+            if (Persistable.class.isAssignableFrom(arrayElementType))
             {
                 clean(arrayElementType);
             }
@@ -807,7 +807,7 @@ public class ArrayTest extends JDOPersistenceTestCase
             clean(arrayHolder.getClass());
 
             Class arrayElementType = arrayType.getComponentType();
-            if (PersistenceCapable.class.isAssignableFrom(arrayElementType))
+            if (Persistable.class.isAssignableFrom(arrayElementType))
             {
                 clean(arrayElementType);
             }
