@@ -25,6 +25,7 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
+import org.datanucleus.identity.StringId;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.ClassPersistenceModifier;
@@ -133,7 +134,7 @@ public class AnnotationTest extends JDOPersistenceTestCase
 
         assertFalse(prefix + "detachable is wrong", cmd2.isDetachable());
         assertEquals(prefix + "identity-type is wrong", IdentityType.APPLICATION, cmd2.getIdentityType());
-        assertEquals(prefix + "objectid-class is wrong", "javax.jdo.identity.StringIdentity", cmd2.getObjectidClass());
+        assertEquals(prefix + "objectid-class is wrong", StringId.class.getName(), cmd2.getObjectidClass());
         assertFalse(prefix + "embedded-only is wrong", cmd2.isEmbeddedOnly());
         assertTrue(prefix + "requires-extent is wrong", cmd2.isRequiresExtent());
         assertNull(prefix + "catalog is wrong", cmd2.getCatalog());

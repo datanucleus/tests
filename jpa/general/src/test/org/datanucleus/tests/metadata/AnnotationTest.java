@@ -132,7 +132,7 @@ public class AnnotationTest extends JPAPersistenceTestCase
         prefix = cmd2.getFullClassName() + " : ";
         assertEquals(prefix + "detachable is wrong", true, cmd2.isDetachable());
         assertEquals(prefix + "identity-type is wrong", cmd2.getIdentityType(), IdentityType.APPLICATION);
-        assertEquals(prefix + "objectid-class is wrong", "javax.jdo.identity.StringIdentity", cmd2.getObjectidClass());
+        assertEquals(prefix + "objectid-class is wrong", "org.datanucleus.identity.StringId", cmd2.getObjectidClass());
         assertEquals(prefix + "embedded-only is wrong", cmd2.isEmbeddedOnly(), false);
         assertEquals(prefix + "requires-extent is wrong", cmd2.isRequiresExtent(), true);
         assertEquals(prefix + "catalog is wrong", cmd2.getCatalog(), null);

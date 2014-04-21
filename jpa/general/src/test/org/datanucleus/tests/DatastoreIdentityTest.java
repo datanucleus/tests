@@ -17,10 +17,10 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
-import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.api.jpa.NucleusJPAHelper;
 import org.datanucleus.identity.OID;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.datastoreidentity.DSIDHolder;
@@ -50,7 +50,8 @@ public class DatastoreIdentityTest extends JPAPersistenceTestCase
                 tx.begin();
                 DSIDHolder holder = new DSIDHolder("First Holder");
                 em.persist(holder);
-                id = (OID)JDOHelper.getObjectId(holder);
+                em.flush();
+                id = (OID)NucleusJPAHelper.getObjectId(holder);
                 tx.commit();
             }
             catch (Exception e)

@@ -22,8 +22,8 @@ import java.util.Collection;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import javax.jdo.spi.PersistenceCapable;
 
+import org.datanucleus.enhancer.Persistable;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.persistentabstracts.ACity;
 import org.jpox.samples.persistentabstracts.ALocation;
@@ -31,7 +31,6 @@ import org.jpox.samples.persistentabstracts.Country;
 
 /**
  * Series of tests for persistent abstract classes.
- * @version $Revision: 1.1 $
  */
 public class PersistentAbstractClassesTest extends JDOPersistenceTestCase
 {
@@ -327,6 +326,6 @@ public class PersistentAbstractClassesTest extends JDOPersistenceTestCase
         assertEquals("Loch Ness", lochNess.getName());
         lochNess.setPosition(100);
         assertEquals(100, lochNess.getPosition());
-        assertTrue(PersistenceCapable.class.isAssignableFrom(lochNess.getClass()));
+        assertTrue(Persistable.class.isAssignableFrom(lochNess.getClass()));
     }
 }

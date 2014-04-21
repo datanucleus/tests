@@ -19,8 +19,8 @@ limitations under the License.
 package org.datanucleus.tests;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.spi.PersistenceCapable;
 
+import org.datanucleus.enhancer.Persistable;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.persistentinterfaces.Country;
 import org.jpox.samples.persistentinterfaces.ICity;
@@ -87,6 +87,6 @@ public class PersistentInterfaces3Test extends JDOPersistenceTestCase
         assertEquals("Loch Ness", lochNess.getName());
         lochNess.setPosition(100);
         assertEquals(100, lochNess.getPosition());
-        assertTrue(PersistenceCapable.class.isAssignableFrom(lochNess.getClass()));
+        assertTrue(Persistable.class.isAssignableFrom(lochNess.getClass()));
     }
 }
