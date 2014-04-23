@@ -21,7 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.datanucleus.api.jpa.NucleusJPAHelper;
-import org.datanucleus.identity.OID;
+import org.datanucleus.identity.IdentityUtils;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.datastoreidentity.DSIDHolder;
 
@@ -44,14 +44,14 @@ public class DatastoreIdentityTest extends JPAPersistenceTestCase
         {
             EntityManager em = getEM();
             EntityTransaction tx = em.getTransaction();
-            OID id = null;
+            Object id = null;
             try
             {      
                 tx.begin();
                 DSIDHolder holder = new DSIDHolder("First Holder");
                 em.persist(holder);
                 em.flush();
-                id = (OID)NucleusJPAHelper.getObjectId(holder);
+                id = NucleusJPAHelper.getObjectId(holder);
                 tx.commit();
             }
             catch (Exception e)
@@ -76,7 +76,7 @@ public class DatastoreIdentityTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Object key = id.getKeyValue();
+                Object key = IdentityUtils.getTargetKeyForDatastoreIdentity(id);
                 DSIDHolder holder = em.find(DSIDHolder.class, key);
                 assertNotNull(holder);
                 assertEquals("First Holder", holder.getName());
