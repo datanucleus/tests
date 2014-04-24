@@ -18,9 +18,9 @@ Contributors:
 **********************************************************************/
 package org.jpox.samples.annotations.one_one.bidir;
 
-import javax.jdo.annotations.Column;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
