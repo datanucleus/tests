@@ -125,7 +125,7 @@ public class MapTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(e);
+                LOG.error("Exception running test", e);
                 fail("Exception thrown while querying 1-N bidir FK relationships (Map) : " + e.getMessage());
             }
             finally
