@@ -304,7 +304,7 @@ public class TypesafeTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Manager.class);
+            TypesafeQuery<Manager> tq = pm.newTypesafeQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             List<Manager> managers = tq.filter(cand.yearsExperience.eq(8)).executeList();
             assertNotNull("Managers is null!", managers);

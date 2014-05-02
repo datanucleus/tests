@@ -15,7 +15,7 @@
     </parent>
     
     <properties>
-        <dn.jdo.query.version>[3.0, )</dn.jdo.query.version>
+        <dn.jdo.query.version>(3.9, )</dn.jdo.query.version>
     </properties>
 
     <build>
