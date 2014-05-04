@@ -57,6 +57,7 @@
         <module>../jdo/xml/</module>
         <module>../jdo/hbase/</module>
         <module>../jdo/mongodb/</module>
+        <module>../jdo/cassandra/</module>
         <module>../jdo/neo4j/</module>
     
         <module>../jpa/general/</module>
@@ -774,6 +775,9 @@
 
         <profile>
             <id>cassandra</id>
+            <modules>
+                <module>../jdo/cassandra/</module>
+            </modules>
             <dependencies>
                 <dependency>
                     <groupId>org.datanucleus</groupId>

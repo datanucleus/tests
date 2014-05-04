@@ -1,0 +1,4 @@
+/bin
+datanucleus.log
+target/
+nb-*.xml

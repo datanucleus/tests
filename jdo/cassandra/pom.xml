@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>4.0</version>
+        <relativePath>../../maven.parent</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>datanucleus-test-jdo-cassandra</artifactId>
+    <name>DataNucleus Cassandra JDO Tests</name>
+    <description><![CDATA[
+        DataNucleus Tests for Cassandra.
+        ]]></description>
+   
+    <properties>
+        <cassandra.version>2.0.1</cassandra.version>
+    </properties>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+            <version>${cassandra.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-cassandra</artifactId>
+            <version>[3.9, )</version>
+        </dependency>
+    </dependencies>
+   
+</project>
