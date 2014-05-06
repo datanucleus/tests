@@ -3216,4 +3216,48 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             em.close();
         }
     }
+
+    /**
+     * Test result using constructor syntax ("new class(args)").
+     */
+    public void testResultWithConstructor()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                em.persist(p1);
+                em.flush();
+
+                Query q = em.createQuery("SELECT NEW " + Person1.class.getName() + "(p.firstName,p.lastName) FROM " + Person.class.getName() + " p");
+                List results = q.getResultList();
+                assertEquals(1, results.size());
+                Object result = results.get(0);
+                assertNotNull(result);
+                assertTrue("Result is of incorrect type", result instanceof Person1);
+                Person1 p = (Person1)result;
+                LOG.info(">> p.firstName=" + p.getFirstName() + " p.lastName=" + p.getLastName());
+                assertEquals("Fred", p.getFirstName());
+                assertEquals("Flintstone", p.getLastName());
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
 }
