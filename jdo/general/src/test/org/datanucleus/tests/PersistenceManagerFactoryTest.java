@@ -76,8 +76,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         private int     isolationLevel = Connection.TRANSACTION_SERIALIZABLE;
       
         /**
-         * Constructor.  This sets the "javax.jdo.option.PersistenceManagerFactoryClass"
-         * for us.
+         * Constructor.  This sets the "javax.jdo.option.PersistenceManagerFactoryClass" for us.
          */
         public PMFProperties()
         {

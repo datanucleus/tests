@@ -28,6 +28,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.tests.JDOPersistenceTestCase;
@@ -485,7 +486,7 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
     protected PersistenceManagerFactory getPMFForTimezone(String tz)
     {
         Properties props = new Properties();
-        props.setProperty("javax.jdo.option.ServerTimeZoneID", tz); // Although not used by the java.sql.Date as String persistence, set for completeness
+        props.setProperty(PropertyNames.PROPERTY_SERVER_TIMEZONE_ID, tz); // Although not used by the java.sql.Date as String persistence, set for completeness
         return getPMF(props);
     }
 }

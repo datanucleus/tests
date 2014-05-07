@@ -34,6 +34,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.datastore.DataStoreCache;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDODataStoreCache;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.api.jdo.NucleusJDOHelper;
@@ -87,8 +88,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL1WeakRefL2()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.cache.level1.type", "weak");
-        userProps.setProperty("datanucleus.cache.level2.type", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         runL2CacheTestForPMF(cachePMF);
@@ -100,8 +101,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL1SoftRefL2()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.cache.level1.type", "soft");
-        userProps.setProperty("datanucleus.cache.level2.type", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "soft");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         runL2CacheTestForPMF(cachePMF);
@@ -192,8 +193,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
             pmf = TestHelper.getPMF(1, userProps);
             
             // Create some data we can use for access
@@ -292,8 +293,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL2LoadedFields()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.cache.level1.type", "soft");
-        userProps.setProperty("datanucleus.cache.level2.type", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "soft");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -395,8 +396,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
             pmf = TestHelper.getPMF(1, userProps);
 
             // Create some data
@@ -530,8 +531,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "soft");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "soft");
             pmf = TestHelper.getPMF(1, userProps);
             
             // Create some data we can use for access
@@ -617,8 +618,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
             pmf = TestHelper.getPMF(1, userProps);
 
             DataStoreCache l2Cache = pmf.getDataStoreCache();
@@ -698,9 +699,9 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testDetachAllOnCommitWithoutL2()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("javax.jdo.option.DetachAllOnCommit", "true");
-        userProps.setProperty("datanucleus.cache.level1.type", "weak");
-        userProps.setProperty("datanucleus.cache.level2.type", "none");
+        userProps.setProperty(PropertyNames.PROPERTY_DETACH_ALL_ON_COMMIT, "true");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "none");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         runL2CacheDetachmentTestForPMF(cachePMF, 5);
@@ -712,9 +713,9 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testDetachAllOnCommitWithL2()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("javax.jdo.option.DetachAllOnCommit", "true");
-        userProps.setProperty("datanucleus.cache.level1.type", "weak");
-        userProps.setProperty("datanucleus.cache.level2.type", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_DETACH_ALL_ON_COMMIT, "true");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         runL2CacheDetachmentTestForPMF(cachePMF, 5);
@@ -728,8 +729,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "weak");
+            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
             pmf = TestHelper.getPMF(1, userProps);
 
             // Create some data
@@ -805,8 +806,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL2MultiplePMSameObjectEvictionChange()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.cache.level1.type", "soft");
-        userProps.setProperty("datanucleus.cache.level2.type", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "soft");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -900,8 +901,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "weak");
+            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
             pmf = TestHelper.getPMF(1, userProps);
             
             // Create some data we can use for access
@@ -1028,8 +1029,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
             pmf = TestHelper.getPMF(1, userProps);
 
             // Create some data we can use for access
@@ -1152,8 +1153,8 @@ public class CacheTest extends JDOPersistenceTestCase
         try
         {
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.cache.level1.type", "weak");
-            userProps.setProperty("datanucleus.cache.level2.type", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
             pmf = TestHelper.getPMF(1, userProps);
             
             // Create some data we can use for access

@@ -60,9 +60,8 @@ public class ReplicationTest extends JDOPersistenceTestCase
                 });
 
             Properties props2 = new Properties();
-            props2.load(Thread.currentThread().getContextClassLoader().getResource(
-                "datanucleus-odf.1.properties").openStream());
-            props2.setProperty("javax.jdo.option.Mapping", "odf");
+            props2.load(Thread.currentThread().getContextClassLoader().getResource("datanucleus-odf.1.properties").openStream());
+            props2.setProperty("datanucleus.Mapping", "odf");
             props2.setProperty(PropertyNames.PROPERTY_ATTACH_SAME_DATASTORE, "false");
             pmf2 = JDOHelper.getPersistenceManagerFactory(props2);
 

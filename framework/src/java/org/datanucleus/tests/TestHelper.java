@@ -41,6 +41,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.util.NucleusLogger;
 import org.datanucleus.util.StringUtils;
@@ -314,7 +315,7 @@ public class TestHelper
     public static String getJDBCSubprotocolForDatastore(int number)
     {
         Properties props = getPropertiesForDatastore(number);
-        String url = props.getProperty("javax.jdo.option.ConnectionURL");
+        String url = props.getProperty(PropertyNames.PROPERTY_CONNECTION_URL);
         if (url == null)
         {
             return null;
@@ -331,7 +332,7 @@ public class TestHelper
     public static String getDatastorePluginProtocol(int number)
     {
         Properties props = getPropertiesForDatastore(number);
-        String url = props.getProperty("javax.jdo.option.ConnectionURL");
+        String url = props.getProperty(PropertyNames.PROPERTY_CONNECTION_URL);
         if (url == null)
         {
             return null;
