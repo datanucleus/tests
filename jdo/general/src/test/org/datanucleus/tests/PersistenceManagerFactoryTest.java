@@ -261,16 +261,16 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         boolean multithreaded = true;
 
         Properties dbProps = TestHelper.getPropertiesForDatastore(1);
-        String  driverName = dbProps.getProperty("javax.jdo.option.ConnectionDriverName");
-        String  url = dbProps.getProperty("javax.jdo.option.ConnectionURL");
-        String  userName = dbProps.getProperty("javax.jdo.option.ConnectionUserName");
-        String  password = dbProps.getProperty("javax.jdo.option.ConnectionPassword");
+        String driverName = dbProps.getProperty("datanucleus.ConnectionDriverName");
+        String url = dbProps.getProperty("datanucleus.ConnectionURL");
+        String userName = dbProps.getProperty("datanucleus.ConnectionUserName");
+        String password = dbProps.getProperty("datanucleus.ConnectionPassword");
 
         boolean validateTables = true;
         boolean validateConstraints = true;
         boolean autoCreateTables = true;
         boolean autoCreateConstraints = true;
-        int     transactionIsolation = Connection.TRANSACTION_READ_COMMITTED;
+        int transactionIsolation = Connection.TRANSACTION_READ_COMMITTED;
 
         PMFProperties props = new PMFProperties();
         props.setOptimistic(optimistic);
