@@ -30,10 +30,13 @@ public class Playlist
     @Column(name = "song_id")
     private String songId;
 
+    @SuppressWarnings("unused")
     private String title;
 
+    @SuppressWarnings("unused")
     private String album;
 
+    @SuppressWarnings("unused")
     private String artist;
 
 }

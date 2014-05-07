@@ -21,10 +21,13 @@ public class Song
     @Persistent(customValueStrategy = "uuid")
     private String id;
 
+    @SuppressWarnings("unused")
     private String title;
 
+    @SuppressWarnings("unused")
     private String album;
 
+    @SuppressWarnings("unused")
     private String artist;
 
     @Persistent
