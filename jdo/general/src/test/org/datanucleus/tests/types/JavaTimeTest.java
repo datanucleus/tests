@@ -25,6 +25,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,6 +34,7 @@ import java.time.Month;
 import org.datanucleus.samples.types.javatime.JavaTimeSample1;
 import org.datanucleus.samples.types.javatime.JavaTimeSample2;
 import org.datanucleus.samples.types.javatime.JavaTimeSample3;
+import org.datanucleus.samples.types.javatime.JavaTimeSample4;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
@@ -56,6 +58,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     JavaTimeSample1.class,
                     JavaTimeSample2.class,
                     JavaTimeSample3.class,
+                    JavaTimeSample4.class,
                 });
             initialised = true;
         }
@@ -481,6 +484,82 @@ public class JavaTimeTest extends JDOPersistenceTestCase
         {
             // Clean out our data
             clean(JavaTimeSample1.class);
+        }
+    }
+
+    /**
+     * Test for Instant persistence and retrieval.
+     */
+    public void testInstant()
+    {
+        try
+        {
+            // Create some data we can use for access
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            Instant inst1 = Instant.ofEpochMilli(1000000);
+            Instant inst2 = Instant.ofEpochMilli(2000000);
+            Object id = null;
+            try
+            {
+                tx.begin();
+                JavaTimeSample4 s = new JavaTimeSample4(1, inst1, inst2);
+                pm.makePersistent(s);
+                tx.commit();
+                id = pm.getObjectId(s);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error persisting Instant sample", e);
+                fail("Error persisting Instant sample");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                JavaTimeSample4 s = (JavaTimeSample4)pm.getObjectById(id);
+
+                Instant ins1 = s.getInstant1();
+                assertNotNull("Retrieved Instant was null!", ins1);
+                assertEquals(1000000, ins1.toEpochMilli());
+
+                Instant ins2 = s.getInstant2();
+                assertNotNull("Retrieved Instant was null!", ins2);
+                assertEquals(2000000, ins2.toEpochMilli());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving Instant data", e);
+                fail("Error retrieving Instant data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(JavaTimeSample4.class);
         }
     }
 }
