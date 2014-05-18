@@ -5,13 +5,13 @@
 <jdo>
     <package name="org.jpox.samples.types.calendar">
         <class name="CalendarHolder" detachable="true">
-            <field name="cal1" persistence-modifier="persistent">
+            <field name="cal1" persistence-modifier="persistent"> <!-- Persisted as 2 columns - millis+timezone -->
+                <extension vendor-name="datanucleus" key="calendar-one-column" value="false"/>
                 <column name="CAL1_TIME"/>
                 <column name="CAL1_TIMEZONE" length="40"/>
             </field>
-            <field name="cal2" persistence-modifier="persistent">
+            <field name="cal2" persistence-modifier="persistent"> <!-- Persisted as 1 column -->
                 <column name="CAL2"/>
-                <extension vendor-name="datanucleus" key="calendar-one-column" value="true"/>
             </field>
 
             <fetch-group name="calendar">
