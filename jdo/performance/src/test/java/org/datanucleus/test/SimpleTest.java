@@ -30,8 +30,12 @@ public class SimpleTest
 {
     private Random r = new Random();
 
+    /**
+     * Test for the retrieval of objects using pm.getObjectById, in a separate ExecutionContext multithreaded.
+     * @throws Exception If an error occurs in the multithreading process or creating a PMF.
+     */
     @Test
-    public void testSimple()
+    public void testGetObjectByIdInExecutionContext()
     throws Exception
     {
         NucleusLogger.GENERAL.info(">> test START");
@@ -113,7 +117,7 @@ public class SimpleTest
         }
 
         semaphore.acquire(threadCount);
-        System.out.println("COMPLETE: Time(ms)=" + (System.currentTimeMillis() - start));
+        System.out.println("COMPLETE: getObjectById time(ms)=" + (System.currentTimeMillis() - start));
         NucleusLogger.GENERAL.info(">> test END");
 
         pmf.close();
