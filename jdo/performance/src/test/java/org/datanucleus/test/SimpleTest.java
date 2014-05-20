@@ -74,8 +74,8 @@ public class SimpleTest
 
         for (int i = 0; i < threadCount; i++)
         {
-            new Thread(new Runnable(){
-
+            new Thread(new Runnable()
+            {
                 @Override
                 public void run()
                 {
@@ -112,7 +112,6 @@ public class SimpleTest
                     }
                     semaphore.release();
                 }
-                
             }).start();
         }
 
