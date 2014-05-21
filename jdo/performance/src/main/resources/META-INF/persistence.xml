@@ -6,6 +6,9 @@
 
     <persistence-unit name="MyTest">
         <!-- Add all of your model classes here -->
+        <class>mydomain.model.Student</class>
+        <class>mydomain.model.Credit</class>
+        <class>mydomain.model.Thesis</class>
         <class>mydomain.model.User</class>
         <exclude-unlisted-classes />
         <properties>
