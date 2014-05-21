@@ -26,6 +26,11 @@ import mydomain.model.*;
 
 import org.datanucleus.util.NucleusLogger;
 
+/**
+ * Performance-style tests using relational data.
+ * Note that this data was utilised previously in the blog post
+ * http://datanucleus.blogspot.co.uk/2013/02/performance-effect-of-various-features.html
+ */
 public class RelationTest
 {
     /**

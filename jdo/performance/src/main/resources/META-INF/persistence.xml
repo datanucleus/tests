@@ -22,6 +22,7 @@
             <property name="datanucleus.schema.autoCreateAll" value="true"/>
             <property name="datanucleus.findObject.validatedWhenCached" value="false"/>
             <property name="datanucleus.persistenceByReachabilityAtCommit" value="false"/>
+            <property name="datanucleus.manageRelationships" value="false"/>
             <property name="datanucleus.detachOnClose" value="false"/>
             <property name="datanucleus.detachAllOnCommit" value="false"/>
             <property name="datanucleus.flush.mode" value="manual"/>
