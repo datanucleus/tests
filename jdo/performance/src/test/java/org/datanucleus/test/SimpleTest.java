@@ -32,10 +32,29 @@ public class SimpleTest
 
     /**
      * Test for the retrieval of objects using pm.getObjectById, in a separate ExecutionContext multithreaded.
+     * This uses 2000 objects with 1 threads.
      * @throws Exception If an error occurs in the multithreading process or creating a PMF.
      */
     @Test
-    public void testGetObjectByIdInExecutionContext()
+    public void testGetObjectByIdInExecutionContext1()
+    throws Exception
+    {
+        performGetObjectByIdMultithreadTest(1, 2000, 200000);
+    }
+
+    /**
+     * Test for the retrieval of objects using pm.getObjectById, in a separate ExecutionContext multithreaded.
+     * This uses 60000 objects with 10 threads.
+     * @throws Exception If an error occurs in the multithreading process or creating a PMF.
+     */
+    @Test
+    public void testGetObjectByIdInExecutionContext2()
+    throws Exception
+    {
+        performGetObjectByIdMultithreadTest(10, 2000, 60000);
+    }
+
+    public void performGetObjectByIdMultithreadTest(final int numThreads, final int numObjects, final int numTriesPerThread)
     throws Exception
     {
         NucleusLogger.GENERAL.info(">> test START");
@@ -48,7 +67,7 @@ public class SimpleTest
         try
         {
             tx.begin();
-            for (int i = 0; i < 2000; i++)
+            for (int i = 0; i < numObjects; i++)
             {
                 pm.makePersistent(new User((long)i));            
             }
@@ -63,8 +82,8 @@ public class SimpleTest
             pm.close();
         }
 
-        int threadCount = 1;
-        final int count = 200000;
+        int threadCount = numThreads;
+        final int count = numTriesPerThread;
         final Semaphore semaphore = new Semaphore(threadCount);
         semaphore.acquire(threadCount);
 
@@ -82,13 +101,14 @@ public class SimpleTest
                     for (int j = 0; j < count; j++) 
                     {
                         PersistenceManager pm = pmf.getPersistenceManager();
+                        Transaction tx = pm.currentTransaction();
                         try
                         {
-                            pm.currentTransaction().begin();
+                            tx.begin();
                             for (long ctr = 0; ctr < 5; ctr++) 
                             {
                                 User ro = null;
-                                long id = r.nextInt(2000);
+                                long id = r.nextInt(numObjects);
                                 try 
                                 {
                                     ro = pm.getObjectById(User.class, id);
@@ -99,7 +119,7 @@ public class SimpleTest
                                 }
                                 ro.getBalance();
                             }
-                            pm.currentTransaction().commit();
+                            tx.commit();
                         }
                         catch (Exception e)
                         {
@@ -107,6 +127,10 @@ public class SimpleTest
                         }
                         finally 
                         {
+                            if (tx.isActive())
+                            {
+                                tx.rollback();
+                            }
                             pm.close();
                         }
                     }
@@ -116,7 +140,7 @@ public class SimpleTest
         }
 
         semaphore.acquire(threadCount);
-        System.out.println("COMPLETE: getObjectById time(ms)=" + (System.currentTimeMillis() - start));
+        System.out.println("COMPLETE: getObjectById(objs=" + numObjects + ", threads=" + numThreads + ", triesPerThread=" + numTriesPerThread + ") time(ms)=" + (System.currentTimeMillis() - start));
         NucleusLogger.GENERAL.info(">> test END");
 
         pmf.close();
