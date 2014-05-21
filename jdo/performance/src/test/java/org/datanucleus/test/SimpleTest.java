@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Contributors :
- ...
+2014 Andy Jefferson - adapted for use in generalised performance test suite
+     ...
 ***********************************************************************/
 package org.datanucleus.test;
 
@@ -140,7 +141,7 @@ public class SimpleTest
         }
 
         semaphore.acquire(threadCount);
-        System.out.println("COMPLETE: getObjectById(objs=" + numObjects + ", threads=" + numThreads + ", triesPerThread=" + numTriesPerThread + ") time(ms)=" + (System.currentTimeMillis() - start));
+        System.out.println("getObjectById(objs=" + numObjects + ", threads=" + numThreads + ", triesPerThread=" + numTriesPerThread + ") time(ms)=" + (System.currentTimeMillis() - start));
         NucleusLogger.GENERAL.info(">> test END");
 
         pmf.close();
