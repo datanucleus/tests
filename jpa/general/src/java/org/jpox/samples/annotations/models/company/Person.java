@@ -187,9 +187,7 @@ public class Person implements Cloneable, Serializable
 
     public String toString()
     {
-        return "Person : number=" + getPersonNum() + 
-            " forename=" + getFirstName() + " surname=" + getLastName() + 
-            " email=" + getEmailAddress() + " bestfriend=" + getBestFriend();
+        return "Person : number=" + getPersonNum() + " forename=" + getFirstName() + " surname=" + getLastName() + " email=" + getEmailAddress();
     }
 
     /**
