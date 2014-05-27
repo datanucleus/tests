@@ -29,6 +29,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import javax.persistence.Parameter;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -649,6 +650,14 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                     "SELECT Object(T) FROM " + Person.class.getName() + " T where T.firstName <> ?1 AND T.firstName = ?2");
                 q.setParameter(1, "Fred1");
                 q.setParameter(2, "Fred");
+
+                Parameter param1 = q.getParameter(1);
+                assertEquals(new Integer(1), param1.getPosition());
+                assertNull(param1.getName());
+                Parameter param2 = q.getParameter(2);
+                assertEquals(new Integer(2), param2.getPosition());
+                assertNull(param2.getName());
+
                 List result = q.getResultList();
                 assertEquals(1, result.size());
                 tx.rollback();
@@ -783,15 +792,14 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(p1);
                 em.flush();
 
-                Query q = em.createQuery(
-                    "SELECT Object(T) FROM " + Person.class.getName() + " T where T.firstName = :theName");
+                Query q = em.createQuery("SELECT Object(T) FROM " + Person.class.getName() + " T where T.firstName = :theName");
                 try
                 {
                     q.setParameter("theName", new Integer(1));
                 }
                 catch (IllegalArgumentException iae)
                 {
-                    // Exception expected since parameter name is wrong
+                    // Exception expected since parameter type is wrong
                     return;
                 }
                 fail("Should have thrown IllegalArgumentException on setting parameter with wrong type but didnt");
@@ -1961,7 +1969,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(">> Exception performing UPDATE, nulling out bestFriend field", e);
+                LOG.error("Exception performing UPDATE, nulling out bestFriend field", e);
                 fail("Error in cleanup : " + e.getMessage());
             }
             finally
@@ -3241,7 +3249,6 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 assertNotNull(result);
                 assertTrue("Result is of incorrect type", result instanceof Person1);
                 Person1 p = (Person1)result;
-                LOG.info(">> p.firstName=" + p.getFirstName() + " p.lastName=" + p.getLastName());
                 assertEquals("Fred", p.getFirstName());
                 assertEquals("Flintstone", p.getLastName());
                 tx.rollback();
