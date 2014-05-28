@@ -1903,6 +1903,16 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                     "WHERE p.firstName IN (:param1, :param2)");
                 q1.setParameter("param1", "Fred");
                 q1.setParameter("param2", "Pebbles");
+
+                Parameter param1 = q1.getParameter("param1");
+                assertNotNull(param1);
+                assertEquals("param1", param1.getName());
+                assertNull(param1.getPosition());
+                Parameter param2 = q1.getParameter("param2");
+                assertNotNull(param2);
+                assertEquals("param2", param2.getName());
+                assertNull(param2.getPosition());
+
                 List result = q1.getResultList();
                 assertEquals(2, result.size());
                 tx.commit();
