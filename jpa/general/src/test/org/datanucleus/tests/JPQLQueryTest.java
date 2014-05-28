@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -646,8 +647,10 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(p1);
                 em.flush();
 
-                Query q = em.createQuery(
-                    "SELECT Object(T) FROM " + Person.class.getName() + " T where T.firstName <> ?1 AND T.firstName = ?2");
+                Query q = em.createQuery("SELECT Object(T) FROM " + Person.class.getName() + " T where T.firstName <> ?1 AND T.firstName = ?2");
+                Set params = q.getParameters();
+                assertNotNull(params);
+                assertEquals(2, params.size());
                 q.setParameter(1, "Fred1");
                 q.setParameter(2, "Fred");
 
