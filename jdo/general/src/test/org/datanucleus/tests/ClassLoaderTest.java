@@ -44,6 +44,7 @@ import org.datanucleus.api.jdo.exceptions.ClassNotPersistenceCapableException;
 import org.datanucleus.api.jdo.exceptions.NoPersistenceInformationException;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ColumnMetaData;
+import org.datanucleus.metadata.FieldRole;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.plugin.PluginManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
@@ -734,7 +735,7 @@ public class ClassLoaderTest extends JDOPersistenceTestCase
         {
             return null;
         }
-        public JavaTypeMapping getMapping(Table table, AbstractMemberMetaData fmd, ClassLoaderResolver clr, int mappingFieldType)
+        public JavaTypeMapping getMapping(Table table, AbstractMemberMetaData fmd, ClassLoaderResolver clr, FieldRole role)
         {
             return null;
         }
