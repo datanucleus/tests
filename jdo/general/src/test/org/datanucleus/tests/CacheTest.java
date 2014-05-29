@@ -18,6 +18,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -27,12 +28,14 @@ import java.util.Properties;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.ObjectState;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.datastore.DataStoreCache;
+import javax.jdo.datastore.JDOConnection;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDODataStoreCache;
@@ -40,6 +43,7 @@ import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.api.jdo.NucleusJDOHelper;
 import org.datanucleus.cache.CachedPC;
 import org.datanucleus.cache.Level2Cache;
+import org.datanucleus.samples.metadata.user.User1;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
@@ -76,7 +80,8 @@ public class CacheTest extends JDOPersistenceTestCase
                     Manager.class,
                     Person.class,
                     Organisation.class,
-                    Qualification.class
+                    Qualification.class,
+                    User1.class
                 });
             initialised = true;
         }
@@ -1547,4 +1552,104 @@ public class CacheTest extends JDOPersistenceTestCase
             clean(LoginAccount.class);
         }
     }
+    
+    public void testCommitFailWith2ndLevelCache() throws Exception
+    {
+        LOG.info(">> testCommitFailWith2ndLevelCache START");
+        PersistenceManager pm = null;
+        Transaction tx = null;
+        try
+        {
+            pm = pmf.getPersistenceManager();
+
+            User1 a = new User1();
+            a.setId("NUCCORE-1204");
+            a.setName("NUCCORE-1204");
+            tx = pm.currentTransaction();
+            tx.begin();
+            pm.makePersistent(a);
+            pm.flush();
+            JDOConnection con = pm.getDataStoreConnection();
+            Connection o = (Connection) con.getNativeConnection();
+
+            // emulate connection closing after flush but before commit
+            o.close();
+
+            con.close();
+            try
+            {
+                tx.commit();
+                fail("Commit should not succeed for closed connection: " + o);
+            }
+            catch (IllegalStateException e)
+            {
+                // commit succeeded - test failed
+                throw e;
+            }
+            catch (Exception e)
+            {
+                // exception expected
+                try
+                {
+                    tx.rollback();
+                }
+                catch (Exception e2)
+                {
+                }
+            }
+            pm.close();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            tx.begin();
+            User1 p = null;
+            try
+            {
+                p = pm.getObjectById(User1.class, "NUCCORE-1204");
+            }
+            catch (JDOObjectNotFoundException e)
+            {
+                LOG.info("" + e);
+                // ignore
+            }
+            if (p != null)
+            {
+                fail("Object was in 2nd level cache: " + p);
+            }
+            tx.commit();
+            pm.close();
+            LOG.info(">> testCommitFailWith2ndLevelCache END");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            fail("" + e);
+        }
+        finally
+        {
+            try
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+            }
+            catch (Exception ignore)
+            {
+            }
+            try
+            {
+                if (!pm.isClosed())
+                {
+                    pm.close();
+                }
+            }
+            catch (Exception ignore)
+            {
+            }
+            clean(User1.class);
+        }
+
+    }
+
 }
