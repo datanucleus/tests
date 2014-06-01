@@ -66,56 +66,56 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
         // Table identifiers
         // a). generated name shorter than max length
         DatastoreIdentifier id = idFactory.newIdentifier(IdentifierType.TABLE, "MyClass");
-        assertTrue("newIdentifier(TABLE, String) has generated an incorrect name : " + id.getIdentifierName(), 
-            "MYCLASS".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newIdentifier(TABLE, String) has generated an incorrect name : " + id.getName(), 
+            "MYCLASS".equalsIgnoreCase(id.getName()));
 
         // b). specified name shorter than max length
         id = idFactory.newTableIdentifier("MY_TABLE_NAME");
-        assertTrue("newDatastoreContainerIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getIdentifierName(), 
-            "MY_TABLE_NAME".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDatastoreContainerIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getName(), 
+            "MY_TABLE_NAME".equalsIgnoreCase(id.getName()));
 
         // c). name specified via ClassMetaData
         AbstractClassMetaData managerCMD = storeMgr.getNucleusContext().getMetaDataManager().getMetaDataForClass("org.jpox.samples.models.company.Manager", clr);
         id = idFactory.newTableIdentifier(managerCMD);
-        assertTrue("newDatastoreContainerIdentifier(clr, ClassMetaData) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDatastoreContainerIdentifier(clr, ClassMetaData) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER".equalsIgnoreCase(id.getName()));
 
         // d). name specified via ClassMetaData
         AbstractMemberMetaData fmd = managerCMD.getMetaDataForMember("subordinates");
         id = idFactory.newTableIdentifier(fmd);
-        assertTrue("newDatastoreContainerIdentifier(clr, AbstractMemberMetaData) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER_SUBORDINATES".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDatastoreContainerIdentifier(clr, AbstractMemberMetaData) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER_SUBORDINATES".equalsIgnoreCase(id.getName()));
 
         // Column identifiers
         // a). generated name shorter than max length
         id = idFactory.newIdentifier(IdentifierType.COLUMN, "myField");
-        assertTrue("newIdentifier(COLUMN, String) has generated an incorrect name : " + id.getIdentifierName(), 
-            "MYFIELD".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newIdentifier(COLUMN, String) has generated an incorrect name : " + id.getName(), 
+            "MYFIELD".equalsIgnoreCase(id.getName()));
 
         // b). specified name shorter than max length
         id = idFactory.newColumnIdentifier("MYCOLUMNNAME");
-        assertTrue("newColumnIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getIdentifierName(), 
-            "MYCOLUMNNAME".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newColumnIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getName(), 
+            "MYCOLUMNNAME".equalsIgnoreCase(id.getName()));
 
         // c). Discriminator column identifier
         id = idFactory.newDiscriminatorFieldIdentifier();
-        assertTrue("newDiscriminatorFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "DISCRIMINATOR".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDiscriminatorFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "DISCRIMINATOR".equalsIgnoreCase(id.getName()));
 
         // d). Version column identifier
         id = idFactory.newVersionFieldIdentifier();
-        assertTrue("newVersionFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "VERSION".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newVersionFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "VERSION".equalsIgnoreCase(id.getName()));
 
         // e). Index (ordering) column identifier
         id = idFactory.newIndexFieldIdentifier(fmd);
-        assertTrue("newIndexFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "IDX".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newIndexFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "IDX".equalsIgnoreCase(id.getName()));
 
         // f). Adapter Index column identifier
         id = idFactory.newAdapterIndexFieldIdentifier();
-        assertTrue("newAdapterIndexFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "IDX".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newAdapterIndexFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "IDX".equalsIgnoreCase(id.getName()));
 
         AbstractMemberMetaData[] relatedMmds = fmd.getRelatedMemberMetaData(clr);
 
@@ -124,16 +124,16 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
         id = idFactory.newJoinTableFieldIdentifier(fmd, 
             relatedMmds != null ? relatedMmds[0] : null, 
             destId, false, FieldRole.ROLE_OWNER);
-        assertTrue("newJoinTableFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER_ID_OID".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newJoinTableFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER_ID_OID".equalsIgnoreCase(id.getName()));
 
         // h). join table element column identifier (1-N bi JoinTable)
         destId = idFactory.newColumnIdentifier("EMPLOYEE_ID");
         id = idFactory.newJoinTableFieldIdentifier(fmd, 
             relatedMmds != null ? relatedMmds[0] : null, 
             destId, false, FieldRole.ROLE_COLLECTION_ELEMENT);
-        assertTrue("newJoinTableFieldIdentifier(ELEMENT) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "EMPLOYEE_ID_EID".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newJoinTableFieldIdentifier(ELEMENT) has returned an incorrect generated name " + id.getName(), 
+            "EMPLOYEE_ID_EID".equalsIgnoreCase(id.getName()));
 
         // i). FK owner column identifier (1-N bi FK)
         AbstractMemberMetaData deptsFMD = managerCMD.getMetaDataForMember("departments");
@@ -142,8 +142,8 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
         id = idFactory.newForeignKeyFieldIdentifier(deptsFMD, 
             deptsRelatedMmds != null ? deptsRelatedMmds[0] : null, 
             destId, false, FieldRole.ROLE_OWNER);
-        assertTrue("newForeignKeyFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER_MANAGER_ID_OID".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newForeignKeyFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER_MANAGER_ID_OID".equalsIgnoreCase(id.getName()));
 
         // Primary key identifiers
 
@@ -215,56 +215,56 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
         // Table identifiers
         // a). generated name shorter than max length
         DatastoreIdentifier id = idFactory.newIdentifier(IdentifierType.TABLE, "MyClass");
-        assertTrue("newIdentifier(TABLE, String) has generated an incorrect name : " + id.getIdentifierName(), 
-            "MYCLASS".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newIdentifier(TABLE, String) has generated an incorrect name : " + id.getName(), 
+            "MYCLASS".equalsIgnoreCase(id.getName()));
 
         // b). specified name shorter than max length
         id = idFactory.newTableIdentifier("MY_TABLE_NAME");
-        assertTrue("newDatastoreContainerIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getIdentifierName(), 
-            "MY_TABLE_NAME".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDatastoreContainerIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getName(), 
+            "MY_TABLE_NAME".equalsIgnoreCase(id.getName()));
 
         // c). name specified via ClassMetaData
         AbstractClassMetaData managerCMD = storeMgr.getNucleusContext().getMetaDataManager().getMetaDataForClass("org.jpox.samples.models.company.Manager", clr);
         id = idFactory.newTableIdentifier(managerCMD);
-        assertTrue("newDatastoreContainerIdentifier(clr, ClassMetaData) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDatastoreContainerIdentifier(clr, ClassMetaData) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER".equalsIgnoreCase(id.getName()));
 
         // d). name specified via ClassMetaData
         AbstractMemberMetaData fmd = managerCMD.getMetaDataForMember("subordinates");
         id = idFactory.newTableIdentifier(fmd);
-        assertTrue("newDatastoreContainerIdentifier(clr, AbstractMemberMetaData) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER_EMPLOYEE".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDatastoreContainerIdentifier(clr, AbstractMemberMetaData) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER_EMPLOYEE".equalsIgnoreCase(id.getName()));
 
         // Column identifiers
         // a). generated name shorter than max length
         id = idFactory.newIdentifier(IdentifierType.COLUMN, "myField");
-        assertTrue("newIdentifier(COLUMN, String) has generated an incorrect name : " + id.getIdentifierName(), 
-            "MYFIELD".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newIdentifier(COLUMN, String) has generated an incorrect name : " + id.getName(), 
+            "MYFIELD".equalsIgnoreCase(id.getName()));
 
         // b). specified name shorter than max length
         id = idFactory.newColumnIdentifier("MY_COLUMN_NAME");
-        assertTrue("newColumnIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getIdentifierName(), 
-            "MY_COLUMN_NAME".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newColumnIdentifier(String) has returned an incorrect name when should have used the supplied name " + id.getName(), 
+            "MY_COLUMN_NAME".equalsIgnoreCase(id.getName()));
 
         // c). Discriminator column identifier
         id = idFactory.newDiscriminatorFieldIdentifier();
-        assertTrue("newDiscriminatorFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "DTYPE".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newDiscriminatorFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "DTYPE".equalsIgnoreCase(id.getName()));
 
         // d). Version column identifier
         id = idFactory.newVersionFieldIdentifier();
-        assertTrue("newVersionFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "VERSION".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newVersionFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "VERSION".equalsIgnoreCase(id.getName()));
 
         // e). Index (ordering) column identifier
         id = idFactory.newIndexFieldIdentifier(fmd);
-        assertTrue("newIndexFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "SUBORDINATES_ORDER".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newIndexFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "SUBORDINATES_ORDER".equalsIgnoreCase(id.getName()));
 
         // f). Adapter Index column identifier
         id = idFactory.newAdapterIndexFieldIdentifier();
-        assertTrue("newAdapterIndexFieldIdentifier() has returned an incorrect name : " + id.getIdentifierName(),
-            "IDX".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newAdapterIndexFieldIdentifier() has returned an incorrect name : " + id.getName(),
+            "IDX".equalsIgnoreCase(id.getName()));
 
         AbstractMemberMetaData[] relatedMmds = fmd.getRelatedMemberMetaData(clr);
 
@@ -273,16 +273,16 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
         id = idFactory.newJoinTableFieldIdentifier(fmd, 
             relatedMmds != null ? relatedMmds[0] : null, 
             destId, false, FieldRole.ROLE_OWNER);
-        assertTrue("newJoinTableFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER_MANAGER_ID".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newJoinTableFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER_MANAGER_ID".equalsIgnoreCase(id.getName()));
 
         // h). join table element column identifier (1-N bi JoinTable)
         destId = idFactory.newColumnIdentifier("EMPLOYEE_ID");
         id = idFactory.newJoinTableFieldIdentifier(fmd, 
             relatedMmds != null ? relatedMmds[0] : null, 
             destId, false, FieldRole.ROLE_COLLECTION_ELEMENT);
-        assertTrue("newJoinTableFieldIdentifier(ELEMENT) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "SUBORDINATES_EMPLOYEE_ID".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newJoinTableFieldIdentifier(ELEMENT) has returned an incorrect generated name " + id.getName(), 
+            "SUBORDINATES_EMPLOYEE_ID".equalsIgnoreCase(id.getName()));
 
         // i). FK owner column identifier (1-N bi FK)
         AbstractMemberMetaData deptsFMD = managerCMD.getMetaDataForMember("departments");
@@ -291,8 +291,8 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
         id = idFactory.newForeignKeyFieldIdentifier(deptsFMD,
             deptsRelatedMmds != null ? deptsRelatedMmds[0] : null, 
             destId, true, FieldRole.ROLE_OWNER);
-        assertTrue("newForeignKeyFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getIdentifierName(), 
-            "MANAGER_MANAGER_ID".equalsIgnoreCase(id.getIdentifierName()));
+        assertTrue("newForeignKeyFieldIdentifier(OWNER) has returned an incorrect generated name " + id.getName(), 
+            "MANAGER_MANAGER_ID".equalsIgnoreCase(id.getName()));
 
         // Primary key identifiers
 
