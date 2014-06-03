@@ -1555,7 +1555,12 @@ public class CacheTest extends JDOPersistenceTestCase
     
     public void testCommitFailWith2ndLevelCache() throws Exception
     {
-        LOG.info(">> testCommitFailWith2ndLevelCache START");
+        if (vendorID == null)
+        {
+            // Not applicable if not RDBMS
+            return;
+        }
+
         PersistenceManager pm = null;
         Transaction tx = null;
         try
@@ -1609,7 +1614,7 @@ public class CacheTest extends JDOPersistenceTestCase
             }
             catch (JDOObjectNotFoundException e)
             {
-                LOG.info("" + e);
+                LOG.info("Exception caught", e);
                 // ignore
             }
             if (p != null)
@@ -1618,11 +1623,10 @@ public class CacheTest extends JDOPersistenceTestCase
             }
             tx.commit();
             pm.close();
-            LOG.info(">> testCommitFailWith2ndLevelCache END");
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            LOG.error("Exception in test", e);
             fail("" + e);
         }
         finally
