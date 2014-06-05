@@ -16,7 +16,10 @@
 		<class name="SamplePoint" table="samplejtspoint" detachable="true">
 			<field name="id"/>
 			<field name="name"/>
-			<field name="geom" persistence-modifier="persistent"/>
+			<field name="geom" persistence-modifier="persistent">
+			    <column name="geom"/>
+			    <column name="geom_0"/> <!-- User data -->
+			</field>
 		</class>
 
 		<class name="SampleLinearRing" table="samplejtslinearring" detachable="true">
