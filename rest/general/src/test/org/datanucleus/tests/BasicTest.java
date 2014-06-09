@@ -24,13 +24,13 @@ import java.net.URLEncoder;
 import junit.framework.TestCase;
 
 import org.datanucleus.api.rest.RestServlet;
+import org.datanucleus.api.rest.orgjson.JSONArray;
+import org.datanucleus.api.rest.orgjson.JSONObject;
 import org.datanucleus.samples.ClassUsingDatastoreId;
 import org.datanucleus.samples.ClassWithValueStrategy;
 import org.datanucleus.util.NucleusLogger;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Person;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.mortbay.io.ByteArrayBuffer;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.client.ContentExchange;
