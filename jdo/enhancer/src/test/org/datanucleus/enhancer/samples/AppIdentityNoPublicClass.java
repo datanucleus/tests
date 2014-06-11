@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.net.Socket;
 
 /**
- * @version $Revision: 1.1 $
  */
 class AppIdentityNoPublicClass implements Serializable
 {
-	public boolean field00;
+    private static final long serialVersionUID = 1602179571251089948L;
+    public boolean field00;
 	private static Socket s;
 	/**
 	 * 

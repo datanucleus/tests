@@ -34,6 +34,8 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable(detachable="true")
 public class Department implements Serializable
 {
+    private static final long serialVersionUID = 4304286738261594694L;
+
     @PrimaryKey
     private String name;
 

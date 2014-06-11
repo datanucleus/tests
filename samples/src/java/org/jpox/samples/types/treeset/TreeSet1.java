@@ -130,6 +130,7 @@ public class TreeSet1 implements CollectionHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 2940091382291059142L;
         public int identifierA;
         public String identifierB;
 

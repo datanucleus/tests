@@ -8,6 +8,7 @@ import javax.jdo.JDOHelper;
 
 public class ElementWidget extends Widget
 {
+    private static final long serialVersionUID = -898782716306904121L;
     private SetWidget owner;
 
 

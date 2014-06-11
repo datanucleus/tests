@@ -80,6 +80,7 @@ public class LifeListener implements CreateLifecycleListener, DeleteLifecycleLis
     public static class Id implements Serializable
     {
 
+        private static final long serialVersionUID = -6883530550246715923L;
         public String ownerID;
 
         public Id()

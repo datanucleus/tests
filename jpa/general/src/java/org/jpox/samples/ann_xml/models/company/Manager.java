@@ -35,6 +35,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class Manager extends Employee implements Serializable
 {
+    private static final long serialVersionUID = -172164342292028415L;
+
     @OneToMany(targetEntity=Employee.class, mappedBy="manager")
     protected Set subordinates;
 

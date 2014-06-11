@@ -28,6 +28,7 @@ import javax.persistence.Id;
 @Entity
 public class Square implements Shape, Cloneable, Serializable
 {
+    private static final long serialVersionUID = -6617391588681204630L;
     @Id
     private int id;
     protected double width=0.0;

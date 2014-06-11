@@ -80,6 +80,7 @@ public class CompoundX2
     static String separator = "::";
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -5943912600526768428L;
         public String x2NameA;
         public String x2NameB;
         public CompoundX1.Id x1;

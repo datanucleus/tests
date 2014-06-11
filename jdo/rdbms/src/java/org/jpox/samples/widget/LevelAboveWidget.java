@@ -26,6 +26,7 @@ import java.io.Serializable;
  */
 public class LevelAboveWidget implements Serializable
 {
+    private static final long serialVersionUID = -5319864510267596364L;
     private String normalString;
 
     public LevelAboveWidget()

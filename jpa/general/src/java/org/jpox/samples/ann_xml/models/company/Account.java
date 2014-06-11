@@ -26,12 +26,12 @@ import javax.persistence.Id;
 
 /**
  * User account for a person.
- *
- * @version $Revision: 1.1 $
  */
 @Entity
 public class Account implements Serializable
 {
+    private static final long serialVersionUID = -8899243332625581377L;
+
     @Id
     private long id; // PK if app id
 

@@ -28,6 +28,7 @@ import java.io.Serializable;
  */
 public class Detail implements Serializable
 {
+    private static final long serialVersionUID = -1948694805364569431L;
     private String id;
     private Master master;
     private HashSet circons = new HashSet();

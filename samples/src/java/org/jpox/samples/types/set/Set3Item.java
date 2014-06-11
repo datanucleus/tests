@@ -174,6 +174,7 @@ public class Set3Item implements Comparable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -7746625091903843655L;
         public int identifierA;
         public String identifierB;
 

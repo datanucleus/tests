@@ -33,6 +33,7 @@ import java.util.StringTokenizer;
  */
 public class ModeOfPaymentID implements Serializable
 {
+    private static final long serialVersionUID = 7525952601161326140L;
     public static final String ENCODING = "UTF-8";
     protected static final String JDO_PREFIX = "jdo";
     protected static final char JDO_PREFIX_SEPARATOR = '/';

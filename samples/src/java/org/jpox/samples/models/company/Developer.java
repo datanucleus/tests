@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 public class Developer extends Employee implements Serializable
 {
+    private static final long serialVersionUID = -2451968976813737980L;
     private String SKILL;
 
     public Developer()

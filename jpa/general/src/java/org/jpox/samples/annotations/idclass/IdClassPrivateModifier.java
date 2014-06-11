@@ -32,6 +32,8 @@ import javax.persistence.IdClass;
 @IdClass(IdClassPrivateModifierPK.class)
 public class IdClassPrivateModifier implements Serializable
 {
+    private static final long serialVersionUID = 306810278685713312L;
+
     @Id
     private String name;
 

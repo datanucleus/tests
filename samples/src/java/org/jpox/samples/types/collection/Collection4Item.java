@@ -25,11 +25,10 @@ import org.jpox.samples.types.container.AppIdUtilities;
 
 /**
  * An item to store in an FK Collection serialised container.
- *
- * @version $Revision: 1.1 $  
  **/
 public class Collection4Item implements Serializable
 {
+    private static final long serialVersionUID = 2000802928792958187L;
     private int identifierA;
     private String identifierB;
 
@@ -129,6 +128,7 @@ public class Collection4Item implements Serializable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 5668830899175819965L;
         public int identifierA;
         public String identifierB;
 

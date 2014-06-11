@@ -72,6 +72,7 @@ public class ShapeHolderMissing
     }
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 6397942703306281623L;
         public int id;
         public Oid()
         {

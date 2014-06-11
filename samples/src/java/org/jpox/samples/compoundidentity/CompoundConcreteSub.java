@@ -19,11 +19,10 @@ package org.jpox.samples.compoundidentity;
 
 /**
  * Concrete sub class using compound identity.
- *
- * @version $Revision: 1.1 $
  */
 public class CompoundConcreteSub extends CompoundAbstractBase
 {
+    private static final long serialVersionUID = 3540595722625648459L;
     private String  value;
 
     public CompoundConcreteSub(CompoundRelated rel, String name, String value)

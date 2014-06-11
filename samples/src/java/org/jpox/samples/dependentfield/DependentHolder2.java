@@ -63,6 +63,7 @@ public class DependentHolder2
      */
     public static class PK implements Serializable
     {
+        private static final long serialVersionUID = 2314016605544186107L;
         public SimpleDependentElement.PK element; // Use same name as the real field above
 
         public PK()

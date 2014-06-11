@@ -123,6 +123,7 @@ public class Vector2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 2015443994198094156L;
         public int identifierA;
         public String identifierB;
 

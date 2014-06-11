@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 public class Account implements Serializable
 {
+    private static final long serialVersionUID = -368898443457910659L;
     private long id; // PK if app id
     private String username;
     private boolean enabled;

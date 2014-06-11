@@ -51,6 +51,7 @@ public class CompoundRelated
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 1763677284291657521L;
         public long id;
         public String name;
 

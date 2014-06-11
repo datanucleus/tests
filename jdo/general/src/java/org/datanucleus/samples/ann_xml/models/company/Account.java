@@ -31,6 +31,8 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable(detachable="true")
 public class Account implements Serializable
 {
+    private static final long serialVersionUID = -5480963767778988092L;
+
     @PrimaryKey
     @Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
     private long id; // PK if app id

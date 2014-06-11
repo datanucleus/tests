@@ -69,6 +69,7 @@ public class CompoundSingleTarget
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -3337471931525836066L;
         public int id;
         public CompoundHolder.Id holder;
 

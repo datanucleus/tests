@@ -52,6 +52,7 @@ public class GroupMember
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = 8144314550125172166L;
         public long id;
         public String name;
 

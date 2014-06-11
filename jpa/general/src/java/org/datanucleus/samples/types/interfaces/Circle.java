@@ -28,6 +28,7 @@ import javax.persistence.Id;
 @Entity
 public class Circle implements Shape, Cloneable, Serializable
 {
+    private static final long serialVersionUID = 8639848600154220636L;
     @Id
     private int id;    
     protected double radius=0.0;

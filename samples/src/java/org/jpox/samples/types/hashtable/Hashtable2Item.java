@@ -152,6 +152,7 @@ public class Hashtable2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -8650920454557020656L;
         public int identifierA;
         public String identifierB;
 

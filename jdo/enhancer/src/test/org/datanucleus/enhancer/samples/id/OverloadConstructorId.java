@@ -29,6 +29,7 @@ import java.io.Serializable;
 public class OverloadConstructorId implements Serializable
 {
 
+    private static final long serialVersionUID = -2907618005521629158L;
     public int fieldA;
 
     public OverloadConstructorId()

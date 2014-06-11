@@ -29,6 +29,7 @@ import java.util.Set;
  */
 public class Group implements Serializable
 {
+    private static final long serialVersionUID = -1577156739281287484L;
     String name;
     protected Set<Person> users = new HashSet();
     protected Set<String> roles = new HashSet();

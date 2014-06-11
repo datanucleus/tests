@@ -28,6 +28,7 @@ import javax.persistence.Id;
 @Entity
 public class Rectangle implements Shape, Cloneable, Serializable
 {
+    private static final long serialVersionUID = 1047763545960108396L;
     @Id
 	private int id;    
     protected double width=0.0;

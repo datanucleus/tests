@@ -27,6 +27,7 @@ import java.util.Random;
  */
 public class ContainerItem implements Comparable, Serializable
 {
+    private static final long serialVersionUID = -4623134841946172324L;
     private int identifierA;
     private String identifierB;
 
@@ -159,6 +160,7 @@ public class ContainerItem implements Comparable, Serializable
 
     public static class Oid implements Serializable, Comparable
     {
+        private static final long serialVersionUID = -6433764259887191732L;
         public int identifierA;
         public String identifierB;
 

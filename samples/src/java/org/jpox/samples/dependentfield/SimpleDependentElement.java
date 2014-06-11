@@ -62,6 +62,7 @@ public class SimpleDependentElement
      */
     public static class PK implements Serializable
     {
+        private static final long serialVersionUID = 8470763171576711388L;
         public int id;
 
         public PK()

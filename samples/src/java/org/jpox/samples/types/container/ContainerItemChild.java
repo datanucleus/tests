@@ -26,6 +26,7 @@ package org.jpox.samples.types.container;
  */
 public class ContainerItemChild extends ContainerItem
 {
+    private static final long serialVersionUID = 3857718772093929025L;
     protected String code=null;
 
     protected ContainerItemChild()

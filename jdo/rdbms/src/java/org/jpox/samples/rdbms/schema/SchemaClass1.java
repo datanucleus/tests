@@ -53,6 +53,7 @@ public class SchemaClass1
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = 8042077487147187057L;
         public long id1;
         public long id2;
 

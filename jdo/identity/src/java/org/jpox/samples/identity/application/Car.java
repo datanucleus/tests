@@ -79,6 +79,7 @@ public class Car
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -8773080696818333463L;
         public String ownerID;
         public String carID;
 

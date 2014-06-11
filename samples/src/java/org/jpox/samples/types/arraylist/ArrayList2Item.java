@@ -123,6 +123,7 @@ public class ArrayList2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -3980253746778997956L;
         public int identifierA;
         public String identifierB;
 

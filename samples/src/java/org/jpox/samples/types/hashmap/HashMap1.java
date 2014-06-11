@@ -144,6 +144,7 @@ public class HashMap1 implements MapHolder
     
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -6456792140050798391L;
         public int identifierA;
         public String identifierB;
 

@@ -2,6 +2,7 @@ package org.jpox.samples.models.company;
 
 public class InsuranceDepartment extends Department
 {
+    private static final long serialVersionUID = -2599811413983447979L;
     private String someInfo1;
     private String someInfo2;
 

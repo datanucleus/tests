@@ -55,6 +55,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
      */
     public class PMFProperties extends Properties
     {
+        private static final long serialVersionUID = -1295633492601093105L;
         private boolean optimistic = false;
         private boolean retainValues = false;
         private boolean restoreValues = false;

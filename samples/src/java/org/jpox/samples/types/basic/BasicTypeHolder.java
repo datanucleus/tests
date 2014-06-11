@@ -24,11 +24,10 @@ import org.datanucleus.tests.TestObject;
 
 /**
  * Holder of all basic field types to use as a test for persisting basic information.
- *
- * @version $Revision: 1.3 $
  */
 public class BasicTypeHolder extends TestObject implements Serializable
 {
+    private static final long serialVersionUID = 1644053520924351977L;
     private boolean booleanField;
     private Boolean booleanObjField;
     private byte byteField;

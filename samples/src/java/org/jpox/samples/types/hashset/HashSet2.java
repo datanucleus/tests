@@ -130,6 +130,7 @@ public class HashSet2 implements CollectionHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -3937961546774453339L;
         public int identifierA;
         public String identifierB;
 

@@ -18,6 +18,7 @@ import junit.framework.Assert;
 public class SetWidget extends Widget
     implements HasNormalSetField, HasInverseSetField, InstanceCallbacks
 {
+    private static final long serialVersionUID = 4379354517772293136L;
     private Set normalSet;
     private Set inverseSet;
     private int numWidgets;

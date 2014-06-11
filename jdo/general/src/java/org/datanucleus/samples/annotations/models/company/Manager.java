@@ -46,6 +46,8 @@ import javax.jdo.annotations.PrimaryKey;
 @Inheritance(strategy=InheritanceStrategy.NEW_TABLE)
 public class Manager extends Employee implements Serializable
 {
+    private static final long serialVersionUID = -6399411635335820362L;
+
     @Persistent(mappedBy="manager", table="MANAGER_EMPLOYEES")
     @Element(types=Employee.class)
     @Join(column="MANAGER_ID")

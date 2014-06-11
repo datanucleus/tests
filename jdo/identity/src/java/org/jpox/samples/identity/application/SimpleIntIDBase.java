@@ -106,6 +106,7 @@ public class SimpleIntIDBase  extends TestObject implements InstanceCallbacks
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = 8148233092314727058L;
         public int code;
 
         public Key ()

@@ -154,6 +154,7 @@ public class HashMap2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 7851210160015160969L;
         public int identifierA;
         public String identifierB;
 

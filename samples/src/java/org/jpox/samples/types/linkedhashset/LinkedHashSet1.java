@@ -129,6 +129,7 @@ public class LinkedHashSet1 implements CollectionHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 8905147480859826789L;
         public int identifierA;
         public String identifierB;
 

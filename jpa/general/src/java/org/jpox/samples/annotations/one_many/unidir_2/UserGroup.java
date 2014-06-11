@@ -80,6 +80,7 @@ public class UserGroup
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = -7683954995227243532L;
         public long id;
         public String name;
 

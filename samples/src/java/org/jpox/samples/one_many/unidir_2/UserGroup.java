@@ -67,6 +67,7 @@ public class UserGroup
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = 5666029454242180233L;
         public long id;
         public String name;
 

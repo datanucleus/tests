@@ -39,6 +39,8 @@ import javax.persistence.TableGenerator;
 @TableGenerator(name="AccountGenerator")
 public class Account implements Serializable
 {
+    private static final long serialVersionUID = -1883261101079091951L;
+
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator="AccountGenerator")
     private long id; // PK if app id

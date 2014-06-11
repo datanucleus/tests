@@ -133,6 +133,8 @@ public class ComposedStringIDBase extends TestObject implements InstanceCallback
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = 7885533062877673848L;
+
         public String code;
 
         public String composed;

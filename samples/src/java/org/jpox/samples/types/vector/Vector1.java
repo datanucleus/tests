@@ -149,6 +149,7 @@ public class Vector1 implements ListHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 1885642503599593266L;
         public int identifierA;
         public String identifierB;
 

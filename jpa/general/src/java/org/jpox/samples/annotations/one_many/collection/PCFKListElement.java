@@ -28,6 +28,8 @@ import javax.persistence.Id;
 @Entity
 public class PCFKListElement implements Serializable
 {
+    private static final long serialVersionUID = -9193762304239228080L;
+
     @Id
     long id;
 

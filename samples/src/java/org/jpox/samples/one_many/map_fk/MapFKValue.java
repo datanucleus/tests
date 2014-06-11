@@ -24,6 +24,8 @@ import java.io.Serializable;
  */
 public class MapFKValue extends MapFKValueBase implements Serializable
 {
+    private static final long serialVersionUID = 140210967289168477L;
+
     MapFKHolder holder;
 
     String name;

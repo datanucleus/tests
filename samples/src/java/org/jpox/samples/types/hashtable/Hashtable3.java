@@ -119,6 +119,7 @@ public class Hashtable3 implements MapHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -805439462800881748L;
         public int identifierA;
         public String identifierB;
 

@@ -27,6 +27,7 @@ import java.io.Serializable;
  */
 public class PCFKListElementShared implements Serializable
 {
+    private static final long serialVersionUID = -9040128075299140608L;
     String name;
     public PCFKListElementShared(String name)
     {

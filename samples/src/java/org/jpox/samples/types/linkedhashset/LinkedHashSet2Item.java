@@ -176,6 +176,7 @@ public class LinkedHashSet2Item implements Comparable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 4705795632874099853L;
         public int identifierA;
         public String identifierB;
 

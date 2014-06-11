@@ -183,6 +183,7 @@ public class FP2Base
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -4545278107524953099L;
         public int piece1;
 
         public Id()

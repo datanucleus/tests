@@ -27,6 +27,7 @@ import java.io.Serializable;
  */
 public class SerialisedObject implements Serializable
 {
+    private static final long serialVersionUID = -6713574270418211774L;
     private String description;
 
     public SerialisedObject(String desc)

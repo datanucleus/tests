@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public class ElementEID implements Serializable
 {
-	private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -7083970862465113923L;
     public String organisationID;
     public long eeeID;
 

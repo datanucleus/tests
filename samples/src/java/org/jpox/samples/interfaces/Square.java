@@ -26,6 +26,7 @@ import java.io.Serializable;
  */
 public class Square implements Shape, Cloneable, Serializable
 {
+    private static final long serialVersionUID = 1676449850787232809L;
     private int id;
     protected double width=0.0;
     protected double length=0.0;
@@ -96,6 +97,7 @@ public class Square implements Shape, Cloneable, Serializable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -8409233963975934188L;
         public int id;
         public Oid()
         {

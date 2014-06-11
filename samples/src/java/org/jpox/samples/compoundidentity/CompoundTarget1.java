@@ -71,6 +71,7 @@ public class CompoundTarget1
 
     public static class Id implements java.io.Serializable
     {
+        private static final long serialVersionUID = 7640849414291159466L;
         public CompoundSource1.Id source;
 
         public Id()

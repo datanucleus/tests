@@ -28,6 +28,7 @@ import java.util.StringTokenizer;
  */
 public class Office implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = -463151609436855378L;
     private long floor; // PK when app-id
     private String roomName; // PK when app-id
 
@@ -135,6 +136,7 @@ public class Office implements Cloneable, Serializable
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 2196040222596916094L;
         public long floor;
         public String roomName;
 

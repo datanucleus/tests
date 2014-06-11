@@ -8,8 +8,7 @@ import java.util.Date;
  */
 public class JFireOrganisation implements Serializable
 {
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 6180923792207564828L;
     private String organisationID;
     private Date createDT;
     private Date changeDT;

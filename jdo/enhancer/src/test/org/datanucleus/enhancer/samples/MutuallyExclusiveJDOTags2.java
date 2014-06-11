@@ -48,6 +48,7 @@ public class MutuallyExclusiveJDOTags2
      */
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 4708311987480859453L;
         public Object theField;
 
         public Id()

@@ -27,7 +27,8 @@ import java.io.Serializable;
  */
 public class OtherDetail implements Serializable
 {
-  private String id;
+  private static final long serialVersionUID = 6975345384207009084L;
+private String id;
   private Master master;
   
   public OtherDetail()

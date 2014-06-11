@@ -30,6 +30,7 @@ import org.datanucleus.enhancer.samples.id.OverloadConstructorId;
  */
 public class OverloadConstructor implements Serializable
 {
+    private static final long serialVersionUID = -8733861163939320532L;
     private int fieldA;
     private int fieldB;
     

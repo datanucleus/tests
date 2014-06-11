@@ -40,6 +40,8 @@ import javax.persistence.OneToOne;
 @IdClass(Person.PK.class)
 public class Person implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = 9154696544843368658L;
+
     @Id
     private long personNum; // Part of PK with app id
 
@@ -193,6 +195,7 @@ public class Person implements Cloneable, Serializable
 
     public static class PK implements Serializable
     {
+        private static final long serialVersionUID = -2181519053688846887L;
         public long personNum;
         public String globalNum;
 

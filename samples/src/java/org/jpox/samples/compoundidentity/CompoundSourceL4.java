@@ -57,6 +57,7 @@ public class CompoundSourceL4
     
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 1030665946269034484L;
         public CompoundSourceL3.Id source;
         public String name;
 

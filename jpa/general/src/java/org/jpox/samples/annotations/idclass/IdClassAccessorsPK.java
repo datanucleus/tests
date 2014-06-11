@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 public class IdClassAccessorsPK implements Serializable
 {
+    private static final long serialVersionUID = 6337348993337011007L;
     private String id;
 
     public String getId()

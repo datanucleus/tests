@@ -41,6 +41,8 @@ import javax.persistence.Table;
 @SequenceGenerator(name="DepartmentGenerator", sequenceName="DEPT_SEQ")
 public class Department implements Serializable
 {
+    private static final long serialVersionUID = -8933226690738600703L;
+
     @EmbeddedId
     private DepartmentPK primaryKey;
 

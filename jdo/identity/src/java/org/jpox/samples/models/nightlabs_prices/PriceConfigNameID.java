@@ -24,6 +24,8 @@ import java.io.Serializable;
 
 public class PriceConfigNameID implements Serializable
 {
+    private static final long serialVersionUID = 6249718559977745218L;
+
     public String organisationID;
 
     public long priceConfigID;

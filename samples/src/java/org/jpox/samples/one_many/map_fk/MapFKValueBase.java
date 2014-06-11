@@ -24,6 +24,7 @@ import java.io.Serializable;
  */
 public class MapFKValueBase implements Serializable
 {
+    private static final long serialVersionUID = -2966703820831890307L;
     long id; // Used for app identity
     String key;
 

@@ -27,6 +27,7 @@ import java.io.Serializable;
  */
 public class PCFKSetElement implements Serializable
 {
+    private static final long serialVersionUID = 5906396604075699262L;
     String name;
     public PCFKSetElement(String name)
     {

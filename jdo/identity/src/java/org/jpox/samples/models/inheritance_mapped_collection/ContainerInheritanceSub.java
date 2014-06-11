@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class ContainerInheritanceSub extends ContainerInheritanceRoot
 {
+    private static final long serialVersionUID = 2388513150003011745L;
     private Set es;
     private ElementE e;
 

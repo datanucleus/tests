@@ -153,6 +153,7 @@ public class ComposedMixedIDBase extends TestObject implements InstanceCallbacks
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = 5758290023984157641L;
         public int code;
         public String composed;
         public Double doubleObjField;

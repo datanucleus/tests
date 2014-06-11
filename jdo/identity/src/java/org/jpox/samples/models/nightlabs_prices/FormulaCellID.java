@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class FormulaCellID
 implements Serializable
 {
+    private static final long serialVersionUID = 5799179120275124403L;
     // primary key - begin
     public String organisationID;
     public long priceConfigID;

@@ -151,6 +151,7 @@ public class Map3Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 6307594891000257396L;
         public int identifierA;
         public String identifierB;
 

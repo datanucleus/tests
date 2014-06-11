@@ -25,6 +25,7 @@ import org.datanucleus.tests.TestHelper;
 
 public class DecimalWidget extends Widget
 {
+    private static final long serialVersionUID = 3811452389300291340L;
     private BigInteger bigIntegerField;
     private BigDecimal bigDecimalField;
 

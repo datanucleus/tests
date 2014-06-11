@@ -27,6 +27,7 @@ import java.io.Serializable;
  */
 public class StringBlobWidget extends Widget implements Serializable
 {
+    private static final long serialVersionUID = 3082767883809945919L;
     private String hugeString;
     
     public StringBlobWidget()

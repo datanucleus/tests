@@ -151,6 +151,7 @@ public class LinkedHashMap2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -5013376131413935895L;
         public int identifierA;
         public String identifierB;
 

@@ -75,6 +75,7 @@ public class ShapeHolder2
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 503501173030863587L;
         public int id;
         public Oid()
         {

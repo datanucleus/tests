@@ -6,6 +6,8 @@ package org.jpox.samples.widget;
 
 public class FloatWidget extends Widget
 {
+    private static final long serialVersionUID = -2787949302409513467L;
+
     /**
      * The minimum accuracy required of the storage and retrieval of float
      * values.

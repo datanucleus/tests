@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class ContainerInheritanceRoot
 implements Serializable
 {
+    private static final long serialVersionUID = 7850057443828138155L;
     private String organisationID;
     private String bbbID;
 

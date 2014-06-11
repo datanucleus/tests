@@ -25,6 +25,8 @@ import org.datanucleus.tests.TestObject;
 
 public class Widget extends TestObject implements InstanceCallbacks, Serializable
 {
+    private static final long serialVersionUID = 5422494122561102422L;
+
     private boolean booleanField;
 
     private Boolean booleanObjField;

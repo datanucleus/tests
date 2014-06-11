@@ -53,6 +53,7 @@ public class Base
     }
     public static class BaseId implements Serializable
     {
+        private static final long serialVersionUID = -1246370279244920807L;
         public int id;
 
         public BaseId()

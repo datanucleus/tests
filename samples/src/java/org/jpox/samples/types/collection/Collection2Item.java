@@ -174,6 +174,7 @@ public class Collection2Item implements Comparable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -6553427199550781869L;
         public int identifierA;
         public String identifierB;
 

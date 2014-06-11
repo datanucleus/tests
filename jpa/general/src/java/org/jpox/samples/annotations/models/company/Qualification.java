@@ -30,6 +30,7 @@ import javax.persistence.Id;
 @Entity(name="Qualification_Ann")
 public class Qualification implements Serializable
 {
+    private static final long serialVersionUID = -1077333349158881515L;
     @Id
     private String name;
     private Person person;

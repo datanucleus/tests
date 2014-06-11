@@ -61,6 +61,7 @@ public class UUIDStringGeneratorItem
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 5817232299435383854L;
         public String identifier;
 
         public Oid()

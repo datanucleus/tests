@@ -23,11 +23,10 @@ import java.util.StringTokenizer;
 /**
  * Abstract class with compound identity.
  * Used to test inheritance and compound relationships.
- *
- * @version $Revision: 1.1 $
  */
 public abstract class CompoundAbstractBase implements Serializable
 {
+    private static final long serialVersionUID = 4545756491773985841L;
     private CompoundRelated related; // PK
     private String name; // PK
 
@@ -61,6 +60,7 @@ public abstract class CompoundAbstractBase implements Serializable
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -5614234543789506821L;
         public CompoundRelated.Id related;
         public String name;
 

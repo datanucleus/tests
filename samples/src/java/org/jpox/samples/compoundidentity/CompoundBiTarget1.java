@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 /**
  * Model for 1-1 bidirectional with only one side having the FK as PK.
- * 
- * @version $Revision: 1.1 $
  */
 public class CompoundBiTarget1
 {
@@ -52,6 +50,7 @@ public class CompoundBiTarget1
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -4140005892767595032L;
         public CompoundBiSource1.Id source;
 
         public Id()

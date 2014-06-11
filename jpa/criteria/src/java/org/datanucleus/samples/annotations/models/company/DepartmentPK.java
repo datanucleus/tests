@@ -25,6 +25,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class DepartmentPK implements java.io.Serializable
 {
+    private static final long serialVersionUID = 3174021881183266103L;
     private Integer idInteger;
     private String idString;
 

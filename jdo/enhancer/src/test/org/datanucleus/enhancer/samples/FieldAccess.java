@@ -177,6 +177,7 @@ public class FieldAccess
     public static class Id implements Serializable
     {
 
+        private static final long serialVersionUID = 8960920526378241732L;
         public int id;
 
         public Id()

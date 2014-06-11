@@ -30,6 +30,7 @@ import java.util.StringTokenizer;
  */
 public class Person implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = 4488301280191662133L;
     private long personNum; // Part of PK when app id
     private String globalNum; // Part of PK when app id
 
@@ -204,6 +205,7 @@ public class Person implements Cloneable, Serializable
     
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -4927244110186988295L;
         public long personNum;
         public String globalNum;
 

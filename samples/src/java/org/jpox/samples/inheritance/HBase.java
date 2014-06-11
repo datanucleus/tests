@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 public class HBase implements Serializable
 {
+    private static final long serialVersionUID = 2643066534786782698L;
     private Integer id;
     private String value;
 

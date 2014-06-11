@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 public class Employee extends Person implements Serializable
 {
+    private static final long serialVersionUID = -2548482848748663549L;
     private String serialNo;
     private float salary;
     private String salaryCurrency;

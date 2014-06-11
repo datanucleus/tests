@@ -28,6 +28,7 @@ import javax.jdo.annotations.Persistent;
 @PersistenceCapable(detachable="true")
 public class Employee extends Person implements Serializable
 {
+    private static final long serialVersionUID = -4296146684137163698L;
     private String serialNo;
     private float salary;
     private String salaryCurrency;

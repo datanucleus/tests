@@ -28,6 +28,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Employee extends Person implements Serializable
 {
+    private static final long serialVersionUID = 5547588410978145991L;
+
     @Basic
     private String serialNo;
 

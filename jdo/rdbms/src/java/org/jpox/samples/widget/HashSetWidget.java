@@ -18,6 +18,7 @@ import junit.framework.Assert;
 
 public class HashSetWidget extends Widget implements HasNormalSetField, InstanceCallbacks
 {
+    private static final long serialVersionUID = 1375826254340532655L;
     private HashSet normalSet;
     private int numWidgets;
 

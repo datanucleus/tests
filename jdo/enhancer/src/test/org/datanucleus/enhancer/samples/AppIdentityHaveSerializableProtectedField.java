@@ -6,8 +6,10 @@ import java.net.Socket;
 /**
  * @version $Revision: 1.1 $
  */
-public class AppIdentityHaveSerializableProtectedField implements Serializable {
-	public boolean field00;
+public class AppIdentityHaveSerializableProtectedField implements Serializable 
+{
+    private static final long serialVersionUID = -7207559208212103118L;
+    public boolean field00;
 	private static Socket s;
 	protected String aaa;
 	/**

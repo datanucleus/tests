@@ -70,6 +70,7 @@ public class CompoundX1
     static String separator = "::";
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 2630725339275309741L;
         public String x1Name;
         public long x1Version;
 
@@ -81,7 +82,7 @@ public class CompoundX1
         {
             String[] partes = clave.split(separator);
             if (partes.length != 2)
-                throw new Exception("Error, parámetros ilegales");
+                throw new Exception("Error, parï¿½metros ilegales");
             this.x1Name = partes[0];
             this.x1Version = Long.parseLong(partes[1]);
         }

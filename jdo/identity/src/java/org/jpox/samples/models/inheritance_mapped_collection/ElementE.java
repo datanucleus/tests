@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public class ElementE implements Serializable
 {
-	private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -6564055598701195621L;
     private String organisationID; // PK
     private long eeeID; // PK
 

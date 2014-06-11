@@ -26,6 +26,7 @@ import java.util.Date;
  */
 public class Qualification implements Serializable
 {
+    private static final long serialVersionUID = -5405458435977302755L;
     private Person person;
     private String name;
     private Organisation organisation;

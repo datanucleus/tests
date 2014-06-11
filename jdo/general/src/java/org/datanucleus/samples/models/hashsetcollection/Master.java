@@ -28,6 +28,8 @@ import java.io.Serializable;
  */
 public class Master implements Serializable
 {
+    private static final long serialVersionUID = -1554348749213539200L;
+
     private String id;
 
     private HashSet details = new HashSet();

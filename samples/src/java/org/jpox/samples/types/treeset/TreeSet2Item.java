@@ -176,6 +176,7 @@ public class TreeSet2Item implements Comparable
 
     public static class Oid implements Serializable, Comparable
     {
+        private static final long serialVersionUID = -3399859590470401854L;
         public int identifierA;
         public String identifierB;
 

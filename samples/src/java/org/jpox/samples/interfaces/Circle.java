@@ -21,10 +21,10 @@ import java.io.Serializable;
 
 /**
  * Circle class.
- * @version $Revision: 1.2 $
  */
 public class Circle implements Shape, Cloneable, Serializable
 {
+    private static final long serialVersionUID = 3618736736884492568L;
     private int id;    
     protected double radius=0.0;
 
@@ -104,6 +104,7 @@ public class Circle implements Shape, Cloneable, Serializable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -4851852453075087929L;
         public int id;
 
         public Oid()

@@ -32,6 +32,8 @@ import javax.jdo.JDOHelper;
  */
 public class Person implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = -7379807145463631211L;
+
     private long personNum; // Part of PK when app id
 
     private String firstName;
@@ -190,6 +192,7 @@ public class Person implements Cloneable, Serializable
     
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 2359789248166754955L;
         public long personNum;
         public String globalNum;
 

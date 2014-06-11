@@ -25,7 +25,8 @@ package org.datanucleus.samples.metadata.user;
  */
 public class UserId3 implements java.io.Serializable
 {
-	public String id;
+	private static final long serialVersionUID = -7181813044434993324L;
+    public String id;
 
 	/**
 	 *	Default constructor.

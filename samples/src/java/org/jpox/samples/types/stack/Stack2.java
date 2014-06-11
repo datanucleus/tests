@@ -147,6 +147,7 @@ public class Stack2 implements ListHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 8861806166562701150L;
         public int identifierA;
         public String identifierB;
 

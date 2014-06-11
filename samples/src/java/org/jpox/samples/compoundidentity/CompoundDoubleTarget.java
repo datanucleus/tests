@@ -82,6 +82,7 @@ public class CompoundDoubleTarget
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -9176378712097085578L;
         public int id;
         public CompoundHolder.Id holder;
         public CompoundRelated.Id related;

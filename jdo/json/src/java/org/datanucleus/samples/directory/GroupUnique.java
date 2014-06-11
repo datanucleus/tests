@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 public class GroupUnique implements Serializable
 {
+    private static final long serialVersionUID = 763626666101321390L;
     String name;
     protected Person member;
 

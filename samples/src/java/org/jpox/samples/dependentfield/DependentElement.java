@@ -94,6 +94,7 @@ public class DependentElement
 
 	public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -4225051359926138642L;
         public int id;
 
         public Id()

@@ -108,6 +108,7 @@ public class Triangle3 implements ShapeInverse
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 7206772326595702978L;
         public int id;
         public String composed;
         public Oid()

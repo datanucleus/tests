@@ -44,6 +44,8 @@ import javax.persistence.StoredProcedureParameter;
 @IdClass(Person.PK.class)
 public class Person implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = -2811612508852231823L;
+
     @Id
     @Column(name="PERSON_ID")
     private long personNum; // Part of PK with app id
@@ -201,6 +203,7 @@ public class Person implements Cloneable, Serializable
 
     public static class PK implements Serializable
     {
+        private static final long serialVersionUID = -3206569800918021618L;
         public long personNum;
         public String globalNum;
 

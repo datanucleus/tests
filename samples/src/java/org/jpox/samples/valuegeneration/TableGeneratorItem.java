@@ -61,6 +61,7 @@ public class TableGeneratorItem
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 8940095714777817215L;
         public int identifier;
 
         public Oid()

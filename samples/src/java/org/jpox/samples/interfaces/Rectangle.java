@@ -26,7 +26,8 @@ import java.io.Serializable;
  */
 public class Rectangle implements Shape, Cloneable, Serializable
 {
-	private int id;    
+	private static final long serialVersionUID = 5488145913366327153L;
+    private int id;    
     protected double width=0.0;
     protected double length=0.0;
 
@@ -118,6 +119,7 @@ public class Rectangle implements Shape, Cloneable, Serializable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 7157350923150502225L;
         public int id;
         public Oid()
         {

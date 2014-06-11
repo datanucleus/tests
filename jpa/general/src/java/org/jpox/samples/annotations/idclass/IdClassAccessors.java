@@ -34,6 +34,8 @@ import javax.persistence.IdClass;
 @IdClass(IdClassAccessorsPK.class)
 public class IdClassAccessors implements Serializable
 {
+    private static final long serialVersionUID = -2416432717521790387L;
+
     private IdClassAccessorsPK compoundPK;
 
     private String name;

@@ -148,6 +148,7 @@ public class LinkedList1 implements ListHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -1992586670274658595L;
         public int identifierA;
         public String identifierB;
 

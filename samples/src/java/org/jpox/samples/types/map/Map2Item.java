@@ -152,6 +152,7 @@ public class Map2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -8863688319913555814L;
         public int identifierA;
         public String identifierB;
 

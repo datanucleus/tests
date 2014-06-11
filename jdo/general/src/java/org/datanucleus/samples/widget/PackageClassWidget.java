@@ -26,6 +26,7 @@ import java.io.Serializable;
  **/
 public class PackageClassWidget implements Serializable
 {
+    private static final long serialVersionUID = -6541120878712846926L;
     private String normalString;
 
     public PackageClassWidget()

@@ -26,6 +26,7 @@ import java.io.Serializable;
  */
 public class MapValueItem implements Serializable
 {
+    private static final long serialVersionUID = 2545054128809451297L;
     long id; // Used for app identity
     String name;
     String description;

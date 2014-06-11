@@ -63,6 +63,7 @@ public class UnorderedPrimaryKeyFields
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 9194986596817221458L;
         public int id;
         public String composed;
         public Oid()

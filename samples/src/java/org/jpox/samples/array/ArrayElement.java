@@ -21,11 +21,10 @@ import java.io.Serializable;
 
 /**
  * Sample object that is stored in an array.
- *
- * @version $Revision: 1.2 $  
  */
 public class ArrayElement implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = 6309647388987657279L;
     protected String id = null;
     protected String name = null;
 

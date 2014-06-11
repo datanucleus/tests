@@ -71,6 +71,7 @@ public class CompoundMapTarget
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 551339306987103532L;
         public String name;
         public CompoundHolder.Id holder;
 

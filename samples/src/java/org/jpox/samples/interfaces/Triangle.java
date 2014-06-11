@@ -26,6 +26,7 @@ import java.io.Serializable;
  */
 public class Triangle implements Shape, Cloneable, Serializable
 {
+    private static final long serialVersionUID = 5912342834818282162L;
     private int id;
     private String composed;
     protected double width=0.0;
@@ -108,6 +109,7 @@ public class Triangle implements Shape, Cloneable, Serializable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -2226836635817709878L;
         public int id;
         public String composed;
         public Oid()

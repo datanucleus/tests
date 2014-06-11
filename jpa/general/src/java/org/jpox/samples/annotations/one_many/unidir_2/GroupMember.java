@@ -80,6 +80,7 @@ public class GroupMember
 
     public static class Key implements Serializable
     {
+        private static final long serialVersionUID = 6767256045911514693L;
         public long id;
         public String name;
 

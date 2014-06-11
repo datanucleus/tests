@@ -148,6 +148,7 @@ public class ArrayList2 implements ListHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 4939194560218791560L;
         public int identifierA;
         public String identifierB;
 

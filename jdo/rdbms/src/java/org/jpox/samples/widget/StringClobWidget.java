@@ -29,6 +29,7 @@ import java.io.Serializable;
  */
 public class StringClobWidget extends Widget implements Serializable
 {
+    private static final long serialVersionUID = 767516565286542787L;
     private String anotherHugeString;
 
     public StringClobWidget()

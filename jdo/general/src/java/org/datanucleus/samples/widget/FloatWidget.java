@@ -6,6 +6,8 @@ package org.datanucleus.samples.widget;
 
 public class FloatWidget extends Widget
 {
+    private static final long serialVersionUID = 6492964523491033679L;
+
     /**
      * The minimum accuracy required of the storage and retrieval of float
      * values.

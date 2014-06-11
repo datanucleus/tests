@@ -61,6 +61,7 @@ public class SequenceGeneratorItem
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 6874690958469269477L;
         public int identifier;
 
         public Oid()

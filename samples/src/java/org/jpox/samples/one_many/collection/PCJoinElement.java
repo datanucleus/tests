@@ -27,6 +27,7 @@ import java.io.Serializable;
  */
 public class PCJoinElement implements Serializable
 {
+    private static final long serialVersionUID = 7155119821216663869L;
     String name;
     public PCJoinElement(String name)
     {

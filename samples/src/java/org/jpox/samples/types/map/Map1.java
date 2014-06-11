@@ -143,6 +143,7 @@ public class Map1 implements MapHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -4768346522963041683L;
         public int identifierA;
         public String identifierB;
 

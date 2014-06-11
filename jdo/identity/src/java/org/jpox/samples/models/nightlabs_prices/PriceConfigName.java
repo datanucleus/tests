@@ -27,7 +27,9 @@ import java.util.Map;
 public class PriceConfigName
 implements Serializable
 {
-	private String organisationID;
+	private static final long serialVersionUID = -6725393770193529547L;
+
+    private String organisationID;
 
 	private long priceConfigID;
 

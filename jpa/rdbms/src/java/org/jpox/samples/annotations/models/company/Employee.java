@@ -38,6 +38,8 @@ import javax.persistence.TableGenerator;
         pkColumnValue="EMPLOYEE")
 public class Employee extends Person implements Serializable
 {
+    private static final long serialVersionUID = 3943090129519932327L;
+
     @Basic
     @Column(name="SERIAL_NO")
     private String serialNo;

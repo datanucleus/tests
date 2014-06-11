@@ -85,6 +85,7 @@ public class CompoundHolder
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 3360811259780214732L;
         public long id;
         public String name;
 

@@ -29,6 +29,7 @@ import java.util.Set;
  */
 public class Manager extends Employee implements Serializable
 {
+    private static final long serialVersionUID = -1710801247113719913L;
     protected Set subordinates;
     protected Set departments;
 

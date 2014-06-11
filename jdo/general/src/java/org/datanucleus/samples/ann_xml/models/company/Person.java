@@ -44,6 +44,8 @@ import javax.jdo.annotations.Value;
     value="SELECT FROM org.jpox.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")
 public class Person implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = -6888602842233560037L;
+
     @Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
     @PrimaryKey
     private long personNum; // Part of PK when app id
@@ -237,6 +239,7 @@ public class Person implements Cloneable, Serializable
 
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = -3096793377027066604L;
         public long personNum;
         public String globalNum;
 

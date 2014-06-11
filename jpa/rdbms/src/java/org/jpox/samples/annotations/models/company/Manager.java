@@ -41,6 +41,8 @@ import javax.persistence.Table;
 @Table(name="JPA_AN_MANAGER")
 public class Manager extends Employee implements Serializable
 {
+    private static final long serialVersionUID = 4136952515177294923L;
+
     @OneToMany(mappedBy="manager", cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="JPA_AN_MGR_EMPLOYEES", joinColumns=@JoinColumn(name="MGR_ID"),
         inverseJoinColumns=@JoinColumn(name="EMP_ID"))

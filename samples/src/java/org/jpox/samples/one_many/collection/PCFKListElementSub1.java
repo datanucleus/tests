@@ -23,6 +23,8 @@ package org.jpox.samples.one_many.collection;
  */
 public class PCFKListElementSub1 extends PCFKListElement
 {
+    private static final long serialVersionUID = 5916432824896499017L;
+
     public PCFKListElementSub1(String name)
     {
         super(name);

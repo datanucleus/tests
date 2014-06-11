@@ -101,6 +101,7 @@ public class NativeQueryTest extends JDOPersistenceTestCase
             // Find all with revision more than 31
             NativeQuery nq = new NativeQuery()
             {
+                private static final long serialVersionUID = -8713726438022753379L;
                 public boolean match(Object e)
                 {
                     return ((ASub1)e).getRevision() >= 32;
@@ -148,6 +149,7 @@ public class NativeQueryTest extends JDOPersistenceTestCase
             // Find all with revision more than 31
             NativeQuery nq = new NativeQuery()
             {
+                private static final long serialVersionUID = -1369609081363122187L;
                 public boolean match(Object e)
                 {
                     return ((ABase)e).getRevision() >= 32;

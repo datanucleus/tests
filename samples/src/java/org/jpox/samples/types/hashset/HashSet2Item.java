@@ -176,6 +176,7 @@ public class HashSet2Item implements Comparable
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -7178967921304424848L;
         public int identifierA;
         public String identifierB;
 

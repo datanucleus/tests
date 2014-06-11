@@ -71,6 +71,7 @@ public abstract class AbstractCompositeBase
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -4317945971814944582L;
         public int id;
         public String name;
         public Oid()

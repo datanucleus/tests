@@ -33,6 +33,7 @@ import javax.jdo.JDOHelper;
  */
 public class Person implements Cloneable, Serializable
 {
+    private static final long serialVersionUID = 2581396510708089342L;
     private long personNum;
     private String globalNum; // primary-key
 
@@ -213,6 +214,7 @@ public class Person implements Cloneable, Serializable
     
     public static class Id implements Serializable
     {
+        private static final long serialVersionUID = 2359789248166754955L;
         public long personNum;
         public String globalNum;
 

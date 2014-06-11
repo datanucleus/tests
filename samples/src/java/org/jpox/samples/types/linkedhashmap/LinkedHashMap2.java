@@ -144,6 +144,7 @@ public class LinkedHashMap2 implements MapHolder
     
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -4779069700046794557L;
         public int identifierA;
         public String identifierB;
 

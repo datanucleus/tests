@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 public class IdClassPrivateModifierPK implements Serializable
 {
+    private static final long serialVersionUID = -3968504752892496982L;
     private String name;
     private int name2;
     

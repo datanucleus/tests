@@ -21,6 +21,7 @@ package org.datanucleus.samples.directory;
 
 public class PersonWithPassword extends Person
 {
+    private static final long serialVersionUID = 741206801096157561L;
     String password;
 
     public PersonWithPassword()

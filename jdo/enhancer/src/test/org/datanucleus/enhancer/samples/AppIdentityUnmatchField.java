@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.net.Socket;
 
 /**
- * @version $Revision: 1.1 $
  */
 public class AppIdentityUnmatchField implements Serializable 
 {
-	public boolean field00;
+    private static final long serialVersionUID = -776059435012956834L;
+    public boolean field00;
 	public boolean field01;
 	private static Socket s;
 

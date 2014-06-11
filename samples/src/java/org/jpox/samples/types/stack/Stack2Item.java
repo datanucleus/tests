@@ -123,6 +123,7 @@ public class Stack2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -3195269670661555446L;
         public int identifierA;
         public String identifierB;
 

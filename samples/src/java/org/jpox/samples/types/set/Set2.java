@@ -130,6 +130,7 @@ public class Set2 implements CollectionHolder
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = -2429295575322571698L;
         public int identifierA;
         public String identifierB;
 

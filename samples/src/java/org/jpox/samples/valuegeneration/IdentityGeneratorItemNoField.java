@@ -27,6 +27,7 @@ import java.io.Serializable;
  */
 public class IdentityGeneratorItemNoField implements Serializable
 {
+    private static final long serialVersionUID = -3657569725275980622L;
     private int id;
 
     public IdentityGeneratorItemNoField()

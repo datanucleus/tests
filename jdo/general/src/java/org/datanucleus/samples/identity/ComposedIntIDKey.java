@@ -10,10 +10,10 @@ import org.datanucleus.samples.identity.ComposedIntIDKey;
 
 /**
  * Sample application identity PK composed of 2 ints.
- * @version $Revision: 1.1 $
  */
 public class ComposedIntIDKey implements Serializable
 {
+    private static final long serialVersionUID = 8205175230942242945L;
     public int code;
     public int composed;
 

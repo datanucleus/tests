@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 public class DateWidget extends Widget
 {
+    private static final long serialVersionUID = 6789596858956764685L;
     private java.util.Date dateField;
     private java.sql.Date sqlDateField;
     private java.sql.Timestamp sqlTimestampField;

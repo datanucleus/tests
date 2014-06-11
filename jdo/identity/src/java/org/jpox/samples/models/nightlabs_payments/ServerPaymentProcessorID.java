@@ -30,7 +30,8 @@ import java.util.StringTokenizer;
 
 public class ServerPaymentProcessorID implements Serializable
 {
-	public static final String ENCODING="UTF-8";
+	private static final long serialVersionUID = 4704625010501897746L;
+    public static final String ENCODING="UTF-8";
 	protected static final String JDO_PREFIX = "jdo";
 	protected static final char JDO_PREFIX_SEPARATOR = '/';
 	protected static final char CLASS_SEPARATOR = '?';

@@ -123,6 +123,7 @@ public class LinkedList2Item
 
     public static class Oid implements Serializable
     {
+        private static final long serialVersionUID = 1280345311965185238L;
         public int identifierA;
         public String identifierB;
 

@@ -24,10 +24,11 @@ import java.io.Serializable;
 
 /**
  * Object for circular references in graph
- * @version $Revision: 1.1 $
  */
 public class Circon implements Serializable
 {
+    private static final long serialVersionUID = -8181607692958338529L;
+
     private String id;
 
     private HashSet masters = new HashSet();

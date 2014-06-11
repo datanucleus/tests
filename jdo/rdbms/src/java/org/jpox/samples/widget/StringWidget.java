@@ -27,6 +27,7 @@ import java.io.Serializable;
  */
 public class StringWidget extends Widget implements Serializable
 {
+    private static final long serialVersionUID = -575692935453003064L;
     private String fixedLengthString;
     private String normalString;
     
