@@ -13,10 +13,6 @@
         <version>4.0</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
-    
-    <properties>
-        <dn.jdo.query.version>(3.9, )</dn.jdo.query.version>
-    </properties>
 
     <build>
         <plugins>
@@ -27,7 +23,7 @@
                     <dependency>
                         <groupId>org.datanucleus</groupId>
                         <artifactId>datanucleus-jdo-query</artifactId>
-                        <version>${dn.jdo.query.version}</version>
+                        <version>[4.0.0-release, )</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -38,7 +34,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jdo-query</artifactId>
-            <version>${dn.jdo.query.version}</version>
+            <version>[4.0.0-release, )</version>
         </dependency>
     </dependencies>
 </project>

@@ -20,13 +20,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jpa</artifactId>
-            <version>(3.9, )</version>
+            <version>[4.0.0-release, )</version>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
-            <version>(3.9, )</version>
+            <version>[4.0.0-release, )</version>
         </dependency>
         <dependency>
             <groupId>hsqldb</groupId>
@@ -37,7 +37,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jodatime</artifactId>
-            <version>(3.9, )</version>
+            <version>[4.0.0-release, )</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
