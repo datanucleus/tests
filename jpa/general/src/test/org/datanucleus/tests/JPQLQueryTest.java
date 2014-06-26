@@ -20,6 +20,7 @@ package org.datanucleus.tests;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -2328,6 +2329,50 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test for use of JDBC escape syntax literal.
+     */
+    @SuppressWarnings("deprecation")
+    public void testJdbcEscapeSyntaxLiteral()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            DateHolder d1 = new DateHolder();
+            Calendar cal = Calendar.getInstance();
+            cal.set(2006, 11, 01);
+            d1.setDateField(cal.getTime());
+            em.persist(d1);
+            DateHolder d2 = new DateHolder();
+            Calendar cal2 = Calendar.getInstance();
+            cal2.set(2022, 11, 01);
+            d2.setDateField(cal2.getTime());
+            em.persist(d2);
+            em.flush();
+
+            List<DateHolder> result = em.createQuery("SELECT Object(D) FROM " + DateHolder.class.getName() + " D WHERE D.dateField < {d '2008-01-01'}").getResultList();
+            assertEquals(1, result.size());
+            DateHolder holder = result.get(0);
+            Date holderDate = holder.getDateField();
+            assertNotNull(holderDate);
+            assertEquals(106, holderDate.getYear()); // 2006
+            assertEquals(11, holderDate.getMonth()); // 11
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
      * Test for use of LENGTH.
      */
     public void testStringLength()
@@ -2648,8 +2693,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.flush();
 
                 List result = em.createQuery(
-                    "SELECT p.personNum, CASE WHEN p.age < 20 THEN 'Youth' WHEN p.age >= 20 AND p.age < 50 THEN 'Adult' ELSE 'Old' END" + 
-                    " FROM " + Person.class.getName() + " p").getResultList();
+                    "SELECT p.personNum, CASE WHEN p.age < :param1 THEN 'Youth' WHEN p.age >= :param1 AND p.age < :param2 THEN 'Adult' ELSE 'Old' END" + 
+                    " FROM " + Person.class.getName() + " p").setParameter("param1", 20).setParameter("param2", 50).getResultList();
                 Iterator resultsIter = result.iterator();
                 boolean pebbles = false;
                 boolean barney = false;
@@ -2668,6 +2713,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 assertTrue("Pebbles wasn't correct in the Case results", pebbles);
                 assertTrue("Barney wasn't correct in the Case results", barney);
                 tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
             }
             finally
             {
