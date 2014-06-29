@@ -3284,4 +3284,73 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
             clean(Office.class);
         }
     }
+
+    /**
+     * Test the use of result with "IF ... ELSE ...".
+     */
+    public void testResultWithIfElse()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                BasicTypeHolder basics[] = new BasicTypeHolder[5];
+                for (int i=0; i<basics.length; i++)
+                {
+                    basics[i] = new BasicTypeHolder();
+                    basics[i].setLongField(i+1);
+                    basics[i].setShortField((short) (i+11));
+                    basics[i].setCharField('0');
+                }
+                pm.makePersistentAll(basics);
+                tx.commit();
+                Object ids[] = new Object[5];
+                for (int i=0; i<basics.length; i++)
+                {
+                    ids[i] = pm.getObjectId(basics[i]);
+                }
+
+                tx.begin();
+                Query q = pm.newQuery(BasicTypeHolder.class);
+                q.setResult("IF (this.longField > 2) 1 ELSE 0");
+                Collection c = (Collection) q.execute();
+                Assert.assertEquals(5, c.size());
+                int numZeros = 0;
+                int numOnes = 0;
+                for (Object obj : c)
+                {
+                    Long l = Long.valueOf("" + obj);
+                    if (l == 1)
+                    {
+                        numOnes++;
+                    }
+                    else if (l == 0)
+                    {
+                        numZeros++;
+                    }
+                }
+                assertEquals(3, numOnes);
+                assertEquals(2, numZeros);
+
+                tx.commit();
+
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(BasicTypeHolder.class);
+        }
+    }
 }
