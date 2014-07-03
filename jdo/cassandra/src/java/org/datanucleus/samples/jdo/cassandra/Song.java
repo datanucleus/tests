@@ -5,9 +5,7 @@
  */
 package org.datanucleus.samples.jdo.cassandra;
 
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 
 /**
  * 
@@ -17,20 +15,68 @@ import javax.jdo.annotations.PrimaryKey;
 public class Song
 {
 
-    @PrimaryKey
-    @Persistent(customValueStrategy = "uuid")
-    private String id;
+    @PrimaryKey    
+    private int id;
 
-    @SuppressWarnings("unused")
     private String title;
 
-    @SuppressWarnings("unused")
     private String album;
 
-    @SuppressWarnings("unused")
     private String artist;
 
     @Persistent
+    @Serialized
+    @Column(name = "data")
     private byte[] data;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getAlbum()
+    {
+        return album;
+    }
+
+    public void setAlbum(String album)
+    {
+        this.album = album;
+    }
+
+    public String getArtist()
+    {
+        return artist;
+    }
+
+    public void setArtist(String artist)
+    {
+        this.artist = artist;
+    }
+
+   public byte [] getData() {
+      return data;
+   }
+
+   public void setData(byte[] data) {
+      this.data = data;
+   }
+
+    
 
 }

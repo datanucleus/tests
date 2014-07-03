@@ -18,9 +18,8 @@ import javax.jdo.annotations.PrimaryKey;
 public class Playlist
 {
 
-    @PrimaryKey
-    @Persistent(customValueStrategy = "uuid")
-    private String id;
+    @PrimaryKey    
+    private int id;
 
     @PrimaryKey
     @Column(name = "song_order")
@@ -28,15 +27,72 @@ public class Playlist
 
     @Persistent
     @Column(name = "song_id")
-    private String songId;
+    private int songId;
 
-    @SuppressWarnings("unused")
     private String title;
 
-    @SuppressWarnings("unused")
     private String album;
 
-    @SuppressWarnings("unused")
     private String artist;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public int getSongOrder()
+    {
+        return songOrder;
+    }
+
+    public void setSongOrder(int songOrder)
+    {
+        this.songOrder = songOrder;
+    }
+
+    public int getSongId()
+    {
+        return songId;
+    }
+
+    public void setSongId(int songId)
+    {
+        this.songId = songId;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getAlbum()
+    {
+        return album;
+    }
+
+    public void setAlbum(String album)
+    {
+        this.album = album;
+    }
+
+    public String getArtist()
+    {
+        return artist;
+    }
+
+    public void setArtist(String artist)
+    {
+        this.artist = artist;
+    }
 
 }
