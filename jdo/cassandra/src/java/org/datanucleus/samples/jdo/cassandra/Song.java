@@ -24,7 +24,7 @@ public class Song
 
     private String artist;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     @Serialized
     @Column(name = "data")
     private byte[] data;

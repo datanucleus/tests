@@ -9,6 +9,7 @@ import javax.jdo.PersistenceManager;
 import org.datanucleus.samples.jdo.cassandra.Song;
 import static org.datanucleus.tests.SampleCassandraData.SONG_IMAGE_1;
 import static org.datanucleus.tests.SampleCassandraData.getSongImageAsByteArray;
+import org.junit.Assert;
 
 /**
  * 
@@ -62,7 +63,7 @@ public class CassandraTypesTest extends JDOPersistenceTestCase
         assertNotNull(retrieveSong.getData());
         byte[] expectedImageByteArray = getSongImageAsByteArray(imgPath);
         byte[] actualImageByteArray = retrieveSong.getData();        
-        assertEquals(expectedImageByteArray, actualImageByteArray);
+        Assert.assertArrayEquals(expectedImageByteArray, actualImageByteArray);
         
         
     }
