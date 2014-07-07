@@ -19,9 +19,11 @@ package org.datanucleus.tests.types;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.tests.JDOPersistenceTestCase;
@@ -617,6 +619,31 @@ public class EnumTest extends JDOPersistenceTestCase
             p = (AlternativePalette) pm.getObjectById(id, true);
             assertEquals(100, p.getAmount());
             assertEquals(AlternativeColour.GREEN, p.getColour());
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+        pmf.getDataStoreCache().evictAll();
+
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            Query q = pm.newQuery(AlternativePalette.class, "this.colour == org.jpox.samples.types.enums.AlternativeColour.GREEN");
+            List<AlternativePalette> result = (List<AlternativePalette>) q.execute();
+            assertEquals(1, result.size());
+            p = result.get(0);
+            assertEquals(100, p.getAmount());
+            assertEquals(AlternativeColour.GREEN, p.getColour());
+
             tx.commit();
         }
         finally
