@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.datanucleus.tests;
 
 import java.awt.image.*;
 import java.io.*;
-import java.nio.*;
 import javax.imageio.*;
 import javax.jdo.*;
 import org.datanucleus.samples.jdo.cassandra.*;
