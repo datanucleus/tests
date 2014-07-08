@@ -5,6 +5,7 @@
  */
 package org.datanucleus.samples.jdo.cassandra;
 
+import java.util.*;
 import javax.jdo.annotations.*;
 
 /**
@@ -15,8 +16,8 @@ import javax.jdo.annotations.*;
 public class Song
 {
 
-    @PrimaryKey    
-    private int id;
+    @PrimaryKey
+    private UUID id;
 
     private String title;
 
@@ -25,16 +26,15 @@ public class Song
     private String artist;
 
     @Persistent(defaultFetchGroup = "true")
-    @Serialized
-    @Column(name = "data")
+    @Serialized    
     private byte[] data;
 
-    public int getId()
+    public UUID getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(UUID id)
     {
         this.id = id;
     }
@@ -69,14 +69,14 @@ public class Song
         this.artist = artist;
     }
 
-   public byte [] getData() {
-      return data;
-   }
+    public byte[] getData()
+    {
+        return data;
+    }
 
-   public void setData(byte[] data) {
-      this.data = data;
-   }
-
-    
+    public void setData(byte[] data)
+    {
+        this.data = data;
+    }
 
 }

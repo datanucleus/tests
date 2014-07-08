@@ -5,6 +5,7 @@
  */
 package org.datanucleus.samples.jdo.cassandra;
 
+import java.util.*;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -19,7 +20,7 @@ public class Playlist
 {
 
     @PrimaryKey    
-    private int id;
+    private UUID id;
 
     @PrimaryKey
     @Column(name = "song_order")
@@ -27,7 +28,7 @@ public class Playlist
 
     @Persistent
     @Column(name = "song_id")
-    private int songId;
+    private UUID songId;
 
     private String title;
 
@@ -35,12 +36,12 @@ public class Playlist
 
     private String artist;
 
-    public int getId()
+    public UUID getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(UUID id)
     {
         this.id = id;
     }
@@ -55,12 +56,12 @@ public class Playlist
         this.songOrder = songOrder;
     }
 
-    public int getSongId()
+    public UUID getSongId()
     {
         return songId;
     }
 
-    public void setSongId(int songId)
+    public void setSongId(UUID songId)
     {
         this.songId = songId;
     }

@@ -1,7 +1,26 @@
+/**********************************************************************
+Copyright (c) 2007 Andy Jefferson and others. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Contributors :
+ barisergun75@gmail.com
+***********************************************************************/
+
 package org.datanucleus.tests;
 
 import java.awt.image.*;
 import java.io.*;
+import java.util.*;
 import javax.imageio.*;
 import javax.jdo.*;
 import org.datanucleus.samples.jdo.cassandra.*;
@@ -23,7 +42,7 @@ public class SampleCassandraData
     public static final String CLASSES_TARGET_DIRECTORY_PATH = CassandraTypesTest.class.getResource("/").getPath()
             .replace("test-classes", "classes");
 
-    public static int songId;
+    public static UUID songId;
 
     public static final void loadData() throws IOException
     {
@@ -55,7 +74,7 @@ public class SampleCassandraData
     // Todo instead of song itself using song or album image for blob data
     public static final String SONG_IMAGE_1 = "soundsofuniverse.jpg";
 
-    private static final int createASampleSong(PersistenceManager pm) throws IOException
+    private static UUID createASampleSong(PersistenceManager pm) throws IOException
     {
 
         Song song1 = new Song();
@@ -65,6 +84,7 @@ public class SampleCassandraData
         String imgPath = CLASSES_TARGET_DIRECTORY_PATH + SONG_IMAGE_1;
         byte[] byteBuffer = getSongImageAsByteArray(imgPath);
         song1.setData(byteBuffer);
+        song1.setId(UUID.randomUUID());
 
         Song createdSong = pm.makePersistent(song1);
         return createdSong.getId();
@@ -83,18 +103,19 @@ public class SampleCassandraData
 
     }
 
-    private static final int createASamplePlayList(PersistenceManager pm)
+    private static UUID createASamplePlayList(PersistenceManager pm)
     {
         Playlist playlist = new Playlist();
         playlist.setSongId(songId);
         playlist.setAlbum(ALBUM_1);
         playlist.setArtist(ARTIST_1);
         playlist.setTitle(TITLE_1);
+        playlist.setId(UUID.randomUUID());
         playlist.setSongOrder(0);
         Playlist createdPlaylist = pm.makePersistent(playlist);
         return createdPlaylist.getId();
     }
-
+    
     public static final void cleanupTables()
     {
         PersistenceManager pm = pmf.getPersistenceManager();
