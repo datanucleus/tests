@@ -77,6 +77,9 @@ import org.jpox.samples.one_one.bidir.Boiler;
 import org.jpox.samples.one_one.bidir.Timer;
 import org.jpox.samples.one_one.unidir.Login;
 import org.jpox.samples.one_one.unidir.LoginAccount;
+import org.datanucleus.samples.rdbms.application.CollElement;
+import org.datanucleus.samples.rdbms.application.CollElementOwner1;
+import org.datanucleus.samples.rdbms.application.CollElementOwner2;
 import org.datanucleus.samples.rdbms.application.ConflictAssociation;
 import org.datanucleus.samples.rdbms.application.ConflictRole;
 import org.datanucleus.samples.rdbms.application.ConflictUser;
@@ -2277,6 +2280,52 @@ public class SchemaTest extends JDOPersistenceTestCase
         finally
         {
             clean(Person.class);
+        }
+    }
+
+    /**
+     * Samples creates 3 tables, 2 owners for FK collections, and 1 element table which has both FKs to the owners.
+     */
+    public void testTableWithMultipleCollectionOwners()
+    {
+        addClassesToSchema(new Class[] {CollElementOwner1.class, CollElementOwner2.class, CollElement.class});
+
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null;
+        ManagedConnection mconn = null; 
+        try
+        {
+            tx.begin();
+
+            HashSet columnNames = new HashSet();
+            columnNames.add("COLL_ELEMENT_ID");
+            columnNames.add("COLL_ELEMENT_NAME");
+            columnNames.add("OWNER1_ID");
+            columnNames.add("OWNER2_ID");
+
+            mconn = databaseMgr.getConnection(0);
+            conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // Check table column names
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "COLL_ELEMENT", columnNames);
+ 
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error(e);
+            fail("Specification of table and column names has error in creation of schema for CollElement. Exception was thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
 
