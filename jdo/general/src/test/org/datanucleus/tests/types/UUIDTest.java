@@ -41,13 +41,14 @@ public class UUIDTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Tests for persistence and retreival of a random UUID.
+     * Tests for persistence and retrieval of a random UUID.
      */
     public void testRandomUuid()
     {
         UUIDHolder u;
         Object id = null;
         final UUID testUuid = UUID.randomUUID();
+        final UUID testUuid2 = UUID.randomUUID();
 
         // ---------------------
         // Random UUID
@@ -59,6 +60,7 @@ public class UUIDTest extends JDOPersistenceTestCase
             tx.begin();
             u = new UUIDHolder();
             u.setUuid(testUuid);
+            u.setUuid2(testUuid2);
             pm.makePersistent(u);
             tx.commit();
             id = JDOHelper.getObjectId(u);
@@ -71,6 +73,8 @@ public class UUIDTest extends JDOPersistenceTestCase
             }
             pm.close();
         }
+        pmf.getDataStoreCache().evictAll();
+
         pm = pmf.getPersistenceManager();
         tx = pm.currentTransaction();
         try
@@ -78,6 +82,7 @@ public class UUIDTest extends JDOPersistenceTestCase
             tx.begin();
             u = (UUIDHolder) pm.getObjectById(id, true);
             assertEquals(testUuid, u.getUuid());
+            assertEquals(testUuid2, u.getUuid2());
             tx.commit();
         }
         finally
@@ -109,6 +114,7 @@ public class UUIDTest extends JDOPersistenceTestCase
             tx.begin();
             u = new UUIDHolder();
             u.setUuid(null);
+            u.setUuid2(null);
             pm.makePersistent(u);
             tx.commit();
             id = JDOHelper.getObjectId(u);
@@ -121,6 +127,8 @@ public class UUIDTest extends JDOPersistenceTestCase
             }
             pm.close();
         }
+        pmf.getDataStoreCache().evictAll();
+
         pm = pmf.getPersistenceManager();
         tx = pm.currentTransaction();
         try
@@ -128,6 +136,7 @@ public class UUIDTest extends JDOPersistenceTestCase
             tx.begin();
             u = (UUIDHolder) pm.getObjectById(id, true);
             assertNull(u.getUuid());
+            assertNull(u.getUuid2());
             tx.commit();
         }
         finally
@@ -163,14 +172,24 @@ public class UUIDTest extends JDOPersistenceTestCase
             tx.begin();
             u[0] = new UUIDHolder();
             u[0].setUuid(testUuid1);
+            u[0].setUuid2(testUuid1);
+
             u[1] = new UUIDHolder();
             u[1].setUuid(testUuid2);
+            u[1].setUuid2(testUuid2);
+
             u[2] = new UUIDHolder();
             u[2].setUuid(testUuid1);
+            u[2].setUuid2(testUuid1);
+
             u[3] = new UUIDHolder();
             u[3].setUuid(testUuid2);
+            u[3].setUuid2(testUuid2);
+
             u[4] = new UUIDHolder();
             u[4].setUuid(testUuid1);
+            u[4].setUuid2(testUuid1);
+
             pm.makePersistentAll(u);
             tx.commit();
             id[0] = JDOHelper.getObjectId(u[0]);
@@ -187,7 +206,7 @@ public class UUIDTest extends JDOPersistenceTestCase
             }
             pm.close();
         }
-        
+
         pm = pmf.getPersistenceManager();
         tx = pm.currentTransaction();
         try
@@ -205,13 +224,49 @@ public class UUIDTest extends JDOPersistenceTestCase
             }
             pm.close();
         }
-        
+
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            Collection c = (Collection) pm.newQuery(UUIDHolder.class, "uuid2 == '" + testUuid1 + "'").execute();
+            assertEquals(3, c.size());
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+
         pm = pmf.getPersistenceManager();
         tx = pm.currentTransaction();
         try
         {
             tx.begin();
             Collection c = (Collection) pm.newQuery(UUIDHolder.class, "uuid == '" + testUuid2 + "'").execute();
+            assertEquals(2, c.size());
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            Collection c = (Collection) pm.newQuery(UUIDHolder.class, "uuid2 == '" + testUuid2 + "'").execute();
             assertEquals(2, c.size());
             tx.commit();
         }

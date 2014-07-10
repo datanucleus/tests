@@ -6,6 +6,9 @@
     <package name="org.jpox.samples.types.uuid">
         <class name="UUIDHolder">
             <field name="uuid" persistence-modifier="persistent"/>
+            <field name="uuid2" persistence-modifier="persistent">
+                <column jdbc-type="varchar"/>
+            </field>
             <field name="other" persistence-modifier="persistent">
                 <column name="other"/>
             </field>
