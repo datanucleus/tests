@@ -33,6 +33,9 @@ import junit.framework.TestListener;
 import org.junit.internal.runners.JUnit38ClassRunner;
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
+import org.junit.runner.manipulation.Filter;
+import org.junit.runner.manipulation.Filterable;
+import org.junit.runner.manipulation.NoTestsRemainException;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -44,7 +47,7 @@ import org.junit.runners.model.InitializationError;
  * configurations easily by showing the configuration name in the method
  * description.
  */
-public class MultiConfigRunner extends Runner
+public class MultiConfigRunner extends Runner implements Filterable
 {
     private Runner delegateRunner;
 
@@ -63,6 +66,15 @@ public class MultiConfigRunner extends Runner
     public void run(RunNotifier notifier)
     {
         delegateRunner.run(notifier);
+    }
+    
+    @Override
+    public void filter(Filter filter) throws NoTestsRemainException
+    {
+        if (delegateRunner instanceof Filterable)
+        {
+            ((Filterable) delegateRunner).filter(filter);
+        }
     }
 
     private Runner runnerForClass(Class<?> testClass) throws Exception
