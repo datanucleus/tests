@@ -31,6 +31,7 @@ import org.datanucleus.api.jpa.JPAEntityManager;
 import org.datanucleus.store.connection.ManagedConnection;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
+import org.jpox.samples.annotations.models.company.Account;
 import org.jpox.samples.annotations.models.company.Employee;
 import org.jpox.samples.annotations.models.company.Person;
 
@@ -51,7 +52,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         {
             addClassesToSchema(new Class[]
                 {
-                    Person.class, Employee.class
+                    Person.class, Employee.class, Account.class,
                 });
         }
     }
@@ -609,6 +610,134 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         finally
         {
             // Cleanup data
+            clean(Person.class);
+        }
+    }
+
+    public void testNamedProcWithMultipleResultSet()
+    {
+        if (vendorID == null)
+        {
+            return;
+        }
+        if (storeMgr instanceof RDBMSStoreManager)
+        {
+            DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
+            if (!dba.supportsOption(DatastoreAdapter.STORED_PROCEDURES))
+            {
+                LOG.warn("Database doesnt support stored procedures so ignoring the test");
+                return;
+            }
+        }
+
+        String procName = "DN_PROC_NAMED_RS2";
+
+        RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
+        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        try
+        {
+            Connection conn = (Connection)mc.getConnection();
+            Statement stmt = conn.createStatement();
+
+            // Drop it first
+            String dropStmt = "DROP PROCEDURE IF EXISTS " + procName;
+            stmt.execute(dropStmt);
+
+            // Create it
+            String createStmt = "CREATE PROCEDURE " + procName + "(IN PARAM1 VARCHAR(255), IN PARAM2 VARCHAR(255)) BEGIN " +
+                "SELECT * FROM JPA_AN_PERSON WHERE FIRSTNAME = PARAM1;" +
+                "SELECT * FROM JPA_AN_ACCOUNT WHERE USERNAME = PARAM2;" +
+                "END";
+            stmt.execute(createStmt);
+        }
+        catch (SQLException sqle)
+        {
+            fail("Exception in drop-create of stored procedure : " + sqle.getMessage());
+        }
+        finally
+        {
+            mc.close();
+        }
+
+        try
+        {
+            JPAEntityManager em = (JPAEntityManager)getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@warnerbros.com");
+                em.persist(p);
+                Account a = new Account();
+                a.setUsername("Fred");
+                a.setEnabled(true);
+                em.persist(a);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            em = (JPAEntityManager)getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+LOG.info(">> Executing stored proc");
+                // Execute stored proc and compare
+                StoredProcedureQuery spq = em.createNamedStoredProcedureQuery("myNamedSP2");
+                spq.setParameter("PARAM1", "Fred");
+                spq.setParameter("PARAM2", "Fred");
+                boolean val = spq.execute();
+                assertTrue("Return from execute should have been true", val);
+
+                List results = spq.getResultList();
+                assertNotNull("ResultSet was null!", results);
+                assertEquals("Number of results was wrong", 1, results.size());
+                for (Object result : results)
+                {
+                    LOG.info(">> result=" + result);
+                }
+                assertTrue("More results should be present but werent", spq.hasMoreResults());
+                List results2 = spq.getResultList();
+                assertNotNull("ResultSet2 was null!", results2);
+                assertEquals("Number of results2 was wrong", 1, results2.size());
+                for (Object result : results2)
+                {
+                    LOG.info(">> result=" + result);
+                }
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            // Cleanup data
+            clean(Account.class);
             clean(Person.class);
         }
     }

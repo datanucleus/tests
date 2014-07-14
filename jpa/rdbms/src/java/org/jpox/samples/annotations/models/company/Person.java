@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.MapKey;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -37,8 +38,13 @@ import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 
-@NamedStoredProcedureQuery(name="myNamedSP", procedureName="DN_PROC_NAMED_RS", 
-    parameters={@StoredProcedureParameter(name="PARAM1", type=String.class, mode=ParameterMode.IN)})
+@NamedStoredProcedureQueries(value=
+    {@NamedStoredProcedureQuery(name="myNamedSP", procedureName="DN_PROC_NAMED_RS", 
+        parameters={@StoredProcedureParameter(name="PARAM1", type=String.class, mode=ParameterMode.IN)}),
+     @NamedStoredProcedureQuery(name="myNamedSP2", procedureName="DN_PROC_NAMED_RS2", 
+        parameters={@StoredProcedureParameter(name="PARAM1", type=String.class, mode=ParameterMode.IN), @StoredProcedureParameter(name="PARAM2", type=String.class, mode=ParameterMode.IN)})
+    }
+)
 @Entity(name="Person_Ann")
 @Table(name="JPA_AN_PERSON")
 @IdClass(Person.PK.class)
