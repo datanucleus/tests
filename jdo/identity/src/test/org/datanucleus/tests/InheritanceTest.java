@@ -186,6 +186,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
                 single = new HBase();
                 single.setId(new Integer(1));
                 pm.makePersistent(single);
+                pm.flush();
                 JDOHelper.getObjectId(single);
                 tx.commit();
             }
