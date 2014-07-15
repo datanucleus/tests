@@ -54,10 +54,6 @@ public class SQLQueryTest extends JPAPersistenceTestCase
      */
     public void testBasic1()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
         try
         {
             EntityManager em = getEM();
@@ -105,10 +101,6 @@ public class SQLQueryTest extends JPAPersistenceTestCase
      */
     public void testBasic2()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
         try
         {
             EntityManager em = getEM();
@@ -172,10 +164,6 @@ public class SQLQueryTest extends JPAPersistenceTestCase
      */
     public void testBasicWithNumberedParameters()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
         try
         {
             EntityManager em = getEM();
@@ -225,10 +213,6 @@ public class SQLQueryTest extends JPAPersistenceTestCase
      */
     public void testSQLResult()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
         try
         {
             EntityManager em = getEM();
@@ -301,10 +285,6 @@ public class SQLQueryTest extends JPAPersistenceTestCase
      */
     public void testSQLResultAliased()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
         try
         {
             EntityManager em = getEM();
@@ -379,10 +359,6 @@ public class SQLQueryTest extends JPAPersistenceTestCase
      */
     public void testSQLResultAliased2()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
         try
         {
             EntityManager em = getEM();
