@@ -18,6 +18,9 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import static org.datanucleus.tests.annotations.Datastore.DatastoreKey.RDBMS;
+import static org.datanucleus.tests.annotations.TransactionMode.Mode.PESSIMISTIC;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +47,8 @@ import org.datanucleus.samples.models.hashsetcollection.OtherDetail;
 import org.datanucleus.samples.store.Product;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
+import org.datanucleus.tests.annotations.Datastore;
+import org.datanucleus.tests.annotations.TransactionMode;
 import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Developer;
 import org.jpox.samples.models.company.Employee;
@@ -55,9 +60,10 @@ import org.jpox.samples.one_many.unidir_2.UserGroup;
 
 /**
  * Series of tests for Attach/Detach replication functionality.
- *
- * NOTE : THIS IS ONLY RUN WITH RDBMS.
  */
+@Datastore(RDBMS)
+@TransactionMode(PESSIMISTIC)
+// TODO Support Replication in Optimistic Mode
 public class AttachDetachReplicateTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
@@ -99,11 +105,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
      */
     public void testReplicateSimple2()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
-
         PersistenceManagerFactory pmf2 = getPersistenceManagerFactory2();
         try
         {
@@ -221,11 +222,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
      */
     public void testReplicateSimple()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
-
         PersistenceManagerFactory pmf2 = getPersistenceManagerFactory2();
         try
         {
@@ -346,11 +342,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
      */
     public void testReplicateRelation_1to1_circular()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
-
         PersistenceManagerFactory pmf2 = getPersistenceManagerFactory2();
         try
         {
@@ -557,11 +548,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
      */
     public void testMoveAcrossDatastores_company()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
-
         PersistenceManagerFactory pmf2 = getPersistenceManagerFactory2();
         try
         {
@@ -859,11 +845,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
      */
     public void testMoveAcrossDatastoresWithRelation()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
-
         PersistenceManagerFactory pmf2 = getPersistenceManagerFactory2();
         try
         {
@@ -1082,11 +1063,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
      */
     public void testSetDetachedObjectOnFieldInPCNewObject()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
-
         PersistenceManagerFactory pmf2 = getPersistenceManagerFactory2();
         try
         {
@@ -1242,11 +1218,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
 
     public void testReplicateApplicationIdentityWith1toN()
     {
-        if (vendorID == null)
-        {
-            return;
-        }
-
         PersistenceManagerFactory pmf1 = null;
         PersistenceManagerFactory pmf2 = null;
 
