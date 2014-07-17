@@ -17,7 +17,7 @@
  **********************************************************************/
 package org.datanucleus.tests;
 
-import static org.datanucleus.tests.Datastore.DatastoreKey.oracle;
+import static org.datanucleus.tests.annotations.Datastore.DatastoreKey.ORACLE;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +36,7 @@ import javax.jdo.Transaction;
 import oracle.spatial.geometry.JGeometry;
 
 import org.datanucleus.samples.jgeometry.SampleGeometry;
+import org.datanucleus.tests.annotations.Datastore;
 import org.datanucleus.util.StringUtils;
 
 /**
@@ -43,7 +44,7 @@ import org.datanucleus.util.StringUtils;
  * currently.
  * @version $Revision: 1.2 $
  */
-@Datastore(oracle)
+@Datastore(ORACLE)
 public class JGeometrySpatialTest extends JDOPersistenceTestCase
 {
 

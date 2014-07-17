@@ -17,8 +17,8 @@
  **********************************************************************/
 package org.datanucleus.tests;
 
-import static org.datanucleus.tests.Datastore.DatastoreKey.mysql;
-import static org.datanucleus.tests.Datastore.DatastoreKey.postgresql;
+import static org.datanucleus.tests.annotations.Datastore.DatastoreKey.MYSQL;
+import static org.datanucleus.tests.annotations.Datastore.DatastoreKey.POSTGRESQL;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +37,7 @@ import org.datanucleus.samples.pggeometry.SampleGeometryCollection;
 import org.datanucleus.samples.pggeometry.SampleLineString;
 import org.datanucleus.samples.pggeometry.SamplePoint;
 import org.datanucleus.samples.pggeometry.SamplePolygon;
+import org.datanucleus.tests.annotations.Datastore;
 import org.datanucleus.util.StringUtils;
 import org.postgis.Geometry;
 import org.postgis.GeometryCollection;
@@ -50,7 +51,7 @@ import org.postgis.Polygon;
 /**
  * Series of spatial tests for PostGis functions. Run on MySQL and PostgreSQL, and some only on PostgresSQL.
  */
-@Datastore({postgresql, mysql})
+@Datastore({POSTGRESQL, MYSQL})
 public class PgGeometrySpatialTest extends JDOPersistenceTestCase
 {
     public PgGeometrySpatialTest(String name)
@@ -246,7 +247,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testTransform() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -268,7 +269,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testGeographicMethods() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -603,7 +604,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testIsEmpty() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -638,7 +639,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testIsSimple() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -665,7 +666,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
   
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testBoundary() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -801,7 +802,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testCrosses() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -907,7 +908,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testRelate() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -936,7 +937,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testDistance() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -965,7 +966,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testBuffer() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -995,7 +996,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testConvexHull() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1024,7 +1025,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testIntersection() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1053,7 +1054,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testUnion() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1083,7 +1084,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testSymDifference() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1115,7 +1116,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testDifference() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1247,7 +1248,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testIsRing() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1404,7 +1405,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testCentroid() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1431,7 +1432,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testPointOnSurfaceMethod() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -1596,7 +1597,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
     
-    @Datastore(postgresql)
+    @Datastore(POSTGRESQL)
     public void testBboxTest() throws SQLException
     {
         PersistenceManager pm = pmf.getPersistenceManager();

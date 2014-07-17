@@ -14,24 +14,34 @@ limitations under the License.
 
 Contributors:
     ...
-*****************************************************************/
+ *****************************************************************/
 package org.datanucleus.tests;
 
-import java.util.stream.Stream;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static org.datanucleus.tests.annotations.TransactionMode.Mode.OPTIMISTIC;
+import static org.datanucleus.tests.annotations.TransactionMode.Mode.PESSIMISTIC;
 
-import org.datanucleus.tests.Datastore.DatastoreKey;
+import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.Optional;
+
+import org.datanucleus.tests.annotations.Datastore;
+import org.datanucleus.tests.annotations.Datastore.DatastoreKey;
+import org.datanucleus.tests.annotations.TransactionMode;
+import org.datanucleus.tests.annotations.TransactionMode.Mode;
 import org.junit.Assume;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
 /**
- * Provides support for custom annotations such as {@link Datastore}.
+ * Provides support for custom annotations such as {@link Datastore} which allows to skip tests for specific configurations
  */
 public class DatanucleusTestWatcher extends TestWatcher
 {
     private Description description;
 
-    public String getTestName() 
+    public String getTestName()
     {
         return description.getTestClass().getName() + " " + description.getMethodName();
     }
@@ -45,29 +55,61 @@ public class DatanucleusTestWatcher extends TestWatcher
         if (JDOPersistenceTestCase.class.isAssignableFrom(testClass))
         {
             filterDatastores(testClass);
+            filterTransactionMode(testClass);
+        }
+    }
+
+    // Filter based on the Optimistic and Pessimistic transaction configuration
+    private void filterTransactionMode(Class<?> testClass)
+    {
+        List<Mode> filterModes = findAnnotationAtMethodOrClass(TransactionMode.class, description, testClass)
+                .map(annotation -> asList(annotation.value()))
+                .orElse(emptyList());
+        if (!filterModes.isEmpty())
+        {
+            boolean optimistic = JDOPersistenceTestCase.pmf.getOptimistic();
+
+            Assume.assumeTrue(
+                    filterModes
+                            .stream()
+                            .anyMatch(filter ->
+                                (filter.equals(OPTIMISTIC) && optimistic) || (filter.equals(PESSIMISTIC) && !optimistic)
+                            ));
         }
     }
 
     private void filterDatastores(Class<?> testClass)
     {
-        // Use class level annotation as default if present
-        final DatastoreKey[] defaultDatastores = testClass.isAnnotationPresent(Datastore.class) ?
-                testClass.getAnnotation(Datastore.class).value() : null;
+        List<DatastoreKey> filterDatastores =
+                findAnnotationAtMethodOrClass(Datastore.class, description, testClass)
+                        .map(annotation -> asList(annotation.value()))
+                        .orElse(emptyList());
 
-        // Use method level annotation if present otherwise fallback to the default.
-        DatastoreKey[] filterDatastores = description.getAnnotation(Datastore.class) == null ?
-                defaultDatastores : description.getAnnotation(Datastore.class).value();
-
-        // Any datastore to filter?
-        if (filterDatastores != null)
+        if (!filterDatastores.isEmpty())
         {
             String datastoreKey = JDOPersistenceTestCase.storeMgr.getStoreManagerKey();
-            DatastoreKey currentDatastore = DatastoreKey.valueOf(datastoreKey);
+            DatastoreKey currentDatastore = DatastoreKey.valueOf(datastoreKey.toUpperCase());
             DatastoreKey vendorIdDatastore = JDOPersistenceTestCase.vendorID == null ?
-                    null : DatastoreKey.valueOf(JDOPersistenceTestCase.vendorID);
+                    null : DatastoreKey.valueOf(JDOPersistenceTestCase.vendorID.toUpperCase());
 
             Assume.assumeTrue(
-                    Stream.of(filterDatastores).anyMatch(datastore -> datastore.equals(currentDatastore) || datastore.equals(vendorIdDatastore)));
+                    filterDatastores.stream()
+                            .anyMatch(filter -> filter.equals(currentDatastore) || filter.equals(vendorIdDatastore)));
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Annotation> Optional<T> findAnnotationAtMethodOrClass(
+            Class<T> annotation,
+            Description description,
+            Class<?> testClass)
+    {
+        Annotation foundAnnotation = description.getAnnotation(annotation);
+        if (foundAnnotation == null)
+        {
+            foundAnnotation = testClass.getAnnotation(annotation);
+        }
+
+        return Optional.ofNullable((T) foundAnnotation);
     }
 }
