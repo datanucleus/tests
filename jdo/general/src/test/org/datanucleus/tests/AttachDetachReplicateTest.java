@@ -62,7 +62,6 @@ import org.jpox.samples.one_many.unidir_2.UserGroup;
  * Series of tests for Attach/Detach replication functionality.
  */
 @Datastore(RDBMS)
-@TransactionMode(PESSIMISTIC)
 // TODO Support Replication in Optimistic Mode
 public class AttachDetachReplicateTest extends JDOPersistenceTestCase
 {
@@ -1061,6 +1060,7 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
      * Test adding a detached object to a PC_NEW object graph (after it has been made persistent)
      * TODO Change the sample to be Company
      */
+    @TransactionMode(PESSIMISTIC)
     public void testSetDetachedObjectOnFieldInPCNewObject()
     {
         PersistenceManagerFactory pmf2 = getPersistenceManagerFactory2();
