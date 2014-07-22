@@ -1481,6 +1481,58 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test less than Date.
+     */
+    public void testLessThanDate()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Qualification> crit = qb.createQuery(Qualification.class);
+            Root<Qualification> candidate = crit.from(Qualification.class);
+            candidate.alias("q");
+            crit.select(candidate);
+
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.set(Calendar.YEAR, 2011);
+            cal.set(Calendar.MONTH, 2);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            cal.set(Calendar.HOUR_OF_DAY, 12);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            Path datePath = candidate.get("date");
+            crit.where(qb.lessThan(datePath, new java.sql.Date(cal.getTime().getTime())));
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT q FROM org.datanucleus.samples.annotations.models.company.Qualification q WHERE (q.date < {d '2011-03-01'})",
+                crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Qualification> results = q.getResultList();
+
+            assertNotNull("Null results returned!", results);
+            assertEquals("Number of results is incorrect", 1, results.size());
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
      * Test generation of filter with TREAT.
      */
     public void testTREATInWhereClause()
