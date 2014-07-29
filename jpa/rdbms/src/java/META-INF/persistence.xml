@@ -24,5 +24,7 @@
         <class>org.jpox.samples.annotations.models.company.PhoneNumber</class>
         <class>org.jpox.samples.annotations.one_one.unidir.Login</class>
         <class>org.jpox.samples.annotations.one_one.unidir.LoginAccount</class>
+        <class>org.jpox.samples.annotations.types.basic.DateHolder</class>
+        <class>org.jpox.samples.annotations.types.basic.TypeHolder</class>
     </persistence-unit>
 </persistence>

@@ -19,6 +19,7 @@ package org.datanucleus.tests;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.util.HashSet;
 
 import javax.persistence.EntityManager;
@@ -36,6 +37,7 @@ import org.jpox.samples.annotations.inheritance.InheritB2;
 import org.jpox.samples.annotations.inheritance.InheritC;
 import org.jpox.samples.annotations.inheritance.InheritC1;
 import org.jpox.samples.annotations.inheritance.InheritC2;
+import org.jpox.samples.annotations.types.basic.DateHolder;
 
 /**
  * Tests for schema creation.
@@ -205,6 +207,83 @@ public class SchemaTest extends JPAPersistenceTestCase
             LOG.error(e);
             fail("Specification of table and column names must have been ignored when creating the schema for " + 
                 "inheritance case where the fields were overridden. Exception was thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for allows null setting.
+     */
+    public void testAllowsNull()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {DateHolder.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            HashSet<String> columnNames = new HashSet<String>();
+            columnNames.add("ID");
+            columnNames.add("DATEFIELD");
+            columnNames.add("DATEFIELD2");
+
+            // Check base table column names
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_ANN_DATEHOLDER", columnNames);
+
+            String insensitiveTableName = RDBMSTestHelper.getIdentifierInCaseOfAdapter(storeMgr, "JPA_ANN_DATEHOLDER", false);
+            ResultSet rs = dmd.getColumns(null, null, insensitiveTableName, null);
+            while (rs.next())
+            {
+                String colName = rs.getString(4);
+                int nullValue = rs.getInt(11);
+                if (colName.equalsIgnoreCase("DATEFIELD"))
+                {
+                    if (nullValue != 1)
+                    {
+                        fail("Column " + colName + " should have allowed nulls but doesnt");
+                    }
+                }
+                else if (colName.equalsIgnoreCase("DATEFIELD2"))
+                {
+                    if (nullValue != 1)
+                    {
+                        fail("Column " + colName + " should have allowed nulls but doesnt");
+                    }
+                }
+                else if (colName.equalsIgnoreCase("ID"))
+                {
+                    if (nullValue != 0)
+                    {
+                        fail("Column " + colName + " shouldnt have allowed nulls but does");
+                    }
+                }
+            }
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error(e);
+            fail("Specification of table and column names gave error when checking schema. Exception was thrown : " + e.getMessage());
         }
         finally
         {
