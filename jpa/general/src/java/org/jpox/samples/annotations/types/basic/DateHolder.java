@@ -39,6 +39,9 @@ public class DateHolder
     @Temporal(value=TemporalType.DATE)
     private java.util.Date dateField;
 
+    @Temporal(value=TemporalType.DATE)
+    private java.util.Date dateField2;
+
     public DateHolder()
     {
         super();
@@ -48,9 +51,17 @@ public class DateHolder
     {
         return dateField;
     }
-
     public void setDateField(java.util.Date date)
     {
         this.dateField = date;
+    }
+
+    public java.util.Date getDateField2()
+    {
+        return dateField2;
+    }
+    public void setDateField2(java.util.Date date)
+    {
+        this.dateField2 = date;
     }
 }

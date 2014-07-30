@@ -36,6 +36,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.datanucleus.store.types.wrappers.GregorianCalendar;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub1;
@@ -2318,6 +2319,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             assertEquals(1, result.size());
             tx.rollback();
         }
+        catch (Exception e)
+        {
+            LOG.error(">> Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
+        }
         finally
         {
             if (tx.isActive())
@@ -2361,6 +2367,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             assertEquals(11, holderDate.getMonth()); // 11
 
             tx.rollback();
+        }
+        catch (Exception e)
+        {
+            LOG.error(">> Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -3328,6 +3339,99 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         finally
         {
             clean(Person.class);
+        }
+    }
+
+    /**
+     * Test for multiple date params.
+     */
+    public void testMultipleDateParameters()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            DateHolder d1 = new DateHolder();
+            Calendar cal1 = GregorianCalendar.getInstance();
+            cal1.set(Calendar.YEAR, 2012);
+            cal1.set(Calendar.MONTH, 3);
+            cal1.set(Calendar.DAY_OF_MONTH, 0);
+            cal1.set(Calendar.HOUR_OF_DAY, 0);
+            cal1.set(Calendar.MINUTE, 0);
+            cal1.set(Calendar.SECOND, 0);
+            cal1.set(Calendar.MILLISECOND, 0);
+            d1.setDateField(cal1.getTime());
+            Calendar cal2 = GregorianCalendar.getInstance();
+            cal2.set(Calendar.YEAR, 2001);
+            cal2.set(Calendar.MONTH, 2);
+            cal2.set(Calendar.DAY_OF_MONTH, 0);
+            cal2.set(Calendar.HOUR_OF_DAY, 0);
+            cal2.set(Calendar.MINUTE, 0);
+            cal2.set(Calendar.SECOND, 0);
+            cal2.set(Calendar.MILLISECOND, 0);
+            d1.setDateField2(cal2.getTime());
+            em.persist(d1);
+
+            em.flush();
+
+            Query q = em.createQuery("SELECT d FROM " + DateHolder.class.getName() + " d WHERE d.dateField = :date1 AND d.dateField2 = :date2");
+            q.setParameter("date1", cal1.getTime());
+            q.setParameter("date2", cal2.getTime());
+            List<DateHolder> results = q.getResultList();
+            assertEquals(1, results.size());
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in TREAT WHERE test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for multiple joins finishing at the candidate again
+     */
+    public void testMultipleJoinsAndFieldAccess()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                String query = "Select d From Department d Join d.projects p Join d.manager m";
+                em.createQuery(query).getResultList();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test with multiple joins", e);
+                fail("Exception in test using multiple joins : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Boiler.class);
+            clean(Timer.class);
         }
     }
 }
