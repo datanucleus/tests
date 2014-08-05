@@ -29,8 +29,8 @@ import java.lang.annotation.Target;
  */
 @Target({TYPE, METHOD})
 @Retention(RUNTIME)
-public @interface Datastore {
-
+public @interface Datastore 
+{
     // The values matches the key returned by StoreManager#getStoreManagerKey converted to upper case 
     public enum DatastoreKey {
         RDBMS,
@@ -39,7 +39,14 @@ public @interface Datastore {
         // Others
         MONGODB,
         LDAP,
-        XML
+        XML,
+        CASSANDRA,
+        NEO4J,
+        NEODATIS,
+        HBASE,
+        EXCEL,
+        ODF,
+        JSON
     }
 
     DatastoreKey[] value();
