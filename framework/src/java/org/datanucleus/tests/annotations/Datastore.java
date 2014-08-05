@@ -32,21 +32,29 @@ import java.lang.annotation.Target;
 public @interface Datastore 
 {
     // The values matches the key returned by StoreManager#getStoreManagerKey converted to upper case 
-    public enum DatastoreKey {
+    public enum DatastoreKey 
+    {
         RDBMS,
         // Vendors - Matching keys from Datastore
-        H2, MYSQL, POSTGRESQL, ORACLE,
+        H2,
+        MYSQL, 
+        POSTGRESQL, 
+        ORACLE,
+        HSQL,
+        DERBY,
+        SQLSERVER,
+        SQLITE,
         // Others
-        MONGODB,
-        LDAP,
-        XML,
         CASSANDRA,
+        EXCEL,
+        HBASE,
+        JSON,
+        LDAP,
+        MONGODB,
         NEO4J,
         NEODATIS,
-        HBASE,
-        EXCEL,
         ODF,
-        JSON
+        XML,
     }
 
     DatastoreKey[] value();
