@@ -231,9 +231,14 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
 
-        RDBMSTableIndexInfo indexInfo = (RDBMSTableIndexInfo)handler.getSchemaData(con, "indices", 
-            new Object[] {table1});
-        assertEquals("Number of Indices for table " + table1 + " is wrong", 3, indexInfo.getNumberOfChildren());
+        RDBMSTableIndexInfo indexInfo = (RDBMSTableIndexInfo)handler.getSchemaData(con, "indices", new Object[] {table1});
+        int numIndices = 3;
+        if (vendorID.equals("hsql"))
+        {
+            // HSQL will create an index for the FK without asking, and we can't replace it with our own so end up with two
+            numIndices = 4;
+        }
+        assertEquals("Number of Indices for table " + table1 + " is wrong", numIndices, indexInfo.getNumberOfChildren());
         Iterator indexIter = indexInfo.getChildren().iterator();
         while (indexIter.hasNext())
         {
@@ -257,7 +262,6 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
                 fail("Unexpected index " + columnName + " for table " + table1);
             }
         }
-
 
         indexInfo = (RDBMSTableIndexInfo)handler.getSchemaData(con, "indices", new Object[] {table2});
         assertEquals("Number of Indices for table " + table2 + " is wrong", 2, indexInfo.getNumberOfChildren());
