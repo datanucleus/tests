@@ -68,8 +68,8 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
 
         // Retrieve and check the table for SchemaClass1
         DatastoreClass table1 = databaseMgr.getDatastoreClass(SchemaClass1.class.getName(), clr);
-        RDBMSTableInfo tableInfo1 = (RDBMSTableInfo)handler.getSchemaData(con, "columns", 
-            new Object[] {table1});
+        RDBMSTableInfo tableInfo1 = (RDBMSTableInfo)handler.getSchemaData(con, "columns", new Object[] {table1});
+        assertNotNull("TableInfo from getColumns is NULL!", tableInfo1);
         assertEquals("Number of columns for table " + table1 + " is wrong", 4, tableInfo1.getNumberOfChildren());
         Iterator colsIter = tableInfo1.getChildren().iterator();
         Collection colNamesPresent = new HashSet();
@@ -103,8 +103,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
 
         // Retrieve and check the table for SchemaClass2
         DatastoreClass table2 = databaseMgr.getDatastoreClass(SchemaClass2.class.getName(), clr);
-        RDBMSTableInfo tableInfo2 = (RDBMSTableInfo)handler.getSchemaData(con, "columns", 
-            new Object[] {table2});
+        RDBMSTableInfo tableInfo2 = (RDBMSTableInfo)handler.getSchemaData(con, "columns", new Object[] {table2});
         assertEquals("Number of columns for table " + table2 + " is wrong", 3, tableInfo2.getNumberOfChildren());
         colsIter = tableInfo2.getChildren().iterator();
         colNamesPresent.clear();
@@ -134,8 +133,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
             colNamesPresent.size() == 0);
 
         // Now check retrieval of a column for a table
-        RDBMSColumnInfo colInfo = (RDBMSColumnInfo)handler.getSchemaData(con, "column", 
-            new Object[] {table2, "VALUE"});
+        RDBMSColumnInfo colInfo = (RDBMSColumnInfo)handler.getSchemaData(con, "column", new Object[] {table2, "VALUE"});
         assertNotNull("Column VALUE for table " + table2 + " was not found", colInfo);
         assertEquals("Column name is wrong", "VALUE", colInfo.getColumnName());
     }
@@ -157,8 +155,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
-        RDBMSTableFKInfo fkInfo = (RDBMSTableFKInfo)handler.getSchemaData(con, "foreign-keys", 
-            new Object[] {table1});
+        RDBMSTableFKInfo fkInfo = (RDBMSTableFKInfo)handler.getSchemaData(con, "foreign-keys", new Object[] {table1});
 
         // Expecting single FK between SchemaClass1.other and SchemaClass2
         assertEquals("Number of FKs for table " + table1 + " is wrong", 1, fkInfo.getNumberOfChildren());
@@ -190,10 +187,8 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
-        RDBMSTablePKInfo pkInfo1 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", 
-            new Object[] {table1});
-        RDBMSTablePKInfo pkInfo2 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", 
-            new Object[] {table2});
+        RDBMSTablePKInfo pkInfo1 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", new Object[] {table1});
+        RDBMSTablePKInfo pkInfo2 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", new Object[] {table2});
 
         // Expecting 2 PK columns for SchemaClass1
         // TODO Enable checks on the PK name (when JDBC drivers return it correctly)
