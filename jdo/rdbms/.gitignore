@@ -2,3 +2,4 @@
 datanucleus.log
 target/
 /testDB
+/test.db
