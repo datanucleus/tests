@@ -35,8 +35,7 @@
             </field>
         </class>
 
-        <class name="ArrayList2ItemChild" detachable="true" identity-type="datastore"
-            persistence-capable-superclass="ArrayList2Item">
+        <class name="ArrayList2ItemChild" detachable="true" identity-type="datastore">
             <inheritance strategy="new-table"/>
             <field name="code" persistence-modifier="persistent">
                 <column length="10" jdbc-type="VARCHAR"/>

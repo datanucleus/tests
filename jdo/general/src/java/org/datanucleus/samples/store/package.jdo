@@ -19,8 +19,7 @@
             <field name="statusId" persistence-modifier="persistent"></field>
         </class>
 
-        <class name="Book" detachable="true" identity-type="datastore"
-           persistence-capable-superclass="Product">
+        <class name="Book" detachable="true" identity-type="datastore">
            <inheritance strategy="new-table"/>
             <field name="isbn" persistence-modifier="persistent"></field>
             <field name="author" persistence-modifier="persistent"></field>
@@ -29,8 +28,7 @@
             <field name="publisher" persistence-modifier="persistent"></field>
         </class>
 
-        <class name="CompactDisc" detachable="true" identity-type="datastore"
-           persistence-capable-superclass="Product">
+        <class name="CompactDisc" detachable="true" identity-type="datastore">
             <inheritance strategy="new-table"/>
             <field name="artist" persistence-modifier="persistent"></field>
             <field name="title" persistence-modifier="persistent"></field>
@@ -39,13 +37,11 @@
             <field name="publisher" persistence-modifier="persistent"></field>
         </class>
 
-        <class name="YourCompactDisc" detachable="true" identity-type="datastore"
-           persistence-capable-superclass="CompactDisc">
+        <class name="YourCompactDisc" detachable="true" identity-type="datastore">
             <inheritance strategy="new-table"/>
         </class>
 
-        <class name="MyCompactDisc" detachable="true" identity-type="datastore"
-           persistence-capable-superclass="CompactDisc">
+        <class name="MyCompactDisc" detachable="true" identity-type="datastore">
             <inheritance strategy="new-table"/>
             <field name="location" persistence-modifier="persistent"></field>
         </class>

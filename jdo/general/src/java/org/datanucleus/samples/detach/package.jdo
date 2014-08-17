@@ -49,7 +49,7 @@
             </fetch-group>        
         </class>
 
-        <class name="ClassElements" detachable="true" persistence-capable-superclass="ClassSuperElements">
+        <class name="ClassElements" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="name" persistence-modifier="persistent"/>
             <field name="toCheckPrefetch" persistence-modifier="persistent">
@@ -106,7 +106,7 @@
             </fetch-group>
         </class>
 
-        <class name="DetachChildA" detachable="true" persistence-capable-superclass="DetachParent">
+        <class name="DetachChildA" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="fieldD" persistence-modifier="persistent" default-fetch-group="false"/>
             <field name="fieldE" persistence-modifier="persistent" default-fetch-group="false"/>
@@ -116,7 +116,7 @@
             </fetch-group>
         </class>
         
-        <class name="DetachChildB" detachable="true" persistence-capable-superclass="DetachParent">
+        <class name="DetachChildB" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="fieldG" persistence-modifier="persistent" default-fetch-group="false"/>
             <field name="fieldH" persistence-modifier="persistent" default-fetch-group="false"/>

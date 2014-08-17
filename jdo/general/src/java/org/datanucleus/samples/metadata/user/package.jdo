@@ -14,7 +14,7 @@
             <field name="name" persistence-modifier="persistent"/>
         </class>
 
-        <class name="UserGroup1" persistence-capable-superclass="org.datanucleus.samples.metadata.user.User1">
+        <class name="UserGroup1">
             <inheritance strategy="new-table"/>
             <field name="userGroupName" persistence-modifier="persistent"/>
         </class>
@@ -25,7 +25,7 @@
             <field name="name"/>
         </class>
 
-        <class name="UserGroup2" persistence-capable-superclass="org.datanucleus.samples.metadata.user.User2">
+        <class name="UserGroup2">
             <inheritance strategy="new-table"/>
             <field name="userGroupName"/>
         </class>
@@ -37,8 +37,7 @@
             <field name="name"/>
         </class>
 
-        <class name="UserGroup3" objectid-class="UserId3" identity-type="application" 
-                persistence-capable-superclass="org.datanucleus.samples.metadata.user.User3">
+        <class name="UserGroup3" objectid-class="UserId3" identity-type="application">
             <inheritance strategy="new-table"/>
             <field name="userGroupName"/>
         </class>
