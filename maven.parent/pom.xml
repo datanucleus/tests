@@ -348,6 +348,12 @@
                 <configuration>
                     <filesets>
                         <fileset>
+                            <directory>${basedir}/testDB</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
                             <directory>${basedir}</directory>
                             <includes>
                                 <include>**/*.log</include>
