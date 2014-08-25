@@ -22,11 +22,11 @@ import java.util.Set;
 
 /**
  * Class providing test for (inverse) container of interfaces.
- **/
+ */
 public class ShapeHolder3
 {
     private int id;
-    protected Set shapeSet = new HashSet();
+    protected Set<ShapeInverse> shapeSet = new HashSet();
 
     public ShapeHolder3()
     {

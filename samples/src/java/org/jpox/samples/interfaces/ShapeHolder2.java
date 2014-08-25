@@ -26,8 +26,6 @@ import java.util.Random;
  * <li>a field containing a Shape object (1-1 relation)</li>
  * <li>a second field containing a Shape object (1-1 relation)</li>
  * </ul>
- *
- * @version $Revision: 1.1 $ 
  */
 public class ShapeHolder2
 {

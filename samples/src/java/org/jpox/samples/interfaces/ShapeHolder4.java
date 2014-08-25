@@ -22,8 +22,6 @@ import java.util.Random;
 /**
  * Container of Shapes. Has a Shape field.
  * Can be used as a test of missing/incomplete ORM info via and ORM file.
- *
- * @version $Revision: 1.1 $ 
  */
 public class ShapeHolder4
 {

@@ -32,8 +32,6 @@ import java.util.Set;
  * <li>a field containing a List of Shapes (1-N relation)</li>
  * <li>a field containing a Set of Shapes (1-N relation)</li>
  * </ul>
- *
- * @version $Revision: 1.4 $ 
  */
 public class ShapeHolder
 {
@@ -41,8 +39,8 @@ public class ShapeHolder
     protected Shape shape1 = null;
     protected Shape shape2 = null;
 
-    protected List shapeList1 = new ArrayList();
-    protected Set shapeSet1 = new HashSet();
+    protected List<Shape> shapeList1 = new ArrayList();
+    protected Set<Shape> shapeSet1 = new HashSet();
 
     public ShapeHolder(int id)
     {

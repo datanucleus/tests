@@ -26,7 +26,7 @@ import java.util.List;
 public class ShapeHolder3b
 {
     private int id;
-    protected List shapeList = new ArrayList();
+    protected List<ShapeInverseB> shapeList = new ArrayList();
 
     public ShapeHolder3b()
     {
