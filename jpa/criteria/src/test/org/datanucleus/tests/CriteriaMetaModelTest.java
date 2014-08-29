@@ -253,6 +253,62 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test basic generation of query with candidate and alias.
+     */
+    public void testCandidateDistinct()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaQuery<Team> crit = qb.createQuery(Team.class);
+            Root<Team> candidate = crit.from(Team.class);
+            candidate.alias("t");
+            crit.select(candidate).distinct(true);
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT DISTINCT t FROM org.datanucleus.samples.jpa.query.Team t", crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Team> teams = q.getResultList();
+
+            assertNotNull("Null results returned!", teams);
+            assertEquals("Number of results is incorrect", 2, teams.size());
+            boolean realmadrid = false;
+            boolean barcelona = false;
+            Iterator<Team> teamIter = teams.iterator();
+            while (teamIter.hasNext())
+            {
+                Team team = teamIter.next();
+                if (team.getName().equals("Barcelona"))
+                {
+                    barcelona = true;
+                }
+                else if (team.getName().equals("Real Madrid"))
+                {
+                    realmadrid = true;
+                }
+            }
+            assertTrue("Barcelona not returned", barcelona);
+            assertTrue("Real Madrid not returned", realmadrid);
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
      * Test basic querying for a candidate with a filter
      */
     public void testFilter()
