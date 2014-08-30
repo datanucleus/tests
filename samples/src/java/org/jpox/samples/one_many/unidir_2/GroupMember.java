@@ -22,7 +22,6 @@ import java.util.StringTokenizer;
 
 /**
  * Member of a user group.
- * @version $Revision: 1.1 $
  */
 public class GroupMember
 {

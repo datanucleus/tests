@@ -19,7 +19,6 @@ package org.jpox.samples.one_many.bidir_2;
 
 /**
  * Double glazed window.
- * @version $Revision: 1.1 $
  */
 public class DoubleGlazedWindow extends Window
 {

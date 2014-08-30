@@ -29,7 +29,7 @@ import java.util.Set;
 public class Farm
 {
     private String name;
-    private HashSet animals = new HashSet();
+    private Set<Animal> animals = new HashSet();
     private Animal pet;
 
     public Farm(String name)
@@ -43,7 +43,7 @@ public class Farm
         return name;
     }
 
-    public HashSet getAnimals()
+    public Set getAnimals()
     {
         return animals;
     }

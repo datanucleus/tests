@@ -19,7 +19,6 @@ package org.jpox.samples.one_many.bidir_2;
 
 /**
  * Single glazed window.
- * @version $Revision: 1.1 $
  */
 public class SingleGlazedWindow extends Window
 {

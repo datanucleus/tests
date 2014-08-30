@@ -19,7 +19,6 @@ package org.jpox.samples.one_many.bidir;
 
 /**
  * Farm where they have dairy cattle.
- * @version $Revision: 1.1 $
  */
 public class DairyFarm extends Farm
 {

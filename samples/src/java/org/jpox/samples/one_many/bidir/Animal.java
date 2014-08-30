@@ -21,7 +21,6 @@ package org.jpox.samples.one_many.bidir;
 
 /**
  * An animal on the farm.
- * @version $Revision: 1.1 $
  */
 public class Animal
 {

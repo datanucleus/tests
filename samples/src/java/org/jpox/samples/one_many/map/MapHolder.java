@@ -30,14 +30,14 @@ public class MapHolder
     private long id; // Used for app identity
     private String name;
 
-    private Map joinMapNonNon; // Map<String,String> using join table
-    private Map joinMapNonNon2; // Map<String,String> using join table (in case 2 ways of mapping it)
-    private Map joinMapNonPC; // Map<String,MapValueItem> using join table
-    private Map joinMapPCNon; // Map<MapKeyitem,String> using join table
-    private Map joinMapPCPC; // Map<MapKeyItem,MapValueItem> using join table
+    private Map<String, String> joinMapNonNon; // Map<String,String> using join table
+    private Map<String, String> joinMapNonNon2; // Map<String,String> using join table (in case 2 ways of mapping it)
+    private Map<String, MapValueItem> joinMapNonPC; // Map<String,MapValueItem> using join table
+    private Map<MapKeyItem, String> joinMapPCNon; // Map<MapKeyitem,String> using join table
+    private Map<MapKeyItem, MapValueItem> joinMapPCPC; // Map<MapKeyItem,MapValueItem> using join table
     private Map joinMapNonPCSerial; // Map<String,MapValueItem> using join table with value serialised into join table
 
-    private Map fkMapKey; // Map<String,MapFKValueItem> with key stored in value
+    private Map<String, MapFKValueItem> fkMapKey; // Map<String,MapFKValueItem> with key stored in value
     private Map fkMapKey2; // Map<String,MapHolder> with key stored in value
     private Map fkMapValue; // Map<MapFKKeyItem,String> with value stored in key
 
@@ -74,7 +74,7 @@ public class MapHolder
         return name;
     }
 
-    public Map getJoinMapNonNon()
+    public Map<String, String> getJoinMapNonNon()
     {
         if (joinMapNonNon == null)
         {
@@ -83,7 +83,7 @@ public class MapHolder
         return joinMapNonNon;
     }
 
-    public Map getJoinMapNonNon2()
+    public Map<String, String> getJoinMapNonNon2()
     {
         if (joinMapNonNon2 == null)
         {
@@ -92,7 +92,7 @@ public class MapHolder
         return joinMapNonNon2;
     }
 
-    public Map getJoinMapNonPC()
+    public Map<String, MapValueItem> getJoinMapNonPC()
     {
         if (joinMapNonPC == null)
         {
@@ -110,7 +110,7 @@ public class MapHolder
         return joinMapPCNon;
     }
 
-    public Map getJoinMapPCPC()
+    public Map<MapKeyItem, MapValueItem> getJoinMapPCPC()
     {
         if (joinMapPCPC == null)
         {

@@ -19,7 +19,6 @@ package org.jpox.samples.one_many.bidir;
 
 /**
  * Representation of cattle.
- * @version $Revision: 1.1 $
  */
 public class Cattle extends Animal
 {

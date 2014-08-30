@@ -19,7 +19,6 @@ package org.jpox.samples.one_many.bidir;
 
 /**
  * Representation of poultry (hens, chickens etc).
- * @version $Revision: 1.1 $
  */
 public class Poultry extends Animal
 {

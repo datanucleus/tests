@@ -20,8 +20,8 @@ package org.datanucleus.tests;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
@@ -578,12 +578,12 @@ public class PersistenceTest extends JDOPersistenceTestCase
 
                 Farm farm1 = (Farm)pm.getObjectById(farm1Id);
                 assertEquals("Name of farm1 is incorrect", "Giles Farm", farm1.getName());
-                HashSet<Animal> farm1Animals = farm1.getAnimals();
+                Set<Animal> farm1Animals = farm1.getAnimals();
                 assertEquals("Number of animals in farm1 is incorrect", 2, farm1Animals.size());
 
                 Farm farm2 = (Farm)pm.getObjectById(farm2Id);
                 assertEquals("Name of farm2 is incorrect", "Brook Farm", farm2.getName());
-                HashSet<Animal> farm2Animals = farm2.getAnimals();
+                Set<Animal> farm2Animals = farm2.getAnimals();
                 assertEquals("Number of animals in farm2 is incorrect", 1, farm2Animals.size());
 
                 Animal cow = (Animal)pm.getObjectById(animal1Id);
@@ -618,12 +618,12 @@ public class PersistenceTest extends JDOPersistenceTestCase
 
                 Farm farm1 = (Farm)pm.getObjectById(farm1Id);
                 assertEquals("Name of farm1 is incorrect", "Giles Farm", farm1.getName());
-                HashSet<Animal> farm1Animals = farm1.getAnimals();
+                Set<Animal> farm1Animals = farm1.getAnimals();
                 assertEquals("Number of animals in farm1 is incorrect", 1, farm1Animals.size());
 
                 Farm farm2 = (Farm)pm.getObjectById(farm2Id);
                 assertEquals("Name of farm2 is incorrect", "Brook Farm", farm2.getName());
-                HashSet<Animal> farm2Animals = farm2.getAnimals();
+                Set<Animal> farm2Animals = farm2.getAnimals();
                 assertEquals("Number of animals in farm2 is incorrect", 1, farm2Animals.size());
 
                 try

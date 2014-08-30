@@ -25,13 +25,11 @@ import java.util.HashSet;
  * Representation of an office in a company.
  * Contains a collection of computers, where the computers use "subclass-table"
  * inheritance strategy, and so is used as a test for that relation.
- * 
- * @version $Revision: 1.1 $
  */
 public class Office
 {
     String name;
-    Collection computers = new HashSet();
+    Collection<Computer> computers = new HashSet();
 
     public Office(String name)
     {
@@ -63,7 +61,7 @@ public class Office
         return computers.contains(comp);
     }
 
-    public Collection getComputers()
+    public Collection<Computer> getComputers()
     {
         return computers;
     }

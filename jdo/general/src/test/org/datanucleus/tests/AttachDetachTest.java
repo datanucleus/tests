@@ -2106,7 +2106,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             try
             {
                 LOG.info("Detached farm : " + detachedFarm);
-                HashSet animals = detachedFarm.getAnimals();
+                Set<Animal> animals = detachedFarm.getAnimals();
                 Iterator animalsIter = animals.iterator();
                 while (animalsIter.hasNext())
                 {

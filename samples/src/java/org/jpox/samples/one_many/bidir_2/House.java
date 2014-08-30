@@ -20,6 +20,7 @@ package org.jpox.samples.one_many.bidir_2;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Representation of a House.
@@ -29,7 +30,7 @@ public class House
     private int number;
     private String street;
 
-    private HashSet windows = new HashSet();
+    private Set<Window> windows = new HashSet();
 
     public House(int number, String street)
     {

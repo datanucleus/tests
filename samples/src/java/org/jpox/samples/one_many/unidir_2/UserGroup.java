@@ -24,15 +24,13 @@ import java.util.StringTokenizer;
 
 /**
  * User group, consisting of a list of members.
- * 
- * @version $Revision: 1.1 $
  */
 public class UserGroup
 {
     private long id;
     private String name;
 
-    private List members = new ArrayList();
+    private List<GroupMember> members = new ArrayList();
 
     public UserGroup(long id, String name)
     {
@@ -40,7 +38,7 @@ public class UserGroup
         this.name = name;
     }
 
-    public List getMembers()
+    public List<GroupMember> getMembers()
     {
         return members;
     }
