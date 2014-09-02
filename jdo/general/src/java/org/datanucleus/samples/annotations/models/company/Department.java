@@ -46,7 +46,7 @@ public class Department implements Serializable
     @Persistent
     @Element(types=Project.class)
     @Join
-    private Set projects = new HashSet();
+    private Set<Project> projects = new HashSet();
 
     public Department(String name)
     {
@@ -73,12 +73,12 @@ public class Department implements Serializable
         return this.manager;
     }
 
-    public Set getProjects()
+    public Set<Project> getProjects()
     {
         return projects;
     }
 
-    public void setProjects(Set projects)
+    public void setProjects(Set<Project> projects)
     {
         this.projects = projects;
     }

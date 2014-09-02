@@ -51,14 +51,14 @@ public class Manager extends Employee implements Serializable
     @Persistent(mappedBy="manager", table="MANAGER_EMPLOYEES")
     @Element(types=Employee.class)
     @Join(column="MANAGER_ID")
-    protected Set subordinates;
+    protected Set<Employee> subordinates;
 
     @Persistent(mappedBy="manager")
     @Element(types=Department.class)
     @Join
     @Extensions({@Extension(vendorName="datanucleus", key="prop1", value="val1"), 
         @Extension(vendorName="datanucleus", key="prop2", value="val2")})
-    protected Set departments;
+    protected Set<Department> departments;
 
     protected Manager() 
     {
@@ -71,7 +71,7 @@ public class Manager extends Employee implements Serializable
         this.subordinates = new HashSet();
     }
 
-    public Set getSubordinates()
+    public Set<Employee> getSubordinates()
     {
         return this.subordinates;
     }
@@ -98,7 +98,7 @@ public class Manager extends Employee implements Serializable
         this.subordinates.clear();
     }
 
-    public Set getDepartments()
+    public Set<Department> getDepartments()
     {
         return this.departments;
     }
