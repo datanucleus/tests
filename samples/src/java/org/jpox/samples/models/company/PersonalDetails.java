@@ -21,8 +21,6 @@ package org.jpox.samples.models.company;
  * Details of a person.
  * Represents a subset of the information available from Person, and so can be used as a 
  * ResultClass for SQL/JDOQL queries.
- * 
- * @version $Revision: 1.1 $
  */
 public class PersonalDetails
 {

@@ -22,13 +22,12 @@ import java.util.List;
 
 /**
  * Representation of a typical open source project.
- * @version $Revision: 1.1 $
  */
 public class SoftwareProject
 {
     protected long id;
     protected String name;
-    protected List donations = new ArrayList();
+    protected List<Donation> donations = new ArrayList();
 
     /**
      * Constructor.
@@ -70,7 +69,7 @@ public class SoftwareProject
      * Accessor for the donations
      * @return The donations
      */
-    public List getDonations()
+    public List<Donation> getDonations()
     {
         return donations;
     }

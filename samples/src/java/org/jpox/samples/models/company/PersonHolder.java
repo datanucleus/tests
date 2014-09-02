@@ -19,8 +19,6 @@ package org.jpox.samples.models.company;
 
 /**
  * Convenience class that can be used in query results for holding Person objects.
- * 
- * @version $Revision: 1.1 $
  */
 public class PersonHolder
 {

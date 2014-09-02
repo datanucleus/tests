@@ -30,25 +30,21 @@ import java.util.Set;
 public class Manager extends Employee implements Serializable
 {
     private static final long serialVersionUID = -1710801247113719913L;
-    protected Set subordinates;
-    protected Set departments;
+    protected Set<Employee> subordinates;
+    protected Set<Department> departments;
 
-    /**
-     * Default constructor required since this is a PersistenceCapable class.
-     */
     protected Manager() 
     {
     }
 
-    public Manager(long id, String firstname, String lastname, String email,
-                   float salary, String serial)
+    public Manager(long id, String firstname, String lastname, String email, float salary, String serial)
     {
         super(id, firstname, lastname, email, salary, serial);
         this.departments = new HashSet();
         this.subordinates = new HashSet();
     }
 
-    public Set getSubordinates()
+    public Set<Employee> getSubordinates()
     {
         return this.subordinates;
     }
@@ -73,7 +69,7 @@ public class Manager extends Employee implements Serializable
         this.subordinates.clear();
     }
 
-    public Set getDepartments()
+    public Set<Department> getDepartments()
     {
         return this.departments;
     }

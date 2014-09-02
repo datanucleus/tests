@@ -21,6 +21,7 @@ package org.jpox.samples.models.company;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
@@ -33,7 +34,7 @@ public class Office implements Cloneable, Serializable
     private String roomName; // PK when app-id
 
     private String description;
-    private HashSet departments = new HashSet(); // 1-N uni relation using join table
+    private Set<Department> departments = new HashSet(); // 1-N uni relation using join table
     private Date date;
 
     public Office()

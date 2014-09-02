@@ -23,14 +23,13 @@ import java.util.List;
 /**
  * Representation of a Currency. Has a currency code, and has a series of exchange rates.
  * Has 1-N bidirectional relation with the Rate(s).
- * @version $Revision: 1.1 $
  */
 public class Currency
 {
     private int id; // PK for app id
 
     private String currencyCode;
-    private List rates = new ArrayList();
+    private List<Rate> rates = new ArrayList();
 
     public Currency(String currencyCode)
     {
@@ -57,7 +56,7 @@ public class Currency
         this.id = id;
     }
 
-    public final List getRates()
+    public final List<Rate> getRates()
     {
         return rates;
     }

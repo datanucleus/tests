@@ -18,12 +18,11 @@ Contributors:
 package org.jpox.samples.reachability;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Sample class used for testing reachability.
  * Certain fields are marked as not being persisted by reachability.
- * 
- * @version $Revision: 1.1 $
  */
 public class ReachableHolder
 {
@@ -32,7 +31,7 @@ public class ReachableHolder
 
     ReachableItem item1 = null; // Not persisted by reachability
 
-    HashSet set1 = new HashSet(); // Not persisted by reachability
+    Set<ReachableItem> set1 = new HashSet(); // Not persisted by reachability
 
     public ReachableHolder(String name)
     {
@@ -49,7 +48,7 @@ public class ReachableHolder
         return item1;
     }
 
-    public HashSet getSet1()
+    public Set getSet1()
     {
         return set1;
     }
