@@ -20,6 +20,7 @@ package org.jpox.samples.annotations.one_one.unidir;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
@@ -67,7 +68,12 @@ import javax.persistence.Table;
                     @FieldResult(name="lastName", column="LN"),
                     @FieldResult(name="login", column="LID")}),
            @EntityResult(entityClass=Login.class)
-        })
+        }),
+    @SqlResultSetMapping(name="AN_LOGIN_PLUS_ACCOUNT_CONSTRUCTOR",
+        classes={
+               @ConstructorResult(targetClass=LoginAccountComplete.class,
+                   columns={@ColumnResult(name="FN"), @ColumnResult(name="LN"), @ColumnResult(name="USER"), @ColumnResult(name="PWD")}),
+            })
     })
 public class LoginAccount
 {

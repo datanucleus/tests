@@ -29,6 +29,7 @@ import org.jpox.samples.annotations.models.company.Employee;
 import org.jpox.samples.annotations.models.company.Person;
 import org.jpox.samples.annotations.one_one.unidir.Login;
 import org.jpox.samples.annotations.one_one.unidir.LoginAccount;
+import org.jpox.samples.annotations.one_one.unidir.LoginAccountComplete;
 
 /**
  * Tests for SQL queries via JPA.
@@ -406,6 +407,78 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                     assertEquals("Flintstone", ((LoginAccount)obj[0]).getLastName());
                     assertEquals("flintstone", ((Login)obj[1]).getUserName());
                     assertTrue(((LoginAccount)obj[0]).getLogin() == ((Login)obj[1]));
+                }
+
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(LoginAccount.class);
+            clean(Login.class);
+        }
+    }
+
+    /**
+     * Test of an SQL query using a result set mapping giving two entities (Login + LoginAccount) and
+     * using aliasing of columns and constructor result.
+     */
+    public void testSQLResultConstructor()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                LoginAccount acct = new LoginAccount(1, "Fred", "Flintstone");
+                Login login = new Login("flintstone", "pwd");
+                acct.setLogin(login);
+                em.persist(login);
+                em.persist(acct);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                List result = em.createNativeQuery(
+                    "SELECT P.FIRSTNAME AS FN, P.LASTNAME AS LN, L.USERNAME AS USER, L.PASSWORD AS PWD FROM " +
+                    "JPA_AN_LOGINACCOUNT P, JPA_AN_LOGIN L","AN_LOGIN_PLUS_ACCOUNT_CONSTRUCTOR").getResultList();
+                assertEquals(1, result.size());
+
+                // Check the results
+                Iterator iter = result.iterator();
+                while (iter.hasNext())
+                {
+                    // Should be a LoginAccountComplete
+                    LoginAccountComplete acctCmp = (LoginAccountComplete)iter.next();
+                    assertEquals("Fred", acctCmp.getFirstName());
+                    assertEquals("Flintstone", acctCmp.getLastName());
+                    assertEquals("flintstone", acctCmp.getUserName());
+                    assertEquals("pwd", acctCmp.getPassword());
                 }
 
                 tx.rollback();
