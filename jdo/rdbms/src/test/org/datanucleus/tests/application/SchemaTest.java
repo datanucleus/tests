@@ -714,7 +714,10 @@ public class SchemaTest extends JDOPersistenceTestCase
             }
             catch (JDOFatalInternalException jdoex)
             {
-                pm.currentTransaction().rollback();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
                 success = true;
             }
 
@@ -742,21 +745,23 @@ public class SchemaTest extends JDOPersistenceTestCase
             }
             catch (JDOFatalInternalException jdoex)
             {
-                pm.currentTransaction().rollback();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
                 success = true;
             }
         }
         catch(Exception e)
         {
-            e.printStackTrace();
-            LOG.error(e);
+            LOG.error("Exception thrown", e);
             fail(e.toString());             
         }
         finally
         {
-            if (pm.currentTransaction().isActive())
+            if (tx.isActive())
             {
-                pm.currentTransaction().rollback();
+                tx.rollback();
             }
             pm.close();
         }
