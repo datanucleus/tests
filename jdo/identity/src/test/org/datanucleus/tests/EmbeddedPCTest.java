@@ -33,6 +33,8 @@ import org.jpox.samples.embedded.Chip;
 import org.jpox.samples.embedded.Computer;
 import org.jpox.samples.embedded.ComputerCard;
 import org.jpox.samples.embedded.DigitalCamera;
+import org.jpox.samples.embedded.EmbeddedObject;
+import org.jpox.samples.embedded.EmbeddedOwner1;
 import org.jpox.samples.embedded.FittedBathroom;
 import org.jpox.samples.embedded.FittedKitchen;
 import org.jpox.samples.embedded.Manufacturer;
@@ -1854,6 +1856,77 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
         {
             // Clean out created data
             clean(FittedBathroom.class);
+        }
+    }
+
+    public void testEmbeddedOwnerWithInheritanceAndByteArray()
+    {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                EmbeddedOwner1 owner = new EmbeddedOwner1(1, "First owner");
+                owner.setBytesValue(new byte[]{1,2,3});
+                EmbeddedObject emb = new EmbeddedObject("First embedded", new byte[]{3,5,7,9});
+                owner.setEmbeddedObject(emb);
+                pm.makePersistent(owner);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects with embedded field(s) : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve the object and validate it
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                EmbeddedOwner1 owner = (EmbeddedOwner1)pm.getObjectById(EmbeddedOwner1.class, 1);
+                assertNotNull(owner);
+                assertEquals("First owner", owner.getName());
+                EmbeddedObject emb = owner.getEmbeddedObject();
+                assertNotNull(emb);
+                assertEquals("First embedded", emb.getName());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving objects with embedded field(s) : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out created data
+            clean(EmbeddedOwner1.class);
         }
     }
 }

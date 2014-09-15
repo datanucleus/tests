@@ -282,5 +282,27 @@
             </inheritance>
             <field name="capabilities" column="BATH_CAPABILITIES"/>
         </class>
+
+        <class name="AbstractEmbeddedOwner1" detachable="true">
+            <inheritance strategy="subclass-table"/>
+            <field name="id" primary-key="true"/>
+            <field name="name"/>
+        </class>
+
+        <class name="EmbeddedOwner1" detachable="true">
+            <field name="longValue"/>
+            <field name="bytesValue"/>
+            <field name="embeddedObject" persistence-modifier="persistent" default-fetch-group="true">
+                <embedded>
+                    <field name="name" column="EMBEDDED_NAME"/>
+                    <field name="bytesValue" persistent="true" column="EMBEDDED_BYTES"/>
+                </embedded>
+            </field>
+        </class>
+
+        <class name="EmbeddedObject" embedded-only="true" detachable="true">
+            <field name="name"/>
+            <field name="bytesValue"/>
+        </class>
     </package>
 </jdo>
