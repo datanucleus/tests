@@ -377,17 +377,30 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             EntityTransaction tx = em.getTransaction();
             try
             {
-                Person.PK pk = null;
                 tx.begin();
 
                 Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
-                pk = p1.getPK();
                 em.persist(p1);
+                Account acct1 = new Account();
+                acct1.setUsername("fredf");
+                em.persist(acct1);
+                em.flush();
+
+                Person.PK pk = p1.getPK();
+                long acctId = acct1.getId();
+
                 tx.commit();
 
                 tx.begin();
+
+                // Find using IdClass instance
                 Person person = em.find(Person.class, pk);
                 assertEquals(p1.getFirstName(), person.getFirstName());
+
+                // Find using key value (but of slightly different type that needs conversion - DN extension)
+                Account acct = em.find(Account.class, Integer.valueOf("" + acctId));
+                assertEquals(acct1.getUsername(), acct.getUsername());
+
                 tx.commit();
             }
             finally
@@ -401,6 +414,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
         }
         finally
         {
+            clean(Account.class);
             clean(Person.class);
         }
     }
