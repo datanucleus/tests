@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (c) 2007 Andy Jefferson and others. All rights reserved.
+Copyright (c) 2014 Baris ERGUN and others. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Contributors :
- barisergun75@gmail.com
-***********************************************************************/
+ 
+ ***********************************************************************/
 
 package org.datanucleus.tests;
 
@@ -26,11 +26,6 @@ import javax.jdo.*;
 import org.datanucleus.samples.jdo.cassandra.*;
 import static org.datanucleus.tests.JDOPersistenceTestCase.pmf;
 
-/**
- * 
- * @author barise
- * @date Jul 1, 2014
- */
 public class SampleCassandraData
 {
     // TODO wasted sometime to create a resources directory for test sources but
@@ -39,10 +34,10 @@ public class SampleCassandraData
     // test-classes with classes
     // in the current classloaders path
 
-    public static final String CLASSES_TARGET_DIRECTORY_PATH = CassandraTypesTest.class.getResource("/").getPath()
+    public static final String CLASSES_TARGET_DIRECTORY_PATH = SampleCassandraData.class.getResource("/").getPath()
             .replace("test-classes", "classes");
 
-    public static UUID songId;
+    public static List<UUID> SONG_ID_LIST = new LinkedList<UUID>();
 
     public static final void loadData() throws IOException
     {
@@ -53,8 +48,7 @@ public class SampleCassandraData
         try
         {
             tx.begin();
-            songId = createASampleSong(pm);
-            createASamplePlayList(pm);
+            createSampleSongsInAPlayList(pm);
 
         }
         finally
@@ -64,31 +58,58 @@ public class SampleCassandraData
         }
     }
 
-    public static final String ARTIST_1 = "Depeche Mode";
+    public static final String ARTIST_NAME = "Depeche Mode";
 
-    public static final String ALBUM_1 = "Delta Machine";
+    public static final String ALBUM_NAME = "Delta Machine";
 
-    // Even written wrong
-    public static final String TITLE_1 = "Wrrong";
+    public static final String TITLE_1 = "Welcome to My World";
 
-    // Todo instead of song itself using song or album image for blob data
-    public static final String SONG_IMAGE_1 = "soundsofuniverse.jpg";
+    public static final String TITLE_2 = "Angel";
 
-    private static UUID createASampleSong(PersistenceManager pm) throws IOException
+    public static final String TITLE_3 = "Heaven";
+
+    public static final String TITLE_4 = "Secret to the End";
+
+    public static final String TITLE_5 = "My Little Universe";
+
+    public static final String TITLE_6 = "Slow";
+
+    public static final String TITLE_7 = "Broken";
+
+    public static final List<String> TITLES = Arrays.asList(TITLE_1, TITLE_2, TITLE_3, TITLE_4, TITLE_5, TITLE_6, TITLE_7);
+
+    public static final String SONG_IMAGE = "soundsofuniverse.jpg";
+
+    public static byte[] ALBUM_IMAGE;
+
+    public static void createSampleSongsInAPlayList(PersistenceManager pm) throws IOException
     {
 
-        Song song1 = new Song();
-        song1.setArtist(ARTIST_1);
-        song1.setAlbum(ALBUM_1);
-        song1.setTitle(TITLE_1);
-        String imgPath = CLASSES_TARGET_DIRECTORY_PATH + SONG_IMAGE_1;
-        byte[] byteBuffer = getSongImageAsByteArray(imgPath);
-        song1.setData(byteBuffer);
-        song1.setId(UUID.randomUUID());
-
-        Song createdSong = pm.makePersistent(song1);
-        return createdSong.getId();
-
+        int songOrder = 0;
+        UUID playListId = UUID.randomUUID();
+        String imgPath = CLASSES_TARGET_DIRECTORY_PATH + SONG_IMAGE;
+        ALBUM_IMAGE = getSongImageAsByteArray(imgPath);
+        for (Iterator<String> it = TITLES.iterator(); it.hasNext();)
+        {
+            String songTitle = it.next();
+            Song song = new Song();
+            UUID songId = UUID.randomUUID();
+            SONG_ID_LIST.add(songId);
+            song.setArtistName(ARTIST_NAME);
+            song.setAlbumName(ALBUM_NAME);
+            song.setSongTitle(songTitle);
+            song.setAlbumImage(ALBUM_IMAGE);
+            song.setId(songId);
+            pm.makePersistent(song);
+            Playlist playlist = new Playlist();
+            playlist.setSongId(song.getId());
+            playlist.setAlbumName(song.getAlbumName());
+            playlist.setArtistName(song.getArtistName());
+            playlist.setSongTitle(song.getSongTitle());
+            playlist.setId(playListId);
+            playlist.setSongOrder(songOrder);
+            pm.makePersistent(playlist);
+        }
     }
 
     public static final byte[] getSongImageAsByteArray(String filePath) throws IOException
@@ -99,23 +120,10 @@ public class SampleCassandraData
         WritableRaster raster = bufferedImage.getRaster();
         DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
 
-        return data.getData();        
+        return data.getData();
 
     }
 
-    private static UUID createASamplePlayList(PersistenceManager pm)
-    {
-        Playlist playlist = new Playlist();
-        playlist.setSongId(songId);
-        playlist.setAlbum(ALBUM_1);
-        playlist.setArtist(ARTIST_1);
-        playlist.setTitle(TITLE_1);
-        playlist.setId(UUID.randomUUID());
-        playlist.setSongOrder(0);
-        Playlist createdPlaylist = pm.makePersistent(playlist);
-        return createdPlaylist.getId();
-    }
-    
     public static final void cleanupTables()
     {
         PersistenceManager pm = pmf.getPersistenceManager();
