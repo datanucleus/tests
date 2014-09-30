@@ -23,8 +23,9 @@ import javax.jdo.FetchPlan;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import org.datanucleus.samples.jdo.cassandra.Song;
-import static org.datanucleus.tests.JDOPersistenceTestCase.pmf;
+
 import static org.datanucleus.tests.SampleCassandraData.TITLES;
+
 import org.junit.Assert;
 
 public class CQLTest extends JDOPersistenceTestCase
