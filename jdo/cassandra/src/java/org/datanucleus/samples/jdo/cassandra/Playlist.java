@@ -1,8 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**********************************************************************
+Copyright (c) 2014 Baris ERGUN and others. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Contributors :
+ 
+ ***********************************************************************/
 package org.datanucleus.samples.jdo.cassandra;
 
 import java.util.*;
@@ -11,15 +23,11 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-/**
- * 
- * @author bergun
- */
 @PersistenceCapable
 public class Playlist
 {
 
-    @PrimaryKey    
+    @PrimaryKey
     private UUID id;
 
     @PrimaryKey
@@ -30,11 +38,11 @@ public class Playlist
     @Column(name = "song_id")
     private UUID songId;
 
-    private String title;
+    private String songTitle;
 
-    private String album;
+    private String albumName;
 
-    private String artist;
+    private String artistName;
 
     public UUID getId()
     {
@@ -66,34 +74,34 @@ public class Playlist
         this.songId = songId;
     }
 
-    public String getTitle()
+    public String getSongTitle()
     {
-        return title;
+        return songTitle;
     }
 
-    public void setTitle(String title)
+    public void setSongTitle(String title)
     {
-        this.title = title;
+        this.songTitle = title;
     }
 
-    public String getAlbum()
+    public String getAlbumName()
     {
-        return album;
+        return albumName;
     }
 
-    public void setAlbum(String album)
+    public void setAlbumName(String album)
     {
-        this.album = album;
+        this.albumName = album;
     }
 
-    public String getArtist()
+    public String getArtistName()
     {
-        return artist;
+        return artistName;
     }
 
-    public void setArtist(String artist)
+    public void setArtistName(String artist)
     {
-        this.artist = artist;
+        this.artistName = artist;
     }
 
 }
