@@ -3337,6 +3337,22 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
 
                 tx.commit();
 
+                tx.begin();
+                try
+                {
+                    // Test construct with no final "ELSE expr"
+                    q = pm.newQuery(BasicTypeHolder.class);
+                    q.setResult("IF (this.longField > 2) 1 ELSE IF (this.logField < 0) 0");
+                    q.compile();
+                    fail("Should have thrown exception with missing ELSE on IF construct, but didnt");
+                }
+                catch (JDOException jdoe)
+                {
+                    // Expected
+                }
+
+                tx.commit();
+
             }
             finally
             {
