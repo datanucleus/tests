@@ -5,6 +5,7 @@
 
     <!-- Test "unit", containing all classes so we can enhance the lot -->
     <persistence-unit name="TEST">
+        <mapping-file>META-INF/orm.xml</mapping-file>
         <class>org.jpox.samples.annotations.inheritance.InheritA</class>
         <class>org.jpox.samples.annotations.inheritance.InheritA1</class>
         <class>org.jpox.samples.annotations.inheritance.InheritA2</class>

@@ -37,7 +37,9 @@ import org.jpox.samples.annotations.inheritance.InheritB2;
 import org.jpox.samples.annotations.inheritance.InheritC;
 import org.jpox.samples.annotations.inheritance.InheritC1;
 import org.jpox.samples.annotations.inheritance.InheritC2;
+import org.jpox.samples.annotations.one_many.map.MapHolder1;
 import org.jpox.samples.annotations.types.basic.DateHolder;
+import org.jpox.samples.xml.one_many.map.MapHolder1Xml;
 
 /**
  * Tests for schema creation.
@@ -284,6 +286,118 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             LOG.error(e);
             fail("Specification of table and column names gave error when checking schema. Exception was thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA Map<NonPC, NonPC> using annotations.
+     */
+    public void testMapOfSimpleSimpleViaAnnotations()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {MapHolder1.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            HashSet<String> columnNames = new HashSet<String>();
+            columnNames.add("JPA_AN_MAPHOLDER1_ID");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_MAPHOLDER1", columnNames);
+
+            HashSet<String> columnNames2 = new HashSet<String>();
+            columnNames2.add("MAPHOLDER1_ID");
+            columnNames2.add("PROP_NAME");
+            columnNames2.add("PROP_VALUE");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_MAPHOLDER1_PROPS", columnNames2);
+
+            HashSet<String> columnNames3 = new HashSet<String>();
+            columnNames3.add("MAPHOLDER1_JPA_AN_MAPHOLDER1_ID");
+            columnNames3.add("PROPERTIES2_KEY");
+            columnNames3.add("PROPERTIES2_VALUE");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "MAPHOLDER1_PROPERTIES2", columnNames3);
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA Map<NonPC, NonPC> using xml.
+     */
+    public void testMapOfSimpleSimpleViaXml()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {MapHolder1Xml.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            HashSet<String> columnNames = new HashSet<String>();
+            columnNames.add("JPA_XML_MAPHOLDER1_ID");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_XML_MAPHOLDER1", columnNames);
+
+            HashSet<String> columnNames2 = new HashSet<String>();
+            columnNames2.add("MAPHOLDER1_ID");
+            columnNames2.add("PROP_NAME");
+            columnNames2.add("PROP_VALUE");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_XML_MAPHOLDER1_PROPS", columnNames2);
+
+            HashSet<String> columnNames3 = new HashSet<String>();
+            columnNames3.add("MAPHOLDER1XML_JPA_XML_MAPHOLDER1_ID");
+            columnNames3.add("PROPERTIES2_KEY");
+            columnNames3.add("PROPERTIES2_VALUE");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "MAPHOLDER1XML_PROPERTIES2", columnNames3);
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
         }
         finally
         {
