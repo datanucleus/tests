@@ -106,6 +106,10 @@ public class Office implements Cloneable, Serializable
         departments.clear();
     }
 
+    public Set<Department> getDepartments() {
+        return departments;
+    }
+
     // Note that this is only really correct for application identity, but we also use this class for datastore id
     public int hashCode()
     {
