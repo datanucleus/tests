@@ -5,8 +5,7 @@
     
         <class name="SecurityGroup" detachable="true" table="ou=Security Groups,dc=example,dc=com" schema="top, organization,organizationalUnit,pilotOrganization">
             <field name="name" primary-key="true" column="ou" />
-            <field name="members">
-                <column name="o" />
+            <field name="members" column="o">
                 <join column="cn" />
                 <extension vendor-name="datanucleus" key="empty-value" value="uid=admin,ou=system"/>
             </field>
