@@ -5,8 +5,7 @@
     
         <class name="Department" detachable="true" table="ou=Departments,dc=example,dc=com" schema="top,groupOfNames">
             <field name="name" primary-key="true" column="cn" />
-            <field name="members" default-fetch-group="true">
-                <column name="member" />
+            <field name="members" default-fetch-group="true" column="member">
                 <extension vendor-name="datanucleus" key="empty-value" value="uid=admin,ou=system"/>
             </field>
         </class>

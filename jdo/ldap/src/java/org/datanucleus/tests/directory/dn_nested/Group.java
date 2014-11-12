@@ -21,7 +21,6 @@ package org.datanucleus.tests.directory.dn_nested;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -29,8 +28,7 @@ import javax.jdo.annotations.Persistent;
 @PersistenceCapable(table = "ou=Groups,dc=example,dc=com", schema = "top,groupOfNames", detachable = "true")
 public class Group extends GroupMember
 {
-    @Persistent(defaultFetchGroup = "true", recursionDepth = -1)
-    @Column(name = "member")
+    @Persistent(defaultFetchGroup = "true", recursionDepth = -1, column="member")
     @Extension(vendorName = "datanucleus", key = "empty-value", value = "uid=admin,ou=system")
     protected Set<GroupMember> members = new HashSet<GroupMember>();
 
