@@ -4,7 +4,7 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
-    <version>4.0</version>
+    <version>4.1</version>
     <artifactId>datanucleus-test-jdo</artifactId>
     <name>DataNucleus Test for JDO</name>
     <description>DataNucleus Test for JDO</description>
@@ -19,12 +19,12 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>(3.9, )</version>
+            <version>(4.0.99, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>(3.9, )</version>
+            <version>(4.0.99, )</version>
         </dependency>
 
         <dependency>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
-            <version>(3.9, )</version>
+            <version>(4.0.99, )</version>
         </dependency>
 
         <!-- Change to the datastore driver required for your datastore -->
@@ -90,7 +90,7 @@
             <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>datanucleus-maven-plugin</artifactId>
-                <version>4.0.0-m2</version>
+                <version>4.0.0-release</version>
                 <configuration>
                     <api>JDO</api>
                     <persistenceUnitName>MyTest</persistenceUnitName>

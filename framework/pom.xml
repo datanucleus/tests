@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
     <artifactId>datanucleus-test-framework</artifactId>
-    <version>4.0</version>
+    <version>4.1</version>
     <name>DataNucleus TestFramework</name>
     <description><![CDATA[
         DataNucleus Test Framework, providing the base classes for persistence testing.
