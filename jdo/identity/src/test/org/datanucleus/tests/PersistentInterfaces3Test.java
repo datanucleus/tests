@@ -20,7 +20,7 @@ package org.datanucleus.tests;
 
 import javax.jdo.PersistenceManager;
 
-import org.datanucleus.enhancer.Persistable;
+import org.datanucleus.enhancement.Persistable;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.persistentinterfaces.Country;
 import org.jpox.samples.persistentinterfaces.ICity;

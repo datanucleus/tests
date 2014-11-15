@@ -18,7 +18,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.enhancer.jdo;
 
-import org.datanucleus.enhancer.Persistable;
+import org.datanucleus.enhancement.Persistable;
 import org.datanucleus.metadata.InvalidMetaDataException;
 
 /**

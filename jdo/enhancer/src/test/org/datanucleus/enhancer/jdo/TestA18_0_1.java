@@ -1,7 +1,7 @@
 package org.datanucleus.enhancer.jdo;
 
 import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
-import org.datanucleus.enhancer.Persistable;
+import org.datanucleus.enhancement.Persistable;
 
 /**
  */
