@@ -511,6 +511,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             // test the two accounts are in the account list
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             daffyDuck = pm.getObjectById(Person.class, "Daffy Duck");
             dduck2 = pm.getObjectById(Account.class, "dduck2");

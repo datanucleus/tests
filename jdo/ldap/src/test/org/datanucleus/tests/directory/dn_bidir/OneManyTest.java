@@ -813,6 +813,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             pm = pmf.getPersistenceManager();
             pm.getFetchPlan().addGroup(FetchPlan.ALL);
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             pm.makePersistent(speedyGonzales);
             pm.makePersistent(detachedDaffyDuck);
@@ -823,6 +824,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             pm = pmf.getPersistenceManager();
             pm.getFetchPlan().setGroup(FetchPlan.ALL);
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             daffyDuck = pm.getObjectById(Person.class, "Daffy Duck");
             speedyGonzales = pm.getObjectById(Person.class, "Speedy Gonzales");
