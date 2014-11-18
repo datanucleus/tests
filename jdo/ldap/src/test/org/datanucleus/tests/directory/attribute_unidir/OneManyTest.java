@@ -508,6 +508,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             // test the two accounts are in the account list
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             daffyDuck = pm.getObjectById(Person.class, "Daffy Duck");
             dduck2 = pm.getObjectById(Account.class, "dduck2");
@@ -520,10 +521,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             // create a new person and move one account to the new person
             Person speedyGonzales = new Person("Speedy", "Gonzales", "Speedy Gonzales", null, null);
             speedyGonzales.getAccounts().add(sgonzales2);
-            LOG.info(">> OneManyTest remove Account from existing Person");
-            // This will delete the Account since the field is cascade delete TODO Fix this test, or add functionality to core to allow it
             daffyDuck.getAccounts().remove(sgonzales2);
-            LOG.info(">> OneManyTest makePersistent new Person with existing Account");
             pm.makePersistent(speedyGonzales);
             tx.commit();
             pm.close();
