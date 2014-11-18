@@ -582,6 +582,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             // test the two accounts are in the account list
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             daffyDuck = pm.getObjectById(Person.class, "Daffy Duck");
             dduck2 = pm.getObjectById(AccountWithPassword.class, "dduck2");
@@ -801,6 +802,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             pm = pmf.getPersistenceManager();
             pm.getFetchPlan().addGroup(FetchPlan.ALL);
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             pm.makePersistent(speedyGonzales);
             pm.makePersistent(detachedDaffyDuck);

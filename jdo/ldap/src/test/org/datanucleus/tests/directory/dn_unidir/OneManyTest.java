@@ -719,6 +719,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             pm = pmf.getPersistenceManager();
             pm.getFetchPlan().addGroup(FetchPlan.ALL);
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             pm.makePersistent(speedyGonzales);
             pm.makePersistent(detachedDaffyDuck);

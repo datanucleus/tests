@@ -548,6 +548,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             // test fetch
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             dduck = pm.getObjectById(AccountWithPassword.class, "dduck");
             daffyDuck = pm.getObjectById(Person.class, "Daffy Duck");
@@ -566,6 +567,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             // ensure that dduck was deleted as it is dependent
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             daffyDuck = pm.getObjectById(Person.class, "Daffy Duck");
             assertNotNull(daffyDuck.getAccounts());
@@ -591,6 +593,7 @@ public class OneManyTest extends JDOPersistenceTestCase
             // test the two accounts are in the account list
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
+            tx.setOptimistic(true);
             tx.begin();
             daffyDuck = pm.getObjectById(Person.class, "Daffy Duck");
             dduck2 = pm.getObjectById(AccountWithPassword.class, "dduck2");
