@@ -129,7 +129,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             // Query the data with bulk-fetch enabled
             // Note : this doesn't actually check how many SQL were issued just that it passes
             Query q = pm.newQuery("SELECT FROM " + Farm.class.getName() + " WHERE name == :farmName");
-            q.addExtension("datanucleus.multivaluedFetch", "bulk-fetch");
+            q.addExtension("datanucleus.rdbms.query.multivaluedFetch", "exists");
             q.getFetchPlan().setGroup("all");
             List results = (List) q.execute("Jones Farm");
             assertEquals(1, results.size());
@@ -193,7 +193,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             // Query the data with bulk-fetch enabled
             // Note : this doesn't actually check how many SQL were issued just that it passes
             Query q = pm.newQuery("SELECT FROM " + Farm.class.getName() + " WHERE name == farmName PARAMETERS java.lang.String farmName");
-            q.addExtension("datanucleus.multivaluedFetch", "bulk-fetch");
+            q.addExtension("datanucleus.rdbms.query.multivaluedFetch", "exists");
             q.getFetchPlan().setGroup("all");
             List results = (List) q.execute("Jones Farm");
             assertEquals(1, results.size());
@@ -251,7 +251,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             // Query the data with bulk-fetch enabled
             // Note : this doesn't actually check how many SQL were issued just that it passes
             Query q = pm.newQuery("SELECT FROM " + House.class.getName() + " WHERE number == 101");
-            q.addExtension("datanucleus.multivaluedFetch", "bulk-fetch");
+            q.addExtension("datanucleus.rdbms.query.multivaluedFetch", "exists");
             q.getFetchPlan().setGroup("all");
             List<House> results = (List<House>) q.execute();
             assertEquals(1, results.size());
@@ -311,7 +311,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             // Query the data with bulk-fetch enabled
             // Note : this doesn't actually check how many SQL were issued just that it passes
             Query q = pm.newQuery("SELECT FROM " + House.class.getName() + " WHERE number == 101 ORDER BY street");
-            q.addExtension("datanucleus.multivaluedFetch", "bulk-fetch");
+            q.addExtension("datanucleus.rdbms.query.multivaluedFetch", "exists");
             q.getFetchPlan().setGroup("all");
             List<House> results = (List<House>) q.execute();
             assertEquals(1, results.size());
