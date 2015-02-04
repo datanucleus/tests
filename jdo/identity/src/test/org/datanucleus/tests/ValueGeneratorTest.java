@@ -707,7 +707,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
         try
         {
             // must use PM connection, otherwise would cause deadlock
-            getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "UsePM");
+            getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "EXISTING");
 
             HashSet idSet = new HashSet();
             Class idClass = null;
@@ -1172,7 +1172,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
             Transaction tx=pm.currentTransaction();
             try
             {
-                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "UsePM");
+                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "EXISTING");
                 tx.begin();
 
                 // Create a few objects.
