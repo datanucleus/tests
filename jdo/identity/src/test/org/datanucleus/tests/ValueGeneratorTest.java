@@ -755,7 +755,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 {
                     tx.rollback();
                 }
-                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "New");
+                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "NEW");
                 pm.close();
             }
             
@@ -1199,7 +1199,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 {
                     tx.rollback();
                 }
-                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "New");
+                getConfigurationForPMF(pmf).setProperty(PropertyNames.PROPERTY_VALUEGEN_TXN_ATTRIBUTE, "NEW");
                 pm.close();
             }
 
