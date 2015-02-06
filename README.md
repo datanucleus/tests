@@ -32,3 +32,4 @@ Before running each test set execution the databased will be cleaned up automati
 >mvn -Pmysql -Dmaven.datanucleus.test.skip.reset=true clean test
 
 [1]: ../../tree/master/framework.maven
+
