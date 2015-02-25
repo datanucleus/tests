@@ -21,6 +21,7 @@ package org.datanucleus.tests;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOException;
@@ -35,7 +36,9 @@ import org.jpox.samples.rdbms.views.CircularReferenceView1;
 import org.jpox.samples.rdbms.views.CircularReferenceView2;
 import org.jpox.samples.rdbms.views.CircularReferenceView3;
 import org.jpox.samples.rdbms.views.DependentView;
+import org.jpox.samples.rdbms.views.FNameView;
 import org.jpox.samples.rdbms.views.MinMaxWidgetValues;
+import org.jpox.samples.rdbms.views.NameObject;
 import org.jpox.samples.rdbms.views.ReliedOnView;
 import org.jpox.samples.rdbms.views.SetWidgetCounts;
 import org.jpox.samples.widget.DateWidget;
@@ -99,6 +102,46 @@ public class ViewTest extends JDOPersistenceTestCase
     protected static boolean supportsViews() 
     {
         return ((RDBMSStoreManager)storeMgr).getDatastoreAdapter().supportsOption(DatastoreAdapter.VIEWS);
+    }
+
+    public void testNameView()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            pm.makePersistent(new NameObject(1, "FIRST"));
+            pm.makePersistent(new NameObject(2, "SECOND"));
+            pm.makePersistent(new NameObject(3, "THIRD"));
+            pm.makePersistent(new NameObject(4, "FOURTH"));
+            tx.commit();
+
+            tx.begin();
+            Query q = pm.newQuery(NameObject.class);
+            List<NameObject> persons = (List<NameObject>) q.execute();
+            assertEquals(4, persons.size());
+            assertEquals("FIRST", persons.get(0).getName());
+
+            Query q1 = pm.newQuery(FNameView.class);
+            List<FNameView> fNames = ((List<FNameView>)q1.execute());
+            assertEquals(2, fNames.size());
+            assertEquals("FIRST", fNames.get(0).getName());
+            tx.commit();
+        }
+        catch (Throwable thr)
+        {
+            LOG.error(">> Exception thrown persist/view data with FNameView", thr);
+            fail("Failed to persist data : " + thr.getMessage());
+        }
+        finally 
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
     }
 
     public void testViewOfWidgets() 
