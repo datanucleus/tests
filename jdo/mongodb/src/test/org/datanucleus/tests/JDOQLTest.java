@@ -1256,4 +1256,90 @@ public class JDOQLTest extends JDOPersistenceTestCase
             clean(Person.class);
         }
     }
+
+    /**
+     * Query with a filter on 1-1 relation value.
+     * @throws Exception
+     */
+    public void testFilterOneToOne() throws Exception
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            Object p1Id = null;
+            try
+            {
+                tx.begin();
+                Person p1 = new Person();
+                p1.setPersonNum(1);
+                p1.setGlobalNum("1");
+                p1.setFirstName("Bugs");
+                p1.setLastName("Bunny");
+
+                Person p2 = new Person();
+                p2.setPersonNum(2);
+                p2.setGlobalNum("2");
+                p2.setFirstName("Daffy");
+                p2.setLastName("Duck");
+                p2.setBestFriend(p1);
+
+                pm.makePersistent(p1);
+                pm.makePersistent(p2);
+
+                tx.commit();
+                p1Id = pm.getObjectId(p1);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception during persist", e);
+                fail("Exception thrown when running test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = (Person)pm.getObjectById(p1Id);
+                Query q1 = pm.newQuery("SELECT FROM " + Person.class.getName() + " WHERE bestFriend == :p");
+                List<Person> results1 = (List<Person>)q1.execute(p1);
+                assertEquals(1, results1.size());
+                Iterator<Person> iter = results1.iterator();
+                Person p = iter.next();
+                assertEquals("Daffy", p.getFirstName());
+                assertEquals("Duck", p.getLastName());
+                assertEquals(2, p.getPersonNum());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception during query", e);
+                fail("Exception thrown when running test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(Employee.class);
+            clean(Person.class);
+        }
+    }
 }
