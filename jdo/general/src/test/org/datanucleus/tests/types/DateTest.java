@@ -78,7 +78,7 @@ public class DateTest extends AbstractTypeTestCase
     }
 
     /**
-     * Test for querying of URI fields.
+     * Test for querying of date fields.
      * @throws Exception
      */
     public void testQuery()
@@ -89,27 +89,40 @@ public class DateTest extends AbstractTypeTestCase
         try
         {
             tx.begin();
-            pm.makePersistent(getOneObject());
-            pm.makePersistent(getOneObject());
-            pm.makePersistent(getOneObject());
-            DateHolderC holder = new DateHolderC();
-            holder.setKey(generateTestValue1());
-            holder.setValue(generateTestValue3());
-            holder.setValue2(generateTestValue3());
-            pm.makePersistent(holder);
-            pm.flush();
 
+            DateHolderC holder1 = new DateHolderC();
+            holder1.setKey(generateValueInTZ("2007-09-09 12:27:00.000"));
+            holder1.setValue(generateValueInTZ("2007-09-09 12:27:00.000"));
+            holder1.setValue2(generateValueInTZ("2007-09-09 12:27:00.000"));
+            pm.makePersistent(holder1);
+            DateHolderC holder2 = new DateHolderC();
+            holder2.setKey(generateValueInTZ("2007-10-05 12:28:00.000"));
+            holder2.setValue(generateValueInTZ("2007-10-05 12:28:00.000"));
+            holder2.setValue2(generateValueInTZ("2007-10-05 12:28:00.000"));
+            pm.makePersistent(holder2);
+            DateHolderC holder3 = new DateHolderC();
+            holder3.setKey(generateValueInTZ("2012-09-09 12:29:00.000"));
+            holder3.setValue(generateValueInTZ("2012-09-09 12:29:00.000"));
+            holder3.setValue2(generateValueInTZ("2012-09-09 12:29:00.000"));
+            pm.makePersistent(holder3);
+
+            pm.flush();
+            Date val1Date = holder2.getValue();
+            Date val2Date = holder3.getValue2();
+
+            // Query comparing with first "value" field
             Query q = pm.newQuery(getSimpleClass(), "value == p");
             q.declareParameters("java.util.Date p");
-            Collection c = (Collection) q.execute(holder.getValue());
+            Collection c = (Collection) q.execute(val1Date);
             assertEquals(1, c.size());
-            assertEquals(generateTestValue3(), ((DateHolderC)c.iterator().next()).getValue());
+            assertEquals(val1Date, ((DateHolderC)c.iterator().next()).getValue());
 
+            // Query comparing with second "value" field
             q = pm.newQuery(getSimpleClass(), "value2 == p");
             q.declareParameters("java.util.Date p");
-            c = (Collection) q.execute(holder.getValue2());
+            c = (Collection) q.execute(val2Date);
             assertEquals(1, c.size());
-            assertEquals(generateTestValue3(), ((DateHolderC)c.iterator().next()).getValue2());
+            assertEquals(val2Date, ((DateHolderC)c.iterator().next()).getValue2());
 
             tx.commit();
         }
@@ -173,21 +186,6 @@ public class DateTest extends AbstractTypeTestCase
     protected int getNumberOfMutabilityChecks()
     {
         return 0;
-    }
-
-    private Date generateValueInTZ(String value)
-    {
-        try
-        {
-            /* Create a new Format object each time, because we want it to be
-             * absolutely sure it will parse in the current TimeZone.
-             */
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(value);
-        }
-        catch (ParseException pe)
-        {
-            throw new RuntimeException(pe);
-        }
     }
 
     private long msvalue;
@@ -433,15 +431,25 @@ public class DateTest extends AbstractTypeTestCase
         return valueWithCounter("2003-03-07 11:23:45", System.currentTimeMillis() + counter);
     }
 
-    private Date generateTestValue3()
-    {
-        return valueWithCounter("2009-01-01 01:01:01", 511);
-    }
-
     protected PersistenceManagerFactory getPMFForTimezone(String tz)
     {
         Properties props = new Properties();
         props.setProperty(PropertyNames.PROPERTY_SERVER_TIMEZONE_ID, tz); // Although not used by the java.sql.Date as String persistence, set for completeness
         return getPMF(props);
+    }
+
+    private Date generateValueInTZ(String value)
+    {
+        try
+        {
+            /* Create a new Format object each time, because we want it to be
+             * absolutely sure it will parse in the current TimeZone.
+             */
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(value);
+        }
+        catch (ParseException pe)
+        {
+            throw new RuntimeException(pe);
+        }
     }
 }
