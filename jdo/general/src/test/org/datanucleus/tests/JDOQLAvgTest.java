@@ -245,6 +245,7 @@ public class JDOQLAvgTest extends JDOPersistenceTestCase
         short shortValue = (short) value;
 
         BasicTypeHolder typeHolder = new BasicTypeHolder();
+        typeHolder.setCharField((char)value);
         typeHolder.setShortField(shortValue);
         typeHolder.setShortObjField(shortValue);
         typeHolder.setIntField(value);
