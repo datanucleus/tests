@@ -2608,7 +2608,6 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         try
         {
             tester.getObjectCollection().add(mgr);
-            //tester.getInterfaceCollection().add(p);
             tx.begin();
             pm.makePersistent(tester);
             tx.commit();
@@ -2623,10 +2622,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             if (tx.isActive())
             {
                 tx.rollback();
-                pm.close();
-                fail("Failed to persist object and commit transaction");
             }
-
             pm.close();
         }
 
@@ -2643,8 +2639,6 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             assertEquals(1, tester.getObjectCollection().size());
             mgr = (Manager) tester.getObjectCollection().iterator().next();
             assertEquals(0, mgr.getPersonNum());
-
-            // assertEquals(1, tester.getInterfaceCollection().size());
 
             tx.commit();
         }
@@ -2805,16 +2799,14 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
 
-        Manager mgr = new Manager(0, FIRSTNAME[0], LASTNAME[0], EMAIL[0], EMP_SALARY[0], EMP_SERIAL[0]);
-
         try
         {
+            Manager mgr = new Manager(0, FIRSTNAME[0], LASTNAME[0], EMAIL[0], EMP_SALARY[0], EMP_SERIAL[0]);
             Department d = new Department("Engineering");
             d.setManager(mgr);
-
-            tx.begin();
             mgr.addDepartment(d);
 
+            tx.begin();
             pm.makePersistent(d);
             tx.commit();
 
@@ -2846,7 +2838,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             java.util.Iterator it = ext.iterator();
 
             assertTrue(it.hasNext());
-            mgr = (Manager) it.next();
+            Manager mgr = (Manager) it.next();
             Collection c = mgr.getDepartments();
             assertTrue("Departments should have been null or empty", c == null || c.size() == 0);
 
