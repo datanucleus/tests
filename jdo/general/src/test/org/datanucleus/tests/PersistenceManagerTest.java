@@ -175,6 +175,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             while (it.hasNext())
             {
                 InversePrimitive ip = (InversePrimitive) it.next();
+                ip.setTester(null);
                 pm.deletePersistent(ip);
             }
 
@@ -189,9 +190,13 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             while (it.hasNext())
             {
                 CollectionFieldTester t = (CollectionFieldTester) it.next();
-                if( t.getPrimitiveCollection() != null )
+                if (t.getPrimitiveCollection() != null)
                 {
                     t.getPrimitiveCollection().clear();
+                }
+                if (t.getInversePrimitiveCollection() != null)
+                {
+                    t.getInversePrimitiveCollection().clear();
                 }
                 pm.deletePersistent(t);
             }
