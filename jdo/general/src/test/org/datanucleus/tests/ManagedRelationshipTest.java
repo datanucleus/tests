@@ -1127,6 +1127,7 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
                 pm.deletePersistent(window1);
                 pm.flush();
 
+                assertNotNull("House windows is null after window delete + flush!", house.getWindows());
                 assertEquals("House has incorrect number of windows after window delete", 1, house.getWindows().size());
 
                 tx.commit();
