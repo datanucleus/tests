@@ -39,6 +39,7 @@ import javax.jdo.FetchPlan;
 import javax.jdo.JDOException;
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOObjectNotFoundException;
+import javax.jdo.JDOUnsupportedOptionException;
 import javax.jdo.JDOUserCallbackException;
 import javax.jdo.JDOUserException;
 import javax.jdo.ObjectState;
@@ -340,7 +341,15 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         assertEquals(pmProps.get("javax.jdo.option.DatastoreReadTimeoutMillis"), 0);
 
         pm.setDetachAllOnCommit(true);
-        pm.setDatastoreReadTimeoutMillis(100);
+        boolean readTimeoutSupported = true;
+        try
+        {
+            pm.setDatastoreReadTimeoutMillis(100);
+        }
+        catch (JDOUnsupportedOptionException uoe)
+        {
+            readTimeoutSupported = false;
+        }
 
         pmProps = pm.getProperties();
         assertTrue(pmProps.containsKey("javax.jdo.option.DetachAllOnCommit"));
@@ -350,7 +359,10 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         assertTrue(pmProps.containsKey("javax.jdo.option.Multithreaded"));
         assertTrue(pmProps.containsKey("javax.jdo.option.IgnoreCache"));
         assertEquals(pmProps.get("javax.jdo.option.DetachAllOnCommit"), true);
-        assertEquals(pmProps.get("javax.jdo.option.DatastoreReadTimeoutMillis"), 100);
+        if (readTimeoutSupported)
+        {
+            assertEquals(pmProps.get("javax.jdo.option.DatastoreReadTimeoutMillis"), 100);
+        }
 
         // Check setting of invalid property (this will log a warning currently)
         pm.setProperty("myproperty", "someValue");
