@@ -52,7 +52,6 @@ import javax.jdo.identity.LongIdentity;
 
 import junit.framework.Assert;
 
-import org.datanucleus.PropertyNames;
 import org.datanucleus.TransactionEventListener;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.api.jdo.exceptions.TransactionNotActiveException;
@@ -69,8 +68,6 @@ import org.datanucleus.samples.lifecyclelistener.LifecycleListenerSpecification;
 import org.datanucleus.samples.metadata.animal.Dog;
 import org.datanucleus.samples.widget.CollectionFieldTester;
 import org.datanucleus.samples.widget.InversePrimitive;
-import org.datanucleus.samples.widget.InverseSetFieldTester;
-import org.datanucleus.samples.widget.InverseSetValue;
 import org.datanucleus.samples.widget.Primitive;
 import org.datanucleus.samples.widget.Widget;
 import org.datanucleus.tests.JDOPersistenceTestCase;
@@ -82,13 +79,12 @@ import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Manager;
 import org.jpox.samples.models.company.Person;
 import org.jpox.samples.models.company.Project;
+import org.jpox.samples.one_many.bidir.Animal;
+import org.jpox.samples.one_many.bidir.Farm;
 import org.jpox.samples.persistentinterfaces.Country;
 
 /**
- * This class is a JUnit test class for unit testing "org.jpox.PersistenceManagerImpl".
- *
- * This tests the persistence of all of the basic FCO types as well as
- * collection handling of various types of fields.
+ * Series of tests for basic capabilities of a JDO PersistenceManager.
  */
 public class PersistenceManagerTest extends JDOPersistenceTestCase
 {
@@ -291,18 +287,6 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 Person person = (Person) it.next();
                 pm.deletePersistent(person);
-            }
-
-            pm.currentTransaction().commit();
-
-            // delete all objects
-            pm.currentTransaction().begin();
-
-            it = pm.getExtent(InverseSetValue.class, true).iterator();
-
-            while (it.hasNext())
-            {
-                pm.deletePersistent(it.next());
             }
 
             pm.currentTransaction().commit();
@@ -1524,7 +1508,6 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
-            pm.setProperty(PropertyNames.PROPERTY_MANAGE_RELATIONSHIPS, "false"); // Turn off Managed Relationships since InverseSetValue etc have a flawed hashCode
             Transaction tx = pm.currentTransaction();
             try
             {
@@ -1561,76 +1544,56 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 // Create owner with 2 elements.
                 tx = pm.currentTransaction();
                 tx.begin();
-                InverseSetFieldTester owner = new InverseSetFieldTester();
-                InverseSetValue value = new InverseSetValue();
-                value.fillRandom();
-                owner.addValue(value);
-                InverseSetValue value1 = new InverseSetValue();
-                value1.fillRandom();
-                owner.addValue(value1);
+                Farm farm = new Farm("Giles Farm");
+                Animal an1 = new Animal("Dog");
+                an1.setFarm(farm);
+                Animal an2 = new Animal("Cow");
+                an2.setFarm(farm);
+                farm.addAnimal(an1);
+                farm.addAnimal(an2);
 
-                String[] valueStrings = new String[2];
-                valueStrings[0] = value.getStrField();
-                valueStrings[1] = value1.getStrField();
-
-                pm.makePersistent(owner);
+                pm.makePersistent(farm);
                 tx.commit();
-                Object id = pm.getObjectId(owner);
+                Object id = pm.getObjectId(farm);
 
                 // Make the owner and its elements transient
                 tx = pm.currentTransaction();
                 tx.begin();
                 pm.getFetchPlan().addGroup(FetchPlan.ALL);
-                InverseSetFieldTester transientOwner = (InverseSetFieldTester) pm.getObjectById(id, true);
-                pm.retrieveAll(transientOwner.getElements());
-                pm.makeTransient(transientOwner);
-                pm.makeTransientAll(transientOwner.getElements());
+                Farm transientFarm = (Farm) pm.getObjectById(id, true);
+                pm.retrieveAll(transientFarm.getAnimals());
+                pm.makeTransient(transientFarm);
+                pm.makeTransientAll(transientFarm.getAnimals());
                 tx.commit();
 
                 // Check the result
-                Set transientElements = transientOwner.getElements();
-                assertFalse("Owner object is not transient!", JDOHelper.isPersistent(transientOwner));
-                assertEquals("Number of elements in transient owner is incorrect", transientElements.size(), 2);
+                Set transientAnimals = transientFarm.getAnimals();
+                assertFalse("Owner object is not transient!", JDOHelper.isPersistent(transientFarm));
+                assertEquals("Number of elements in transient owner is incorrect", transientAnimals.size(), 2);
 
-                Iterator transientElementsIter = transientElements.iterator();
-                boolean value1Present = false;
-                boolean value2Present = false;
-                while (transientElementsIter.hasNext())
+                Iterator transientAnimalsIter = transientAnimals.iterator();
+                boolean dogPresent = false;
+                boolean cowPresent = false;
+                while (transientAnimalsIter.hasNext())
                 {
-                    InverseSetValue transientValue = (InverseSetValue)transientElementsIter.next();
-                    assertFalse("Element object is not transient!", JDOHelper.isPersistent(transientValue));
+                    Animal transientAnimal = (Animal)transientAnimalsIter.next();
+                    assertFalse("Element object is not transient!", JDOHelper.isPersistent(transientAnimal));
 
-                    // Check that the String field of the element is the same as that persisted
-                    // We should really check for other things, on the Widget field of the value but that is
-                    // not transient and so we cant do straight comparisons
-                    if (transientValue.getStrField() == null)
+                    // Check that the Animal name field is the same as that persisted
+                    if (transientAnimal.getName().equals("Dog"))
                     {
-                        if (valueStrings[0] == null && !value1Present)
-                        {
-                            value1Present = true;
-                        }
-                        else if (valueStrings[1] == null && !value2Present)
-                        {
-                            value2Present = true;
-                        }
+                        dogPresent = true;
                     }
-                    else
+                    else if (transientAnimal.getName().equals("Cow"))
                     {
-                        if (transientValue.getStrField().equals(valueStrings[0]))
-                        {
-                            value1Present = true;
-                        }
-                        else if (transientValue.getStrField().equals(valueStrings[1]))
-                        {
-                            value2Present = true;
-                        }
+                        cowPresent = true;
                     }
 
                     // Check that the owner is the transient one
-                    assertEquals("Owner of transient set element is incorrect", StringUtils.toJVMIDString(transientValue.getOwner()), StringUtils.toJVMIDString(transientOwner));
+                    assertEquals("Owner of transient animal is incorrect", StringUtils.toJVMIDString(transientAnimal.getFarm()), StringUtils.toJVMIDString(transientFarm));
                 }
-                assertTrue("First value element is not present in the transient set", value1Present);
-                assertTrue("Second value element is not present in the transient set", value2Present);
+                assertTrue("First value animal is not present in the transient set", dogPresent);
+                assertTrue("Second value animal is not present in the transient set", cowPresent);
             }
             finally
             {
@@ -1643,8 +1606,8 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(InverseSetFieldTester.class);
-            clean(InverseSetValue.class);
+            clean(Farm.class);
+            clean(Animal.class);
             clean(Manager.class);
             clean(Widget.class);
         }

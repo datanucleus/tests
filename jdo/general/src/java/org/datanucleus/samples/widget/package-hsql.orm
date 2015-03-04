@@ -22,12 +22,6 @@
             </field>
         </class>
 
-        <class name="InverseSetValue">
-            <field name="strField">
-                <column length="20" jdbc-type="VARCHAR"/>
-            </field>
-        </class>
-
         <class name="StringWidget">
             <field name="fixedLengthString">
     			<column length="20" jdbc-type="CHAR"/>

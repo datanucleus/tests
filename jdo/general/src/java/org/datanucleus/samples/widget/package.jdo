@@ -95,20 +95,7 @@
                 </collection>
             </field>
         </class>
-                
-        <class name="InverseSetValue">
-            <field name="owner"/>
-            <field name="objField" default-fetch-group="true" persistence-modifier="persistent"/>
-        </class>
-        
-        <class name="InverseSetFieldTester">
-            <datastore-identity strategy="increment"/>
-            <field name="elements" mapped-by="owner">
-                <collection element-type="InverseSetValue"/>
-            </field>
-        </class>
 
-        
         <class name="Widget">
             <field name="booleanField" null-value="exception"/>
             <field name="booleanObjField"/>
