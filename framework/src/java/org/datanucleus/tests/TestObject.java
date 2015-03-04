@@ -27,8 +27,7 @@ import javax.jdo.JDOHelper;
 
 /**
  * Sample test object, providing population helpers for fields.
- * 
- * @version $Revision: 1.2 $
+ * TODO Dump this crap. It has JDOHelper.getObjectId() in its hashcode so consequently cannot be used in a set until persistent, which forces persists of objects!
  */
 public abstract class TestObject implements Cloneable
 {

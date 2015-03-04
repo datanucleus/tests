@@ -26,10 +26,7 @@ import junit.framework.Assert;
 import org.datanucleus.tests.TestObject;
 
 /**
- * Sample value that is stored in a 1-N bidirectional Foreign-Key
- * relationship.
- * 
- * @version $Revision: 1.2 $
+ * Sample value that is stored in a 1-N bidirectional Foreign-Key relationship.
  */
 public class InverseSetValue extends TestObject implements InstanceCallbacks
 {
