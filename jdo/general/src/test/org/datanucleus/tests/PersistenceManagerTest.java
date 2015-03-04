@@ -52,6 +52,7 @@ import javax.jdo.identity.LongIdentity;
 
 import junit.framework.Assert;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.TransactionEventListener;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.api.jdo.exceptions.TransactionNotActiveException;
@@ -1523,6 +1524,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
+            pm.setProperty(PropertyNames.PROPERTY_MANAGE_RELATIONSHIPS, "false"); // Turn off Managed Relationships since InverseSetValue etc have a flawed hashCode
             Transaction tx = pm.currentTransaction();
             try
             {
@@ -1551,10 +1553,8 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 Assert.assertEquals(m.getFirstName(), m1.getFirstName());
                 Assert.assertEquals(m.getEmailAddress(), m1.getEmailAddress());
                 Assert.assertEquals(m.getPersonNum(), m1.getPersonNum());
-                Assert.assertTrue("subordinates are not the same",
-                    Manager.compareSet(m.getSubordinates(), m1.getSubordinates()));
-                Assert.assertTrue("departments are not the same",
-                    Manager.compareSet(m.getDepartments(), m1.getDepartments()));
+                Assert.assertTrue("subordinates are not the same", Manager.compareSet(m.getSubordinates(), m1.getSubordinates()));
+                Assert.assertTrue("departments are not the same", Manager.compareSet(m.getDepartments(), m1.getDepartments()));
                 tx.commit();
 
                 // FK 1-N relationship
