@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
@@ -1662,20 +1663,17 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
             Animal animal1 = new Animal("animal1");
             Animal animal2 = new Animal("animal2");
             farm1.setAnimals(createSet(animal1, animal2));
-
             pm.makePersistent(farm1);
             
             Farm farm2 = new Farm("farm2");
             Animal animal3 = new Animal("animal3");
             Animal animal4 = new Animal("animal4");
-            farm2.setAnimals(createSet(animal3, animal4));
-            
+            farm2.setAnimals(createSet(animal3, animal4));            
             pm.makePersistent(farm2);
             
             Farm farm3 = new Farm("farm3");
             Animal animal5 =  new Animal("animal5");
             farm3.setAnimals(createSet(animal5));
-            
             pm.makePersistent(farm3);
 
             pm.flush();
@@ -1691,20 +1689,22 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
             
             assertEquals(createSet(animal5), farm3.getAnimals());
             assertEquals(farm3, animal5.getFarm());
+            pm.flush();
 
-            tx.commit();
-
-            
             // perform update and validate
-            tx.begin();
+            LOG.info(">> farm1 " + farm1 + " state=" + JDOHelper.getObjectState(farm1) + " - about to update animals using setAnimals()");
+            LOG.info(">> farm2 " + farm2 + " state=" + JDOHelper.getObjectState(farm2));
+            LOG.info(">> farm3 " + farm3 + " state=" + JDOHelper.getObjectState(farm3));
             farm1.setAnimals(createSet(animal2, animal3, animal5));
             pm.flush();
+
+            // will move animal3 from farm2 to farm1
+            // will move animal5 from farm3 to farm2
             // should result in:
             // farm1 <-> {animal2, animal3, animal5}
             // farm2 <-> {animal4}
             // farm3 <-> {}
             // i.e. animal3 and animal5 moved from their previous owners to farm1
-
             assertEquals(createSet(animal2, animal3, animal5), farm1.getAnimals());
             assertEquals(farm1, animal2.getFarm());
             assertEquals(farm1, animal3.getFarm());
