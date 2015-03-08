@@ -46,5 +46,13 @@
                 <column jdbc-type="VARCHAR"/>
             </field>
         </class>
+        <class name="JodaSample6" identity-type="application" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="id" primary-key="true" persistence-modifier="persistent"/>
+            <field name="localDateTime1" persistence-modifier="persistent"/>
+            <field name="localDateTime2" persistence-modifier="persistent">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
     </package>
 </jdo>

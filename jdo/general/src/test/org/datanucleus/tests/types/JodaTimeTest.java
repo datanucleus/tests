@@ -30,11 +30,13 @@ import org.datanucleus.samples.types.jodatime.JodaSample2;
 import org.datanucleus.samples.types.jodatime.JodaSample3;
 import org.datanucleus.samples.types.jodatime.JodaSample4;
 import org.datanucleus.samples.types.jodatime.JodaSample5;
+import org.datanucleus.samples.types.jodatime.JodaSample6;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 /**
@@ -842,6 +844,99 @@ public class JodaTimeTest extends JDOPersistenceTestCase
         finally
         {
             clean(JodaSample2.class);
+        }
+    }
+
+    /**
+     * Test for LocalDateTime persistence and retrieval.
+     */
+    public void testLocalDateTime()
+    {
+        try
+        {
+            // Create some data we can use for access
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            LocalDateTime dateTime1 = new LocalDateTime(2008, 3, 14, 15, 9, 26, 0);
+            LocalDateTime dateTime2 = new LocalDateTime(2009, 5, 13, 7, 9, 26, 0);
+            Object id = null;
+            Object id2 = null;
+            try
+            {
+                tx.begin();
+                JodaSample6 s = new JodaSample6(1, dateTime1, dateTime2);
+                JodaSample6 s2 = new JodaSample6(2, null, null);
+                pm.makePersistent(s);
+                pm.makePersistent(s2);
+                tx.commit();
+                id = pm.getObjectId(s);
+                id2 = pm.getObjectId(s2);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error persisting LocalDateTime sample", e);
+                fail("Error persisting LocalDateTime sample");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                JodaSample6 s = (JodaSample6)pm.getObjectById(id);
+
+                LocalDateTime ldt1 = s.getLocalDateTime1();
+                assertNotNull("Retrieved LocalDateTime was null!", ldt1);
+                assertEquals("Timestamp : Year was wrong", 2008, ldt1.getYear());
+                assertEquals("Timestamp : Month was wrong", 3, ldt1.getMonthOfYear());
+                assertEquals("Timestamp : Day was wrong", 14, ldt1.getDayOfMonth());
+                assertEquals("Timestamp : Hour was wrong", 15, ldt1.getHourOfDay());
+                assertEquals("Timestamp : Minute was wrong", 9, ldt1.getMinuteOfHour());
+                assertEquals("Timestamp : Second was wrong", 26, ldt1.getSecondOfMinute());
+
+                LocalDateTime ldt2 = s.getLocalDateTime2();
+                assertNotNull("Retrieved LocalDateTime was null!", ldt2);
+                assertEquals("String : Year was wrong", 2009, ldt2.getYear());
+                assertEquals("String : Month was wrong", 5, ldt2.getMonthOfYear());
+                assertEquals("String : Day was wrong", 13, ldt2.getDayOfMonth());
+                assertEquals("String : Hour was wrong", 7, ldt2.getHourOfDay());
+                assertEquals("String : Minute was wrong", 9, ldt2.getMinuteOfHour());
+                assertEquals("String : Second was wrong", 26, ldt2.getSecondOfMinute());
+
+                JodaSample6 s2 = (JodaSample6)pm.getObjectById(id2);                
+                assertNull(s2.getLocalDateTime1());
+                assertNull(s2.getLocalDateTime2());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving LocalDateTime data", e);
+                fail("Error retrieving LocalDateTime data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(JodaSample6.class);
         }
     }
 }
