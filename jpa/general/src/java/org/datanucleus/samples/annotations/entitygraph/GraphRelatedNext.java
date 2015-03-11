@@ -17,32 +17,29 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.annotations.entitygraph;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
-public class GraphRelated
+public class GraphRelatedNext
 {
     @Id
     long id;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    GraphRelatedNext nextRelation;
+    String name;
 
-    public GraphRelated(long id)
+    public GraphRelatedNext(long id)
     {
         this.id = id;
     }
 
-    public void setRelationNext(GraphRelatedNext related)
+    public void setName(String name)
     {
-        this.nextRelation = related;
+        this.name = name;
     }
 
-    public GraphRelatedNext getRelationNext()
+    public String getName()
     {
-        return nextRelation;
+        return name;
     }
 }

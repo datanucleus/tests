@@ -36,6 +36,7 @@ import org.datanucleus.api.jpa.JPAEntityManagerFactory;
 import org.datanucleus.api.jpa.JPAQuery;
 import org.datanucleus.samples.annotations.entitygraph.GraphBase;
 import org.datanucleus.samples.annotations.entitygraph.GraphRelated;
+import org.datanucleus.samples.annotations.entitygraph.GraphRelatedNext;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 
@@ -349,6 +350,167 @@ public class EntityGraphTest extends JPAPersistenceTestCase
         {
             clean(GraphBase.class);
             clean(GraphRelated.class);
+        }
+    }
+
+    public void testQueryMultipleLevelsUsingLoadGraph()
+    {
+        try
+        {
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                GraphBase base = new GraphBase(1, "First Base");
+                GraphRelated related = new GraphRelated(101);
+                base.setRelation(related);
+                GraphRelatedNext next = new GraphRelatedNext(201);
+                next.setName("First Next Relation");
+                related.setRelationNext(next);
+                em.persist(base);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception on persist+query", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+            List<GraphBase> results = null;
+            try
+            {
+                tx.begin();
+
+                EntityGraph<GraphBase> eg = em.createEntityGraph(GraphBase.class);
+                eg.addAttributeNodes("name", "relation");
+                Subgraph<GraphRelated> relationGraph = eg.addSubgraph("relation", GraphRelated.class);
+                relationGraph.addAttributeNodes("nextRelation");
+                Subgraph<GraphRelatedNext> cityGraph = relationGraph.addSubgraph("nextRelation", GraphRelatedNext.class);
+                cityGraph.addAttributeNodes("name");
+
+                Query q = em.createQuery("SELECT b FROM GraphBase b");
+                q.setHint("javax.persistence.loadgraph", eg);
+                results = q.getResultList();
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception on persist+query", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            // Will now be detached, so check detachment
+            assertEquals(1, results.size());
+            // Test if everything was loaded as per JPA Spec 3.2.7
+            assertEquals("First Next Relation", results.get(0).getRelation().getRelationNext().getName());
+        }
+        finally
+        {
+            clean(GraphBase.class);
+            clean(GraphRelated.class);
+            clean(GraphRelatedNext.class);
+        }
+    }
+
+    /**
+     * This is the equivalent of testQueryMultipleLevelsUsingLoadGraph but using FETCH JOIN.
+     */
+    public void testQueryMultipleLevelsUsingFetchJoin()
+    {
+        try
+        {
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                GraphBase base = new GraphBase(1, "First Base");
+                GraphRelated related = new GraphRelated(101);
+                base.setRelation(related);
+                GraphRelatedNext next = new GraphRelatedNext(201);
+                next.setName("First Next Relation");
+                related.setRelationNext(next);
+                em.persist(base);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception on persist+query", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+            List<GraphBase> results = null;
+            try
+            {
+                tx.begin();
+
+                Query q = em.createQuery("SELECT b FROM GraphBase b JOIN FETCH b.relation r JOIN FETCH r.nextRelation n");
+                results = q.getResultList();
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception on persist+query", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            // Will now be detached, so check detachment
+            assertEquals(1, results.size());
+            // Test if everything was loaded as per JPA Spec 3.2.7
+            assertEquals("First Next Relation", results.get(0).getRelation().getRelationNext().getName());
+        }
+        finally
+        {
+            clean(GraphBase.class);
+            clean(GraphRelated.class);
+            clean(GraphRelatedNext.class);
         }
     }
 }
