@@ -26,7 +26,7 @@ public class Player extends Person
 {
     Date startDate;
 
-    @ManyToOne(cascade={CascadeType.ALL})
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     Team team;
 
     public Player(long id, String first, String last)

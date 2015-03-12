@@ -22,7 +22,7 @@ import javax.persistence.*;
 @Entity
 public class Manager extends Coach
 {
-    @OneToOne(mappedBy="manager", cascade={CascadeType.ALL})
+    @OneToOne(mappedBy="manager", cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     Team team;
 
     public Manager(long id, String first, String last, int yrs)

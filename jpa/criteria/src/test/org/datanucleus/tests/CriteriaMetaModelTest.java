@@ -101,6 +101,7 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             cal.set(Calendar.MONTH, 8);
             cal.set(Calendar.DAY_OF_MONTH, 1);
             pl1.setStartDate(cal.getTime());
+            pl1.setTeam(team1);
             em.persist(pl1);
 
             tx.commit();
@@ -135,9 +136,24 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
                 Team team = teamIter.next();
                 Manager mgr = team.getManager();
                 mgr.setTeam(null);
+                team.setManager(null);
             }
 
+            Query q2 = em.createQuery("SELECT p FROM Player p");
+            List<Player> players = q2.getResultList();
+            Iterator<Player> playerIter = players.iterator();
+            while (playerIter.hasNext())
+            {
+                Player pl = playerIter.next();
+                Team t = pl.getTeam();
+                t.getPlayers().remove(pl);
+                pl.setTeam(null);
+            }
             tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in tearDown", e);
         }
         finally
         {
@@ -983,6 +999,60 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             LOG.error("Exception during query", e);
             fail("Exception during test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test generation of FROM with multiple joins.
+     */
+    public void testMultipleJoin()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaQuery<Player> crit = qb.createQuery(Player.class);
+            Root<Player> candidate = crit.from(Player.class);
+            candidate.alias("p");
+            crit.select(candidate);
+            Join<Player, Team> teamRoot = candidate.join(Player_.team, JoinType.INNER);
+            teamRoot.alias("t");
+            Join<Team, Manager> mgrRoot = teamRoot.join(Team_.manager, JoinType.INNER);
+            mgrRoot.alias("m");
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT p FROM org.datanucleus.samples.jpa.query.Player p JOIN p.team t JOIN t.manager m", crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Player> players = q.getResultList();
+
+            assertNotNull("Null results returned!", players);
+            assertEquals("Number of results is incorrect", 1, players.size());
+            boolean beckham = false;
+            Iterator<Player> playerIter = players.iterator();
+            while (playerIter.hasNext())
+            {
+                Player pl = playerIter.next();
+                if (pl.getFirstName().equals("David"))
+                {
+                    beckham = true;
+                }
+            }
+            assertTrue("Beckham not returned", beckham);
+
+            tx.rollback();
         }
         finally
         {

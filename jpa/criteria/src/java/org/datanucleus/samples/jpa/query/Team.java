@@ -34,7 +34,7 @@ public class Team
     @OneToOne(cascade={CascadeType.ALL})
     Manager manager;
 
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     Set<Player> players = new HashSet<Player>();
 
     URL website;
