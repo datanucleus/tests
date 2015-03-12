@@ -21,24 +21,25 @@ package org.jpox.samples.types.color;
 
 /**
  * Object with a Color.
- *
- * @version $Revision: 1.1 $
  */
 public class ColorHolder
 {
+    long id;
     private java.awt.Color colorA;
 
-    /**
-     * @return Returns the colorA.
-     */
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+    public long getId()
+    {
+        return id;
+    }
+
     public java.awt.Color getColorA()
     {
         return colorA;
     }
-    
-    /**
-     * @param colorA The colorA to set.
-     */
     public void setColorA(java.awt.Color colorA)
     {
         this.colorA = colorA;
