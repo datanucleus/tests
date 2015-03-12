@@ -6,6 +6,7 @@
     <!-- TEST "unit" -->
     <persistence-unit name="TEST">
         <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/types/calendar/orm.xml</mapping-file>
         <class>org.jpox.samples.typeconversion.ComplicatedType2</class>
     </persistence-unit>
 
@@ -34,6 +35,7 @@
         <mapping-file>org/jpox/samples/one_one/bidir/orm.xml</mapping-file>
         <mapping-file>org/jpox/samples/models/company/orm.xml</mapping-file>
         <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
+        <mapping-file>org/jpox/samples/types/calendar/orm.xml</mapping-file>
 
         <mapping-file>org/jpox/samples/ann_xml/many_many/orm.xml</mapping-file>
         <mapping-file>org/jpox/samples/ann_xml/one_one/unidir/orm.xml</mapping-file>
