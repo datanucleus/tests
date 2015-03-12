@@ -25,16 +25,24 @@ import java.util.TimeZone;
 /**
  * Sample class with a Calendar.
  * Has two fields so they can be stored in different ways as required.
- * 
- * @version $Revision: 1.1 $
  */
 public class CalendarHolder
 {
+    long id;
     Calendar cal1 = new GregorianCalendar();
     Calendar cal2 = new GregorianCalendar();
 
     public CalendarHolder()
     {
+    }
+
+    public long getId()
+    {
+        return id;
+    }
+    public void setId(long id)
+    {
+        this.id = id;
     }
 
     public Calendar getCal1()
