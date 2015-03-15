@@ -33,6 +33,15 @@ public class MapFKValueBase implements Serializable
         this.key = key;
     }
 
+    public void setId(long id)
+    {
+    	this.id = id;
+    }
+    public long getId()
+    {
+    	return this.id;
+    }
+
     public String getKey()
     {
         return key;

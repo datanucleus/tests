@@ -63,7 +63,7 @@ public class MapFKHolder
     {
         if (map == null)
         {
-            map = new HashMap();
+            map = new HashMap<String, MapFKValue>();
         }
         return map;
     }
