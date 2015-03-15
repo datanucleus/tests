@@ -63,6 +63,9 @@ import org.jpox.samples.annotations.one_one.bidir.Timer;
 import org.jpox.samples.annotations.one_one.unidir.Login;
 import org.jpox.samples.annotations.one_one.unidir.LoginAccount;
 import org.jpox.samples.annotations.types.basic.DateHolder;
+import org.jpox.samples.one_many.map_fk.MapFKHolder;
+import org.jpox.samples.one_many.map_fk.MapFKValue;
+import org.jpox.samples.one_many.map_fk.MapFKValueBase;
 
 /**
  * Tests for JPQL.
@@ -81,7 +84,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                     Person.class, Employee.class, Manager.class, Qualification.class, Organisation.class, 
                     Animal.class, Farm.class,
                     House.class, Window.class, Boiler.class, Timer.class, Login.class, LoginAccount.class,
-                    UserGroup.class, GroupMember.class, ModeratedUserGroup.class, ExpertGroupMember.class
+                    UserGroup.class, GroupMember.class, ModeratedUserGroup.class, ExpertGroupMember.class,
+                    MapFKHolder.class, MapFKValue.class, MapFKValueBase.class
                 });
         }
     }
