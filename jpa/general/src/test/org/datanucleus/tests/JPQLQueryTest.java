@@ -3438,4 +3438,53 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             clean(Timer.class);
         }
     }
+
+    /**
+     * Test for KEY and VALUE use with Map field.
+     */
+    public void testKEYandVALUE()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            MapFKHolder holder = new MapFKHolder(1);
+            holder.setName("First Holder");
+            for (int i=0;i<3;i++)
+            {
+                MapFKValue val1 = new MapFKValue("Key" + i, "Map value " + i, "Some description " + i);
+                val1.setHolder(holder);
+                val1.setId(100+i);
+                holder.getMap().put(val1.getKey(), val1);
+            }
+            em.persist(holder);
+
+            em.flush();
+
+            List<Object[]> results = em.createQuery("SELECT h.name, VALUE(h.map).name FROM " + MapFKHolder.class.getName() + " h WHERE KEY(h.map) = 'Key1'").getResultList();
+            assertNotNull(results);
+            assertEquals(1, results.size());
+            Object[] resultRow = results.get(0);
+            assertEquals(2, resultRow.length);
+            assertEquals("First Holder", resultRow[0]);
+            assertEquals("Map value 1", resultRow[1]);
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
 }
