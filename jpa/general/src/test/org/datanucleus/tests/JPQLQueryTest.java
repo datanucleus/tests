@@ -36,6 +36,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
+import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase;
@@ -85,7 +87,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                     Animal.class, Farm.class,
                     House.class, Window.class, Boiler.class, Timer.class, Login.class, LoginAccount.class,
                     UserGroup.class, GroupMember.class, ModeratedUserGroup.class, ExpertGroupMember.class,
-                    MapFKHolder.class, MapFKValue.class, MapFKValueBase.class
+                    MapFKHolder.class, MapFKValue.class, MapFKValueBase.class,
+                    MapJoinHolder.class, MapJoinValue.class
                 });
         }
     }
@@ -3442,7 +3445,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     /**
      * Test for KEY and VALUE use with Map field.
      */
-    public void testKEYandVALUE()
+    public void testMapFKWithKEYandVALUE()
     {
         EntityManager em = getEM();
         EntityTransaction tx = em.getTransaction();
@@ -3463,13 +3466,62 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
 
             em.flush();
 
-            List<Object[]> results = em.createQuery("SELECT h.name, VALUE(h.map).name FROM " + MapFKHolder.class.getName() + " h WHERE KEY(h.map) = 'Key1'").getResultList();
+            List<Object[]> results = em.createQuery("SELECT h.name, VALUE(m).name FROM " + MapFKHolder.class.getName() + " h LEFT OUTER JOIN h.map m WHERE KEY(m) = 'Key1'").getResultList();
             assertNotNull(results);
             assertEquals(1, results.size());
             Object[] resultRow = results.get(0);
             assertEquals(2, resultRow.length);
             assertEquals("First Holder", resultRow[0]);
             assertEquals("Map value 1", resultRow[1]);
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for KEY and VALUE use with Map field.
+     */
+    public void testMapJoinWithKEYandVALUE()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            MapJoinHolder holder = new MapJoinHolder(1);
+            holder.setName("First Holder");
+            for (int i=0;i<3;i++)
+            {
+                MapJoinValue val = new MapJoinValue(i, "Map value " + i, "Some description " + i);
+                holder.getMap().put("Key" + i, val);
+            }
+            em.persist(holder);
+
+            em.flush();
+
+            TypedQuery<MapJoinValue> q = em.createQuery("SELECT VALUE(m) FROM MapJoinHolder h LEFT JOIN h.map m ON KEY(m) = :key", MapJoinValue.class);
+            q.setParameter("key", "Key2");
+            List<MapJoinValue> results = q.getResultList();
+
+            assertNotNull(results);
+            assertEquals(1, results.size());
+            MapJoinValue resultVal = results.get(0);
+            assertEquals("Map value 2", resultVal.getName());
+            assertEquals("Some description 2", resultVal.getDescription());
 
             tx.rollback();
         }
