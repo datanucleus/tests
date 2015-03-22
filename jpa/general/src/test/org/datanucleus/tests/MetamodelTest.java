@@ -18,15 +18,20 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.MapAttribute;
 import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.Type;
 
+import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue;
+import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
+import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.models.company.Employee;
 import org.jpox.samples.annotations.models.company.Manager;
@@ -241,6 +246,127 @@ public class MetamodelTest extends JPAPersistenceTestCase
         catch (IllegalArgumentException iae)
         {
             fail("Error in metamodel tests" + iae.getMessage());
+        }
+    }
+
+    /**
+     * Test for class with Map field(s).
+     */
+    public void testMap()
+    {
+        Metamodel model = emf.getMetamodel();
+        try
+        {
+            EntityType<?> mapHolderType = model.entity(MapJoinHolder.class);
+            assertNotNull(mapHolderType);
+            assertEquals("Number of attributes is wrong", 5, mapHolderType.getAttributes().size());
+
+            try
+            {
+                // long field (id)
+                Attribute attr = mapHolderType.getAttribute("id");
+                assertNotNull(attr);
+                assertTrue(attr instanceof SingularAttribute);
+                assertEquals("id", attr.getName());
+                assertEquals(long.class, attr.getJavaType());
+                assertEquals("id", attr.getJavaMember().getName());
+                assertFalse(attr.isCollection());
+                assertFalse(attr.isAssociation());
+                assertTrue(attr instanceof SingularAttribute);
+                assertFalse(((SingularAttribute)attr).isOptional());
+                assertFalse(((SingularAttribute)attr).isVersion());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"id\" field of " + MapJoinHolder.class.getName());
+            }
+
+            try
+            {
+                // String field (name)
+                Attribute attr = mapHolderType.getAttribute("name");
+                assertNotNull(attr);
+                assertTrue(attr instanceof SingularAttribute);
+                assertEquals("name", attr.getName());
+                assertEquals(String.class, attr.getJavaType());
+                assertEquals("name", attr.getJavaMember().getName());
+                assertFalse(attr.isCollection());
+                assertFalse(attr.isAssociation());
+                assertTrue(attr instanceof SingularAttribute);
+                assertTrue(((SingularAttribute)attr).isOptional());
+                assertFalse(((SingularAttribute)attr).isVersion());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"name\" field of " + MapJoinHolder.class.getName());
+            }
+
+            try
+            {
+                // Map<NonPC, PC>
+                Attribute attr = mapHolderType.getAttribute("map");
+                assertNotNull(attr);
+                assertTrue(attr instanceof MapAttribute);
+                MapAttribute mapAttr = (MapAttribute)attr;
+                assertEquals("map", attr.getName());
+                assertEquals(Map.class, attr.getJavaType());
+                assertEquals("map", attr.getJavaMember().getName());
+                assertTrue(attr.isCollection());
+                assertTrue(attr.isAssociation());
+                assertEquals(String.class.getName(), mapAttr.getKeyJavaType().getName());
+                Type valueType = mapAttr.getElementType();
+                assertEquals(MapJoinValue.class.getName(), valueType.getJavaType().getName());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"map\" field of " + MapJoinHolder.class.getName());
+            }
+
+            try
+            {
+                // Map<NonPC, NonPC>
+                Attribute attr = mapHolderType.getAttribute("map2");
+                assertNotNull(attr);
+                assertTrue(attr instanceof MapAttribute);
+                MapAttribute mapAttr = (MapAttribute)attr;
+                assertEquals("map2", attr.getName());
+                assertEquals(Map.class, attr.getJavaType());
+                assertEquals("map2", attr.getJavaMember().getName());
+                assertTrue(attr.isCollection());
+                assertFalse(attr.isAssociation());
+                assertEquals(Integer.class.getName(), mapAttr.getKeyJavaType().getName());
+                Type valueType = mapAttr.getElementType();
+                assertEquals(String.class.getName(), valueType.getJavaType().getName());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"map2\" field of " + MapJoinHolder.class.getName());
+            }
+
+            try
+            {
+                // Map<NonPC, PC>
+                Attribute attr = mapHolderType.getAttribute("map3");
+                assertNotNull(attr);
+                assertTrue(attr instanceof MapAttribute);
+                MapAttribute mapAttr = (MapAttribute)attr;
+                assertEquals("map3", attr.getName());
+                assertEquals(Map.class, attr.getJavaType());
+                assertEquals("map3", attr.getJavaMember().getName());
+                assertTrue(attr.isCollection());
+                assertTrue(attr.isAssociation());
+                assertEquals(String.class.getName(), mapAttr.getKeyJavaType().getName());
+                Type valueType = mapAttr.getElementType();
+                assertEquals(MapJoinEmbeddedValue.class.getName(), valueType.getJavaType().getName());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"map3\" field of " + MapJoinHolder.class.getName());
+            }
+        }
+        catch (IllegalArgumentException iae)
+        {
+            fail("Didnt find EntityType for " + Animal.class.getName());
         }
     }
 }
