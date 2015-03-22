@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -28,7 +30,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Holder of a Map stored by join table.
+ * Holder of maps stored by join table.
  */
 @Entity
 @Table(name="JPA_AN_MAPJOINHOLDER")
@@ -42,6 +44,10 @@ public class MapJoinHolder
     @OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="JPA_AN_MAPJOINHOLDER_MAP")
     private Map<String, MapJoinValue> map;
+
+    @ElementCollection
+    @CollectionTable(name="JPA_AN_MAPJOINHOLDER_MAP2")
+    private Map<Integer, String> map2;
 
     public MapJoinHolder()
     {
@@ -79,5 +85,14 @@ public class MapJoinHolder
             map = new HashMap<String, MapJoinValue>();
         }
         return map;
+    }
+
+    public Map<Integer, String> getMap2()
+    {
+        if (map2 == null)
+        {
+            map2 = new HashMap<Integer, String>();
+        }
+        return map2;
     }
 }

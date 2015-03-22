@@ -3539,4 +3539,52 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             em.close();
         }
     }
+
+
+    /**
+     * Test for KEY and VALUE use with Map<Integer, String> field.
+     */
+    public void testMapJoinNonPCWithKEYandVALUE()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            MapJoinHolder holder = new MapJoinHolder(1);
+            holder.setName("First Holder");
+            for (int i=0;i<3;i++)
+            {
+                holder.getMap2().put(i, "Val" + i);
+            }
+            em.persist(holder);
+
+            em.flush();
+
+            Query q = em.createQuery("SELECT VALUE(m2) FROM MapJoinHolder h LEFT JOIN h.map2 m2 ON KEY(m2) = :key");
+            q.setParameter("key", new Integer(1));
+            List results = q.getResultList();
+            assertNotNull(results);
+            assertEquals(1, results.size());
+
+            String resultVal = (String)results.get(0);
+            assertEquals("Val1", resultVal);
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
 }
