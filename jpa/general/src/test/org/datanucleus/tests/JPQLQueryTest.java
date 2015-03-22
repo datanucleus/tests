@@ -3620,6 +3620,14 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             assertEquals("Name1", resultVal.getName());
             assertEquals("Description1", resultVal.getDescription());
 
+            // Try access to a field of the embedded value
+            Query q2 = em.createQuery("SELECT VALUE(m3).name FROM MapJoinHolder h LEFT JOIN h.map3 m3 ON KEY(m3) = :key");
+            q2.setParameter("key", "Key1");
+            List results2 = q2.getResultList();
+            assertNotNull(results2);
+            assertEquals(1, results2.size());
+            assertEquals("Name1", (String)results2.get(0));
+
             tx.rollback();
         }
         catch (PersistenceException e)
