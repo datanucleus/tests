@@ -36,6 +36,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
@@ -3540,7 +3541,6 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
     }
 
-
     /**
      * Test for KEY and VALUE use with Map<Integer, String> field.
      */
@@ -3570,6 +3570,55 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
 
             String resultVal = (String)results.get(0);
             assertEquals("Val1", resultVal);
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for KEY and VALUE use with Map<String, {embedded}> field.
+     */
+    public void testMapJoinEmbeddableWithKEYandVALUE()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            MapJoinHolder holder = new MapJoinHolder(1);
+            holder.setName("First Holder");
+            for (int i=0;i<3;i++)
+            {
+                MapJoinEmbeddedValue val = new MapJoinEmbeddedValue("Name" + i, "Description" + i);
+                holder.getMap3().put("Key" + i, val);
+            }
+            em.persist(holder);
+
+            em.flush();
+
+            TypedQuery<MapJoinEmbeddedValue> q = em.createQuery("SELECT VALUE(m3) FROM MapJoinHolder h LEFT JOIN h.map3 m3 ON KEY(m3) = :key", MapJoinEmbeddedValue.class);
+            q.setParameter("key", "Key1");
+            List<MapJoinEmbeddedValue> results = q.getResultList();
+            assertNotNull(results);
+            assertEquals(1, results.size());
+
+            MapJoinEmbeddedValue resultVal = results.get(0);
+            assertEquals("Name1", resultVal.getName());
+            assertEquals("Description1", resultVal.getDescription());
 
             tx.rollback();
         }

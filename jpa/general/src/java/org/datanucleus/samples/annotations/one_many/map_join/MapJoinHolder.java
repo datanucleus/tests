@@ -49,6 +49,10 @@ public class MapJoinHolder
     @CollectionTable(name="JPA_AN_MAPJOINHOLDER_MAP2")
     private Map<Integer, String> map2;
 
+    @ElementCollection
+    @CollectionTable(name="JPA_AN_MAPJOINHOLDER_MAP3")
+    private Map<String, MapJoinEmbeddedValue> map3;
+
     public MapJoinHolder()
     {
     }
@@ -94,5 +98,14 @@ public class MapJoinHolder
             map2 = new HashMap<Integer, String>();
         }
         return map2;
+    }
+
+    public Map<String, MapJoinEmbeddedValue> getMap3()
+    {
+        if (map3 == null)
+        {
+            map3 = new HashMap<String, MapJoinEmbeddedValue>();
+        }
+        return map3;
     }
 }
