@@ -36,6 +36,7 @@ import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
@@ -539,6 +540,81 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
                 else if (result[0].equals("Pep") && result[1].equals("Guardiola"))
                 {
                     guardiola = true;
+                }
+            }
+            if (!mourinho)
+            {
+                fail("Jose Mourinho not returned");
+            }
+            if (!guardiola)
+            {
+                fail("Pep Guardiola not returned");
+            }
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test basic querying with a result including CASE expression.
+     */
+    public void testResultCase()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            Root<Manager> candidate = crit.from(Manager.class);
+            Set<Join<Manager, ?>> joins = candidate.getJoins();
+            assertNotNull(joins); // Make sure joins returns empty set
+            assertEquals(0, joins.size());
+            Set<Fetch<Manager, ?>> fetches = candidate.getFetches();
+            assertNotNull(fetches); // Make sure fetches returns empty set
+            assertEquals(0, fetches.size());
+            candidate.alias("m");
+
+            Path<Integer> yrsVar = candidate.get(Manager_.yearsExperience);
+            Predicate lessThan2 = qb.lessThan(yrsVar, 5);
+            crit.multiselect(candidate.get(Manager_.firstName), candidate.get(Manager_.lastName), qb.selectCase().when(lessThan2, "Junior").otherwise("Senior"));
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT m.firstName,m.lastName,CASE WHEN (m.yearsExperience < 5) THEN 'Junior' ELSE 'Senior' END FROM org.datanucleus.samples.jpa.query.Manager m", crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Object[]> results = q.getResultList();
+
+            assertNotNull("Null results returned!", results);
+            assertEquals("Number of results is incorrect", 2, results.size());
+            boolean mourinho = false;
+            boolean guardiola = false;
+            Iterator<Object[]> resultIter = results.iterator();
+            while (resultIter.hasNext())
+            {
+                Object[] result = resultIter.next();
+                assertEquals(3, result.length);
+                if (result[0].equals("Jose") && result[1].equals("Mourinho"))
+                {
+                    mourinho = true;
+                    assertEquals("Senior", result[2]);
+                }
+                else if (result[0].equals("Pep") && result[1].equals("Guardiola"))
+                {
+                    guardiola = true;
+                    assertEquals("Junior", result[2]);
                 }
             }
             if (!mourinho)
