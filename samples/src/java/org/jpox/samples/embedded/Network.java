@@ -24,14 +24,13 @@ import java.util.Iterator;
 
 /**
  * Representation of a Network of devices.
- * @version $Revision: 1.1 $
  */
 public class Network
 {
     private long id; // Used by application identity
     private String name;
 
-    private Collection devices = new HashSet();
+    private Collection<Device> devices = new HashSet();
 
     public Network(String name)
     {
