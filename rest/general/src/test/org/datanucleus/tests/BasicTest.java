@@ -20,6 +20,8 @@ package org.datanucleus.tests;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Collection;
+import java.util.HashSet;
 
 import junit.framework.TestCase;
 
@@ -29,6 +31,8 @@ import org.datanucleus.api.rest.orgjson.JSONObject;
 import org.datanucleus.samples.ClassUsingDatastoreId;
 import org.datanucleus.samples.ClassWithValueStrategy;
 import org.datanucleus.util.NucleusLogger;
+import org.jpox.samples.embedded.Device;
+import org.jpox.samples.embedded.Network;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Person;
 import org.mortbay.io.ByteArrayBuffer;
@@ -816,6 +820,99 @@ public class BasicTest extends TestCase
         }
         finally
         {
+        }
+    }
+
+    /**
+     * Example using an embedded collection field, with persist then get then delete
+     * @throws IOException
+     */
+    public void testPersistEmbeddedCollection() throws IOException
+    {
+        HttpClient client = new HttpClient();
+        try
+        {
+            ContentExchange post = new ContentExchange();
+            post.setURL("http://localhost:"+PORT+"/dn/"+Network.class.getName());
+            post.setMethod("POST");
+            JSONObject obj = new JSONObject();
+            obj.put("id", 1);
+            obj.put("name", "Home Network");
+            Collection<JSONObject> devs = new HashSet<JSONObject>();
+            JSONObject dev1 = new JSONObject();
+            dev1.put("class", Device.class.getName()); // TODO Is this needed?
+            dev1.put("name", "Toaster");
+            dev1.put("description", "Kitchen Toaster");
+            devs.add(dev1);
+            JSONArray jsonarr = new JSONArray(devs);
+            obj.put("devices", jsonarr);
+            post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+
+            //persist
+            client.start();
+            client.send(post);
+            post.waitForDone();
+
+            //validate
+            assertEquals(201, post.getResponseStatus());
+            assertNotNull(post.getResponseContent());
+            obj = new JSONObject(post.getResponseContent());
+            assertEquals(1, obj.getLong("id"));
+
+            try
+            {
+                ContentExchange get = new ContentExchange();
+                get.setURL("http://localhost:"+PORT+"/dn/"+Network.class.getName() + "/1?fetch=all");
+                get.setMethod("GET");
+                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+                LOG.info(">> EMBEDDEDTEST GET");
+                client.send(get);
+                get.waitForDone();
+
+                assertEquals(200, get.getResponseStatus());
+                assertNotNull(get.getResponseContent());
+                obj = new JSONObject(get.getResponseContent());
+                assertEquals("Home Network", obj.getString("name"));
+
+                Object devObjs = obj.get("devices");
+                assertNotNull(devObjs);
+                assertTrue(devObjs instanceof JSONArray);
+                JSONArray devArr = (JSONArray)devObjs;
+                assertEquals(1, devArr.length());
+                Object devObj = devArr.get(0);
+                assertTrue(devObj instanceof JSONObject);
+                JSONObject dev = (JSONObject)devObj;
+                assertEquals("Toaster", dev.getString("name"));
+                assertEquals("Kitchen Toaster", dev.getString("description"));
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in validate", e);
+                fail(e.getMessage());
+            }
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in persist", e);
+            fail(e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                ContentExchange delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+Network.class.getName() + "/1");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+            }
+            catch (Exception e)
+            {
+                fail(e.getMessage());
+            }
         }
     }
 }
