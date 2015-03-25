@@ -31,7 +31,6 @@ import org.datanucleus.api.rest.orgjson.JSONObject;
 import org.datanucleus.samples.ClassUsingDatastoreId;
 import org.datanucleus.samples.ClassWithValueStrategy;
 import org.datanucleus.util.NucleusLogger;
-import org.jpox.samples.embedded.Device;
 import org.jpox.samples.embedded.Network;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Person;
@@ -840,7 +839,6 @@ public class BasicTest extends TestCase
             obj.put("name", "Home Network");
             Collection<JSONObject> devs = new HashSet<JSONObject>();
             JSONObject dev1 = new JSONObject();
-            dev1.put("class", Device.class.getName()); // TODO Is this needed?
             dev1.put("name", "Toaster");
             dev1.put("description", "Kitchen Toaster");
             devs.add(dev1);
@@ -865,7 +863,6 @@ public class BasicTest extends TestCase
                 get.setURL("http://localhost:"+PORT+"/dn/"+Network.class.getName() + "/1?fetch=all");
                 get.setMethod("GET");
                 get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
-                LOG.info(">> EMBEDDEDTEST GET");
                 client.send(get);
                 get.waitForDone();
 
