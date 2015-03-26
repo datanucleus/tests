@@ -12,6 +12,7 @@
             <property name="javax.jdo.option.ConnectionPassword" value=""/>
             <property name="javax.jdo.option.RetainValues" value="true"/>
             <property name="datanucleus.schema.autoCreateAll" value="true"/>
+            <property name="datanucleus.optimistic" value="false"/>
         </properties>
     </persistence-unit>
 

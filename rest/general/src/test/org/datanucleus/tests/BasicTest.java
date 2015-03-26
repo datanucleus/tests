@@ -925,9 +925,11 @@ public class BasicTest extends TestCase
         HttpClient client = new HttpClient();
         try
         {
+            // Persist Office plus 2 computers
             ContentExchange post = new ContentExchange();
             post.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName());
             post.setMethod("POST");
+
             JSONObject obj = new JSONObject();
             obj.put("name", "Headquarters");
             Collection<JSONObject> computers = new HashSet<JSONObject>();
@@ -950,7 +952,6 @@ public class BasicTest extends TestCase
             obj.put("computers", jsonarr);
             post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
 
-            //persist
             client.start();
             client.send(post);
             post.waitForDone();
@@ -958,11 +959,13 @@ public class BasicTest extends TestCase
             //validate
             assertEquals(201, post.getResponseStatus());
             assertNotNull(post.getResponseContent());
+
             obj = new JSONObject(post.getResponseContent());
             assertEquals("Headquarters", obj.getString("name"));
 
             try
             {
+                // Retrieve objects to check persistence
                 ContentExchange get = new ContentExchange();
                 get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
                 get.setMethod("GET");
@@ -1008,6 +1011,125 @@ public class BasicTest extends TestCase
 
                 assertTrue(pcFound);
                 assertTrue(laptopFound);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in validate", e);
+                fail(e.getMessage());
+            }
+
+            try
+            {
+                // Retrieve Office and add new Computer
+                ContentExchange get = new ContentExchange();
+                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
+                get.setMethod("GET");
+                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+                client.send(get);
+                get.waitForDone();
+
+                assertEquals(200, get.getResponseStatus());
+                assertNotNull(get.getResponseContent());
+
+                obj = new JSONObject(get.getResponseContent());
+                Object devObjs = obj.get("computers");
+                assertNotNull(devObjs);
+                assertTrue(devObjs instanceof JSONArray);
+                JSONArray devArr = (JSONArray)devObjs;
+                Collection coll = new HashSet();
+                for (int i=0;i<devArr.length();i++)
+                {
+                    coll.add(devArr.get(i));
+                }
+                JSONObject dev3 = new JSONObject();
+                dev3.put("class", LaptopComputer.class.getName());
+                dev3.put("id", 3);
+                dev3.put("ipAddress", "192.168.1.4");
+                dev3.put("operatingSystem", "Linux");
+                dev3.put("batteryLife", 8);
+                dev3.put("numberOfPcmcia", 0);
+                coll.add(dev3);
+                obj.put("computers", coll);
+LOG.info(">> POST of Office with 2 existing plus 1 new Computer json=" + obj);
+                post = new ContentExchange();
+                post.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName()+"/Headquarters");
+                post.setMethod("POST");
+                post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+
+                client.start();
+                client.send(post);
+                post.waitForDone();
+
+                //validate
+                assertEquals(201, post.getResponseStatus());
+                assertNotNull(post.getResponseContent());
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in update", e);
+                fail(e.getMessage());
+            }
+
+            try
+            {
+                // Retrieve objects to check persistence
+                ContentExchange get = new ContentExchange();
+                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
+                get.setMethod("GET");
+                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+                client.send(get);
+                get.waitForDone();
+
+                assertEquals(200, get.getResponseStatus());
+                assertNotNull(get.getResponseContent());
+                obj = new JSONObject(get.getResponseContent());
+
+                Object devObjs = obj.get("computers");
+                assertNotNull(devObjs);
+                assertTrue(devObjs instanceof JSONArray);
+                JSONArray devArr = (JSONArray)devObjs;
+                assertEquals(3, devArr.length());
+
+                boolean laptopFound = false;
+                boolean laptop2Found = false;
+                boolean pcFound = false;
+                for (int i=0;i<devArr.length();i++)
+                {
+                    Object devObj = devArr.get(i);
+                    assertTrue(devObj instanceof JSONObject);
+                    JSONObject dev = (JSONObject)devObj;
+                    if (dev.getLong("id") == 1)
+                    {
+                        assertEquals(DesktopComputer.class.getName(), dev.getString("class"));
+                        assertEquals("192.168.1.2", dev.getString("ipAddress"));
+                        assertEquals("Linux", dev.getString("operatingSystem"));
+                        assertEquals(4, dev.getInt("numberOfProcessors"));
+                        pcFound = true;
+                    }
+                    else if (dev.getLong("id") == 2)
+                    {
+                        assertEquals(LaptopComputer.class.getName(), dev.getString("class"));
+                        assertEquals("192.168.1.3", dev.getString("ipAddress"));
+                        assertEquals("Windows", dev.getString("operatingSystem"));
+                        assertEquals(5, dev.getLong("batteryLife"));
+                        assertEquals(0, dev.getInt("numberOfPcmcia"));
+                        laptopFound = true;
+                    }
+                    else if (dev.getLong("id") == 3)
+                    {
+                        assertEquals(LaptopComputer.class.getName(), dev.getString("class"));
+                        assertEquals("192.168.1.4", dev.getString("ipAddress"));
+                        assertEquals("Linux", dev.getString("operatingSystem"));
+                        assertEquals(8, dev.getLong("batteryLife"));
+                        assertEquals(0, dev.getInt("numberOfPcmcia"));
+                        laptop2Found = true;
+                    }
+                }
+
+                assertTrue(pcFound);
+                assertTrue(laptopFound);
+                assertTrue(laptop2Found);
             }
             catch (Exception e)
             {
