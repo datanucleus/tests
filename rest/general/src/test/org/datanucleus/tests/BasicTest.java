@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -29,6 +30,7 @@ import org.datanucleus.api.rest.RestServlet;
 import org.datanucleus.api.rest.orgjson.JSONArray;
 import org.datanucleus.api.rest.orgjson.JSONObject;
 import org.datanucleus.samples.ClassUsingDatastoreId;
+import org.datanucleus.samples.ClassWithStringCollection;
 import org.datanucleus.samples.ClassWithValueStrategy;
 import org.datanucleus.util.NucleusLogger;
 import org.jpox.samples.embedded.Network;
@@ -865,7 +867,6 @@ public class BasicTest extends TestCase
                 ContentExchange get = new ContentExchange();
                 get.setURL("http://localhost:"+PORT+"/dn/"+Network.class.getName() + "/1?fetch=all");
                 get.setMethod("GET");
-                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
                 client.send(get);
                 get.waitForDone();
 
@@ -969,7 +970,6 @@ public class BasicTest extends TestCase
                 ContentExchange get = new ContentExchange();
                 get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
                 get.setMethod("GET");
-                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
                 client.send(get);
                 get.waitForDone();
 
@@ -1024,7 +1024,6 @@ public class BasicTest extends TestCase
                 ContentExchange get = new ContentExchange();
                 get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
                 get.setMethod("GET");
-                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
                 client.send(get);
                 get.waitForDone();
 
@@ -1077,7 +1076,6 @@ LOG.info(">> POST of Office with 2 existing plus 1 new Computer json=" + obj);
                 ContentExchange get = new ContentExchange();
                 get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
                 get.setMethod("GET");
-                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
                 client.send(get);
                 get.waitForDone();
 
@@ -1167,6 +1165,106 @@ LOG.info(">> POST of Office with 2 existing plus 1 new Computer json=" + obj);
                 delete.setMethod("DELETE");
                 client.send(delete);
                 delete.waitForDone();
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+            }
+            catch (Exception e)
+            {
+                fail(e.getMessage());
+            }
+        }
+    }
+
+    public void testClassWithNonPersistableCollection() throws IOException
+    {
+        HttpClient client = new HttpClient();
+        try
+        {
+            ContentExchange post = new ContentExchange();
+            post.setURL("http://localhost:"+PORT+"/dn/"+ClassWithStringCollection.class.getName());
+            post.setMethod("POST");
+
+            JSONObject obj = new JSONObject();
+            obj.put("id", 101);
+            obj.put("name", "Name of Object1");
+            Set<String> strings = new HashSet<String>();
+            strings.add("FirstString");
+            strings.add("SecondString");
+            strings.add("ThirdString");
+            obj.put("strings", strings);
+            post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+
+            //persist
+            client.start();
+            client.send(post);
+            post.waitForDone();
+
+            //validate
+            assertEquals(201, post.getResponseStatus());
+            assertNotNull(post.getResponseContent());
+            obj = new JSONObject(post.getResponseContent());
+            assertEquals(101, obj.getLong("id"));
+
+            try
+            {
+                ContentExchange get = new ContentExchange();
+                get.setURL("http://localhost:"+PORT+"/dn/"+ClassWithStringCollection.class.getName() + "/101?fetchGroup=all");
+                get.setMethod("GET");
+                client.send(get);
+                get.waitForDone();
+
+                assertEquals(200, get.getResponseStatus());
+                assertNotNull(get.getResponseContent());
+                obj = new JSONObject(get.getResponseContent());
+                Object stringsObj = obj.get("strings");
+                assertTrue(stringsObj instanceof JSONArray);
+                JSONArray stringsArr = (JSONArray)stringsObj;
+                assertEquals(3, stringsArr.length());
+                boolean[] present = new boolean[3];
+                present[0] = false;
+                present[1] = false;
+                present[2] = false;
+                for (int i=0;i<stringsArr.length();i++)
+                {
+                    if (stringsArr.get(i).equals("FirstString"))
+                    {
+                        present[0] = true;
+                    }
+                    else if (stringsArr.get(i).equals("SecondString"))
+                    {
+                        present[1] = true;
+                    }
+                    else if (stringsArr.get(i).equals("ThirdString"))
+                    {
+                        present[2] = true;
+                    }
+                }
+                for (int i=0;i<3;i++)
+                {
+                    assertTrue("String " + i + " is not present on retrieval", present[i]);
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception validating data", e);
+                fail("Exception validating data : " + e.getMessage());
+            }
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception persisting/checking data", e);
+            fail("Exception in persist/check of data : " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                ContentExchange delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+ClassWithStringCollection.class.getName() + "/101");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+
                 assertEquals(204, delete.getResponseStatus());
                 assertNull(delete.getResponseContent());
             }
