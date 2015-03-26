@@ -632,7 +632,6 @@ public class BasicTest extends TestCase
                 ContentExchange get = new ContentExchange();
                 get.setURL("http://localhost:"+PORT+"/dn/"+ClassUsingDatastoreId.class.getName() + "/" + idValue);
                 get.setMethod("GET");
-                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
                 client.send(get);
                 get.waitForDone();
 
@@ -973,7 +972,7 @@ public class BasicTest extends TestCase
             {
                 // Retrieve objects to check persistence
                 ContentExchange get = new ContentExchange();
-                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
+                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all&maxFetchDepth=2");
                 get.setMethod("GET");
                 client.send(get);
                 get.waitForDone();
@@ -1027,7 +1026,7 @@ public class BasicTest extends TestCase
             {
                 // Retrieve Office and add new Computer
                 ContentExchange get = new ContentExchange();
-                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
+                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all&maxFetchDepth=2");
                 get.setMethod("GET");
                 client.send(get);
                 get.waitForDone();
@@ -1079,7 +1078,7 @@ public class BasicTest extends TestCase
             {
                 // Retrieve objects to check persistence
                 ContentExchange get = new ContentExchange();
-                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
+                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all&maxFetchDepth=2");
                 get.setMethod("GET");
                 client.send(get);
                 get.waitForDone();
@@ -1311,7 +1310,6 @@ public class BasicTest extends TestCase
             val2.put("description", "The second description");
             map.put("Second", val2);
             obj.put("map", map);
-            NucleusLogger.GENERAL.info(">> POST obj=" + obj);
             post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
 
             client.start();
@@ -1387,7 +1385,6 @@ public class BasicTest extends TestCase
         {
             try
             {
-                LOG.info(">> DELETE of MapHOLDER(101)");
                 ContentExchange delete = new ContentExchange();
                 delete.setURL("http://localhost:"+PORT+"/dn/"+MapFKHolder.class.getName() + "/101");
                 delete.setMethod("DELETE");
@@ -1396,7 +1393,6 @@ public class BasicTest extends TestCase
                 assertEquals(204, delete.getResponseStatus());
                 assertNull(delete.getResponseContent());
 
-                LOG.info(">> DELETE of MapFKValue(1)");
                 delete = new ContentExchange();
                 delete.setURL("http://localhost:"+PORT+"/dn/"+MapFKValue.class.getName() + "/1");
                 delete.setMethod("DELETE");
@@ -1405,7 +1401,6 @@ public class BasicTest extends TestCase
                 assertEquals(204, delete.getResponseStatus());
                 assertNull(delete.getResponseContent());
 
-                LOG.info(">> DELETE of MapFKValue(2)");
                 delete = new ContentExchange();
                 delete.setURL("http://localhost:"+PORT+"/dn/"+MapFKValue.class.getName() + "/2");
                 delete.setMethod("DELETE");
