@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.one_many.unidir">
+        <class name="Computer" detachable="true">
+            <inheritance strategy="subclass-table"/>
+            <field name="id" primary-key="true"/>
+            <field name="ipAddress"/>
+            <field name="operatingSystem"/>
+        </class>
+
+        <class name="LaptopComputer" table="RELATIONS_LAPTOPS">
+            <inheritance strategy="new-table"/>
+            <field name="batteryLife"/>
+            <field name="numberOfPcmcia"/>
+        </class>
+
+        <class name="DesktopComputer" table="RELATIONS_DESKTOPS">
+            <inheritance strategy="new-table"/>
+            <field name="numberOfProcessors"/>
+        </class>
+
+        <class name="Office" table="RELATIONS_OFFICE">
+            <inheritance strategy="new-table"/>
+            <field name="name" primary-key="true"/>
+            <field name="computers" table="RELATIONS_OFFICE_COMPUTERS">
+                <collection element-type="Computer"/>
+                <join/>
+                <element column="RELATIONS_COMPUTERS_EID"/>
+            </field>
+        </class>
+    </package>
+</jdo>

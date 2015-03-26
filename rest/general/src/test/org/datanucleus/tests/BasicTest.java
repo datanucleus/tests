@@ -34,6 +34,9 @@ import org.datanucleus.util.NucleusLogger;
 import org.jpox.samples.embedded.Network;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Person;
+import org.jpox.samples.one_many.unidir.DesktopComputer;
+import org.jpox.samples.one_many.unidir.LaptopComputer;
+import org.jpox.samples.one_many.unidir.Office;
 import org.mortbay.io.ByteArrayBuffer;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.client.ContentExchange;
@@ -903,6 +906,145 @@ public class BasicTest extends TestCase
                 client.send(delete);
                 delete.waitForDone();
 
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+            }
+            catch (Exception e)
+            {
+                fail(e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Test of 1-N unidir join table relation persistence/retrieval.
+     * @throws IOException
+     */
+    public void testOneToManyJoin() throws IOException
+    {
+        HttpClient client = new HttpClient();
+        try
+        {
+            ContentExchange post = new ContentExchange();
+            post.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName());
+            post.setMethod("POST");
+            JSONObject obj = new JSONObject();
+            obj.put("name", "Headquarters");
+            Collection<JSONObject> computers = new HashSet<JSONObject>();
+            JSONObject dev1 = new JSONObject();
+            dev1.put("class", DesktopComputer.class.getName());
+            dev1.put("id", 1);
+            dev1.put("ipAddress", "192.168.1.2");
+            dev1.put("operatingSystem", "Linux");
+            dev1.put("numberOfProcessors", 4);
+            computers.add(dev1);
+            JSONObject dev2 = new JSONObject();
+            dev2.put("class", LaptopComputer.class.getName());
+            dev2.put("id", 2);
+            dev2.put("ipAddress", "192.168.1.3");
+            dev2.put("operatingSystem", "Windows");
+            dev2.put("batteryLife", 5);
+            dev2.put("numberOfPcmcia", 0);
+            computers.add(dev2);
+            JSONArray jsonarr = new JSONArray(computers);
+            obj.put("computers", jsonarr);
+            post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+
+            //persist
+            client.start();
+            client.send(post);
+            post.waitForDone();
+
+            //validate
+            assertEquals(201, post.getResponseStatus());
+            assertNotNull(post.getResponseContent());
+            obj = new JSONObject(post.getResponseContent());
+            assertEquals("Headquarters", obj.getString("name"));
+
+            try
+            {
+                ContentExchange get = new ContentExchange();
+                get.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters?fetchGroup=all");
+                get.setMethod("GET");
+                get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+                client.send(get);
+                get.waitForDone();
+
+                assertEquals(200, get.getResponseStatus());
+                assertNotNull(get.getResponseContent());
+                obj = new JSONObject(get.getResponseContent());
+
+                Object devObjs = obj.get("computers");
+                assertNotNull(devObjs);
+                assertTrue(devObjs instanceof JSONArray);
+                JSONArray devArr = (JSONArray)devObjs;
+                assertEquals(2, devArr.length());
+
+                boolean laptopFound = false;
+                boolean pcFound = false;
+                for (int i=0;i<devArr.length();i++)
+                {
+                    Object devObj = devArr.get(i);
+                    assertTrue(devObj instanceof JSONObject);
+                    JSONObject dev = (JSONObject)devObj;
+                    if (dev.getLong("id") == 1)
+                    {
+                        assertEquals(DesktopComputer.class.getName(), dev.getString("class"));
+                        assertEquals("192.168.1.2", dev.getString("ipAddress"));
+                        assertEquals("Linux", dev.getString("operatingSystem"));
+                        assertEquals(4, dev.getInt("numberOfProcessors"));
+                        pcFound = true;
+                    }
+                    else if (dev.getLong("id") == 2)
+                    {
+                        assertEquals(LaptopComputer.class.getName(), dev.getString("class"));
+                        assertEquals("192.168.1.3", dev.getString("ipAddress"));
+                        assertEquals("Windows", dev.getString("operatingSystem"));
+                        assertEquals(5, dev.getLong("batteryLife"));
+                        assertEquals(0, dev.getInt("numberOfPcmcia"));
+                        laptopFound = true;
+                    }
+                }
+
+                assertTrue(pcFound);
+                assertTrue(laptopFound);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in validate", e);
+                fail(e.getMessage());
+            }
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in persist", e);
+            fail(e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                ContentExchange delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName() + "/Headquarters");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+
+                delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+LaptopComputer.class.getName() + "/2");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+
+                delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+DesktopComputer.class.getName() + "/1");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
                 assertEquals(204, delete.getResponseStatus());
                 assertNull(delete.getResponseContent());
             }
