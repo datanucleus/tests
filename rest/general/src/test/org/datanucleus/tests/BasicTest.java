@@ -21,7 +21,10 @@ package org.datanucleus.tests;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import junit.framework.TestCase;
@@ -36,6 +39,8 @@ import org.datanucleus.util.NucleusLogger;
 import org.jpox.samples.embedded.Network;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Person;
+import org.jpox.samples.one_many.map_fk.MapFKHolder;
+import org.jpox.samples.one_many.map_fk.MapFKValue;
 import org.jpox.samples.one_many.unidir.DesktopComputer;
 import org.jpox.samples.one_many.unidir.LaptopComputer;
 import org.jpox.samples.one_many.unidir.Office;
@@ -1049,7 +1054,7 @@ public class BasicTest extends TestCase
                 dev3.put("numberOfPcmcia", 0);
                 coll.add(dev3);
                 obj.put("computers", coll);
-LOG.info(">> POST of Office with 2 existing plus 1 new Computer json=" + obj);
+
                 post = new ContentExchange();
                 post.setURL("http://localhost:"+PORT+"/dn/"+Office.class.getName()+"/Headquarters");
                 post.setMethod("POST");
@@ -1265,6 +1270,147 @@ LOG.info(">> POST of Office with 2 existing plus 1 new Computer json=" + obj);
                 client.send(delete);
                 delete.waitForDone();
 
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+            }
+            catch (Exception e)
+            {
+                fail(e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Test of 1-N Map using FK.
+     * @throws IOException
+     */
+    public void testOneToManyMapFK() throws IOException
+    {
+        HttpClient client = new HttpClient();
+        try
+        {
+            // Persist Office plus 2 computers
+            ContentExchange post = new ContentExchange();
+            post.setURL("http://localhost:"+PORT+"/dn/"+MapFKHolder.class.getName());
+            post.setMethod("POST");
+
+            JSONObject obj = new JSONObject();
+            obj.put("id", 101);
+            obj.put("name", "First Map Holder");
+            Map map = new HashMap();
+            JSONObject val1 = new JSONObject();
+            val1.put("id", 1);
+            val1.put("key", "First");
+            val1.put("name", "First Value");
+            val1.put("description", "The first description");
+            map.put("First", val1);
+            JSONObject val2 = new JSONObject();
+            val2.put("id", 2);
+            val2.put("key", "Second");
+            val2.put("name", "Second Value");
+            val2.put("description", "The second description");
+            map.put("Second", val2);
+            obj.put("map", map);
+            NucleusLogger.GENERAL.info(">> POST obj=" + obj);
+            post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+
+            client.start();
+            client.send(post);
+            post.waitForDone();
+
+            //validate
+            assertEquals(201, post.getResponseStatus());
+            assertNotNull(post.getResponseContent());
+
+            obj = new JSONObject(post.getResponseContent());
+            assertEquals(101, obj.getLong("id"));
+
+            try
+            {
+                // Retrieve objects to check persistence
+                ContentExchange get = new ContentExchange();
+                get.setURL("http://localhost:"+PORT+"/dn/"+MapFKHolder.class.getName() + "/101?fetchGroup=all");
+                get.setMethod("GET");
+                client.send(get);
+                get.waitForDone();
+
+                assertEquals(200, get.getResponseStatus());
+                assertNotNull(get.getResponseContent());
+                obj = new JSONObject(get.getResponseContent());
+
+                Object mapObjs = obj.get("map");
+                assertNotNull(mapObjs);
+                assertTrue(mapObjs instanceof JSONObject);
+                JSONObject mapObj = (JSONObject)mapObjs;
+                assertEquals(2, mapObj.length());
+                boolean firstPresent = false;
+                boolean secondPresent = false;
+                Iterator<String> mapKeys = mapObj.keys();
+                while (mapKeys.hasNext())
+                {
+                    String mapKey = mapKeys.next();
+                    Object mapVal = mapObj.get(mapKey);
+                    assertTrue(mapVal instanceof JSONObject);
+                    JSONObject jsonVal = (JSONObject)mapVal;
+                    if (mapKey.equals("First"))
+                    {
+                        assertEquals(1, jsonVal.getLong("id"));
+                        assertEquals("First", jsonVal.getString("key"));
+                        assertEquals("First Value", jsonVal.getString("name"));
+                        assertEquals("The first description", jsonVal.getString("description"));
+                        firstPresent = true;
+                    }
+                    else if (mapKey.equals("Second"))
+                    {
+                        assertEquals(2, jsonVal.getLong("id"));
+                        assertEquals("Second", jsonVal.getString("key"));
+                        assertEquals("Second Value", jsonVal.getString("name"));
+                        assertEquals("The second description", jsonVal.getString("description"));
+                        secondPresent = true;
+                    }
+                }
+                assertTrue(firstPresent);
+                assertTrue(secondPresent);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in validate", e);
+                fail(e.getMessage());
+            }
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in persist", e);
+            fail(e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                LOG.info(">> DELETE of MapHOLDER(101)");
+                ContentExchange delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+MapFKHolder.class.getName() + "/101");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+
+                LOG.info(">> DELETE of MapFKValue(1)");
+                delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+MapFKValue.class.getName() + "/1");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+
+                LOG.info(">> DELETE of MapFKValue(2)");
+                delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+MapFKValue.class.getName() + "/2");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
                 assertEquals(204, delete.getResponseStatus());
                 assertNull(delete.getResponseContent());
             }
