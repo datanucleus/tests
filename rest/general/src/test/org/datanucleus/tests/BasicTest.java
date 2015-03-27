@@ -1171,6 +1171,14 @@ public class BasicTest extends TestCase
                 delete.waitForDone();
                 assertEquals(204, delete.getResponseStatus());
                 assertNull(delete.getResponseContent());
+                delete = new ContentExchange();
+
+                delete.setURL("http://localhost:"+PORT+"/dn/"+LaptopComputer.class.getName() + "/3");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
             }
             catch (Exception e)
             {
