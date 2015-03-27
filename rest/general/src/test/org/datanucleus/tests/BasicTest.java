@@ -143,8 +143,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-        	e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -222,8 +222,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -301,8 +301,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -384,8 +384,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -453,8 +453,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -574,8 +574,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -683,8 +683,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -823,8 +823,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            e.printStackTrace();
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
@@ -898,8 +898,8 @@ public class BasicTest extends TestCase
         }
         catch (Exception e)
         {
-            LOG.error("Exception in persist", e);
-            fail(e.getMessage());
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
         finally
         {
