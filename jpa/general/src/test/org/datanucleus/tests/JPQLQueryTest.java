@@ -2754,6 +2754,67 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
     }
 
+    public void testCASESimple()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p = new Person(105, "Pebbles", "Flintstone", "pebbles.flintstone@datanucleus.org");
+                p.setAge(5);
+                em.persist(p);
+                Employee e = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
+                e.setAge(35);
+                em.persist(e);
+                em.flush();
+
+                List result = em.createQuery(
+                    "SELECT p.personNum, CASE p.age WHEN 5 THEN '5-yr old' ELSE 'Other' END" + 
+                    " FROM " + Person.class.getName() + " p").getResultList();
+                Iterator resultsIter = result.iterator();
+                boolean pebbles = false;
+                boolean barney = false;
+                while (resultsIter.hasNext())
+                {
+                    Object[] values = (Object[])resultsIter.next();
+                    if (((Number)values[0]).intValue() == 105 && values[1].equals("5-yr old"))
+                    {
+                        pebbles = true;
+                    }
+                    if (((Number)values[0]).intValue() == 102 && values[1].equals("Other"))
+                    {
+                        barney = true;
+                    }
+                }
+                assertTrue("Pebbles wasn't correct in the Case results", pebbles);
+                assertTrue("Barney wasn't correct in the Case results", barney);
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Employee.class);
+            clean(Person.class);
+        }
+    }
+
     public void testINDEX()
     {
         try
