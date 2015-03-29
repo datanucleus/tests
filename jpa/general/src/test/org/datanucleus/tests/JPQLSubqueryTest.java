@@ -412,4 +412,45 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
             clean(Person.class);
         }
     }
+
+    /**
+     * ANY(subquery).
+     */
+    public void testSubqueryAll()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                p1.setAge(35);
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                p2.setAge(45);
+                em.persist(p1);
+                em.persist(p2);
+
+                List result = em.createQuery(
+                    "SELECT p FROM " + Person.class.getName() + " p " +
+                    "WHERE p.age > ALL(SELECT avg(q.age) FROM " + Person.class.getName() + " q)").getResultList();
+                assertEquals(1, result.size());
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
 }
