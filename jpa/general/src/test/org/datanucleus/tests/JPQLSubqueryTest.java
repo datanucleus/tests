@@ -23,6 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.jpox.samples.annotations.models.company.Account;
 import org.jpox.samples.annotations.models.company.Employee;
 import org.jpox.samples.annotations.models.company.Person;
 import org.jpox.samples.annotations.models.company.WebSite;
@@ -275,7 +276,6 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
         }
     }
 
-    
     /**
      * Simple query using a subquery as the argument to NOT IN (...).
      */
@@ -347,6 +347,55 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
                     "WHERE EXISTS " +
                     "(SELECT Q.personNum FROM " + Person.class.getName() + " Q WHERE Q.bestFriend = P)").getResultList();
                 assertEquals(1, result.size());
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
+
+    /**
+     * Simple query using a subquery in the HAVING clause.
+     */
+    public void testHavingSubquery()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Account a1 = new Account();
+                a1.setUsername("Flintstone");
+                a1.setId(1);
+                em.persist(a1);
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                p1.setAge(35);
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                p2.setAge(45);
+                p1.setBestFriend(p2);
+                em.persist(p1);
+                em.persist(p2);
+
+                // TODO Come up with a better sample query
+                List<Person> result = em.createQuery(
+                    "SELECT p FROM " + Person.class.getName() + " p " +
+                    "GROUP BY p.firstName HAVING EXISTS (SELECT a FROM " + Account.class.getName() + " a WHERE a.username = p.lastName)").getResultList();
+                assertNotNull(result);
+                assertEquals(2, result.size());
+
                 tx.rollback();
             }
             finally

@@ -76,8 +76,8 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
         try
         {
             parser.parse();
-            assertEquals("Filter is incorrect", "T.field1 < DATANUCLEUS_SUBQUERY_1", query.getFilter());
-            SubqueryDefinition subqDef = query.getSubqueryForVariable("DATANUCLEUS_SUBQUERY_1");
+            assertEquals("Filter is incorrect", "T.field1 < DN_SUBQUERY_1", query.getFilter());
+            SubqueryDefinition subqDef = query.getSubqueryForVariable("DN_SUBQUERY_1");
             assertNotNull("No subquery defined", subqDef);
             org.datanucleus.store.query.Query subq = subqDef.getQuery();
             assertEquals("Subquery result is incorrect", "AVG(S.price)", subq.getResult());
@@ -104,8 +104,8 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
         try
         {
             parser.parse();
-            assertEquals("Filter is incorrect", "T.field1 < DATANUCLEUS_SUBQUERY_1 AND T.field2 == 'Some String'", query.getFilter());
-            SubqueryDefinition subqDef = query.getSubqueryForVariable("DATANUCLEUS_SUBQUERY_1");
+            assertEquals("Filter is incorrect", "T.field1 < DN_SUBQUERY_1 AND T.field2 == 'Some String'", query.getFilter());
+            SubqueryDefinition subqDef = query.getSubqueryForVariable("DN_SUBQUERY_1");
             assertNotNull("No subquery defined", subqDef);
             org.datanucleus.store.query.Query subq = subqDef.getQuery();
             assertEquals("Subquery result is incorrect", "AVG(S.price)", subq.getResult());
@@ -130,8 +130,8 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
         try
         {
             parser.parse();
-            assertEquals("Filter is incorrect", "T.field1 IN DATANUCLEUS_SUBQUERY_1", query.getFilter());
-            SubqueryDefinition subqDef = query.getSubqueryForVariable("DATANUCLEUS_SUBQUERY_1");
+            assertEquals("Filter is incorrect", "T.field1 IN DN_SUBQUERY_1", query.getFilter());
+            SubqueryDefinition subqDef = query.getSubqueryForVariable("DN_SUBQUERY_1");
             assertNotNull("No subquery defined", subqDef);
             org.datanucleus.store.query.Query subq = subqDef.getQuery();
             assertNull("Subquery filter is not null", subq.getFilter());
@@ -157,12 +157,12 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
         try
         {
             parser.parse();
-            assertEquals("Filter is incorrect", "T.field1 IN DATANUCLEUS_SUBQUERY_1 AND T.field2 IN DATANUCLEUS_SUBQUERY_2", query.getFilter());
-            SubqueryDefinition subqDef = query.getSubqueryForVariable("DATANUCLEUS_SUBQUERY_1");
+            assertEquals("Filter is incorrect", "T.field1 IN DN_SUBQUERY_1 AND T.field2 IN DN_SUBQUERY_2", query.getFilter());
+            SubqueryDefinition subqDef = query.getSubqueryForVariable("DN_SUBQUERY_1");
             assertNotNull("No subquery defined", subqDef);
             org.datanucleus.store.query.Query subq = subqDef.getQuery();
             assertNull("Subquery1 filter is not null", subq.getFilter());
-            SubqueryDefinition subqDef2 = query.getSubqueryForVariable("DATANUCLEUS_SUBQUERY_2");
+            SubqueryDefinition subqDef2 = query.getSubqueryForVariable("DN_SUBQUERY_2");
             assertNotNull("No subquery defined", subqDef2);
             org.datanucleus.store.query.Query subq2 = subqDef2.getQuery();
             assertNull("Subquery2 filter is not null", subq2.getFilter());
