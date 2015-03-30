@@ -1299,8 +1299,20 @@ public class BasicTest extends TestCase
             ContentExchange get = new ContentExchange();
             get.setURL("http://localhost:"+PORT+"/dn/"+ClassWithStringCollection.class.getName() + "/101?fetchGroup=all");
             get.setMethod("GET");
-
             client.start();
+            client.send(get);
+            get.waitForDone();
+
+            assertEquals(404, get.getResponseStatus());
+            assertNull(get.getResponseContent());
+
+            get = new ContentExchange();
+            get.setURL("http://localhost:"+PORT+"/dn/"+Person.class.getName());
+            get.setMethod("GET");
+            JSONObject obj = new JSONObject();
+            obj.put("globalNum", "global:1786244744");
+            obj.put("personNum", 1);
+            get.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
             client.send(get);
             get.waitForDone();
 
