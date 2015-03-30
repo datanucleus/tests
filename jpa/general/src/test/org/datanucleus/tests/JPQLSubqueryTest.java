@@ -23,8 +23,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.store.rdbms.RDBMSStoreManager;
+import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.jpox.samples.annotations.models.company.Account;
 import org.jpox.samples.annotations.models.company.Employee;
+import org.jpox.samples.annotations.models.company.Organisation;
 import org.jpox.samples.annotations.models.company.Person;
 import org.jpox.samples.annotations.models.company.WebSite;
 
@@ -369,6 +372,16 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
      */
     public void testHavingSubquery()
     {
+        if (!(storeMgr instanceof RDBMSStoreManager))
+        {
+            return;
+        }
+        DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
+        if (!dba.supportsOption(DatastoreAdapter.SUBQUERY_IN_HAVING))
+        {
+            return;
+        }
+        
         try
         {
             EntityManager em = getEM();
@@ -381,22 +394,26 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
                 a1.setUsername("Flintstone");
                 a1.setId(1);
                 em.persist(a1);
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
-                p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
-                p2.setAge(45);
-                p1.setBestFriend(p2);
-                em.persist(p1);
-                em.persist(p2);
+                Organisation o1 = new Organisation("DN Labs");
+                o1.setDescription("Development labs");
+                Organisation o2 = new Organisation("Flintstone");
+                o2.setDescription("Freds organisation");
+                em.persist(o1);
+                em.persist(o2);
 
-                // TODO Come up with a better sample query
+                // TODO Come up with a better sample query. Enable H2?
                 List<Person> result = em.createQuery(
-                    "SELECT p FROM " + Person.class.getName() + " p " +
-                    "GROUP BY p.firstName HAVING EXISTS (SELECT a FROM " + Account.class.getName() + " a WHERE a.username = p.lastName)").getResultList();
+                    "SELECT o FROM " + Organisation.class.getName() + " o " +
+                    "GROUP BY o.name HAVING EXISTS (SELECT a FROM " + Account.class.getName() + " a WHERE a.username = o.name)").getResultList();
                 assertNotNull(result);
-                assertEquals(2, result.size());
+                assertEquals(1, result.size());
 
                 tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in query", e);
+                fail("Exception executing query with HAVING subquery : " + e.getMessage());
             }
             finally
             {
