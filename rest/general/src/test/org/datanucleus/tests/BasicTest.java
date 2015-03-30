@@ -1288,6 +1288,36 @@ public class BasicTest extends TestCase
     }
 
     /**
+     * Check the correct response status when a non-existent object is passed to GET.
+     * @throws IOException
+     */
+    public void testGetOfNonExistentObject() throws IOException
+    {
+        HttpClient client = new HttpClient();
+        try
+        {
+            ContentExchange get = new ContentExchange();
+            get.setURL("http://localhost:"+PORT+"/dn/"+ClassWithStringCollection.class.getName() + "/101?fetchGroup=all");
+            get.setMethod("GET");
+
+            client.start();
+            client.send(get);
+            get.waitForDone();
+
+            assertEquals(404, get.getResponseStatus());
+            assertNull(get.getResponseContent());
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception on get of non-existent data", e);
+            fail("Exception on get of data : " + e.getMessage());
+        }
+        finally
+        {
+        }
+    }
+
+    /**
      * Test of 1-N Map using FK.
      * @throws IOException
      */
