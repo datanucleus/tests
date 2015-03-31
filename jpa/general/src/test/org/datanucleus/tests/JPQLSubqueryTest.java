@@ -96,7 +96,7 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
     /**
      * Simple query using a subquery as the argument to IN (...).
      */
-    public void testSubqueryIn()
+    public void testIn()
     {
         try
         {
@@ -189,7 +189,7 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
     /**
      * Simple query using a subquery as the argument to IN (...).
      */
-    public void testSubqueryInNested()
+    public void testInNested()
     {
         try
         {
@@ -282,7 +282,7 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
     /**
      * Simple query using a subquery as the argument to NOT IN (...).
      */
-    public void testSubqueryNotIn()
+    public void testNotIn()
     {
         try
         {
@@ -348,6 +348,49 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
                 List result = em.createQuery(
                     "SELECT Object(P) FROM " + Person.class.getName() + " P " +
                     "WHERE EXISTS " +
+                    "(SELECT Q.personNum FROM " + Person.class.getName() + " Q WHERE Q.bestFriend = P)").getResultList();
+                assertEquals(1, result.size());
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
+
+    /**
+     * Simple query using a subquery with NOT EXISTS.
+     */
+    public void testNotExists()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                p1.setAge(35);
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                p2.setAge(45);
+                p1.setBestFriend(p2);
+                em.persist(p1);
+                em.persist(p2);
+
+                List result = em.createQuery(
+                    "SELECT Object(P) FROM " + Person.class.getName() + " P " +
+                    "WHERE NOT EXISTS " +
                     "(SELECT Q.personNum FROM " + Person.class.getName() + " Q WHERE Q.bestFriend = P)").getResultList();
                 assertEquals(1, result.size());
                 tx.rollback();
