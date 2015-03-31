@@ -33,6 +33,7 @@ import org.datanucleus.api.rest.RestServlet;
 import org.datanucleus.api.rest.orgjson.JSONArray;
 import org.datanucleus.api.rest.orgjson.JSONObject;
 import org.datanucleus.samples.ClassUsingDatastoreId;
+import org.datanucleus.samples.ClassWithSimpleMap;
 import org.datanucleus.samples.ClassWithStringCollection;
 import org.datanucleus.samples.ClassWithValueStrategy;
 import org.datanucleus.util.NucleusLogger;
@@ -78,9 +79,9 @@ public class BasicTest extends TestCase
         ServletHolder holder = new ServletHolder(new RestServlet());
         holder.setInitParameter("persistence-context", "h2-backend"); // TODO Set this based on which datastore in use
         root.addServlet(holder, "/dn/*");
-        server.start(); 
+        server.start();
     }
-    
+
     protected void tearDown() throws Exception
     {
         LOG.info("********** " + toString() + " [tearDown] **********");
@@ -1273,6 +1274,109 @@ public class BasicTest extends TestCase
             {
                 ContentExchange delete = new ContentExchange();
                 delete.setURL("http://localhost:"+PORT+"/dn/"+ClassWithStringCollection.class.getName() + "/101");
+                delete.setMethod("DELETE");
+                client.send(delete);
+                delete.waitForDone();
+
+                assertEquals(204, delete.getResponseStatus());
+                assertNull(delete.getResponseContent());
+            }
+            catch (Exception e)
+            {
+                fail(e.getMessage());
+            }
+        }
+    }
+
+    public void testClassWithNonPersistableMap() throws IOException
+    {
+        HttpClient client = new HttpClient();
+        try
+        {
+            ContentExchange post = new ContentExchange();
+            post.setURL("http://localhost:"+PORT+"/dn/"+ClassWithSimpleMap.class.getName());
+            post.setMethod("POST");
+
+            JSONObject obj = new JSONObject();
+            obj.put("id", 101);
+            obj.put("name", "Name of Object1");
+            Map<Integer, String> map = new HashMap<>();
+            map.put(new Integer(1), "First");
+            map.put(new Integer(2), "Second");
+            map.put(new Integer(3), "Third");
+            obj.put("map", new JSONObject(map));
+            post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
+
+            //persist
+            client.start();
+            client.send(post);
+            post.waitForDone();
+
+            //validate
+            assertEquals(201, post.getResponseStatus());
+            assertNotNull(post.getResponseContent());
+            obj = new JSONObject(post.getResponseContent());
+            assertEquals(101, obj.getLong("id"));
+
+            try
+            {
+                ContentExchange get = new ContentExchange();
+                get.setURL("http://localhost:"+PORT+"/dn/"+ClassWithSimpleMap.class.getName() + "/101?fetchGroup=all");
+                get.setMethod("GET");
+                client.send(get);
+                get.waitForDone();
+
+                assertEquals(200, get.getResponseStatus());
+                assertNotNull(get.getResponseContent());
+                obj = new JSONObject(get.getResponseContent());
+                Object mapObj = obj.get("map");
+                assertTrue(mapObj instanceof JSONObject);
+                JSONObject theMap = (JSONObject)mapObj;
+                assertEquals(3, theMap.length());
+                boolean[] present = new boolean[3];
+                present[0] = false;
+                present[1] = false;
+                present[2] = false;
+                Iterator keyIter = theMap.keys();
+                while (keyIter.hasNext())
+                {
+                    Object key = keyIter.next();
+                    Object val = theMap.get("" + key);
+                    if (val.equals("First"))
+                    {
+                        present[0] = true;
+                    }
+                    else if (val.equals("Second"))
+                    {
+                        present[1] = true;
+                    }
+                    else if (val.equals("Third"))
+                    {
+                        present[2] = true;
+                    }
+                }
+                for (int i=0;i<3;i++)
+                {
+                    assertTrue("Map Key " + i + " is not present on retrieval", present[i]);
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception validating data", e);
+                fail("Exception validating data : " + e.getMessage());
+            }
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception persisting/checking data", e);
+            fail("Exception in persist/check of data : " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                ContentExchange delete = new ContentExchange();
+                delete.setURL("http://localhost:"+PORT+"/dn/"+ClassWithSimpleMap.class.getName() + "/101");
                 delete.setMethod("DELETE");
                 client.send(delete);
                 delete.waitForDone();
