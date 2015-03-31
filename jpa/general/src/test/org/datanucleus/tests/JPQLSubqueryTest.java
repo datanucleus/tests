@@ -394,14 +394,11 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
                 a1.setUsername("Flintstone");
                 a1.setId(1);
                 em.persist(a1);
-                Organisation o1 = new Organisation("DN Labs");
-                o1.setDescription("Development labs");
-                Organisation o2 = new Organisation("Flintstone");
-                o2.setDescription("Freds organisation");
+                Organisation o1 = new Organisation("Flintstone");
+                o1.setDescription("Freds organisation");
                 em.persist(o1);
-                em.persist(o2);
 
-                // TODO Come up with a better sample query. Enable H2?
+                // TODO Come up with a better sample query. Why does the JPA TCK/Spec have none?
                 List<Person> result = em.createQuery(
                     "SELECT o FROM " + Organisation.class.getName() + " o " +
                     "GROUP BY o.name HAVING EXISTS (SELECT a FROM " + Account.class.getName() + " a WHERE a.username = o.name)").getResultList();
