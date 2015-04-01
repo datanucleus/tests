@@ -26,6 +26,9 @@ import java.util.UUID;
  */
 public class UUIDHolder
 {
+    /** Primary key */
+    private UUID id;
+
     private UUID uuid;
 
     /** Secondary UUID in case datastore allows it to be persisted as VARCHAR different to primary. */
@@ -34,11 +37,19 @@ public class UUIDHolder
     private UUIDHolder other;
     private HashSet otherCollection = new HashSet();
 
+    public UUID getId()
+    {
+        return id;
+    }
+    public void setId(UUID id)
+    {
+        this.id = id;
+    }
+
     public UUID getUuid()
     {
         return uuid;
     }
-
     public void setUuid(UUID uuid)
     {
         this.uuid = uuid;
@@ -48,7 +59,6 @@ public class UUIDHolder
     {
         return uuid2;
     }
-
     public void setUuid2(UUID uuid)
     {
         this.uuid2 = uuid;

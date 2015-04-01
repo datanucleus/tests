@@ -59,6 +59,7 @@ public class UUIDTest extends JDOPersistenceTestCase
         {
             tx.begin();
             u = new UUIDHolder();
+            u.setId(UUID.randomUUID());
             u.setUuid(testUuid);
             u.setUuid2(testUuid2);
             pm.makePersistent(u);
@@ -113,6 +114,7 @@ public class UUIDTest extends JDOPersistenceTestCase
         {
             tx.begin();
             u = new UUIDHolder();
+            u.setId(UUID.randomUUID());
             u.setUuid(null);
             u.setUuid2(null);
             pm.makePersistent(u);
@@ -171,22 +173,27 @@ public class UUIDTest extends JDOPersistenceTestCase
         {
             tx.begin();
             u[0] = new UUIDHolder();
+            u[0].setId(UUID.randomUUID());
             u[0].setUuid(testUuid1);
             u[0].setUuid2(testUuid1);
 
             u[1] = new UUIDHolder();
+            u[1].setId(UUID.randomUUID());
             u[1].setUuid(testUuid2);
             u[1].setUuid2(testUuid2);
 
             u[2] = new UUIDHolder();
+            u[2].setId(UUID.randomUUID());
             u[2].setUuid(testUuid1);
             u[2].setUuid2(testUuid1);
 
             u[3] = new UUIDHolder();
+            u[3].setId(UUID.randomUUID());
             u[3].setUuid(testUuid2);
             u[3].setUuid2(testUuid2);
 
             u[4] = new UUIDHolder();
+            u[4].setId(UUID.randomUUID());
             u[4].setUuid(testUuid1);
             u[4].setUuid2(testUuid1);
 
