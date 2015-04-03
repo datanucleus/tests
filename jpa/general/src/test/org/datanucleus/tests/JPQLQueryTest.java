@@ -18,6 +18,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -1796,8 +1797,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                List result = em.createQuery(
-                    "SELECT DISTINCT Object(P) FROM " + Person.class.getName() + " p").getResultList();
+                List result = em.createQuery("SELECT DISTINCT Object(P) FROM " + Person.class.getName() + " p").getResultList();
                 assertEquals(2, result.size());
                 tx.commit();
             }
@@ -1846,23 +1846,17 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                List result = em.createQuery(
-                    "SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p " + 
-                    "WHERE p.firstName IN ('Fred', 'Pebbles')").getResultList();
+                List result = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName IN ('Fred', 'Pebbles')").getResultList();
                 assertEquals(2, result.size());
                 tx.commit();
 
                 tx.begin();
-                result = em.createQuery(
-                    "SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p " + 
-                    "WHERE p.firstName NOT IN ('Fred', 'Pebbles')").getResultList();
+                result = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName NOT IN ('Fred', 'Pebbles')").getResultList();
                 assertEquals(1, result.size());
                 tx.commit();
 
                 tx.begin();
-                result = em.createQuery(
-                    "SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p " + 
-                    "WHERE p.age IN (38)").getResultList();
+                result = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.age IN (38)").getResultList();
                 assertEquals(1, result.size());
                 tx.commit();
             }
@@ -1911,12 +1905,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                Query q1 = em.createQuery(
-                    "SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p " + 
-                    "WHERE p.firstName IN (:param1, :param2)");
+                Query q1 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1, :param2)");
                 q1.setParameter("param1", "Fred");
                 q1.setParameter("param2", "Pebbles");
-
                 Parameter param1 = q1.getParameter("param1");
                 assertNotNull(param1);
                 assertEquals("param1", param1.getName());
@@ -1925,15 +1916,12 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 assertNotNull(param2);
                 assertEquals("param2", param2.getName());
                 assertNull(param2.getPosition());
-
                 List result = q1.getResultList();
                 assertEquals(2, result.size());
                 tx.commit();
 
                 tx.begin();
-                Query q2 = em.createQuery(
-                    "SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p " + 
-                    "WHERE p.firstName NOT IN (:param1, :param2)");
+                Query q2 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName NOT IN (:param1, :param2)");
                 q2.setParameter("param1", "Fred");
                 q2.setParameter("param2", "Pebbles");
                 result = q2.getResultList();
@@ -1941,9 +1929,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                Query q3 = em.createQuery(
-                    "SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p " + 
-                    "WHERE p.firstName IN (:param1)");
+                Query q3 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1)");
                 Collection<String> options = new HashSet<String>();
                 options.add("Fred");
                 options.add("Pebbles");
@@ -1954,14 +1940,22 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
 
                 // Now try IN using entities
                 tx.begin();
-                Query q4 = em.createQuery(
-                    "SELECT DISTINCT p FROM " + Person.class.getName() + " p " + 
-                    "WHERE p.bestFriend IN (:param1)");
+                Query q4 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.bestFriend IN (:param1)");
                 Collection<Person> friends = new HashSet<Person>();
                 friends.add(p2);
                 friends.add(p1);
                 q4.setParameter("param1", friends);
                 result = q4.getResultList();
+                assertEquals(2, result.size());
+                tx.commit();
+
+                tx.begin();
+                Query q5 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.personNum IN (:param1)");
+                List<Long> inList = new ArrayList<Long>();
+                inList.add(new Long(101));
+                inList.add(new Long(102));
+                q5.setParameter("param1", inList);
+                result = q5.getResultList();
                 assertEquals(2, result.size());
                 tx.commit();
             }
@@ -2322,14 +2316,13 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             em.persist(d2);
             em.flush();
 
-            List result = em.createQuery(
-                "SELECT Object(D) FROM " + DateHolder.class.getName() + " D WHERE D.dateField < CURRENT_DATE").getResultList();
+            List result = em.createQuery("SELECT Object(D) FROM " + DateHolder.class.getName() + " D WHERE D.dateField < CURRENT_DATE").getResultList();
             assertEquals(1, result.size());
             tx.rollback();
         }
         catch (Exception e)
         {
-            LOG.error(">> Exception in test", e);
+            LOG.error("Exception in test", e);
             fail("Exception in test : " + e.getMessage());
         }
         finally
@@ -2378,7 +2371,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
         catch (Exception e)
         {
-            LOG.error(">> Exception in test", e);
+            LOG.error("Exception in test", e);
             fail("Exception in test : " + e.getMessage());
         }
         finally
