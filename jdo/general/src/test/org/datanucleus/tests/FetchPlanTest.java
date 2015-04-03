@@ -1035,8 +1035,9 @@ public class FetchPlanTest extends JDOPersistenceTestCase
         BitSet fieldsInFPBitSet = fpc.getMemberNumbersByBitSet();
         assertTrue("piece1 should be in the fetchplan", fieldsInFPBitSet.get(cmd.getAbsolutePositionOfMember("piece1")));
 
-        // Test empty group - should only have PK in fetch plan for PlaneA
+        // Test empty group - should only have PK in fetch plan
         javax.jdo.FetchGroup grp1 = myPMF.getFetchGroup(FP2Base.class, "MyGroupPMF");
+        myPMF.addFetchGroups(grp1);
         fp.addGroup("MyGroupPMF");
 
         fpc = fp.getFetchPlanForClass(cmd);
