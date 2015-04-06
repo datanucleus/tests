@@ -1639,10 +1639,10 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test for management of relations with a 1-N FK bidir where an element is being moved
-     * from one collection owner to another, by setting a collection containing that element
-     * on a new owner 
-     * @see {@link #testOneToManyJoinBidirSetCollectionMoveElement()}
+     * Test for management of relations with a 1-N FK bidir where an element is being moved from one collection owner to another, 
+     * by setting a collection containing that element on a new owner.
+     * The implication of the test is that secondary changes will also be handled by the RelationshipManager (i.e if an element is added to
+     * one collection, and is using FK, then has to also be removed from the old collection (in datastore and in memory).
      */
     public void testOneToManyFKBidirSetCollectionMoveElement()
     {
@@ -1692,11 +1692,18 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
             pm.flush();
 
             // perform update and validate
-            LOG.info(">> farm1 " + farm1 + " state=" + JDOHelper.getObjectState(farm1) + " - about to update animals using setAnimals()");
-            LOG.info(">> farm2 " + farm2 + " state=" + JDOHelper.getObjectState(farm2));
-            LOG.info(">> farm3 " + farm3 + " state=" + JDOHelper.getObjectState(farm3));
+            LOG.info(">> farm1 " + farm1 + " id=" + JDOHelper.getObjectId(farm1) + " state=" + JDOHelper.getObjectState(farm1));
+            LOG.info(">> farm2 " + farm2 + " id=" + JDOHelper.getObjectId(farm2) + " state=" + JDOHelper.getObjectState(farm2));
+            LOG.info(">> farm3 " + farm3 + " id=" + JDOHelper.getObjectId(farm3) + " state=" + JDOHelper.getObjectState(farm3));
+            LOG.info(">> animal1 " + animal1 + " id=" + JDOHelper.getObjectId(animal1) + " farm=" + JDOHelper.getObjectId(animal1.getFarm()));
+            LOG.info(">> animal2 " + animal2 + " id=" + JDOHelper.getObjectId(animal2) + " farm=" + JDOHelper.getObjectId(animal2.getFarm()));
+            LOG.info(">> animal3 " + animal3 + " id=" + JDOHelper.getObjectId(animal3) + " farm=" + JDOHelper.getObjectId(animal3.getFarm()));
+            LOG.info(">> animal4 " + animal4 + " id=" + JDOHelper.getObjectId(animal4) + " farm=" + JDOHelper.getObjectId(animal4.getFarm()));
+            LOG.info(">> animal5 " + animal5 + " id=" + JDOHelper.getObjectId(animal5) + " farm=" + JDOHelper.getObjectId(animal5.getFarm()));
             farm1.setAnimals(createSet(animal2, animal3, animal5));
+            LOG.info(">> flush.start for change");
             pm.flush();
+            LOG.info(">> flush.complete");
 
             // will move animal3 from farm2 to farm1
             // will move animal5 from farm3 to farm2
