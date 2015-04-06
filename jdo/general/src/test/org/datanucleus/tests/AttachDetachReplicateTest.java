@@ -1228,7 +1228,8 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
             props.setProperty(PropertyNames.PROPERTY_ATTACH_SAME_DATASTORE, "false");
             props.setProperty(PropertyNames.PROPERTY_AUTOSTART_MECHANISM,"Classes");
             props.setProperty(PropertyNames.PROPERTY_AUTOSTART_CLASSNAMES,
-                "org.jpox.samples.relations.sides.SideAParent,org.jpox.samples.relations.sides.SideAChild,org.jpox.samples.relations.sides.SideBParent,org.jpox.samples.relations.sides.SideBChild");
+                "org.jpox.samples.one_many.unidir_2.GroupMember,org.jpox.samples.one_many.unidir_2.ExpertGroupMember," +
+                "org.jpox.samples.one_many.unidir_2.UserGroup,org.jpox.samples.one_many.unidir_2.ModeratedUserGroup");
             pmf1 = TestHelper.getPMF(1, props);
 
             // Persist data to "datastore1"
