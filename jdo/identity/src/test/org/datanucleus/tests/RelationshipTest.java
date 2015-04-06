@@ -1,4 +1,3 @@
-package org.datanucleus.tests;
 /**********************************************************************
 Copyright (c) 2004 Andy Jefferson and others.
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-
-
 Contributors:
     ...
 ***********************************************************************/
+package org.datanucleus.tests;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -103,6 +101,10 @@ import org.jpox.samples.one_one.bidir_3.ElectronicJournal;
 import org.jpox.samples.one_one.bidir_3.PrintJournal;
 import org.jpox.samples.one_one.unidir.Login;
 import org.jpox.samples.one_one.unidir.LoginAccount;
+import org.jpox.samples.one_one.unidir_2.Magazine;
+import org.jpox.samples.one_one.unidir_2.MediaWork;
+import org.jpox.samples.one_one.unidir_2.Newspaper;
+import org.jpox.samples.one_one.unidir_2.Reader;
 
 /**
  * Test case to test use of Relationships.
@@ -131,6 +133,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
                     MapFKHolder.class, MapFKValue.class,
                     Sky.class, Cloud.class,
                     JdoGraph.class, JdoGraphEntity.class, JdoGraphEntityClass.class,
+                    Magazine.class, MediaWork.class, Newspaper.class, Reader.class,
                 });
             if (storeMgr.supportsValueStrategy("identity"))
             {
@@ -5143,4 +5146,123 @@ public class RelationshipTest extends JDOPersistenceTestCase
             clean(UserDetails.class);
         }
     }*/
+
+    /**
+     * Test case for 1-1 uni relationship to a class using "subclass-table" inheritance strategy. See JIRA "NUCRDBMS-18"
+     */
+    public void test1to1UnidirInheritanceSubclassTable()
+    throws Exception
+    {
+        try
+        {
+            // Create the necessary schema
+            try
+            {
+                addClassesToSchema(new Class[]
+                   {
+                    Newspaper.class,
+                    Magazine.class,
+                    MediaWork.class,
+                    Reader.class
+                   });
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail ("Exception thrown while adding classes for 1-1 relation using subclass-table : " + e.getMessage());
+            }
+
+            // Check the persistence of data
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            Object fredId = null;
+            Object pamId = null;
+            try
+            {
+                tx.begin();
+                Magazine hello = new Magazine("Hello", MediaWork.FREQ_WEEKLY, "Trash Publishers");
+                Newspaper mail = new Newspaper("Daily Mail", MediaWork.FREQ_DAILY, "Piers Morgan", "Tabloid");
+                Reader fred = new Reader("Fred Smith", mail);
+                Reader pam = new Reader("Pam Green", hello);
+                pm.makePersistent(fred);
+                pm.makePersistent(pam);
+                tx.commit();
+                fredId = pm.getObjectId(fred);
+                pamId = pm.getObjectId(pam);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail(e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Check the retrieval of the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Reader fred = (Reader) pm.getObjectById(fredId, true);
+                assertTrue("Fred has the wrong name!", fred.getName().equals("Fred Smith"));
+                assertTrue("Fred has the wrong type of material", fred.getMaterial() instanceof Newspaper);
+                assertTrue("Fred has the wrong material", fred.getMaterial().getName().equals("Daily Mail"));
+
+                Reader pam = (Reader) pm.getObjectById(pamId, true);
+                assertTrue("Pam has the wrong name", pam.getName().equals("Pam Green"));
+                assertTrue("Pam has the wrong type of material", pam.getMaterial() instanceof Magazine);
+                assertTrue("Pam has the wrong material", pam.getMaterial().getName().equals("Hello"));
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Check a query
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query q1 = pm.newQuery(Reader.class, "((org.jpox.samples.one_one.unidir_2.Magazine)material).name == \"Hello\"");
+                List results1 = (List)q1.execute();
+                assertEquals("Number of readers who read \"Hello\" magazine was incorrect", results1.size(), 1);
+
+                Query q2 = pm.newQuery(Reader.class, "((org.jpox.samples.one_one.unidir_2.Newspaper)material).name == \"Daily Mail\"");
+                List results2 = (List)q2.execute();
+                assertEquals("Number of readers who read \"Daily Mail\" newspaper was incorrect", results2.size(), 1);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out all data
+            clean(Reader.class);
+            clean(Newspaper.class);
+            clean(Magazine.class);
+        }
+    }
 }
