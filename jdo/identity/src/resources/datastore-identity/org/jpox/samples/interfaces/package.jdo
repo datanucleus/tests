@@ -89,7 +89,7 @@
         <class name="ShapeHolder3b">
             <field name="shapeList" persistence-modifier="persistent" mapped-by="shapeHolder">
                 <collection element-type="ShapeInverseB"/>
-                <order mapped-by="containerListOrder"/>
+                <order mapped-by="listOrder"/>
                 <extension vendor-name="datanucleus" key="implementation-classes" 
                     value="Circle3b,Rectangle3b,Square3b"/>
             </field>
