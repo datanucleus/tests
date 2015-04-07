@@ -17,6 +17,7 @@
             <field name="listPrice" persistence-modifier="persistent"></field>
             <field name="taxPercent" persistence-modifier="persistent"></field>
             <field name="statusId" persistence-modifier="persistent"></field>
+            <field name="guarantee" persistence-modifier="persistent"></field>
         </class>
 
         <class name="Book" detachable="true" identity-type="datastore">
@@ -44,6 +45,10 @@
         <class name="MyCompactDisc" detachable="true" identity-type="datastore">
             <inheritance strategy="new-table"/>
             <field name="location" persistence-modifier="persistent"></field>
+        </class>
+
+        <class name="Guarantee" detachable="true">
+            <field name="id" primary-key="true"/>
         </class>
 
         <class name="Inventory" detachable="true" identity-type="datastore">

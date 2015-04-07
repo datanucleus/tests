@@ -531,6 +531,81 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Tests for collection.contains(element) && elem.other.field == val.
+     */
+    public void testFilterCollectionContainsVariablePlusExtraJoin()
+    {
+        JavaQueryCompiler compiler = null;
+        QueryCompilation compilation = null;
+        try
+        {
+            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+                null, Inventory.class, null, "products.contains(element) && element.guarantee.numberOfYears < 3", 
+                null, null, null, null, null, null, Product.class.getName() + " element", null);
+            compilation = compiler.compile(new HashMap(), null);
+        }
+        catch (NucleusException ne)
+        {
+            NucleusLogger.QUERY.error("Exception thrown during compilation", ne);
+            fail("compilation of filter with valid field threw exception : " + ne.getMessage());
+        }
+        Expression expr = compilation.getExprFilter();
+        assertTrue("Compiled expression should have been DyadicExpression but wasnt", 
+            expr instanceof DyadicExpression);
+        DyadicExpression dyExpr = (DyadicExpression)expr;
+LOG.info(">> expr=" + dyExpr);
+        // product.contains(element)
+        assertTrue("Left expression should have been InvokeExpression but wasnt", 
+            dyExpr.getLeft() instanceof InvokeExpression);
+        InvokeExpression leftExpr = (InvokeExpression)dyExpr.getLeft();
+        assertTrue("InvokeExpression should have been invoked on PrimaryExpression but wasnt",
+            leftExpr.getLeft() instanceof PrimaryExpression);
+
+        assertEquals("Left expression : Name of field upon which we invoke the method was wrong", 
+            "products", ((PrimaryExpression)leftExpr.getLeft()).getId());
+        assertEquals("Left expression : Name of invoked method was wrong", "contains", leftExpr.getOperation());
+        assertEquals("Left expression : Number of parameters to contains() is wrong", 
+            1, leftExpr.getArguments().size());
+        Object param1 = leftExpr.getArguments().get(0);
+        assertTrue("Left expression : Parameter1 to contains() is of wrong type", param1 instanceof VariableExpression);
+        VariableExpression vrExpr = (VariableExpression)param1;
+        assertEquals("Left expression : Name of variable to contains() is incorrect", "element", vrExpr.getId());
+
+        // element.guarantee.numberOfYears < 3
+        assertTrue("Right expression should have been DyadicExpression but wasnt", 
+            dyExpr.getRight() instanceof DyadicExpression);
+        DyadicExpression rightExpr = (DyadicExpression)dyExpr.getRight();
+        assertTrue("Right expression (left) should have been PrimaryExpression but wasnt", 
+            rightExpr.getLeft() instanceof PrimaryExpression);
+        PrimaryExpression rightExprLeft = (PrimaryExpression)rightExpr.getLeft();
+        assertTrue("Right expression (left).left is of incorrect type", rightExprLeft.getLeft() instanceof VariableExpression);
+        VariableExpression rightExprLeftLeft = (VariableExpression)rightExprLeft.getLeft();
+        assertTrue("Right expression (left).left is of incorrect type", rightExprLeft.getLeft() instanceof VariableExpression);
+        assertEquals("Right expression (left) part1 is incorrect", "element", rightExprLeftLeft.getId());
+        assertEquals("Right expression (left) has incorrect number of tuples", 2, rightExprLeft.getTuples().size());
+        assertEquals("Right expression (left) part2 is incorrect", "guarantee", rightExprLeft.getTuples().get(0));
+        assertEquals("Right expression (left) part2 is incorrect", "numberOfYears", rightExprLeft.getTuples().get(1));
+
+        assertEquals("Right expression : Operator between left and right is incorrect", 
+            Expression.OP_LT, rightExpr.getOperator());
+
+        assertTrue("Right expression (right) should have been Literal but wasnt", 
+            rightExpr.getRight() instanceof Literal);
+        Literal rightExprRight = (Literal)rightExpr.getRight();
+        assertEquals("Right expression (right) literal has incorrect value", 
+            3, ((Long)rightExprRight.getLiteral()).longValue());
+
+        // Check symbols
+        SymbolTable symbols = compilation.getSymbolTable();
+        assertTrue("Symbol table doesnt have entry for 'element'", symbols.hasSymbol("element"));
+        assertTrue("Symbol table doesnt have entry for 'this'", symbols.hasSymbol("this"));
+        Symbol sy1 = symbols.getSymbol("element");
+        assertEquals("Type of symbol for 'element' is wrong", Product.class, sy1.getValueType());
+        Symbol sy2 = symbols.getSymbol("this");
+        assertEquals("Type of symbol for 'this' is wrong", Inventory.class, sy2.getValueType());
+    }
+
+    /**
      * Tests for "!(expression)".
      */
     public void testFilterWithNegateExpression()
