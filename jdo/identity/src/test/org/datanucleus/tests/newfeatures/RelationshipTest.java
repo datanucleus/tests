@@ -75,8 +75,11 @@ public class RelationshipTest extends JDOPersistenceTestCase
                 // Create some data
                 Office office = new Office("JPOX Corporate Office");
                 LaptopComputer laptop1 = new LaptopComputer("192.168.0.10", "Linux", 3, 2);
+                laptop1.setId(1);
                 DesktopComputer desktop1 = new DesktopComputer("192.168.0.11", "Linux", 2);
+                desktop1.setId(2);
                 DesktopComputer desktop2 = new DesktopComputer("192.168.0.12", "Windows", 1);
+                desktop2.setId(3);
                 office.addComputer(laptop1);
                 office.addComputer(desktop1);
                 office.addComputer(desktop2);
@@ -92,8 +95,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-                LOG.error(e);
+                LOG.error("Exception on persist", e);
                 fail("Exception thrown while creating 1-N unidirectional Join Table \"subclass-table\" relationship data : " + e.getMessage());
             }
             finally
@@ -105,6 +107,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
                 
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
 
             // Test the retrieval of objects by id
             pm = pmf.getPersistenceManager();
@@ -118,8 +121,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
                 assertTrue("Office was not retrieved via getObjectById", office != null);
                 assertEquals("Office obtained by getObjectById was incorrect : has wrong name", office.getName(), "JPOX Corporate Office");
                 assertTrue("Office obtained by getObjectById was incorrect : has null collection of computers", office.getComputers() != null);
-                assertEquals("Office obtained by getObjectById was incorrect : has incorrect number of computers", 
-                    office.getNumberOfComputers(), 3);
+                assertEquals("Office obtained by getObjectById was incorrect : has incorrect number of computers", office.getNumberOfComputers(), 3);
                 Collection computers = office.getComputers();
                 Iterator iter = computers.iterator();
                 while (iter.hasNext())
