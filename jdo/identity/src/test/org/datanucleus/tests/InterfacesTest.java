@@ -38,10 +38,12 @@ import javax.jdo.Transaction;
 import org.jpox.samples.interfaces.Cereal;
 import org.jpox.samples.interfaces.Circle;
 import org.jpox.samples.interfaces.Circle3;
+import org.jpox.samples.interfaces.Circle3b;
 import org.jpox.samples.interfaces.Diet;
 import org.jpox.samples.interfaces.Food;
 import org.jpox.samples.interfaces.Rectangle;
 import org.jpox.samples.interfaces.Rectangle3;
+import org.jpox.samples.interfaces.Rectangle3b;
 import org.jpox.samples.interfaces.Salad;
 import org.jpox.samples.interfaces.Shape;
 import org.jpox.samples.interfaces.Shape5;
@@ -52,9 +54,11 @@ import org.jpox.samples.interfaces.Shape5Square;
 import org.jpox.samples.interfaces.ShapeHolder;
 import org.jpox.samples.interfaces.ShapeHolder2;
 import org.jpox.samples.interfaces.ShapeHolder3;
+import org.jpox.samples.interfaces.ShapeHolder3b;
 import org.jpox.samples.interfaces.ShapeHolder4;
 import org.jpox.samples.interfaces.Square;
 import org.jpox.samples.interfaces.Square3;
+import org.jpox.samples.interfaces.Square3b;
 import org.jpox.samples.interfaces.Steak;
 import org.jpox.samples.interfaces.Triangle;
 
@@ -1508,6 +1512,61 @@ public class InterfacesTest extends JDOPersistenceTestCase
             clean(Shape5Holder.class);
             clean(Shape5Circle.class);
             clean(Shape5Rectangle.class);
+        }
+    }
+
+    /**
+     * Test for the creation of an list for interface objects using FK. See JIRA "NUCRDBMS-19"
+     */
+    public void testListFK()
+    throws Exception
+    {
+        try
+        {
+            addClassesToSchema(new Class[] {ShapeHolder3b.class, Rectangle3b.class, Circle3b.class, Square3b.class});
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            Object id;
+            try
+            {
+                // Create container and some shapes
+                tx.begin();
+                ShapeHolder3b container = new ShapeHolder3b(r.nextInt());
+                Circle3b circle = new Circle3b(r.nextInt(), 1.75);
+                container.getShapeList().add(circle);
+                Rectangle3b rectangle = new Rectangle3b(r.nextInt(), 1.0, 2.0);
+                container.getShapeList().add(rectangle);
+                assertEquals(2,container.getShapeList().size());
+                pm.makePersistent(container);
+                tx.commit();
+                id = pm.getObjectId(container);
+                pm.close();
+
+                pm = pmf.getPersistenceManager();
+                tx = pm.currentTransaction();
+                tx.begin();
+                ShapeHolder3b actual = (ShapeHolder3b) pm.getObjectById(id);
+                assertEquals(2,actual.getShapeList().size());
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                
+                pm.close();
+            }
+            
+            // TODO Extend this to then query the elements in the collection
+        }
+        finally
+        {
+            clean(Circle3b.class);
+            clean(Rectangle3b.class);
+            clean(ShapeHolder3b.class);
         }
     }
 }
