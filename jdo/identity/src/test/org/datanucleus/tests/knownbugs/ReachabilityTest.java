@@ -127,12 +127,21 @@ public class ReachabilityTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Organisation org = (Organisation)queryByName(pm, Organisation.class, "JPOX Corporation");
+                Query query = pm.newQuery(Organisation.class, "name == :param");
+                Collection<Organisation> result = (Collection<Organisation>)query.execute("JPOX Corporation");
+                Iterator<Organisation> iter = result.iterator();
+                Organisation org = null;
+                if (iter.hasNext())
+                {
+                    org = iter.next();
+                }
+
                 assertTrue("Organisation is in the datastore!", org == null);
                 Organisation org2 = (Organisation)pm.getObjectById(orgId);
                 assertTrue("Organisation 2 is not in the datastore!", org2 != null);
                 Qualification qual = (Qualification)pm.getObjectById(qualId);
                 assertTrue("Qualification is not in the datastore!", qual != null);
+                query.closeAll();
 
                 tx.commit();
             }
@@ -150,41 +159,6 @@ public class ReachabilityTest extends JDOPersistenceTestCase
             // Clean out our data
             clean(Qualification.class);
             clean(Organisation.class);
-        }
-    }
-
-    /**
-     * Generic query for instances of the candidate class and its subclasses which have the specified name.
-     * @param pm PersistenceManager to use
-     * @param candidateClass the candidate class
-     * @param name the name to find
-     * @return the first instance found or <code>null</code> if none exists
-     */
-    private static Object queryByName(PersistenceManager pm, Class candidateClass, String name)
-    {
-        Query query = null;
-        try
-        {
-            query = pm.newQuery(candidateClass, "name == param");
-            query.declareImports("import java.lang.String;");
-            query.declareParameters("java.lang.String param");
-            Collection result = (Collection)query.execute(name);
-            Iterator iter = result.iterator();
-            if (iter.hasNext())
-            {
-                return iter.next();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        finally
-        {
-            if (query != null)
-            {
-                query.closeAll();
-            }
         }
     }
 }
