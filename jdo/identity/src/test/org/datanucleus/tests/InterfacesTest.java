@@ -1174,7 +1174,6 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 Diet diet = (Diet)pm.getObjectById(id);
                 Food fave = diet.getFavouriteFood();
                 assertNotNull("Favourite food is null!!", fave);
-                LOG.info(">> fave=" + fave);
                 assertTrue("Favourite should be Steak!", fave instanceof Steak);
 
                 // Set to null
@@ -1392,6 +1391,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 tx.commit();
                 id = pm.getObjectId(container);
                 pm.close();
+                pmf.getDataStoreCache().evictAll();
 
                 pm = pmf.getPersistenceManager();
                 tx = pm.currentTransaction();
@@ -1456,6 +1456,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 tx.commit();
                 id = pm.getObjectId(container);
                 pm.close();
+                pmf.getDataStoreCache().evictAll();
 
                 pm = pmf.getPersistenceManager();
                 tx = pm.currentTransaction();
@@ -1542,6 +1543,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 tx.commit();
                 id = pm.getObjectId(container);
                 pm.close();
+                pmf.getDataStoreCache().evictAll();
 
                 pm = pmf.getPersistenceManager();
                 tx = pm.currentTransaction();
