@@ -1377,6 +1377,8 @@ public class InterfacesTest extends JDOPersistenceTestCase
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             Object id;
+            Object circleId = null;
+            Object rectId = null;
             try
             {
                 // Create container and some shapes
@@ -1390,6 +1392,8 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 pm.makePersistent(container);
                 tx.commit();
                 id = pm.getObjectId(container);
+                circleId = JDOHelper.getObjectId(circle);
+                rectId = JDOHelper.getObjectId(rectangle);
                 pm.close();
                 pmf.getDataStoreCache().evictAll();
 
@@ -1397,6 +1401,10 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 tx = pm.currentTransaction();
                 tx.begin();
                 ShapeHolder3 actual = (ShapeHolder3) pm.getObjectById(id);
+                Circle3 c = (Circle3) pm.getObjectById(circleId);
+                assertTrue(actual.getShapeSet().contains(c));
+                Rectangle3 r = (Rectangle3) pm.getObjectById(rectId);
+                assertTrue(actual.getShapeSet().contains(r));
                 assertEquals(2,actual.getShapeSet().size());
                 tx.commit();
             }
