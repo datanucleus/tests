@@ -156,7 +156,7 @@ public class EntityManagerFactoryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                TypedQuery<Person> q = em.createQuery("SELECT FROM " + Person.class.getName() + " p", Person.class);
+                TypedQuery<Person> q = em.createQuery("SELECT p FROM " + Person.class.getName() + " p", Person.class);
                 List<Person> results = q.getResultList();
                 assertEquals(1, results.size());
                 Person p = results.get(0);
