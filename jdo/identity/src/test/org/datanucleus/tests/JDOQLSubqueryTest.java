@@ -17,6 +17,7 @@ Contributors:
 ***********************************************************************/
 package org.datanucleus.tests;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -464,6 +465,62 @@ public class JDOQLSubqueryTest extends JDOPersistenceTestCase
         {
             // Clean out our data
             clean(BasicTypeHolder.class);
+        }
+    }
+
+    /**
+     * Test a simple subquery using single-string form and a subquery in the result.
+     **/
+    public void testSingleStringSubqueryInResult()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            // Persist 2 Employees
+            Employee emp1 = new Employee(101, "F1", "S1", "f1.s1@company.com", 100f, "10001");
+            Employee emp2 = new Employee(102, "F2", "S2", "f2.s2@company.com", 200f, "10002");
+            pm.makePersistent(emp1);
+            pm.makePersistent(emp2);
+            pm.flush();
+
+            // Find the Employees earning more than the average salary of people with surname "S2"
+            Query q = pm.newQuery("SELECT this, (SELECT avg(e.salary) FROM " + Employee.class.getName() + " e WHERE e.lastName == 'S1') FROM " + Employee.class.getName() + " ORDER BY this.salary");
+            List results = (List)q.execute();
+            assertNotNull("No results from query!", results);
+            assertEquals(2, results.size());
+            Object result0 = results.get(0);
+            assertNotNull(result0);
+            assertTrue(result0.getClass().isArray());
+            assertEquals(2, Array.getLength(result0));
+            assertTrue(Array.get(result0, 0) instanceof Employee);
+            assertEquals(((Employee)Array.get(result0, 0)).getLastName(), "S1");
+            assertEquals(100.0, Array.get(result0, 1));
+
+            Object result1 = results.get(1);
+            assertTrue(result1.getClass().isArray());
+            assertEquals(2, Array.getLength(result1));
+            assertTrue(Array.get(result1, 0) instanceof Employee);
+            assertEquals(((Employee)Array.get(result1, 0)).getLastName(), "S2");
+            assertEquals(100.0, Array.get(result1, 1));
+
+            // Don't commit the data
+            tx.rollback();
+        }
+        catch (JDOUserException e)
+        {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
 }

@@ -73,8 +73,7 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
 
                 List result = em.createQuery(
                     "SELECT Object(P) FROM " + Person.class.getName() + " P " +
-                    "WHERE P.age > " +
-                    "(SELECT avg(Q.age) FROM " + Person.class.getName() + " Q)").getResultList();
+                    "WHERE P.age > (SELECT avg(Q.age) FROM " + Person.class.getName() + " Q)").getResultList();
                 assertEquals(1, result.size());
                 tx.rollback();
             }
@@ -199,18 +198,12 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-
                 Query query = em.createQuery(
-                    "SELECT Object(W) FROM " + WebSite.class.getName() + " W " +
-                    "WHERE W.id IN " +
-                    "(" +
-                    "SELECT WW.id FROM " + WebSite.class.getName() + " WW WHERE " +
-                    " WW.id IN " +
-                    "(SELECT Z.id FROM " + WebSite.class.getName()+" Z WHERE Z.id=1000)"+
-                    ")");
+                    "SELECT W FROM " + WebSite.class.getName() + " W " +
+                    "WHERE W.id IN (SELECT WW.id FROM " + WebSite.class.getName() + " WW WHERE WW.id IN " +
+                    "(SELECT Z.id FROM " + WebSite.class.getName()+" Z WHERE Z.id=1000))");
 //                query.setParameter("name", "Rubble");
-                
-                 List result = query.getResultList();
+                List result = query.getResultList();
                 assertEquals(0, result.size());
                 tx.rollback();
             }
@@ -239,29 +232,18 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-
-                Query query = em.createQuery(
-                        "SELECT Object(W) FROM " + WebSite.class.getName() + " W " +
-                        "WHERE W.id IN " +
-                        "(" +
-                        "SELECT WW.id FROM " + WebSite.class.getName() + " WW WHERE " +
-                        " WW.url = :url" +
-                        ")");
+                Query query = em.createQuery("SELECT Object(W) FROM " + WebSite.class.getName() + " W " +
+                        "WHERE W.id IN (SELECT WW.id FROM " + WebSite.class.getName() + " WW WHERE WW.url = :url)");
                 query.setParameter("url", "nourl");
                 List result = query.getResultList();
-                
-                query  = em.createQuery(
-                    "SELECT Object(W) FROM " + WebSite.class.getName() + " W " +
-                    "WHERE W.id IN " +
-                    "(" +
-                    "SELECT WW.id FROM " + WebSite.class.getName() + " WW WHERE " +
-                    " WW.url = :url AND WW.id= :oid" +
-                    ")");
+
+                query  = em.createQuery("SELECT Object(W) FROM " + WebSite.class.getName() + " W " +
+                    "WHERE W.id IN (SELECT WW.id FROM " + WebSite.class.getName() + " WW WHERE WW.url = :url AND WW.id= :oid)");
                 query.setParameter("url", "nourl");
                 query.setParameter("oid", new Integer(3));
                 result = query.getResultList();
-                
                 assertEquals(0, result.size());
+
                 tx.rollback();
             }
             finally
@@ -494,6 +476,55 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
                     "SELECT p FROM " + Person.class.getName() + " p " +
                     "WHERE p.age > ALL(SELECT avg(q.age) FROM " + Person.class.getName() + " q)").getResultList();
                 assertEquals(1, result.size());
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
+
+    /**
+     * Simple query using a subquery in SELECT clause
+     */
+    public void testSubqueryInResult()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                p1.setAge(35);
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                p2.setAge(45);
+                em.persist(p1);
+                em.persist(p2);
+                em.flush();
+
+                List<Object[]> result = em.createQuery(
+                    "SELECT p, (SELECT avg(Q.age) FROM " + Person.class.getName() + " Q) FROM " + Person.class.getName() + " p WHERE p.age > 3 ORDER BY p.age").getResultList();
+                assertEquals(2, result.size());
+                Object[] row0 = result.get(0);
+                Object[] row1 = result.get(1);
+                assertTrue(row0[0] instanceof Person);
+                assertEquals("Fred", ((Person)row0[0]).getFirstName());
+                assertEquals(40.0, row0[1]);
+                assertTrue(row1[0] instanceof Person);
+                assertEquals("Barney", ((Person)row1[0]).getFirstName());
+                assertEquals(40.0, row1[1]);
                 tx.rollback();
             }
             finally
