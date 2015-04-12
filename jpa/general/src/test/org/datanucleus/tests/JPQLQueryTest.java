@@ -3698,4 +3698,43 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             em.close();
         }
     }
+
+    /**
+     * Test of the use of a result alias, and using it in ORDER BY.
+     */
+    public void testOrderByResultAlias()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 30000f, "1234A");
+            Employee e2 = new Employee(102, "George", "Cement", "george.cement@jpox.com", 20000f, "1235C");
+            em.persist(e1);
+            em.persist(e2);
+
+            em.flush();
+
+            List<Object[]> result = em.createQuery("SELECT e.firstName, (e.salary/12) AS MONTHLY FROM " + Employee.class.getName() + " e ORDER BY MONTHLY ASC").getResultList();
+            assertEquals(2, result.size());
+            Object[] result1 = result.get(0);
+            Object[] result2 = result.get(1);
+            assertEquals("George", result1[0]);
+            assertEquals(1666.6666, ((Number)result1[1]).doubleValue(), 0.1);
+            assertEquals("Fred", result2[0]);
+            assertEquals(2500.00, ((Number)result2[1]).doubleValue(), 0.1);
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }    
 }
