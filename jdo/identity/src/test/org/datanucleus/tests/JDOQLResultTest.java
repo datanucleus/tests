@@ -1329,7 +1329,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 pm.flush();
 
                 q = pm.newQuery(Person.class);
-                q.setOrdering("bestFriend.firstName ascending");
+                q.setOrdering("bestFriend.firstName ascending NULLS FIRST");
                 l = (List) q.execute();
                 Assert.assertEquals(9, l.size()); // 9 Person objects so 9 results - 6 nulls, and then 3 results
                 Iterator it = l.iterator();
