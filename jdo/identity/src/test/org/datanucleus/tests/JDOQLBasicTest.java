@@ -1946,7 +1946,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             cal1.set(Calendar.HOUR_OF_DAY, 10);
             cal1.set(Calendar.MINUTE, 55);
             cal1.set(Calendar.SECOND, 5);
-            cal1.set(Calendar.MILLISECOND, 0); // Set millis since some RDBMS don't save this info. TODO Only do this if the datastore doesn't support millis
+            if (vendorID != null)
+            {
+                DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
+                if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
+                {
+                    cal1.set(Calendar.MILLISECOND, 0);
+                }
+            }
             prim1.setDateField(cal1.getTime());
             maxDate = cal1.getTime();
 
@@ -1958,7 +1965,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             cal2.set(Calendar.HOUR_OF_DAY, 4);
             cal2.set(Calendar.MINUTE, 13);
             cal2.set(Calendar.SECOND, 45);
-            cal1.set(Calendar.MILLISECOND, 0); // Set millis since some RDBMS don't save this info TODO Only do this if the datastore doesn't support millis
+            if (vendorID != null)
+            {
+                DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
+                if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
+                {
+                    cal2.set(Calendar.MILLISECOND, 0);
+                }
+            }
             prim2.setDateField(cal2.getTime());
 
             PersistenceManager pm = pmf.getPersistenceManager();
