@@ -37,6 +37,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.datanucleus.api.jpa.JPAQuery;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
@@ -3736,5 +3737,101 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             }
             em.close();
         }
-    }    
+    }
+
+    /**
+     * Test for saving a query as a named query via the EMF.
+     */
+    public void testAddAsNamedQuery()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@gmail.com");
+            em.persist(p1);
+
+            Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@gmail.com");
+            em.persist(p2);
+
+            em.flush();
+
+            Query q1 = em.createQuery("SELECT p FROM Person_Ann p WHERE p.lastName = :param");
+            q1.setParameter("param", "Flintstone");
+            List<Person> results1 = q1.getResultList();
+            assertEquals(1, results1.size());
+            assertEquals("Flintstone", ((Person)results1.iterator().next()).getLastName());
+
+            // Save this query for later use
+            emf.addNamedQuery("PeopleWithLastName", q1);
+
+            Query q2 = em.createNamedQuery("PeopleWithLastName");
+            assertEquals("SELECT p FROM Person_Ann p WHERE p.lastName = :param", q2.toString());
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in Named Query test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for saving a query as a named query via the Query (DN extension).
+     */
+    public void testSaveAsNamedQuery()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@gmail.com");
+            em.persist(p1);
+
+            Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@gmail.com");
+            em.persist(p2);
+
+            em.flush();
+
+            Query q1 = em.createQuery("SELECT p FROM Person_Ann p WHERE p.lastName = :param");
+            q1.setParameter("param", "Flintstone");
+            List<Person> results1 = q1.getResultList();
+            assertEquals(1, results1.size());
+            assertEquals("Flintstone", ((Person)results1.iterator().next()).getLastName());
+
+            // Save this query for later use
+            ((JPAQuery)q1).saveAsNamedQuery("PeopleWithLastNameFromQuery");
+
+            Query q2 = em.createNamedQuery("PeopleWithLastNameFromQuery");
+            assertEquals("SELECT p FROM Person_Ann p WHERE p.lastName = :param", q2.toString());
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in Named Query test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
 }
