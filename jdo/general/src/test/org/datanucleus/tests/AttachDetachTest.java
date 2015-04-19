@@ -2115,7 +2115,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(e);
+                LOG.error("Exception in test", e);
                 fail("Exception thrown on use of allegedly detached farm " + e.getMessage());
             }
         }
@@ -3188,7 +3188,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting objects and closing PM with detachOnClose : " + e.getMessage());
             }
             finally
@@ -3285,7 +3284,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3339,7 +3337,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3393,7 +3390,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3481,7 +3477,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3537,7 +3532,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3625,7 +3619,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3676,7 +3669,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3714,7 +3706,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
             }
             finally
@@ -3771,7 +3762,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting objects : " + e.getMessage());
             }
             finally
@@ -3800,7 +3790,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while retrieving and detaching objects : " + e.getMessage());
             }
             finally
@@ -3871,7 +3860,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(e);
+                LOG.error("Exception in test", e);
                 fail("Exception thrown while persisting test data : " + e.getMessage());
             }
             finally
@@ -3898,7 +3887,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(e);
+                LOG.error("Exception in test", e);
                 fail("Exception thrown while retrieving/detaching test data : " + e.getMessage());
             }
             finally
@@ -3947,7 +3936,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(e);
+                LOG.error("Exception in test", e);
                 fail("Exception thrown while retrieving/detaching test data : " + e.getMessage());
             }
             finally
@@ -4036,7 +4025,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(e);
+                LOG.error("Exception in test", e);
                 fail("Exception thrown while creating sample data : " + e.getMessage());
             }
             finally
@@ -4149,16 +4138,14 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                     }
                     catch (JDODetachedFieldAccessException e)
                     {
-                        LOG.error(e);
-                        LOG.error("Object threw exception when accessing : " + e.getMessage());
+                        LOG.error("Exception in test", e);
                         fail("One of the objects in a recursive relation that should have been detached hasn't! : " + e.getMessage());
                     }
                 }
             }
             catch (JDODetachedFieldAccessException e)
             {
-                LOG.error(e);
-                LOG.error("Object threw exception when accessing : " + e.getMessage());
+                LOG.error("Exception in test", e);
                 fail("One of the objects in a recursive relation that should have been detached hasn't! : " + e.getMessage());
             }
         }
@@ -4236,7 +4223,6 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception in test", e);
-                LOG.error(e);
                 fail("Exception thrown while persisting test data : " + e.getMessage());
             }
             finally
