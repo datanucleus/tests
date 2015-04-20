@@ -33,6 +33,7 @@ import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValu
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.tests.JPAPersistenceTestCase;
+import org.jpox.samples.annotations.many_one.ManyOneOwner;
 import org.jpox.samples.annotations.models.company.Employee;
 import org.jpox.samples.annotations.models.company.Manager;
 import org.jpox.samples.annotations.models.company.Person;
@@ -367,6 +368,38 @@ public class MetamodelTest extends JPAPersistenceTestCase
         catch (IllegalArgumentException iae)
         {
             fail("Didnt find EntityType for " + Animal.class.getName());
+        }
+    }
+
+    /**
+     * Test for the identification of relation type.
+     */
+    public void testManyToOne()
+    {
+        Metamodel model = emf.getMetamodel();
+        try
+        {
+            EntityType<?> ownerType = model.entity(ManyOneOwner.class);
+            assertNotNull(ownerType);
+            assertEquals("Number of attributes is wrong", 2, ownerType.getAttributes().size());
+
+            try
+            {
+                Attribute attr = ownerType.getAttribute("other");
+                assertNotNull(attr);
+                assertEquals(attr.getName(), "other");
+                assertFalse(attr.isCollection());
+                assertTrue(attr instanceof SingularAttribute);
+                assertEquals(Attribute.PersistentAttributeType.MANY_TO_ONE, attr.getPersistentAttributeType());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"other\" field of " + ManyOneOwner.class.getName());
+            }
+        }
+        catch (IllegalArgumentException iae)
+        {
+            fail("Didnt find EntityType for " + ManyOneOwner.class.getName());
         }
     }
 }
