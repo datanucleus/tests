@@ -1894,10 +1894,13 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
                 Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                p1.setAge(30);
                 em.persist(p1);
                 Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                p2.setAge(35);
                 em.persist(p2);
                 Person p3 = new Person(103, "Pebbles", "Flintstone", "pebbles.flintstone@jpox.com");
+                p3.setAge(3);
                 em.persist(p3);
                 p1.setBestFriend(p2);
                 p3.setBestFriend(p2);
@@ -1906,7 +1909,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                Query q1 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1, :param2)");
+                Query q1 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1, :param2)");
                 q1.setParameter("param1", "Fred");
                 q1.setParameter("param2", "Pebbles");
                 Parameter param1 = q1.getParameter("param1");
@@ -1922,7 +1925,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                Query q2 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName NOT IN (:param1, :param2)");
+                Query q2 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName NOT IN (:param1, :param2)");
                 q2.setParameter("param1", "Fred");
                 q2.setParameter("param2", "Pebbles");
                 result = q2.getResultList();
@@ -1930,13 +1933,23 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                Query q3 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1)");
+                Query q3 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1)");
                 Collection<String> options = new HashSet<String>();
                 options.add("Fred");
                 options.add("Pebbles");
                 q3.setParameter("param1", options);
                 result = q3.getResultList();
                 assertEquals(2, result.size());
+                tx.commit();
+
+                tx.begin();
+                Query q3b = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.age NOT IN (:param1)");
+                List<Integer> options3b = new ArrayList<Integer>();
+                options3b.add(30);
+                options3b.add(35);
+                q3b.setParameter("param1", options3b);
+                result = q3b.getResultList();
+                assertEquals(1, result.size());
                 tx.commit();
 
                 // Now try IN using entities
@@ -1951,7 +1964,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                Query q5 = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.personNum IN (:param1)");
+                Query q5 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.personNum IN (:param1)");
                 List<Long> inList = new ArrayList<Long>();
                 inList.add(new Long(101));
                 inList.add(new Long(102));
