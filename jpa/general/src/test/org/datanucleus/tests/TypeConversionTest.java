@@ -18,11 +18,13 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.datanucleus.tests.JPAPersistenceTestCase;
+import org.jpox.samples.typeconversion.CollectionConverterHolder;
 import org.jpox.samples.typeconversion.ComplicatedType;
 import org.jpox.samples.typeconversion.ComplicatedType2;
 import org.jpox.samples.typeconversion.MapConverterHolder;
@@ -259,6 +261,87 @@ public class TypeConversionTest extends JPAPersistenceTestCase
         finally
         {
             clean(MapConverterHolder.class);
+        }
+    }
+
+    public void testCollectionElementConversion()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CollectionConverterHolder h = new CollectionConverterHolder(1);
+                h.getSet1().add(new MyType1("A", "J"));
+                h.getSet1().add(new MyType1("E", "B"));
+                em.persist(h);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during persist when using type converter", e);
+                fail("Failure on persist with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CollectionConverterHolder p1 = em.find(CollectionConverterHolder.class, 1);
+                assertNotNull(p1);
+                Set<MyType1> set = p1.getSet1();
+                assertNotNull(set);
+                assertEquals(2, set.size());
+                boolean elem1Present = false;
+                boolean elem2Present = false;
+                for (MyType1 elem : set)
+                {
+                    if (elem.getName1().equals("A") && elem.getName2().equals("J"))
+                    {
+                        elem1Present = true;
+                    }
+                    else if (elem.getName1().equals("E") && elem.getName2().equals("B"))
+                    {
+                        elem2Present = true;
+                    }
+                }
+                assertTrue(elem1Present);
+                assertTrue(elem2Present);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during retrieve when using type converter", e);
+                fail("Failure on retrieve with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(CollectionConverterHolder.class);
         }
     }
 }
