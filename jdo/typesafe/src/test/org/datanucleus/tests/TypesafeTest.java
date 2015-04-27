@@ -364,6 +364,42 @@ public class TypesafeTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Test basic querying for a candidate with a filter when navigating 1-1 relation.
+     */
+    public void testFilter3()
+    {
+        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            QTeam cand = QTeam.jdoCandidate;
+            List<Team> teams = tq.filter(cand.manager.firstName.eq("Jose")).executeList();
+            assertNotNull("Teams is null!", teams);
+            assertEquals("Number of teams is wrong", 1, teams.size());
+            Team team = teams.get(0);
+            assertEquals("Mourinho", team.getManager().getLastName());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
      * Test basic querying with a result.
      */
     public void testResult()
