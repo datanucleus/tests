@@ -83,11 +83,6 @@
             <artifactId>datanucleus-core</artifactId>
             <version>(4.0.99, )</version>
         </dependency>
-        <!-- dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-cache</artifactId>
-            <version>[4.0.0-release, )</version>
-        </dependency-->
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>

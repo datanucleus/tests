@@ -15,7 +15,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>javax.jdo</groupId>
             <artifactId>jdo-api</artifactId>
-            <version>[3.0, )</version>
+            <version>[3.1, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
@@ -25,17 +25,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>[4.0.0-release, )</version>
+            <version>(4.0.99, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
-            <version>[4.0.0-release, )</version>
+            <version>(4.0.99, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[4.0.0-release, )</version>
+            <version>(4.0.99, )</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
