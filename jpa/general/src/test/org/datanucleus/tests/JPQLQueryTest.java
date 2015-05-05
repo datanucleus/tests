@@ -1932,12 +1932,21 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 assertEquals(1, result.size());
                 tx.commit();
 
+                // Parameter with single value
                 tx.begin();
-                Query q3 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1)");
+                Query q3a = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1)");
+                q3a.setParameter("param1", "Pebbles");
+                result = q3a.getResultList();
+                assertEquals(1, result.size());
+                tx.commit();
+
+                // Parameter with collection of values TODO If we set this param name to "param1" it will try to reuse compilation from previous query above and fail
+                tx.begin();
+                Query q3 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:collParam)");
                 Collection<String> options = new HashSet<String>();
                 options.add("Fred");
                 options.add("Pebbles");
-                q3.setParameter("param1", options);
+                q3.setParameter("collParam", options);
                 result = q3.getResultList();
                 assertEquals(2, result.size());
                 tx.commit();
