@@ -136,6 +136,35 @@ public class JavaTimeTest extends JPAPersistenceTestCase
                 }
                 em.close();
             }
+
+            // Query the data
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                // Try query with a LocalDateTime parameter
+                Query q = em.createQuery("SELECT s FROM " + JavaTimeSample1.class.getName() + " s WHERE s.dateTime1 < :param");
+                q.setParameter("param", dateTime2);
+                List<JavaTimeSample1> results = q.getResultList();
+                assertEquals(1,  results.size());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving DateTime data", e);
+                fail("Error retrieving DateTime data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
