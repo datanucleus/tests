@@ -79,6 +79,7 @@ import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Manager;
 import org.jpox.samples.models.company.Person;
 import org.jpox.samples.models.company.Project;
+import org.jpox.samples.models.voting.Vote;
 import org.jpox.samples.one_many.bidir.Animal;
 import org.jpox.samples.one_many.bidir.Farm;
 import org.jpox.samples.persistentinterfaces.Country;
@@ -2171,6 +2172,46 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         finally
         {
             clean(Person.class);
+        }
+    }
+
+    /**
+     * Simple test of makeTransactional method with single-field-id.
+     * JDO TCK only tests for user-provided application id.
+     */
+    public void testMakeTransactionalSingleFieldId() throws Exception
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            try
+            {
+                tx.begin();
+
+                Vote v = new Vote(101, "Liberal");
+                pm.makeTransactional(v);
+
+                tx.commit();
+            }
+            catch (JDOException jdoe)
+            {
+                LOG.error("Exception in test", jdoe);
+                fail("Exception thrown during makeTransactional : " + jdoe.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(Vote.class);
         }
     }
 
