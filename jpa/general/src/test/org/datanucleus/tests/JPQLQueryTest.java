@@ -2374,11 +2374,13 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             Calendar cal = Calendar.getInstance();
             cal.set(2006, 11, 01);
             d1.setDateField(cal.getTime());
+            d1.setDateField3(cal.getTime());
             em.persist(d1);
             DateHolder d2 = new DateHolder();
             Calendar cal2 = Calendar.getInstance();
             cal2.set(2022, 11, 01);
             d2.setDateField(cal2.getTime());
+            d2.setDateField3(cal2.getTime());
             em.persist(d2);
             em.flush();
 
@@ -2389,6 +2391,16 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             assertNotNull(holderDate);
             assertEquals(106, holderDate.getYear()); // 2006
             assertEquals(11, holderDate.getMonth()); // 11
+
+            List<DateHolder> result2 = em.createQuery("SELECT Object(D) FROM " + DateHolder.class.getName() + " D WHERE D.dateField3 < {ts '2008-01-01 10:04:00.0'}").getResultList();
+            assertEquals(1, result2.size());
+            DateHolder holder2 = result2.get(0);
+            Date holderDate2 = holder2.getDateField();
+            assertNotNull(holderDate2);
+            assertEquals(106, holderDate2.getYear()); // 2006
+            assertEquals(11, holderDate2.getMonth()); // 11
+
+            // TODO Add test for "t" syntax
 
             tx.rollback();
         }
