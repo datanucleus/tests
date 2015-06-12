@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.models.nullability">
+        <class name="NullabilityOwner">
+            <inheritance strategy="new-table"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="name"/>
+            <field name="optionalMember">
+                <column allows-null="true"/>
+            </field>
+            <fetch-group name="optionalMember">
+                <field name="optionalMember"/>
+            </fetch-group>
+        </class>
+        <class name="NullabilityOptionalMember">
+            <inheritance strategy="new-table"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="name"/>
+            <field name="mandatoryMember">
+                <column allows-null="false"/>
+            </field>
+            <fetch-group name="mandatoryMember">
+                <field name="mandatoryMember"/>
+            </fetch-group>
+        </class>
+        <class name="NullabilityMandatoryMember">
+            <inheritance strategy="new-table"/>
+            <field name="id" persistence-modifier="none"/>
+            <field name="name"/>
+        </class>
+    </package>
+</jdo>

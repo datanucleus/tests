@@ -49,6 +49,9 @@ import javax.jdo.Transaction;
 import junit.framework.Assert;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.models.nullability.NullabilityMandatoryMember;
+import org.datanucleus.samples.models.nullability.NullabilityOptionalMember;
+import org.datanucleus.samples.models.nullability.NullabilityOwner;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.tests.JDOPersistenceTestCase;
@@ -4923,6 +4926,73 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
         {
             // Clean out our data
             CompanyHelper.clearCompanyData(pmf);
+        }
+    }
+
+    /**
+     * Test fetching of objects with nullable and non-nullable 1-1/N-1 relations.
+     */
+    public void testNullabilityFetching()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                NullabilityMandatoryMember m = new NullabilityMandatoryMember(1, "Mandatory1");
+                NullabilityOptionalMember o = new NullabilityOptionalMember(1, "Optional1", m);
+                NullabilityOwner r = new NullabilityOwner(1, "Root1", o);
+                NullabilityOwner r2 = new NullabilityOwner(2, "Root2", null);
+                pm.makePersistent(r);
+                pm.makePersistent(r2);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query query = pm.newQuery(NullabilityOwner.class);
+                query.getFetchPlan().setMaxFetchDepth(2);
+                query.getFetchPlan().addGroup("optionalMember");
+                query.getFetchPlan().addGroup("mandatoryMember");
+                List<NullabilityOwner> list = (List<NullabilityOwner>)query.execute();
+                if (list.size() != 2)
+                {
+                    fail("All objects not found! size=" + list.size());
+                }
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    pm.currentTransaction().rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(NullabilityOwner.class);
+            clean(NullabilityOptionalMember.class);
+            clean(NullabilityMandatoryMember.class);
         }
     }
 
