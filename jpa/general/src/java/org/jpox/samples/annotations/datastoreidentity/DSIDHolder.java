@@ -20,13 +20,13 @@ package org.jpox.samples.annotations.datastoreidentity;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 
-import org.datanucleus.api.jpa.annotations.DatastoreIdentity;
+import org.datanucleus.api.jpa.annotations.DatastoreId;
 
 /**
  * Simple example of an entity with datastore id.
  */
 @Entity
-@DatastoreIdentity(generationType=GenerationType.TABLE)
+@DatastoreId(generationType=GenerationType.TABLE)
 public class DSIDHolder
 {
     String name;
