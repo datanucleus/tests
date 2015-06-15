@@ -4,7 +4,7 @@
     <groupId>org.datanucleus</groupId>
     <artifactId>test-framework-maven</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>4.1</version>
+    <version>4.2</version>
     <description>Plugin that helps run the DataNucleus tests for different configurations</description>
     <dependencies>
         <dependency>
@@ -47,15 +47,9 @@
     						<pluginExecutions>
     							<pluginExecution>
     								<pluginExecutionFilter>
-    									<groupId>
-    										org.apache.maven.plugins
-    									</groupId>
-    									<artifactId>
-    										maven-plugin-plugin
-    									</artifactId>
-    									<versionRange>
-    										[3.2,)
-    									</versionRange>
+    									<groupId>org.apache.maven.plugins</groupId>
+    									<artifactId>maven-plugin-plugin</artifactId>
+    									<versionRange>[3.2,)</versionRange>
     									<goals>
     										<goal>descriptor</goal>
     									</goals>
