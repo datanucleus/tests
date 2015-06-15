@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
     <artifactId>datanucleus-test-maven-parent</artifactId>
-    <version>4.1</version>
+    <version>4.2</version>
     <name>DataNucleus AccessPlatform Integration Tests</name>
     <description>Build and run integration tests (profiles "h2" and "rdbms" are active by default)</description>
     <packaging>pom</packaging>
@@ -71,12 +71,12 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-framework</artifactId>
-            <version>4.1</version>
+            <version>4.2</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-samples</artifactId>
-            <version>4.1</version>
+            <version>4.2</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
