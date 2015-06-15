@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
     <version>4.2</version>
-    <artifactId>datanucleus-test-jdo</artifactId>
-    <name>DataNucleus Test for JDO</name>
-    <description>DataNucleus Test for JDO</description>
+    <artifactId>datanucleus-test-jdo-performance</artifactId>
+    <name>DataNucleus Performance Tests for JDO</name>
+    <description>DataNucleus Performance Tests for JDO</description>
 
     <dependencies>
         <dependency>
