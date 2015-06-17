@@ -19,10 +19,10 @@ package org.jpox.samples.jpa.datastoreid;
 
 import javax.persistence.Entity;
 
-import org.datanucleus.api.jpa.annotations.DatastoreIdentity;
+import org.datanucleus.api.jpa.annotations.DatastoreId;
 
 @Entity
-@DatastoreIdentity
+@DatastoreId
 public class MyDatastoreId
 {
     String name;
