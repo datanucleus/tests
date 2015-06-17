@@ -81,7 +81,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -101,7 +101,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -158,7 +158,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -230,7 +230,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -287,7 +287,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -359,7 +359,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -419,7 +419,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -440,7 +440,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -501,7 +501,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -562,7 +562,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -625,7 +625,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -685,7 +685,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -745,7 +745,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -809,7 +809,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
@@ -864,7 +864,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(null, null);
 
             // Execute the query
@@ -925,7 +925,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
-                query.getGrouping(), query.getHaving(), query.getExplicitParameters(), query.getExplicitVariables(), null);
+                query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
             QueryCompilation compilation = compiler.compile(null, null);
 
             // Execute the query
