@@ -412,13 +412,13 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             tq.result(false, cand.firstName, cand.lastName);
-            List<Object> results = tq.executeResultList();
+            List results = tq.executeResultList();
 
             assertNotNull("Results is null!", results);
             assertEquals("Number of results is wrong", 2, results.size());
             boolean mourinho = false;
             boolean guardiola = false;
-            Iterator<Object> resultIter = results.iterator();
+            Iterator<Object[]> resultIter = results.iterator();
             while (resultIter.hasNext())
             {
                 Object[] result = (Object[])resultIter.next();
@@ -472,7 +472,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             tq.result(false, cand.yearsExperience.min(), cand.yearsExperience.max(), cand.yearsExperience.avg());
-            Object results = tq.executeResultUnique();
+            Object[] results = (Object[]) tq.executeResultUnique();
 
             assertNotNull("Results is null!", results);
             Object[] resultComps = (Object[])results;
