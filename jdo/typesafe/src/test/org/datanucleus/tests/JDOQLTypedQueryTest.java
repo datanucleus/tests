@@ -411,16 +411,17 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
-            List<Object[]> results = tq.executeResultList(false, cand.firstName, cand.lastName);
+            tq.result(false, cand.firstName, cand.lastName);
+            List<Object> results = tq.executeResultList();
 
             assertNotNull("Results is null!", results);
             assertEquals("Number of results is wrong", 2, results.size());
             boolean mourinho = false;
             boolean guardiola = false;
-            Iterator<Object[]> resultIter = results.iterator();
+            Iterator<Object> resultIter = results.iterator();
             while (resultIter.hasNext())
             {
-                Object[] result = resultIter.next();
+                Object[] result = (Object[])resultIter.next();
                 assertEquals(2, result.length);
                 if (result[0].equals("Jose") && result[1].equals("Mourinho"))
                 {
@@ -470,13 +471,15 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
-            Object[] results = tq.executeResultUnique(false, cand.yearsExperience.min(), cand.yearsExperience.max(), cand.yearsExperience.avg());
+            tq.result(false, cand.yearsExperience.min(), cand.yearsExperience.max(), cand.yearsExperience.avg());
+            Object results = tq.executeResultUnique();
 
             assertNotNull("Results is null!", results);
-            assertEquals("Number of results is wrong", 3, results.length);
-            assertEquals("Min is incorrect", 3, results[0]);
-            assertEquals("Max is incorrect", 8, results[1]);
-            assertEquals("Avg is incorrect", 5.5, results[2]); // H2 seems to treat AVG as returning the type of the expression, rather than double
+            Object[] resultComps = (Object[])results;
+            assertEquals("Number of results is wrong", 3, resultComps.length);
+            assertEquals("Min is incorrect", 3, resultComps[0]);
+            assertEquals("Max is incorrect", 8, resultComps[1]);
+            assertEquals("Avg is incorrect", 5.5, resultComps[2]); // H2 seems to treat AVG as returning the type of the expression, rather than double
 
             tx.commit();
         }
@@ -508,7 +511,8 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
-            Object results = tq.executeResultUnique(false, cand.count());
+            tq.result(false, cand.count());
+            Object results = tq.executeResultUnique();
             assertEquals("Count is incorrect", 2l, results);
 
             tx.commit();
@@ -541,7 +545,8 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
-            Object results = tq.executeResultUnique(false, cand.countDistinct());
+            tq.result(false, cand.countDistinct());
+            Object results = tq.executeResultUnique();
             assertEquals("Count is incorrect", 2l, results);
 
             tx.commit();
