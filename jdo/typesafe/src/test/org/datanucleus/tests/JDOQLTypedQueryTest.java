@@ -21,14 +21,13 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.jdo.JDOQLTypedQuery;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.datanucleus.api.jdo.JDOPersistenceManager;
-import org.datanucleus.api.jdo.query.JDOTypesafeQuery;
-import org.datanucleus.query.typesafe.TypesafeQuery;
+import org.datanucleus.api.jdo.query.JDOQLTypedQueryImpl;
 import org.datanucleus.samples.jdo.query.Coach;
 import org.datanucleus.samples.jdo.query.Manager;
 import org.datanucleus.samples.jdo.query.Player;
@@ -40,11 +39,11 @@ import org.datanucleus.tests.JDOPersistenceTestCase;
 /**
  * Tests for JDOQL typesafe operations.
  */
-public class TypesafeTest extends JDOPersistenceTestCase
+public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
 
-    public TypesafeTest(String name)
+    public JDOQLTypedQueryTest(String name)
     {
         super(name);
 
@@ -161,13 +160,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testCandidateQuery()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             List<Team> teams = tq.executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 2, teams.size());
@@ -194,13 +193,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testCandidateQueryWithoutSubclasses()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Coach> tq = pm.newTypesafeQuery(Coach.class);
+            JDOQLTypedQuery<Coach> tq = pm.newJDOQLTypedQuery(Coach.class);
             tq.excludeSubclasses();
             List<Coach> coaches = tq.executeList();
             assertNotNull("Coaches is null!", coaches);
@@ -228,13 +227,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testFilter()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             QTeam cand = QTeam.jdoCandidate;
             List<Team> teams = tq.filter(cand.name.eq("Barcelona")).executeList();
             assertNotNull("Teams is null!", teams);
@@ -264,13 +263,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testFilterNullValue()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             QTeam cand = QTeam.jdoCandidate;
             List<Team> teams = tq.filter(cand.name.eq((String)null)).executeList();
             assertNotNull("Teams is null!", teams);
@@ -298,13 +297,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testFilter2()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Manager> tq = pm.newTypesafeQuery(Manager.class);
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             List<Manager> managers = tq.filter(cand.yearsExperience.eq(8)).executeList();
             assertNotNull("Managers is null!", managers);
@@ -334,13 +333,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testFilterComparisonAgainstNull()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             QTeam cand = QTeam.jdoCandidate;
             List<Team> teams = tq.filter(cand.website.eq((URL)null)).executeList();
             assertNotNull("Teams is null!", teams);
@@ -368,13 +367,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testFilter3()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             QTeam cand = QTeam.jdoCandidate;
             List<Team> teams = tq.filter(cand.manager.firstName.eq("Jose")).executeList();
             assertNotNull("Teams is null!", teams);
@@ -404,13 +403,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testResult()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Manager> tq = pm.newTypesafeQuery(Manager.class);
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             List<Object[]> results = tq.executeResultList(false, cand.firstName, cand.lastName);
 
@@ -463,16 +462,15 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testResultWithAggregates()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Manager> tq = pm.newTypesafeQuery(Manager.class);
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
-            Object[] results = tq.executeResultUnique(false, cand.yearsExperience.min(),
-                cand.yearsExperience.max(), cand.yearsExperience.avg());
+            Object[] results = tq.executeResultUnique(false, cand.yearsExperience.min(), cand.yearsExperience.max(), cand.yearsExperience.avg());
 
             assertNotNull("Results is null!", results);
             assertEquals("Number of results is wrong", 3, results.length);
@@ -502,13 +500,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testResultCount()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Manager> tq = pm.newTypesafeQuery(Manager.class);
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             Object results = tq.executeResultUnique(false, cand.count());
             assertEquals("Count is incorrect", 2l, results);
@@ -535,13 +533,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testResultCountDistinct()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Manager> tq = pm.newTypesafeQuery(Manager.class);
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             Object results = tq.executeResultUnique(false, cand.countDistinct());
             assertEquals("Count is incorrect", 2l, results);
@@ -568,13 +566,13 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testFilterWithOrder()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Manager> tq = pm.newTypesafeQuery(Manager.class);
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             List<Manager> managers = tq.orderBy(cand.yearsExperience.asc()).executeList();
             assertNotNull("Managers is null!", managers);
@@ -610,16 +608,15 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testFilterParameter()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             QTeam cand = QTeam.jdoCandidate;
-            List<Team> teams = tq.filter(cand.name.eq(tq.stringParameter("TeamName")))
-                .setParameter("TeamName", "Barcelona").executeList();
+            List<Team> teams = tq.filter(cand.name.eq(tq.stringParameter("TeamName"))).setParameter("TeamName", "Barcelona").executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 1, teams.size());
             Team tm = teams.get(0);
@@ -647,17 +644,19 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testBulkUpdate()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         pm.setProperty(PropertyNames.PROPERTY_QUERY_JDOQL_ALLOWALL, "true");
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             QTeam cand = QTeam.jdoCandidate;
-            JDOTypesafeQuery jdotq = (JDOTypesafeQuery) tq.filter(cand.name.eq("Barcelona"));
-            long number = ((JDOTypesafeQuery)jdotq.set(cand.name, "Barcelona FC")).update();
+            tq.filter(cand.name.eq("Barcelona"));
+            JDOQLTypedQueryImpl dntq = (JDOQLTypedQueryImpl)tq;
+            dntq.set(cand.name, "Barcelona FC");
+            long number = dntq.update();
             assertEquals("Number of records updated was wrong", 1, number);
             tq.closeAll();
 
@@ -691,17 +690,15 @@ public class TypesafeTest extends JDOPersistenceTestCase
      */
     public void testBulkDelete()
     {
-        JDOPersistenceManager pm = (JDOPersistenceManager) pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         pm.setProperty(PropertyNames.PROPERTY_QUERY_JDOQL_ALLOWALL, "true");
         Transaction tx = pm.currentTransaction();
         try
         {
             tx.begin();
 
-            TypesafeQuery<Team> tq = pm.newTypesafeQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
-            JDOTypesafeQuery jdotq = (JDOTypesafeQuery) tq.filter(cand.name.eq("Barcelona"));
-            long number = ((JDOTypesafeQuery)jdotq).delete();
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class).filter(QTeam.jdoCandidate.name.eq("Barcelona"));
+            long number = ((JDOQLTypedQueryImpl)tq).delete();
             assertEquals("Number of records deleted was wrong", 1, number);
             tq.closeAll();
 
