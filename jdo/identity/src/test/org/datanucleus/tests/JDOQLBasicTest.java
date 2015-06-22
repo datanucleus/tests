@@ -190,10 +190,10 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
-                q.declareImports("import org.jpox.samples.*; import org.jpox.samples.models.company.*;");
-                q.declareParameters("org.jpox.samples.models.company.Employee m");
-                q.setFilter("this.salary > m.salary");
-                q.execute(new Employee(1,"","","",0,""));
+                q.imports("import org.jpox.samples.*; import org.jpox.samples.models.company.*;")
+                    .parameters("org.jpox.samples.models.company.Employee m")
+                    .filter("this.salary > m.salary")
+                    .execute(new Employee(1,"","","",0,""));
                 q.closeAll();
             }
             catch (JDOUserException e)
@@ -206,9 +206,9 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
-                q.declareImports("import org.jpox.samples.models.company.*;");
-                q.setFilter("this.salary > 0");
-                q.compile();
+                q.imports("import org.jpox.samples.models.company.*;")
+                    .filter("this.salary > 0")
+                    .compile();
                 q.closeAll();
             }
             catch (Exception e)
@@ -3083,11 +3083,10 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 tx.begin();
                 Query q = pm.newQuery(Manager.class);
-                q.setFilter("emp.lastName == \"WakesUp2\" && this.subordinates.contains(emp)");
-                q.declareVariables("Employee emp");
-                q.declareImports("import org.jpox.samples.models.company.Employee");
-                Collection c = (Collection) q.execute();
-                assertEquals(1,c.size());
+                Collection c = q.filter("emp.lastName == \"WakesUp2\" && this.subordinates.contains(emp)")
+                        .variables("Employee emp").imports("import org.jpox.samples.models.company.Employee")
+                        .executeList();
+                assertEquals(1, c.size());
                 assertEquals(((Manager)c.iterator().next()).getFirstName(),"Bart");
                 tx.commit();
             }
@@ -3135,10 +3134,9 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 tx.begin();
                 Query q = pm.newQuery(pm.getExtent(UserGroup.class, true));
-                q.setFilter("this.members.contains(mem) && mem.name == \"Craig Russell\"");
-                q.declareVariables("ExpertGroupMember mem");
-                q.declareImports("import org.jpox.samples.one_many.unidir_2.ExpertGroupMember");
-                Collection c = (Collection) q.execute();
+                Collection c = q.filter("this.members.contains(mem) && mem.name == \"Craig Russell\"")
+                     .variables("ExpertGroupMember mem").imports("import org.jpox.samples.one_many.unidir_2.ExpertGroupMember")
+                     .executeList();
                 assertEquals(1, c.size());
                 assertEquals(((UserGroup)c.iterator().next()).getName(), "JDO Expert Group");
                 tx.commit();
@@ -3188,11 +3186,10 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 tx.begin();
                 Query q = pm.newQuery(Manager.class);
-                q.setFilter("this.subordinates.contains(emp) && emp.lastName == \"WakesUp2\" ");
-                q.declareVariables("Employee emp");
-                q.declareImports("import org.jpox.samples.models.company.Employee");
-                Collection c = (Collection) q.execute();
-                assertEquals(1,c.size());
+                Collection c = q.filter("this.subordinates.contains(emp) && emp.lastName == \"WakesUp2\" ")
+                        .variables("Employee emp").imports("import org.jpox.samples.models.company.Employee")
+                        .executeList();
+                assertEquals(1, c.size());
                 assertEquals(((Manager)c.iterator().next()).getFirstName(),"Bart");
                 tx.commit();
             }
@@ -3240,11 +3237,10 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 tx.begin();
                 Query q = pm.newQuery(pm.getExtent(UserGroup.class,true));
-                q.setFilter("(mem.name == \"Craig Russell\") && this.members.contains(mem)");
-                q.declareVariables("ExpertGroupMember mem");
-                q.declareImports("import org.jpox.samples.one_many.unidir_2.ExpertGroupMember");
-                Collection c = (Collection) q.execute();
-                assertEquals(1,c.size());
+                Collection c = q.filter("(mem.name == \"Craig Russell\") && this.members.contains(mem)")
+                        .variables("ExpertGroupMember mem").imports("import org.jpox.samples.one_many.unidir_2.ExpertGroupMember")
+                        .executeList();
+                assertEquals(1, c.size());
                 assertEquals(((UserGroup)c.iterator().next()).getName(), "JDO Expert Group");
                 tx.commit();
             }
@@ -3641,15 +3637,12 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 tx.begin();
                 Query q = pm.newQuery(Qualification.class);
-                q.setFilter("((Employee)person).serialNo == \"serial 3\"");
-                q.declareImports("import org.jpox.samples.models.company.Employee");
-                Collection c = (Collection) q.execute();
+                Collection c = q.filter("((Employee)person).serialNo == \"serial 3\"").imports("import org.jpox.samples.models.company.Employee").executeList();
                 assertEquals(1, c.size());
                 assertEquals("q1", ((Qualification) c.iterator().next()).getName());
+
                 q = pm.newQuery(Qualification.class);
-                q.setFilter("((Manager)person).serialNo == \"serial 4\"");
-                q.declareImports("import org.jpox.samples.models.company.Employee");
-                c = (Collection) q.execute();
+                c = q.filter("((Manager)person).serialNo == \"serial 4\"").imports("import org.jpox.samples.models.company.Employee").executeList();
                 assertEquals(1, c.size());
                 assertEquals("q2", ((Qualification) c.iterator().next()).getName());
 
