@@ -501,6 +501,26 @@
         </profile>
 
         <profile>
+            <!-- Use datastore "mariadb" -->
+            <id>mariadb</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.mariadb.jdbc</groupId>
+                    <artifactId>mariadb-java-client</artifactId>
+                    <version>1.1.9</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-rdbms</artifactId>
+                    <version>(4.0.99, )</version>
+                </dependency>
+            </dependencies>
+            <properties>
+                <maven.datanucleus.datastore>mariadb</maven.datanucleus.datastore>
+            </properties>
+        </profile>
+
+        <profile>
             <!-- Use datastore "postgresql" -->
             <id>postgresql</id>
             <dependencies>
