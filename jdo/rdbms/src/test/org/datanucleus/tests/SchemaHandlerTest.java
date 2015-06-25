@@ -44,7 +44,7 @@ import org.jpox.samples.rdbms.schema.SchemaClass2;
 
 /**
  * Tests for the SchemaHandler for RDBMS datastores.
- * TODO Add handling for case of identifiers (e.g PostgreSQL is in lowercase).
+ * Note that we do case-insensitive comparison of column names here.
  */
 public class SchemaHandlerTest extends JDOPersistenceTestCase
 {
@@ -80,26 +80,14 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         while (colsIter.hasNext())
         {
             RDBMSColumnInfo colInfo = (RDBMSColumnInfo)colsIter.next();
-            if (colInfo.getColumnName().equals("TABLE1_ID1"))
+            String colInfoName = colInfo.getColumnName().toUpperCase();
+            if (colInfoName.equals("TABLE1_ID1") || colInfoName.equals("TABLE1_ID2") || colInfoName.equals("NAME") || colInfoName.equals("OTHER_ID"))
             {
-                colNamesPresent.remove(colInfo.getColumnName());
-            }
-            if (colInfo.getColumnName().equals("TABLE1_ID2"))
-            {
-                colNamesPresent.remove(colInfo.getColumnName());
-            }
-            if (colInfo.getColumnName().equals("NAME"))
-            {
-                colNamesPresent.remove(colInfo.getColumnName());
-            }
-            if (colInfo.getColumnName().equals("OTHER_ID"))
-            {
-                colNamesPresent.remove(colInfo.getColumnName());
+                colNamesPresent.remove(colInfoName);
             }
         }
         assertTrue("Some columns expected were not present in the datastore table : " + 
-            StringUtils.collectionToString(colNamesPresent), 
-            colNamesPresent.size() == 0);
+            StringUtils.collectionToString(colNamesPresent), colNamesPresent.size() == 0);
 
         // Retrieve and check the table for SchemaClass2
         DatastoreClass table2 = databaseMgr.getDatastoreClass(SchemaClass2.class.getName(), clr);
@@ -113,29 +101,32 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         while (colsIter.hasNext())
         {
             RDBMSColumnInfo colInfo = (RDBMSColumnInfo)colsIter.next();
-            if (colInfo.getColumnName().equals("TABLE2_ID"))
+            String colInfoName = colInfo.getColumnName().toUpperCase();
+            if (colInfoName.equals("TABLE2_ID"))
             {
-                colNamesPresent.remove(colInfo.getColumnName());
+                colNamesPresent.remove(colInfoName);
             }
-            if (colInfo.getColumnName().equals("NAME"))
+            if (colInfoName.equals("NAME"))
             {
-                colNamesPresent.remove(colInfo.getColumnName());
-                assertEquals("Length of column " + colInfo.getColumnName() + " has incorrect length",
-                    20, colInfo.getColumnSize());
+                colNamesPresent.remove(colInfoName);
+                assertEquals("Length of column " + colInfo.getColumnName() + " has incorrect length", 20, colInfo.getColumnSize());
             }
-            if (colInfo.getColumnName().equals("VALUE"))
+            if (colInfoName.equals("VALUE"))
             {
-                colNamesPresent.remove(colInfo.getColumnName());
+                colNamesPresent.remove(colInfoName);
             }
         }
         assertTrue("Some columns expected were not present in the datastore table : " + 
-            StringUtils.collectionToString(colNamesPresent), 
-            colNamesPresent.size() == 0);
+            StringUtils.collectionToString(colNamesPresent), colNamesPresent.size() == 0);
 
         // Now check retrieval of a column for a table
         RDBMSColumnInfo colInfo = (RDBMSColumnInfo)handler.getSchemaData(con, "column", new Object[] {table2, "VALUE"});
+        if (colInfo == null)
+        {
+            colInfo = (RDBMSColumnInfo)handler.getSchemaData(con, "column", new Object[] {table2, "value"});
+        }
         assertNotNull("Column VALUE for table " + table2 + " was not found", colInfo);
-        assertEquals("Column name is wrong", "VALUE", colInfo.getColumnName());
+        assertEquals("Column name is wrong", "VALUE", colInfo.getColumnName().toUpperCase());
     }
 
     /**
@@ -162,11 +153,11 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
 
         // Check the FK details
         ForeignKeyInfo fk = (ForeignKeyInfo)fkInfo.getChild(0);
-        assertEquals("FK Name is wrong", "TABLE1_FK1", fk.getProperty("fk_name"));
-        assertEquals("PK Table Name is wrong", "SCHEMA_TABLE_2", fk.getProperty("pk_table_name"));
-        assertEquals("FK Table Name is wrong", "SCHEMA_TABLE_1", fk.getProperty("fk_table_name"));
-        assertEquals("PK Column Name is wrong", "TABLE2_ID", fk.getProperty("pk_column_name"));
-        assertEquals("FK Column Name is wrong", "OTHER_ID", fk.getProperty("fk_column_name"));
+        assertEquals("FK Name is wrong", "TABLE1_FK1", ((String)fk.getProperty("fk_name")).toUpperCase());
+        assertEquals("PK Table Name is wrong", "SCHEMA_TABLE_2", ((String)fk.getProperty("pk_table_name")).toUpperCase());
+        assertEquals("FK Table Name is wrong", "SCHEMA_TABLE_1", ((String)fk.getProperty("fk_table_name")).toUpperCase());
+        assertEquals("PK Column Name is wrong", "TABLE2_ID", ((String)fk.getProperty("pk_column_name")).toUpperCase());
+        assertEquals("FK Column Name is wrong", "OTHER_ID", ((String)fk.getProperty("fk_column_name")).toUpperCase());
     }
 
     /**
@@ -194,16 +185,16 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // TODO Enable checks on the PK name (when JDBC drivers return it correctly)
         assertEquals("Number of PKs for table " + table1 + " is wrong", 2, pkInfo1.getNumberOfChildren());
         PrimaryKeyInfo pk = (PrimaryKeyInfo)pkInfo1.getChild(0);
-        assertEquals("Column Name is wrong", "TABLE1_ID1", pk.getProperty("column_name"));
+        assertEquals("Column Name is wrong", "TABLE1_ID1", ((String)pk.getProperty("column_name")).toUpperCase());
 //        assertEquals("PK Name is wrong", "TABLE1_PK", pk.getProperty("pk_name"));
         pk = (PrimaryKeyInfo)pkInfo1.getChild(1);
-        assertEquals("Column Name is wrong", "TABLE1_ID2", pk.getProperty("column_name"));
+        assertEquals("Column Name is wrong", "TABLE1_ID2", ((String)pk.getProperty("column_name")).toUpperCase());
 //        assertEquals("PK Name is wrong", "TABLE1_PK", pk.getProperty("pk_name"));
 
         // Expecting 1 PK column for SchemaClass
         assertEquals("Number of PKs for table " + table1 + " is wrong", 1, pkInfo2.getNumberOfChildren());
         pk = (PrimaryKeyInfo)pkInfo2.getChild(0);
-        assertEquals("Column Name is wrong", "TABLE2_ID", pk.getProperty("column_name"));
+        assertEquals("Column Name is wrong", "TABLE2_ID", ((String)pk.getProperty("column_name")).toUpperCase());
 //        assertEquals("PK Name is wrong", "TABLE2_PK", pk.getProperty("pk_name"));
     }
 
@@ -238,7 +229,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         while (indexIter.hasNext())
         {
             IndexInfo index = (IndexInfo)indexIter.next();
-            String columnName = (String)index.getProperty("column_name");
+            String columnName = ((String)index.getProperty("column_name")).toUpperCase();
             boolean unique = !((Boolean)index.getProperty("non_unique")).booleanValue();
             if (columnName.equals("OTHER_ID"))
             {
@@ -264,8 +255,8 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         while (indexIter.hasNext())
         {
             IndexInfo index = (IndexInfo)indexIter.next();
-            String columnName = (String)index.getProperty("column_name");
-            String indexName = (String)index.getProperty("index_name");
+            String columnName = ((String)index.getProperty("column_name")).toUpperCase();
+            String indexName = ((String)index.getProperty("index_name")).toUpperCase();
             boolean unique = !((Boolean)index.getProperty("non_unique")).booleanValue();
             if (columnName.equals("VALUE"))
             {
