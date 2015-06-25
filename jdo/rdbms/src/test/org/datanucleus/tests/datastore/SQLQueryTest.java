@@ -37,9 +37,11 @@ import javax.jdo.annotations.IdentityType;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.models.company.CompanyHelper;
+import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Developer;
 import org.jpox.samples.models.company.DeveloperRC;
 import org.jpox.samples.models.company.Employee;
+import org.jpox.samples.models.company.InsuranceDepartment;
 import org.jpox.samples.models.company.Manager;
 import org.jpox.samples.models.company.Person;
 import org.jpox.samples.models.company.PersonalDetails;
@@ -62,7 +64,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         super(name);
         if (!initialised)
         {
-            addClassesToSchema(new Class[]{Person.class, Manager.class, Employee.class, Developer.class});
+            addClassesToSchema(new Class[]{Person.class, Manager.class, Employee.class, Developer.class, Department.class, InsuranceDepartment.class});
             initialised = true;
         }
     }
