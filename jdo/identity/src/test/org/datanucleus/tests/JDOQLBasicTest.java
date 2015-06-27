@@ -547,9 +547,10 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 pm.makePersistent(woody);
                 pm.makePersistent(boss2);
                 tx.commit();
+
                 tx.begin();
                 Query q = pm.newQuery(Department.class,"manager.firstName == \"Boss\"");
-                Collection c = (Collection) q.execute();
+                Collection c = q.executeList();
                 assertEquals(c.size(),1);
                 assertEquals(((Department)c.iterator().next()).getName(),"DeptC");
                 tx.commit();
@@ -561,10 +562,11 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 pm.makePersistent(qB);
                 pm.makePersistent(coyote);
                 pm.makePersistent(pepe2);           
-                tx.commit();            
+                tx.commit();
+
                 tx.begin();
                 q = pm.newQuery(Qualification.class,"person.firstName == \"Pepe\"");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 assertEquals(c.size(),1);
                 assertEquals(((Qualification)c.iterator().next()).getName(),"QC");          
                 tx.commit();
@@ -1335,73 +1337,73 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 tx.begin();
                 Query q = pm.newQuery(Office.class,"this.description.matches(\"village\")");
-                Collection c = (Collection) q.execute();
+                Collection c = q.executeList();
                 Assert.assertEquals(1, c.size());
                 Assert.assertEquals(ids[1],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\".illag.\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[1],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\".*illag.\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[1],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\"(?i).*ILLAGE\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[1],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.toUpperCase().matches(\".*ILLAGE\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[1],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.toUpperCase().matches(\".*ILLAGA\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(0,c.size());
                 
                 q = pm.newQuery(Office.class,"this.description.toUpperCase().matches(\".*\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(offices.length, c.size());
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\"spring_field\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[2],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\"spring.field\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[2],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\"percent%city\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[3],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\"percent.city\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[3],JDOHelper.getObjectId(c.iterator().next()));
                 
                 q = pm.newQuery(Office.class,"this.description.matches(\"Some name or other (Nr\\\\. 1507)\")");
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[5],JDOHelper.getObjectId(c.iterator().next()));
                 
                 String filter = "this.description.matches(\"slash\\\\city\")";
                 q = pm.newQuery(Office.class,filter);
-                c = (Collection) q.execute();
+                c = q.executeList();
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[4],JDOHelper.getObjectId(c.iterator().next()));
 
                 if (vendorID.equalsIgnoreCase("oracle") || vendorID.equalsIgnoreCase("derby"))
                 {
                     q = pm.newQuery(Office.class,"\"spring_field\".matches(this.description)");
-                    c = (Collection) q.execute();
+                    c = q.executeList();
                     Assert.assertEquals(1,c.size());
                 }
                 if (vendorID.equalsIgnoreCase("derby"))
@@ -1410,7 +1412,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                     //oracle 10 does not work, since it returns 7, ignoring the pattern
                     Assert.assertEquals(ids[2],JDOHelper.getObjectId(c.iterator().next()));
                     q = pm.newQuery(Office.class,"this.description.matches(this.description)");
-                    c = (Collection) q.execute();
+                    c = q.executeList();
                     Assert.assertEquals(4,c.size());
                 }
                 tx.commit();
@@ -2805,8 +2807,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                Query q = pm.newQuery(ReachableItem.class,
-                        "this.name == pA.firstName && pA.firstName == theName && pA.age == 28");
+                Query q = pm.newQuery(ReachableItem.class, "this.name == pA.firstName && pA.firstName == theName && pA.age == 28");
                 q.declareParameters("String theName");
                 q.declareVariables(Person.class.getName() + " pA");
                 Collection c = (Collection) q.execute("Road");
@@ -2815,10 +2816,8 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                q = pm.newQuery(ReachableItem.class);
-                q.setFilter("this == item && (item.name.equals(\"Bugs\") || item.name.equals(\"Road\"))");
-                q.declareVariables(ReachableItem.class.getName() + " item");
-                q.setOrdering("name ascending");
+                q = pm.newQuery(ReachableItem.class).filter("this == item && (item.name.equals(\"Bugs\") || item.name.equals(\"Road\"))");
+                q.variables(ReachableItem.class.getName() + " item").orderBy("name ascending");
                 List l = new ArrayList((Collection) q.execute());
                 assertEquals(2,l.size());
                 assertEquals(((ReachableItem)l.get(0)).getName(), "Bugs");
@@ -2826,10 +2825,8 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.commit();
 
                 tx.begin();
-                q = pm.newQuery(ReachableItem.class);
-                q.setFilter("this != item && item.name.equals(\"Bugs\")");
-                q.declareVariables(ReachableItem.class.getName() + " item");
-                q.setOrdering("name ascending");
+                q = pm.newQuery(ReachableItem.class).filter("this != item && item.name.equals(\"Bugs\")");
+                q.variables(ReachableItem.class.getName() + " item").orderBy("name ascending");
                 l = new ArrayList((Collection) q.execute());
                 assertEquals(2, l.size());
                 assertEquals(((ReachableItem)l.get(0)).getName(), "Bart");
@@ -4192,8 +4189,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
 
                 Assert.assertEquals(1, c.size());
@@ -4220,8 +4216,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 success = false;
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
                 q.closeAll();
                 c.size();
@@ -4243,8 +4238,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
                 Iterator iterator = c.iterator();
                 q.closeAll();
@@ -4263,8 +4257,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 success = false;
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
                 Iterator iterator = c.iterator();
                 q.closeAll();
@@ -4287,8 +4280,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
                 Iterator iterator = c.iterator();
                 q.close(c);
@@ -4307,8 +4299,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 success = false;
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
                 Iterator iterator = c.iterator();
                 q.close(c);
@@ -4331,8 +4322,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
                 Iterator iterator = c.iterator();
                 q.close(new HashSet());
@@ -4350,8 +4340,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.execute(new Long(1));
                 Iterator iterator = c.iterator();
                 q.close(new HashSet());
@@ -4369,8 +4358,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.executeWithArray(new Object[] {new Long(1)});
                 Iterator iterator = c.iterator();
                 q.close(c);
@@ -4389,8 +4377,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 success = false;
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 Collection c = (Collection) q.executeWithArray(new Object[] {new Long(1)});
                 Iterator iterator = c.iterator();
                 q.close(c);
@@ -4434,8 +4421,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 success = false;
                 tx.begin();
-                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
-                q.declareParameters("java.lang.Long longVar");
+                Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 q.setCandidates(new HashSet());
                 Collection c = (Collection) q.executeWithArray(new Object[] {new Long(1)});
                 Iterator iterator = c.iterator();
@@ -5215,8 +5201,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 c = (Collection) q.execute(value2);
                 Assert.assertEquals(0, c.size());
 
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 4\")");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 4\")").parameters("org.jpox.samples.one_many.map.MapValueItem w");
                 c = (Collection) q.execute(value3);
                 Assert.assertEquals(0, c.size());
 
@@ -5224,22 +5209,19 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 Map map1 = new HashMap();
                 map1.put("Item 1", value1);
 
-                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")");
-                q.declareParameters("java.util.Map map");
+                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")").parameters("java.util.Map map");
                 c = (Collection) q.execute(map1);
                 Assert.assertEquals(1, c.size());
 
                 Map map2 = new HashMap();
-                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")");
-                q.declareParameters("java.util.Map map");
+                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")").parameters("java.util.Map map");
                 c = (Collection) q.execute(map2);
                 Assert.assertEquals(0, c.size());
 
                 Map map3 = new HashMap();
                 map3.put("Item 1", value1);
                 map3.put("Item 2", value2);
-                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 3\")");
-                q.declareParameters("java.util.Map map");
+                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 3\")").parameters("java.util.Map map");
                 c = (Collection) q.execute(map3);
                 Assert.assertEquals(0, c.size());
 
