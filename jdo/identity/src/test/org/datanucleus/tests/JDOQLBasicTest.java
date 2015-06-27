@@ -5111,6 +5111,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                     threads[i].join();
                     if (runner[i].exception != null)
                     {
+                        LOG.error("Exception in query", runner[i].exception);
                         fail("Map.get thread runner failed; consult the log for details : " + runner[i].exception.getMessage());
                     }
                 }
@@ -5163,65 +5164,57 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 MapValueItem value3 = (MapValueItem)pm.getObjectById(idValue3);
 
                 //check map.get -> object expression == object literal
-                Query q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 1\") == w");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
-                Collection c = (Collection) q.execute(value1);
+                Query q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 1\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value1);
+                Collection c = q.executeList();
                 Assert.assertEquals(1, c.size());
                 
                 Assert.assertEquals(idHolder1, JDOHelper.getObjectId(c.iterator().next()));
-                q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 3\") == w");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
-                c = (Collection) q.execute(value3);
+                q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 3\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                c = q.executeList();
                 Assert.assertEquals(2, c.size());
                 
-                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 1\") == w");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
-                c = (Collection) q.execute(value2);
+                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 1\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value2);
+                c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
-                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 4\") == w");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
-                c = (Collection) q.execute(value3);
+                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 4\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
                 //check object literal == map.get -> object expression
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
-                c = (Collection) q.execute(value1);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value1);
+                c = q.executeList();
                 Assert.assertEquals(1, c.size());
                 Assert.assertEquals(idHolder1, JDOHelper.getObjectId(c.iterator().next()));
 
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 3\")");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
-                c = (Collection) q.execute(value3);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 3\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                c = q.executeList();
                 Assert.assertEquals(2, c.size());
 
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")");
-                q.declareParameters("org.jpox.samples.one_many.map.MapValueItem w");
-                c = (Collection) q.execute(value2);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value2);
+                c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 4\")").parameters("org.jpox.samples.one_many.map.MapValueItem w");
-                c = (Collection) q.execute(value3);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 4\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
                 //test map.get in map literals
                 Map map1 = new HashMap();
                 map1.put("Item 1", value1);
-
-                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")").parameters("java.util.Map map");
-                c = (Collection) q.execute(map1);
+                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")").parameters("java.util.Map map").setParameters(map1);
+                c = q.executeList();
                 Assert.assertEquals(1, c.size());
 
                 Map map2 = new HashMap();
-                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")").parameters("java.util.Map map");
+                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")").parameters("java.util.Map map").setParameters(map2);
                 c = (Collection) q.execute(map2);
                 Assert.assertEquals(0, c.size());
 
                 Map map3 = new HashMap();
                 map3.put("Item 1", value1);
                 map3.put("Item 2", value2);
-                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 3\")").parameters("java.util.Map map");
+                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 3\")").parameters("java.util.Map map").setParameters(map3);
                 c = (Collection) q.execute(map3);
                 Assert.assertEquals(0, c.size());
 
