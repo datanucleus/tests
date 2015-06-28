@@ -659,10 +659,8 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
             QManager cand = QManager.jdoCandidate;
             JDOQLTypedSubquery subq = tq.subquery(Manager.class, "m");
-            QManager subCand = QManager.candidate();
+            QManager subCand = QManager.candidate("m");
             tq.filter(cand.yearsExperience.gt(subq.selectUnique(subCand.yearsExperience.avg())));
-            LOG.info(">> subquery : " + subq);
-            LOG.info(">> query with subquery : " + tq.toString());
             List<Manager> managers = tq.executeList();
             assertNotNull("Result is null!", managers);
             assertEquals("Number of managers is wrong", 1, managers.size());
