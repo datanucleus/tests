@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.jdo.JDOQLTypedQuery;
+import javax.jdo.JDOQLTypedSubquery;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
@@ -626,6 +627,47 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             assertEquals("Number of teams is wrong", 1, teams.size());
             Team tm = teams.get(0);
             assertEquals("Barcelona", tm.getName());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Test use of subquery.
+     */
+    public void testSubquery()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
+            QManager cand = QManager.jdoCandidate;
+            JDOQLTypedSubquery subq = tq.subquery(Manager.class, "m");
+            QManager subCand = QManager.candidate();
+            tq.filter(cand.yearsExperience.gt(subq.selectUnique(subCand.yearsExperience.avg())));
+            LOG.info(">> subquery : " + subq);
+            LOG.info(">> query with subquery : " + tq.toString());
+            List<Manager> managers = tq.executeList();
+            assertNotNull("Result is null!", managers);
+            assertEquals("Number of managers is wrong", 1, managers.size());
+            Manager mgr = managers.get(0);
+            assertEquals("Mourinho", mgr.getLastName());
 
             tx.commit();
         }
