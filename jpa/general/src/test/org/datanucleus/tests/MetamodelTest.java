@@ -62,6 +62,8 @@ public class MetamodelTest extends JPAPersistenceTestCase
             EntityType<?> animalType = model.entity(Animal.class);
             assertNotNull(animalType);
             assertEquals("Number of Animal attributes is wrong", 2, animalType.getAttributes().size());
+            Class idType = animalType.getIdType().getJavaType();
+            assertEquals(String.class, idType);
 
             try
             {
