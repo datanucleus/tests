@@ -2684,6 +2684,53 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
     }
 
+    /**
+     * Test for result aggregates.
+     */
+    public void testResultAggregate()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Farm farm1 = new Farm("High Farm");
+                Farm farm2 = new Farm("Low Farm");
+                Animal a1 = new Animal("Dog");
+                Animal a2 = new Animal("Sheep");
+                Animal a3 = new Animal("Cow");
+                farm1.getAnimals().add(a1);
+                farm1.getAnimals().add(a2);
+                farm2.getAnimals().add(a3);
+                em.persist(farm1);
+                em.persist(farm2);
+                em.flush();
+
+                Object result = em.createQuery(
+                    "SELECT COUNT(F) FROM " + Farm.class.getName() + " F").getSingleResult();
+                assertTrue(result instanceof Long);
+                assertEquals(2, ((Long)result).longValue());
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Farm.class);
+            clean(Animal.class);
+        }
+    }
+
     public void testTYPE()
     {
         try
