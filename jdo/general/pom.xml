@@ -11,7 +11,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
-        <version>4.2</version>
+        <version>5.0</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
@@ -34,7 +34,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>test-framework-maven</artifactId>
-                <version>4.2</version>
+                <version>5.0</version>
                 <executions>
                     <execution>
                         <phase>test</phase>

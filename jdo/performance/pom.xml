@@ -4,22 +4,22 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
-    <version>4.2</version>
+    <version>5.0</version>
     <artifactId>datanucleus-test-jdo-performance</artifactId>
     <name>DataNucleus Performance Tests for JDO</name>
     <description>DataNucleus Performance Tests for JDO</description>
 
     <dependencies>
         <dependency>
-            <groupId>javax.jdo</groupId>
-            <artifactId>jdo-api</artifactId>
-            <version>[3.0, )</version>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>javax.jdo</artifactId>
+            <version>[3.2.0-m1, )</version>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>(4.0.99, )</version>
+            <version>(4.9, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
