@@ -86,10 +86,10 @@
         <class>org.jpox.samples.annotations.callbacks.CallbackSub1Sub2</class>
         <class>org.jpox.samples.annotations.callbacks.CallbackSub2</class>
 
-        <class>org.jpox.samples.annotations.generics.GenericOneOneBase1</class>
+        <class>org.jpox.samples.annotations.generics.GenericOneOneRoot1</class>
         <class>org.jpox.samples.annotations.generics.GenericOneOneSub1</class>
         <class>org.jpox.samples.annotations.generics.GenericOneOneRelated1</class>
-        <class>org.jpox.samples.annotations.generics.GenericOneOneBase2</class>
+        <class>org.jpox.samples.annotations.generics.GenericOneOneRoot2</class>
         <class>org.jpox.samples.annotations.generics.GenericOneOneSub2</class>
         <class>org.jpox.samples.annotations.generics.GenericOneOneRelated2</class>
 
