@@ -790,6 +790,50 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test use of getParameters when the parameter is in a subquery
+     */
+    public void testGetParametersWithSubquery()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                em.persist(p1);
+                em.flush();
+
+                Query q1 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p where firstName = :nameParam1");
+                Set<Parameter<?>> params1 = q1.getParameters();
+                assertEquals(1, params1.size());
+                assertEquals("nameParam1", params1.iterator().next().getName());
+
+                Query q2 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p where p.personNum IN (SELECT p2.personNum FROM Person p2 WHERE p2.firstName = :nameParam2)");
+                Set<Parameter<?>> params2 = q2.getParameters();
+                assertEquals(1, params2.size());
+                assertEquals("nameParam2", params2.iterator().next().getName());
+
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
+
+    /**
      * Test of trying to set a named parameter where the type used is incorrect.
      * Expects an IllegalArgumentException to be thrown
      */
