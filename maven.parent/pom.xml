@@ -86,7 +86,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>(4.1.99, )</version>
+            <version>(4.9, )</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -418,7 +418,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
                 <dependency>
                     <groupId>com.h2database</groupId>
@@ -445,7 +445,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -470,7 +470,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -492,7 +492,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -512,7 +512,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -532,7 +532,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -552,7 +552,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -572,7 +572,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -595,7 +595,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -619,7 +619,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.9, )</version>
                 </dependency>
             </dependencies>
             <properties>
