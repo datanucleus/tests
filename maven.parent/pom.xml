@@ -86,7 +86,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[4.2.0-m1, )</version>
+            <version>[4.2.0-m1, 4.9)</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -418,7 +418,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>com.h2database</groupId>
@@ -445,7 +445,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -470,7 +470,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -492,7 +492,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -512,7 +512,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -532,7 +532,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -552,7 +552,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -572,7 +572,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -595,7 +595,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -619,7 +619,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -658,7 +658,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -680,7 +680,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -702,7 +702,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -729,7 +729,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-odf</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.odftoolkit</groupId>
@@ -751,7 +751,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-hbase</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -794,7 +794,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-neo4j</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -820,7 +820,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-mongodb</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -843,7 +843,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-cassandra</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -866,7 +866,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-json</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>javax.ws.rs</groupId>
@@ -904,44 +904,6 @@
             </properties>
         </profile>
 
-        <!--profile>
-            <id>appengine</id>
-            <dependencies>
-                <dependency>
-                    <groupId>com.google.appengine.orm</groupId>
-                    <artifactId>datanucleus-appengine-test</artifactId>
-                    <version>1.0</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>com.google.appengine.orm</groupId>
-                    <artifactId>datanucleus-appengine</artifactId>
-                    <version>[2.1, )</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>com.google.appengine</groupId>
-                    <artifactId>appengine-api-1.0-sdk</artifactId>
-                    <version>1.7.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.google.appengine</groupId>
-                    <artifactId>appengine-api-stubs</artifactId>
-                    <version>1.7.0</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>com.google.appengine</groupId>
-                    <artifactId>appengine-testing</artifactId>
-                    <version>1.7.0</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-            <properties>
-                <maven.datanucleus.datastore>appengine</maven.datanucleus.datastore>
-            </properties>
-        </profile-->
-
         <profile>
             <id>amazons3</id>
             <modules>
@@ -971,7 +933,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-xml</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>javax.xml.bind</groupId>
@@ -1003,7 +965,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-ldap</artifactId>
-                    <version>[4.0.99, )</version>
+                    <version>[4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>

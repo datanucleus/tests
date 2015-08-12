@@ -20,7 +20,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-geospatial</artifactId>
-            <version>(4.0.99, )</version>
+            <version>(4.0.99, 4.9)</version>
         </dependency>
         <dependency>
             <groupId>oracle</groupId>
