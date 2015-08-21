@@ -23,9 +23,13 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThatThrownBy;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -37,6 +41,7 @@ import javax.jdo.Extent;
 import javax.jdo.FetchPlan;
 import javax.jdo.JDODetachedFieldAccessException;
 import javax.jdo.JDOHelper;
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.JDOUserException;
 import javax.jdo.ObjectState;
 import javax.jdo.PersistenceManager;
@@ -45,10 +50,10 @@ import javax.jdo.Transaction;
 import javax.jdo.listener.InstanceLifecycleEvent;
 import javax.jdo.listener.StoreLifecycleListener;
 
-import junit.framework.Assert;
-
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
+import org.datanucleus.samples.annotations.detach.DetachHolder;
+import org.datanucleus.samples.annotations.detach.DetachPC;
 import org.datanucleus.samples.detach.ClassElements;
 import org.datanucleus.samples.detach.ClassOwner;
 import org.datanucleus.samples.detach.ClassWithNonPCCollection;
@@ -63,7 +68,6 @@ import org.datanucleus.samples.models.hashsetcollection.Detail;
 import org.datanucleus.samples.models.hashsetcollection.Master;
 import org.datanucleus.samples.store.Customer;
 import org.datanucleus.samples.store.Supplier;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.models.company.Account;
 import org.jpox.samples.models.company.CompanyHelper;
@@ -78,6 +82,8 @@ import org.jpox.samples.one_many.map.MapHolder;
 import org.jpox.samples.one_many.map.MapValueItem;
 import org.jpox.samples.one_one.unidir.Login;
 import org.jpox.samples.one_one.unidir.LoginAccount;
+
+import junit.framework.Assert;
 
 /**
  * Series of tests for Attach/Detach functionality.
@@ -4977,6 +4983,126 @@ public class AttachDetachTest extends JDOPersistenceTestCase
         {
             // Clean out our data
             CompanyHelper.clearCompanyData(pmf);
+        }
+    }
+    
+    public void testAttachNeverExtension()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+     
+            try
+            {
+                tx.begin();
+
+                // Persist some data and detach it
+                DetachHolder detachHolder = new DetachHolder();
+                detachHolder.setDateNeverAttach(new Date());
+                detachHolder.setPcNeverAttach(new DetachPC("neverAttach"));
+
+                pm.setDetachAllOnCommit(true);
+                pm.makePersistent(detachHolder);
+
+                tx.commit();
+
+                tx.begin();
+
+                // Re-attach
+                DetachHolder attachedHolder = pm.makePersistent(detachHolder);
+
+                assertNull("Should not attach field with 'never' attach extension", attachedHolder.getDateNeverAttach());
+                assertNull("Should not attach field with 'never' attach extension", attachedHolder.getPcNeverAttach());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(DetachHolder.class);
+            clean(DetachPC.class);
+        }
+    }
+    
+    /**
+     * It should cascade when attaching an object
+     */
+    public void testAttachDependentPcChangedToNull()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+     
+            try
+            {
+                tx.begin();
+
+                // Persist some data and detach it
+                DetachHolder detachHolder = new DetachHolder();
+                DetachPC pcDependent = new DetachPC("dependent");
+                DetachPC pcNonDependent = new DetachPC("nonDependent");
+                
+                detachHolder.setPcDependent(pcDependent);
+                detachHolder.setPc(pcNonDependent);
+
+                pm.makePersistent(detachHolder);
+                
+                Object dependentId = JDOHelper.getObjectId(pcDependent);
+                Object nonDependentId = JDOHelper.getObjectId(pcNonDependent);
+
+                // Detach
+                
+                DetachHolder holderDetached = pm.detachCopy(detachHolder);
+              
+                tx.commit();
+                
+                // Change to null
+                holderDetached.setPcDependent(null);
+                holderDetached.setPc(null);
+
+                // Attach
+
+                tx.begin();
+                
+                pm.makePersistent(holderDetached);
+                
+                tx.commit();
+                
+                tx.begin();
+                
+                assertThatThrownBy(() -> {
+                    pm.getObjectById(dependentId);
+                })
+                    .as("Must delete dependent PC on attach")
+                    .isInstanceOf(JDOObjectNotFoundException.class);
+                
+                assertThat(pm.getObjectById(nonDependentId))
+                    .as("Must not delete non dependent on attach")
+                    .isNotNull();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(DetachHolder.class);
+            clean(DetachPC.class);
         }
     }
 }
