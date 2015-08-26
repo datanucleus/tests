@@ -1000,25 +1000,33 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
     {
         PersistenceManager pm = pmf.getPersistenceManager();
         pm.currentTransaction().begin();
+        Project prj = new Project("Top secret", 123456);
+        pm.makePersistent(prj);
+        Object prjId = pm.getObjectId(prj);
 
-        boolean success = false;
+        // Causes rollback of current transaction
+        pm.close();
+
+        // Check that object wasn't persisted
+        pm = pmf.getPersistenceManager();
         try
         {
-            try
-            {
-                pm.close();
-            }
-            catch (JDOException ex)
-            {
-                success = true;
-            }
+            pm.currentTransaction().begin();
+            Object prjDB = pm.getObjectById(prjId);
+            fail("Object " + prjDB + " was persisted yet should have been rolled back when PM was closed with active transaction");
+        }
+        catch (JDOObjectNotFoundException onfe)
+        {
+            // Expected
         }
         finally
         {
-            pm.currentTransaction().rollback();
+            if (pm.currentTransaction().isActive())
+            {
+                pm.currentTransaction().rollback();
+            }
             pm.close();
         }
-        assertTrue("Should have raised an exception", success);
 
         // test close twice
         pm = pmf.getPersistenceManager();
