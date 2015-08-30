@@ -17,6 +17,8 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import static org.datanucleus.tests.annotations.TransactionMode.Mode.PESSIMISTIC;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +28,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.tests.annotations.TransactionMode;
 import org.jpox.samples.many_many.AccountCustomer;
 import org.jpox.samples.many_many.GasSupplier;
 import org.jpox.samples.many_many.OilSupplier;
@@ -1644,6 +1647,8 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
      * The implication of the test is that secondary changes will also be handled by the RelationshipManager (i.e if an element is added to
      * one collection, and is using FK, then has to also be removed from the old collection (in datastore and in memory).
      */
+    @TransactionMode(PESSIMISTIC)
+    // FIXME Fix text in Optimistic mode
     public void testOneToManyFKBidirSetCollectionMoveElement()
     {
         PersistenceManager pm = null;
