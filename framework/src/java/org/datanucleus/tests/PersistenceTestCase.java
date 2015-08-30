@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 public abstract class PersistenceTestCase
 {
     @Rule
-    public DatanucleusTestWatcher testWatcher = new DatanucleusTestWatcher();
+    public DataNucleusTestWatcher testWatcher = new DataNucleusTestWatcher();
     
     /** Log for unit testing. */
     protected static final NucleusLogger LOG = NucleusLogger.getLoggerInstance("DataNucleus.Test");

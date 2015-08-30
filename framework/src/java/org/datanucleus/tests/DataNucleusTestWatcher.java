@@ -30,17 +30,39 @@ import org.datanucleus.tests.annotations.Datastore;
 import org.datanucleus.tests.annotations.Datastore.DatastoreKey;
 import org.datanucleus.tests.annotations.TransactionMode;
 import org.datanucleus.tests.annotations.TransactionMode.Mode;
+import org.datanucleus.util.NucleusLogger;
 import org.junit.Assume;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
+import junit.framework.AssertionFailedError;
+
 /**
  * Provides support for custom annotations such as {@link Datastore} which allows to skip tests for specific configurations
  */
-public class DatanucleusTestWatcher extends TestWatcher
+public class DataNucleusTestWatcher extends TestWatcher
 {
+    /** Log for unit testing. */
+    private static final NucleusLogger LOG = NucleusLogger.getLoggerInstance("DataNucleus.Test");
+    
     private Description description;
 
+    /**
+     * Log the error to using DN log
+     */
+    @Override
+    protected void failed(Throwable e, Description description)
+    {
+        if(!(e instanceof AssertionFailedError))
+        {
+            // JUnit assert errors are already logged by tests that are not using this feature of
+            // having the errors automatically sent to the log by the runner.
+            // New test will not catch the exception or should raise a java.lang.AssertionError 
+            // using AssertJ
+            LOG.error("Exception running " + description.getDisplayName(), e);
+        }
+        super.failed(e, description);
+    }
     public String getTestName()
     {
         return description.getTestClass().getName() + " " + description.getMethodName();

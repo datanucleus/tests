@@ -33,14 +33,20 @@ public class CompanyHelper
 {
     /** Log for unit testing. */
     protected static final NucleusLogger LOG = NucleusLogger.getLoggerInstance("DataNucleus.TEST");
-
+    public static final String PACKAGE = Employee.class.getPackage().getName();
+    
+    public static void clearCompanyData(PersistenceManagerFactory pmf)
+    {
+        try(PersistenceManager pm = pmf.getPersistenceManager()){
+            clearCompanyData(pm);
+        }
+    }
     /**
      * Convenience method to clean out all Company data
      * @param pmf The PMF managing the company data
      */
-    public static void clearCompanyData(PersistenceManagerFactory pmf)
+    public static void clearCompanyData(PersistenceManager pm)
     {
-        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
 
         try
@@ -130,27 +136,19 @@ public class CompanyHelper
             }
             tx.commit();
 
-            TestHelper.clean(pmf, Manager.class);
-            TestHelper.clean(pmf, Employee.class);
-            TestHelper.clean(pmf, Qualification.class);
-            TestHelper.clean(pmf, Department.class);
-            TestHelper.clean(pmf, Person.class);
-            TestHelper.clean(pmf, Office.class);
-            TestHelper.clean(pmf, Account.class);
-            TestHelper.clean(pmf, Project.class);
+            TestHelper.clean(pm, Manager.class);
+            TestHelper.clean(pm, Employee.class);
+            TestHelper.clean(pm, Qualification.class);
+            TestHelper.clean(pm, Department.class);
+            TestHelper.clean(pm, Person.class);
+            TestHelper.clean(pm, Office.class);
+            TestHelper.clean(pm, Account.class);
+            TestHelper.clean(pm, Project.class);
         }
         catch (Exception e)
         {
             LOG.error("Exception thrown during clear", e);
             throw new NucleusUserException("Exception thrown during clear() : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
         }
     }
 }

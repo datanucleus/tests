@@ -36,7 +36,9 @@ import java.util.StringTokenizer;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Transaction;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -227,15 +229,10 @@ public class TestHelper
         return in;
     }
 
-    /**
-     * Convenience method to remove all objects of the passed class in JDO.
-     * @param pmf PersistenceManagerFactory
-     * @param cls The class
-     */
+    
     @SuppressWarnings("unchecked")
-    public static void clean(PersistenceManagerFactory pmf, Class cls)
+    public static void clean(PersistenceManager pm, Class cls)
     {
-        javax.jdo.PersistenceManager pm = pmf.getPersistenceManager();
         javax.jdo.Transaction tx = pm.currentTransaction();
         tx.setOptimistic(false);
 
@@ -265,13 +262,27 @@ public class TestHelper
             LOG.error("Exception in clean", e);
             throw e;
         }
+    }
+    
+    /**
+     * Convenience method to remove all objects of the passed class in JDO.
+     * @param pmf PersistenceManagerFactory
+     * @param cls The class
+     */
+    public static void clean(PersistenceManagerFactory pmf, Class cls)
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        try
+        {
+            clean(pm, cls);
+        }
         finally
         {
+            Transaction tx = pm.currentTransaction();
             if (tx.isActive())
             {
                 tx.rollback();
             }
-
             pm.close();
         }
     }

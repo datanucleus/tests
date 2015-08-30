@@ -47,6 +47,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <artifactId>flyway-core</artifactId>
             <version>2.2.1</version>
         </dependency>
+        <dependency>
+          <groupId>org.assertj</groupId>
+          <artifactId>assertj-core</artifactId>
+          <version>3.1.0</version>
+        </dependency>
+        
     </dependencies>
 
     <build>
