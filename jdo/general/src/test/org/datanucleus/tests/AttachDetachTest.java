@@ -2777,6 +2777,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
         {
             DetachDates detachedDate = null;
             Object dateId = null;
+            long numMillis = 1000;
 
             // Persist an object containing a Date
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -2786,7 +2787,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                DetachDates date = new DetachDates(0);
+                DetachDates date = new DetachDates(numMillis);
                 pm.makePersistent(date);
 
                 detachedDate = (DetachDates) pm.detachCopy(date);
@@ -2809,13 +2810,13 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             }
 
             assertEquals("Value of the java.util.Date that was detached is incorrect",
-                0, detachedDate.getUtilDate().getTime());
+                numMillis, detachedDate.getUtilDate().getTime());
             assertEquals("Value of the java.sql.Date that was detached is incorrect",
-                0, detachedDate.getSqlDate().getTime());
+                numMillis, detachedDate.getSqlDate().getTime());
             assertEquals("Value of the java.sql.Time that was detached is incorrect",
-                0, detachedDate.getSqlTime().getTime());
+                numMillis, detachedDate.getSqlTime().getTime());
             assertEquals("Value of the java.sql.Timestamp that was detached is incorrect",
-                0, detachedDate.getSqlTimestamp().getTime());
+                numMillis, detachedDate.getSqlTimestamp().getTime());
 
             // Create set of milliseconds for updates
             long javaUtilDateMillis = 10000000;

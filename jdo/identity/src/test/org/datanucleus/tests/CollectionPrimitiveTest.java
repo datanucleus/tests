@@ -30,7 +30,6 @@ import org.jpox.samples.one_many.collection.SetHolder;
 
 /**
  * Tests persistence of Collections of NonPC objects.
- * @version $Revision: 1.1 $
  */
 public class CollectionPrimitiveTest extends JDOPersistenceTestCase
 {
@@ -151,7 +150,7 @@ public class CollectionPrimitiveTest extends JDOPersistenceTestCase
                 coll.getSetNonPC1().add(new String("First string"));
                 coll.getSetNonPC1().add(new String("Second string"));
                 coll.getSetNonPC1().add(new String("Third string"));
-                coll.getSetNonPC2().add(new java.util.Date(0));
+                coll.getSetNonPC2().add(new java.util.Date(1000));
                 coll.getSetNonPC2().add(new java.util.Date(120000000));
                 coll.getSetNonPC2().add(new java.util.Date());
 

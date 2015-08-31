@@ -321,7 +321,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testDateArray()
     {
-        Date[] elements = new Date[] {new Date(0), new Date(10000000), new Date(20000000)};
+        Date[] elements = new Date[] {new Date(1000), new Date(10000000), new Date(20000000)};
         DateArray holder = new DateArray(elements, elements);
         performArrayTest(holder, Date[].class, elements, elements, 0.0);
 
