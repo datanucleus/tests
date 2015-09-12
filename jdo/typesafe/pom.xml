@@ -36,5 +36,10 @@
             <artifactId>datanucleus-jdo-query</artifactId>
             <version>[4.0.0-release, )</version>
         </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-java8</artifactId>
+            <version>[4.0.0-release, )</version>
+        </dependency>
     </dependencies>
 </project>

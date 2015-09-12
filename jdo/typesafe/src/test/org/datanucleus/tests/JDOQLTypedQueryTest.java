@@ -18,6 +18,7 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,9 +30,11 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.query.JDOQLTypedQueryImpl;
+import org.datanucleus.samples.jdo.query.Appointment;
 import org.datanucleus.samples.jdo.query.Coach;
 import org.datanucleus.samples.jdo.query.Manager;
 import org.datanucleus.samples.jdo.query.Player;
+import org.datanucleus.samples.jdo.query.QAppointment;
 import org.datanucleus.samples.jdo.query.QManager;
 import org.datanucleus.samples.jdo.query.QTeam;
 import org.datanucleus.samples.jdo.query.Team;
@@ -93,6 +96,10 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             team2.setManager(mgr2);
             pm.makePersistent(team2);
 
+            LocalDateTime dt = LocalDateTime.of(2008, 3, 14, 10, 9, 26, 0);
+            Appointment appt = new Appointment(1, "Weekly Meetup", dt);
+            pm.makePersistent(appt);
+
             tx.commit();
         }
         catch (Exception e)
@@ -132,7 +139,6 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
                 mgr.setTeam(null);
                 team.setManager(null);
             }
-            pm.flush();
 
             tx.commit();
         }
@@ -150,6 +156,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             pm.close();
         }
 
+        clean(Appointment.class);
         clean(Team.class);
         clean(Manager.class);
 
@@ -751,6 +758,41 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             List<Team> results = (List<Team>) q.execute();
             assertEquals(0, results.size());
             q.closeAll();
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+
+    /**
+     * Test java 8 expressions.
+     */
+    public void testLocalDateTime()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        pm.setProperty(PropertyNames.PROPERTY_QUERY_JDOQL_ALLOWALL, "true");
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Appointment> tq = pm.newJDOQLTypedQuery(Appointment.class).filter(QAppointment.jdoCandidate.date.getHour().eq(10));
+            List<Appointment> appts = tq.executeList();
+            assertEquals("Number of appointments was wrong", 1, appts.size());
+            tq.closeAll();
 
             tx.commit();
         }
