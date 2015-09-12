@@ -19,13 +19,12 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
-import java.util.Iterator;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.one_many.collection.SetHolder;
 
 /**
@@ -74,7 +73,7 @@ public class CollectionPrimitiveTest extends JDOPersistenceTestCase
                 coll.getJoinSetNonPC1().add(new String("First string"));
                 coll.getJoinSetNonPC1().add(new String("Second string"));
                 coll.getJoinSetNonPC1().add(new String("Third string"));
-                coll.getJoinSetNonPC2().add(new java.util.Date(100));
+                coll.getJoinSetNonPC2().add(new java.util.Date(1000));
                 coll.getJoinSetNonPC2().add(new java.util.Date(120000000));
                 coll.getJoinSetNonPC2().add(new java.util.Date());
 
@@ -151,7 +150,7 @@ public class CollectionPrimitiveTest extends JDOPersistenceTestCase
                 coll.getSetNonPC1().add(new String("First string"));
                 coll.getSetNonPC1().add(new String("Second string"));
                 coll.getSetNonPC1().add(new String("Third string"));
-                coll.getSetNonPC2().add(new java.util.Date(100));
+                coll.getSetNonPC2().add(new java.util.Date(1000));
                 coll.getSetNonPC2().add(new java.util.Date(120000000));
                 coll.getSetNonPC2().add(new java.util.Date());
 
@@ -228,7 +227,7 @@ public class CollectionPrimitiveTest extends JDOPersistenceTestCase
                 coll.getSetNonPCSerial1().add(new String("First string"));
                 coll.getSetNonPCSerial1().add(new String("Second string"));
                 coll.getSetNonPCSerial1().add(new String("Third string"));
-                coll.getSetNonPCSerial2().add(new java.util.Date(100));
+                coll.getSetNonPCSerial2().add(new java.util.Date(1000));
                 coll.getSetNonPCSerial2().add(new java.util.Date(120000000));
                 coll.getSetNonPCSerial2().add(new java.util.Date());
 

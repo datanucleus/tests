@@ -2595,11 +2595,14 @@ public class AttachDetachTest extends JDOPersistenceTestCase
         PersistenceManager pm = newPM();
         pm.getFetchPlan().addGroup("dates");
         Transaction tx = pm.currentTransaction();
+
+        int dateValue = 1000;
+
         try
         {
             tx.begin();
 
-            DetachDates date = new DetachDates(0);
+            DetachDates date = new DetachDates(dateValue);
             pm.makePersistent(date);
 
             detachedDate = (DetachDates) pm.detachCopy(date);
@@ -2622,13 +2625,13 @@ public class AttachDetachTest extends JDOPersistenceTestCase
         }
 
         assertEquals("Value of the java.util.Date that was detached is incorrect",
-            0, detachedDate.getUtilDate().getTime());
+            dateValue, detachedDate.getUtilDate().getTime());
         assertEquals("Value of the java.sql.Date that was detached is incorrect",
-            0, detachedDate.getSqlDate().getTime());
+            dateValue, detachedDate.getSqlDate().getTime());
         assertEquals("Value of the java.sql.Time that was detached is incorrect",
-            0, detachedDate.getSqlTime().getTime());
+            dateValue, detachedDate.getSqlTime().getTime());
         assertEquals("Value of the java.sql.Timestamp that was detached is incorrect",
-            0, detachedDate.getSqlTimestamp().getTime());
+            dateValue, detachedDate.getSqlTimestamp().getTime());
 
         // Create set of milliseconds for updates
         long javaUtilDateMillis = 10000000;
