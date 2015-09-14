@@ -23,7 +23,7 @@
                     <dependency>
                         <groupId>org.datanucleus</groupId>
                         <artifactId>datanucleus-jdo-query</artifactId>
-                        <version>[4.0.0-release, )</version>
+                        <version>[4.2.0-m1, 4.9)</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -34,7 +34,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jdo-query</artifactId>
-            <version>[4.0.0-release, )</version>
+            <version>[4.2.0-m1, 4.9)</version>
         </dependency>
     </dependencies>
 </project>
