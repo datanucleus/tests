@@ -1832,6 +1832,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             cal1.set(Calendar.HOUR_OF_DAY, 10);
             cal1.set(Calendar.MINUTE, 55);
             cal1.set(Calendar.SECOND, 5);
+            cal1.set(Calendar.MILLISECOND, 0);
             prim1.setSQLDateField(new java.sql.Date(cal1.getTimeInMillis()));
             prim1.setSQLTimeField(new java.sql.Time(cal1.getTimeInMillis()));
 
@@ -1843,6 +1844,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             cal2.set(Calendar.HOUR_OF_DAY, 4);
             cal2.set(Calendar.MINUTE, 13);
             cal2.set(Calendar.SECOND, 45);
+            cal2.set(Calendar.MILLISECOND, 0);
             prim2.setSQLDateField(new java.sql.Date(cal2.getTimeInMillis()));
             prim2.setSQLTimeField(new java.sql.Time(cal2.getTimeInMillis()));
 
