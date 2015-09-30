@@ -392,6 +392,11 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testUUIDStringGenerator()
     throws Exception
     {
+        if (!storeMgr.supportsValueStrategy("uuid-string"))
+        {
+            return;
+        }
+
         try
         {
             HashSet idSet = new HashSet();
@@ -495,6 +500,11 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testUUIDHexGenerator()
     throws Exception
     {
+        if (!storeMgr.supportsValueStrategy("uuid-hex"))
+        {
+            return;
+        }
+
         try
         {
             HashSet idSet = new HashSet();
