@@ -95,7 +95,7 @@
                 <collection element-type="org.jpox.samples.interfaces.Food"/>
                 <join/>
                 <element>
-                    <column name="FOOD" length="1024"/>
+                    <column name="FOOD" length="255"/>
                 </element>
                 <extension vendor-name="datanucleus" key="mapping-strategy" value="identity"/>
             </field>
