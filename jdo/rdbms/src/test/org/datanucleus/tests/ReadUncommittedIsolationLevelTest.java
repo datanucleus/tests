@@ -48,6 +48,11 @@ public class ReadUncommittedIsolationLevelTest extends JDOPersistenceTestCase
             // Datastore doesn't support this isolation level
             return;
         }
+        else if (vendorID != null && vendorID.equalsIgnoreCase("hsql"))
+        {
+            // HSQL 2.x can lock up on this
+            return;
+        }
 
         // Add some initial data
         pm = pmf.getPersistenceManager();
