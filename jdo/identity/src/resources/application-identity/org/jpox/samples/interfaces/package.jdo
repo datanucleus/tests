@@ -136,7 +136,7 @@
             <field name="foods" persistence-modifier="persistent">
                 <collection element-type="org.jpox.samples.interfaces.Food"/>
                 <element>
-                    <column name="FOOD" length="1024"/>
+                    <column name="FOOD" length="255"/>
                 </element>
                 <join/>
                 <extension vendor-name="datanucleus" key="mapping-strategy" value="identity"/>
