@@ -1591,7 +1591,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -1627,7 +1627,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
