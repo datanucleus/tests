@@ -43,6 +43,7 @@ import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
 import org.datanucleus.tests.JPAPersistenceTestCase;
+
 import org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub1;
 import org.jpox.samples.annotations.models.company.Employee;
@@ -2894,17 +2895,20 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 List result = em.createQuery(
                     "SELECT p.personNum, CASE p.age WHEN 5 THEN '5-yr old' ELSE 'Other' END" + 
                     " FROM " + Person.class.getName() + " p").getResultList();
+                assertEquals("Number of results is incorrect", 2, result.size());
                 Iterator resultsIter = result.iterator();
                 boolean pebbles = false;
                 boolean barney = false;
                 while (resultsIter.hasNext())
                 {
                     Object[] values = (Object[])resultsIter.next();
-                    if (((Number)values[0]).intValue() == 105 && values[1].equals("5-yr old"))
+                    int idValue = ((Number)values[0]).intValue();
+                    String caseValue = (String)values[1];
+                    if (idValue == 105 && caseValue.equals("5-yr old"))
                     {
                         pebbles = true;
                     }
-                    if (((Number)values[0]).intValue() == 102 && values[1].equals("Other"))
+                    if (idValue == 102 && (caseValue.equals("Other") || caseValue.equals("Other   "))) // HSQL 2.x pads the string to the same length (i.e CHAR not VARCHAR)
                     {
                         barney = true;
                     }
