@@ -31,13 +31,19 @@ import org.datanucleus.samples.types.jodatime.JodaSample3;
 import org.datanucleus.samples.types.jodatime.JodaSample4;
 import org.datanucleus.samples.types.jodatime.JodaSample5;
 import org.datanucleus.samples.types.jodatime.JodaSample6;
+import org.datanucleus.store.types.converters.TypeConverter;
+import org.datanucleus.store.types.jodatime.converters.JodaLocalDateSqlDateConverter;
+import org.datanucleus.store.types.jodatime.converters.JodaLocalDateStringConverter;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Tests for persistence of JodaTime types.
@@ -938,5 +944,24 @@ public class JodaTimeTest extends JDOPersistenceTestCase
         {
             clean(JodaSample6.class);
         }
+    }
+
+    public void testLocalDateConversionIsUnaffectedByTimeZoneChanges() 
+    {
+        assert_localDateConversionIsUnaffectedByTimeZoneChanges(new JodaLocalDateStringConverter());
+        assert_localDateConversionIsUnaffectedByTimeZoneChanges(new JodaLocalDateSqlDateConverter());
+    }
+
+    private <T> void assert_localDateConversionIsUnaffectedByTimeZoneChanges(TypeConverter<LocalDate, T> converter) 
+    {
+        LocalDate expectedDate = new LocalDate(2015, 10, 5);
+
+        DateTimeZone.setDefault(DateTimeZone.forID("Asia/Tokyo"));
+        T dataStoreType = converter.toDatastoreType(expectedDate);
+
+        DateTimeZone.setDefault(DateTimeZone.forID("America/Costa_Rica"));
+        LocalDate actualDate = converter.toMemberType(dataStoreType);
+
+        assertThat(actualDate).isEqualTo(expectedDate);
     }
 }
