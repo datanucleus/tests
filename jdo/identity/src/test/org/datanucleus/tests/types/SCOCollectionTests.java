@@ -111,8 +111,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
-            Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
+            LOG.error("Exception in test", e);
+            Assert.fail("Exception thrown while creating " + container_class.getName() + " " + e.getMessage());
         }
         finally
         {
@@ -143,8 +143,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -186,7 +186,7 @@ public class SCOCollectionTests
             }
             catch (Exception e1)
             {
-                LOG.error(e1);
+                LOG.error("Exception in test", e1);
                 Assert.fail("Failed to find Container class " + container_class.getName());
             }
             pm.makePersistent(container);
@@ -207,8 +207,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
-            Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
+            LOG.error("Exception in test", e);
+            Assert.fail("Exception thrown while creating " + container_class.getName() + " " + e.getMessage());
         }
         finally
         {
@@ -239,8 +239,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -283,8 +283,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
-            Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
+            LOG.error("Exception in test", e);
+            Assert.fail("Exception thrown while creating " + container_class.getName() + " " + e.getMessage());
         }
         finally
         {
@@ -319,8 +319,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -368,8 +368,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
-            Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
+            LOG.error("Exception in test", e);
+            Assert.fail("Exception thrown while creating " + container_class.getName() + " " + e.getMessage());
         }
         finally
         {
@@ -402,8 +402,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -462,8 +462,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
-            Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
+            LOG.error("Exception in test", e);
+            Assert.fail("Exception thrown while creating " + container_class.getName() + " " + e.getMessage());
         }
         finally
         {
@@ -499,8 +499,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -531,8 +531,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e4)
         {
-            LOG.error(e4);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e4.getMessage(),false);
+            LOG.error("Exception in test", e4);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e4.getMessage());
         }
         finally
         {
@@ -576,8 +576,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
-            Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
+            LOG.error("Exception in test", e);
+            Assert.fail("Exception thrown while creating " + container_class.getName() + " " + e.getMessage());
         }
         finally
         {
@@ -628,8 +628,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -660,8 +660,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -705,7 +705,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
+            LOG.error("Exception in test", e);
             Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
         }
         finally
@@ -757,7 +757,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -789,7 +789,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -833,7 +833,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
+            LOG.error("Exception in test", e);
             Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
         }
         finally
@@ -870,7 +870,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -902,7 +902,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e4)
         {
-            LOG.error(e4);
+            LOG.error("Exception in test", e4);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e4.getMessage(),false);
         }
         finally
@@ -945,7 +945,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
+            LOG.error("Exception in test", e);
             Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
         }
         finally
@@ -980,7 +980,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -1012,7 +1012,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e4)
         {
-            LOG.error(e4);
+            LOG.error("Exception in test", e4);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e4.getMessage(),false);
         }
         finally
@@ -1050,7 +1050,7 @@ public class SCOCollectionTests
 		}
 		catch (Exception e1)
 		{
-		    LOG.error(e1);
+		    LOG.error("Exception in test", e1);
 		    Assert.fail("Failed to find Container class " + container_class.getName());
 		}
 		return container;
@@ -1087,7 +1087,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
+            LOG.error("Exception in test", e);
             Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
         }
         finally
@@ -1125,7 +1125,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -1171,7 +1171,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
+            LOG.error("Exception in test", e);
             Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
         }
         finally
@@ -1206,7 +1206,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -1237,7 +1237,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
+            LOG.error("Exception in test", e2);
             Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
         }
         finally
@@ -1413,7 +1413,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
+            LOG.error("Exception in test", e);
             Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
         }
         finally
@@ -1553,7 +1553,7 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
+            LOG.error("Exception in test", e);
             Assert.assertTrue("Exception thrown while creating and detaching " + container_class.getName() + " " + e.getMessage(),false);
         }
         finally
@@ -1565,6 +1565,7 @@ public class SCOCollectionTests
 
             pm.close();
         }
+        pmf.getDataStoreCache().evictAll();
 
         // Update the container
         Object item = SCOHolderUtilities.createItemParent(item_class_parent, "Item 10", 100, 10);
@@ -1592,7 +1593,7 @@ public class SCOCollectionTests
         catch (JDOUserException e2)
         {
             LOG.error("Exception in test", e2);
-            Assert.assertTrue("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage(),false);
+            Assert.fail("Exception thrown while retrieving " + container_class.getName() + " : " + e2.getMessage());
         }
         finally
         {
@@ -1628,7 +1629,7 @@ public class SCOCollectionTests
         catch (JDOUserException e2)
         {
             LOG.error("Exception in test", e2);
-            Assert.assertTrue("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage(),false);
+            Assert.fail("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -1665,8 +1666,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -1699,8 +1700,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while retrieving " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
@@ -1761,8 +1762,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e)
         {
-            LOG.error(e);
-            Assert.assertTrue("Exception thrown while creating " + container_class.getName() + " " + e.getMessage(),false);
+            LOG.error("Exception in test", e);
+            Assert.fail("Exception thrown while creating " + container_class.getName() + " " + e.getMessage());
         }
         finally
         {
@@ -1793,8 +1794,8 @@ public class SCOCollectionTests
         }
         catch (JDOUserException e2)
         {
-            LOG.error(e2);
-            Assert.assertTrue("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage(),false);
+            LOG.error("Exception in test", e2);
+            Assert.fail("Exception thrown while manipulating " + container_class.getName() + " " + e2.getMessage());
         }
         finally
         {
