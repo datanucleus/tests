@@ -1730,7 +1730,7 @@ public class PgGeometrySpatialTest extends JDOPersistenceTestCase
             sqlConn = (Connection) pm.getDataStoreConnection();
             String connUrl = pmf.getConnectionURL().toLowerCase();
             String fileName = "sample_pg_postgis.sql";
-            if (connUrl.contains("mysql"))
+            if (connUrl.contains("mysql") || connUrl.contains("mariadb"))
             {
                 fileName = "sample_pg_mysql.sql";
             }

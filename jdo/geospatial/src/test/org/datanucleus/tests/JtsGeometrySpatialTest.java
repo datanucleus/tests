@@ -1671,7 +1671,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
             sqlConn = (Connection) pm.getDataStoreConnection();
             String connUrl = pmf.getConnectionURL().toLowerCase();
             String fileName = "sample_jts_postgis.sql";
-            if (connUrl.contains("mysql"))
+            if (connUrl.contains("mysql") || connUrl.contains("mariadb"))
             {
                 fileName = "sample_jts_mysql.sql";
             }
