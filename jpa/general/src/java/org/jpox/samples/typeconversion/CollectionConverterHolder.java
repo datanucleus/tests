@@ -40,6 +40,11 @@ public class CollectionConverterHolder
     @Convert(converter=MyType1StringConverter.class)
     Set<MyType1> set1 = new HashSet<MyType1>();
 
+    @ElementCollection
+    @CollectionTable
+    @Convert(converter=SetMyType1StringConverter.class)
+    Set<MyType1> set2 = new HashSet<MyType1>();
+
     public CollectionConverterHolder(long id)
     {
         this.id = id;
@@ -48,5 +53,10 @@ public class CollectionConverterHolder
     public Set<MyType1> getSet1()
     {
         return set1;
+    }
+
+    public Set<MyType1> getSet2()
+    {
+        return set2;
     }
 }

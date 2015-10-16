@@ -276,6 +276,8 @@ public class TypeConversionTest extends JPAPersistenceTestCase
                 CollectionConverterHolder h = new CollectionConverterHolder(1);
                 h.getSet1().add(new MyType1("A", "J"));
                 h.getSet1().add(new MyType1("E", "B"));
+                h.getSet2().add(new MyType1("JJJ", "KKK"));
+                h.getSet2().add(new MyType1("LL", "MM"));
                 em.persist(h);
                 tx.commit();
             }
@@ -304,12 +306,12 @@ public class TypeConversionTest extends JPAPersistenceTestCase
                 tx.begin();
                 CollectionConverterHolder p1 = em.find(CollectionConverterHolder.class, 1);
                 assertNotNull(p1);
-                Set<MyType1> set = p1.getSet1();
-                assertNotNull(set);
-                assertEquals(2, set.size());
+                Set<MyType1> set1 = p1.getSet1();
+                assertNotNull(set1);
+                assertEquals(2, set1.size());
                 boolean elem1Present = false;
                 boolean elem2Present = false;
-                for (MyType1 elem : set)
+                for (MyType1 elem : set1)
                 {
                     if (elem.getName1().equals("A") && elem.getName2().equals("J"))
                     {
@@ -322,6 +324,25 @@ public class TypeConversionTest extends JPAPersistenceTestCase
                 }
                 assertTrue(elem1Present);
                 assertTrue(elem2Present);
+
+                Set<MyType1> set2 = p1.getSet2();
+                assertNotNull(set2);
+                assertEquals(2, set2.size());
+                boolean elem3Present = false;
+                boolean elem4Present = false;
+                for (MyType1 elem : set2)
+                {
+                    if (elem.getName1().equals("JJJ") && elem.getName2().equals("KKK"))
+                    {
+                        elem3Present = true;
+                    }
+                    else if (elem.getName1().equals("LL") && elem.getName2().equals("MM"))
+                    {
+                        elem4Present = true;
+                    }
+                }
+                assertTrue(elem3Present);
+                assertTrue(elem4Present);
 
                 tx.commit();
             }
