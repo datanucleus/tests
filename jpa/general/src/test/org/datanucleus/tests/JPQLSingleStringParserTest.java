@@ -172,4 +172,28 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
             fail("Exception thrown in parse "+e.getMessage());
         }
     }
+
+    /**
+     * Test for the parse of an INSERT query and conversion into the correct components.
+     */
+    public void testInsert()
+    {
+        EntityManager em = emf.createEntityManager();
+        String str = "INSERT INTO org.jpox.samples.MyClass (id, name, otherField) SELECT p.id, p.name, p.description FROM org.jpox.samples.Person p WHERE p.id > 3";
+        Query q = em.createQuery(str);
+        AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
+        JPQLSingleStringParser parser = new JPQLSingleStringParser(query, str);
+        try
+        {
+            parser.parse();
+            assertEquals("Type is wrong", org.datanucleus.store.query.Query.BULK_INSERT, query.getType());
+            assertEquals("Candidate is wrong", "org.jpox.samples.MyClass", query.getFrom());
+            assertEquals("INSERT fields are wrong", "id, name, otherField", query.getInsertFields());
+            assertEquals("INSERT select query is wrong", "SELECT p.id, p.name, p.description FROM org.jpox.samples.Person p WHERE p.id > 3", query.getInsertSelectQuery());
+        }
+        catch (NucleusUserException nue)
+        {
+            fail("Exception thrown in parse "+nue.getMessage());
+        }
+    }
 }
