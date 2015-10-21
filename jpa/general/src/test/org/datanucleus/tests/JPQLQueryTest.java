@@ -3271,6 +3271,49 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test of bulk INSERT statement.
+     */
+    public void testBulkInsert()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                em.persist(p);
+                em.flush();
+
+                Query q = em.createQuery("INSERT INTO SimpleClass (id, name) SELECT p.personNum, p.lastName FROM Person_Ann p");
+                int val = q.executeUpdate();
+                assertEquals("Number of records inserted by query was incorrect", 1, val);
+
+                tx.commit();
+            }
+            catch (Throwable e)
+            {
+                LOG.error("Exception thrown in bulk insert", e);
+                fail("Exception thrown on bulk insert : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
+
+    /**
      * Test the specification of positional parameters.
      */
     public void testPositionalParameterWithLike()
