@@ -27,6 +27,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.types.converters.CollectionConverterHolder;
+import org.datanucleus.samples.types.converters.MapConverterHolder;
 import org.datanucleus.samples.types.converters.MyType1;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
@@ -254,6 +255,216 @@ public class AttributeConverterTest extends JDOPersistenceTestCase
         {
             // Cleanup
             clean(CollectionConverterHolder.class);
+        }
+    }
+
+    /**
+     * Tests for conversion of a value of a map.
+     */
+    public void testMapValue()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                MapConverterHolder h1 = new MapConverterHolder(1, "First");
+                h1.getConvertedValueMap().put("AB", new MyType1("A", "B"));
+                h1.getConvertedValueMap().put("CD", new MyType1("C", "D"));
+                pm.makePersistent(h1);
+
+                MapConverterHolder h2 = new MapConverterHolder(2, "Second");
+                pm.makePersistent(h2);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query<MapConverterHolder> q = pm.newQuery("SELECT FROM " + MapConverterHolder.class.getName() + " WHERE this.name == :name");
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("name", "First");
+                q.setNamedParameters(params);
+                List<MapConverterHolder> results = q.executeList();
+                assertEquals(1, results.size());
+                MapConverterHolder h = results.get(0);
+                Map<String, MyType1> hmap = h.getConvertedValueMap();
+                assertNotNull(hmap);
+                assertEquals(2, hmap.size());
+                assertTrue(hmap.containsKey("AB"));
+                assertTrue(hmap.containsKey("CD"));
+                MyType1 val1 = hmap.get("AB");
+                assertEquals("A", val1.getName1());
+                assertEquals("B", val1.getName2());
+                MyType1 val2 = hmap.get("CD");
+                assertEquals("C", val2.getName1());
+                assertEquals("D", val2.getName2());
+
+                MapConverterHolder h2 = pm.getObjectById(MapConverterHolder.class, 2);
+                Map<String, MyType1> h2map = h2.getConvertedValueMap();
+                assertNotNull(h2map);
+                h2map.put("HJ", new MyType1("H", "J"));
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                MapConverterHolder h2 = pm.getObjectById(MapConverterHolder.class, 2);
+                Map<String, MyType1> h2map = h2.getConvertedValueMap();
+                assertNotNull(h2map);
+                assertEquals(1, h2map.size());
+                assertTrue(h2map.containsKey("HJ"));
+                MyType1 val1 = h2map.get("HJ");
+                assertEquals("H", val1.getName1());
+                assertEquals("J", val1.getName2());
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Cleanup
+            clean(MapConverterHolder.class);
+        }
+    }
+
+    /**
+     * Tests for conversion of map field using a converter.
+     */
+    public void testMapFull()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                MapConverterHolder h1 = new MapConverterHolder(1, "First");
+                h1.getConvertedMap().put("A", "B");
+                h1.getConvertedMap().put("C", "D");
+                pm.makePersistent(h1);
+
+                MapConverterHolder h2 = new MapConverterHolder(2, "Second");
+                pm.makePersistent(h2);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query<MapConverterHolder> q = pm.newQuery("SELECT FROM " + MapConverterHolder.class.getName() + " WHERE this.name == :name");
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("name", "First");
+                q.setNamedParameters(params);
+                List<MapConverterHolder> results = q.executeList();
+                assertEquals(1, results.size());
+                MapConverterHolder h = results.get(0);
+                Map<String, String> hmap = h.getConvertedMap();
+                assertNotNull(hmap);
+                assertEquals(2, hmap.size());
+                assertTrue(hmap.containsKey("A"));
+                assertTrue(hmap.containsKey("C"));
+                assertEquals("B", hmap.get("A"));
+                assertEquals("D", hmap.get("C"));
+
+                MapConverterHolder h2 = pm.getObjectById(MapConverterHolder.class, 2);
+                Map<String, String> h2map = h2.getConvertedMap();
+                assertNotNull(h2map);
+                h2map.put("H", "J");
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                MapConverterHolder h2 = pm.getObjectById(MapConverterHolder.class, 2);
+                Map<String, String> h2map = h2.getConvertedMap();
+                assertNotNull(h2map);
+                assertEquals(1, h2map.size());
+                assertTrue(h2map.containsKey("H"));
+                assertEquals("J", h2map.get("H"));
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Cleanup
+            clean(MapConverterHolder.class);
         }
     }
 }
