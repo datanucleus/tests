@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Convert;
 import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Key;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.Value;
@@ -48,6 +49,11 @@ public class MapConverterHolder
     @Join
     Map<String, MyType1> convertedValueMap = new HashMap<String, MyType1>();
 
+    /** Map field which is stored in a join table, with the key converted to a String. */
+    @Key(converter=MyType1ToStringConverter.class)
+    @Join
+    Map<MyType1, String> convertedKeyMap = new HashMap<MyType1, String>();
+
     public MapConverterHolder(long id, String name)
     {
         this.id = id;
@@ -67,5 +73,10 @@ public class MapConverterHolder
     public Map<String, MyType1> getConvertedValueMap()
     {
         return convertedValueMap;
+    }
+
+    public Map<MyType1, String> getConvertedKeyMap()
+    {
+        return convertedKeyMap;
     }
 }

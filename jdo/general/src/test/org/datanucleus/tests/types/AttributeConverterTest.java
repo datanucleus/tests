@@ -259,6 +259,111 @@ public class AttributeConverterTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Tests for conversion of a key of a map.
+     */
+    public void testMapKey()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                MapConverterHolder h1 = new MapConverterHolder(1, "First");
+                h1.getConvertedKeyMap().put(new MyType1("A", "B"), "AB");
+                h1.getConvertedKeyMap().put(new MyType1("C", "D"), "CD");
+                pm.makePersistent(h1);
+
+                MapConverterHolder h2 = new MapConverterHolder(2, "Second");
+                pm.makePersistent(h2);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query<MapConverterHolder> q = pm.newQuery("SELECT FROM " + MapConverterHolder.class.getName() + " WHERE this.name == :name");
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("name", "First");
+                q.setNamedParameters(params);
+                List<MapConverterHolder> results = q.executeList();
+                assertEquals(1, results.size());
+                MapConverterHolder h = results.get(0);
+                Map<MyType1, String> hmap = h.getConvertedKeyMap();
+                assertNotNull(hmap);
+                assertEquals(2, hmap.size());
+                MyType1 k1 = new MyType1("A", "B");
+                MyType1 k2 = new MyType1("C", "D");
+                assertTrue(hmap.containsKey(k1));
+                assertTrue(hmap.containsKey(k2));
+                assertEquals("AB", hmap.get(k1));
+                assertEquals("CD", hmap.get(k2));
+
+                MapConverterHolder h2 = pm.getObjectById(MapConverterHolder.class, 2);
+                Map<MyType1, String> h2map = h2.getConvertedKeyMap();
+                assertNotNull(h2map);
+                h2map.put(new MyType1("H", "J"), "HJ");
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                MapConverterHolder h2 = pm.getObjectById(MapConverterHolder.class, 2);
+                Map<MyType1, String> h2map = h2.getConvertedKeyMap();
+                assertNotNull(h2map);
+                assertEquals(1, h2map.size());
+                MyType1 k3 = new MyType1("H", "J");
+                assertTrue(h2map.containsKey(k3));
+                assertEquals("HJ", h2map.get(k3));
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Cleanup
+            clean(MapConverterHolder.class);
+        }
+    }
+
+    /**
      * Tests for conversion of a value of a map.
      */
     public void testMapValue()
