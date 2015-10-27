@@ -22,8 +22,8 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.client.HTable;
-import org.apache.hadoop.hbase.io.hfile.Compression;
-import org.apache.hadoop.hbase.regionserver.StoreFile;
+import org.apache.hadoop.hbase.io.compress.Compression;
+import org.apache.hadoop.hbase.regionserver.BloomType;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.datanucleus.samples.hbase.ExtendedTestEntity;
 
@@ -62,20 +62,20 @@ public class MetaDataExtensionTest extends JDOPersistenceTestCase
             String name = Bytes.toString(cf.getName());
             if (ExtendedTestEntity.class.getSimpleName().equals(name))
             {
-                assertEquals(StoreFile.BloomType.NONE, cf.getBloomFilterType());
+                assertEquals(BloomType.NONE, cf.getBloomFilterType());
             }
             else if ("cf1".equals(name))
             {
-                assertEquals(StoreFile.BloomType.ROW, cf.getBloomFilterType());
+                assertEquals(BloomType.ROW, cf.getBloomFilterType());
             }
             else if ("cf2".equals(name))
             {
-                assertEquals(StoreFile.BloomType.ROWCOL, cf.getBloomFilterType());
+                assertEquals(BloomType.ROWCOL, cf.getBloomFilterType());
 
             }
             else if ("cf3".equals(name))
             {
-                assertEquals(StoreFile.BloomType.NONE, cf.getBloomFilterType());
+                assertEquals(BloomType.NONE, cf.getBloomFilterType());
 
             }
             else
@@ -152,11 +152,13 @@ public class MetaDataExtensionTest extends JDOPersistenceTestCase
             String name = Bytes.toString(cf.getName());
             if ("cf3".equals(name))
             {
-                assertTrue(cf.getKeepDeletedCells());
+//                assertTrue(cf.getKeepDeletedCells());
+                fail("TODO: keepDeletedCells was replaced by enum."); // TODO keepDeletedCells was replaced by enum.
             }
             else
             {
-                assertFalse(cf.getKeepDeletedCells());
+//                assertFalse(cf.getKeepDeletedCells());
+                fail("TODO: keepDeletedCells was replaced by enum."); // TODO keepDeletedCells was replaced by enum.
             }
         }
     }
