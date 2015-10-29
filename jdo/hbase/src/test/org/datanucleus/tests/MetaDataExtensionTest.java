@@ -21,6 +21,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.KeepDeletedCells;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.io.compress.Compression;
 import org.apache.hadoop.hbase.regionserver.BloomType;
@@ -152,13 +153,11 @@ public class MetaDataExtensionTest extends JDOPersistenceTestCase
             String name = Bytes.toString(cf.getName());
             if ("cf3".equals(name))
             {
-//                assertTrue(cf.getKeepDeletedCells());
-                fail("TODO: keepDeletedCells was replaced by enum."); // TODO keepDeletedCells was replaced by enum.
+                assertEquals(KeepDeletedCells.TRUE, cf.getKeepDeletedCells());
             }
             else
             {
-//                assertFalse(cf.getKeepDeletedCells());
-                fail("TODO: keepDeletedCells was replaced by enum."); // TODO keepDeletedCells was replaced by enum.
+                assertEquals(KeepDeletedCells.FALSE, cf.getKeepDeletedCells());
             }
         }
     }
