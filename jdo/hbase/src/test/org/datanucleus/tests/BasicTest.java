@@ -50,8 +50,22 @@ public class BasicTest extends JDOPersistenceTestCase
             try
             {
                 pm.currentTransaction().begin();
-                Person p = (Person) pm.getObjectById(id);
-                pm.deletePersistent(p);
+
+                // We catch the JDOObjectNotFoundException in order to not hide the 'real' error by an exception here,
+                // in case the creation of the Person already failed, before (tearDown() is always invoked).
+                Person p;
+                try {
+                    p = (Person) pm.getObjectById(id);
+                }
+                catch (JDOObjectNotFoundException x)
+                {
+                    p = null;
+                }
+                if (p != null)
+                {
+                    pm.deletePersistent(p);
+                }
+
                 pm.currentTransaction().commit();
             }
             finally
