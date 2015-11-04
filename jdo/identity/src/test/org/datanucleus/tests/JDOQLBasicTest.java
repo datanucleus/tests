@@ -56,6 +56,9 @@ import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
+import org.jpox.samples.inheritance.ABase;
+import org.jpox.samples.inheritance.ASub1;
+import org.jpox.samples.inheritance.ASub2;
 import org.jpox.samples.inheritance.PBase;
 import org.jpox.samples.inheritance.PSub1;
 import org.jpox.samples.inheritance.PSub2;
@@ -109,7 +112,10 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                     PSub1.class,
                     PSub2.class,
                     Mouse.class,
-                    Keyboard.class
+                    Keyboard.class,
+                    ABase.class,
+                    ASub1.class,
+                    ASub2.class,
                 });
             initialised = true;
         }        
@@ -4974,6 +4980,51 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             clean(NullabilityOwner.class);
             clean(NullabilityOptionalMember.class);
             clean(NullabilityMandatoryMember.class);
+        }
+    }
+
+    /**
+     * Test use of cast on case with inheritance using a union. See NUCRDBMS-325
+     */
+    public void testInheritanceCastWithUnion()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            ABase base = new ABase();
+            ASub1 sub1 = new ASub1();
+            ASub2 sub2 = new ASub2();
+            pm.makePersistent(base);
+            pm.makePersistent(sub1);
+            pm.makePersistent(sub2);
+            tx.commit();
+
+            // Run the test
+            tx.begin();
+            Query q = pm.newQuery(ABase.class,
+                "this instanceof " + ASub1.class.getName() + " || this instanceof " + ASub2.class.getName());
+            List c = (List) q.execute();
+            assertEquals("Number of items returned from instanceof+union query was incorrect", 2, c.size());
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception during test", e);
+            fail("Exception thrown during test " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+
+            clean(ASub1.class);
+            clean(ASub2.class);
+            clean(ABase.class);
         }
     }
 
