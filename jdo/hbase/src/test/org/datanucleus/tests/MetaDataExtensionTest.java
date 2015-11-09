@@ -184,7 +184,7 @@ public class MetaDataExtensionTest extends JDOPersistenceTestCase
     private HColumnDescriptor[] getColumnFamilies() throws IOException
     {
         Configuration conf = HBaseConfiguration.create();
-        @SuppressWarnings("resource")
+        @SuppressWarnings({"resource", "deprecation"})
         HTable table = new HTable(conf, ExtendedTestEntity.class.getSimpleName());
 
         HTableDescriptor tableDescriptor = table.getTableDescriptor();
