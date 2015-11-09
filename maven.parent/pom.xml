@@ -636,7 +636,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-neodatis</artifactId>
-                    <version>(4.0.99, )</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.neodatis.odb</groupId>
@@ -658,7 +658,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -680,7 +680,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -702,7 +702,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -729,7 +729,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-odf</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>org.odftoolkit</groupId>
@@ -751,7 +751,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-hbase</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -794,7 +794,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-neo4j</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -820,7 +820,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-mongodb</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -843,7 +843,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-cassandra</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -866,7 +866,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-json</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>javax.ws.rs</groupId>
@@ -933,7 +933,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-xml</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
                 <dependency>
                     <groupId>javax.xml.bind</groupId>
@@ -965,7 +965,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-ldap</artifactId>
-                    <version>[4.0.99, 4.9)</version>
+                    <version>(4.0.99, 4.9)</version>
                 </dependency>
             </dependencies>
             <properties>
