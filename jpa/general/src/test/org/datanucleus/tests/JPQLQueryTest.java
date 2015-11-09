@@ -3625,4 +3625,67 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             em.close();
         }
     }
+
+    /**
+     * Test for DN extension "excludeSubclasses".
+     */
+    public void testHintExcludeSubclasses()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@gmail.com");
+            em.persist(p1);
+
+            Employee e2 = new Employee(102, "Barney", "Rubble", "barney.rubble@gmail.com", 10000f, "12300");
+            em.persist(e2);
+
+            em.flush();
+
+            // No hint
+            Query q0 = em.createQuery("SELECT p FROM Person_Ann p");
+            org.datanucleus.store.query.Query intQuery0 = q0.unwrap(org.datanucleus.store.query.Query.class);
+            assertTrue(intQuery0.isSubclasses());
+            List<Person> results0 = q0.getResultList();
+            assertEquals(2, results0.size());
+
+            // hint = true
+            Query q1 = em.createQuery("SELECT p FROM Person_Ann p");
+            q1.setHint(org.datanucleus.store.query.Query.EXTENSION_EXCLUDE_SUBCLASSES, "true");
+            org.datanucleus.store.query.Query intQuery1 = q1.unwrap(org.datanucleus.store.query.Query.class);
+            assertFalse(intQuery1.isSubclasses());
+            List<Person> results1 = q1.getResultList();
+            assertEquals(1, results1.size());
+            Person p = results1.get(0);
+            assertEquals("Fred", p.getFirstName());
+            assertEquals("Flintstone", p.getLastName());
+            assertEquals(101, p.getPersonNum());
+
+            // hint = false
+            Query q2 = em.createQuery("SELECT p FROM Person_Ann p");
+            q2.setHint(org.datanucleus.store.query.Query.EXTENSION_EXCLUDE_SUBCLASSES, "false");
+            org.datanucleus.store.query.Query intQuery2 = q2.unwrap(org.datanucleus.store.query.Query.class);
+            assertTrue(intQuery2.isSubclasses());
+            List<Person> results2 = q2.getResultList();
+            assertEquals(2, results2.size());
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in Named Query test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
 }
