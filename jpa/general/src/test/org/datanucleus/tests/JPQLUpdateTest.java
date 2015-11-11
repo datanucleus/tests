@@ -233,6 +233,11 @@ public class JPQLUpdateTest extends JPAPersistenceTestCase
      */
     public void testBulkUpdateUsingWhereSubquery()
     {
+        if (vendorID != null && vendorID.equalsIgnoreCase("mysql"))
+        {
+            // MySQL has issues with using subqueries in UPDATE statements
+            return;
+        }
         try
         {
             EntityManager em = getEM();
