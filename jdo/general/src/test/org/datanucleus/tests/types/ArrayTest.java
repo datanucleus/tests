@@ -321,7 +321,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testDateArray()
     {
-        Date[] elements = new Date[] {new Date(0), new Date(10000000), new Date(20000000)};
+        Date[] elements = new Date[]{new Date(1000), new Date(10000000), new Date(20000000)};
         DateArray holder = new DateArray(elements, elements);
         performArrayTest(holder, Date[].class, elements, elements, 0.0);
 
@@ -373,15 +373,22 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testInterfaceArray()
     {
-        Shape[] shapes = new Shape[2];
-        shapes[0] = new Rectangle(1, 25.0, 20.0);
-        shapes[1] = new Rectangle(2, 35.0, 10.0);
-        InterfaceArray holder = new InterfaceArray(shapes, shapes);
-        Shape[] expectedShapes = new Shape[2];
-        expectedShapes[0] = (Shape)((Rectangle)shapes[0]).clone();
-        expectedShapes[1] = (Shape)((Rectangle)shapes[1]).clone();
+        Shape[] shapes1 = new Shape[2];
+        shapes1[0] = new Rectangle(1, 25.0, 20.0);
+        shapes1[1] = new Rectangle(2, 35.0, 10.0);
+        Shape[] shapes2 = new Shape[2];
+        shapes2[0] = new Rectangle(3, 25.0, 20.0);
+        shapes2[1] = new Rectangle(4, 35.0, 10.0);
+        InterfaceArray holder = new InterfaceArray(shapes1, shapes2);
 
-        performArrayTest(holder, Shape[].class, expectedShapes, expectedShapes, 0.0);
+        Shape[] expectedShapes1 = new Shape[2];
+        expectedShapes1[0] = (Shape)((Rectangle)shapes1[0]).clone();
+        expectedShapes1[1] = (Shape)((Rectangle)shapes1[1]).clone();
+        Shape[] expectedShapes2 = new Shape[2];
+        expectedShapes2[0] = (Shape)((Rectangle)shapes2[0]).clone();
+        expectedShapes2[1] = (Shape)((Rectangle)shapes2[1]).clone();
+
+        performArrayTest(holder, Shape[].class, expectedShapes1, expectedShapes2, 0.0);
 
         holder = new InterfaceArray(null, null);
         performArrayTest(holder, Shape[].class, null, null, 0.0);
@@ -394,16 +401,25 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testPersistableArray()
     {
-        ArrayElement[] elements = new ArrayElement[3];
-        elements[0] = new ArrayElement("101", "First element");
-        elements[1] = new ArrayElement("102", "Second element");
-        elements[2] = new ArrayElement("103", "Third element");
-        PersistableArray holder = new PersistableArray(elements, elements);
-        ArrayElement[] expectedElements = new ArrayElement[3];
-        expectedElements[0] = (ArrayElement)elements[0].clone();
-        expectedElements[1] = (ArrayElement)elements[1].clone();
-        expectedElements[2] = (ArrayElement)elements[2].clone();
-        performArrayTest(holder, ArrayElement[].class, expectedElements, expectedElements, 0.0);
+        ArrayElement[] elements1 = new ArrayElement[3];
+        elements1[0] = new ArrayElement("101", "First element");
+        elements1[1] = new ArrayElement("102", "Second element");
+        elements1[2] = new ArrayElement("103", "Third element");
+        ArrayElement[] elements2 = new ArrayElement[3];
+        elements2[0] = new ArrayElement("104", "Fourth element");
+        elements2[1] = new ArrayElement("105", "Fifth element");
+        elements2[2] = new ArrayElement("106", "Sixth element");
+        PersistableArray holder = new PersistableArray(elements1, elements2);
+
+        ArrayElement[] expectedElements1 = new ArrayElement[3];
+        expectedElements1[0] = (ArrayElement)elements1[0].clone();
+        expectedElements1[1] = (ArrayElement)elements1[1].clone();
+        expectedElements1[2] = (ArrayElement)elements1[2].clone();
+        ArrayElement[] expectedElements2 = new ArrayElement[3];
+        expectedElements2[0] = (ArrayElement)elements2[0].clone();
+        expectedElements2[1] = (ArrayElement)elements2[1].clone();
+        expectedElements2[2] = (ArrayElement)elements2[2].clone();
+        performArrayTest(holder, ArrayElement[].class, expectedElements1, expectedElements2, 0.0);
 
         holder = new PersistableArray(null, null);
         performArrayTest(holder, ArrayElement[].class, null, null, 0.0);
@@ -414,16 +430,25 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testPersistableArrayWithNulls()
     {
-        ArrayElement[] elements = new ArrayElement[3];
-        elements[0] = new ArrayElement("101", "First element");
-        elements[1] = null;
-        elements[2] = new ArrayElement("103", "Third element");
-        PersistableArray holder = new PersistableArray(elements, elements);
-        ArrayElement[] expectedElements = new ArrayElement[3];
-        expectedElements[0] = (ArrayElement)elements[0].clone();
-        expectedElements[1] = null;
-        expectedElements[2] = (ArrayElement)elements[2].clone();
-        performArrayTest(holder, ArrayElement[].class, expectedElements, expectedElements, 0.0);
+        ArrayElement[] elements1 = new ArrayElement[3];
+        elements1[0] = new ArrayElement("101", "First element");
+        elements1[1] = null;
+        elements1[2] = new ArrayElement("103", "Third element");
+        ArrayElement[] elements2 = new ArrayElement[3];
+        elements2[0] = new ArrayElement("104", "Fourth element");
+        elements2[1] = null;
+        elements2[2] = new ArrayElement("106", "Sixth element");
+        PersistableArray holder = new PersistableArray(elements1, elements2);
+
+        ArrayElement[] expectedElements1 = new ArrayElement[3];
+        expectedElements1[0] = (ArrayElement)elements1[0].clone();
+        expectedElements1[1] = null;
+        expectedElements1[2] = (ArrayElement)elements1[2].clone();
+        ArrayElement[] expectedElements2 = new ArrayElement[3];
+        expectedElements2[0] = (ArrayElement)elements2[0].clone();
+        expectedElements2[1] = null;
+        expectedElements2[2] = (ArrayElement)elements2[2].clone();
+        performArrayTest(holder, ArrayElement[].class, expectedElements1, expectedElements2, 0.0);
 
         holder = new PersistableArray(null, null);
         performArrayTest(holder, ArrayElement[].class, null, null, 0.0);
@@ -434,16 +459,25 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testObjectArray()
     {
-        ArrayElement[] elements = new ArrayElement[3];
-        elements[0] = new ArrayElement("101", "First element");
-        elements[1] = new ArrayElement("102", "Second element");
-        elements[2] = new ArrayElement("103", "Third element");
-        ObjectArray holder = new ObjectArray(elements, elements);
-        ArrayElement[] expectedElements = new ArrayElement[3];
-        expectedElements[0] = (ArrayElement)elements[0].clone();
-        expectedElements[1] = (ArrayElement)elements[1].clone();
-        expectedElements[2] = (ArrayElement)elements[2].clone();
-        performArrayTest(holder, ArrayElement[].class, expectedElements, expectedElements, 0.0);
+        ArrayElement[] elements1 = new ArrayElement[3];
+        elements1[0] = new ArrayElement("101", "First element");
+        elements1[1] = new ArrayElement("102", "Second element");
+        elements1[2] = new ArrayElement("103", "Third element");
+        ArrayElement[] elements2 = new ArrayElement[3];
+        elements2[0] = new ArrayElement("104", "Fourth element");
+        elements2[1] = new ArrayElement("105", "Fifth element");
+        elements2[2] = new ArrayElement("106", "Sixth element");
+        ObjectArray holder = new ObjectArray(elements1, elements2);
+
+        ArrayElement[] expectedElements1 = new ArrayElement[3];
+        expectedElements1[0] = (ArrayElement)elements1[0].clone();
+        expectedElements1[1] = (ArrayElement)elements1[1].clone();
+        expectedElements1[2] = (ArrayElement)elements1[2].clone();
+        ArrayElement[] expectedElements2 = new ArrayElement[3];
+        expectedElements2[0] = (ArrayElement)elements2[0].clone();
+        expectedElements2[1] = (ArrayElement)elements2[1].clone();
+        expectedElements2[2] = (ArrayElement)elements2[2].clone();
+        performArrayTest(holder, ArrayElement[].class, expectedElements1, expectedElements2, 0.0);
 
         holder = new ObjectArray(null, null);
         performArrayTest(holder, ArrayElement[].class, null, null, 0.0);
@@ -498,16 +532,21 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testJoinTablePCQueryArray()
     {
-        ArrayElement[] elements = new ArrayElement[3];
-        elements[0] = new ArrayElement("100", "First");
-        elements[1] = new ArrayElement("101", "Second");
-        elements[2] = new ArrayElement("102", "Third");
-        PersistableArray holder = new PersistableArray(elements, elements);
-        ArrayElement[] expectedElements = new ArrayElement[3];
-        expectedElements[0] = (ArrayElement)elements[0].clone();
-        expectedElements[1] = (ArrayElement)elements[1].clone();
-        expectedElements[2] = (ArrayElement)elements[2].clone();
-        performArrayQueryTest(holder, ArrayElement[].class, expectedElements);
+        ArrayElement[] elements1 = new ArrayElement[3];
+        elements1[0] = new ArrayElement("100", "First");
+        elements1[1] = new ArrayElement("101", "Second");
+        elements1[2] = new ArrayElement("102", "Third");
+        ArrayElement[] elements2 = new ArrayElement[3];
+        elements2[0] = new ArrayElement("103", "Fourth");
+        elements2[1] = new ArrayElement("104", "Fifth");
+        elements2[2] = new ArrayElement("105", "Sixth");
+        PersistableArray holder = new PersistableArray(elements1, elements2);
+
+        ArrayElement[] expectedElements1 = new ArrayElement[3];
+        expectedElements1[0] = (ArrayElement)elements1[0].clone();
+        expectedElements1[1] = (ArrayElement)elements1[1].clone();
+        expectedElements1[2] = (ArrayElement)elements1[2].clone();
+        performArrayQueryTest(holder, ArrayElement[].class, expectedElements1);
     }
 
     /**
@@ -515,14 +554,18 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testJoinTableInterfaceQueryArray()
     {
-        Shape[] shapes = new Shape[2];
-        shapes[0] = new Rectangle(1, 25.0, 20.0);
-        shapes[1] = new Rectangle(2, 35.0, 10.0);
-        InterfaceArray holder = new InterfaceArray(shapes, shapes);
-        Shape[] expectedShapes = new Shape[2];
-        expectedShapes[0] = (Shape)((Rectangle)shapes[0]).clone();
-        expectedShapes[1] = (Shape)((Rectangle)shapes[1]).clone();
-        performArrayQueryTest(holder, Shape[].class, expectedShapes);
+        Shape[] shapes1 = new Shape[2];
+        shapes1[0] = new Rectangle(1, 25.0, 20.0);
+        shapes1[1] = new Rectangle(2, 35.0, 10.0);
+        Shape[] shapes2 = new Shape[2];
+        shapes2[0] = new Rectangle(3, 25.0, 20.0);
+        shapes2[1] = new Rectangle(4, 35.0, 10.0);
+        InterfaceArray holder = new InterfaceArray(shapes1, shapes2);
+
+        Shape[] expectedShapes1 = new Shape[2];
+        expectedShapes1[0] = (Shape)((Rectangle)shapes1[0]).clone();
+        expectedShapes1[1] = (Shape)((Rectangle)shapes1[1]).clone();
+        performArrayQueryTest(holder, Shape[].class, expectedShapes1);
 
         clean(Rectangle.class);
     }
