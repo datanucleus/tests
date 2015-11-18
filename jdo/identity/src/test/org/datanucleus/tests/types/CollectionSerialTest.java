@@ -142,8 +142,9 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
 
     /**
      * Test case to check the attach/detach of the container.
+     * TODO This test makes little sense since we are serialising the whole field, so in principle the same as the FK example below.
      **/
-    public void testJoinAttachDetach()
+    public void xtestJoinAttachDetach()
     throws Exception
     {
         try
