@@ -26,20 +26,8 @@ import org.jpox.samples.types.container.ContainerItem;
 import org.jpox.samples.types.container.ContainerItemChild;
 
 /**
- * Test case to test Collection SCO when serialised.
- * Tests should include 
- * <ul>
- * <li>JoinTable</li>
- * <li>ForeignKey</li>
- * </ul>
- * <ul>
- * <li>datastore identity</li>
- * <li>application identity</li>
- * </ul> 
- * and check basic things for combinations of each of these. 
- *
- * @version $Revision: 1.3 $ 
- **/
+ * Tests for Collection field which is serialised.
+ */
 public class CollectionSerialTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
@@ -65,7 +53,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the addition of elements.
      **/
-    public void testJoinAddCollection()
+    public void testUniAddCollection()
     throws Exception
     {
         try
@@ -84,7 +72,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the removal of elements.
      **/
-    public void testJoinRemoveCollection()
+    public void testUniRemoveCollection()
     throws Exception
     {
         try
@@ -104,7 +92,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the retention of elements.
      **/
-    public void testJoinRetainCollection()
+    public void testUniRetainCollection()
     throws Exception
     {
         try
@@ -124,7 +112,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the clearing out of elements.
      **/
-    public void testJoinClearIsEmpty()
+    public void testUniClearIsEmpty()
     throws Exception
     {
         try
@@ -144,7 +132,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
      * Test case to check the attach/detach of the container.
      * TODO This test makes little sense since we are serialising the whole field, so in principle the same as the FK example below.
      **/
-    public void xtestJoinAttachDetach()
+    public void xtestUniAttachDetach()
     throws Exception
     {
         try
@@ -164,7 +152,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the addition of elements to a serialised collection.
      **/
-    public void testFKAddCollection()
+    public void testBiAddCollection()
     throws Exception
     {
         try
@@ -183,7 +171,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the removal of elements.
      **/
-    public void testFKRemoveCollection()
+    public void testBiRemoveCollection()
     throws Exception
     {
         try
@@ -203,7 +191,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the retention of elements.
      **/
-    public void testFKRetainCollection()
+    public void testBiRetainCollection()
     throws Exception
     {
         try
@@ -223,7 +211,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the clearing out of elements.
      **/
-    public void testFKClearIsEmpty()
+    public void testBiClearIsEmpty()
     throws Exception
     {
         try
@@ -242,7 +230,7 @@ public class CollectionSerialTest extends JDOPersistenceTestCase
     /**
      * Test case to check the attach/detach of the container.
      **/
-    public void testFKAttachDetach()
+    public void testBiAttachDetach()
     throws Exception
     {
         try
