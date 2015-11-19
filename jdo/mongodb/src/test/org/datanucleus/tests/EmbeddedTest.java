@@ -112,6 +112,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
             
             // -------------- Check the retrieval of objects with embedded subobject -----------------
             pm = pmf.getPersistenceManager();
@@ -173,6 +174,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
             
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
@@ -409,7 +411,8 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
-            
+            pmf.getDataStoreCache().evictAll();
+
             // Retrieve the object(s) and detach them
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
@@ -425,8 +428,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 assertTrue("Unable to retrieve object with embedded object(s)", camera != null);
                 assertTrue("Retrieved object with embedded object(s) has incorrect make field", camera.getMake().equals("Canon"));
                 assertTrue("Retrieved object with embedded object(s) has no memory", camera.getMemory() != null);
-                assertTrue("Retrieved object with embedded object(s) has incorrect embedded object : memory type is wrong", camera
-                        .getMemory().getType() == Memory.COMPACT_FLASH);
+                assertTrue("Retrieved object with embedded object(s) has incorrect embedded object : memory type is wrong", camera.getMemory().getType() == Memory.COMPACT_FLASH);
                 assertTrue("Retrieved object with embedded object(s) has no chip", camera.getMemory().getChip() != null);
                 assertEquals("Retrieved chip has wrong thickness", 12, camera.getMemory().getChip().getThickness());
     
@@ -447,6 +449,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
     
             // Check the detached object(s) and check them
             assertNotNull("Detached Computer is null!", detachedCamera);
@@ -494,6 +497,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
     
             // Retrieve the object(s) and re-check updated objects
             pm = pmf.getPersistenceManager();
@@ -581,6 +585,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
             
             // Retrieve the Network and the devices
             pm = pmf.getPersistenceManager();
@@ -916,6 +921,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
             
             // Basic query of all Networks
             pm = pmf.getPersistenceManager();
@@ -1067,6 +1073,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
             
             // Retrieve the Library and the films
             pm = pmf.getPersistenceManager();
