@@ -83,14 +83,6 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
         return time;
     }
 
-    private Timestamp generateTestValue3()
-    {
-        String baseString = "2011-07-01 01:25:25.299";
-        Timestamp time = Timestamp.valueOf(baseString + counter);
-        counter++;
-        return time;
-    }
-
     // -------------------------------------------------------------------------------------------------------
 
     /**
@@ -373,14 +365,11 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            pm.makePersistent(getOneObject());
-            pm.makePersistent(getOneObject());
-            pm.makePersistent(getOneObject());
-
             SqlTimestampHolder holder = new SqlTimestampHolder();
+            Timestamp ts1 = Timestamp.valueOf("2011-07-01 01:25:25.299");
             holder.setKey(generateTestKey());
-            holder.setValue(generateTestValue3());
-            holder.setValue2(generateTestValue3());
+            holder.setValue(ts1);
+            holder.setValue2(ts1);
             pm.makePersistent(holder);
             pm.flush();
 
