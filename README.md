@@ -21,12 +21,12 @@ Here are few examples on how to run the tests:
 - Run all the executions with optimistic and pessimistic configuration
 >mvn -Dtest.configs=optimistic,pessimistic clean test
 
-On test.jdo.identity this will trigger 4 different executions, each configuration is run for each execution.
+On "jdo/identity" this will trigger 4 different executions, each configuration is run for each execution.
 
-- Run the CollectionTest, skippking application identity execution and only optimistic configuration
+- Run the CollectionTest, skipping "application-identity" execution and using optimistic configuration
 >mvn -Dtest=CollectionTest -Dtest.configs=optimistic -Dtest.application-identity.skip=true clean test
 
-- Run all the executions with optimisitc using Mysql database
+- Run all the executions with optimistic using MySQL database
 >mvn -Pmysql -Dtest.configs=optimistic clean test
 
 ## Database cleanup
