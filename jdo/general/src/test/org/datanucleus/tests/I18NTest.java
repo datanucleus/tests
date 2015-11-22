@@ -53,6 +53,11 @@ public class I18NTest extends JDOPersistenceTestCase
     public void testISO8859_1()
     throws Exception
     {
+        if (vendorID != null && vendorID.equals("postgresql"))
+        {
+            // Dont run on Postgresql
+            return;
+        }
         try
         {
             try
@@ -139,6 +144,11 @@ public class I18NTest extends JDOPersistenceTestCase
     public void testISO8859_2()
     throws Exception
     {
+        if (vendorID != null && vendorID.equals("postgresql"))
+        {
+            // Dont run on Postgresql
+            return;
+        }
         try
         {
             try
