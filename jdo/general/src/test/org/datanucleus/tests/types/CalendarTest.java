@@ -28,6 +28,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.tests.JDOPersistenceTestCase;
+import org.datanucleus.util.StringUtils;
 import org.jpox.samples.types.calendar.CalendarHolder;
 
 /**
@@ -693,7 +694,7 @@ public class CalendarTest  extends JDOPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error("Exception thrown in test", e);
-                fail("Unexpected exception thrown while querying Calendar : " + e.getMessage());
+                fail("Unexpected exception thrown while querying Calendar : " + StringUtils.getStringFromException(e));
             }
             finally
             {
