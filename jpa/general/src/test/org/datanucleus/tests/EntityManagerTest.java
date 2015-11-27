@@ -39,6 +39,7 @@ import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.models.company.Account;
 import org.jpox.samples.annotations.models.company.Person;
 import org.jpox.samples.annotations.models.company.Project;
+import org.jpox.samples.annotations.versioned.VersionedPerson;
 
 /**
  * Testcases for EntityManagerImpl.
@@ -747,6 +748,59 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             clean(ShapeHolder.class);
             clean(Rectangle.class);
             clean(Circle.class);
+        }
+    }
+
+    /**
+     * Test of persistence/retrieval of object with version.
+     */
+    public void testVersionedObject()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                VersionedPerson p = new VersionedPerson(1, 1);
+                em.persist(p);
+                tx.commit();
+                assertEquals(1, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            // Merge the same object, but transient
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                VersionedPerson p = new VersionedPerson(1, 1);
+                p = em.merge(p);
+                tx.commit();
+                assertEquals(2, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(VersionedPerson.class);
         }
     }
 }
