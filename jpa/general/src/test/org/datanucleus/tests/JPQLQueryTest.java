@@ -35,6 +35,8 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Parameter;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
+import javax.persistence.TupleElement;
 import javax.persistence.TypedQuery;
 
 import org.datanucleus.api.jpa.JPAQuery;
@@ -43,7 +45,6 @@ import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-
 import org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub1;
 import org.jpox.samples.annotations.models.company.Employee;
@@ -2617,6 +2618,53 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 Person2 p = people.get(0);
                 assertEquals("Fred", p.getFirstName());
                 assertEquals("Flintstone", p.getLastName());
+            }
+            catch(NoResultException ex)
+            {
+                //expected
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
+
+    public void testResultClassViaTuple()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                em.persist(p1);
+                em.flush();
+
+                TypedQuery<Tuple> q = em.createQuery("SELECT T.firstName,T.lastName FROM " + Person.class.getName() + " T", Tuple.class);
+                List<Tuple> results = q.getResultList();
+                assertNotNull("Returned object was null!", results);
+                assertEquals(1, results.size());
+                Tuple result = results.get(0);
+                List<TupleElement<?>> resultElems = result.getElements();
+                assertEquals(2, resultElems.size());
+                assertEquals("firstName", resultElems.get(0).getAlias());
+                assertEquals("lastName", resultElems.get(1).getAlias());
+                Object val0 = result.get(0);
+                assertEquals("Fred", val0);
+                Object val1 = result.get(1);
+                assertEquals("Flintstone", val1);
             }
             catch(NoResultException ex)
             {
