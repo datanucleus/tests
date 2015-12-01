@@ -27,6 +27,8 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
+import javax.persistence.TupleElement;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
@@ -593,6 +595,84 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
                     mourinho = true;
                 }
                 else if (result[0].equals("Pep") && result[1].equals("Guardiola"))
+                {
+                    guardiola = true;
+                }
+            }
+            if (!mourinho)
+            {
+                fail("Jose Mourinho not returned");
+            }
+            if (!guardiola)
+            {
+                fail("Pep Guardiola not returned");
+            }
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test basic querying with a result as a Tuple.
+     */
+    public void testResultTuple()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Tuple> crit = qb.createTupleQuery();
+            Root<Manager> candidate = crit.from(Manager.class);
+            Set<Join<Manager, ?>> joins = candidate.getJoins();
+            assertNotNull(joins); // Make sure joins returns empty set
+            assertEquals(0, joins.size());
+            Set<Fetch<Manager, ?>> fetches = candidate.getFetches();
+            assertNotNull(fetches); // Make sure fetches returns empty set
+            assertEquals(0, fetches.size());
+
+            candidate.alias("m");
+            crit.multiselect(candidate.get(Manager_.firstName), candidate.get(Manager_.lastName));
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT m.firstName,m.lastName FROM org.datanucleus.samples.jpa.query.Manager m", crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Tuple> results = q.getResultList();
+
+            assertNotNull("Null results returned!", results);
+            assertEquals("Number of results is incorrect", 2, results.size());
+            boolean mourinho = false;
+            boolean guardiola = false;
+            Iterator<Tuple> resultIter = results.iterator();
+            while (resultIter.hasNext())
+            {
+                Tuple result = resultIter.next();
+                List<TupleElement<?>> tupleElements = result.getElements(); 
+                assertEquals(2, tupleElements.size());
+                Object elem0 = result.get(0);
+                Object elem1 = result.get(1);
+                assertTrue(elem0 instanceof String);
+                assertTrue(elem1 instanceof String);
+                String first = (String)elem0;
+                String last = (String)elem1;
+                if (first.equals("Jose") && last.equals("Mourinho"))
+                {
+                    mourinho = true;
+                }
+                else if (first.equals("Pep") && last.equals("Guardiola"))
                 {
                     guardiola = true;
                 }
