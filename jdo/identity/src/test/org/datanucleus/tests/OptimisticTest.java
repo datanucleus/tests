@@ -145,6 +145,54 @@ public class OptimisticTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Test of conflicting transactions, using "version-number" strategy.
+     */
+    public void testGetObjectByIdUsingVersionNumberStrategy()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+
+        try
+        {
+            tx.begin();
+            Trade1 t1 = new Trade1("Mr X", 100.0, new Date());
+            pm.makePersistent(t1);
+            tx.commit();
+            assertNotNull("Object just persisted using makePersistent doesnt have a version!", JDOHelper.getVersion(t1));
+            assertEquals(new Long(1), JDOHelper.getVersion(t1));
+
+            Object id = pm.getObjectId(t1);
+            pmf.getDataStoreCache().evictAll();
+
+            // retrieve the object using getObjectById and check that the version is loaded
+            pm.setIgnoreCache(true);
+            tx.setOptimistic(true);
+            tx.begin();
+            Trade1 t1a = (Trade1) pm.getObjectById(id);
+            assertNotNull(JDOHelper.getVersion(t1a));
+            assertEquals(new Long(1), JDOHelper.getVersion(t1));
+
+            tx.commit();
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Exception in test", ex);
+            fail("Exception thrown in test: " + ex.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+
+            // Clean out our data
+            clean(Trade1.class);
+        }
+    }
+
+    /**
      * Test of using "none" strategy.
      * This should do no actual optimistic checking, although it will update the version column
      */
@@ -300,6 +348,51 @@ public class OptimisticTest extends JDOPersistenceTestCase
                 tx2.rollback();
             }
             pm2.close();
+
+            // Clean out our data
+            clean(Trade4.class);
+        }
+    }
+
+    /**
+     * Test of conflicting transactions, using "version-number" strategy where the class has a version field.
+     */
+    public void testGetObjectByIdWithBasicVersionNumberStrategyVersionField()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+
+        try
+        {
+            tx.begin();
+            Trade4 tradeA = new Trade4("Mr X", 100.0, new Date());
+            pm.makePersistent(tradeA);
+            tx.commit();
+            assertEquals("Object just persisted using makePersistent has incorrect version!", 1, tradeA.getVersion());
+            Object id = pm.getObjectId(tradeA);
+            pmf.getDataStoreCache().evictAll();
+
+            // retrieve the object using getObjectById and check that the version is set
+            pm.setIgnoreCache(true);
+            tx.setOptimistic(true);
+            tx.begin();
+            Trade4 tradeB = (Trade4) pm.getObjectById(id);
+            assertNotNull(JDOHelper.getVersion(tradeB));
+            assertEquals(new Long(1), JDOHelper.getVersion(tradeB));
+            tx.commit();
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Exception in test", ex);
+            fail("Exception thrown during test of conflictTransactions: " + ex.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
 
             // Clean out our data
             clean(Trade4.class);
