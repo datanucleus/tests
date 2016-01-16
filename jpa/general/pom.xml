@@ -22,11 +22,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <artifactId>datanucleus-api-jpa</artifactId>
             <version>(4.9, )</version>
         </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-java8</artifactId>
-            <version>(4.9, )</version>
-        </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
