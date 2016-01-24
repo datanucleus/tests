@@ -17,6 +17,7 @@ Contributors:
 ***********************************************************************/
 package org.datanucleus.samples.jpa.query;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -28,6 +29,8 @@ public class Player extends Person
 
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     Team team;
+
+    LocalDateTime dateTime;
 
     public Player(long id, String first, String last)
     {
@@ -42,6 +45,15 @@ public class Player extends Person
     public Date getStartDate()
     {
         return startDate;
+    }
+
+    public LocalDateTime getDateTime()
+    {
+        return dateTime;
+    }
+    public void setDateTime(LocalDateTime dt)
+    {
+        this.dateTime = dt;
     }
 
     public void setTeam(Team t)

@@ -17,6 +17,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -29,6 +30,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TupleElement;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
@@ -105,6 +107,7 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             cal.set(Calendar.DAY_OF_MONTH, 1);
             pl1.setStartDate(cal.getTime());
             pl1.setTeam(team1);
+            pl1.setDateTime(LocalDateTime.now());
             em.persist(pl1);
 
             tx.commit();
@@ -606,6 +609,52 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             if (!guardiola)
             {
                 fail("Pep Guardiola not returned");
+            }
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test basic querying with a result of a value type.
+     */
+    public void testResultOfValueType()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<LocalDateTime> crit = qb.createQuery(LocalDateTime.class);
+            Root<Player> candidate = crit.from(Player.class);
+            candidate.alias("p");
+            crit.multiselect(candidate.get(Player_.dateTime));
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect", "SELECT p.dateTime FROM org.datanucleus.samples.jpa.query.Player p", crit.toString());
+
+            TypedQuery<LocalDateTime> q = em.createQuery(crit);
+            List<LocalDateTime> results = q.getResultList();
+
+            assertNotNull("Null results returned!", results);
+            assertEquals("Number of results is incorrect", 1, results.size());
+
+            Iterator<LocalDateTime> resultIter = results.iterator();
+            while (resultIter.hasNext())
+            {
+                Object result = resultIter.next();
+                LOG.debug(">> result=" + result);
             }
 
             tx.rollback();
