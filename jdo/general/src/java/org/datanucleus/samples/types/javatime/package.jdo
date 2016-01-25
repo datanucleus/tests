@@ -45,5 +45,15 @@
                 <column jdbc-type="VARCHAR"/>
             </field>
         </class>
+        <class name="JavaTimeSample6" identity-type="application" detachable="true">
+            <inheritance strategy="new-table"/>
+            <field name="id" primary-key="true" persistence-modifier="persistent"/>
+            <field name="yearMonth1" persistence-modifier="persistent">
+                <column jdbc-type="DATE"/>
+            </field>
+            <field name="yearMonth2" persistence-modifier="persistent">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
     </package>
 </jdo>

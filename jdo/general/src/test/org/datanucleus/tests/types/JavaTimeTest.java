@@ -31,12 +31,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.MonthDay;
+import java.time.YearMonth;
 
 import org.datanucleus.samples.types.javatime.JavaTimeSample1;
 import org.datanucleus.samples.types.javatime.JavaTimeSample2;
 import org.datanucleus.samples.types.javatime.JavaTimeSample3;
 import org.datanucleus.samples.types.javatime.JavaTimeSample4;
 import org.datanucleus.samples.types.javatime.JavaTimeSample5;
+import org.datanucleus.samples.types.javatime.JavaTimeSample6;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
@@ -62,6 +64,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     JavaTimeSample3.class,
                     JavaTimeSample4.class,
                     JavaTimeSample5.class,
+                    JavaTimeSample6.class,
                 });
             initialised = true;
         }
@@ -682,6 +685,125 @@ public class JavaTimeTest extends JDOPersistenceTestCase
         finally
         {
             clean(JavaTimeSample5.class);
+        }
+    }
+
+    /**
+     * Test for YearMonth persistence and retrieval.
+     */
+    public void testYearMonth()
+    {
+        try
+        {
+            // Create some data we can use for access
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            YearMonth ym1 = YearMonth.of(2001, 5);
+            YearMonth ym2 = YearMonth.of(2006, 11);
+            Object id = null;
+            try
+            {
+                tx.begin();
+                JavaTimeSample6 s = new JavaTimeSample6(1, ym1, ym2);
+                pm.makePersistent(s);
+                tx.commit();
+                id = pm.getObjectId(s);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error persisting YearMonth sample", e);
+                fail("Error persisting YearMonth sample");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                JavaTimeSample6 s = (JavaTimeSample6)pm.getObjectById(id);
+
+                YearMonth ym1r = s.getYearMonth1();
+                assertNotNull("Retrieved YearMonth was null!", ym1r);
+                assertEquals(5, ym1r.getMonthValue());
+                assertEquals(2001, ym1r.getYear());
+
+                YearMonth ym2r = s.getYearMonth2();
+                assertNotNull("Retrieved YearMonth was null!", ym2r);
+                assertEquals(11, ym2r.getMonthValue());
+                assertEquals(2006, ym2r.getYear());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving YearMonth data", e);
+                fail("Error retrieving YearMonth data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Query the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                // Query the YearMonth that was stored as a DATE
+                Query q1 = pm.newQuery("SELECT FROM " + JavaTimeSample6.class.getName() + " WHERE yearMonth1.getMonthValue() == 5");
+                q1.setClass(JavaTimeSample6.class);
+                List<JavaTimeSample6> results1 = q1.executeList();
+                assertNotNull(results1);
+                assertEquals(1, results1.size());
+                JavaTimeSample6 s = results1.iterator().next();
+                assertEquals("YearMonth.dayOfMonth is wrong for queried monthValue", 2001, s.getYearMonth1().getYear());
+
+                // Query the YearMonth that was stored as a DATE
+                Query q2 = pm.newQuery("SELECT FROM " + JavaTimeSample6.class.getName() + " WHERE yearMonth1.getYear() == 2001");
+                q2.setClass(JavaTimeSample6.class);
+                List<JavaTimeSample6> results2 = q2.executeList();
+                assertNotNull(results2);
+                assertEquals(1, results2.size());
+                s = results2.iterator().next();
+                assertEquals("YearMonth.monthValue is wrong for queried dayOfMonth", 5, s.getYearMonth1().getMonthValue());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving YearMonth data", e);
+                fail("Error retrieving YearMonth data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(JavaTimeSample6.class);
         }
     }
 }
