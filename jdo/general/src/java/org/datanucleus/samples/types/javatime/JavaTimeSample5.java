@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (c) 2014 Andy Jefferson and others. All rights reserved.
+Copyright (c) 2016 Andy Jefferson and others. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -17,23 +17,23 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.types.javatime;
 
-import java.time.Instant;
+import java.time.MonthDay;
 
 /**
- * Sample using Instant.
+ * Sample using MonthDay.
  */
-public class JavaTimeSample4
+public class JavaTimeSample5
 {
     private long id;
 
-    private Instant instant1;
-    private Instant instant2;
+    private MonthDay monthDay1;
+    private MonthDay monthDay2;
 
-    public JavaTimeSample4(long id, Instant dt1, Instant dt2)
+    public JavaTimeSample5(long id, MonthDay md1, MonthDay md2)
     {
         this.id = id;
-        this.instant1 = dt1;
-        this.instant2 = dt2;
+        this.monthDay1 = md1;
+        this.monthDay2 = md2;
     }
 
     public long getId()
@@ -46,23 +46,23 @@ public class JavaTimeSample4
         this.id = id;
     }
 
-    public Instant getInstant1()
+    public MonthDay getMonthDay1()
     {
-        return instant1;
+        return monthDay1;
     }
 
-    public void setInstant1(Instant dt)
+    public void setMonthDay1(MonthDay md)
     {
-        this.instant1 = dt;
+        this.monthDay1 = md;
     }
 
-    public Instant getInstant2()
+    public MonthDay getMonthDay2()
     {
-        return instant2;
+        return monthDay2;
     }
 
-    public void setInstant2(Instant dt)
+    public void setMonthDay2(MonthDay md)
     {
-        this.instant2 = dt;
+        this.monthDay2 = md;
     }
 }

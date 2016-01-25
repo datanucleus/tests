@@ -30,11 +30,13 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.MonthDay;
 
 import org.datanucleus.samples.types.javatime.JavaTimeSample1;
 import org.datanucleus.samples.types.javatime.JavaTimeSample2;
 import org.datanucleus.samples.types.javatime.JavaTimeSample3;
 import org.datanucleus.samples.types.javatime.JavaTimeSample4;
+import org.datanucleus.samples.types.javatime.JavaTimeSample5;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
@@ -59,6 +61,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     JavaTimeSample2.class,
                     JavaTimeSample3.class,
                     JavaTimeSample4.class,
+                    JavaTimeSample5.class,
                 });
             initialised = true;
         }
@@ -560,6 +563,125 @@ public class JavaTimeTest extends JDOPersistenceTestCase
         finally
         {
             clean(JavaTimeSample4.class);
+        }
+    }
+
+    /**
+     * Test for MonthDay persistence and retrieval.
+     */
+    public void testMonthDay()
+    {
+        try
+        {
+            // Create some data we can use for access
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            MonthDay md1 = MonthDay.of(5, 20);
+            MonthDay md2 = MonthDay.of(11, 1);
+            Object id = null;
+            try
+            {
+                tx.begin();
+                JavaTimeSample5 s = new JavaTimeSample5(1, md1, md2);
+                pm.makePersistent(s);
+                tx.commit();
+                id = pm.getObjectId(s);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error persisting MonthDay sample", e);
+                fail("Error persisting MonthDay sample");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                JavaTimeSample5 s = (JavaTimeSample5)pm.getObjectById(id);
+
+                MonthDay md1r = s.getMonthDay1();
+                assertNotNull("Retrieved MonthDay was null!", md1r);
+                assertEquals(5, md1r.getMonthValue());
+                assertEquals(20, md1r.getDayOfMonth());
+
+                MonthDay md2r = s.getMonthDay2();
+                assertNotNull("Retrieved MonthDay was null!", md2r);
+                assertEquals(11, md2r.getMonthValue());
+                assertEquals(1, md2r.getDayOfMonth());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving MonthDay data", e);
+                fail("Error retrieving MonthDay data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Query the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                // Query the MonthDay that was stored as a DATE
+                Query q1 = pm.newQuery("SELECT FROM " + JavaTimeSample5.class.getName() + " WHERE monthDay1.getMonthValue() == 5");
+                q1.setClass(JavaTimeSample5.class);
+                List<JavaTimeSample5> results1 = q1.executeList();
+                assertNotNull(results1);
+                assertEquals(1, results1.size());
+                JavaTimeSample5 s = results1.iterator().next();
+                assertEquals("MonthDay.dayOfMonth is wrong for queried monthValue", 20, s.getMonthDay1().getDayOfMonth());
+
+                // Query the MonthDay that was stored as a DATE
+                Query q2 = pm.newQuery("SELECT FROM " + JavaTimeSample5.class.getName() + " WHERE monthDay1.getDayOfMonth() == 20");
+                q2.setClass(JavaTimeSample5.class);
+                List<JavaTimeSample5> results2 = q2.executeList();
+                assertNotNull(results2);
+                assertEquals(1, results2.size());
+                s = results2.iterator().next();
+                assertEquals("MonthDay.monthValue is wrong for queried dayOfMonth", 5, s.getMonthDay1().getMonthValue());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving MonthDay data", e);
+                fail("Error retrieving MonthDay data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(JavaTimeSample5.class);
         }
     }
 }
