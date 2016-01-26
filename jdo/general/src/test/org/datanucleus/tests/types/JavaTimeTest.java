@@ -148,6 +148,126 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+
+            // Query the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getYear() == 2008");
+                    q.setClass(JavaTimeSample1.class);
+                    List<JavaTimeSample1> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample1 s = results.iterator().next();
+                    LocalDateTime dt = s.getDateTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getMonthValue() == 3");
+                    q.setClass(JavaTimeSample1.class);
+                    List<JavaTimeSample1> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample1 s = results.iterator().next();
+                    LocalDateTime dt = s.getDateTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getDayOfMonth() == 14");
+                    q.setClass(JavaTimeSample1.class);
+                    List<JavaTimeSample1> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample1 s = results.iterator().next();
+                    LocalDateTime dt = s.getDateTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getHour() == 15");
+                    q.setClass(JavaTimeSample1.class);
+                    List<JavaTimeSample1> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample1 s = results.iterator().next();
+                    LocalDateTime dt = s.getDateTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getMinute() == 9");
+                    q.setClass(JavaTimeSample1.class);
+                    List<JavaTimeSample1> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample1 s = results.iterator().next();
+                    LocalDateTime dt = s.getDateTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getSecond() == 26");
+                    q.setClass(JavaTimeSample1.class);
+                    List<JavaTimeSample1> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample1 s = results.iterator().next();
+                    LocalDateTime dt = s.getDateTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error querying LocalDateTime", e);
+                fail("Error querying LocalDateTime : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
@@ -227,6 +347,69 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+
+            // Query the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample2.class.getName() + " WHERE localDate1.getYear() == 2008");
+                    q.setClass(JavaTimeSample2.class);
+                    List<JavaTimeSample2> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample2 s = results.iterator().next();
+                    LocalDate dt = s.getLocalDate1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample2.class.getName() + " WHERE localDate1.getMonthValue() == 3");
+                    q.setClass(JavaTimeSample2.class);
+                    List<JavaTimeSample2> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample2 s = results.iterator().next();
+                    LocalDate dt = s.getLocalDate1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample2.class.getName() + " WHERE localDate1.getDayOfMonth() == 14");
+                    q.setClass(JavaTimeSample2.class);
+                    List<JavaTimeSample2> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample2 s = results.iterator().next();
+                    LocalDate dt = s.getLocalDate1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Year was wrong", 2008, dt.getYear());
+                    assertEquals("Timestamp : Month was wrong", Month.MARCH, dt.getMonth());
+                    assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
+                }
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error querying LocalDate", e);
+                fail("Error querying LocalDate : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
@@ -297,6 +480,69 @@ public class JavaTimeTest extends JDOPersistenceTestCase
             {
                 LOG.error("Error retrieving LocalTime data", e);
                 fail("Error retrieving LocalTime data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Query the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() + " WHERE localTime1.getHour() == 15");
+                    q.setClass(JavaTimeSample3.class);
+                    List<JavaTimeSample3> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample3 s = results.iterator().next();
+                    LocalTime dt = s.getLocalTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() + " WHERE localTime1.getMinute() == 9");
+                    q.setClass(JavaTimeSample3.class);
+                    List<JavaTimeSample3> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample3 s = results.iterator().next();
+                    LocalTime dt = s.getLocalTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+                {
+                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() + " WHERE localTime1.getSecond() == 26");
+                    q.setClass(JavaTimeSample3.class);
+                    List<JavaTimeSample3> results = q.executeList();
+                    assertNotNull(results);
+                    assertEquals(1, results.size());
+                    JavaTimeSample3 s = results.iterator().next();
+                    LocalTime dt = s.getLocalTime1();
+                    assertNotNull(dt);
+                    assertEquals("Timestamp : Hour was wrong", 15, dt.getHour());
+                    assertEquals("Timestamp : Minute was wrong", 9, dt.getMinute());
+                    assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
+                }
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error querying LocalTime", e);
+                fail("Error querying LocalTime : " + e.getMessage());
             }
             finally
             {
