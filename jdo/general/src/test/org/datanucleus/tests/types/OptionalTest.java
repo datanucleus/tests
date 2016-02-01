@@ -17,9 +17,11 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.types;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.types.optional.OptionalSample1;
@@ -135,7 +137,13 @@ public class OptionalTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                // TODO Add this
+                Query q = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE stringField == null");
+                q.setClass(OptionalSample1.class);
+                List<OptionalSample1> results = q.executeList();
+                assertNotNull(results);
+                assertEquals(1, results.size());
+                OptionalSample1 result1 = results.get(0);
+                assertEquals(2, result1.getId());
 
                 tx.commit();
             }
