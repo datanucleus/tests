@@ -57,18 +57,22 @@ public class OptionalTest extends JDOPersistenceTestCase
             Transaction tx = pm.currentTransaction();
 
             Object id = null;
+            Object id2 = null;
             try
             {
                 tx.begin();
                 OptionalSample1 s = new OptionalSample1(1, "First String", 123.45);
                 pm.makePersistent(s);
+                OptionalSample1 s2 = new OptionalSample1(2, null, 245.6);
+                pm.makePersistent(s2);
                 tx.commit();
                 id = pm.getObjectId(s);
+                id2 = pm.getObjectId(s2);
             }
             catch (Exception e)
             {
-                LOG.error("Error persisting Optional sample", e);
-                fail("Error persisting Optional sample");
+                LOG.error("Error persisting Optional samples", e);
+                fail("Error persisting Optional samples");
             }
             finally
             {
@@ -98,6 +102,16 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertNotNull(dblField.get());
                 assertEquals(123.45, dblField.get(), 0.05);
 
+                OptionalSample1 s2 = pm.getObjectById(OptionalSample1.class, id2);
+
+                Optional<String> strField2 = s2.getStringField();
+                assertNotNull(strField2);
+                assertFalse(strField2.isPresent());
+                Optional<Double> dblField2 = s2.getDoubleField();
+                assertNotNull(dblField2);
+                assertNotNull(dblField2.get());
+                assertEquals(245.6, dblField2.get(), 0.05);
+
                 tx.commit();
             }
             catch (Exception e)
@@ -121,6 +135,7 @@ public class OptionalTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
+                // TODO Add this
 
                 tx.commit();
             }

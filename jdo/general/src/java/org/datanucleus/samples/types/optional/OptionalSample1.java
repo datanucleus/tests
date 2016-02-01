@@ -32,8 +32,8 @@ public class OptionalSample1
     public OptionalSample1(long id, String str, Double dbl)
     {
         this.id = id;
-        this.stringField = Optional.of(str);
-        this.doubleField = Optional.of(dbl);
+        this.stringField = str!=null ? Optional.of(str) : Optional.empty();
+        this.doubleField = dbl!=null ? Optional.of(dbl) : Optional.empty();
     }
 
     public long getId()
@@ -52,7 +52,7 @@ public class OptionalSample1
     }
     public void setStringField(String str)
     {
-        this.stringField = Optional.of(str);
+        this.stringField = str!=null? Optional.of(str) : Optional.empty();
     }
 
     public Optional<Double> getDoubleField()
@@ -61,6 +61,6 @@ public class OptionalSample1
     }
     public void setDoubleField(Double dbl)
     {
-        this.doubleField = Optional.of(dbl);
+        this.doubleField = dbl!=null ? Optional.of(dbl) : Optional.empty();
     }
 }
