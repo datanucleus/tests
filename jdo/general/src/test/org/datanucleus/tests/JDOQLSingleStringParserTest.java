@@ -108,7 +108,7 @@ public class JDOQLSingleStringParserTest extends JDOPersistenceTestCase
     /**
      * Test for the parse of a literal which includes a keyword.
      */
-    public void testLiteralWithKeyword()
+    /*public void testLiteralWithKeyword()
     {
         PersistenceManager pm = pmf.getPersistenceManager();
         Query q = pm.newQuery("JDOQL", null);
@@ -124,7 +124,7 @@ public class JDOQLSingleStringParserTest extends JDOPersistenceTestCase
             LOG.error("Exception in test", e);
             fail("Exception in parse : "+e.getMessage());
         }
-    }
+    }*/
 
     /**
      * Test that we give an appropriate exception when parsing a subselect with a missing close paren.
