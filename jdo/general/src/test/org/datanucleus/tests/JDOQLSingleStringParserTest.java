@@ -106,6 +106,27 @@ public class JDOQLSingleStringParserTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Test for the parse of a literal which includes a keyword.
+     */
+    public void testLiteralWithKeyword()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Query q = pm.newQuery("JDOQL", null);
+        AbstractJDOQLQuery query = (AbstractJDOQLQuery) ((JDOQuery)q).getInternalQuery();
+        String str = "SELECT FROM org.jpox.samples.MyClass WHERE field1 == 'The book from which I took inspiration'";
+        JDOQLSingleStringParser parser = new JDOQLSingleStringParser(query, str);
+        try
+        {
+            parser.parse();
+        }
+        catch (NucleusUserException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in parse : "+e.getMessage());
+        }
+    }
+
+    /**
      * Test that we give an appropriate exception when parsing a subselect with a missing close paren.
      */
     public void testSubselectWithMissingCloseParen()
