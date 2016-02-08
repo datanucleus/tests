@@ -24,6 +24,7 @@ import java.util.List;
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOUserException;
+import javax.jdo.ObjectState;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
@@ -355,6 +356,78 @@ public class NondurableIdTest extends JDOPersistenceTestCase
             {
                 LOG.error("Exception thrown while deleting nondurable object", e);
                 fail("Exception thrown while deleting nondurable object : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clear out our data
+            clean(LogEntry.class);
+        }
+    }
+
+    /**
+     * Method to test the retrieval of nondurable objects outside of a transaction.
+     */
+    public void testRetrieveNonTransactional()
+    {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_NONDURABLE_ID))
+        {
+            return;
+        }
+
+        try
+        {
+            // Persist some "nondurable" objects
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                List entries = new ArrayList();
+                LogEntry entry = new LogEntry(LogEntry.WARNING, "Datastore adapter not found. Falling back to default");
+                entries.add(entry);
+                entries.add(new LogEntry(LogEntry.ERROR, "No datastore specified"));
+                entries.add(new LogEntry(LogEntry.INFO, "Object X1 persisted"));
+                entries.add(new LogEntry(LogEntry.WARNING, "Object X2 persisted"));
+                entries.add(new LogEntry(LogEntry.WARNING, "Object Y1 persisted"));
+                entries.add(new LogEntry(LogEntry.ERROR, "Error persisting object Y2"));
+                pm.makePersistentAll(entries);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve some objects
+            pm = pmf.getPersistenceManager();
+            try
+            {
+                Query q = pm.newQuery(LogEntry.class);
+                List<LogEntry> entries = q.executeList();
+                for (LogEntry entry : entries)
+                {
+                    assertNotNull(entry);
+                    assertEquals(ObjectState.HOLLOW_PERSISTENT_NONTRANSACTIONAL, JDOHelper.getObjectState(entry));
+
+                    // Access a field to make sure it allows transition-read, since the query will have loaded this field into the object
+                    entry.getMessage();
+                }
             }
             finally
             {
