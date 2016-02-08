@@ -3302,6 +3302,66 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test for date methods.
+     */
+    public void testDateMethods()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            DateHolder d1 = new DateHolder();
+            Calendar cal1 = GregorianCalendar.getInstance();
+            cal1.set(Calendar.YEAR, 2012);
+            cal1.set(Calendar.MONTH, 3);
+            cal1.set(Calendar.DAY_OF_MONTH, 3);
+            cal1.set(Calendar.HOUR_OF_DAY, 0);
+            cal1.set(Calendar.MINUTE, 0);
+            cal1.set(Calendar.SECOND, 0);
+            cal1.set(Calendar.MILLISECOND, 0);
+            d1.setDateField(cal1.getTime());
+            Calendar cal2 = GregorianCalendar.getInstance();
+            cal2.set(Calendar.YEAR, 2001);
+            cal2.set(Calendar.MONTH, 2);
+            cal2.set(Calendar.DAY_OF_MONTH, 1);
+            cal2.set(Calendar.HOUR_OF_DAY, 0);
+            cal2.set(Calendar.MINUTE, 0);
+            cal2.set(Calendar.SECOND, 0);
+            cal2.set(Calendar.MILLISECOND, 0);
+            d1.setDateField2(cal2.getTime());
+            em.persist(d1);
+
+            em.flush();
+
+            Query q = em.createQuery("SELECT YEAR(d.dateField), MONTH(d.dateField), DAY(d.dateField) FROM " + DateHolder.class.getName() + " d");
+            List<Object[]> results = q.getResultList();
+            assertEquals(1, results.size());
+            Object[] row = results.get(0);
+            assertEquals(3, row.length);
+            assertEquals(2012, row[0]);
+            assertEquals(4, row[1]);
+            assertEquals(3, row[2]);
+
+            tx.rollback();
+        }
+        catch (PersistenceException e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in date methods test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
      * Test for multiple joins finishing at the candidate again
      */
     public void testMultipleJoinsAndFieldAccess()
