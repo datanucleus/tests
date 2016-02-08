@@ -66,7 +66,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     /**
      * Test for the parse of a literal which includes a keyword.
      */
-    /*public void testLiteralWithKeyword()
+    public void testLiteralWithKeyword()
     {
         EntityManager em = emf.createEntityManager();
         String str = "SELECT T FROM org.jpox.samples.MyClass T WHERE T.field1 = 'The book from which I took inspiration'";
@@ -82,7 +82,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
             LOG.error("Exception in test", e);
             fail("Exception in parse : "+e.getMessage());
         }
-    }*/
+    }
 
     /**
      * Test for the parse of a subquery and conversion into the correct components.
