@@ -141,13 +141,38 @@ public class OptionalTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE stringField == null");
+                Query q = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE stringField.isPresent()");
                 q.setClass(OptionalSample1.class);
                 List<OptionalSample1> results = q.executeList();
                 assertNotNull(results);
                 assertEquals(1, results.size());
                 OptionalSample1 result1 = results.get(0);
-                assertEquals(2, result1.getId());
+                assertEquals(1, result1.getId());
+
+                Query q2 = pm.newQuery("SELECT id, stringField.get() FROM " + OptionalSample1.class.getName());
+                List results2 = q2.executeResultList();
+                assertNotNull(results2);
+                assertEquals(2, results2.size());
+
+                boolean s1Present = false;
+                boolean s2Present = false;
+                for (Object row : results2)
+                {
+                    Object[] rowValues = (Object[])row;
+                    if (((Number)rowValues[0]).intValue() == 1)
+                    {
+                        s1Present = true;
+                        assertTrue(rowValues[1] instanceof String);
+                        assertEquals("First String", rowValues[1]);
+                    }
+                    else if (((Number)rowValues[0]).intValue() == 2)
+                    {
+                        s2Present = true;
+                        assertNull(rowValues[1]);
+                    }
+                }
+                assertTrue(s1Present);
+                assertTrue(s2Present);
 
                 tx.commit();
             }
