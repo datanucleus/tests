@@ -25,6 +25,8 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.types.optional.OptionalSample1;
+import org.datanucleus.samples.types.optional.OptionalSample2;
+import org.datanucleus.samples.types.optional.OptionalSample3;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
@@ -42,6 +44,8 @@ public class OptionalTest extends JDOPersistenceTestCase
             addClassesToSchema(new Class[]
                 {
                     OptionalSample1.class,
+                    OptionalSample2.class,
+                    OptionalSample3.class,
                 });
             initialised = true;
         }
@@ -164,6 +168,94 @@ public class OptionalTest extends JDOPersistenceTestCase
         finally
         {
             clean(OptionalSample1.class);
+        }
+    }
+
+    /**
+     * Test for Optional of 1-1 relation.
+     */
+    public void testOptionalOneToOne()
+    {
+        try
+        {
+            // Create some data we can use for access
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            Object id1 = null;
+            Object id2 = null;
+            try
+            {
+                tx.begin();
+
+                OptionalSample2 s2a = new OptionalSample2(1, "First");
+                OptionalSample3 s3 = new OptionalSample3(101, "First S3");
+                s2a.setSample3(s3);
+                pm.makePersistent(s2a);
+
+                OptionalSample2 s2b = new OptionalSample2(2, "Second");
+                pm.makePersistent(s2b);
+
+                tx.commit();
+                id1 = pm.getObjectId(s2a);
+                id2 = pm.getObjectId(s2b);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error persisting Optional samples", e);
+                fail("Error persisting Optional samples");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                OptionalSample2 s2a = pm.getObjectById(OptionalSample2.class, id1);
+                assertEquals("First", s2a.getName());
+                Optional<OptionalSample3> s3fielda = s2a.getSample3();
+                assertNotNull(s3fielda);
+                assertNotNull(s3fielda.get());
+                OptionalSample3 s3 = s3fielda.get();
+                assertEquals("First S3", s3.getName());
+
+                OptionalSample2 s2b = pm.getObjectById(OptionalSample2.class, id2);
+                assertEquals("Second", s2b.getName());
+                Optional<OptionalSample3> s3fieldb = s2b.getSample3();
+                assertNotNull(s3fieldb);
+                assertFalse(s3fieldb.isPresent());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving Optional data", e);
+                fail("Error retrieving Optional data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(OptionalSample2.class);
+            clean(OptionalSample3.class);
         }
     }
 }
