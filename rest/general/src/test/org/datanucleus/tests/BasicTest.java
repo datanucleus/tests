@@ -206,7 +206,7 @@ public class BasicTest extends TestCase
             {
                 ContentExchange get = new ContentExchange();
                 String encodedQuery = URLEncoder.encode("SELECT FROM " + Person.class.getName(), "UTF-8");
-                get.setURL("http://localhost:"+PORT+"/dn/jdoql?" + encodedQuery);
+                get.setURL("http://localhost:"+PORT+"/dn/jdoql?query=" + encodedQuery);
                 get.setMethod("GET");
                 client.send(get);
                 get.waitForDone();
@@ -285,7 +285,7 @@ public class BasicTest extends TestCase
             {
                 ContentExchange get = new ContentExchange();
                 String encodedQuery = URLEncoder.encode("SELECT p FROM " + Person.class.getName() + " p", "UTF-8");
-                get.setURL("http://localhost:"+PORT+"/dn/jpql?" + encodedQuery);
+                get.setURL("http://localhost:"+PORT+"/dn/jpql?query=" + encodedQuery);
                 get.setMethod("GET");
                 client.send(get);
                 get.waitForDone();
@@ -782,7 +782,7 @@ public class BasicTest extends TestCase
             {
                 ContentExchange get = new ContentExchange();
                 String encodedQuery = URLEncoder.encode("SELECT FROM " + Person.class.getName(), "UTF-8");
-                get.setURL("http://localhost:"+PORT+"/dn/jdoql?" + encodedQuery);
+                get.setURL("http://localhost:"+PORT+"/dn/jdoql?query=" + encodedQuery);
                 get.setMethod("GET");
                 client.send(get);
                 get.waitForDone();
