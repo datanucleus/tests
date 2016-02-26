@@ -24,6 +24,7 @@ import org.datanucleus.api.jpa.JPAQuery;
 import org.datanucleus.exceptions.NucleusUserException;
 import org.datanucleus.query.JPQLSingleStringParser;
 import org.datanucleus.store.query.AbstractJPQLQuery;
+import org.datanucleus.store.query.Query.QueryType;
 import org.datanucleus.store.query.Query.SubqueryDefinition;
 
 /**
@@ -207,7 +208,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
         try
         {
             parser.parse();
-            assertEquals("Type is wrong", org.datanucleus.store.query.Query.BULK_INSERT, query.getType());
+            assertEquals("Type is wrong", QueryType.BULK_INSERT, query.getType());
             assertEquals("Candidate is wrong", "org.jpox.samples.MyClass", query.getFrom());
             assertEquals("INSERT fields are wrong", "id, name, otherField", query.getInsertFields());
             assertEquals("INSERT select query is wrong", "SELECT p.id, p.name, p.description FROM org.jpox.samples.Person p WHERE p.id > 3", query.getInsertSelectQuery());
