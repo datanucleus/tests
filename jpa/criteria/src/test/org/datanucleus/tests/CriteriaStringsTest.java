@@ -17,6 +17,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +51,9 @@ import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.samples.annotations.models.company.Qualification;
 import org.datanucleus.samples.annotations.one_many.bidir.Animal;
 import org.datanucleus.samples.annotations.one_many.bidir.Farm;
+import org.datanucleus.samples.jpa.criteria.embedded.A;
+import org.datanucleus.samples.jpa.criteria.embedded.B;
+import org.datanucleus.samples.jpa.criteria.embedded.C;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
@@ -1566,6 +1570,89 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             assertEquals("Number of results is incorrect", 1, results.size());
 
             tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test basic generation of query with candidate and alias, plus FROM joins across embedded 1-1.
+     */
+    public void testJoinAcrossEmbeddedOneToOne()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            A a = new A();
+            a.setId(Long.valueOf(1));
+            a.setName("First A");
+            B b = a.getB();
+            b.setName("First B");
+            C c = new C(101, BigDecimal.valueOf(123.45), "GBP");
+            b.setC(c);
+            em.persist(a);
+            em.persist(c);
+            em.flush();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+
+            // First method, using join("b").join("c")
+            CriteriaQuery<A> crit1 = qb.createQuery(A.class);
+            Root<A> cand1 = crit1.from(A.class);
+            cand1.alias("a");
+            crit1.select(cand1);
+            cand1.join("b").join("c");
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT a FROM org.datanucleus.samples.jpa.criteria.embedded.A a JOIN a.b DN_JOIN_0 JOIN DN_JOIN_0.c DN_JOIN_1",
+                crit1.toString());
+
+            Query q1 = em.createQuery(crit1);
+            List<A> results1 = q1.getResultList();
+
+            assertNotNull("Null results returned!", results1);
+            assertEquals("Number of results is incorrect", 1, results1.size());
+            A resultA1 = results1.get(0);
+            assertEquals(Long.valueOf(1), resultA1.getId());
+            assertEquals("First A", resultA1.getName());
+
+            // Second method, using join("b.c")
+            CriteriaQuery<A> crit2 = qb.createQuery(A.class);
+            Root<A> cand2 = crit2.from(A.class);
+            cand2.alias("a");
+            crit2.select(cand2);
+            cand2.join("b.c");
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT a FROM org.datanucleus.samples.jpa.criteria.embedded.A a JOIN a.b DN_JOIN_0 JOIN DN_JOIN_0.c DN_JOIN_1",
+                crit2.toString());
+
+            Query q2 = em.createQuery(crit2);
+            List<A> results2 = q2.getResultList();
+
+            assertNotNull("Null results returned!", results2);
+            assertEquals("Number of results is incorrect", 1, results2.size());
+            A resultA2 = results2.get(0);
+            assertEquals(Long.valueOf(1), resultA2.getId());
+            assertEquals("First A", resultA2.getName());
+
+            tx.rollback();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown during test", e);
+            fail("Exception caught during test : " + e.getMessage());
         }
         finally
         {
