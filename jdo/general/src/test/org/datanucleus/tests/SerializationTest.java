@@ -34,7 +34,9 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.samples.serialised.SerialisedHolder;
 import org.datanucleus.samples.serialised.SerialisedHolder2;
+import org.datanucleus.samples.serialised.SerialisedHolder3;
 import org.datanucleus.samples.serialised.SerialisedObject;
+import org.datanucleus.samples.serialised.SerialisedObject3;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.interfaces.Circle;
 import org.jpox.samples.interfaces.ShapeHolder;
@@ -130,6 +132,7 @@ public class SerializationTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
 
             // Retrieve the object
             pm = pmf.getPersistenceManager();
@@ -169,6 +172,82 @@ public class SerializationTest extends JDOPersistenceTestCase
         {
             // Clean up our data
             clean(SerialisedHolder2.class);
+        }
+    }
+
+    /**
+     * Test for serialisation of Object field.
+     */
+    public void testSerialisedObject()
+    {
+        try
+        {
+            Object holderId = null;
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            // Persist the object with serialised fields
+            try
+            {
+                tx.begin();
+
+                SerialisedObject3 obj = new SerialisedObject3("Some long description");
+                SerialisedHolder3 holder = new SerialisedHolder3("Holder(1)", obj);
+                pm.makePersistent(holder);
+
+                tx.commit();
+                holderId = pm.getObjectId(holder);
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown in test", e);
+                fail("Exception thrown while persisted object with serialised Object field : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            // Retrieve the object
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                SerialisedHolder3 holder = (SerialisedHolder3)pm.getObjectById(holderId);
+                assertNotNull("Holder of serialised data could not be retrieved!", holder);
+                assertTrue("Holder name is incorrect", holder.getName().equals("Holder(1)"));
+                assertNotNull("Retrieved holder has null serialised data", holder.getObject());
+                SerialisedObject3 obj = holder.getObject();
+                assertEquals("Some long description", obj.getDescription());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown in test", e);
+                fail("Exception thrown while retrieving object with serialised Object field : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean up our data
+            clean(SerialisedHolder3.class);
         }
     }
 
