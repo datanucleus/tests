@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (c) 2005 Andy Jefferson and others. All rights reserved.
+Copyright (c) 2016 Andy Jefferson and others. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -19,17 +19,26 @@ Contributors:
 package org.datanucleus.samples.serialised;
 
 /**
- * Sample class having PC field that is serialised.
+ * Sample class having byte[] field that is serialised.
  */
-public class SerialisedHolder
+public class SerialisedHolder2
 {
     private String name;
-    private SerialisedObject pc;
+    private byte[] data;
 
-    public SerialisedHolder(String name, SerialisedObject pc)
+    public SerialisedHolder2(String name, byte[] data)
     {
         this.name = name;
-        this.pc = pc;
+        this.data = data;
+    }
+
+    public byte[] getData()
+    {
+        return data;
+    }
+    public void setData(byte[] data)
+    {
+        this.data = data;
     }
 
     public String getName()
@@ -39,14 +48,5 @@ public class SerialisedHolder
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    public SerialisedObject getSerialisedPC()
-    {
-        return pc;
-    }
-    public void setSerialisedPC(SerialisedObject pc)
-    {
-        this.pc = pc;
     }
 }

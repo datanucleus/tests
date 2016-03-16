@@ -11,5 +11,13 @@
         </class>
 
         <class name="SerialisedObject" detachable="true"/>
+
+        <class name="SerialisedHolder2" detachable="true" table="SERIALISED_HOLDER2">
+            <datastore-identity>
+                <column name="SERIALISED_HOLDER2_ID"/>
+            </datastore-identity>
+            <field name="name" column="NAME"/>
+            <field name="data" serialized="true" persistence-modifier="persistent" column="SERIALISED_DATA"/>
+        </class>
     </package>
 </jdo>

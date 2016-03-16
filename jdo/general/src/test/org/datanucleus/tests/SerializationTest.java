@@ -33,6 +33,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.serialised.SerialisedHolder;
+import org.datanucleus.samples.serialised.SerialisedHolder2;
 import org.datanucleus.samples.serialised.SerialisedObject;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.interfaces.Circle;
@@ -90,6 +91,85 @@ public class SerializationTest extends JDOPersistenceTestCase
 
         // Clean out any data created
         clean(Employee.class);
+    }
+
+    /**
+     * Test for serialisation of byte[] field.
+     */
+    public void testSerialisedByteArray()
+    {
+        try
+        {
+            Object holderId = null;
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            // Persist the object with serialised fields
+            byte[] elements = new byte[] {1, 0, 1, 1, 0, 1, 0, 1, 0, 1};
+            try
+            {
+                tx.begin();
+
+                SerialisedHolder2 holder = new SerialisedHolder2("Holder(1)", elements);
+                pm.makePersistent(holder);
+
+                tx.commit();
+                holderId = pm.getObjectId(holder);
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown in test", e);
+                fail("Exception thrown while persisted object with serialised byte[] field : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve the object
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                SerialisedHolder2 holder = (SerialisedHolder2)pm.getObjectById(holderId);
+                assertNotNull("Holder of serialised data could not be retrieved!", holder);
+                assertTrue("Holder name is incorrect", holder.getName().equals("Holder(1)"));
+                assertNotNull("Retrieved holder has null serialised data", holder.getData());
+                byte[] data = holder.getData();
+                assertEquals(elements.length, data.length);
+                for (int i=0;i<elements.length;i++)
+                {
+                    assertEquals(elements[i], data[i]);
+                }
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown in test", e);
+                fail("Exception thrown while retrieving object with serialised byte[] field : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean up our data
+            clean(SerialisedHolder2.class);
+        }
     }
 
     /**
