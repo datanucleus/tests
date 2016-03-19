@@ -75,7 +75,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LOG.error("Error when persisting 2 Person objects", e);
                 fail("Exception thrown when running test " + e.getMessage());
             }
             finally
@@ -127,7 +127,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LOG.error("Exception when persisting 3 Person objects", e);
                 fail("Exception thrown when persisting in PM : " + e.getMessage());
                 return;
             }
@@ -156,7 +156,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
+                    LOG.error("Exception when querying and updating Person objects", e);
                     fail("Exception thrown when updating in PM2 : " + e.getMessage());
                     return;
                 }
@@ -208,7 +208,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LOG.error("Exception when persisting 2 Person objects", e);
                 fail("Exception thrown when running test " + e.getMessage());
             }
             finally
@@ -234,7 +234,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LOG.error("Exception when deleting 2 Person objects", e);
                 fail("Exception thrown when running test " + e.getMessage());
             }
             finally
@@ -261,7 +261,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LOG.error("Exception when querying Person objects", e);
                 fail("Exception thrown when running test " + e.getMessage());
             }
             finally
@@ -301,7 +301,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LOG.error(">> Error when persisting first object", e);
                 fail("Exception thrown persisting data " + e.getMessage());
             }
             finally
@@ -962,7 +962,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                LOG.error("Exception when persisting 2 BasicTypeHolder objects", e);
                 fail("Exception thrown when running test " + e.getMessage());
             }
             finally
