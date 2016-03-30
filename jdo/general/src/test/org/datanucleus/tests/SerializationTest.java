@@ -292,6 +292,7 @@ public class SerializationTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
 
             // Retrieve the object
             pm = pmf.getPersistenceManager();
