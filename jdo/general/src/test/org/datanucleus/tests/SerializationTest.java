@@ -257,6 +257,11 @@ public class SerializationTest extends JDOPersistenceTestCase
      */
     public void testSerialisedPC()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_PC))
+        {
+            return;
+        }
+
         try
         {
             Object holderId = null;
