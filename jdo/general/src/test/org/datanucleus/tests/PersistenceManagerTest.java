@@ -70,6 +70,7 @@ import org.datanucleus.samples.widget.CollectionFieldTester;
 import org.datanucleus.samples.widget.InversePrimitive;
 import org.datanucleus.samples.widget.Primitive;
 import org.datanucleus.samples.widget.Widget;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
@@ -1053,6 +1054,11 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
      */
     public void testMakeCollectionFieldsPersistent() throws Exception
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_COLLECTION_ELEMENT))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         CollectionFieldTester collectionTester = new CollectionFieldTester();
 
@@ -3815,6 +3821,11 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
     @SuppressWarnings("unchecked")
     public void testJoinTableCollectionFieldPersistence1()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_COLLECTION_ELEMENT))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
 
         CollectionFieldTester tester = new CollectionFieldTester();
