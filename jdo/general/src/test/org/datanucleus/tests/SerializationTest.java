@@ -37,6 +37,7 @@ import org.datanucleus.samples.serialised.SerialisedHolder2;
 import org.datanucleus.samples.serialised.SerialisedHolder3;
 import org.datanucleus.samples.serialised.SerialisedObject;
 import org.datanucleus.samples.serialised.SerialisedObject3;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.interfaces.Circle;
 import org.jpox.samples.interfaces.ShapeHolder;
@@ -618,6 +619,11 @@ public class SerializationTest extends JDOPersistenceTestCase
      */
     public void testSerialisedCollectionElements()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_COLLECTION_ELEMENT))
+        {
+            return;
+        }
+
         try
         {
             Object holderId = null;
@@ -747,6 +753,11 @@ public class SerializationTest extends JDOPersistenceTestCase
      */
     public void testSerialisedMapValues()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_MAP_VALUE))
+        {
+            return;
+        }
+
         try
         {
             Object holderId = null;
