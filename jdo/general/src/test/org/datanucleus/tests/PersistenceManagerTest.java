@@ -2616,6 +2616,11 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
     @SuppressWarnings("unchecked")
     public void testNormalFCOCollectionFieldPersistence4()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_COLLECTION_ELEMENT))
+        {
+            return;
+        }
+
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
 
