@@ -29,8 +29,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.types.sqltimestamp.SqlTimestampHolder;
 
@@ -91,13 +90,10 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
     public void testBasicPersistence()
     throws Exception
     {
-        if (vendorID != null)
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_DATASTORE_TIME_STORES_MILLISECS))
         {
-            DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
-            if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
-            {
-                return;
-            }
+            // Datastore doesn't handle millisecs.
+            return;
         }
 
         // TODO Some datastores don't handle nanoseconds (i.e only down to ".299")
@@ -351,13 +347,10 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
     public void testQuery()
     throws Exception
     {
-        if (vendorID != null)
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_DATASTORE_TIME_STORES_MILLISECS))
         {
-            DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
-            if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
-            {
-                return;
-            }
+            // Datastore doesn't handle millisecs.
+            return;
         }
 
         PersistenceManager pm = pmf.getPersistenceManager();

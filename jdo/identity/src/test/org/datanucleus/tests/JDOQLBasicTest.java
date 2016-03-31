@@ -52,6 +52,7 @@ import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.models.nullability.NullabilityMandatoryMember;
 import org.datanucleus.samples.models.nullability.NullabilityOptionalMember;
 import org.datanucleus.samples.models.nullability.NullabilityOwner;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.tests.JDOPersistenceTestCase;
@@ -1959,13 +1960,9 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             cal1.set(Calendar.HOUR_OF_DAY, 10);
             cal1.set(Calendar.MINUTE, 55);
             cal1.set(Calendar.SECOND, 5);
-            if (vendorID != null)
+            if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_DATASTORE_TIME_STORES_MILLISECS))
             {
-                DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
-                if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
-                {
-                    cal1.set(Calendar.MILLISECOND, 0);
-                }
+                cal1.set(Calendar.MILLISECOND, 0);
             }
             prim1.setDateField(cal1.getTime());
             maxDate = cal1.getTime();
@@ -1978,13 +1975,9 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             cal2.set(Calendar.HOUR_OF_DAY, 4);
             cal2.set(Calendar.MINUTE, 13);
             cal2.set(Calendar.SECOND, 45);
-            if (vendorID != null)
+            if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_DATASTORE_TIME_STORES_MILLISECS))
             {
-                DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
-                if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
-                {
-                    cal2.set(Calendar.MILLISECOND, 0);
-                }
+                cal2.set(Calendar.MILLISECOND, 0);
             }
             prim2.setDateField(cal2.getTime());
 

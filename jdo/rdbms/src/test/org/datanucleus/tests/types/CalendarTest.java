@@ -24,8 +24,7 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.types.calendar.CalendarHolder;
 
@@ -163,25 +162,17 @@ public class CalendarTest  extends JDOPersistenceTestCase
             {
                 tx.begin();
                 CalendarHolder cal2 = (CalendarHolder) pm.getObjectById(id, true);
-                if (storeMgr.getClass().getName().equals("org.datanucleus.store.rdbms.RDBMSStoreManager"))
+                if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_DATASTORE_TIME_STORES_MILLISECS))
                 {
-                    DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
-                    if (dba.supportsOption(org.datanucleus.store.rdbms.adapter.DatastoreAdapter.DATETIME_STORES_MILLISECS))
-                    {
-                        assertEquals(123456, cal2.getCal2TimeInMillisecs());
-                    }
-                    else
-                    {
-                        // Millisecs not stored so just check hours/mins/secs
-                        if (cal2.getCal2TimeInMillisecs() != 123000 && cal2.getCal2TimeInMillisecs() != 123456)
-                        {
-                            fail("Calendar 2 time in millisecs was wrong : expected 123000 but got " + cal2.getCal2TimeInMillisecs());
-                        }
-                    }
+                    assertEquals(123456, cal2.getCal2TimeInMillisecs());
                 }
                 else
                 {
-                    assertEquals(123456, cal2.getCal2TimeInMillisecs());
+                    // Millisecs not stored so just check hours/mins/secs
+                    if (cal2.getCal2TimeInMillisecs() != 123000 && cal2.getCal2TimeInMillisecs() != 123456)
+                    {
+                        fail("Calendar 2 time in millisecs was wrong : expected 123000 but got " + cal2.getCal2TimeInMillisecs());
+                    }
                 }
                 tx.commit();
             }

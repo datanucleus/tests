@@ -23,8 +23,7 @@ import javax.jdo.JDOOptimisticVerificationException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
-import org.datanucleus.store.rdbms.RDBMSStoreManager;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.versioned.Trade2;
 
@@ -43,14 +42,10 @@ public class OptimisticTest extends JDOPersistenceTestCase
      */
     public void testBasicDateTimeStrategy()
     {
-        if (storeMgr instanceof RDBMSStoreManager)
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_DATASTORE_TIME_STORES_MILLISECS))
         {
-            DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
-            if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
-            {
-                LOG.warn("Database doesnt support storing of millisecs in DATETIME columns so ignoring the test");
-                return;
-            }
+            LOG.warn("Database doesnt support storing of millisecs in DATETIME columns so ignoring the test");
+            return;
         }
 
         addClassesToSchema(new Class[]{Trade2.class});
