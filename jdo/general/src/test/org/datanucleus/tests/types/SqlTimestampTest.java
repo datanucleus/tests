@@ -100,6 +100,7 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
             }
         }
 
+        // TODO Some datastores don't handle nanoseconds (i.e only down to ".299")
         try
         {
             Timestamp keyTs = Timestamp.valueOf("2014-03-05 01:10:25.599000001");
