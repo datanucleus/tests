@@ -37,10 +37,12 @@ public class CompanyHelper
     
     public static void clearCompanyData(PersistenceManagerFactory pmf)
     {
-        try(PersistenceManager pm = pmf.getPersistenceManager()){
+        try(PersistenceManager pm = pmf.getPersistenceManager())
+        {
             clearCompanyData(pm);
         }
     }
+
     /**
      * Convenience method to clean out all Company data
      * @param pmf The PMF managing the company data
@@ -149,6 +151,13 @@ public class CompanyHelper
         {
             LOG.error("Exception thrown during clear", e);
             throw new NucleusUserException("Exception thrown during clear() : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
         }
     }
 }
