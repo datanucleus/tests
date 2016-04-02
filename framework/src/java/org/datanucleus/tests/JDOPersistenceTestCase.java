@@ -289,6 +289,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                     }
                     catch (Exception e)
                     {
+                        LOG.warn("Exception in delete process", e);
                         if (LOG.isDebugEnabled())
                         {
                             LOG.debug("Failed, retrying later: " + id);
