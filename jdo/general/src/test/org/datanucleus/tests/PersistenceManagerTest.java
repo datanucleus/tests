@@ -3065,8 +3065,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue());
             assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue());
 
-            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length,
-                events.length == i);
+            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length, events.length == i);
 
             tx.begin();
             pm.evictAll();
@@ -3114,8 +3113,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
             assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue());
             assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue());
-            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length,
-                events.length == i);
+            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length, events.length == i);
 
             pmf.getDataStoreCache().evictAll(); pm.evictAll(); // Make sure the get goes to the DB
             tx.begin();
@@ -3150,8 +3148,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             events = listener.getRegisteredEventsAsArray();
             assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue());
             assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue());
-            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length,
-                events.length == i);
+            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length, events.length == i);
         }
         catch (Exception e)
         {
@@ -3209,14 +3206,24 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 1
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
+
+                int numPreStore = 0;
+                int numPostStore = 0;
+                int numEventsToProcess = i+8;
+                for (int j=i;j<numEventsToProcess;j++)
+                {
+                    if (events[j].intValue() == LifecycleListenerSpecification.EVENT_PRE_STORE)
+                    {
+                        numPreStore++;
+                    }
+                    else if (events[j].intValue() == LifecycleListenerSpecification.EVENT_POST_STORE)
+                    {
+                        numPostStore++;
+                    }
+                    i++;
+                }
+                assertEquals("Number of PreStore events is wrong", 4, numPreStore);
+                assertEquals("Number of PostStore events is wrong", 4, numPostStore);
             }
             else
             {
@@ -3246,8 +3253,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Department 3
             assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue()); // Department 3
 
-            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length,
-                events.length == i);
+            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length, events.length == i);
 
             // Evict anything in the L2 cache so we know we are going to the
             // datastore, and hence get predictable callback ordering
@@ -3270,19 +3276,29 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             events = listener.getRegisteredEventsAsArray();
             if (tx.getOptimistic())
             {
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue()); // Manager
-
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_DIRTY, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_DIRTY, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_DIRTY, events[i++].intValue()); // Manager
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_DIRTY, events[i++].intValue()); // Manager
-
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
-
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
+                int numPostLoad = 0;
+                int numPreDirty = 0;
+                int numPostDirty = 0;
+                int numEventsToProcess = i+8;
+                for (int j=i;j<numEventsToProcess;j++)
+                {
+                    if (events[j].intValue() == LifecycleListenerSpecification.EVENT_POST_LOAD)
+                    {
+                        numPostLoad++;
+                    }
+                    else if (events[j].intValue() == LifecycleListenerSpecification.EVENT_PRE_DIRTY)
+                    {
+                        numPreDirty++;
+                    }
+                    else if (events[j].intValue() == LifecycleListenerSpecification.EVENT_POST_DIRTY)
+                    {
+                        numPostDirty++;
+                    }
+                    i++;
+                }
+                assertEquals("Number of PostLoad is wrong", 4, numPostLoad);
+                assertEquals("Number of PreDirty is wrong", 2, numPreDirty); // 1 for Department2 and 1 for Manager
+                assertEquals("Number of PostDirty is wrong", 2, numPostDirty); // 1 for Department2 and 1 for Manager
             }
             else
             {
@@ -3301,9 +3317,6 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
 
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_DIRTY, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_DIRTY, events[i++].intValue()); // Manager
-
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
             }
 
             // Commit the changes and check the events
@@ -3311,6 +3324,8 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             events = listener.getRegisteredEventsAsArray();
             if (tx.getOptimistic())
             {
+                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
+                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Manager
@@ -3320,6 +3335,8 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             }
             else
             {
+                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
+                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
                 if (vendorID != null)
                 {
                     // RDBMS loads here
@@ -3342,8 +3359,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 }
             }
 
-            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length,
-                events.length == i);
+            assertTrue("Total number of lifecycle events received was incorrect : should have been " + i + " but was " + events.length, events.length == i);
 
             // TODO Add attach/detach of the Manager and its Departments.
         }
@@ -3411,17 +3427,29 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CREATE, events[i++].intValue()); // Department 3
 
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue());
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue());
-
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Manager
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 1
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
-                assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 3
-                assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Manager
+                // Expecting 5 PreStore and 5 PostStore; 1 for each of the objects
+                int numPreStore = 0;
+                int numPostStore = 0;
+                int numOther = 0;
+                for (int j=i;j<15;j++)
+                {
+                    if (events[j].intValue() == LifecycleListenerSpecification.EVENT_PRE_STORE)
+                    {
+                        numPreStore++;
+                    }
+                    else if (events[j].intValue() == LifecycleListenerSpecification.EVENT_POST_STORE)
+                    {
+                        numPostStore++;
+                    }
+                    else
+                    {
+                        numOther++;
+                    }
+                    i++;
+                }
+                assertEquals("Number of PreStore events was incorrect", 5, numPreStore);
+                assertEquals("Number of PostStore events was incorrect", 5, numPostStore);
+                assertEquals("Number of other events was incorrect", 0, numOther);
             }
             else
             {
