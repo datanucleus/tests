@@ -17,8 +17,11 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import org.datanucleus.api.jpa.NucleusJPAHelper;
 import org.datanucleus.tests.JPAPersistenceTestCase;
@@ -56,8 +59,7 @@ public class NonDurableIdentityTest extends JPAPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error(e);
-                e.printStackTrace();
+                LOG.error("Exception in test", e);
                 fail(e.getMessage());
             }
             finally
@@ -70,6 +72,31 @@ public class NonDurableIdentityTest extends JPAPersistenceTestCase
             }
             emf.getCache().evictAll();
 
+            em = emf.createEntityManager();
+            tx = em.getTransaction();
+            try
+            {      
+                tx.begin();
+                Query q = em.createQuery("SELECT h FROM NonDurableIDHolder h");
+                List<NonDurableIDHolder> results = q.getResultList();
+                assertNotNull(results);
+                assertEquals(1, results.size());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
