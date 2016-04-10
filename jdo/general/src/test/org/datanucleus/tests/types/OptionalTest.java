@@ -154,25 +154,47 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertNotNull(results2);
                 assertEquals(2, results2.size());
 
-                boolean s1Present = false;
-                boolean s2Present = false;
+                boolean row1Present = false;
+                boolean row2Present = false;
                 for (Object row : results2)
                 {
                     Object[] rowValues = (Object[])row;
                     if (((Number)rowValues[0]).intValue() == 1)
                     {
-                        s1Present = true;
+                        row1Present = true;
                         assertTrue(rowValues[1] instanceof String);
                         assertEquals("First String", rowValues[1]);
                     }
                     else if (((Number)rowValues[0]).intValue() == 2)
                     {
-                        s2Present = true;
+                        row2Present = true;
                         assertNull(rowValues[1]);
                     }
                 }
-                assertTrue(s1Present);
-                assertTrue(s2Present);
+                assertTrue(row1Present);
+                assertTrue(row2Present);
+
+                Query q3 = pm.newQuery("SELECT id, stringField.orElse('NotPresent') FROM " + OptionalSample1.class.getName());
+                List<Object[]> results3 = q3.executeResultList();
+                assertNotNull(results3);
+                assertEquals(2, results3.size());
+                row1Present = false;
+                row2Present = false;
+                for (Object[] result : results3)
+                {
+                    if (((Number)result[0]).intValue() == 1)
+                    {
+                        row1Present = true;
+                        assertEquals("First String", result[1]);
+                    }
+                    else if (((Number)result[0]).intValue() == 2)
+                    {
+                        row2Present = true;
+                        assertEquals("NotPresent", result[1]);
+                    }
+                }
+                assertTrue(row1Present);
+                assertTrue(row2Present);
 
                 tx.commit();
             }
