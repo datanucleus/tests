@@ -926,7 +926,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             columnNames.add("SHAPESET1_SQUARE_SQUARE_ID_EID");
             columnNames.add("SHAPESET1_TRIANGLE_TRIANGLE_ID_EID");
             columnNames.add("SHAPESET1_TRIANGLE_ID_EID");
-            columnNames.add("IDX");
+//            columnNames.add("IDX");
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "SHAPEHOLDER_SHAPESET1", columnNames);
             columnNames.clear();
 
