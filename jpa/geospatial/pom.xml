@@ -21,13 +21,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jpa</artifactId>
-            <version>(4.9, )</version>
+            <version>[${api.jpa.min.version}, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-geospatial</artifactId>
-            <version>[4.0.0-release, )</version>
+            <version>[${geospatial.min.version}, )</version>
         </dependency>
+
         <dependency>
             <groupId>oracle</groupId>
             <artifactId>ojdbc6</artifactId>
