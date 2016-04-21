@@ -5,6 +5,7 @@ import org.jpox.samples.models.company.Office;
 
 import javax.jdo.*;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by pica on 02/03/16.
@@ -50,6 +51,12 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
 
     public void testJdoQLTimeout() {
 
+        if (!pmf.supportedOptions().contains("javax.jdo.option.Datastore.Timeout"))
+        {
+            // Datastore doesn't support query timeouts
+            return;
+        }
+
         Runnable sleeper = new SerializedSleepyLister(pmf, false, 2000);
         RunnerThrowable searcher = new ImpatientSearcher(pmf, false, 1000);
 
@@ -70,11 +77,17 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
 
         assertNotNull("ImpatientSearcher did not get a timeout", searcher.getThrowable());
         assertEquals(JDOException.class, searcher.getThrowable().getClass());
-        // TODO
-//        assertEquals(QueryTimeoutException.class, searcher.getThrowable().getCause().getClass());
+        // TODO (apparently needs proper mapping of JDBC driver exceptions)
+        // assertEquals(QueryTimeoutException.class, searcher.getThrowable().getCause().getClass());
     }
 
     public void testSQLTimeout() {
+
+        if (!pmf.supportedOptions().contains("javax.jdo.option.Datastore.Timeout"))
+        {
+            // Datastore doesn't support query timeouts
+            return;
+        }
 
         Runnable sleeper = new SerializedSleepyLister(pmf, true, 2000);
         RunnerThrowable searcher = new ImpatientSearcher(pmf, true, 1000);
@@ -95,8 +108,8 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
         joinBoth(t1, t2);
         assertNotNull("ImpatientSearcher did not get a timeout", searcher.getThrowable());
         assertEquals(JDODataStoreException.class, searcher.getThrowable().getClass());
-        // TODO
-//        assertEquals(QueryTimeoutException.class, searcher.getThrowable().getCause().getClass());
+        // TODO (apparently needs proper mapping of JDBC driver exceptions)
+        // assertEquals(QueryTimeoutException.class, searcher.getThrowable().getCause().getClass());
     }
 
     private void joinBoth(Thread t1, Thread t2) {
@@ -166,13 +179,13 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
                 q.setDatastoreReadTimeoutMillis(wait);
                 q.setUnique(true);
                 final long t0 = System.nanoTime();
-                final Office r = (Office) q.execute();
-                LOG.info(String.format("got %s after %d", r, (System.nanoTime() - t0) / 1000000));
+                final Object r = q.execute();
+                LOG.info(String.format("got %s after %d", Objects.toString(r), (System.nanoTime() - t0) / 1000000));
 
                 tx.commit();
             } catch (Throwable t) {
                 throwable = t;
-                throw t;
+                LOG.info(String.format("got a %s", t.getClass().getSimpleName()));
             } finally {
                 if (tx.isActive()) {
                     tx.rollback();
