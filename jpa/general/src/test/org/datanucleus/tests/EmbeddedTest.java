@@ -24,6 +24,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.embedded.Job;
 import org.jpox.samples.annotations.embedded.Processor;
@@ -60,15 +61,14 @@ public class EmbeddedTest extends JPAPersistenceTestCase
                 d.setPrimaryKey(pk);
                 em.persist(d);
 
-                List result = em.createQuery(
-                    "SELECT Object(T) FROM " + Department.class.getName() + " T").getResultList();
+                List result = em.createQuery("SELECT T FROM " + Department.class.getName() + " T").getResultList();
                 assertEquals(1, result.size());
                 assertEquals(pk.getIdString(), ((Department)result.get(0)).getPrimaryKey().getIdString());
                 tx.commit();
 
                 // Retrieve the object and delete it
                 tx.begin();
-                result = em.createQuery("SELECT Object(T) FROM " + Department.class.getName() + " T").getResultList();
+                result = em.createQuery("SELECT T FROM " + Department.class.getName() + " T").getResultList();
                 d = (Department)result.get(0);
                 em.remove(d);
                 em.flush();
@@ -99,6 +99,11 @@ public class EmbeddedTest extends JPAPersistenceTestCase
      */
     public void testOneToManyWithEmbeddedId()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
