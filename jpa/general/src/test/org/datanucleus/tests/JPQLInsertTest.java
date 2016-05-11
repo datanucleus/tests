@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 import org.jpox.samples.annotations.models.company.Employee;
@@ -51,6 +52,11 @@ public class JPQLInsertTest extends JPAPersistenceTestCase
      */
     public void testBulkInsert()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JPQL_BULK_INSERT))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();

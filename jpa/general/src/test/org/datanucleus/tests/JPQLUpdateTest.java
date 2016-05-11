@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.models.company.Employee;
 import org.jpox.samples.annotations.models.company.Person;
@@ -53,6 +54,11 @@ public class JPQLUpdateTest extends JPAPersistenceTestCase
      */
     public void testBulkUpdateFieldInSupertable()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JPQL_BULK_UPDATE))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
@@ -96,6 +102,11 @@ public class JPQLUpdateTest extends JPAPersistenceTestCase
      */
     public void testBulkUpdateFieldInTable()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JPQL_BULK_UPDATE))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
@@ -142,6 +153,11 @@ public class JPQLUpdateTest extends JPAPersistenceTestCase
      */
     public void testBulkUpdateSettingToNull()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JPQL_BULK_UPDATE))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
@@ -233,6 +249,11 @@ public class JPQLUpdateTest extends JPAPersistenceTestCase
      */
     public void testBulkUpdateUsingWhereSubquery()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JPQL_BULK_UPDATE))
+        {
+            return;
+        }
+
         if (vendorID != null && vendorID.equalsIgnoreCase("mysql"))
         {
             // MySQL has issues with using subqueries in UPDATE statements
@@ -289,6 +310,11 @@ public class JPQLUpdateTest extends JPAPersistenceTestCase
      */
     public void testUpdateSingleResult()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JPQL_BULK_UPDATE))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
