@@ -99,11 +99,6 @@ public class EmbeddedTest extends JPAPersistenceTestCase
      */
     public void testOneToManyWithEmbeddedId()
     {
-        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
-        {
-            return;
-        }
-
         try
         {
             EntityManager em = getEM();
@@ -175,6 +170,11 @@ public class EmbeddedTest extends JPAPersistenceTestCase
      */
     public void testOneToManyEmbeddedElements()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_COLLECTION))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();

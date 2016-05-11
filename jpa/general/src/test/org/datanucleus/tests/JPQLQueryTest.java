@@ -43,6 +43,7 @@ import org.datanucleus.api.jpa.JPAQuery;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
+import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase;
@@ -3401,6 +3402,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
      */
     public void testMapJoinWithKEYandVALUE()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
@@ -3456,6 +3462,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
      */
     public void testMapJoinNonPCWithKEYandVALUE()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
@@ -3509,6 +3520,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
      */
     public void testMapJoinEmbeddableWithKEYandVALUE()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+        {
+            return;
+        }
+
         try
         {
             EntityManager em = getEM();
