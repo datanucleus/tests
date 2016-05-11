@@ -4724,6 +4724,11 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
      */
     public void testBulkUpdate()
     {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JDOQL_BULK_UPDATE))
+        {
+            return;
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
