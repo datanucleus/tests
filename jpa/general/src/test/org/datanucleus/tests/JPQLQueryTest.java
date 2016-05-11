@@ -179,15 +179,12 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(p1);
                 Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
                 em.persist(p2);
-
                 em.flush();
-                tx.commit();
 
-                tx.begin();
-                List result = em.createQuery(
-                    "SELECT T FROM " + Person.class.getName() + " T").setMaxResults(1).getResultList();
+                List result = em.createQuery("SELECT T FROM " + Person.class.getName() + " T").setMaxResults(1).getResultList();
                 assertEquals(1, result.size());
-                tx.commit();
+
+                tx.rollback();
             }
             finally
             {
@@ -1832,12 +1829,10 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
                 em.persist(p2);
                 em.flush();
-                tx.commit();
 
-                tx.begin();
                 List result = em.createQuery("SELECT DISTINCT Object(P) FROM " + Person.class.getName() + " p").getResultList();
                 assertEquals(2, result.size());
-                tx.commit();
+                tx.rollback();
             }
             catch (Exception e)
             {
@@ -1881,22 +1876,16 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 p3.setAge(38);
                 em.persist(p3);
                 em.flush();
-                tx.commit();
 
-                tx.begin();
                 List result = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName IN ('Fred', 'Pebbles')").getResultList();
                 assertEquals(2, result.size());
-                tx.commit();
 
-                tx.begin();
                 result = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.firstName NOT IN ('Fred', 'Pebbles')").getResultList();
                 assertEquals(1, result.size());
-                tx.commit();
 
-                tx.begin();
                 result = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.age IN (38)").getResultList();
                 assertEquals(1, result.size());
-                tx.commit();
+                tx.rollback();
             }
             catch (Exception e)
             {
@@ -1943,9 +1932,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 p3.setBestFriend(p2);
                 p2.setBestFriend(p3);
                 em.flush();
-                tx.commit();
 
-                tx.begin();
                 Query q1 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1, :param2)");
                 q1.setParameter("param1", "Fred");
                 q1.setParameter("param2", "Pebbles");
@@ -1959,26 +1946,20 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 assertNull(param2.getPosition());
                 List result = q1.getResultList();
                 assertEquals(2, result.size());
-                tx.commit();
 
-                tx.begin();
                 Query q2 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName NOT IN (:param1, :param2)");
                 q2.setParameter("param1", "Fred");
                 q2.setParameter("param2", "Pebbles");
                 result = q2.getResultList();
                 assertEquals(1, result.size());
-                tx.commit();
 
                 // Parameter with single value
-                tx.begin();
                 Query q3a = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:param1)");
                 q3a.setParameter("param1", "Pebbles");
                 result = q3a.getResultList();
                 assertEquals(1, result.size());
-                tx.commit();
 
                 // Parameter with collection of values TODO If we set this param name to "param1" it will try to reuse compilation from previous query above and fail
-                tx.begin();
                 Query q3 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.firstName IN (:collParam)");
                 Collection<String> options = new HashSet<String>();
                 options.add("Fred");
@@ -1986,9 +1967,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 q3.setParameter("collParam", options);
                 result = q3.getResultList();
                 assertEquals(2, result.size());
-                tx.commit();
 
-                tx.begin();
                 Query q3b = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.age NOT IN (:param1)");
                 List<Integer> options3b = new ArrayList<Integer>();
                 options3b.add(30);
@@ -1996,10 +1975,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 q3b.setParameter("param1", options3b);
                 result = q3b.getResultList();
                 assertEquals(1, result.size());
-                tx.commit();
 
                 // Now try IN using entities
-                tx.begin();
                 Query q4 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.bestFriend IN (:param1)");
                 Collection<Person> friends = new HashSet<Person>();
                 friends.add(p2);
@@ -2007,9 +1984,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 q4.setParameter("param1", friends);
                 result = q4.getResultList();
                 assertEquals(2, result.size());
-                tx.commit();
 
-                tx.begin();
                 Query q5 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.personNum IN (:param1)");
                 List<Long> inList = new ArrayList<Long>();
                 inList.add(new Long(101));
@@ -2017,7 +1992,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 q5.setParameter("param1", inList);
                 result = q5.getResultList();
                 assertEquals(2, result.size());
-                tx.commit();
+
+                tx.rollback();
             }
             catch (Exception e)
             {
@@ -2035,28 +2011,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
         finally
         {
-            EntityManager em = emf.createEntityManager();
-            EntityTransaction tx = em.getTransaction();
-            try
-            {
-                tx.begin();
-                Query q = em.createQuery("UPDATE " + Person.class.getName() + " p SET p.bestFriend = NULL");
-                q.executeUpdate();
-                tx.commit();
-            }
-            catch (Exception e)
-            {
-                LOG.error("Exception performing UPDATE, nulling out bestFriend field", e);
-                fail("Error in cleanup : " + e.getMessage());
-            }
-            finally
-            {
-                if (tx.isActive())
-                {
-                    tx.rollback();
-                }
-                em.close();
-            }
+            removePersonBestFriendRelation();
             clean(Person.class);
         }
     }
@@ -2066,69 +2021,79 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
      */
     public void testMemberOf()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 30000f, "1234A");
-            Employee e2 = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 27000f, "1234B");
-            Employee e3 = new Employee(103, "George", "Cement", "george.cement@jpox.com", 20000f, "1235C");
-            Manager mgr1 = new Manager(100, "Chief", "Rock", "chief.rock@warnerbros.com", 40000.0f, "12345A");
-            mgr1.setBestFriend(e1);
-            Manager mgr2 = new Manager(106, "Boss", "Blaster", "boss.blaster@warnerbros.com", 40005.0f, "12345B");
-            mgr2.setBestFriend(e2);
-            mgr1.addSubordinate(e1);
-            mgr1.addSubordinate(e2);
-            e1.setManager(mgr1);
-            e2.setManager(mgr1);
-            mgr2.addSubordinate(e3);
-            e3.setManager(mgr2);
-            em.persist(mgr1);
-            em.persist(mgr2);
-            em.flush();
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 30000f, "1234A");
+                Employee e2 = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 27000f, "1234B");
+                Employee e3 = new Employee(103, "George", "Cement", "george.cement@jpox.com", 20000f, "1235C");
+                Manager mgr1 = new Manager(100, "Chief", "Rock", "chief.rock@warnerbros.com", 40000.0f, "12345A");
+                mgr1.setBestFriend(e1);
+                Manager mgr2 = new Manager(106, "Boss", "Blaster", "boss.blaster@warnerbros.com", 40005.0f, "12345B");
+                mgr2.setBestFriend(e2);
+                mgr1.addSubordinate(e1);
+                mgr1.addSubordinate(e2);
+                e1.setManager(mgr1);
+                e2.setManager(mgr1);
+                mgr2.addSubordinate(e3);
+                e3.setManager(mgr2);
+                em.persist(mgr1);
+                em.persist(mgr2);
+                em.flush();
 
-            // Retrieve an Employee to use in MEMBER of queries
-            Employee emp = (Employee)em.createQuery("SELECT DISTINCT e FROM " + Employee.class.getName() + " e WHERE e.firstName = 'Fred'").getSingleResult();
+                // Retrieve an Employee to use in MEMBER of queries
+                Employee emp = (Employee)em.createQuery("SELECT DISTINCT e FROM " + Employee.class.getName() + " e WHERE e.firstName = 'Fred'").getSingleResult();
 
-            // Do a MEMBER OF query using an input parameter
-            List result = em.createQuery("SELECT DISTINCT m FROM " + Manager.class.getName() + " m " +
-                "WHERE :param MEMBER OF m.subordinates").setParameter("param", emp).getResultList();
-            assertEquals(1, result.size()); // Manager 1
-            Manager mgr = (Manager)result.get(0);
-            assertEquals("Manager returned from MEMBER OF query has incorrect firstName", "Chief", mgr.getFirstName());
-            assertEquals("Manager returned from MEMBER OF query has incorrect lastName", "Rock", mgr.getLastName());
+                // Do a MEMBER OF query using an input parameter
+                List result = em.createQuery("SELECT DISTINCT m FROM " + Manager.class.getName() + " m " +
+                        "WHERE :param MEMBER OF m.subordinates").setParameter("param", emp).getResultList();
+                assertEquals(1, result.size()); // Manager 1
+                Manager mgr = (Manager)result.get(0);
+                assertEquals("Manager returned from MEMBER OF query has incorrect firstName", "Chief", mgr.getFirstName());
+                assertEquals("Manager returned from MEMBER OF query has incorrect lastName", "Rock", mgr.getLastName());
 
-            // Do a NOT MEMBER OF query using an input parameter
-            result = em.createQuery("SELECT DISTINCT m FROM " + Manager.class.getName() + " m " +
-                "WHERE :param NOT MEMBER OF m.subordinates").setParameter("param", emp).getResultList();
-            assertEquals(1, result.size()); // Manager 2
-            mgr = (Manager)result.get(0);
-            assertEquals("Manager returned from NOT MEMBER OF query has incorrect firstName", "Boss", mgr.getFirstName());
-            assertEquals("Manager returned from NOT MEMBER OF query has incorrect lastName", "Blaster", mgr.getLastName());
+                // Do a NOT MEMBER OF query using an input parameter
+                result = em.createQuery("SELECT DISTINCT m FROM " + Manager.class.getName() + " m " +
+                        "WHERE :param NOT MEMBER OF m.subordinates").setParameter("param", emp).getResultList();
+                assertEquals(1, result.size()); // Manager 2
+                mgr = (Manager)result.get(0);
+                assertEquals("Manager returned from NOT MEMBER OF query has incorrect firstName", "Boss", mgr.getFirstName());
+                assertEquals("Manager returned from NOT MEMBER OF query has incorrect lastName", "Blaster", mgr.getLastName());
 
-            // Do a MEMBER OF query using a field
-            result = em.createQuery("SELECT DISTINCT m FROM " + Manager.class.getName() + " m " +
-                "WHERE m.bestFriend MEMBER OF m.subordinates").getResultList();
-            assertEquals(1, result.size()); // Manager 1
-            mgr = (Manager)result.get(0);
-            assertEquals("Manager returned from MEMBER OF query has incorrect firstName", "Chief", mgr.getFirstName());
-            assertEquals("Manager returned from MEMBER OF query has incorrect lastName", "Rock", mgr.getLastName());
+                // Do a MEMBER OF query using a field
+                result = em.createQuery("SELECT DISTINCT m FROM " + Manager.class.getName() + " m " +
+                        "WHERE m.bestFriend MEMBER OF m.subordinates").getResultList();
+                assertEquals(1, result.size()); // Manager 1
+                mgr = (Manager)result.get(0);
+                assertEquals("Manager returned from MEMBER OF query has incorrect firstName", "Chief", mgr.getFirstName());
+                assertEquals("Manager returned from MEMBER OF query has incorrect lastName", "Rock", mgr.getLastName());
 
-            tx.rollback();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown generating query with MEMBER syntax " + e.getMessage());
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown generating query with MEMBER syntax " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            removePersonBestFriendRelation();
+            removeManagerEmployeeRelation();
+            clean(Manager.class);
+            clean(Employee.class);
         }
     }
 
@@ -2184,19 +2149,14 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(mgr1);
                 em.persist(mgr2);
                 em.flush();
-                tx.commit();
 
-                tx.begin();
-                List result = em.createQuery(
-                    "SELECT DISTINCT m FROM " + Manager.class.getName() + " m," + Employee.class.getName() + " e " +
+                List result = em.createQuery("SELECT DISTINCT m FROM " + Manager.class.getName() + " m," + Employee.class.getName() + " e " +
                     "WHERE e MEMBER OF m.subordinates AND e.firstName = 'Barney'").getResultList();
                 assertEquals(1, result.size()); // Manager 1
                 Manager mgr = (Manager)result.get(0);
-                assertEquals("Manager returned from MEMBER OF query has incorrect firstName", 
-                    "Chief", mgr.getFirstName());
-                assertEquals("Manager returned from MEMBER OF query has incorrect lastName", 
-                    "Rock", mgr.getLastName());
-                tx.commit();
+                assertEquals("Manager returned from MEMBER OF query has incorrect firstName", "Chief", mgr.getFirstName());
+                assertEquals("Manager returned from MEMBER OF query has incorrect lastName", "Rock", mgr.getLastName());
+                tx.rollback();
             }
             catch (Exception e)
             {
@@ -2214,6 +2174,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
         finally
         {
+            removePersonBestFriendRelation();
+            removeManagerEmployeeRelation();
             clean(Manager.class);
             clean(Employee.class);
         }
@@ -2242,16 +2204,14 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(farm1);
                 em.persist(farm2);
                 em.flush();
-                tx.commit();
 
-                tx.begin();
                 List result = em.createQuery(
                     "SELECT DISTINCT f FROM " + Farm.class.getName() + " f," + Animal.class.getName() + " a " +
                     "WHERE a MEMBER OF f.animals AND a.name = 'Dog'").getResultList();
                 assertEquals(1, result.size()); // "High Farm"
                 Farm farm = (Farm)result.get(0);
                 assertEquals("Farm returned from MEMBER OF query has incorrect name", "High Farm", farm.getName());
-                tx.commit();
+                tx.rollback();
             }
             catch (Exception e)
             {
@@ -2789,7 +2749,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 Person p = new Person(105, "Pebbles", "Flintstone", "pebbles.flintstone@datanucleus.org");
                 p.setAge(5);
                 em.persist(p);
-                Employee e = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
+                Employee e = new Employee(106, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
                 e.setAge(35);
                 em.persist(e);
                 em.flush();
@@ -2806,7 +2766,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                     {
                         pebbles = true;
                     }
-                    if (((Number)values[0]).intValue() == 102 && values[1].equals("Adult"))
+                    if (((Number)values[0]).intValue() == 106 && values[1].equals("Adult"))
                     {
                         barney = true;
                     }
@@ -2849,7 +2809,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 Person p = new Person(105, "Pebbles", "Flintstone", "pebbles.flintstone@datanucleus.org");
                 p.setAge(5);
                 em.persist(p);
-                Employee e = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
+                Employee e = new Employee(106, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
                 e.setAge(35);
                 em.persist(e);
                 em.flush();
@@ -2868,7 +2828,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                     {
                         pebbles = true;
                     }
-                    if (idValue == 102 && (caseValue.equals("Other") || caseValue.equals("Other   "))) // HSQL 2.x pads the string to the same length (i.e CHAR not VARCHAR)
+                    if (idValue == 106 && (caseValue.equals("Other") || caseValue.equals("Other   "))) // HSQL 2.x pads the string to the same length (i.e CHAR not VARCHAR)
                     {
                         barney = true;
                     }
@@ -3110,6 +3070,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
         finally
         {
+            removeManagerEmployeeRelation();
             clean(Qualification.class);
             clean(Manager.class);
         }
@@ -3548,55 +3509,61 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
      */
     public void testMapJoinEmbeddableWithKEYandVALUE()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-
-            MapJoinHolder holder = new MapJoinHolder(1);
-            holder.setName("First Holder");
-            for (int i=0;i<3;i++)
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
             {
-                MapJoinEmbeddedValue val = new MapJoinEmbeddedValue("Name" + i, "Description" + i);
-                holder.getMap3().put("Key" + i, val);
+                tx.begin();
+
+                MapJoinHolder holder = new MapJoinHolder(1);
+                holder.setName("First Holder");
+                for (int i=0;i<3;i++)
+                {
+                    MapJoinEmbeddedValue val = new MapJoinEmbeddedValue("Name" + i, "Description" + i);
+                    holder.getMap3().put("Key" + i, val);
+                }
+                em.persist(holder);
+                em.flush();
+
+                TypedQuery<MapJoinEmbeddedValue> q = em.createQuery("SELECT VALUE(m3) FROM MapJoinHolder h LEFT JOIN h.map3 m3 ON KEY(m3) = :key", MapJoinEmbeddedValue.class);
+                q.setParameter("key", "Key1");
+                List<MapJoinEmbeddedValue> results = q.getResultList();
+                assertNotNull(results);
+                assertEquals(1, results.size());
+
+                MapJoinEmbeddedValue resultVal = results.get(0);
+                assertEquals("Name1", resultVal.getName());
+                assertEquals("Description1", resultVal.getDescription());
+
+                // Try access to a field of the embedded value
+                Query q2 = em.createQuery("SELECT VALUE(m3).name FROM MapJoinHolder h LEFT JOIN h.map3 m3 ON KEY(m3) = :key");
+                q2.setParameter("key", "Key1");
+                List results2 = q2.getResultList();
+                assertNotNull(results2);
+                assertEquals(1, results2.size());
+                assertEquals("Name1", (String)results2.get(0));
+
+                tx.rollback();
             }
-            em.persist(holder);
-
-            em.flush();
-
-            TypedQuery<MapJoinEmbeddedValue> q = em.createQuery("SELECT VALUE(m3) FROM MapJoinHolder h LEFT JOIN h.map3 m3 ON KEY(m3) = :key", MapJoinEmbeddedValue.class);
-            q.setParameter("key", "Key1");
-            List<MapJoinEmbeddedValue> results = q.getResultList();
-            assertNotNull(results);
-            assertEquals(1, results.size());
-
-            MapJoinEmbeddedValue resultVal = results.get(0);
-            assertEquals("Name1", resultVal.getName());
-            assertEquals("Description1", resultVal.getDescription());
-
-            // Try access to a field of the embedded value
-            Query q2 = em.createQuery("SELECT VALUE(m3).name FROM MapJoinHolder h LEFT JOIN h.map3 m3 ON KEY(m3) = :key");
-            q2.setParameter("key", "Key1");
-            List results2 = q2.getResultList();
-            assertNotNull(results2);
-            assertEquals(1, results2.size());
-            assertEquals("Name1", (String)results2.get(0));
-
-            tx.rollback();
-        }
-        catch (PersistenceException e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception in test : " + e.getMessage());
+            catch (PersistenceException e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(MapJoinHolder.class);
         }
     }
 
@@ -3818,5 +3785,68 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             clean(Employee.class);
             clean(Person.class);
         }
+    }
+
+    private void removeManagerEmployeeRelation()
+    {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+            Query q = em.createQuery("SELECT m FROM " + Manager.class.getName() + " m");
+            List<Manager> managers = q.getResultList();
+            for (Manager m : managers)
+            {
+                Set<Employee> emps = m.getSubordinates();
+                for (Employee e : emps)
+                {
+                    e.setManager(null);
+                }
+                m.clearSubordinates();
+            }
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception performing removal of Manager-Employee relation", e);
+            fail("Error in cleanup : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+        emf.getCache().evictAll();
+    }
+
+    private void removePersonBestFriendRelation()
+    {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+            Query q = em.createQuery("UPDATE " + Person.class.getName() + " p SET p.bestFriend = NULL");
+            q.executeUpdate();
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception performing UPDATE, nulling out bestFriend field", e);
+            fail("Error in cleanup : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+        emf.getCache().evictAll();
     }
 }
