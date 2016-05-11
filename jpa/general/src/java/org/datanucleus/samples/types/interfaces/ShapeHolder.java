@@ -41,7 +41,7 @@ public class ShapeHolder
     @Id
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     protected Shape shape1 = null;
 
     @OneToMany(cascade=CascadeType.ALL)
