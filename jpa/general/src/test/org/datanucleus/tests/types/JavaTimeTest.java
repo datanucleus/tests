@@ -145,7 +145,7 @@ public class JavaTimeTest extends JPAPersistenceTestCase
                 tx.begin();
 
                 // Try query with a LocalDateTime parameter
-                Query q = em.createQuery("SELECT s FROM " + JavaTimeSample1.class.getName() + " s WHERE s.dateTime1 < :param");
+                Query q = em.createQuery("SELECT s FROM " + JavaTimeSample1.class.getName() + " s WHERE s.dateTime1 IS NOT NULL AND s.dateTime1 < :param");
                 q.setParameter("param", dateTime2);
                 List<JavaTimeSample1> results = q.getResultList();
                 assertEquals(1,  results.size());
