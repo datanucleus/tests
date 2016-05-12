@@ -3846,13 +3846,17 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         try
         {
             tx.begin();
-            Query q = em.createQuery("UPDATE " + Person.class.getName() + " p SET p.bestFriend = NULL");
-            q.executeUpdate();
+            Query q = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE bestFriend IS NOT NULL");
+            List<Person> persons = q.getResultList();
+            for (Person p : persons)
+            {
+                p.setBestFriend(null);
+            }
             tx.commit();
         }
         catch (Exception e)
         {
-            LOG.error("Exception performing UPDATE, nulling out bestFriend field", e);
+            LOG.error("Exception performing null of bestFriend field", e);
             fail("Error in cleanup : " + e.getMessage());
         }
         finally
