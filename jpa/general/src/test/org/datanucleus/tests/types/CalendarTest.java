@@ -121,7 +121,8 @@ public class CalendarTest extends JPAPersistenceTestCase
                 assertEquals("Timestamp : Year was wrong", 2000, cal2.get(Calendar.YEAR));
                 assertEquals("Timestamp : Month was wrong", 2, cal2.get(Calendar.MONTH));
                 assertEquals("Timestamp : Day was wrong", 10, cal2.get(Calendar.DAY_OF_MONTH));
-                assertEquals("Timestamp : Hour was wrong", 0, cal2.get(Calendar.HOUR_OF_DAY));
+                int hour = cal2.get(Calendar.HOUR_OF_DAY);
+                assertTrue("Timestamp : Hour was wrong", hour == 0 || hour == 5); // In-memory with some datastores has the real hour (not stored as 0)
                 assertEquals("Timestamp : Minute was wrong", 0, cal2.get(Calendar.MINUTE));
                 assertEquals("Timestamp : Second was wrong", 0, cal2.get(Calendar.SECOND));
 
