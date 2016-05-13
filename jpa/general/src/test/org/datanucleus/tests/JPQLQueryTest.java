@@ -46,6 +46,7 @@ import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
 import org.datanucleus.tests.JPAPersistenceTestCase;
+import org.datanucleus.util.StringUtils;
 import org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub1;
 import org.jpox.samples.annotations.models.company.Employee;
@@ -3809,11 +3810,24 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         try
         {
             tx.begin();
-            Query q = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE bestFriend IS NOT NULL");
-            List<Person> persons = q.getResultList();
-            for (Person p : persons)
+            if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_QUERY_JPQL_BULK_UPDATE))
             {
-                p.setBestFriend(null);
+                Query q = em.createQuery("UPDATE " + Person.class.getName() + " p SET p.bestFriend = NULL");
+                q.executeUpdate();
+            }
+            else
+            {
+                Query q = em.createQuery("SELECT p FROM " + Person.class.getName() + " p");// WHERE bestFriend IS NOT NULL");
+                List<Person> persons = q.getResultList();
+                for (Person p : persons)
+                {
+                    String state = storeMgr.getApiAdapter().getObjectState(p).toLowerCase();
+                    if (!state.endsWith("deleted"))
+                    {
+                        LOG.info(">> setting BESTFRIEND on " + StringUtils.toJVMIDString(p) + " state=" + state);
+                        p.setBestFriend(null);
+                    }
+                }
             }
             tx.commit();
         }
