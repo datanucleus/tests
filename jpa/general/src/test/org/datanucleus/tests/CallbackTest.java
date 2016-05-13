@@ -45,215 +45,268 @@ public class CallbackTest extends JPAPersistenceTestCase
 
     public void testCallbackBase()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            CallbackListener.invoked.clear();
-            tx.begin();
-            CallbackBase d = new CallbackBase();
-            d.setName("dpt1");
-            d.setId("1");
-            em.persist(d);
-            em.flush();
-            assertEquals(1, CallbackBase.invoked.size());
-            assertEquals(CallbackBase.class.getName(),(CallbackBase.invoked.get(0)).getName());
-            assertEquals(1, CallbackListener.invoked.size());
-            assertEquals(PrePersist.class.getName(), CallbackListener.invoked.get(0));
-            tx.rollback();
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                CallbackListener.invoked.clear();
+                CallbackBase.invoked.clear();
+                tx.begin();
+                CallbackBase d = new CallbackBase();
+                d.setName("dpt1");
+                d.setId("1");
+                em.persist(d);
+                em.flush();
+                assertEquals(1, CallbackBase.invoked.size());
+                assertEquals(CallbackBase.class.getName(),(CallbackBase.invoked.get(0)).getName());
+                assertEquals(1, CallbackListener.invoked.size());
+                assertEquals(PrePersist.class.getName(), CallbackListener.invoked.get(0));
+                tx.rollback();
+            }
+            finally
+            {
+                CallbackListener.invoked.clear();
+                CallbackBase.invoked.clear();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            CallbackBase.invoked.clear();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(CallbackBase.class);
         }
     }
 
     public void testCallbackOverridden()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            CallbackSub1 d = new CallbackSub1();
-            d.setName("dpt1");
-            d.setId("1");
-            em.persist(d);
-            em.flush();
-            assertEquals(1, CallbackBase.invoked.size());
-            assertEquals(CallbackSub1.class.getName(), (CallbackBase.invoked.get(0)).getName());
-            tx.rollback();
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                CallbackBase.invoked.clear();
+                tx.begin();
+                CallbackSub1 d = new CallbackSub1();
+                d.setName("dpt1");
+                d.setId("1");
+                em.persist(d);
+                em.flush();
+                assertEquals(1, CallbackBase.invoked.size());
+                assertEquals(CallbackSub1.class.getName(), (CallbackBase.invoked.get(0)).getName());
+                tx.rollback();
+            }
+            finally
+            {
+                CallbackBase.invoked.clear();
+                CallbackSub1Listener.invoked.clear();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            CallbackBase.invoked.clear();
-            CallbackSub1Listener.invoked.clear();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(CallbackSub1.class);
         }
     }
 
     public void testCallbackNotOverridden()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            CallbackSub1Sub1 d = new CallbackSub1Sub1();
-            d.setName("dpt1");
-            d.setId("1");
-            em.persist(d);
-            em.flush();
-            assertEquals(1, CallbackBase.invoked.size());
-            assertEquals(CallbackSub1Sub1.class.getName(), (CallbackBase.invoked.get(0)).getName());
-            tx.rollback();
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CallbackSub1Sub1 d = new CallbackSub1Sub1();
+                d.setName("dpt1");
+                d.setId("1");
+                em.persist(d);
+                em.flush();
+                assertEquals(1, CallbackBase.invoked.size());
+                assertEquals(CallbackSub1Sub1.class.getName(), (CallbackBase.invoked.get(0)).getName());
+                tx.rollback();
+            }
+            finally
+            {
+                CallbackBase.invoked.clear();
+                CallbackSub1Listener.invoked.clear();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            CallbackBase.invoked.clear();
-            CallbackSub1Listener.invoked.clear();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(CallbackSub1Sub1.class);
         }
     }
     
     public void testExpectionInCallbackNotEaten()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            CallbackSub2 d = new CallbackSub2();
-            d.setName("dpt1");
-            d.setId("1");
-            em.persist(d);
-            em.flush();
-            fail("Expected ArithmeticException");
-        }
-        catch(ArithmeticException ex)
-        {
-            //expected
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CallbackSub2 d = new CallbackSub2();
+                d.setName("dpt1");
+                d.setId("1");
+                em.persist(d);
+                em.flush();
+                fail("Expected ArithmeticException");
+            }
+            catch(ArithmeticException ex)
+            {
+                //expected
+            }
+            finally
+            {
+                CallbackBase.invoked.clear();
+                CallbackSub1Listener.invoked.clear();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            CallbackBase.invoked.clear();
-            CallbackSub1Listener.invoked.clear();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(CallbackSub2.class);
         }
     }
 
     public void testExpectionInCallbackListenerNotEaten()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            CallbackSub1Listener.raiseException = true;
-            CallbackSub1Sub1 d = new CallbackSub1Sub1();
-            d.setName("dpt1");
-            d.setId("1");
-            em.persist(d);
-            em.flush();
-            fail("Expected ArithmeticException");
-        }
-        catch(ArithmeticException ex)
-        {
-            //expected
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CallbackSub1Listener.raiseException = true;
+                CallbackSub1Sub1 d = new CallbackSub1Sub1();
+                d.setName("dpt1");
+                d.setId("1");
+                em.persist(d);
+                em.flush();
+                fail("Expected ArithmeticException");
+            }
+            catch(ArithmeticException ex)
+            {
+                //expected
+            }
+            finally
+            {
+                CallbackBase.invoked.clear();
+                CallbackSub1Listener.raiseException = false;            
+                CallbackSub1Listener.invoked.clear();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            CallbackBase.invoked.clear();
-            CallbackSub1Listener.raiseException = false;            
-            CallbackSub1Listener.invoked.clear();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(CallbackSub1Sub1.class);
         }
-    }    
+    }
+
     public void testListenerClassCalled()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            CallbackSub1Sub1 d = new CallbackSub1Sub1();
-            d.setName("dpt1");
-            d.setId("1");
-            em.persist(d);
-            em.flush();
-            assertEquals(2, CallbackSub1Listener.invoked.size());
-            assertEquals(PrePersist.class.getName(), CallbackSub1Listener.invoked.get(0));
-            assertEquals(PostPersist.class.getName(), CallbackSub1Listener.invoked.get(1));
-            tx.rollback();
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CallbackSub1Sub1 d = new CallbackSub1Sub1();
+                d.setName("dpt1");
+                d.setId("1");
+                em.persist(d);
+                em.flush();
+                assertEquals(2, CallbackSub1Listener.invoked.size());
+                assertEquals(PrePersist.class.getName(), CallbackSub1Listener.invoked.get(0));
+                assertEquals(PostPersist.class.getName(), CallbackSub1Listener.invoked.get(1));
+                tx.rollback();
+            }
+            finally
+            {
+                CallbackBase.invoked.clear();
+                CallbackSub1Listener.invoked.clear();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            CallbackBase.invoked.clear();
-            CallbackSub1Listener.invoked.clear();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(CallbackSub1Sub1.class);
         }
     }
 
     public void testListenerInheritanceClassCalled()
     {
-        EntityManager em = getEM();
-        EntityTransaction tx = em.getTransaction();
         try
         {
-            tx.begin();
-            CallbackListener.invoked.clear();
-            CallbackSub1Sub2 d = new CallbackSub1Sub2();
-            d.setName("dpt3");
-            d.setId("3");
-            em.persist(d);
-            em.flush();
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CallbackListener.invoked.clear();
+                CallbackSub1Sub2 d = new CallbackSub1Sub2();
+                d.setName("dpt3");
+                d.setId("3");
+                em.persist(d);
+                em.flush();
 
-            assertEquals(2, CallbackSub1Listener.invoked.size());
-            assertEquals(2, CallbackSub1Sub2Listener.invoked.size());
-            assertEquals(PrePersist.class.getName(), CallbackSub1Listener.invoked.get(0));
-            assertEquals(PostPersist.class.getName(), CallbackSub1Listener.invoked.get(1));
-            assertEquals(PrePersist.class.getName(), CallbackSub1Sub2Listener.invoked.get(0));
-            assertEquals(PostPersist.class.getName(), CallbackSub1Sub2Listener.invoked.get(1));
-            assertEquals(2, CallbackListener.invoked.size());
-            assertEquals(PrePersist.class.getName(), CallbackListener.invoked.get(0));
-            assertEquals(PostPersist.class.getName(), CallbackListener.invoked.get(1));
-            tx.rollback();
+                assertEquals(2, CallbackSub1Listener.invoked.size());
+                assertEquals(2, CallbackSub1Sub2Listener.invoked.size());
+                assertEquals(PrePersist.class.getName(), CallbackSub1Listener.invoked.get(0));
+                assertEquals(PostPersist.class.getName(), CallbackSub1Listener.invoked.get(1));
+                assertEquals(PrePersist.class.getName(), CallbackSub1Sub2Listener.invoked.get(0));
+                assertEquals(PostPersist.class.getName(), CallbackSub1Sub2Listener.invoked.get(1));
+                assertEquals(2, CallbackListener.invoked.size());
+                assertEquals(PrePersist.class.getName(), CallbackListener.invoked.get(0));
+                assertEquals(PostPersist.class.getName(), CallbackListener.invoked.get(1));
+                tx.rollback();
+            }
+            finally
+            {
+                CallbackBase.invoked.clear();
+                CallbackSub1Listener.invoked.clear();
+                CallbackSub1Sub2Listener.invoked.clear();
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
         }
         finally
         {
-            CallbackBase.invoked.clear();
-            CallbackSub1Listener.invoked.clear();
-            CallbackSub1Sub2Listener.invoked.clear();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
+            clean(CallbackSub1Sub2.class);
         }
     }
 }
