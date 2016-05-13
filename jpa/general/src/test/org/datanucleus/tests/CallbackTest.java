@@ -126,6 +126,7 @@ public class CallbackTest extends JPAPersistenceTestCase
             EntityTransaction tx = em.getTransaction();
             try
             {
+                CallbackBase.invoked.clear();
                 tx.begin();
                 CallbackSub1Sub1 d = new CallbackSub1Sub1();
                 d.setName("dpt1");
