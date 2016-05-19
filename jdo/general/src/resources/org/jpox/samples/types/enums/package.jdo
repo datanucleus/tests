@@ -34,7 +34,6 @@
                 <column jdbc-type="INTEGER">
                     <extension vendor-name="datanucleus" key="enum-check-constraint" value="true"/>
             	</column>
-                <extension vendor-name="datanucleus" key="enum-getter-by-value" value="getEnumByValue"/>
                 <extension vendor-name="datanucleus" key="enum-value-getter" value="getValue"/>
             </field>
         </class>
