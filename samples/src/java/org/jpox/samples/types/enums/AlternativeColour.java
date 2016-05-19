@@ -35,19 +35,4 @@ public enum AlternativeColour
     {
             return value;
     }
-
-    public static AlternativeColour getEnumByValue(short value)
-    {
-        switch (value)
-        {
-            case 1:
-                return RED;
-            case 3:
-                return GREEN;
-            case 5:
-                return BLUE;
-            default:
-                return YELLOW;
-        }
-    }
 }
