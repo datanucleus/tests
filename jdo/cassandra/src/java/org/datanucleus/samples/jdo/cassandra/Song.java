@@ -15,10 +15,9 @@ limitations under the License.
 Contributors :
  
  ***********************************************************************/
-
 package org.datanucleus.samples.jdo.cassandra;
 
-import java.util.*;
+import java.util.UUID;
 import javax.jdo.annotations.*;
 
 @PersistenceCapable
@@ -26,7 +25,6 @@ import javax.jdo.annotations.*;
 @Version(strategy = VersionStrategy.VERSION_NUMBER, column = "VERSION")
 public class Song
 {
-
     @PrimaryKey
     private UUID id;
 
@@ -45,7 +43,6 @@ public class Song
     {
         return id;
     }
-
     public void setId(UUID id)
     {
         this.id = id;
@@ -55,7 +52,6 @@ public class Song
     {
         return songTitle;
     }
-
     public void setSongTitle(String songTitle)
     {
         this.songTitle = songTitle;
@@ -65,7 +61,6 @@ public class Song
     {
         return albumName;
     }
-
     public void setAlbumName(String albumName)
     {
         this.albumName = albumName;
@@ -75,7 +70,6 @@ public class Song
     {
         return artistName;
     }
-
     public void setArtistName(String artistName)
     {
         this.artistName = artistName;
@@ -85,10 +79,8 @@ public class Song
     {
         return albumImage;
     }
-
     public void setAlbumImage(byte[] albumImage)
     {
         this.albumImage = albumImage;
     }
-
 }

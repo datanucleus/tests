@@ -17,19 +17,32 @@ Contributors :
  ***********************************************************************/
 package org.datanucleus.tests;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
+
+import javax.imageio.ImageIO;
 import javax.jdo.FetchPlan;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.jdo.Transaction;
+
 import org.datanucleus.samples.jdo.cassandra.Song;
-
-import static org.datanucleus.tests.SampleCassandraData.TITLES;
-
 import org.junit.Assert;
 
 public class CQLTest extends JDOPersistenceTestCase
 {
+    static final String ARTIST_NAME = "Depeche Mode";
+    static final String ALBUM_NAME = "Delta Machine";
+    static final List<String> TITLES = Arrays.asList("Welcome to My World", "Angel", "Heaven", "Secret to the End", "My Little Universe", "Slow", "Broken");
+    static final String SONG_IMAGE = "soundsofuniverse.jpg";
+    static byte[] ALBUM_IMAGE;
 
     public CQLTest(String name)
     {
@@ -40,29 +53,72 @@ public class CQLTest extends JDOPersistenceTestCase
     protected void setUp() throws Exception
     {
         super.setUp();
-        SampleCassandraData.loadData();
 
+        // Read in album image
+        File imgPath = new File(CQLTest.class.getResource("/").getPath().replace("test-classes", "classes") + SONG_IMAGE);
+        BufferedImage bufferedImage = ImageIO.read(imgPath);
+        WritableRaster raster = bufferedImage.getRaster();
+        DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
+        ALBUM_IMAGE = data.getData();
+
+        // Create songs
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            for (Iterator<String> it = TITLES.iterator(); it.hasNext();)
+            {
+                String songTitle = it.next();
+                Song song = new Song();
+                UUID songId = UUID.randomUUID();
+                song.setArtistName(ARTIST_NAME);
+                song.setAlbumName(ALBUM_NAME);
+                song.setSongTitle(songTitle);
+                song.setAlbumImage(ALBUM_IMAGE);
+                song.setId(songId);
+                pm.makePersistent(song);
+            }
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    public static final byte[] getSongImageAsByteArray(String filePath) throws IOException
+    {
+        File imgPath = new File(filePath);
+        BufferedImage bufferedImage = ImageIO.read(imgPath);
+        // get DataBufferBytes from Raster
+        WritableRaster raster = bufferedImage.getRaster();
+        DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
+        return data.getData();
     }
 
     @Override
     protected void tearDown() throws Exception
     {
-        SampleCassandraData.cleanupTables();
+        clean(Song.class);
         super.tearDown();
     }
 
     public void testShouldReturnListOfSongsWithSelect() throws IOException
     {
-        PersistenceManager persistenceManager = pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         List<Song> results = null;
         try
         {
-            Query query = persistenceManager.newQuery("CQL", "SELECT * FROM schema1.SONG");
+            Query query = pm.newQuery("CQL", "SELECT * FROM schema1.SONG");
             query.getFetchPlan().setFetchSize(FetchPlan.FETCH_SIZE_GREEDY);
             query.setResultClass(Song.class);
             results = (List<Song>) query.execute();
             assertEquals(TITLES.size(), results.size());
-
         }
         catch (Exception e)
         {
@@ -70,7 +126,7 @@ public class CQLTest extends JDOPersistenceTestCase
         }
         finally
         {
-            persistenceManager.close();
+            pm.close();
         }
 
         for (Song song : results)
@@ -80,25 +136,23 @@ public class CQLTest extends JDOPersistenceTestCase
             Assert.assertNotNull(song.getAlbumImage());
             Assert.assertNotNull(song.getId());
             Assert.assertNotNull(song.getSongTitle());
-            Assert.assertEquals(SampleCassandraData.ALBUM_NAME, song.getAlbumName());
-            Assert.assertArrayEquals(SampleCassandraData.ALBUM_IMAGE, song.getAlbumImage());
-            Assert.assertEquals(SampleCassandraData.ARTIST_NAME, song.getArtistName());
-
+            Assert.assertEquals(ALBUM_NAME, song.getAlbumName());
+            Assert.assertArrayEquals(ALBUM_IMAGE, song.getAlbumImage());
+            Assert.assertEquals(ARTIST_NAME, song.getArtistName());
         }
     }
 
     public void testShouldReturnListOfSongsWithSelectAndFetchSize() throws IOException
     {
-        PersistenceManager persistenceManager = pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         List<Song> results = null;
         try
         {
-            Query query = persistenceManager.newQuery("CQL", "SELECT * FROM schema1.SONG");
+            Query query = pm.newQuery("CQL", "SELECT * FROM schema1.SONG");
             query.getFetchPlan().setFetchSize(3);
             query.setResultClass(Song.class);
             results = (List<Song>) query.execute();
             assertEquals(TITLES.size(), results.size());
-
         }
         catch (Exception e)
         {
@@ -106,7 +160,7 @@ public class CQLTest extends JDOPersistenceTestCase
         }
         finally
         {
-            persistenceManager.close();
+            pm.close();
         }
 
         for (Song song : results)
@@ -116,25 +170,23 @@ public class CQLTest extends JDOPersistenceTestCase
             Assert.assertNotNull(song.getAlbumImage());
             Assert.assertNotNull(song.getId());
             Assert.assertNotNull(song.getSongTitle());
-            Assert.assertEquals(SampleCassandraData.ALBUM_NAME, song.getAlbumName());
-            Assert.assertArrayEquals(SampleCassandraData.ALBUM_IMAGE, song.getAlbumImage());
-            Assert.assertEquals(SampleCassandraData.ARTIST_NAME, song.getArtistName());
-
+            Assert.assertEquals(ALBUM_NAME, song.getAlbumName());
+            Assert.assertArrayEquals(ALBUM_IMAGE, song.getAlbumImage());
+            Assert.assertEquals(ARTIST_NAME, song.getArtistName());
         }
     }
 
     public void testShouldReturnListOfSongsAsObjectsWithCqlshSelect() throws IOException
     {
-        PersistenceManager persistenceManager = pmf.getPersistenceManager();
+        PersistenceManager pm = pmf.getPersistenceManager();
         List<Object> results = null;
         try
         {
-            Query query = persistenceManager.newQuery("CQL", "SELECT * FROM schema1.SONG");
+            Query query = pm.newQuery("CQL", "SELECT * FROM schema1.SONG");
             query.getFetchPlan().setFetchSize(FetchPlan.FETCH_SIZE_GREEDY);
             // No result class set so expecting results as Objects
             results = (List<Object>) query.execute();
             assertEquals(TITLES.size(), results.size());
-
         }
         catch (Exception e)
         {
@@ -142,7 +194,7 @@ public class CQLTest extends JDOPersistenceTestCase
         }
         finally
         {
-            persistenceManager.close();
+            pm.close();
         }
 
         for (Object result : results)
@@ -152,10 +204,7 @@ public class CQLTest extends JDOPersistenceTestCase
             for (Object resultColumn : resultColumns)
             {
                 assertNotNull(resultColumn);
-
             }
         }
-
     }
-
 }
