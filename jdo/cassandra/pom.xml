@@ -16,7 +16,7 @@
         ]]></description>
    
     <properties>
-        <cassandra.version>2.2.0-rc3</cassandra.version>
+        <cassandra.version>3.0.2</cassandra.version>
     </properties>
 
     <!-- Software Dependencies -->
