@@ -161,7 +161,7 @@ public class ValidationTest extends JDOPersistenceTestCase
             }
             catch (ConstraintViolationException cve)
             {
-                LOG.error("Exception thrown as expected", cve);
+                LOG.info("Exception thrown as expected : " + cve.getMessage());
             }
             finally
             {
@@ -226,7 +226,7 @@ public class ValidationTest extends JDOPersistenceTestCase
             }
             catch (ConstraintViolationException cve)
             {
-                LOG.error("Exception thrown as expected", cve);
+                LOG.info("Exception thrown as expected : " + cve.getMessage());
             }
             finally
             {
