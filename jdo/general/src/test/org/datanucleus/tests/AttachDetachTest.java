@@ -79,6 +79,7 @@ import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Manager;
+import org.jpox.samples.models.fitness.FitnessHelper;
 import org.jpox.samples.models.fitness.Gym;
 import org.jpox.samples.models.fitness.Wardrobe;
 import org.jpox.samples.one_many.bidir.Animal;
@@ -2789,131 +2790,139 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testAggregatedDetachAttachFieldMap()
     {
-        // Create a Gym with 3 Wardrobes
-        Gym testGym = new Gym();
-        
-        Map wardrobes = new HashMap();
-        Wardrobe wSmall = new Wardrobe();
-        wSmall.setModel("small");
-        Wardrobe wMedium = new Wardrobe();
-        wMedium.setModel("medium");
-        Wardrobe wLarge = new Wardrobe();
-        wMedium.setModel("large");
-        
-        wardrobes.put("small", wSmall);
-        wardrobes.put("medium", wMedium);
-        wardrobes.put("large", wLarge);
-        
-        testGym.setWardrobes(wardrobes);
-        
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        
-        Gym detachedGym;
-        Gym detachedGym2;
-        Gym detachedGym3;
-        
-        Object gymID = null;
-        
         try
         {
-            // Persist the objects and detach them all
-            tx.begin();
-            pm.makePersistent(testGym);
-            pm.getFetchPlan().clearGroups();
-            pm.getFetchPlan().setGroup("Gym.wardrobes");
-            detachedGym = (Gym)pm.detachCopy(testGym);
-            tx.commit();
-            
-            assertEquals("1) Gym.wardrobes.size()", 3, detachedGym.getWardrobes().size());
-            
-            gymID = pm.getObjectId(detachedGym);
-            
-            // Attach the (unchanged) objects, and detach just the Gym since we're only updating that
-            tx.begin();
-            pm.makePersistent(detachedGym);
-            pm.getFetchPlan().clearGroups();
-            pm.getFetchPlan().setGroup(FetchPlan.DEFAULT);
-            detachedGym2 = (Gym)pm.detachCopy(pm.getObjectById(gymID));
-            tx.commit();
-            
+            // Create a Gym with 3 Wardrobes
+            Gym testGym = new Gym();
+
+            Map wardrobes = new HashMap();
+            Wardrobe wSmall = new Wardrobe();
+            wSmall.setModel("small");
+            Wardrobe wMedium = new Wardrobe();
+            wMedium.setModel("medium");
+            Wardrobe wLarge = new Wardrobe();
+            wMedium.setModel("large");
+
+            wardrobes.put("small", wSmall);
+            wardrobes.put("medium", wMedium);
+            wardrobes.put("large", wLarge);
+
+            testGym.setWardrobes(wardrobes);
+
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+
+            Gym detachedGym;
+            Gym detachedGym2;
+            Gym detachedGym3;
+
+            Object gymID = null;
+
             try
             {
-                Map testMap = detachedGym2.getWardrobes();
-                assertEquals("X) Gym.wardrobes.size() == 3", testMap.size(), 3);
-            }
-            catch (JDODetachedFieldAccessException e)
-            {
-                fail("Field 'Gym.wardrobes' should have been detached since was loaded at detach!");
-            }
-            
-            // Update a field in Gym
-            detachedGym2.setLocation("Freiburg");
-            
-            // Attach the objects, and detach them once more
-            tx.begin();
-            pm.makePersistent(detachedGym2);
-            pm.getFetchPlan().clearGroups();
-            pm.getFetchPlan().setGroup("Gym.wardrobes");
-            detachedGym3 = (Gym)pm.detachCopy(pm.getObjectById(gymID));
-            tx.commit();
-            
-            assertEquals("2) Gym.wardrobes.size()", 3, detachedGym3.getWardrobes().size());
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-        
-        // again with another pm
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            if (gymID != null)
-            {
+                // Persist the objects and detach them all
                 tx.begin();
-                pm.getFetchPlan().clearGroups();
-                pm.getFetchPlan().setGroup(FetchPlan.DEFAULT);
-                detachedGym = (Gym)pm.detachCopy(pm.getObjectById(gymID));
-                tx.commit();
-                
-                detachedGym.setLocation("Basel");
-                
-                tx.begin();
-                pm.makePersistent(detachedGym);
-                tx.commit();
-                
-                tx.begin();
+                pm.makePersistent(testGym);
                 pm.getFetchPlan().clearGroups();
                 pm.getFetchPlan().setGroup("Gym.wardrobes");
+                detachedGym = (Gym)pm.detachCopy(testGym);
+                tx.commit();
+
+                assertEquals("1) Gym.wardrobes.size()", 3, detachedGym.getWardrobes().size());
+
+                gymID = pm.getObjectId(detachedGym);
+
+                // Attach the (unchanged) objects, and detach just the Gym since we're only updating that
+                tx.begin();
+                pm.makePersistent(detachedGym);
+                pm.getFetchPlan().clearGroups();
+                pm.getFetchPlan().setGroup(FetchPlan.DEFAULT);
                 detachedGym2 = (Gym)pm.detachCopy(pm.getObjectById(gymID));
                 tx.commit();
-                
-                assertEquals("3) Gym.wardrobes.size()", 3, detachedGym2.getWardrobes().size());
+
+                try
+                {
+                    Map testMap = detachedGym2.getWardrobes();
+                    assertEquals("X) Gym.wardrobes.size() == 3", testMap.size(), 3);
+                }
+                catch (JDODetachedFieldAccessException e)
+                {
+                    fail("Field 'Gym.wardrobes' should have been detached since was loaded at detach!");
+                }
+
+                // Update a field in Gym
+                detachedGym2.setLocation("Freiburg");
+
+                // Attach the objects, and detach them once more
+                tx.begin();
+                pm.makePersistent(detachedGym2);
+                pm.getFetchPlan().clearGroups();
+                pm.getFetchPlan().setGroup("Gym.wardrobes");
+                detachedGym3 = (Gym)pm.detachCopy(pm.getObjectById(gymID));
+                tx.commit();
+
+                assertEquals("2) Gym.wardrobes.size()", 3, detachedGym3.getWardrobes().size());
             }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // again with another pm
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                if (gymID != null)
+                {
+                    tx.begin();
+                    pm.getFetchPlan().clearGroups();
+                    pm.getFetchPlan().setGroup(FetchPlan.DEFAULT);
+                    detachedGym = (Gym)pm.detachCopy(pm.getObjectById(gymID));
+                    tx.commit();
+
+                    detachedGym.setLocation("Basel");
+
+                    tx.begin();
+                    pm.makePersistent(detachedGym);
+                    tx.commit();
+
+                    tx.begin();
+                    pm.getFetchPlan().clearGroups();
+                    pm.getFetchPlan().setGroup("Gym.wardrobes");
+                    detachedGym2 = (Gym)pm.detachCopy(pm.getObjectById(gymID));
+                    tx.commit();
+
+                    assertEquals("3) Gym.wardrobes.size()", 3, detachedGym2.getWardrobes().size());
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            // Clean out our data
+            FitnessHelper.cleanFitnessData(pmf);
         }
     }
 

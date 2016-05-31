@@ -205,12 +205,11 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                 {
                     tx.rollback();
                 }
-
                 pm.close();
             }
         }
     }
-    
+
     protected final void cleanWith(String prefix, Consumer<PersistenceManager> cleaner)
     {
         cleanersByPrefix.put(prefix,cleaner);
@@ -236,7 +235,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                 deleted.add(id);
             }
         };
-        
+
         try (PersistenceManager pm = pmf.getPersistenceManager())
         {
             pm.addInstanceLifecycleListener(listener, Object.class);
@@ -255,7 +254,6 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                         {
                             LOG.debug("Cleaning up: " + id);
                         }
-                        
                         if (deleted.contains(id))
                         {
                             if (LOG.isDebugEnabled())
@@ -267,20 +265,21 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                         {
                             Object object = pm.getObjectById(id, false);
                             boolean cleanerRun = false;
-                            
+
                             for (Entry<String, Consumer<PersistenceManager>> entry : cleanersByPrefix.entrySet())
                             {
-                                if ( object.getClass().getName().startsWith(entry.getKey()) ){
+                                if (object.getClass().getName().startsWith(entry.getKey()))
+                                {
                                     entry.getValue().accept(pm);
                                     cleanerRun = true;
                                     break;
                                 }
                             }
-                            
-                            if(!cleanerRun){
+
+                            if (!cleanerRun)
+                            {
                                 pm.deletePersistent(object);
                             }
-                            
                             if (LOG.isDebugEnabled())
                             {
                                 LOG.debug("Cleaned " + id + " successfully");
@@ -299,11 +298,11 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                 }
 
                 attempts++;
-                if ( !retry.isEmpty() && attempts > MAX_CLEANUP_ATTEMPTS)
+                if (!retry.isEmpty() && attempts > MAX_CLEANUP_ATTEMPTS)
                 {
                     throw new Exception("Fail to cleanup the following object(s) after " + attempts + " attempts: " + retry);
                 }
-                
+
                 // Try again
                 toDelete.clear();
                 toDelete.addAll(retry);
