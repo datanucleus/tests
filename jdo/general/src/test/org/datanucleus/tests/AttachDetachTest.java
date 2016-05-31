@@ -158,69 +158,76 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testSimpleDetach()
     {
-        ClassOwner owner1 = new ClassOwner("Owner1");
-        ClassElements elementA = new ClassElements("ElementA");
-        ClassElements elementB = new ClassElements("ElementB");
-        ClassElements elementC = new ClassElements("ElementC");
-        ClassElements elementD = new ClassElements("ElementD");
-        owner1.addElement(elementA);
-        owner1.addElement(elementB);
-        owner1.getMapToCheckPrefetch().put("C",elementC);
-        owner1.getListToCheckPrefetch().add(elementD);
-
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
-            pm.makePersistent(owner1);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
+            ClassOwner owner1 = new ClassOwner("Owner1");
+            ClassElements elementA = new ClassElements("ElementA");
+            ClassElements elementB = new ClassElements("ElementB");
+            ClassElements elementC = new ClassElements("ElementC");
+            ClassElements elementD = new ClassElements("ElementD");
+            owner1.addElement(elementA);
+            owner1.addElement(elementB);
+            owner1.getMapToCheckPrefetch().put("C",elementC);
+            owner1.getListToCheckPrefetch().add(elementD);
+
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
             {
-                tx.rollback();
+                tx.begin();
+                pm.makePersistent(owner1);
+                tx.commit();
             }
-            pm.close();
-        }
-        pmf.getDataStoreCache().evictAll();
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
 
-        //make sure we have nothing in cache (metadata in cache)
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            //test detach and attach
-            tx.begin();
-            Query query = pm.newQuery(ClassOwner.class);
+            //make sure we have nothing in cache (metadata in cache)
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                //test detach and attach
+                tx.begin();
+                Query query = pm.newQuery(ClassOwner.class);
 
-            Collection result = (Collection) query.execute();
-            //add a group just above the detach, so we can see if the detachCopyAll retrieves the fields
-            pm.getFetchPlan().addGroup("collection");
-            pm.getFetchPlan().setMaxFetchDepth(2);
-            result = pm.detachCopyAll(result);
+                Collection result = (Collection) query.execute();
+                //add a group just above the detach, so we can see if the detachCopyAll retrieves the fields
+                pm.getFetchPlan().addGroup("collection");
+                pm.getFetchPlan().setMaxFetchDepth(2);
+                result = pm.detachCopyAll(result);
 
-            tx.commit();
-            ClassOwner ownerResult = (ClassOwner)result.iterator().next();
-            assertEquals("Expected 2 elements",2,ownerResult.getElements().size());
-        }
-        catch( Exception e )
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+                tx.commit();
+                ClassOwner ownerResult = (ClassOwner)result.iterator().next();
+                assertEquals("Expected 2 elements",2,ownerResult.getElements().size());
+            }
+            catch( Exception e )
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
+            clean(ClassOwner.class);
         }
     }
 
@@ -2411,137 +2418,144 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testPersistWithDetachedRelativeInMap() throws Exception
     {
-        PersistenceManager pm;
-        Transaction tx;
-
-        MapValueItem detachedItem1 = null;
-        
-        // Create an instance, persist it and detach it
-        pm = newPM();
-        tx = pm.currentTransaction();
         try
         {
-            tx.begin();
+            PersistenceManager pm;
+            Transaction tx;
 
-            MapValueItem item1 = new MapValueItem("First", "First item");
-            pm.makePersistent(item1);
-            pm.getFetchPlan().addGroup(FetchPlan.ALL);
-            detachedItem1 = (MapValueItem) pm.detachCopy(item1);
+            MapValueItem detachedItem1 = null;
 
-            tx.commit();
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error("Exception during test", ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
+            // Create an instance, persist it and detach it
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
             {
-                tx.rollback();
+                tx.begin();
+
+                MapValueItem item1 = new MapValueItem("First", "First item");
+                pm.makePersistent(item1);
+                pm.getFetchPlan().addGroup(FetchPlan.ALL);
+                detachedItem1 = (MapValueItem) pm.detachCopy(item1);
+
+                tx.commit();
             }
-            
-            pm.close();
-        }
-        
-        MapHolder container = new MapHolder();
-        container.getJoinMapNonPC().put("Original", detachedItem1);
-        // To complete the test, we add a new - not yet persisted - item
-        container.getJoinMapNonPC().put("New", new MapValueItem("Second", "Second item"));
-
-        MapValueItem detachedItem3 = null;
-        MapHolder detachedContainer = null;
-        Object containerId = null;
-
-        // Persist the new container, with the detached item, and the new item
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            pm.makePersistent(container);
-
-            // Detach the container and check its contents
-            pm.getFetchPlan().addGroup(FetchPlan.ALL);
-            detachedContainer = (MapHolder) pm.detachCopy(container);
-            assertTrue("Detached container doesnt contain first item ", detachedContainer.getJoinMapNonPC().get("Original") != null);
-            assertTrue("Detached container doesnt contain second item ", detachedContainer.getJoinMapNonPC().get("New") != null);
-
-            // Persist and detach a new item
-            MapValueItem item3 = new MapValueItem("Third", "Third Item");
-            pm.makePersistent(item3);
-            detachedItem3 = (MapValueItem) pm.detachCopy(item3);
-
-            tx.commit();
-            containerId = JDOHelper.getObjectId(container);
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error("Exception during test", ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
-        }
-        
-        // Add a detached object to the Map, and add a new (transient) object to the Map.
-        // Attach the updated container object with its 4 map values.
-        detachedContainer.getJoinMapNonPC().put("Next", detachedItem3);
-        detachedContainer.getJoinMapNonPC().put("Latest", new MapValueItem("Fourth", "Fourth Item"));
-
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            pm.makePersistent(detachedContainer);
-            tx.commit();
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error("Exception during test", ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
+            catch (JDOUserException ue)
             {
-                tx.rollback();
+                LOG.error("Exception during test", ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
             }
-            pm.close();
-        }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
 
-        // Check, whether our container has all map values
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            container = (MapHolder) pm.getObjectById(containerId);
-            assertTrue("Container doesnt contain first item ", container.getJoinMapNonPC().get("Original") != null);
-            assertTrue("Container doesnt contain second item ", container.getJoinMapNonPC().get("New") != null);
-            assertTrue("Container doesnt contain second item ", container.getJoinMapNonPC().get("Next") != null);
-            assertTrue("Container doesnt contain second item ", container.getJoinMapNonPC().get("Latest") != null);
-            tx.commit();
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error("Exception during test", ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
+                pm.close();
+            }
+
+            MapHolder container = new MapHolder();
+            container.getJoinMapNonPC().put("Original", detachedItem1);
+            // To complete the test, we add a new - not yet persisted - item
+            container.getJoinMapNonPC().put("New", new MapValueItem("Second", "Second item"));
+
+            MapValueItem detachedItem3 = null;
+            MapHolder detachedContainer = null;
+            Object containerId = null;
+
+            // Persist the new container, with the detached item, and the new item
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                pm.makePersistent(container);
+
+                // Detach the container and check its contents
+                pm.getFetchPlan().addGroup(FetchPlan.ALL);
+                detachedContainer = (MapHolder) pm.detachCopy(container);
+                assertTrue("Detached container doesnt contain first item ", detachedContainer.getJoinMapNonPC().get("Original") != null);
+                assertTrue("Detached container doesnt contain second item ", detachedContainer.getJoinMapNonPC().get("New") != null);
+
+                // Persist and detach a new item
+                MapValueItem item3 = new MapValueItem("Third", "Third Item");
+                pm.makePersistent(item3);
+                detachedItem3 = (MapValueItem) pm.detachCopy(item3);
+
+                tx.commit();
+                containerId = JDOHelper.getObjectId(container);
+            }
+            catch (JDOUserException ue)
+            {
+                LOG.error("Exception during test", ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            // Add a detached object to the Map, and add a new (transient) object to the Map.
+            // Attach the updated container object with its 4 map values.
+            detachedContainer.getJoinMapNonPC().put("Next", detachedItem3);
+            detachedContainer.getJoinMapNonPC().put("Latest", new MapValueItem("Fourth", "Fourth Item"));
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                pm.makePersistent(detachedContainer);
+                tx.commit();
+            }
+            catch (JDOUserException ue)
+            {
+                LOG.error("Exception during test", ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Check, whether our container has all map values
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                container = (MapHolder) pm.getObjectById(containerId);
+                assertTrue("Container doesnt contain first item ", container.getJoinMapNonPC().get("Original") != null);
+                assertTrue("Container doesnt contain second item ", container.getJoinMapNonPC().get("New") != null);
+                assertTrue("Container doesnt contain second item ", container.getJoinMapNonPC().get("Next") != null);
+                assertTrue("Container doesnt contain second item ", container.getJoinMapNonPC().get("Latest") != null);
+                tx.commit();
+            }
+            catch (JDOUserException ue)
+            {
+                LOG.error("Exception during test", ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            clean(MapHolder.class);
         }
     }
 
@@ -3496,85 +3510,92 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachDuplicates()
     {
-        Object listId = null;
-        Object[] elmId = new Object[4];
-        DetachList detachedList = null;
-
-        // Persist some data
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
-            
-            DetachList list = new DetachList("MyList");
-            DetachListElement elem1 = new DetachListElement("First");
-            DetachListElement elem2 = new DetachListElement("Second");
-            list.addElement(elem1);
-            list.addElement(elem2);
-            list.addElement(elem1);
-            list.addElement(elem1);
-            pm.makePersistent(list);
+            Object listId = null;
+            Object[] elmId = new Object[4];
+            DetachList detachedList = null;
 
-            tx.commit();
-            listId = pm.getObjectId(list);
-            elmId[0] = pm.getObjectId(elem1);
-            elmId[1] = pm.getObjectId(elem2);
-            elmId[2] = pm.getObjectId(elem1);
-            elmId[3] = pm.getObjectId(elem1);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting objects : " + e.getMessage());
+            // Persist some data
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                DetachList list = new DetachList("MyList");
+                DetachListElement elem1 = new DetachListElement("First");
+                DetachListElement elem2 = new DetachListElement("Second");
+                list.addElement(elem1);
+                list.addElement(elem2);
+                list.addElement(elem1);
+                list.addElement(elem1);
+                pm.makePersistent(list);
+
+                tx.commit();
+                listId = pm.getObjectId(list);
+                elmId[0] = pm.getObjectId(elem1);
+                elmId[1] = pm.getObjectId(elem2);
+                elmId[2] = pm.getObjectId(elem1);
+                elmId[3] = pm.getObjectId(elem1);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            List detachedAloneElements = new ArrayList();
+            // Retrieve the objects and detach them
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                DetachList list = (DetachList)pm.getObjectById(listId);
+                assertEquals("List persisted has incorrect number of elements", list.getNumberOfElements(), 4);
+                detachedAloneElements = new ArrayList(pm.detachCopyAll(new ArrayList(list.getElements())));
+                detachedList = (DetachList)pm.detachCopy(list);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving and detaching objects : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Check the objects for dups.
+            List detachedElements = detachedList.getElements();
+            assertEquals("Detached list elements 0 and 2 are not equal!", detachedElements.get(0), detachedElements.get(2));
+            assertEquals("Detached list elements 0 and 3 are not equal!", detachedElements.get(0), detachedElements.get(3));
+            assertEquals("Detached alone list elements 0 and 2 are not equal!", detachedAloneElements.get(0), detachedAloneElements.get(2));
+            assertEquals("Detached alone list elements 0 and 3 are not equal!", detachedAloneElements.get(0), detachedAloneElements.get(3));
+            assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(0), detachedAloneElements.get(0));
+            assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(1), detachedAloneElements.get(1));
+            assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(2), detachedAloneElements.get(2));
+            assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(3), detachedAloneElements.get(3));
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            clean(DetachList.class);
         }
-        List detachedAloneElements = new ArrayList();
-        // Retrieve the objects and detach them
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            DetachList list = (DetachList)pm.getObjectById(listId);
-            assertEquals("List persisted has incorrect number of elements", list.getNumberOfElements(), 4);
-            detachedAloneElements = new ArrayList(pm.detachCopyAll(new ArrayList(list.getElements())));
-            detachedList = (DetachList)pm.detachCopy(list);
-            
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while retrieving and detaching objects : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Check the objects for dups.
-        List detachedElements = detachedList.getElements();
-        assertEquals("Detached list elements 0 and 2 are not equal!", detachedElements.get(0), detachedElements.get(2));
-        assertEquals("Detached list elements 0 and 3 are not equal!", detachedElements.get(0), detachedElements.get(3));
-        assertEquals("Detached alone list elements 0 and 2 are not equal!", detachedAloneElements.get(0), detachedAloneElements.get(2));
-        assertEquals("Detached alone list elements 0 and 3 are not equal!", detachedAloneElements.get(0), detachedAloneElements.get(3));
-        assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(0), detachedAloneElements.get(0));
-        assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(1), detachedAloneElements.get(1));
-        assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(2), detachedAloneElements.get(2));
-        assertNotSame("Detached list elements and detached alone elements are equal!", detachedElements.get(3), detachedAloneElements.get(3));
     }
 
     /**
@@ -4280,109 +4301,116 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testCopyOnAttachFalseOneToOne()
     {
-        LoginAccount acct = null;
-        Login login = null;
-        Object acctId = null;
-        Object loginId = null;
-
-        // Persist the owner object
-        PersistenceManager pm = newPM();
-        pm.setDetachAllOnCommit(true);
-        pm.setCopyOnAttach(false);
-        pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
-        Transaction tx = pm.currentTransaction();
         try
         {
-            // Persist 
-            tx.begin();
-            acct = new LoginAccount("George", "Bush", "bush", "iraq");
-            login = acct.getLogin();
-            pm.makePersistent(acct);
-            tx.commit();
-            acctId = pm.getObjectId(acct);
-            loginId = pm.getObjectId(login);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            LoginAccount acct = null;
+            Login login = null;
+            Object acctId = null;
+            Object loginId = null;
+
+            // Persist the owner object
+            PersistenceManager pm = newPM();
+            pm.setDetachAllOnCommit(true);
+            pm.setCopyOnAttach(false);
+            pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                // Persist 
+                tx.begin();
+                acct = new LoginAccount("George", "Bush", "bush", "iraq");
+                login = acct.getLogin();
+                pm.makePersistent(acct);
+                tx.commit();
+                acctId = pm.getObjectId(acct);
+                loginId = pm.getObjectId(login);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Update the detached objects
+            assertEquals("Owner object is in incorrect state",
+                ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(acct));
+            assertEquals("Owner object is in incorrect state",
+                ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(login));
+            acct.setFirstName("George W");
+            login.setPassword("vietnam");
+
+            // Attach the owner object
+            pm = newPM();
+            pm.setCopyOnAttach(false);
+            pm.setDetachAllOnCommit(true);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                LoginAccount acct2 = (LoginAccount)pm.makePersistent(acct);
+                pm.flush();
+                assertEquals("Attached LoginAccount is different object to detached, yet with CopyOnAttach=false should be same",
+                    acct, acct2);
+                assertTrue("LoginAccount should be persistent but isnt", JDOHelper.isPersistent(acct));
+                assertTrue("Login should be persistent but isnt", JDOHelper.isPersistent(login));
+                tx.commit();
+                assertTrue("LoginAccount should not be dirty but is", JDOHelper.isDetached(acct));
+                assertFalse("LoginAccount should not be dirty but is", JDOHelper.isDirty(acct));
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve and check the datastore state
+            pm = newPM();
+            pm.getFetchPlan().setGroup(FetchPlan.ALL);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                LoginAccount acct2 = (LoginAccount)pm.getObjectById(acctId);
+                Login login2 = (Login)pm.getObjectById(loginId);
+                assertEquals("Account has incorrect first name", "George W", acct2.getFirstName());
+                assertEquals("Account has incorrect last name", "Bush", acct2.getLastName());
+                assertEquals("Login has incorrect username", "bush", login2.getUserName());
+                assertEquals("Login has incorrect password", "vietnam", login2.getPassword());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Update the detached objects
-        assertEquals("Owner object is in incorrect state",
-            ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(acct));
-        assertEquals("Owner object is in incorrect state",
-            ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(login));
-        acct.setFirstName("George W");
-        login.setPassword("vietnam");
-
-        // Attach the owner object
-        pm = newPM();
-        pm.setCopyOnAttach(false);
-        pm.setDetachAllOnCommit(true);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            LoginAccount acct2 = (LoginAccount)pm.makePersistent(acct);
-            pm.flush();
-            assertEquals("Attached LoginAccount is different object to detached, yet with CopyOnAttach=false should be same",
-                acct, acct2);
-            assertTrue("LoginAccount should be persistent but isnt", JDOHelper.isPersistent(acct));
-            assertTrue("Login should be persistent but isnt", JDOHelper.isPersistent(login));
-            tx.commit();
-            assertTrue("LoginAccount should not be dirty but is", JDOHelper.isDetached(acct));
-            assertFalse("LoginAccount should not be dirty but is", JDOHelper.isDirty(acct));
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Retrieve and check the datastore state
-        pm = newPM();
-        pm.getFetchPlan().setGroup(FetchPlan.ALL);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            LoginAccount acct2 = (LoginAccount)pm.getObjectById(acctId);
-            Login login2 = (Login)pm.getObjectById(loginId);
-            assertEquals("Account has incorrect first name", "George W", acct2.getFirstName());
-            assertEquals("Account has incorrect last name", "Bush", acct2.getLastName());
-            assertEquals("Login has incorrect username", "bush", login2.getUserName());
-            assertEquals("Login has incorrect password", "vietnam", login2.getPassword());
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            clean(LoginAccount.class);
         }
     }
 
@@ -4392,80 +4420,87 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testCopyOnAttachFalseMultipleDetach()
     {
-        LoginAccount detachedAcct1 = null;
-        LoginAccount detachedAcct2 = null;
-
-        // Persist the owner object
-        PersistenceManager pm = newPM();
-        pm.setCopyOnAttach(false);
-        pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
-        Transaction tx = pm.currentTransaction();
         try
         {
-            // Persist 
-            tx.begin();
-            LoginAccount acct = new LoginAccount("George", "Bush", "bush", "iraq");
-            pm.makePersistent(acct);
+            LoginAccount detachedAcct1 = null;
+            LoginAccount detachedAcct2 = null;
 
-            // Detach 2 copies
-            detachedAcct1 = (LoginAccount)pm.detachCopy(acct);
-            detachedAcct2 = (LoginAccount)pm.detachCopy(acct);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Update the detached objects
-        assertEquals("Account1 object is in incorrect state",
-            ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(detachedAcct1));
-        assertEquals("Account2 object is in incorrect state",
-            ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(detachedAcct2));
-        detachedAcct1.setFirstName("George W");
-        detachedAcct2.setFirstName("George B");
-
-        // Attach the detached objects
-        pm = newPM();
-        pm.setCopyOnAttach(false);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            pm.makePersistent(detachedAcct1);
-            pm.flush();
+            // Persist the owner object
+            PersistenceManager pm = newPM();
+            pm.setCopyOnAttach(false);
+            pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
+            Transaction tx = pm.currentTransaction();
             try
             {
-                pm.makePersistent(detachedAcct2);
-                LOG.error("Attach of second version of object succeeded!");
-                fail("Attach of second version of an object succeeded but should have thrown exception since CopyOnAttach=false");
+                // Persist 
+                tx.begin();
+                LoginAccount acct = new LoginAccount("George", "Bush", "bush", "iraq");
+                pm.makePersistent(acct);
+
+                // Detach 2 copies
+                detachedAcct1 = (LoginAccount)pm.detachCopy(acct);
+                detachedAcct2 = (LoginAccount)pm.detachCopy(acct);
+                tx.commit();
             }
-            catch (JDOUserException ue)
+            catch (Exception e)
             {
-                // Expected so rethrow it
-                throw ue;
+                LOG.error("Exception in test", e);
+                fail(e.toString());
             }
-            tx.commit();
-        }
-        catch (Exception e)
-        {
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Update the detached objects
+            assertEquals("Account1 object is in incorrect state",
+                ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(detachedAcct1));
+            assertEquals("Account2 object is in incorrect state",
+                ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(detachedAcct2));
+            detachedAcct1.setFirstName("George W");
+            detachedAcct2.setFirstName("George B");
+
+            // Attach the detached objects
+            pm = newPM();
+            pm.setCopyOnAttach(false);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                pm.makePersistent(detachedAcct1);
+                pm.flush();
+                try
+                {
+                    pm.makePersistent(detachedAcct2);
+                    LOG.error("Attach of second version of object succeeded!");
+                    fail("Attach of second version of an object succeeded but should have thrown exception since CopyOnAttach=false");
+                }
+                catch (JDOUserException ue)
+                {
+                    // Expected so rethrow it
+                    throw ue;
+                }
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            clean(LoginAccount.class);
         }
     }
 
@@ -4666,33 +4701,40 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     
     public void testAttachNeverExtension()
     {
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-    
-        tx.begin();
+        try
+        {
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-        // Persist some data and detach it
-        DetachHolder detachHolder = new DetachHolder();
-        detachHolder.setDateNeverAttach(new Date());
-        detachHolder.setPcNeverAttach(new DetachPC("neverAttach"));
+            tx.begin();
 
-        pm.setDetachAllOnCommit(true);
-        pm.makePersistent(detachHolder);
+            // Persist some data and detach it
+            DetachHolder detachHolder = new DetachHolder();
+            detachHolder.setDateNeverAttach(new Date());
+            detachHolder.setPcNeverAttach(new DetachPC("neverAttach"));
 
-        tx.commit();
+            pm.setDetachAllOnCommit(true);
+            pm.makePersistent(detachHolder);
 
-        tx.begin();
+            tx.commit();
 
-        // Re-attach
-        DetachHolder attachedHolder = pm.makePersistent(detachHolder);
+            tx.begin();
 
-        assertThat(attachedHolder.getDateNeverAttach())
+            // Re-attach
+            DetachHolder attachedHolder = pm.makePersistent(detachHolder);
+
+            assertThat(attachedHolder.getDateNeverAttach())
             .as("Should not attach field with 'never' attach extension")
             .isNull();
-        
-        assertThat(attachedHolder.getPcNeverAttach())
+
+            assertThat(attachedHolder.getPcNeverAttach())
             .as("Should not attach field with 'never' attach extension")
             .isNull();
+        }
+        finally
+        {
+            clean(DetachHolder.class);
+        }
     }
     
     /**
