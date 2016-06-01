@@ -24,12 +24,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.samples.annotations.models.company.Employee;
+import org.datanucleus.samples.annotations.models.company.Person;
+import org.datanucleus.samples.annotations.one_one.unidir.Login;
+import org.datanucleus.samples.annotations.one_one.unidir.LoginAccount;
+import org.datanucleus.samples.annotations.one_one.unidir.LoginAccountComplete;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.models.company.Employee;
-import org.jpox.samples.annotations.models.company.Person;
-import org.jpox.samples.annotations.one_one.unidir.Login;
-import org.jpox.samples.annotations.one_one.unidir.LoginAccount;
-import org.jpox.samples.annotations.one_one.unidir.LoginAccountComplete;
 
 /**
  * Tests for SQL queries via JPA.

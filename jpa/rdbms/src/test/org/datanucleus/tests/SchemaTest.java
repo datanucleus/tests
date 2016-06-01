@@ -25,21 +25,21 @@ import java.util.HashSet;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.inheritance.InheritA;
+import org.datanucleus.samples.annotations.inheritance.InheritA1;
+import org.datanucleus.samples.annotations.inheritance.InheritA2;
+import org.datanucleus.samples.annotations.inheritance.InheritA2a;
+import org.datanucleus.samples.annotations.inheritance.InheritB;
+import org.datanucleus.samples.annotations.inheritance.InheritB1;
+import org.datanucleus.samples.annotations.inheritance.InheritB2;
+import org.datanucleus.samples.annotations.inheritance.InheritC;
+import org.datanucleus.samples.annotations.inheritance.InheritC1;
+import org.datanucleus.samples.annotations.inheritance.InheritC2;
+import org.datanucleus.samples.annotations.one_many.map.MapHolder1;
+import org.datanucleus.samples.annotations.types.basic.DateHolder;
+import org.datanucleus.samples.xml.one_many.map.MapHolder1Xml;
 import org.datanucleus.store.connection.ManagedConnection;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.jpox.samples.annotations.inheritance.InheritA;
-import org.jpox.samples.annotations.inheritance.InheritA1;
-import org.jpox.samples.annotations.inheritance.InheritA2;
-import org.jpox.samples.annotations.inheritance.InheritA2a;
-import org.jpox.samples.annotations.inheritance.InheritB;
-import org.jpox.samples.annotations.inheritance.InheritB1;
-import org.jpox.samples.annotations.inheritance.InheritB2;
-import org.jpox.samples.annotations.inheritance.InheritC;
-import org.jpox.samples.annotations.inheritance.InheritC1;
-import org.jpox.samples.annotations.inheritance.InheritC2;
-import org.jpox.samples.annotations.one_many.map.MapHolder1;
-import org.jpox.samples.annotations.types.basic.DateHolder;
-import org.jpox.samples.xml.one_many.map.MapHolder1Xml;
 
 /**
  * Tests for schema creation.

@@ -6,26 +6,26 @@
     <!-- Test "unit", containing all classes so we can enhance the lot -->
     <persistence-unit name="TEST">
         <mapping-file>META-INF/orm.xml</mapping-file>
-        <class>org.jpox.samples.annotations.inheritance.InheritA</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritA1</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritA2</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritA2a</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritB</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritB1</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritB2</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritC</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritC1</class>
-        <class>org.jpox.samples.annotations.inheritance.InheritC2</class>
-        <class>org.jpox.samples.annotations.models.company.Account</class>
-        <class>org.jpox.samples.annotations.models.company.Person</class>
-        <class>org.jpox.samples.annotations.models.company.Employee</class>
-        <class>org.jpox.samples.annotations.models.company.Manager</class>
-        <class>org.jpox.samples.annotations.models.company.Department</class>
-        <class>org.jpox.samples.annotations.models.company.Project</class>
-        <class>org.jpox.samples.annotations.models.company.PhoneNumber</class>
-        <class>org.jpox.samples.annotations.one_one.unidir.Login</class>
-        <class>org.jpox.samples.annotations.one_one.unidir.LoginAccount</class>
-        <class>org.jpox.samples.annotations.types.basic.DateHolder</class>
-        <class>org.jpox.samples.annotations.types.basic.TypeHolder</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritA</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritA1</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritA2</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritA2a</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritB</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritB1</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritB2</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritC</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritC1</class>
+        <class>org.datanucleus.samples.annotations.inheritance.InheritC2</class>
+        <class>org.datanucleus.samples.annotations.models.company.Account</class>
+        <class>org.datanucleus.samples.annotations.models.company.Person</class>
+        <class>org.datanucleus.samples.annotations.models.company.Employee</class>
+        <class>org.datanucleus.samples.annotations.models.company.Manager</class>
+        <class>org.datanucleus.samples.annotations.models.company.Department</class>
+        <class>org.datanucleus.samples.annotations.models.company.Project</class>
+        <class>org.datanucleus.samples.annotations.models.company.PhoneNumber</class>
+        <class>org.datanucleus.samples.annotations.one_one.unidir.Login</class>
+        <class>org.datanucleus.samples.annotations.one_one.unidir.LoginAccount</class>
+        <class>org.datanucleus.samples.annotations.types.basic.DateHolder</class>
+        <class>org.datanucleus.samples.annotations.types.basic.TypeHolder</class>
     </persistence-unit>
 </persistence>

@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
     version="2.1">
-    <package>org.jpox.samples.xml.one_many.map</package>
-    <entity class="org.jpox.samples.xml.one_many.map.MapHolder1Xml">
+    <package>org.datanucleus.samples.xml.one_many.map</package>
+    <entity class="org.datanucleus.samples.xml.one_many.map.MapHolder1Xml">
         <table name="JPA_XML_MAPHOLDER1"/>
         <attributes>
             <id name="id">

@@ -28,12 +28,12 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
 import org.datanucleus.api.jpa.JPAEntityManager;
+import org.datanucleus.samples.annotations.models.company.Account;
+import org.datanucleus.samples.annotations.models.company.Employee;
+import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.store.connection.ManagedConnection;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.jpox.samples.annotations.models.company.Account;
-import org.jpox.samples.annotations.models.company.Employee;
-import org.jpox.samples.annotations.models.company.Person;
 
 /**
  * Series of tests for stored procedures.
