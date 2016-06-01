@@ -28,6 +28,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
@@ -40,6 +41,7 @@ import org.datanucleus.Configuration;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.enhancement.Persistable;
 import org.datanucleus.exceptions.ClassNotResolvedException;
+import org.datanucleus.util.StringUtils;
 
 /**
  * Abstract base class for all JDO unit tests needing access to a persistence manager factory.
@@ -191,7 +193,8 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
     {
         super.tearDown();
         closeManagedPms();
-        cleanup(idsToCleanup);
+        // Enable this if you don't bother cleaning each test manually. Can result in warnings in the log if enabled!
+//        cleanup(idsToCleanup);
     }
 
     private void closeManagedPms()
@@ -215,7 +218,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
         cleanersByPrefix.put(prefix,cleaner);
     }
 
-    private void cleanup(Set<Object> toCleanup) throws Exception
+    protected void cleanup(Set<Object> toCleanup) throws Exception
     {
         // Keep track of what is being deleted so we don't need to
         // delete what has already been deleted by the cascade.
@@ -278,6 +281,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
 
                             if (!cleanerRun)
                             {
+                                LOG.debug(">> calling deletePersistent on " + StringUtils.toJVMIDString(object) + " state=" + JDOHelper.getObjectState(object));
                                 pm.deletePersistent(object);
                             }
                             if (LOG.isDebugEnabled())
