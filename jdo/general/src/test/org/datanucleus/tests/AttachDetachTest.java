@@ -107,48 +107,47 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachStates()
     {
-        Employee woodyDetached = null;
-
-        // Persist an object and detach it
-        try(PersistenceManager pm = newPM())
+        try
         {
-            Transaction tx = pm.currentTransaction();
-            tx.begin();
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
-            pm.makePersistent(woody);
-            woodyDetached = pm.detachCopy(woody);
+            Employee woodyDetached = null;
 
-            assertThat(woodyDetached)
-                .as("Object detached in the current transaction")
-                .has(state(DETACHED_CLEAN));
+            // Persist an object and detach it
+            try(PersistenceManager pm = newPM())
+            {
+                Transaction tx = pm.currentTransaction();
+                tx.begin();
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+                pm.makePersistent(woody);
+                woodyDetached = pm.detachCopy(woody);
 
-            tx.commit();
+                assertThat(woodyDetached).as("Object detached in the current transaction").has(state(DETACHED_CLEAN));
+
+                tx.commit();
+            }
+
+            assertThat(woodyDetached).as("Object detached after commit").has(state(DETACHED_CLEAN));
+
+            // Make some updates
+            woodyDetached.setSalary(15);
+
+            assertThat(woodyDetached).as("Object recently detached and modified").has(state(DETACHED_DIRTY));
+
+            // Attach the object
+            try(PersistenceManager pm = newPM())
+            {
+                Transaction tx = pm.currentTransaction();
+                tx.begin();
+
+                Employee woody = pm.makePersistent(woodyDetached);
+
+                assertThat(woody).as("Detach object attached with makePersistent").has(state(PERSISTENT_DIRTY));
+
+                tx.commit();
+            }
         }
-
-        assertThat(woodyDetached)
-            .as("Object detached after commit")
-            .has(state(DETACHED_CLEAN));
-        
-        // Make some updates
-        woodyDetached.setSalary(15);
-
-        assertThat(woodyDetached)
-            .as("Object recently detached and modified")
-            .has(state(DETACHED_DIRTY));
-
-        // Attach the object
-        try(PersistenceManager pm = newPM())
+        finally
         {
-            Transaction tx = pm.currentTransaction();
-            tx.begin();
-
-            Employee woody = pm.makePersistent(woodyDetached);
-
-            assertThat(woody)
-                .as("Detach object attached with makePersistent")
-                .has(state(PERSISTENT_DIRTY));
-
-            tx.commit();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -236,257 +235,264 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testBasicDetachAttach()
     {
-        Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
-        Employee woodyDetached = null;
-        Employee woody2;
-        Employee woodyAttached = null;
-        Object id = null;
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        
         try
         {
-            //test detach and attach
-            tx.begin();
-            pm.makePersistent(woody);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-            
-            id = pm.getObjectId(woody);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            woodyDetached.setLastName("Woodpecker0");
-            
-            tx.begin();
-            pm.makePersistent(woodyDetached);
-            tx.commit();
-            
-            tx.begin();
-            woody2 = (Employee) pm.getObjectById(id, true);
-            assertEquals("expected change in attached instance", "Woodpecker0", woody2.getLastName());
-            tx.commit();
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
-        }
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            Employee woodyDetached = null;
+            Employee woody2;
+            Employee woodyAttached = null;
+            Object id = null;
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            // test pc are the same after attach
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
-        }
-
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            woodyDetached.setLastName("Woodpecker1");
-            
-            tx.begin();
-            woody2 = (Employee) pm.getObjectById(id, true);
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            tx.commit();
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            // test pc are the same after attach, now in different order, first attach and later get object
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
-        }
-
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            woodyDetached.setLastName("Woodpecker1");
-            
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id, true);
-            tx.commit();
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
-        }
-
-        pm = newPM();
-        pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS | FetchPlan.DETACH_UNLOAD_FIELDS);
-        tx = pm.currentTransaction();
-        try
-        {
-            // test reading non copied field raises exception - DetachedClean
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-            
-            boolean success = false;
             try
             {
-                woodyDetached.getYearsInCompany();
+                //test detach and attach
+                tx.begin();
+                pm.makePersistent(woody);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
+
+                id = pm.getObjectId(woody);
             }
-            catch (JDODetachedFieldAccessException detex)
+            catch (Exception e)
             {
-                success = true;
+                LOG.error("Exception in test", e);
+                fail(e.toString());
             }
-            assertTrue("Expected JDODetachedFieldAccessException on reading a non-detached field", success);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
-        }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
 
-        pm = newPM();
-        pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS | FetchPlan.DETACH_UNLOAD_FIELDS);
-        tx = pm.currentTransaction();
-        try
-        {
-            // test reading non copied field raises exception - DetachedDirty
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
-        }
-
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            // makes it dirty
-            woodyDetached.setFirstName("00");
-            assertTrue("Detached instance should be dirty", JDOHelper.isDirty(woodyDetached));
-            boolean success = false;
+            pm = newPM();
+            tx = pm.currentTransaction();
             try
             {
-                woodyDetached.getYearsInCompany();
+                woodyDetached.setLastName("Woodpecker0");
+
+                tx.begin();
+                pm.makePersistent(woodyDetached);
+                tx.commit();
+
+                tx.begin();
+                woody2 = (Employee) pm.getObjectById(id, true);
+                assertEquals("expected change in attached instance", "Woodpecker0", woody2.getLastName());
+                tx.commit();
+
             }
-            catch (JDODetachedFieldAccessException detex)
+            catch (Exception e)
             {
-                success = true;
+                LOG.error("Exception in test", e);
+                fail(e.toString());
             }
-            assertTrue("Expected JDODetachedFieldAccessException on reading a non-detached field", success);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                // test pc are the same after attach
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                woodyDetached.setLastName("Woodpecker1");
+
+                tx.begin();
+                woody2 = (Employee) pm.getObjectById(id, true);
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                tx.commit();
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                // test pc are the same after attach, now in different order, first attach and later get object
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                woodyDetached.setLastName("Woodpecker1");
+
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id, true);
+                tx.commit();
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            pm = newPM();
+            pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS | FetchPlan.DETACH_UNLOAD_FIELDS);
+            tx = pm.currentTransaction();
+            try
+            {
+                // test reading non copied field raises exception - DetachedClean
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+
+                boolean success = false;
+                try
+                {
+                    woodyDetached.getYearsInCompany();
+                }
+                catch (JDODetachedFieldAccessException detex)
+                {
+                    success = true;
+                }
+                assertTrue("Expected JDODetachedFieldAccessException on reading a non-detached field", success);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            pm = newPM();
+            pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS | FetchPlan.DETACH_UNLOAD_FIELDS);
+            tx = pm.currentTransaction();
+            try
+            {
+                // test reading non copied field raises exception - DetachedDirty
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                // makes it dirty
+                woodyDetached.setFirstName("00");
+                assertTrue("Detached instance should be dirty", JDOHelper.isDirty(woodyDetached));
+                boolean success = false;
+                try
+                {
+                    woodyDetached.getYearsInCompany();
+                }
+                catch (JDODetachedFieldAccessException detex)
+                {
+                    success = true;
+                }
+                assertTrue("Expected JDODetachedFieldAccessException on reading a non-detached field", success);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
     
@@ -495,181 +501,188 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_ManyToOne()
     {
-        Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
-        Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
-        Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
-        Manager boss2 = new Manager(4,"Boss","WakesUp2","boss2@wakes.up",5,"serial 4");
-        Manager boss3 = new Manager(5,"Boss","WakesUp3","boss3@wakes.up",6,"serial 5");
-        woody.setManager(bart);
-        Department deptB = new Department("DeptB");
-        deptB.setManager(bart);
-        
-        Employee woodyDetached;
-        Employee bossDetached;
-        Object id;
-        Object idBoss;
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        
         try
         {
-            //-----------------------------------------------------------------------------------------
-            //test 1 - test detach and attach
-            //-----------------------------------------------------------------------------------------
-            tx.begin();
-            pm.makePersistent(woody);
-            pm.makePersistent(boss);
-            pm.makePersistent(deptB);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-            
-            id = pm.getObjectId(woody);
-            idBoss = pm.getObjectId(boss);
-            woodyDetached.getManager().setLastName("Simpson0");
-            
-            tx.begin();
-            pm.makePersistent(woodyDetached);
-            tx.commit();
-            
-            System.gc();
-            
-            tx.begin();
-            Employee woody2 = (Employee) pm.getObjectById(id,true);
-            assertEquals("expected change in attached instance","Simpson0",woody2.getManager().getLastName());
-            tx.commit();
-            
-            //-----------------------------------------------------------------------------------------
-            //test 2 - test pc are the same after attach
-            //-----------------------------------------------------------------------------------------
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-            
-            woodyDetached.setLastName("Simpson1");
-            
-            tx.begin();
-            woody2 = (Employee) pm.getObjectById(id,true);
-            Employee woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached.getManager(),woody2.getManager());
-            tx.commit();
-            
-            //-----------------------------------------------------------------------------------------
-            //test 3 - test pc are the same after attach, now in different order, first attach and later get object
-            //-----------------------------------------------------------------------------------------
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-            
-            woodyDetached.setLastName("Simpson1");
-            
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id,true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached.getManager(),woody2.getManager());
-            tx.commit();
-            
-            //-----------------------------------------------------------------------------------------
-            //test 4 - test changing aggregated pc. aggregated pc is not yet persistent
-            //-----------------------------------------------------------------------------------------
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-            
-            woodyDetached.setLastName("Simpson1");
-            assertTrue("pc instance should not be already persistent",!JDOHelper.isPersistent(boss3));
-            woodyDetached.setManager(boss3);
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id,true);                
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached, woody2);
-            assertEquals("changed aggregated pc instance was not applied to the datastore",woodyAttached.getManager(), boss3);
-            assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss3));
-            tx.commit(); 
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
+            Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
+            Manager boss2 = new Manager(4,"Boss","WakesUp2","boss2@wakes.up",5,"serial 4");
+            Manager boss3 = new Manager(5,"Boss","WakesUp3","boss3@wakes.up",6,"serial 5");
+            woody.setManager(bart);
+            Department deptB = new Department("DeptB");
+            deptB.setManager(bart);
 
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            assertEquals("changed aggregated pc instance was not applied to the datastore",woody.getManager(), boss3);
-            tx.commit();                
+            Employee woodyDetached;
+            Employee bossDetached;
+            Object id;
+            Object idBoss;
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-            //-----------------------------------------------------------------------------------------
-            //test 5 - test changing aggregated pc. aggregated pc is already persistent
-            //-----------------------------------------------------------------------------------------
-            tx.begin();
-            pm.makePersistent(boss2);
-            tx.commit();
+            try
+            {
+                //-----------------------------------------------------------------------------------------
+                //test 1 - test detach and attach
+                //-----------------------------------------------------------------------------------------
+                tx.begin();
+                pm.makePersistent(woody);
+                pm.makePersistent(boss);
+                pm.makePersistent(deptB);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
 
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
+                id = pm.getObjectId(woody);
+                idBoss = pm.getObjectId(boss);
+                woodyDetached.getManager().setLastName("Simpson0");
 
-            woodyDetached.setLastName("Simpson1");
-            woodyDetached.setManager(boss2);
+                tx.begin();
+                pm.makePersistent(woodyDetached);
+                tx.commit();
 
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id,true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached, woody2);
-            assertEquals("changed aggregated pc instance was not applied to the datastore",woodyAttached.getManager(), boss2);
-            assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss2));
-            tx.commit();
+                System.gc();
 
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            assertEquals("changed aggregated pc instance was not applied to the datastore",woody.getManager(), boss2);
-            tx.commit();
-            
-            //-----------------------------------------------------------------------------------------
-            //test 6 - test setting aggregated pc to null
-            //-----------------------------------------------------------------------------------------
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-            
-            woodyDetached.setLastName("Simpson1");
-            woodyDetached.setManager(null);
+                tx.begin();
+                Employee woody2 = (Employee) pm.getObjectById(id,true);
+                assertEquals("expected change in attached instance","Simpson0",woody2.getManager().getLastName());
+                tx.commit();
 
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id,true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
-            assertEquals("attached instance returned has incorrect last name", "Simpson1", woody2.getLastName());
-            assertNull("changed aggregated pc instance was not applied to the datastore. it should be null",woodyAttached.getManager());
-            tx.commit();
+                //-----------------------------------------------------------------------------------------
+                //test 2 - test pc are the same after attach
+                //-----------------------------------------------------------------------------------------
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
 
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id,true);
-            assertNull("changed aggregated pc instance was not applied to the datastore. it should be null",woody.getManager());
-            tx.commit();
-            
-            //-----------------------------------------------------------------------------------------
-            //test 7 - test detach and read aggregated pc field when its null
-            //-----------------------------------------------------------------------------------------
-            tx.begin();
-            boss = (Manager) pm.getObjectById(idBoss,true);
-            bossDetached = (Manager)pm.detachCopy(boss);
-            tx.commit();
-            
-            assertNull("pc field should be null",bossDetached.getManager());
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+                woodyDetached.setLastName("Simpson1");
+
+                tx.begin();
+                woody2 = (Employee) pm.getObjectById(id,true);
+                Employee woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached.getManager(),woody2.getManager());
+                tx.commit();
+
+                //-----------------------------------------------------------------------------------------
+                //test 3 - test pc are the same after attach, now in different order, first attach and later get object
+                //-----------------------------------------------------------------------------------------
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
+
+                woodyDetached.setLastName("Simpson1");
+
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id,true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached.getManager(),woody2.getManager());
+                tx.commit();
+
+                //-----------------------------------------------------------------------------------------
+                //test 4 - test changing aggregated pc. aggregated pc is not yet persistent
+                //-----------------------------------------------------------------------------------------
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
+
+                woodyDetached.setLastName("Simpson1");
+                assertTrue("pc instance should not be already persistent",!JDOHelper.isPersistent(boss3));
+                woodyDetached.setManager(boss3);
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id,true);                
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached, woody2);
+                assertEquals("changed aggregated pc instance was not applied to the datastore",woodyAttached.getManager(), boss3);
+                assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss3));
+                tx.commit(); 
+
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                assertEquals("changed aggregated pc instance was not applied to the datastore",woody.getManager(), boss3);
+                tx.commit();                
+
+                //-----------------------------------------------------------------------------------------
+                //test 5 - test changing aggregated pc. aggregated pc is already persistent
+                //-----------------------------------------------------------------------------------------
+                tx.begin();
+                pm.makePersistent(boss2);
+                tx.commit();
+
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
+
+                woodyDetached.setLastName("Simpson1");
+                woodyDetached.setManager(boss2);
+
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id,true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached, woody2);
+                assertEquals("changed aggregated pc instance was not applied to the datastore",woodyAttached.getManager(), boss2);
+                assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss2));
+                tx.commit();
+
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                assertEquals("changed aggregated pc instance was not applied to the datastore",woody.getManager(), boss2);
+                tx.commit();
+
+                //-----------------------------------------------------------------------------------------
+                //test 6 - test setting aggregated pc to null
+                //-----------------------------------------------------------------------------------------
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
+
+                woodyDetached.setLastName("Simpson1");
+                woodyDetached.setManager(null);
+
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id,true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",woodyAttached,woody2);
+                assertEquals("attached instance returned has incorrect last name", "Simpson1", woody2.getLastName());
+                assertNull("changed aggregated pc instance was not applied to the datastore. it should be null",woodyAttached.getManager());
+                tx.commit();
+
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id,true);
+                assertNull("changed aggregated pc instance was not applied to the datastore. it should be null",woody.getManager());
+                tx.commit();
+
+                //-----------------------------------------------------------------------------------------
+                //test 7 - test detach and read aggregated pc field when its null
+                //-----------------------------------------------------------------------------------------
+                tx.begin();
+                boss = (Manager) pm.getObjectById(idBoss,true);
+                bossDetached = (Manager)pm.detachCopy(boss);
+                tx.commit();
+
+                assertNull("pc field should be null",bossDetached.getManager());
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -678,364 +691,371 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_ManyToOne_NewPM()
     {
-        Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
-        Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
-        woody.setManager(bart);
-        Department deptB = new Department("DeptB");
-        deptB.setManager(bart);
-
-        Employee woodyDetached = null;
-        Employee woodyAttached = null;
-        Employee woody2 = null;
-        Object id = null;
-
-        // -----------------------------------------------------------------------------------------
-        // test 1 - test detach and attach
-        // -----------------------------------------------------------------------------------------
-
-        // store and detach objects
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
-            pm.makePersistent(woody);
-            pm.makePersistent(deptB);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-            id = pm.getObjectId(woody);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
+            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+            Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
+            woody.setManager(bart);
+            Department deptB = new Department("DeptB");
+            deptB.setManager(bart);
 
-            pm.close();
-        }
+            Employee woodyDetached = null;
+            Employee woodyAttached = null;
+            Employee woody2 = null;
+            Object id = null;
 
-        // change detached objects
-        woodyDetached.getManager().setLastName("Simpson0");
+            // -----------------------------------------------------------------------------------------
+            // test 1 - test detach and attach
+            // -----------------------------------------------------------------------------------------
 
-        // attach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            pm.makePersistent(woodyDetached);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
+            // store and detach objects
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                pm.makePersistent(woody);
+                pm.makePersistent(deptB);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+                id = pm.getObjectId(woody);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
 
-            pm.close();
-        }
-        // check attach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woody2 = (Employee) pm.getObjectById(id, true);
-            assertEquals("expected change in attached instance", "Simpson0", woody2.getManager().getLastName());
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
+                pm.close();
+            }
 
-            pm.close();
-        }
+            // change detached objects
+            woodyDetached.getManager().setLastName("Simpson0");
 
-        // -----------------------------------------------------------------------------------------
-        // test 2 - test pc are the same after attach
-        // -----------------------------------------------------------------------------------------
-        // detach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
+            // attach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                pm.makePersistent(woodyDetached);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
 
-            pm.close();
-        }
+                pm.close();
+            }
+            // check attach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woody2 = (Employee) pm.getObjectById(id, true);
+                assertEquals("expected change in attached instance", "Simpson0", woody2.getManager().getLastName());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
 
-        // change detached objects
-        woodyDetached.setLastName("Simpson1");
+                pm.close();
+            }
 
-        // attach objects and check objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
+            // -----------------------------------------------------------------------------------------
+            // test 2 - test pc are the same after attach
+            // -----------------------------------------------------------------------------------------
+            // detach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
 
-            tx.begin();
-            woody2 = (Employee) pm.getObjectById(id, true);
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached.getManager(), woody2.getManager());
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
+                pm.close();
+            }
 
-            pm.close();
-        }
-
-        // -----------------------------------------------------------------------------------------
-        // test 3 - test pc are the same after attach, now in different
-        // order, first attach and later get object
-        // -----------------------------------------------------------------------------------------
-
-        // detach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
-        }
-
-        // change detached objects
-        woodyDetached.setLastName("Simpson1");
-
-        // attach and check objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id, true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached.getManager(), woody2.getManager());
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
-        }
-
-        // -----------------------------------------------------------------------------------------
-        // test 4 - test changing aggregated pc. aggregated pc is not yet persistent
-        // -----------------------------------------------------------------------------------------
-
-        // detach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
-        }
-
-        // change detached objects
-        woodyDetached.setLastName("Simpson1");
-        Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
-        assertTrue("pc instance should not be already persistent", !JDOHelper.isPersistent(boss));
-        woodyDetached.setManager(boss);
-
-        // attach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id, true);
-
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
-            assertEquals("changed aggregated pc instance was not applied to the datastore", woodyAttached.getManager(), boss);
-            assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(boss));
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
-        }
-
-        // -----------------------------------------------------------------------------------------
-        // test 5 - test changing aggregated pc. aggregated pc is already persistent
-        // -----------------------------------------------------------------------------------------
-
-        // detach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            Manager boss2 = new Manager(4, "Boss", "WakesUp2", "boss2@wakes.up", 5, "serial 4");
-            pm.makePersistent(boss2);
-            tx.commit();
-
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-
+            // change detached objects
             woodyDetached.setLastName("Simpson1");
-            woodyDetached.setManager(boss2);
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id, true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
-            assertEquals("changed aggregated pc instance was not applied to the datastore", woodyAttached.getManager(), boss2);
-            assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(boss2));
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
+
+            // attach objects and check objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
             {
-                tx.rollback();
+
+                tx.begin();
+                woody2 = (Employee) pm.getObjectById(id, true);
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached.getManager(), woody2.getManager());
+                tx.commit();
             }
-            pm.close();
-        }
-
-        // -----------------------------------------------------------------------------------------
-        // test 6 - test setting aggregated pc to null
-        // -----------------------------------------------------------------------------------------
-
-        // detach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woody = (Employee) pm.getObjectById(id, true);
-            woodyDetached = (Employee) pm.detachCopy(woody);
-            tx.commit();
-
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
-        }
-
-        // change detached objects
-        woodyDetached.setLastName("Simpson1");
-        woodyDetached.setManager(null);
-
-        // attach objects
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            woodyAttached = (Employee) pm.makePersistent(woodyDetached);
-            woody2 = (Employee) pm.getObjectById(id, true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
-            assertNull("changed aggregated pc instance was not applied to the datastore. it should be null", woodyAttached.getManager());
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
+            catch (Exception e)
             {
-                tx.rollback();
+                LOG.error("Exception in test", e);
+                fail(e.toString());
             }
-            pm.close();
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 3 - test pc are the same after attach, now in different
+            // order, first attach and later get object
+            // -----------------------------------------------------------------------------------------
+
+            // detach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            // change detached objects
+            woodyDetached.setLastName("Simpson1");
+
+            // attach and check objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id, true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached.getManager(), woody2.getManager());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 4 - test changing aggregated pc. aggregated pc is not yet persistent
+            // -----------------------------------------------------------------------------------------
+
+            // detach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            // change detached objects
+            woodyDetached.setLastName("Simpson1");
+            Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
+            assertTrue("pc instance should not be already persistent", !JDOHelper.isPersistent(boss));
+            woodyDetached.setManager(boss);
+
+            // attach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id, true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
+                assertEquals("changed aggregated pc instance was not applied to the datastore", woodyAttached.getManager(), boss);
+                assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(boss));
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 5 - test changing aggregated pc. aggregated pc is already persistent
+            // -----------------------------------------------------------------------------------------
+
+            // detach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Manager boss2 = new Manager(4, "Boss", "WakesUp2", "boss2@wakes.up", 5, "serial 4");
+                pm.makePersistent(boss2);
+                tx.commit();
+
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+
+                woodyDetached.setLastName("Simpson1");
+                woodyDetached.setManager(boss2);
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id, true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
+                assertEquals("changed aggregated pc instance was not applied to the datastore", woodyAttached.getManager(), boss2);
+                assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(boss2));
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 6 - test setting aggregated pc to null
+            // -----------------------------------------------------------------------------------------
+
+            // detach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woody = (Employee) pm.getObjectById(id, true);
+                woodyDetached = (Employee) pm.detachCopy(woody);
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
+
+            // change detached objects
+            woodyDetached.setLastName("Simpson1");
+            woodyDetached.setManager(null);
+
+            // attach objects
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                woodyAttached = (Employee) pm.makePersistent(woodyDetached);
+                woody2 = (Employee) pm.getObjectById(id, true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", woodyAttached, woody2);
+                assertNull("changed aggregated pc instance was not applied to the datastore. it should be null", woodyAttached.getManager());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            CompanyHelper.clearCompanyData(pmf);
         }
     }    
 
@@ -1044,214 +1064,221 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_OneToMany()
     {
-        Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
-        Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
-        Manager boss2 = new Manager(4,"Boss","WakesUp2","boss2@wakes.up",5,"serial 4");
-        Manager boss3 = new Manager(5,"Boss","WakesUp3","boss3@wakes.up",6,"serial 5");
-        Manager boss4 = new Manager(6,"Boss","WakesUp4","boss4@wakes.up",7,"serial 6");
-        Manager boss5 = new Manager(7,"Boss","WakesUp5","boss5@wakes.up",8,"serial 7");
-        bart.addSubordinate(boss);
-        bart.addSubordinate(boss2);
-        Department deptB = new Department("DeptB");
-        bart.addDepartment(deptB);
-        
-        Manager bartDetached;
-        Manager bart2;
-        Object id;
-        Object id2;
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-
-        // This is a fix for the fact that Person hashCode/equals rely on non-PK fields and so use of
-        // this class outside of a txn will try to load these fields
-        tx.setNontransactionalRead(true);
         try
         {
-            //test detach and attach
-            tx.begin();
-            pm.makePersistent(bart);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            id = pm.getObjectId(bart);
-            Employee employeeChanged = (Employee) bartDetached.getSubordinates().iterator().next();
-            employeeChanged.setLastName("Simpson0");
-            id2 = JDOHelper.getObjectId(employeeChanged);
-            
-            tx.begin();
-            bart2 = (Manager) pm.makePersistent(bartDetached);
-            tx.commit();
-            
-            System.gc();
-            
-            tx.begin();
-            bart2 = (Manager) pm.getObjectById(id,true);
-            employeeChanged = (Employee) pm.getObjectById(id2,true);
-            assertEquals(bart2.getSubordinates().size(),2);
-            assertEquals("expected change in attached instance","Simpson0",employeeChanged.getLastName());
-            tx.commit();
-            
-            //test pc are the same after attach
-            tx.begin();
-            bart = (Manager) pm.getObjectById(id,true);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            bartDetached.setLastName("Simpson1");
-            
-            tx.begin();
-            bart2 = (Manager) pm.getObjectById(id,true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
-            assertTrue("attached instance returned must be the one already enlisted in the PM",bartDetached.getSubordinates().containsAll(bart2.getSubordinates()));
-            tx.commit();
-            
-            
-            //test pc are the same after attach, now in different order, first attach and later get object
-            tx.begin();
-            bart = (Manager) pm.getObjectById(id,true);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            bartDetached.setLastName("Simpson1");
-            
-            tx.begin();
-            bartDetached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id,true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
-            assertTrue("attached instance returned must be the one already enlisted in the PM",bartDetached.getSubordinates().containsAll(bart2.getSubordinates()));
-            tx.commit();            
-            
-            //test changing aggregated pc. add element pc which is not yet persistent
-            tx.begin();
-            bart = (Manager) pm.getObjectById(id,true);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            bartDetached.setLastName("Simpson1");
-            assertTrue("pc instance should not be already persistent",!JDOHelper.isPersistent(boss3));
-            bartDetached.addSubordinate(boss3);
-            tx.begin();
-            bartDetached = (Manager) pm.makePersistent(bartDetached);
-            pm.flush();
-            bart2 = (Manager) pm.getObjectById(id,true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
-            assertTrue("add element to collection was not applied to the datastore",bartDetached.getSubordinates().contains(boss3));
-            assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss3));
-            //verify if previous boss were not lost
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss));
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss2));
-            tx.commit();            
-            
-            //test changing aggregated pc. add element pc which is already persistent
-            tx.begin();
-            pm.makePersistent(boss4);
-            tx.commit();
-            
-            tx.begin();
-            bart = (Manager) pm.getObjectById(id,true);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            bartDetached.setLastName("Simpson1");
-            bartDetached.addSubordinate(boss4);
-            tx.begin();
-            bartDetached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id,true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
-            assertTrue("add element to collection was not applied to the datastore",bartDetached.getSubordinates().contains(boss4));
-            assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss4));
-            //verify if previous boss were not lost
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss));
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss2));
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss3));
-            tx.commit();            
-            
-            //test changing aggregated pc. remove element
-            tx.begin();
-            pm.makePersistent(boss4);
-            tx.commit();
-            
-            tx.begin();
-            bart = (Manager) pm.getObjectById(id,true);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            bartDetached.setLastName("Simpson1");
-            bartDetached.removeSubordinate(boss4);
-            tx.begin();
-            bartDetached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id,true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
-            assertTrue("remove element in aggregated pc instance was not applied to the datastore",!bartDetached.getSubordinates().contains(boss4));
-            assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss4));
-            //verify if previous boss were not lost
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss));
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss2));
-            assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss3));
-            tx.commit();            
-            
-            //test changing aggregated pc. aggregated pc is cleared
-            tx.begin();
-            pm.makePersistent(boss4);
-            tx.commit();
-            
-            tx.begin();
-            bart = (Manager) pm.getObjectById(id,true);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            bartDetached.setLastName("Simpson1");
-            bartDetached.clearSubordinates();
-            tx.begin();
-            bartDetached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id,true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
-            assertTrue("clear Collection with aggregated pc instance was not applied to the datastore",bartDetached.getSubordinates().size()==0);
-            tx.commit();            
-            
-            //test sco fields made dirty
-            tx.begin();
-            pm.makePersistent(boss5);
-            tx.commit();
-            
-            tx.begin();
-            bart = (Manager) pm.getObjectById(id,true);
-            bartDetached = (Manager)pm.detachCopy(bart);
-            tx.commit();
-            
-            bartDetached.addSubordinate(boss5);
-            JDOHelper.makeDirty(bartDetached,"subordinates");
-            tx.begin();
-            bartDetached = (Manager) pm.makePersistent(bartDetached);
-            tx.commit();            
-            tx.begin();
-            bart2 = (Manager) pm.getObjectById(id,true);
-            
-            assertEquals(1,bart2.getSubordinates().size());
-            assertTrue("SCO field should is missing element",bart2.getSubordinates().contains(boss5));
-            assertTrue("element of SCO field is not persistent",JDOHelper.isPersistent(boss5));
-            
-            tx.commit();            
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
+            Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
+            Manager boss2 = new Manager(4,"Boss","WakesUp2","boss2@wakes.up",5,"serial 4");
+            Manager boss3 = new Manager(5,"Boss","WakesUp3","boss3@wakes.up",6,"serial 5");
+            Manager boss4 = new Manager(6,"Boss","WakesUp4","boss4@wakes.up",7,"serial 6");
+            Manager boss5 = new Manager(7,"Boss","WakesUp5","boss5@wakes.up",8,"serial 7");
+            bart.addSubordinate(boss);
+            bart.addSubordinate(boss2);
+            Department deptB = new Department("DeptB");
+            bart.addDepartment(deptB);
+
+            Manager bartDetached;
+            Manager bart2;
+            Object id;
+            Object id2;
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            // This is a fix for the fact that Person hashCode/equals rely on non-PK fields and so use of
+            // this class outside of a txn will try to load these fields
+            tx.setNontransactionalRead(true);
+            try
+            {
+                //test detach and attach
+                tx.begin();
+                pm.makePersistent(bart);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                id = pm.getObjectId(bart);
+                Employee employeeChanged = (Employee) bartDetached.getSubordinates().iterator().next();
+                employeeChanged.setLastName("Simpson0");
+                id2 = JDOHelper.getObjectId(employeeChanged);
+
+                tx.begin();
+                bart2 = (Manager) pm.makePersistent(bartDetached);
+                tx.commit();
+
+                System.gc();
+
+                tx.begin();
+                bart2 = (Manager) pm.getObjectById(id,true);
+                employeeChanged = (Employee) pm.getObjectById(id2,true);
+                assertEquals(bart2.getSubordinates().size(),2);
+                assertEquals("expected change in attached instance","Simpson0",employeeChanged.getLastName());
+                tx.commit();
+
+                //test pc are the same after attach
+                tx.begin();
+                bart = (Manager) pm.getObjectById(id,true);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                bartDetached.setLastName("Simpson1");
+
+                tx.begin();
+                bart2 = (Manager) pm.getObjectById(id,true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
+                assertTrue("attached instance returned must be the one already enlisted in the PM",bartDetached.getSubordinates().containsAll(bart2.getSubordinates()));
+                tx.commit();
+
+
+                //test pc are the same after attach, now in different order, first attach and later get object
+                tx.begin();
+                bart = (Manager) pm.getObjectById(id,true);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                bartDetached.setLastName("Simpson1");
+
+                tx.begin();
+                bartDetached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id,true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
+                assertTrue("attached instance returned must be the one already enlisted in the PM",bartDetached.getSubordinates().containsAll(bart2.getSubordinates()));
+                tx.commit();            
+
+                //test changing aggregated pc. add element pc which is not yet persistent
+                tx.begin();
+                bart = (Manager) pm.getObjectById(id,true);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                bartDetached.setLastName("Simpson1");
+                assertTrue("pc instance should not be already persistent",!JDOHelper.isPersistent(boss3));
+                bartDetached.addSubordinate(boss3);
+                tx.begin();
+                bartDetached = (Manager) pm.makePersistent(bartDetached);
+                pm.flush();
+                bart2 = (Manager) pm.getObjectById(id,true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
+                assertTrue("add element to collection was not applied to the datastore",bartDetached.getSubordinates().contains(boss3));
+                assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss3));
+                //verify if previous boss were not lost
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss));
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss2));
+                tx.commit();            
+
+                //test changing aggregated pc. add element pc which is already persistent
+                tx.begin();
+                pm.makePersistent(boss4);
+                tx.commit();
+
+                tx.begin();
+                bart = (Manager) pm.getObjectById(id,true);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                bartDetached.setLastName("Simpson1");
+                bartDetached.addSubordinate(boss4);
+                tx.begin();
+                bartDetached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id,true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
+                assertTrue("add element to collection was not applied to the datastore",bartDetached.getSubordinates().contains(boss4));
+                assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss4));
+                //verify if previous boss were not lost
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss));
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss2));
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss3));
+                tx.commit();            
+
+                //test changing aggregated pc. remove element
+                tx.begin();
+                pm.makePersistent(boss4);
+                tx.commit();
+
+                tx.begin();
+                bart = (Manager) pm.getObjectById(id,true);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                bartDetached.setLastName("Simpson1");
+                bartDetached.removeSubordinate(boss4);
+                tx.begin();
+                bartDetached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id,true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
+                assertTrue("remove element in aggregated pc instance was not applied to the datastore",!bartDetached.getSubordinates().contains(boss4));
+                assertTrue("aggregated pc instance was expected to be made persistent",JDOHelper.isPersistent(boss4));
+                //verify if previous boss were not lost
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss));
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss2));
+                assertTrue("previous aggregated pc instances were lost",bartDetached.getSubordinates().contains(boss3));
+                tx.commit();            
+
+                //test changing aggregated pc. aggregated pc is cleared
+                tx.begin();
+                pm.makePersistent(boss4);
+                tx.commit();
+
+                tx.begin();
+                bart = (Manager) pm.getObjectById(id,true);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                bartDetached.setLastName("Simpson1");
+                bartDetached.clearSubordinates();
+                tx.begin();
+                bartDetached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id,true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM",bartDetached,bart2);
+                assertTrue("clear Collection with aggregated pc instance was not applied to the datastore",bartDetached.getSubordinates().size()==0);
+                tx.commit();            
+
+                //test sco fields made dirty
+                tx.begin();
+                pm.makePersistent(boss5);
+                tx.commit();
+
+                tx.begin();
+                bart = (Manager) pm.getObjectById(id,true);
+                bartDetached = (Manager)pm.detachCopy(bart);
+                tx.commit();
+
+                bartDetached.addSubordinate(boss5);
+                JDOHelper.makeDirty(bartDetached,"subordinates");
+                tx.begin();
+                bartDetached = (Manager) pm.makePersistent(bartDetached);
+                tx.commit();            
+                tx.begin();
+                bart2 = (Manager) pm.getObjectById(id,true);
+
+                assertEquals(1,bart2.getSubordinates().size());
+                assertTrue("SCO field should is missing element",bart2.getSubordinates().contains(boss5));
+                assertTrue("element of SCO field is not persistent",JDOHelper.isPersistent(boss5));
+
+                tx.commit();            
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }    
 
@@ -1260,468 +1287,475 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_OneToMany_NewPM()
     {
-        Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
-        Manager boss[] = new Manager[5];
-        boss[0] = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
-        boss[1] = new Manager(4, "Boss", "WakesUp2", "boss2@wakes.up", 5, "serial 4");
-        boss[2] = new Manager(5, "Boss", "WakesUp3", "boss3@wakes.up", 6, "serial 5");
-        boss[3] = new Manager(6, "Boss", "WakesUp4", "boss4@wakes.up", 7, "serial 6");
-        boss[4] = new Manager(7, "Boss", "WakesUp5", "boss5@wakes.up", 8, "serial 7");
-        bart.addSubordinate(boss[0]);
-        bart.addSubordinate(boss[1]);
-        Department deptB = new Department("DeptB");
-        bart.addDepartment(deptB);
+        try
+        {
+            Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
+            Manager boss[] = new Manager[5];
+            boss[0] = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
+            boss[1] = new Manager(4, "Boss", "WakesUp2", "boss2@wakes.up", 5, "serial 4");
+            boss[2] = new Manager(5, "Boss", "WakesUp3", "boss3@wakes.up", 6, "serial 5");
+            boss[3] = new Manager(6, "Boss", "WakesUp4", "boss4@wakes.up", 7, "serial 6");
+            boss[4] = new Manager(7, "Boss", "WakesUp5", "boss5@wakes.up", 8, "serial 7");
+            bart.addSubordinate(boss[0]);
+            bart.addSubordinate(boss[1]);
+            Department deptB = new Department("DeptB");
+            bart.addDepartment(deptB);
 
-        Manager bartAttached = null;
-        Manager bartDetached = null;
-        Manager bart2;
-        Object id = null;
-        Object bossIds[] = new Object[boss.length];
-        Object id2;
+            Manager bartAttached = null;
+            Manager bartDetached = null;
+            Manager bart2;
+            Object id = null;
+            Object bossIds[] = new Object[boss.length];
+            Object id2;
 
-        // -----------------------------------------------------------------------------------------
-        // start data for tests
-        // -----------------------------------------------------------------------------------------
-        
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            pm.makePersistent(bart);
-            tx.commit();
-            
-            id = pm.getObjectId(bart);
-            bossIds[0] = pm.getObjectId(boss[0]);
-            bossIds[1] = pm.getObjectId(boss[1]);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            // -----------------------------------------------------------------------------------------
+            // start data for tests
+            // -----------------------------------------------------------------------------------------
+
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                pm.makePersistent(bart);
+                tx.commit();
+
+                id = pm.getObjectId(bart);
+                bossIds[0] = pm.getObjectId(boss[0]);
+                bossIds[1] = pm.getObjectId(boss[1]);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 1 - test detach and attach
+            // -----------------------------------------------------------------------------------------
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            Employee employeeChanged = (Employee) bartDetached.getSubordinates().iterator().next();
+            employeeChanged.setLastName("Simpson0");
+            id2 = JDOHelper.getObjectId(employeeChanged);
+
+            attachDetachedManager(bartDetached);
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+
+            try
+            {
+                tx.begin();
+                bart2 = (Manager) pm.getObjectById(id, true);
+                employeeChanged = (Employee) pm.getObjectById(id2, true);
+                assertEquals(2, bart2.getSubordinates().size());
+                assertEquals("expected change in attached instance", "Simpson0", employeeChanged.getLastName());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 2 - test pc are the same after attach
+            // -----------------------------------------------------------------------------------------
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            bartDetached.setLastName("Simpson1");
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+
+            try
+            {
+                tx.begin();
+                bart2 = (Manager) pm.getObjectById(id, true);
+                bartAttached = (Manager) pm.makePersistent(bartDetached);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
+                assertTrue(Manager.compareElementsContained(bartDetached.getSubordinates(), bart2.getSubordinates()));
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 3 - test pc are the same after attach, now in different order,
+            // first attach and later get object
+            // -----------------------------------------------------------------------------------------
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            bartDetached.setLastName("Simpson1");
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                bartAttached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id, true);
+                assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
+                assertTrue("attached instance returned must be the one already enlisted in the PM", bartDetached.getSubordinates().containsAll(
+                    bart2.getSubordinates()));
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 4 - test changing aggregated pc. add element pc which is not yet
+            // persistent
+            // -----------------------------------------------------------------------------------------
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            bartDetached.setLastName("Simpson1");
+            assertTrue("pc instance should not be already persistent", !JDOHelper.isPersistent(boss[2]));
+            bartDetached.addSubordinate(boss[2]);
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                bartAttached = (Manager) pm.makePersistent(bartDetached);
+                pm.flush();
+                bart2 = (Manager) pm.getObjectById(id, true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
+                assertTrue("add element to collection was not applied to the datastore", bartAttached.getSubordinates().contains(boss[2]));
+                assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(boss[2]));
+                // verify if previous boss were not lost
+                assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[0], false)));
+                assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[1], false)));
+                tx.commit();
+                bossIds[2] = pm.getObjectId(boss[2]);
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 5 - test changing aggregated pc. add element pc which is already
+            // persistent
+            // -----------------------------------------------------------------------------------------
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            Employee detachedBoss3 = null;
+            try
+            {
+                tx.begin();
+                pm.makePersistent(boss[3]);
+                detachedBoss3 = (Employee)pm.detachCopy(boss[3]);
+                tx.commit();
+                bossIds[3] = pm.getObjectId(boss[3]);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            bartDetached.setLastName("Simpson1");
+            bartDetached.addSubordinate(detachedBoss3);
+            JDOHelper.makeDirty(bartDetached, "subordinates");
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                bartAttached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id, true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
+                assertTrue("add element to collection was not applied to the datastore", 
+                    bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[3], false)));
+                assertTrue("aggregated pc instance was expected to be made persistent", 
+                    JDOHelper.isPersistent(pm.getObjectById(bossIds[3], false)));
+                // verify if previous boss were not lost
+                assertTrue("previous aggregated pc instances were lost", 
+                    bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[0], false)));
+                assertTrue("previous aggregated pc instances were lost", 
+                    bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[1], false)));
+                assertTrue("previous aggregated pc instances were lost", 
+                    bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[2], false)));
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 6 - test changing aggregated pc. remove element
+            // -----------------------------------------------------------------------------------------
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            bartDetached.setLastName("Simpson1");
+            bartDetached.removeSubordinate(getDetachedManager(bossIds[3], "groupSubordinates"));
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                bartAttached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id, true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
+                assertTrue("remove element in aggregated pc instance was not applied to the datastore", !bartAttached.getSubordinates().contains(
+                    pm.getObjectById(bossIds[3], false)));
+                assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(pm.getObjectById(bossIds[3], false)));
+                // verify if previous boss were not lost
+                assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[0], false)));
+                assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[1], false)));
+                assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[2], false)));
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 7 - test changing aggregated pc. aggregated pc is cleared
+            // -----------------------------------------------------------------------------------------
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            bartDetached.setLastName("Simpson1");
+            bartDetached.clearSubordinates();
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                bartAttached = (Manager) pm.makePersistent(bartDetached);
+                bart2 = (Manager) pm.getObjectById(id, true);
+
+                assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
+                assertTrue("clear Collection with aggregated pc instance was not applied to the datastore", bartAttached.getSubordinates().size() == 0);
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                bart2 = (Manager) pm.getObjectById(id, true);
+
+                assertTrue("clear Collection with aggregated pc instance was not applied to the datastore", bart2.getSubordinates().size() == 0);
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // -----------------------------------------------------------------------------------------
+            // test 8 - test sco fields made dirty
+            // -----------------------------------------------------------------------------------------
+            pm = newPM();
+            tx = pm.currentTransaction();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+
+            try
+            {
+                tx.begin();
+                pm.makePersistent(boss[4]);
+                tx.commit();
+                bossIds[4] = pm.getObjectId(boss[4]);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            bartDetached = getDetachedManager(id, "groupSubordinates");
+
+            bartDetached.addSubordinate(getDetachedManager(bossIds[4], "groupSubordinates"));
+            JDOHelper.makeDirty(bartDetached, "subordinates");
+
+            attachDetachedManager(bartDetached);
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                bart2 = (Manager) pm.getObjectById(id, true);
+
+                assertEquals(1, bart2.getSubordinates().size());
+                assertTrue("SCO field should is missing element", bart2.getSubordinates().contains(pm.getObjectById(bossIds[4], false)));
+                assertTrue("element of SCO field is not persistent", JDOHelper.isPersistent(pm.getObjectById(bossIds[4], false)));
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 1 - test detach and attach
-        // -----------------------------------------------------------------------------------------
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        Employee employeeChanged = (Employee) bartDetached.getSubordinates().iterator().next();
-        employeeChanged.setLastName("Simpson0");
-        id2 = JDOHelper.getObjectId(employeeChanged);
-        
-        attachDetachedManager(bartDetached);
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        
-        try
-        {
-            tx.begin();
-            bart2 = (Manager) pm.getObjectById(id, true);
-            employeeChanged = (Employee) pm.getObjectById(id2, true);
-            assertEquals(2, bart2.getSubordinates().size());
-            assertEquals("expected change in attached instance", "Simpson0", employeeChanged.getLastName());
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 2 - test pc are the same after attach
-        // -----------------------------------------------------------------------------------------
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        bartDetached.setLastName("Simpson1");
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        
-        try
-        {
-            tx.begin();
-            bart2 = (Manager) pm.getObjectById(id, true);
-            bartAttached = (Manager) pm.makePersistent(bartDetached);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
-            assertTrue(Manager.compareElementsContained(bartDetached.getSubordinates(), bart2.getSubordinates()));
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 3 - test pc are the same after attach, now in different order,
-        // first attach and later get object
-        // -----------------------------------------------------------------------------------------
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        bartDetached.setLastName("Simpson1");
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            bartAttached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id, true);
-            assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
-            assertTrue("attached instance returned must be the one already enlisted in the PM", bartDetached.getSubordinates().containsAll(
-                bart2.getSubordinates()));
-            tx.commit();
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 4 - test changing aggregated pc. add element pc which is not yet
-        // persistent
-        // -----------------------------------------------------------------------------------------
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        bartDetached.setLastName("Simpson1");
-        assertTrue("pc instance should not be already persistent", !JDOHelper.isPersistent(boss[2]));
-        bartDetached.addSubordinate(boss[2]);
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            bartAttached = (Manager) pm.makePersistent(bartDetached);
-            pm.flush();
-            bart2 = (Manager) pm.getObjectById(id, true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
-            assertTrue("add element to collection was not applied to the datastore", bartAttached.getSubordinates().contains(boss[2]));
-            assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(boss[2]));
-            // verify if previous boss were not lost
-            assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[0], false)));
-            assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[1], false)));
-            tx.commit();
-            bossIds[2] = pm.getObjectId(boss[2]);
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 5 - test changing aggregated pc. add element pc which is already
-        // persistent
-        // -----------------------------------------------------------------------------------------
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        Employee detachedBoss3 = null;
-        try
-        {
-            tx.begin();
-            pm.makePersistent(boss[3]);
-            detachedBoss3 = (Employee)pm.detachCopy(boss[3]);
-            tx.commit();
-            bossIds[3] = pm.getObjectId(boss[3]);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        bartDetached.setLastName("Simpson1");
-        bartDetached.addSubordinate(detachedBoss3);
-        JDOHelper.makeDirty(bartDetached, "subordinates");
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            bartAttached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id, true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
-            assertTrue("add element to collection was not applied to the datastore", 
-                bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[3], false)));
-            assertTrue("aggregated pc instance was expected to be made persistent", 
-                JDOHelper.isPersistent(pm.getObjectById(bossIds[3], false)));
-            // verify if previous boss were not lost
-            assertTrue("previous aggregated pc instances were lost", 
-                bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[0], false)));
-            assertTrue("previous aggregated pc instances were lost", 
-                bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[1], false)));
-            assertTrue("previous aggregated pc instances were lost", 
-                bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[2], false)));
-            tx.commit();
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 6 - test changing aggregated pc. remove element
-        // -----------------------------------------------------------------------------------------
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        bartDetached.setLastName("Simpson1");
-        bartDetached.removeSubordinate(getDetachedManager(bossIds[3], "groupSubordinates"));
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            bartAttached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id, true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
-            assertTrue("remove element in aggregated pc instance was not applied to the datastore", !bartAttached.getSubordinates().contains(
-                pm.getObjectById(bossIds[3], false)));
-            assertTrue("aggregated pc instance was expected to be made persistent", JDOHelper.isPersistent(pm.getObjectById(bossIds[3], false)));
-            // verify if previous boss were not lost
-            assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[0], false)));
-            assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[1], false)));
-            assertTrue("previous aggregated pc instances were lost", bartAttached.getSubordinates().contains(pm.getObjectById(bossIds[2], false)));
-            tx.commit();
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 7 - test changing aggregated pc. aggregated pc is cleared
-        // -----------------------------------------------------------------------------------------
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        bartDetached.setLastName("Simpson1");
-        bartDetached.clearSubordinates();
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            bartAttached = (Manager) pm.makePersistent(bartDetached);
-            bart2 = (Manager) pm.getObjectById(id, true);
-            
-            assertEquals("attached instance returned must be the one already enlisted in the PM", bartAttached, bart2);
-            assertTrue("clear Collection with aggregated pc instance was not applied to the datastore", bartAttached.getSubordinates().size() == 0);
-            tx.commit();
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            bart2 = (Manager) pm.getObjectById(id, true);
-            
-            assertTrue("clear Collection with aggregated pc instance was not applied to the datastore", bart2.getSubordinates().size() == 0);
-            tx.commit();
-            
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        // -----------------------------------------------------------------------------------------
-        // test 8 - test sco fields made dirty
-        // -----------------------------------------------------------------------------------------
-        pm = newPM();
-        tx = pm.currentTransaction();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        
-        try
-        {
-            tx.begin();
-            pm.makePersistent(boss[4]);
-            tx.commit();
-            bossIds[4] = pm.getObjectId(boss[4]);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
-        }
-        
-        bartDetached = getDetachedManager(id, "groupSubordinates");
-        
-        bartDetached.addSubordinate(getDetachedManager(bossIds[4], "groupSubordinates"));
-        JDOHelper.makeDirty(bartDetached, "subordinates");
-        
-        attachDetachedManager(bartDetached);
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            bart2 = (Manager) pm.getObjectById(id, true);
-            
-            assertEquals(1, bart2.getSubordinates().size());
-            assertTrue("SCO field should is missing element", bart2.getSubordinates().contains(pm.getObjectById(bossIds[4], false)));
-            assertTrue("element of SCO field is not persistent", JDOHelper.isPersistent(pm.getObjectById(bossIds[4], false)));
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }    
 
@@ -1730,48 +1764,55 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachTransactionalField()
     {
-        Object objectId = null;
-        ClassWithTransactionalField obj1 = new ClassWithTransactionalField("name","transactional");
-        
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        
         try
         {
-            //test detach and attach
-            tx.begin();
-            pm.makePersistent(obj1);
-            tx.commit();
-            objectId = pm.getObjectId(obj1);
-            
-            //test detach and attach
-            tx.begin();
-            obj1 = (ClassWithTransactionalField) pm.getObjectById(objectId,true);
-            pm.getFetchPlan().addGroup("detach");
-            obj1 = (ClassWithTransactionalField) pm.detachCopy(obj1);
-            assertNull("transactional field not correct",obj1.getTransactional());
-            tx.commit();
-            
-            //test detach and attach
-            tx.begin();
-            obj1 = (ClassWithTransactionalField) pm.getObjectById(objectId,true);
-            pm.getFetchPlan().addGroup("detach");
-            obj1.setTransactional("transactional");
-            obj1 = (ClassWithTransactionalField) pm.detachCopy(obj1);
-            assertEquals("transactional field not correct","transactional",obj1.getTransactional());
-            tx.commit();
-        }
-        catch( Exception e )
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            Object objectId = null;
+            ClassWithTransactionalField obj1 = new ClassWithTransactionalField("name","transactional");
+
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+
+            try
+            {
+                //test detach and attach
+                tx.begin();
+                pm.makePersistent(obj1);
+                tx.commit();
+                objectId = pm.getObjectId(obj1);
+
+                //test detach and attach
+                tx.begin();
+                obj1 = (ClassWithTransactionalField) pm.getObjectById(objectId,true);
+                pm.getFetchPlan().addGroup("detach");
+                obj1 = (ClassWithTransactionalField) pm.detachCopy(obj1);
+                assertNull("transactional field not correct",obj1.getTransactional());
+                tx.commit();
+
+                //test detach and attach
+                tx.begin();
+                obj1 = (ClassWithTransactionalField) pm.getObjectById(objectId,true);
+                pm.getFetchPlan().addGroup("detach");
+                obj1.setTransactional("transactional");
+                obj1 = (ClassWithTransactionalField) pm.detachCopy(obj1);
+                assertEquals("transactional field not correct","transactional",obj1.getTransactional());
+                tx.commit();
+            }
+            catch( Exception e )
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-                tx.rollback();
-            
-            pm.close();
+            clean(ClassWithTransactionalField.class);
         }
     }
 
@@ -1781,158 +1822,172 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachCollectionWithNonPCElements()
     {
-        Object objectId = null;
-        ClassWithNonPCCollection obj1 = new ClassWithNonPCCollection();
-
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
         try
         {
-            // test detach and attach
-            tx.begin();
-            obj1.getElements().add("elem1");
-            obj1.getElements().add("elem2");
-            pm.makePersistent(obj1);
-            tx.commit();
-            objectId = pm.getObjectId(obj1);
+            Object objectId = null;
+            ClassWithNonPCCollection obj1 = new ClassWithNonPCCollection();
 
-            // test detach and attach
-            tx.begin();
-            obj1 = (ClassWithNonPCCollection) pm.getObjectById(objectId, true);
-            pm.getFetchPlan().addGroup("detach");
-            obj1 = (ClassWithNonPCCollection) pm.detachCopy(obj1);
-            assertEquals("wrong number of detached non pc elements", 2, obj1.getElements().size());
-            assertEquals("wrong element of detached non pc element", "elem1", obj1.getElements().get(0));
-            assertEquals("wrong element of detached non pc element", "elem2", obj1.getElements().get(1));
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+
+            try
+            {
+                // test detach and attach
+                tx.begin();
+                obj1.getElements().add("elem1");
+                obj1.getElements().add("elem2");
+                pm.makePersistent(obj1);
+                tx.commit();
+                objectId = pm.getObjectId(obj1);
+
+                // test detach and attach
+                tx.begin();
+                obj1 = (ClassWithNonPCCollection) pm.getObjectById(objectId, true);
+                pm.getFetchPlan().addGroup("detach");
+                obj1 = (ClassWithNonPCCollection) pm.detachCopy(obj1);
+                assertEquals("wrong number of detached non pc elements", 2, obj1.getElements().size());
+                assertEquals("wrong element of detached non pc element", "elem1", obj1.getElements().get(0));
+                assertEquals("wrong element of detached non pc element", "elem2", obj1.getElements().get(1));
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
+            clean(ClassWithNonPCCollection.class);
         }
     }
 
     public void testAttachDetachNonTransactionalRead()
     {
-        Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
-        Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
-        Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
-
-        Object id;
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        tx.setNontransactionalRead(true);
-
         try
         {
-            tx.begin();
-            pm.makePersistent(woody);
-            pm.makePersistent(boss);
-            pm.makePersistent(bart);
-            tx.commit();
+            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+            Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
+            Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
 
-            // non transactional read
-            Collection c = (Collection) pm.newQuery(Employee.class).execute();
-            Employee detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
+            Object id;
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            tx.setNontransactionalRead(true);
 
-            // test with String
+            try
+            {
+                tx.begin();
+                pm.makePersistent(woody);
+                pm.makePersistent(boss);
+                pm.makePersistent(bart);
+                tx.commit();
 
-            detachedEmployee.setFirstName("detached guy");
+                // non transactional read
+                Collection c = (Collection) pm.newQuery(Employee.class).execute();
+                Employee detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
 
-            id = JDOHelper.getObjectId(detachedEmployee);
+                // test with String
 
-            tx.begin();
-            pm.makePersistent(detachedEmployee);
-            tx.commit();
+                detachedEmployee.setFirstName("detached guy");
 
-            System.gc();
+                id = JDOHelper.getObjectId(detachedEmployee);
 
-            tx.begin();
-            Employee emp = (Employee) pm.getObjectById(id, true);
-            assertEquals("expected change in attached instance", "detached guy", emp.getFirstName());
-            tx.commit();
+                tx.begin();
+                pm.makePersistent(detachedEmployee);
+                tx.commit();
 
-            // non transactional read
-            c = (Collection) pm.newQuery(Employee.class).execute();
-            detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
+                System.gc();
 
-            // test with Integer (Object) fields non DFG
-            detachedEmployee.setYearsInCompany(new Integer(33));
+                tx.begin();
+                Employee emp = (Employee) pm.getObjectById(id, true);
+                assertEquals("expected change in attached instance", "detached guy", emp.getFirstName());
+                tx.commit();
 
-            id = JDOHelper.getObjectId(detachedEmployee);
+                // non transactional read
+                c = (Collection) pm.newQuery(Employee.class).execute();
+                detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
 
-            tx.begin();
-            pm.makePersistent(detachedEmployee);
-            tx.commit();
+                // test with Integer (Object) fields non DFG
+                detachedEmployee.setYearsInCompany(new Integer(33));
 
-            System.gc();
+                id = JDOHelper.getObjectId(detachedEmployee);
 
-            tx.begin();
-            emp = (Employee) pm.getObjectById(id, true);
-            assertEquals("expected change in attached instance", 33, emp.getYearsInCompany().intValue());
-            tx.commit();
+                tx.begin();
+                pm.makePersistent(detachedEmployee);
+                tx.commit();
 
-            // non transactional read
-            c = (Collection) pm.newQuery(Employee.class).execute();
-            detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
+                System.gc();
 
-            // test with long (Primitive)
-            detachedEmployee.setPersonNum(546);
+                tx.begin();
+                emp = (Employee) pm.getObjectById(id, true);
+                assertEquals("expected change in attached instance", 33, emp.getYearsInCompany().intValue());
+                tx.commit();
 
-            id = JDOHelper.getObjectId(detachedEmployee);
+                // non transactional read
+                c = (Collection) pm.newQuery(Employee.class).execute();
+                detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
 
-            tx.begin();
-            pm.makePersistent(detachedEmployee);
-            tx.commit();
+                // test with long (Primitive)
+                detachedEmployee.setPersonNum(546);
 
-            System.gc();
+                id = JDOHelper.getObjectId(detachedEmployee);
 
-            tx.begin();
-            emp = (Employee) pm.getObjectById(id, true);
-            assertEquals("expected change in attached instance", 546, emp.getPersonNum());
-            tx.commit();
+                tx.begin();
+                pm.makePersistent(detachedEmployee);
+                tx.commit();
 
-            // non transactional read
-            c = (Collection) pm.newQuery(Employee.class).execute();
-            detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
+                System.gc();
 
-            // test with PC (Object)
-            detachedEmployee.setManager(bart);
+                tx.begin();
+                emp = (Employee) pm.getObjectById(id, true);
+                assertEquals("expected change in attached instance", 546, emp.getPersonNum());
+                tx.commit();
 
-            id = JDOHelper.getObjectId(detachedEmployee);
+                // non transactional read
+                c = (Collection) pm.newQuery(Employee.class).execute();
+                detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
 
-            tx.begin();
-            pm.makePersistent(detachedEmployee);
-            tx.commit();
+                // test with PC (Object)
+                detachedEmployee.setManager(bart);
 
-            System.gc();
+                id = JDOHelper.getObjectId(detachedEmployee);
 
-            tx.begin();
-            emp = (Employee) pm.getObjectById(id, true);
-            assertEquals("expected change in attached instance", bart.getFirstName(), emp.getManager().getFirstName());
-            tx.commit();
+                tx.begin();
+                pm.makePersistent(detachedEmployee);
+                tx.commit();
 
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+                System.gc();
+
+                tx.begin();
+                emp = (Employee) pm.getObjectById(id, true);
+                assertEquals("expected change in attached instance", bart.getFirstName(), emp.getManager().getFirstName());
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                    tx.rollback();
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -1942,88 +1997,96 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_OneToManyBidir()
     {
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-        tx.setNontransactionalRead(true);
-
-        Object id = null;
         try
         {
-            // Persist some objects
-            tx.begin();
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            tx.setNontransactionalRead(true);
 
-            Farm farm = new Farm("North End Farm");
-            Animal duck = new Animal("Donald");
-            Animal cow = new Animal("Gertrude");
-            Animal horse = new Animal("Shergar");
-            farm.addAnimal(duck);
-            farm.addAnimal(cow);
-            farm.addAnimal(horse);
-            
-            pm.makePersistent(farm);
-            
-            tx.commit();
-            id = pm.getObjectId(farm);
-        }
-        catch (Exception e)
-        {
-            fail("Exception thrown while persisting 1-N bidirectional objects for the recursive attach/detach test " + e.getMessage());
+            Object id = null;
+            try
+            {
+                // Persist some objects
+                tx.begin();
+
+                Farm farm = new Farm("North End Farm");
+                Animal duck = new Animal("Donald");
+                Animal cow = new Animal("Gertrude");
+                Animal horse = new Animal("Shergar");
+                farm.addAnimal(duck);
+                farm.addAnimal(cow);
+                farm.addAnimal(horse);
+
+                pm.makePersistent(farm);
+
+                tx.commit();
+                id = pm.getObjectId(farm);
+            }
+            catch (Exception e)
+            {
+                fail("Exception thrown while persisting 1-N bidirectional objects for the recursive attach/detach test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            pm = newPM();
+            tx = pm.currentTransaction();
+            Farm detachedFarm = null;
+            try
+            {
+                tx.begin();
+
+                pm.getFetchPlan().addGroup(FetchPlan.ALL);
+                pm.getFetchPlan().setMaxFetchDepth(2);
+
+                Farm farm = (Farm)pm.getObjectById(id, false);
+                assertTrue("Error retrieving the Farm object that was just persisted", farm != null);
+                LOG.info("Retrieved Farm \"" + farm.toString() + "\"");
+
+                detachedFarm = (Farm)pm.detachCopy(farm);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                fail("Exception thrown while detaching 1-N bidrectional objects in the recursive attach/detach test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Play with the farm
+            try
+            {
+                LOG.info("Detached farm : " + detachedFarm);
+                Set<Animal> animals = detachedFarm.getAnimals();
+                Iterator animalsIter = animals.iterator();
+                while (animalsIter.hasNext())
+                {
+                    LOG.info("Detached animal : " + animalsIter.next());
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown on use of allegedly detached farm " + e.getMessage());
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-        
-        pm = newPM();
-        tx = pm.currentTransaction();
-        Farm detachedFarm = null;
-        try
-        {
-            tx.begin();
-
-            pm.getFetchPlan().addGroup(FetchPlan.ALL);
-            pm.getFetchPlan().setMaxFetchDepth(2);
-
-            Farm farm = (Farm)pm.getObjectById(id, false);
-            assertTrue("Error retrieving the Farm object that was just persisted", farm != null);
-            LOG.info("Retrieved Farm \"" + farm.toString() + "\"");
-            
-            detachedFarm = (Farm)pm.detachCopy(farm);
-            
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            fail("Exception thrown while detaching 1-N bidrectional objects in the recursive attach/detach test " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-        
-        // Play with the farm
-        try
-        {
-            LOG.info("Detached farm : " + detachedFarm);
-            Set<Animal> animals = detachedFarm.getAnimals();
-            Iterator animalsIter = animals.iterator();
-            while (animalsIter.hasNext())
-            {
-                LOG.info("Detached animal : " + animalsIter.next());
-            }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown on use of allegedly detached farm " + e.getMessage());
+            clean(Farm.class);
+            clean(Animal.class);
         }
     }
     
@@ -2032,56 +2095,64 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_OneToManyFK()
     {
-        Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
-        Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
-        Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
-        woody.setManager(bart);
-
-        Manager bossDetached;
-        Object idBoss;
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
         try
         {
-            // -----------------------------------------------------------------------------------------
-            // test 1 - test detach and attach
-            // -----------------------------------------------------------------------------------------
-            tx.begin();
-            pm.makePersistent(woody);
-            pm.makePersistent(boss);
-            pm.getFetchPlan().addGroup("groupDepartments");
-            bossDetached = (Manager) pm.detachCopy(boss);
-            tx.commit();
+            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+            Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
+            Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
+            woody.setManager(bart);
 
-            idBoss = pm.getObjectId(boss);
-            Department deptB = new Department("DeptB");
-            deptB.setManager(bossDetached);
-            bossDetached.addDepartment(deptB);
+            Manager bossDetached;
+            Object idBoss;
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-            tx.begin();
-            pm.makePersistent(bossDetached);
-            tx.commit();
+            try
+            {
+                // -----------------------------------------------------------------------------------------
+                // test 1 - test detach and attach
+                // -----------------------------------------------------------------------------------------
+                tx.begin();
+                pm.makePersistent(woody);
+                pm.makePersistent(boss);
+                pm.getFetchPlan().addGroup("groupDepartments");
+                bossDetached = (Manager) pm.detachCopy(boss);
+                tx.commit();
 
-            System.gc();
+                idBoss = pm.getObjectId(boss);
+                Department deptB = new Department("DeptB");
+                deptB.setManager(bossDetached);
+                bossDetached.addDepartment(deptB);
 
-            tx.begin();
-            Manager theBoss = (Manager) pm.getObjectById(idBoss, true);
-            Assert.assertEquals(1, theBoss.getDepartments().size());
-            tx.commit();
+                tx.begin();
+                pm.makePersistent(bossDetached);
+                tx.commit();
 
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+                System.gc();
+
+                tx.begin();
+                Manager theBoss = (Manager) pm.getObjectById(idBoss, true);
+                Assert.assertEquals(1, theBoss.getDepartments().size());
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-                tx.rollback();
-
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -2090,48 +2161,90 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_ManyToMany()
     {
-        Customer customer1 = new Customer("Joe Smith");
-        Supplier supplier1 = new Supplier("Smegma Enterprises");
-        Supplier supplier2 = new Supplier("Amazonia");
-        customer1.addSupplier(supplier1);
-        supplier1.addCustomer(customer1);
-        customer1.addSupplier(supplier2);
-        supplier2.addCustomer(customer1);
-
-        Customer custDetached = null;
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
+        Object c1Id = null;
+        Object s1Id = null;
+        Object s2Id = null;
+        Object s3Id = null;
         try
         {
-            // Persist and detach the Customer (and its Suppliers)
-            tx.begin();
-            customer1 = (Customer)pm.makePersistent(customer1);
-            custDetached = (Customer)pm.detachCopy(customer1);
-            tx.commit();
+            Customer customer1 = new Customer("Joe Smith");
+            Supplier supplier1 = new Supplier("Smegma Enterprises");
+            Supplier supplier2 = new Supplier("Amazonia");
+            customer1.addSupplier(supplier1);
+            supplier1.addCustomer(customer1);
+            customer1.addSupplier(supplier2);
+            supplier2.addCustomer(customer1);
 
-            // Create a new Supplier and add it to the Customer
-            Supplier supplier3 = new Supplier("Hnos Hernandez s.a.");
-            custDetached.addSupplier(supplier3);
-            supplier3.addCustomer(custDetached);
+            Customer custDetached = null;
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-            // Attach the new Supplier
-            tx.begin();
-            pm.makePersistent(supplier3);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            try
+            {
+                // Persist and detach the Customer (and its Suppliers)
+                tx.begin();
+                customer1 = (Customer)pm.makePersistent(customer1);
+                custDetached = (Customer)pm.detachCopy(customer1);
+                tx.commit();
+                c1Id = pm.getObjectId(customer1);
+                s1Id = pm.getObjectId(supplier1);
+                s2Id = pm.getObjectId(supplier2);
+
+                // Create a new Supplier and add it to the Customer
+                Supplier supplier3 = new Supplier("Hnos Hernandez s.a.");
+                custDetached.addSupplier(supplier3);
+                supplier3.addCustomer(custDetached);
+
+                // Attach the new Supplier
+                tx.begin();
+                pm.makePersistent(supplier3);
+                tx.commit();
+                s3Id = pm.getObjectId(supplier3);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
             {
-                tx.rollback();
+                tx.begin();
+                Customer c = (Customer)pm.getObjectById(c1Id);
+                Supplier s1 = (Supplier)pm.getObjectById(s1Id);
+                Supplier s2 = (Supplier)pm.getObjectById(s2Id);
+                Supplier s3 = (Supplier)pm.getObjectById(s3Id);
+                c.getSuppliers().clear();
+                s1.getCustomers().clear();
+                s2.getCustomers().clear();
+                s3.getCustomers().clear();
+                pm.flush();
+                pm.deletePersistent(c);
+                pm.deletePersistent(s1);
+                pm.deletePersistent(s2);
+                pm.deletePersistent(s3);
+                tx.commit();
             }
-            pm.close();
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
     }
 
@@ -2168,10 +2281,11 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             Detail attachedD = (Detail) pm.makePersistent(detachedD);
             assertEquals(attachedD.getMaster().getId(), "Master1");
 
+            tx.rollback();
         }
         catch (JDOUserException ue)
         {
-            LOG.error(ue);
+            LOG.error("Exception in test", ue);
             fail("Exception thrown while performing test : " + ue.getMessage());
         }
         finally
@@ -2221,10 +2335,12 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             assertTrue(JDOHelper.isDetached(dm));
             assertTrue(JDOHelper.isDetached(dm.getCircon()));
             assertTrue(JDOHelper.isDetached(dm.getCircon().getDetail()));
+
+            tx.rollback();
         }
         catch (JDOUserException ue)
         {
-            LOG.error(ue);
+            LOG.error("Exception in test", ue);
             fail("Exception thrown while performing test : " + ue.getMessage());
         }
         finally
@@ -2242,48 +2358,55 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttach_OneToMany_RelationConsistency()
     {
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
         try
         {
-            tx.begin();
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-            // Persist 1-N bidir relation
-            Manager m = new Manager(1, "Homer", "Simpson", "homer@fox.com", 4, "serial 1");
-            Department d = new Department("Nuclear");
-            d.setManager(m);
-            m.addDepartment(d);
+            try
+            {
+                tx.begin();
 
-            pm.makePersistent(m);
+                // Persist 1-N bidir relation
+                Manager m = new Manager(1, "Homer", "Simpson", "homer@fox.com", 4, "serial 1");
+                Department d = new Department("Nuclear");
+                d.setManager(m);
+                m.addDepartment(d);
 
-            pm.getFetchPlan().setMaxFetchDepth(2);
-            Manager dm = (Manager) pm.detachCopy(m);
-            Department dd = (Department) pm.detachCopy(d);
+                pm.makePersistent(m);
 
-            dd.setManager(dm);
+                pm.getFetchPlan().setMaxFetchDepth(2);
+                Manager dm = (Manager) pm.detachCopy(m);
+                Department dd = (Department) pm.detachCopy(d);
 
-            Department ad = (Department) pm.makePersistent(dd);
-            assertTrue(m.equals(ad.getManager()));
+                dd.setManager(dm);
 
-            tx.commit();
-            tx.begin();
-            pm.refresh(ad);
+                Department ad = (Department) pm.makePersistent(dd);
+                assertTrue(m.equals(ad.getManager()));
 
-            assertTrue(m.equals(ad.getManager()));
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error(ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
+                tx.commit();
+                tx.begin();
+                pm.refresh(ad);
+
+                assertTrue(m.equals(ad.getManager()));
+            }
+            catch (JDOUserException ue)
+            {
+                LOG.error(ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -2293,50 +2416,57 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testAttachDetachNonPCCollectionElements()
     {
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
         try
         {
-            tx.begin();
-            pm.getFetchPlan().addGroup("collection");
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-            Owner o = new Owner();
-            o.getElements().add("Elm 1");
-            o.getElements().add("Elm 2");
-            o.getElements().add("Elm 3");
-            o.getElements().add("Elm 4");
-            o.getSetElements().add("Elm 1");
-            o.getSetElements().add("Elm 2");
-            pm.makePersistent(o);
+            try
+            {
+                tx.begin();
+                pm.getFetchPlan().addGroup("collection");
 
-            Owner o1 = (Owner) pm.detachCopy(o);
-            tx.commit();
+                Owner o = new Owner();
+                o.getElements().add("Elm 1");
+                o.getElements().add("Elm 2");
+                o.getElements().add("Elm 3");
+                o.getElements().add("Elm 4");
+                o.getSetElements().add("Elm 1");
+                o.getSetElements().add("Elm 2");
+                pm.makePersistent(o);
 
-            pm.close();
-            pm = newPM();
-            tx = pm.currentTransaction();
-            tx.begin();
-            o1.getElements().add("Elm 5");
-            o1.getSetElements().add("Elm 3");
-            Owner o2 = (Owner) pm.makePersistent(o1);
-            assertEquals(5, o2.getElements().size());
-            assertEquals(3, o2.getSetElements().size());
+                Owner o1 = (Owner) pm.detachCopy(o);
+                tx.commit();
 
-            tx.commit();
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error("Exception during test", ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
+                pm.close();
+                pm = newPM();
+                tx = pm.currentTransaction();
+                tx.begin();
+                o1.getElements().add("Elm 5");
+                o1.getSetElements().add("Elm 3");
+                Owner o2 = (Owner) pm.makePersistent(o1);
+                assertEquals(5, o2.getElements().size());
+                assertEquals(3, o2.getSetElements().size());
+
+                tx.commit();
+            }
+            catch (JDOUserException ue)
+            {
+                LOG.error("Exception during test", ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            clean(Owner.class);
         }
     }
 
@@ -2349,65 +2479,72 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     public void testPersistWithDetachedRelative() 
     throws Exception
     {
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
-        Account detachedAcct = null;
         try
         {
-            tx.begin();
-            
-            Account acct = new Account();
-            acct.setEnabled(true);
-            acct.setUsername("john");
-            pm.makePersistent(acct);
-            
-            detachedAcct = (Account)pm.detachCopy(acct);
-            
-            tx.commit();
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error("Exception in test", ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+
+            Account detachedAcct = null;
+            try
+            {
+                tx.begin();
+
+                Account acct = new Account();
+                acct.setEnabled(true);
+                acct.setUsername("john");
+                pm.makePersistent(acct);
+
+                detachedAcct = (Account)pm.detachCopy(acct);
+
+                tx.commit();
+            }
+            catch (JDOUserException ue)
+            {
+                LOG.error("Exception in test", ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Persist the new object with the related detached
+            // and detachCopy the new object
+            pm = newPM();
+            tx = pm.currentTransaction();
+
+            try
+            {
+                tx.begin();
+
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+                woody.setAccount(detachedAcct);
+
+                pm.makePersistent(woody);
+
+                tx.commit();
+            }
+            catch (JDOUserException ue)
+            {
+                LOG.error("Exception during test", ue);
+                fail("Exception thrown while performing test : " + ue.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-        
-        // Persist the new object with the related detached
-        // and detachCopy the new object
-        pm = newPM();
-        tx = pm.currentTransaction();
-        
-        try
-        {
-            tx.begin();
-
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
-            woody.setAccount(detachedAcct);
-            
-            pm.makePersistent(woody);
-            
-            tx.commit();
-        }
-        catch (JDOUserException ue)
-        {
-            LOG.error("Exception during test", ue);
-            fail("Exception thrown while performing test : " + ue.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -2565,34 +2702,41 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     public void testDetachOfNonPersistentPC()
     throws Exception
     {
-        PersistenceManager pm;
-        Transaction tx;
-
-        pm = newPM();
-        tx = pm.currentTransaction();
         try
         {
-            tx.begin();
+            PersistenceManager pm;
+            Transaction tx;
 
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
 
-            // This should persist it and then detach it
-            pm.detachCopy(woody);
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
 
-            tx.commit();
-        }
-        catch (JDOUserException ue)
-        {
-            fail("Calling pm.detachCopy on an unpersisted object failed!");
+                // This should persist it and then detach it
+                pm.detachCopy(woody);
+
+                tx.commit();
+            }
+            catch (JDOUserException ue)
+            {
+                fail("Calling pm.detachCopy on an unpersisted object failed!");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
+            clean(Employee.class);
         }
     }
 
@@ -2603,199 +2747,206 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     public void testDetachAttachOfSCODate()
     throws Exception
     {
-        DetachDates detachedDate = null;
-        Object dateId = null;
-
-        // Persist an object containing a Date
-        PersistenceManager pm = newPM();
-        pm.getFetchPlan().addGroup("dates");
-        Transaction tx = pm.currentTransaction();
-
-        int dateValue = 1000;
-
         try
         {
-            tx.begin();
+            DetachDates detachedDate = null;
+            Object dateId = null;
 
-            DetachDates date = new DetachDates(dateValue);
-            pm.makePersistent(date);
+            // Persist an object containing a Date
+            PersistenceManager pm = newPM();
+            pm.getFetchPlan().addGroup("dates");
+            Transaction tx = pm.currentTransaction();
 
-            detachedDate = (DetachDates) pm.detachCopy(date);
+            int dateValue = 1000;
 
-            tx.commit();
-            dateId = pm.getObjectId(date);
-        }
-        catch (Exception e)
-        {
-            fail("Error whilst persisting and detaching object containing SCO dates : " + e.getMessage());
+            try
+            {
+                tx.begin();
+
+                DetachDates date = new DetachDates(dateValue);
+                pm.makePersistent(date);
+
+                detachedDate = (DetachDates) pm.detachCopy(date);
+
+                tx.commit();
+                dateId = pm.getObjectId(date);
+            }
+            catch (Exception e)
+            {
+                fail("Error whilst persisting and detaching object containing SCO dates : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            assertEquals("Value of the java.util.Date that was detached is incorrect",
+                dateValue, detachedDate.getUtilDate().getTime());
+            assertEquals("Value of the java.sql.Date that was detached is incorrect",
+                dateValue, detachedDate.getSqlDate().getTime());
+            assertEquals("Value of the java.sql.Time that was detached is incorrect",
+                dateValue, detachedDate.getSqlTime().getTime());
+            assertEquals("Value of the java.sql.Timestamp that was detached is incorrect",
+                dateValue, detachedDate.getSqlTimestamp().getTime());
+
+            // Create set of milliseconds for updates
+            long javaUtilDateMillis = 10000000;
+            long javaSqlDateMillis = 172800000; // 3 Jan 1970 00:00:00 (GMT)
+            long javaSqlTimestampMillis = 30000000;
+            long javaSqlTimeMillis = 42345000; // This is rounded to be consistent with java.sql.Time
+            long javaSqlTimestampMillis2 = 50000000;
+            SimpleDateFormat fmt2 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat fmt3 = new SimpleDateFormat("HH:mm:ss");
+
+            java.sql.Date sqlDateTmp = new java.sql.Date(0);
+            sqlDateTmp.setTime(javaSqlDateMillis);
+            String sqlDateString = fmt2.format(sqlDateTmp);
+            java.sql.Time sqlTimeTmp = new java.sql.Time(0);
+            sqlTimeTmp.setTime(javaSqlTimeMillis);
+            String sqlTimeString = fmt3.format(sqlTimeTmp);
+
+            // Perform an update to the contents of some of the dates
+            detachedDate.setUtilDate(javaUtilDateMillis);
+            detachedDate.setSqlDate(javaSqlDateMillis);
+            detachedDate.setSqlTimestamp(javaSqlTimestampMillis);
+
+            // Attach the date
+            pm = newPM();
+            pm.getFetchPlan().addGroup("dates");
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                DetachDates attachedDate = (DetachDates) pm.makePersistent(detachedDate);
+
+                // Update some of the attached objects directly (test that it uses SCO wrappers)
+                attachedDate.setSqlTime(javaSqlTimeMillis);
+                attachedDate.setSqlTimestamp(javaSqlTimestampMillis2);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                fail("Error whilst attaching object containing SCO dates : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // Retrieve and check the results
+            pm = newPM();
+            pm.getFetchPlan().addGroup("dates");
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                DetachDates date = (DetachDates) pm.getObjectById(dateId);
+                assertEquals("Value of the java.util.Date in the datastore is incorrect",
+                    javaUtilDateMillis, date.getUtilDate().getTime());
+                assertEquals("Value of the java.sql.Date in the datastore is incorrect",
+                    sqlDateString, fmt2.format(date.getSqlDate()));
+                assertEquals("Value of the java.sql.Time in the datastore is incorrect",
+                    sqlTimeString, fmt3.format(date.getSqlTime()));
+                assertEquals("Value of the java.sql.Timestamp in the datastore is incorrect",
+                    javaSqlTimestampMillis2, date.getSqlTimestamp().getTime());
+
+                detachedDate = (DetachDates) pm.detachCopy(date);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                fail("Error whilst retrieving object containing SCO dates : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // Replace the util Date
+            detachedDate.replaceUtilDate(new java.util.Date(50000));
+
+            // Attach the date
+            pm = newPM();
+            pm.getFetchPlan().addGroup("dates");
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                pm.makePersistent(detachedDate);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                fail("Error whilst attaching object containing SCO dates : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // Retrieve and check the results
+            pm = newPM();
+            pm.getFetchPlan().addGroup("dates");
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                DetachDates date = (DetachDates) pm.getObjectById(dateId);
+                assertEquals("Value of the java.util.Date in the datastore is incorrect",
+                    50000, date.getUtilDate().getTime());
+                assertEquals("Value of the java.sql.Date in the datastore is incorrect",
+                    sqlDateString, fmt2.format(date.getSqlDate()));
+                assertEquals("Value of the java.sql.Time in the datastore is incorrect",
+                    sqlTimeString, fmt3.format(date.getSqlTime()));
+                assertEquals("Value of the java.sql.Timestamp in the datastore is incorrect",
+                    javaSqlTimestampMillis2, date.getSqlTimestamp().getTime());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                fail("Error whilst retrieving object containing SCO dates : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
-        }
-
-        assertEquals("Value of the java.util.Date that was detached is incorrect",
-            dateValue, detachedDate.getUtilDate().getTime());
-        assertEquals("Value of the java.sql.Date that was detached is incorrect",
-            dateValue, detachedDate.getSqlDate().getTime());
-        assertEquals("Value of the java.sql.Time that was detached is incorrect",
-            dateValue, detachedDate.getSqlTime().getTime());
-        assertEquals("Value of the java.sql.Timestamp that was detached is incorrect",
-            dateValue, detachedDate.getSqlTimestamp().getTime());
-
-        // Create set of milliseconds for updates
-        long javaUtilDateMillis = 10000000;
-        long javaSqlDateMillis = 172800000; // 3 Jan 1970 00:00:00 (GMT)
-        long javaSqlTimestampMillis = 30000000;
-        long javaSqlTimeMillis = 42345000; // This is rounded to be consistent with java.sql.Time
-        long javaSqlTimestampMillis2 = 50000000;
-        SimpleDateFormat fmt2 = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat fmt3 = new SimpleDateFormat("HH:mm:ss");
-
-        java.sql.Date sqlDateTmp = new java.sql.Date(0);
-        sqlDateTmp.setTime(javaSqlDateMillis);
-        String sqlDateString = fmt2.format(sqlDateTmp);
-        java.sql.Time sqlTimeTmp = new java.sql.Time(0);
-        sqlTimeTmp.setTime(javaSqlTimeMillis);
-        String sqlTimeString = fmt3.format(sqlTimeTmp);
-
-        // Perform an update to the contents of some of the dates
-        detachedDate.setUtilDate(javaUtilDateMillis);
-        detachedDate.setSqlDate(javaSqlDateMillis);
-        detachedDate.setSqlTimestamp(javaSqlTimestampMillis);
-
-        // Attach the date
-        pm = newPM();
-        pm.getFetchPlan().addGroup("dates");
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            DetachDates attachedDate = (DetachDates) pm.makePersistent(detachedDate);
-
-            // Update some of the attached objects directly (test that it uses SCO wrappers)
-            attachedDate.setSqlTime(javaSqlTimeMillis);
-            attachedDate.setSqlTimestamp(javaSqlTimestampMillis2);
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            fail("Error whilst attaching object containing SCO dates : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
-        }
-
-        // Retrieve and check the results
-        pm = newPM();
-        pm.getFetchPlan().addGroup("dates");
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            DetachDates date = (DetachDates) pm.getObjectById(dateId);
-            assertEquals("Value of the java.util.Date in the datastore is incorrect",
-                javaUtilDateMillis, date.getUtilDate().getTime());
-            assertEquals("Value of the java.sql.Date in the datastore is incorrect",
-                sqlDateString, fmt2.format(date.getSqlDate()));
-            assertEquals("Value of the java.sql.Time in the datastore is incorrect",
-                sqlTimeString, fmt3.format(date.getSqlTime()));
-            assertEquals("Value of the java.sql.Timestamp in the datastore is incorrect",
-                javaSqlTimestampMillis2, date.getSqlTimestamp().getTime());
-
-            detachedDate = (DetachDates) pm.detachCopy(date);
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            fail("Error whilst retrieving object containing SCO dates : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
-        }
-
-        // Replace the util Date
-        detachedDate.replaceUtilDate(new java.util.Date(50000));
-
-        // Attach the date
-        pm = newPM();
-        pm.getFetchPlan().addGroup("dates");
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            pm.makePersistent(detachedDate);
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            fail("Error whilst attaching object containing SCO dates : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
-        }
-
-        // Retrieve and check the results
-        pm = newPM();
-        pm.getFetchPlan().addGroup("dates");
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            DetachDates date = (DetachDates) pm.getObjectById(dateId);
-            assertEquals("Value of the java.util.Date in the datastore is incorrect",
-                50000, date.getUtilDate().getTime());
-            assertEquals("Value of the java.sql.Date in the datastore is incorrect",
-                sqlDateString, fmt2.format(date.getSqlDate()));
-            assertEquals("Value of the java.sql.Time in the datastore is incorrect",
-                sqlTimeString, fmt3.format(date.getSqlTime()));
-            assertEquals("Value of the java.sql.Timestamp in the datastore is incorrect",
-                javaSqlTimestampMillis2, date.getSqlTimestamp().getTime());
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            fail("Error whilst retrieving object containing SCO dates : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
+            clean(DetachDates.class);
         }
     }
 
@@ -2945,80 +3096,87 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachOnClose()
     {
-        PersistenceManager pm = newPM();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        pm.getFetchPlan().addGroup("groupA");
-        ((JDOPersistenceManager)pm).getExecutionContext().setProperty(PropertyNames.PROPERTY_DETACH_ON_CLOSE, true);
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
-            
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
-            Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
-            Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
-            donald.addSubordinate(woody);
-            donald.addSubordinate(bugs);
-            woody.setManager(donald);
-            bugs.setManager(donald);
-            pm.makePersistent(donald);
-            
-            tx.commit();
+            PersistenceManager pm = newPM();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+            pm.getFetchPlan().addGroup("groupA");
+            ((JDOPersistenceManager)pm).getExecutionContext().setProperty(PropertyNames.PROPERTY_DETACH_ON_CLOSE, true);
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
 
-            // Close the PM and we should get our objects detached
-            pm.close();
-            
-            // Check that all are now detached
-            if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
-            {
-                fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
+                Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
+                Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
+                donald.addSubordinate(woody);
+                donald.addSubordinate(bugs);
+                woody.setManager(donald);
+                bugs.setManager(donald);
+                pm.makePersistent(donald);
+
+                tx.commit();
+
+                // Close the PM and we should get our objects detached
+                pm.close();
+
+                // Check that all are now detached
+                if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
+                {
+                    fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
+                {
+                    fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
+                {
+                    fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
+                }
+
+                // Check that the relationships are intact
+                if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
+                {
+                    fail("Woody Woodpecker has lost his name after closing the PM");
+                }
+                if (woody.getManager() != donald)
+                {
+                    fail("Woody Woodpecker has lost his relation to its Manager after closing the PM");
+                }
+                if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
+                {
+                    fail("Bugs Bunny has lost his name after closing the PM");
+                }
+                if (bugs.getManager() != donald)
+                {
+                    fail("Bugs Bunny has lost his relation to its Manager after closing the PM");
+                }
+                if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
+                {
+                    fail("Donald Duck has lost his name after closing the PM");
+                }
+                if (donald.getSubordinates().size() != 2)
+                {
+                    fail("Donald Duck has lost some or all of his employees after closing the PM");
+                }
             }
-            if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
+            catch (Exception e)
             {
-                fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects and closing PM with detachOnClose : " + e.getMessage());
             }
-            if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
+            finally
             {
-                fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
             }
-            
-            // Check that the relationships are intact
-            if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
-            {
-                fail("Woody Woodpecker has lost his name after closing the PM");
-            }
-            if (woody.getManager() != donald)
-            {
-                fail("Woody Woodpecker has lost his relation to its Manager after closing the PM");
-            }
-            if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
-            {
-                fail("Bugs Bunny has lost his name after closing the PM");
-            }
-            if (bugs.getManager() != donald)
-            {
-                fail("Bugs Bunny has lost his relation to its Manager after closing the PM");
-            }
-            if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
-            {
-                fail("Donald Duck has lost his name after closing the PM");
-            }
-            if (donald.getSubordinates().size() != 2)
-            {
-                fail("Donald Duck has lost some or all of his employees after closing the PM");
-            }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting objects and closing PM with detachOnClose : " + e.getMessage());
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -3027,87 +3185,94 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAllOnCommit()
     {
-        PersistenceManager pm = newPM();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        pm.getFetchPlan().addGroup("groupA");
-        ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
+            PersistenceManager pm = newPM();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+            pm.getFetchPlan().addGroup("groupA");
+            ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
 
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
-            Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
-            Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
-            donald.addSubordinate(woody);
-            donald.addSubordinate(bugs);
-            woody.setManager(donald);
-            bugs.setManager(donald);
-            pm.makePersistent(donald);
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
+                Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
+                Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
+                donald.addSubordinate(woody);
+                donald.addSubordinate(bugs);
+                woody.setManager(donald);
+                bugs.setManager(donald);
+                pm.makePersistent(donald);
 
-            // Calling this should detach all tx-enlisted objects (Manager + 2 Employee)
-            tx.commit();
-            
-            // Check that all are now detached
-            if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
-            {
-                fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
-            }
-            if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
-            {
-                fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
-            }
-            if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
-            {
-                fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
-            }
-            
-            // Check that the relationships are intact
-            if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
-            {
-                fail("Woody Woodpecker has lost his name after closing the PM");
-            }
-            if (woody.getManager() != donald)
-            {
-                fail("Woody Woodpecker has lost his relation to its Manager after closing the PM");
-            }
-            if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
-            {
-                fail("Bugs Bunny has lost his name after closing the PM");
-            }
-            if (bugs.getManager() != donald)
-            {
-                fail("Bugs Bunny has lost his relation to its Manager after closing the PM");
-            }
-            if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
-            {
-                fail("Donald Duck has lost his name after closing the PM");
-            }
-            if (donald.getSubordinates().size() != 2)
-            {
-                fail("Donald Duck has lost some or all of his employees after closing the PM");
-            }
-            tx.begin();
-            pm.makePersistent(donald);
-            tx.commit();
-            donald.setFirstName("Donaldo");
-            tx.begin();
-            pm.makePersistent(donald);
-            tx.commit();
+                // Calling this should detach all tx-enlisted objects (Manager + 2 Employee)
+                tx.commit();
 
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+                // Check that all are now detached
+                if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
+                {
+                    fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
+                {
+                    fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
+                {
+                    fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
+                }
+
+                // Check that the relationships are intact
+                if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
+                {
+                    fail("Woody Woodpecker has lost his name after closing the PM");
+                }
+                if (woody.getManager() != donald)
+                {
+                    fail("Woody Woodpecker has lost his relation to its Manager after closing the PM");
+                }
+                if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
+                {
+                    fail("Bugs Bunny has lost his name after closing the PM");
+                }
+                if (bugs.getManager() != donald)
+                {
+                    fail("Bugs Bunny has lost his relation to its Manager after closing the PM");
+                }
+                if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
+                {
+                    fail("Donald Duck has lost his name after closing the PM");
+                }
+                if (donald.getSubordinates().size() != 2)
+                {
+                    fail("Donald Duck has lost some or all of his employees after closing the PM");
+                }
+                tx.begin();
+                pm.makePersistent(donald);
+                tx.commit();
+                donald.setFirstName("Donaldo");
+                tx.begin();
+                pm.makePersistent(donald);
+                tx.commit();
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
     
@@ -3116,43 +3281,50 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testCopyOnAttachFalseForUnchangedObject()
     {
-    	Manager mgr = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
-
-        PersistenceManager pm = newPM();
-        pm.setDetachAllOnCommit(true);
-        pm.setCopyOnAttach(false);
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin(); // mgr is transient-clean
-            pm.makePersistent(mgr); // mgr is now persistent-clean
-            tx.commit(); // mgr is now detached-clean
-            if (!JDOHelper.isDetached(mgr))
-            {
-                fail("The object is not detached or hasn't been detached correctly after committing the TX");
-            }
+            Manager mgr = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
 
-            // Attach the UNCHANGED (detached) object
-            tx.begin(); // mgr is detached-clean
-            pm.makePersistent(mgr); // mgr is now persistent-clean
-            tx.commit(); // mgr is now detached-clean
-            if (!JDOHelper.isDetached(mgr))
+            PersistenceManager pm = newPM();
+            pm.setDetachAllOnCommit(true);
+            pm.setCopyOnAttach(false);
+            Transaction tx = pm.currentTransaction();
+            try
             {
-                fail("The object is not detached or hasn't been detached correctly after committing the TX");
+                tx.begin(); // mgr is transient-clean
+                pm.makePersistent(mgr); // mgr is now persistent-clean
+                tx.commit(); // mgr is now detached-clean
+                if (!JDOHelper.isDetached(mgr))
+                {
+                    fail("The object is not detached or hasn't been detached correctly after committing the TX");
+                }
+
+                // Attach the UNCHANGED (detached) object
+                tx.begin(); // mgr is detached-clean
+                pm.makePersistent(mgr); // mgr is now persistent-clean
+                tx.commit(); // mgr is now detached-clean
+                if (!JDOHelper.isDetached(mgr))
+                {
+                    fail("The object is not detached or hasn't been detached correctly after committing the TX");
+                }
             }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            clean(Manager.class);
         }
     }
 
@@ -3161,132 +3333,138 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAllOnCommitViaFetch()
     {
-        
-        Object id = null;
-
-        // Persist some objects
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
+            Object id = null;
 
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
-            Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
-            Account bugsAcct = new Account();
-            bugsAcct.setUsername("bugs");
-            bugsAcct.setEnabled(true);
-            bugs.setAccount(bugsAcct);
-            Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
-            donald.addSubordinate(woody);
-            donald.addSubordinate(bugs);
-            woody.setManager(donald);
-            bugs.setManager(donald);
+            // Persist some objects
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
 
-            pm.makePersistent(donald);
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
+                Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
+                Account bugsAcct = new Account();
+                bugsAcct.setUsername("bugs");
+                bugsAcct.setEnabled(true);
+                bugs.setAccount(bugsAcct);
+                Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
+                donald.addSubordinate(woody);
+                donald.addSubordinate(bugs);
+                woody.setManager(donald);
+                bugs.setManager(donald);
 
-            tx.commit();
-            id = JDOHelper.getObjectId(donald);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+                pm.makePersistent(donald);
+
+                tx.commit();
+                id = JDOHelper.getObjectId(donald);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve an object and check the detached states
+            pm = newPM();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+            pm.getFetchPlan().addGroup("groupA");
+            pm.getFetchPlan().addGroup("groupC");
+            pm.getFetchPlan().setMaxFetchDepth(3);
+            ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Manager donald = (Manager)pm.getObjectById(id);
+                tx.commit();
+
+                Set employees = donald.getSubordinates();
+                assertNotNull("Donald was not detached and should have been at commit", donald);
+                assertNotNull("Employees of Donald were not detached and should have been at commit", employees);
+                assertEquals("Donald Duck has incorrect number of employees after detach at commit", 2, donald.getSubordinates().size());
+                Employee bugs = null;
+                Employee woody = null;
+                Account bugsAcct = null;
+                Iterator emplIter = employees.iterator();
+                while (emplIter.hasNext())
+                {
+                    Employee emp = (Employee)emplIter.next();
+                    if (emp.getFirstName().equals("Bugs"))
+                    {
+                        bugs = emp;
+                    }
+                    else if (emp.getFirstName().equals("Woody"))
+                    {
+                        woody = emp;
+                    }
+                }
+
+                assertNotNull("Bugs Bunny was not detached and should have been at commit", bugs);
+                assertNotNull("Woody Woodpecker was not detached and should have been at commit", woody);
+                bugsAcct = bugs.getAccount();
+                assertNotNull("Account of Bugs Bunny was not detached and should have been at commit", bugsAcct);
+
+                // Check that all are now detached
+                if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
+                {
+                    fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
+                {
+                    fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
+                {
+                    fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
+                }
+
+                // Check that the relationships are intact
+                if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
+                {
+                    fail("Woody Woodpecker has lost his name after closing the PM");
+                }
+                assertNotNull("Woody has a null Manager after detach", woody.getManager());
+                assertEquals("Woody has lost the relation to his detached Manager after commit", woody.getManager(), donald);
+                if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
+                {
+                    fail("Bugs Bunny has lost his name after closing the PM");
+                }
+                assertNotNull("Bugs has a null Manager after detach", bugs.getManager());
+                assertEquals("Bugs has lost the relation to his detached Manager after commit", bugs.getManager(), donald);
+                if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
+                {
+                    fail("Donald Duck has lost his name after closing the PM");
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Retrieve an object and check the detached states
-        pm = newPM();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        pm.getFetchPlan().addGroup("groupA");
-        pm.getFetchPlan().addGroup("groupC");
-        pm.getFetchPlan().setMaxFetchDepth(3);
-        ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            Manager donald = (Manager)pm.getObjectById(id);
-            tx.commit();
-
-            Set employees = donald.getSubordinates();
-            assertNotNull("Donald was not detached and should have been at commit", donald);
-            assertNotNull("Employees of Donald were not detached and should have been at commit", employees);
-            assertEquals("Donald Duck has incorrect number of employees after detach at commit", 2, donald.getSubordinates().size());
-            Employee bugs = null;
-            Employee woody = null;
-            Account bugsAcct = null;
-            Iterator emplIter = employees.iterator();
-            while (emplIter.hasNext())
-            {
-                Employee emp = (Employee)emplIter.next();
-                if (emp.getFirstName().equals("Bugs"))
-                {
-                    bugs = emp;
-                }
-                else if (emp.getFirstName().equals("Woody"))
-                {
-                    woody = emp;
-                }
-            }
-
-            assertNotNull("Bugs Bunny was not detached and should have been at commit", bugs);
-            assertNotNull("Woody Woodpecker was not detached and should have been at commit", woody);
-            bugsAcct = bugs.getAccount();
-            assertNotNull("Account of Bugs Bunny was not detached and should have been at commit", bugsAcct);
-
-            // Check that all are now detached
-            if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
-            {
-                fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
-            }
-            if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
-            {
-                fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
-            }
-            if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
-            {
-                fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
-            }
-
-            // Check that the relationships are intact
-            if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
-            {
-                fail("Woody Woodpecker has lost his name after closing the PM");
-            }
-            assertNotNull("Woody has a null Manager after detach", woody.getManager());
-            assertEquals("Woody has lost the relation to his detached Manager after commit", woody.getManager(), donald);
-            if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
-            {
-                fail("Bugs Bunny has lost his name after closing the PM");
-            }
-            assertNotNull("Bugs has a null Manager after detach", bugs.getManager());
-            assertEquals("Bugs has lost the relation to his detached Manager after commit", bugs.getManager(), donald);
-            if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
-            {
-                fail("Donald Duck has lost his name after closing the PM");
-            }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -3296,131 +3474,138 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAllOnCommitViaFetchUnlimited()
     {
-        Object id = null;
-
-        // Persist some objects
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
+            Object id = null;
 
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
-            Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
-            Account bugsAcct = new Account();
-            bugsAcct.setUsername("bugs");
-            bugsAcct.setEnabled(true);
-            bugs.setAccount(bugsAcct);
-            Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
-            donald.addSubordinate(woody);
-            donald.addSubordinate(bugs);
-            woody.setManager(donald);
-            bugs.setManager(donald);
+            // Persist some objects
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
 
-            pm.makePersistent(donald);
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
+                Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
+                Account bugsAcct = new Account();
+                bugsAcct.setUsername("bugs");
+                bugsAcct.setEnabled(true);
+                bugs.setAccount(bugsAcct);
+                Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
+                donald.addSubordinate(woody);
+                donald.addSubordinate(bugs);
+                woody.setManager(donald);
+                bugs.setManager(donald);
 
-            tx.commit();
-            id = JDOHelper.getObjectId(donald);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+                pm.makePersistent(donald);
+
+                tx.commit();
+                id = JDOHelper.getObjectId(donald);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve an object and check the detached states
+            pm = newPM();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+            pm.getFetchPlan().addGroup("groupA");
+            pm.getFetchPlan().addGroup("groupC");
+            pm.getFetchPlan().setMaxFetchDepth(-1);
+            ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Manager donald = (Manager)pm.getObjectById(id);
+                tx.commit();
+
+                Set employees = donald.getSubordinates();
+                assertNotNull("Donald was not detached and should have been at commit", donald);
+                assertNotNull("Employees of Donald were not detached and should have been at commit", employees);
+                assertEquals("Donald Duck has incorrect number of employees after detach at commit", 2, donald.getSubordinates().size());
+                Employee bugs = null;
+                Employee woody = null;
+                Account bugsAcct = null;
+                Iterator emplIter = employees.iterator();
+                while (emplIter.hasNext())
+                {
+                    Employee emp = (Employee)emplIter.next();
+                    if (emp.getFirstName().equals("Bugs"))
+                    {
+                        bugs = emp;
+                    }
+                    else if (emp.getFirstName().equals("Woody"))
+                    {
+                        woody = emp;
+                    }
+                }
+
+                assertNotNull("Bugs Bunny was not detached and should have been at commit", bugs);
+                assertNotNull("Woody Woodpecker was not detached and should have been at commit", woody);
+                bugsAcct = bugs.getAccount();
+                assertNotNull("Account of Bugs Bunny was not detached and should have been at commit", bugsAcct);
+
+                // Check that all are now detached
+                if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
+                {
+                    fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
+                {
+                    fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
+                }
+                if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
+                {
+                    fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
+                }
+
+                // Check that the relationships are intact
+                if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
+                {
+                    fail("Woody Woodpecker has lost his name after closing the PM");
+                }
+                assertNotNull("Woody has a null Manager after detach", woody.getManager());
+                assertEquals("Woody has lost the relation to his detached Manager after commit", woody.getManager(), donald);
+                if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
+                {
+                    fail("Bugs Bunny has lost his name after closing the PM");
+                }
+                assertNotNull("Bugs has a null Manager after detach", bugs.getManager());
+                assertEquals("Bugs has lost the relation to his detached Manager after commit", bugs.getManager(), donald);
+                if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
+                {
+                    fail("Donald Duck has lost his name after closing the PM");
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Retrieve an object and check the detached states
-        pm = newPM();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        pm.getFetchPlan().addGroup("groupA");
-        pm.getFetchPlan().addGroup("groupC");
-        pm.getFetchPlan().setMaxFetchDepth(-1);
-        ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            Manager donald = (Manager)pm.getObjectById(id);
-            tx.commit();
-
-            Set employees = donald.getSubordinates();
-            assertNotNull("Donald was not detached and should have been at commit", donald);
-            assertNotNull("Employees of Donald were not detached and should have been at commit", employees);
-            assertEquals("Donald Duck has incorrect number of employees after detach at commit", 2, donald.getSubordinates().size());
-            Employee bugs = null;
-            Employee woody = null;
-            Account bugsAcct = null;
-            Iterator emplIter = employees.iterator();
-            while (emplIter.hasNext())
-            {
-                Employee emp = (Employee)emplIter.next();
-                if (emp.getFirstName().equals("Bugs"))
-                {
-                    bugs = emp;
-                }
-                else if (emp.getFirstName().equals("Woody"))
-                {
-                    woody = emp;
-                }
-            }
-
-            assertNotNull("Bugs Bunny was not detached and should have been at commit", bugs);
-            assertNotNull("Woody Woodpecker was not detached and should have been at commit", woody);
-            bugsAcct = bugs.getAccount();
-            assertNotNull("Account of Bugs Bunny was not detached and should have been at commit", bugsAcct);
-
-            // Check that all are now detached
-            if (!JDOHelper.isDetached(bugs) || JDOHelper.getObjectId(bugs) == null)
-            {
-                fail("Bugs Bunny is not detached or hasn't been detached correctly after closing the PM");
-            }
-            if (!JDOHelper.isDetached(woody) || JDOHelper.getObjectId(woody) == null)
-            {
-                fail("Woody Woodpecker is not detached or hasn't been detached correctly after closing the PM");
-            }
-            if (!JDOHelper.isDetached(donald) || JDOHelper.getObjectId(donald) == null)
-            {
-                fail("Donald Duck is not detached or hasn't been detached correctly after closing the PM");
-            }
-
-            // Check that the relationships are intact
-            if (!woody.getFirstName().equals("Woody") || !woody.getLastName().equals("Woodpecker"))
-            {
-                fail("Woody Woodpecker has lost his name after closing the PM");
-            }
-            assertNotNull("Woody has a null Manager after detach", woody.getManager());
-            assertEquals("Woody has lost the relation to his detached Manager after commit", woody.getManager(), donald);
-            if (!bugs.getFirstName().equals("Bugs") || !bugs.getLastName().equals("Bunny"))
-            {
-                fail("Bugs Bunny has lost his name after closing the PM");
-            }
-            assertNotNull("Bugs has a null Manager after detach", bugs.getManager());
-            assertEquals("Bugs has lost the relation to his detached Manager after commit", bugs.getManager(), donald);
-            if (!donald.getFirstName().equals("Donald") || !donald.getLastName().equals("Duck"))
-            {
-                fail("Donald Duck has lost his name after closing the PM");
-            }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
     
@@ -3430,77 +3615,84 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAllOnCommitViaQuery()
     {
-        // Persist some objects
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
+            // Persist some objects
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
 
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
-            Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
-            Account bugsAcct = new Account();
-            bugsAcct.setUsername("bugs");
-            bugsAcct.setEnabled(true);
-            bugs.setAccount(bugsAcct);
-            Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
-            donald.addSubordinate(woody);
-            donald.addSubordinate(bugs);
-            woody.setManager(donald);
-            bugs.setManager(donald);
-            pm.makePersistent(donald);
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@warnerbros.com", 125, "123409");
+                Employee bugs = new Employee(2, "Bugs", "Bunny", "bugs@warnerbros.com", 200, "123410");
+                Account bugsAcct = new Account();
+                bugsAcct.setUsername("bugs");
+                bugsAcct.setEnabled(true);
+                bugs.setAccount(bugsAcct);
+                Manager donald = new Manager(3, "Donald", "Duck", "donald@warnerbros.com", 400, "123400");
+                donald.addSubordinate(woody);
+                donald.addSubordinate(bugs);
+                woody.setManager(donald);
+                bugs.setManager(donald);
+                pm.makePersistent(donald);
 
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting objects and committing transaction with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve Employees and check the detached states
+            pm = newPM();
+            pm.getFetchPlan().addGroup("groupSubordinates");
+            pm.getFetchPlan().addGroup("groupA");
+            pm.getFetchPlan().addGroup("groupC");
+            pm.getFetchPlan().setMaxFetchDepth(3);
+            ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Query q = pm.newQuery(Employee.class);
+                Collection results = (Collection)q.execute();
+                tx.commit(); // Detach all of Employees on commit
+
+                assertThat((Collection<?>)results).as("Number of Employees retrieved is incorrect").hasSize(3);
+                Iterator empIter = results.iterator();
+                while (empIter.hasNext())
+                {
+                    Employee emp = (Employee)empIter.next();
+                    assertTrue("Employee " + StringUtils.toJVMIDString(emp) + " is not detached!", JDOHelper.isDetached(emp));
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Retrieve Employees and check the detached states
-        pm = newPM();
-        pm.getFetchPlan().addGroup("groupSubordinates");
-        pm.getFetchPlan().addGroup("groupA");
-        pm.getFetchPlan().addGroup("groupC");
-        pm.getFetchPlan().setMaxFetchDepth(3);
-        ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            Query q = pm.newQuery(Employee.class);
-            Collection results = (Collection)q.execute();
-            tx.commit(); // Detach all of Employees on commit
-
-            assertThat((Collection<?>)results).as("Number of Employees retrieved is incorrect").hasSize(3);
-            Iterator empIter = results.iterator();
-            while (empIter.hasNext())
-            {
-                Employee emp = (Employee)empIter.next();
-                assertTrue("Employee " + StringUtils.toJVMIDString(emp) + " is not detached!", JDOHelper.isDetached(emp));
-            }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while retrieving objects with detachAllOnCommit : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -3603,156 +3795,163 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testMaxFetchDepth()
     {
-        Object e1Id = null;
-
-        // Persist some data
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
-            Employee e1 = new Employee(1, "Yogi", "Bear", "yogi@warnerbros.com", 124, "10123");
-            Employee e2 = new Employee(2, "Fred", "Flintstone", "fred.flintstone@hannabarbara.com", 167, "10019");
-            Manager m1 = new Manager(3, "Wily", "Coyote", "wily.coyote@warnerbros.com", 202, "10067");
-            Manager m2 = new Manager(4, "Mickey", "Mouse", "mickey.mouse@hollywood.com", 203, "10066");
-            Manager m3 = new Manager(5, "Donald", "Duck", "donald.duck@hollywood.com", 204, "10065");
-            m1.addSubordinate(e1);
-            m1.addSubordinate(e2);
-            e1.setManager(m1);
-            e2.setManager(m1);
-            m2.addSubordinate(m1);
-            m1.setManager(m2);
-            m3.addSubordinate(m2);
-            m2.setManager(m3);
-            Department d1 = new Department("Cartoon");
-            m1.addDepartment(d1);
-            d1.setManager(m1);
+            Object e1Id = null;
 
-            // This should persist all objects
-            pm.makePersistent(e1);
+            // Persist some data
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Employee e1 = new Employee(1, "Yogi", "Bear", "yogi@warnerbros.com", 124, "10123");
+                Employee e2 = new Employee(2, "Fred", "Flintstone", "fred.flintstone@hannabarbara.com", 167, "10019");
+                Manager m1 = new Manager(3, "Wily", "Coyote", "wily.coyote@warnerbros.com", 202, "10067");
+                Manager m2 = new Manager(4, "Mickey", "Mouse", "mickey.mouse@hollywood.com", 203, "10066");
+                Manager m3 = new Manager(5, "Donald", "Duck", "donald.duck@hollywood.com", 204, "10065");
+                m1.addSubordinate(e1);
+                m1.addSubordinate(e2);
+                e1.setManager(m1);
+                e2.setManager(m1);
+                m2.addSubordinate(m1);
+                m1.setManager(m2);
+                m3.addSubordinate(m2);
+                m2.setManager(m3);
+                Department d1 = new Department("Cartoon");
+                m1.addDepartment(d1);
+                d1.setManager(m1);
 
-            tx.commit();
-            e1Id = pm.getObjectId(e1);
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting test data : " + e.getMessage());
+                // This should persist all objects
+                pm.makePersistent(e1);
+
+                tx.commit();
+                e1Id = pm.getObjectId(e1);
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting test data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve and detach some objects using default fetch-depth
+            Employee e1Detached = null;
+            pm = newPM();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Employee e1 = (Employee)pm.getObjectById(e1Id);
+                e1Detached = (Employee)pm.detachCopy(e1);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving/detaching test data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Check the detached objects (Employee.manager is in the DFG)
+            try
+            {
+                // Basic fields of the detached object
+                e1Detached.getSerialNo();
+                e1Detached.getManager();
+            }
+            catch (JDODetachedFieldAccessException dfea)
+            {
+                fail("Detach of Employee has not detached its DFG fields! Should have been detached");
+            }
+            try
+            {
+                // Second level relation of the detached object
+                e1Detached.getManager().getManager();
+                fail("Detach of Employee has also detached Manager of the Manager! Should not have been detached since outside fetch-depth of 1");
+            }
+            catch (JDODetachedFieldAccessException ndfe)
+            {
+                // Expected
+            }
+
+            // Retrieve and detach some objects using extra level of fetch-depth
+            pm = newPM();
+            pm.getFetchPlan().setMaxFetchDepth(2);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Employee e1 = (Employee)pm.getObjectById(e1Id);
+                e1Detached = (Employee)pm.detachCopy(e1);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving/detaching test data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Check the detached objects
+            try
+            {
+                // Basic fields of the detached object
+                e1Detached.getSerialNo();
+                e1Detached.getManager();
+            }
+            catch (JDODetachedFieldAccessException dfea)
+            {
+                fail("Detach of Employee has not detached its DFG fields! Should have been detached");
+            }
+            try
+            {
+                // Basic fields of the detached object
+                e1Detached.getManager().getManager();
+            }
+            catch (JDODetachedFieldAccessException dfea)
+            {
+                fail("Detach of Employee has not detached Manager of Manager! Should have been detached");
+            }
+            try
+            {
+                // Third level relation of the detached object
+                e1Detached.getManager().getManager().getManager();
+                fail("Detach of Employee has also detached Manager of the Manager of the Manager! Should not have been detached since outside fetch-depth of 1");
+            }
+            catch (JDODetachedFieldAccessException ndfe)
+            {
+                // Expected
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Retrieve and detach some objects using default fetch-depth
-        Employee e1Detached = null;
-        pm = newPM();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            Employee e1 = (Employee)pm.getObjectById(e1Id);
-            e1Detached = (Employee)pm.detachCopy(e1);
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while retrieving/detaching test data : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Check the detached objects (Employee.manager is in the DFG)
-        try
-        {
-            // Basic fields of the detached object
-            e1Detached.getSerialNo();
-            e1Detached.getManager();
-        }
-        catch (JDODetachedFieldAccessException dfea)
-        {
-            fail("Detach of Employee has not detached its DFG fields! Should have been detached");
-        }
-        try
-        {
-            // Second level relation of the detached object
-            e1Detached.getManager().getManager();
-            fail("Detach of Employee has also detached Manager of the Manager! Should not have been detached since outside fetch-depth of 1");
-        }
-        catch (JDODetachedFieldAccessException ndfe)
-        {
-            // Expected
-        }
-
-        // Retrieve and detach some objects using extra level of fetch-depth
-        pm = newPM();
-        pm.getFetchPlan().setMaxFetchDepth(2);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-
-            Employee e1 = (Employee)pm.getObjectById(e1Id);
-            e1Detached = (Employee)pm.detachCopy(e1);
-
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while retrieving/detaching test data : " + e.getMessage());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Check the detached objects
-        try
-        {
-            // Basic fields of the detached object
-            e1Detached.getSerialNo();
-            e1Detached.getManager();
-        }
-        catch (JDODetachedFieldAccessException dfea)
-        {
-            fail("Detach of Employee has not detached its DFG fields! Should have been detached");
-        }
-        try
-        {
-            // Basic fields of the detached object
-            e1Detached.getManager().getManager();
-        }
-        catch (JDODetachedFieldAccessException dfea)
-        {
-            fail("Detach of Employee has not detached Manager of Manager! Should have been detached");
-        }
-        try
-        {
-            // Third level relation of the detached object
-            e1Detached.getManager().getManager().getManager();
-            fail("Detach of Employee has also detached Manager of the Manager of the Manager! Should not have been detached since outside fetch-depth of 1");
-        }
-        catch (JDODetachedFieldAccessException ndfe)
-        {
-            // Expected
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -3946,6 +4145,8 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+
+            clean(Directory.class);
         }
     }
 
@@ -3954,124 +4155,131 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachLoadUnloadFields()
     {
-        Manager detachedM1a = null;
-        Manager detachedM1b = null;
-
-        // Persist some data
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
-            Employee e1 = new Employee(1, "Yogi", "Bear", "yogi@warnerbros.com", 124, "10123");
-            Employee e2 = new Employee(2, "Fred", "Flintstone", "fred.flintstone@hannabarbara.com", 167, "10019");
-            Manager m1 = new Manager(3, "Wily", "Coyote", "wily.coyote@warnerbros.com", 202, "10067");
-            m1.addSubordinate(e1);
-            m1.addSubordinate(e2);
-            e1.setManager(m1);
-            e2.setManager(m1);
-            Department d1 = new Department("Cartoon");
-            m1.addDepartment(d1);
-            d1.setManager(m1);
+            Manager detachedM1a = null;
+            Manager detachedM1b = null;
 
-            // This should persist all objects
-            pm.makePersistent(e1);
+            // Persist some data
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Employee e1 = new Employee(1, "Yogi", "Bear", "yogi@warnerbros.com", 124, "10123");
+                Employee e2 = new Employee(2, "Fred", "Flintstone", "fred.flintstone@hannabarbara.com", 167, "10019");
+                Manager m1 = new Manager(3, "Wily", "Coyote", "wily.coyote@warnerbros.com", 202, "10067");
+                m1.addSubordinate(e1);
+                m1.addSubordinate(e2);
+                e1.setManager(m1);
+                e2.setManager(m1);
+                Department d1 = new Department("Cartoon");
+                m1.addDepartment(d1);
+                d1.setManager(m1);
 
-            // Detach just the FetchPlan fields
-            pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS | FetchPlan.DETACH_UNLOAD_FIELDS);
-            detachedM1a = (Manager)pm.detachCopy(m1);
+                // This should persist all objects
+                pm.makePersistent(e1);
 
-            pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS);
-            detachedM1b = (Manager)pm.detachCopy(m1);
+                // Detach just the FetchPlan fields
+                pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS | FetchPlan.DETACH_UNLOAD_FIELDS);
+                detachedM1a = (Manager)pm.detachCopy(m1);
 
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail("Exception thrown while persisting test data : " + e.getMessage());
+                pm.getFetchPlan().setDetachmentOptions(FetchPlan.DETACH_LOAD_FIELDS);
+                detachedM1b = (Manager)pm.detachCopy(m1);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while persisting test data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Check what has been detached - when detaching just fetch plan fields
+            try
+            {
+                detachedM1a.getEmailAddress();
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                fail("Field Manager.emailAddress hasn't been detached yet this should have been since was in fetch-plan");
+            }
+            try
+            {
+                detachedM1a.getSerialNo();
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                fail("Field Manager.serialNo hasn't been detached yet this should have been since was in fetch-plan");
+            }
+
+            try
+            {
+                detachedM1a.getDepartments();
+                fail("Field Manager.departments has been detached yet this should not have been since wasn't in fetch-plan");
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                // Expected
+            }
+
+            try
+            {
+                detachedM1a.getSubordinates();
+                fail("Field Manager.subordinates has been detached yet this should not have been since wasn't in fetch-plan");
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                // Expected
+            }
+
+            // Check what has been detached - when detaching all loaded fields
+            try
+            {
+                detachedM1b.getEmailAddress();
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                fail("Field Manager.emailAddress hasn't been detached yet this should have been since was in fetch-plan");
+            }
+            try
+            {
+                detachedM1b.getSerialNo();
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                fail("Field Manager.serialNo hasn't been detached yet this should have been since was in fetch-plan");
+            }
+
+            try
+            {
+                detachedM1b.getDepartments();
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                fail("Field Manager.departments hasn't been detached yet this should have been since was loaded at detach");
+            }
+
+            try
+            {
+                detachedM1b.getSubordinates();
+            }
+            catch (JDODetachedFieldAccessException dfae)
+            {
+                fail("Field Manager.subordinates hasn't been detached yet this should have been since was loaded at detach");
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Check what has been detached - when detaching just fetch plan fields
-        try
-        {
-            detachedM1a.getEmailAddress();
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            fail("Field Manager.emailAddress hasn't been detached yet this should have been since was in fetch-plan");
-        }
-        try
-        {
-            detachedM1a.getSerialNo();
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            fail("Field Manager.serialNo hasn't been detached yet this should have been since was in fetch-plan");
-        }
-
-        try
-        {
-            detachedM1a.getDepartments();
-            fail("Field Manager.departments has been detached yet this should not have been since wasn't in fetch-plan");
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            // Expected
-        }
-
-        try
-        {
-            detachedM1a.getSubordinates();
-            fail("Field Manager.subordinates has been detached yet this should not have been since wasn't in fetch-plan");
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            // Expected
-        }
-
-        // Check what has been detached - when detaching all loaded fields
-        try
-        {
-            detachedM1b.getEmailAddress();
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            fail("Field Manager.emailAddress hasn't been detached yet this should have been since was in fetch-plan");
-        }
-        try
-        {
-            detachedM1b.getSerialNo();
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            fail("Field Manager.serialNo hasn't been detached yet this should have been since was in fetch-plan");
-        }
-
-        try
-        {
-            detachedM1b.getDepartments();
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            fail("Field Manager.departments hasn't been detached yet this should have been since was loaded at detach");
-        }
-
-        try
-        {
-            detachedM1b.getSubordinates();
-        }
-        catch (JDODetachedFieldAccessException dfae)
-        {
-            fail("Field Manager.subordinates hasn't been detached yet this should have been since was loaded at detach");
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -4081,65 +4289,72 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testAttachCleanCollectionWithNonPCElements()
     {
-        Object objectId = null;
-        ClassWithNonPCCollection obj1 = new ClassWithNonPCCollection();
-
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
         try
         {
-            // test detach and attach
-            tx.begin();
-            obj1.getElements().add("elem1");
-            obj1.getElements().add("elem2");
-            pm.makePersistent(obj1);
-            tx.commit();
-            objectId = pm.getObjectId(obj1);
+            Object objectId = null;
+            ClassWithNonPCCollection obj1 = new ClassWithNonPCCollection();
 
-            // detach
-            tx.begin();
-            obj1 = (ClassWithNonPCCollection) pm.getObjectById(objectId, true);
-            pm.getFetchPlan().addGroup("detach");
-            obj1 = (ClassWithNonPCCollection) pm.detachCopy(obj1);
-            tx.commit();
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-            // add a storeLifeCycleListener to check what gets stored
-            final Collection storedElements = new ArrayList();
-            pm.addInstanceLifecycleListener(new StoreLifecycleListener()
+            try
             {
-                public void preStore(InstanceLifecycleEvent event)
+                // test detach and attach
+                tx.begin();
+                obj1.getElements().add("elem1");
+                obj1.getElements().add("elem2");
+                pm.makePersistent(obj1);
+                tx.commit();
+                objectId = pm.getObjectId(obj1);
+
+                // detach
+                tx.begin();
+                obj1 = (ClassWithNonPCCollection) pm.getObjectById(objectId, true);
+                pm.getFetchPlan().addGroup("detach");
+                obj1 = (ClassWithNonPCCollection) pm.detachCopy(obj1);
+                tx.commit();
+
+                // add a storeLifeCycleListener to check what gets stored
+                final Collection storedElements = new ArrayList();
+                pm.addInstanceLifecycleListener(new StoreLifecycleListener()
                 {
+                    public void preStore(InstanceLifecycleEvent event)
+                    {
+                    }
+
+                    public void postStore(InstanceLifecycleEvent event)
+                    {
+                        storedElements.add(event.getSource());
+                    }
+                });
+
+                // attach the unchanged Object
+                tx.begin();
+                obj1 = (ClassWithNonPCCollection) pm.makePersistent(obj1);
+                tx.commit();
+
+                // test that nothing has been stored
+                assertTrue(storedElements.isEmpty());
+
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
                 }
 
-                public void postStore(InstanceLifecycleEvent event)
-                {
-                    storedElements.add(event.getSource());
-                }
-            });
-
-            // attach the unchanged Object
-            tx.begin();
-            obj1 = (ClassWithNonPCCollection) pm.makePersistent(obj1);
-            tx.commit();
-
-            // test that nothing has been stored
-            assertTrue(storedElements.isEmpty());
-
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
+            clean(ClassWithNonPCCollection.class);
         }
     }
 
@@ -4148,71 +4363,79 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testAttachOneManyBidirFromNewManySide()
     {
-        Farm detachedFarm = null;
-
-        PersistenceManager pm = newPM();
-        ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
-        Transaction tx = pm.currentTransaction();
         try
         {
-            // Persist the 1 side
-            tx.begin();
-            Farm farm = new Farm("Sunnybrook Farm");
-            pm.makePersistent(farm);
-            tx.commit();
-            detachedFarm = farm;
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            Farm detachedFarm = null;
+
+            PersistenceManager pm = newPM();
+            ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                // Persist the 1 side
+                tx.begin();
+                Farm farm = new Farm("Sunnybrook Farm");
+                pm.makePersistent(farm);
+                tx.commit();
+                detachedFarm = farm;
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
+
+            // Create the N side and link to the detached 1 side
+            Animal animal = new Animal("Porky");
+            animal.setFarm(detachedFarm);
+            detachedFarm.addAnimal(animal);
+
+            pm = newPM();
+            ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
+            tx = pm.currentTransaction();
+            try
+            {
+                // Persist from the N side
+                tx.begin();
+                pm.makePersistent(animal);
+                tx.commit();
+
+                // Check the detached results
+                assertTrue("Animal should be detached but isnt", JDOHelper.isDetached(animal));
+                Farm farm = animal.getFarm();
+                assertNotNull("Animal should have its Farm field set but is null", farm);
+                assertTrue("Animal.farm should be detached but isnt", JDOHelper.isDetached(farm));
+                assertNotNull("Animal.farm.animals should be set but is null", farm.getAnimals());
+                assertEquals("Animal.farm.animals has incorrect number of animals", 1, farm.getAnimals().size());
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
-        }
-
-        // Create the N side and link to the detached 1 side
-        Animal animal = new Animal("Porky");
-        animal.setFarm(detachedFarm);
-        detachedFarm.addAnimal(animal);
-
-        pm = newPM();
-        ((JDOPersistenceManager)pm).setDetachAllOnCommit(true);
-        tx = pm.currentTransaction();
-        try
-        {
-            // Persist from the N side
-            tx.begin();
-            pm.makePersistent(animal);
-            tx.commit();
-
-            // Check the detached results
-            assertTrue("Animal should be detached but isnt", JDOHelper.isDetached(animal));
-            Farm farm = animal.getFarm();
-            assertNotNull("Animal should have its Farm field set but is null", farm);
-            assertTrue("Animal.farm should be detached but isnt", JDOHelper.isDetached(farm));
-            assertNotNull("Animal.farm.animals should be set but is null", farm.getAnimals());
-            assertEquals("Animal.farm.animals has incorrect number of animals", 1, farm.getAnimals().size());
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-
-            pm.close();
+            clean(Farm.class);
+            clean(Animal.class);
         }
     }
 
@@ -4221,79 +4444,84 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testCopyOnAttachFalseOneToManyBidir()
     {
-        Farm farm1 = null;
-
-        // Persist the owner object
-        PersistenceManager pm = newPM();
-        pm.setDetachAllOnCommit(true);
-        pm.setCopyOnAttach(false);
-        pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
-        Transaction tx = pm.currentTransaction();
         try
         {
-            // Persist 
-            tx.begin();
-            farm1 = new Farm("Sunnybrook Farm");
-            pm.makePersistent(farm1);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            Farm farm1 = null;
+
+            // Persist the owner object
+            PersistenceManager pm = newPM();
+            pm.setDetachAllOnCommit(true);
+            pm.setCopyOnAttach(false);
+            pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                // Persist 
+                tx.begin();
+                farm1 = new Farm("Sunnybrook Farm");
+                pm.makePersistent(farm1);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Update the detached owner with new elements
+            assertEquals("Owner object is in incorrect state", ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(farm1));
+            Animal dog = new Animal("Patch");
+            Animal cat = new Animal("Tabby");
+            farm1.addAnimal(dog);
+            dog.setFarm(farm1);
+            farm1.addAnimal(cat);
+            cat.setFarm(farm1);
+
+            // Attach the owner object
+            pm = newPM();
+            pm.setDetachAllOnCommit(true);
+            pm.setCopyOnAttach(false);
+            pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Farm farm2 = (Farm)pm.makePersistent(farm1);
+                pm.flush();
+                assertEquals("Attached owner is different object to detached, yet with CopyOnAttach=false should be same", farm1, farm2);
+                assertTrue("Farm should be persistent but isnt", JDOHelper.isPersistent(farm1));
+                assertTrue("Cat should be persistent but isnt", JDOHelper.isPersistent(cat));
+                assertTrue("Dog should be persistent but isnt", JDOHelper.isPersistent(dog));
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            assertEquals("Owner object is in incorrect state", ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(farm1));
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            clean(Farm.class);
+            clean(Animal.class);
         }
-
-        // Update the detached owner with new elements
-        assertEquals("Owner object is in incorrect state",
-            ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(farm1));
-        Animal dog = new Animal("Patch");
-        Animal cat = new Animal("Tabby");
-        farm1.addAnimal(dog);
-        dog.setFarm(farm1);
-        farm1.addAnimal(cat);
-        cat.setFarm(farm1);
-
-        // Attach the owner object
-        pm = newPM();
-        pm.setDetachAllOnCommit(true);
-        pm.setCopyOnAttach(false);
-        pm.getFetchPlan().setGroup(FetchPlan.ALL).setMaxFetchDepth(2);
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            Farm farm2 = (Farm)pm.makePersistent(farm1);
-            pm.flush();
-            assertEquals("Attached owner is different object to detached, yet with CopyOnAttach=false should be same",
-                farm1, farm2);
-            assertTrue("Farm should be persistent but isnt", JDOHelper.isPersistent(farm1));
-            assertTrue("Cat should be persistent but isnt", JDOHelper.isPersistent(cat));
-            assertTrue("Dog should be persistent but isnt", JDOHelper.isPersistent(dog));
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-        assertEquals("Owner object is in incorrect state",
-            ObjectState.DETACHED_CLEAN, JDOHelper.getObjectState(farm1));
     }
     
     /**
@@ -4411,6 +4639,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
         finally
         {
             clean(LoginAccount.class);
+            clean(Login.class);
         }
     }
 
@@ -4501,6 +4730,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
         finally
         {
             clean(LoginAccount.class);
+            clean(Login.class);
         }
     }
 
@@ -4509,59 +4739,66 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testFetchDepthOnDetachCopyAll()
     {
-        Manager bob = new Manager(1, "Bob", "Woodpecker", "bob@woodpecker.com", 13, "serial 1");
-        Manager dave = new Manager(1, "Dave", "Woodpecker", "dave@woodpecker.com", 13, "serial 2");
-        Employee mary = new Employee(1, "Mary", "Woodpecker", "mary@woodpecker.com", 13, "serial 3");
-        mary.setManager(dave);
-        dave.setManager(bob);
-
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-
         try
         {
-            // Save Mary will also save Dave and Bob.
-            tx.begin();
-            pm.makePersistent(mary);
-            tx.commit();
+            Manager bob = new Manager(1, "Bob", "Woodpecker", "bob@woodpecker.com", 13, "serial 1");
+            Manager dave = new Manager(1, "Dave", "Woodpecker", "dave@woodpecker.com", 13, "serial 2");
+            Employee mary = new Employee(1, "Mary", "Woodpecker", "mary@woodpecker.com", 13, "serial 3");
+            mary.setManager(dave);
+            dave.setManager(bob);
 
-            tx.begin();
-            // Group A has firstName and manager, amount other things.
-            // No max fetch-depth is defined, so they default to 1.
-            pm.getFetchPlan().setGroup("groupA");
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-            Query query = pm.newQuery(pm.getExtent(Employee.class, true));
-            query.setOrdering("firstName descending");
-            Collection c = (Collection) query.execute();
-            c = pm.detachCopyAll(c);
-            tx.commit();
-
-            assertEquals("c.size() == 3", c.size(), 3);
-            for (Iterator i = c.iterator(); i.hasNext();)
+            try
             {
-                Employee em = (Employee) i.next();
-                try
+                // Save Mary will also save Dave and Bob.
+                tx.begin();
+                pm.makePersistent(mary);
+                tx.commit();
+
+                tx.begin();
+                // Group A has firstName and manager, amount other things.
+                // No max fetch-depth is defined, so they default to 1.
+                pm.getFetchPlan().setGroup("groupA");
+
+                Query query = pm.newQuery(pm.getExtent(Employee.class, true));
+                query.setOrdering("firstName descending");
+                Collection c = (Collection) query.execute();
+                c = pm.detachCopyAll(c);
+                tx.commit();
+
+                assertEquals("c.size() == 3", c.size(), 3);
+                for (Iterator i = c.iterator(); i.hasNext();)
                 {
-                    em.getManager();
-                }
-                catch (Exception e)
-                {
-                    fail("Manager must be returned for maxFetchDepth of 1 : employee " + em.getFirstName() + " has no manager");
+                    Employee em = (Employee) i.next();
+                    try
+                    {
+                        em.getManager();
+                    }
+                    catch (Exception e)
+                    {
+                        fail("Manager must be returned for maxFetchDepth of 1 : employee " + em.getFirstName() + " has no manager");
+                    }
                 }
             }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
 
@@ -4638,64 +4875,71 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testDetachAttachWithNoChangeLifecycle()
     {
-        // Create object and detach it
-        Employee woodyDetached = null;
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
         try
         {
-            tx.begin();
+            // Create object and detach it
+            Employee woodyDetached = null;
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
 
-            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
-            Account acct = new Account();
-            acct.setId(101);
-            acct.setEnabled(true);
-            acct.setUsername("woodyw");
-            woody.setAccount(acct);
+                Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+                Account acct = new Account();
+                acct.setId(101);
+                acct.setEnabled(true);
+                acct.setUsername("woodyw");
+                woody.setAccount(acct);
 
-            pm.makePersistent(woody);
-            woodyDetached = (Employee)pm.detachCopy(woody);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
+                pm.makePersistent(woody);
+                woodyDetached = (Employee)pm.detachCopy(woody);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Attach the object
+            pm = newPM();
+            tx = pm.currentTransaction();
+            tx.setOptimistic(true); // Delay all persistence ops til flush/commit
+            try
+            {
+                tx.begin();
+                Employee woody = pm.makePersistent(woodyDetached);
+                Account acct = woody.getAccount();
+                assertFalse("Attached object is dirty but shouldn't be", JDOHelper.isDirty(woody));
+                assertFalse("Attached Account is dirty but shouldn't be", JDOHelper.isDirty(acct));
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail(e.toString());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        // Attach the object
-        pm = newPM();
-        tx = pm.currentTransaction();
-        tx.setOptimistic(true); // Delay all persistence ops til flush/commit
-        try
-        {
-            tx.begin();
-            Employee woody = pm.makePersistent(woodyDetached);
-            Account acct = woody.getAccount();
-            assertFalse("Attached object is dirty but shouldn't be", JDOHelper.isDirty(woody));
-            assertFalse("Attached Account is dirty but shouldn't be", JDOHelper.isDirty(acct));
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception in test", e);
-            fail(e.toString());
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            CompanyHelper.clearCompanyData(pmf);
         }
     }
     
@@ -4723,13 +4967,8 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             // Re-attach
             DetachHolder attachedHolder = pm.makePersistent(detachHolder);
 
-            assertThat(attachedHolder.getDateNeverAttach())
-            .as("Should not attach field with 'never' attach extension")
-            .isNull();
-
-            assertThat(attachedHolder.getPcNeverAttach())
-            .as("Should not attach field with 'never' attach extension")
-            .isNull();
+            assertThat(attachedHolder.getDateNeverAttach()).as("Should not attach field with 'never' attach extension").isNull();
+            assertThat(attachedHolder.getPcNeverAttach()).as("Should not attach field with 'never' attach extension").isNull();
         }
         finally
         {
@@ -4742,52 +4981,56 @@ public class AttachDetachTest extends JDOPersistenceTestCase
      */
     public void testAttachDependentPcChangedToNull()
     {
-        PersistenceManager pm = newPM();
-        Transaction tx = pm.currentTransaction();
-    
-        tx.begin();
+        try
+        {
+            PersistenceManager pm = newPM();
+            Transaction tx = pm.currentTransaction();
 
-        // Persist some data and detach it
-        DetachHolder detachHolder = new DetachHolder();
-        DetachPC pcDependent = new DetachPC("dependent");
-        DetachPC pcNonDependent = new DetachPC("nonDependent");
-        
-        detachHolder.setPcDependent(pcDependent);
-        detachHolder.setPc(pcNonDependent);
+            tx.begin();
 
-        pm.makePersistent(detachHolder);
-        
-        Object dependentId = JDOHelper.getObjectId(pcDependent);
-        Object nonDependentId = JDOHelper.getObjectId(pcNonDependent);
+            // Persist some data and detach it
+            DetachHolder detachHolder = new DetachHolder();
+            DetachPC pcDependent = new DetachPC("dependent");
+            DetachPC pcNonDependent = new DetachPC("nonDependent");
 
-        // Detach
-        
-        DetachHolder holderDetached = pm.detachCopy(detachHolder);
-        
-        tx.commit();
-        
-        // Change to null
-        holderDetached.setPcDependent(null);
-        holderDetached.setPc(null);
+            detachHolder.setPcDependent(pcDependent);
+            detachHolder.setPc(pcNonDependent);
 
-        // Attach
+            pm.makePersistent(detachHolder);
 
-        tx.begin();
-        
-        pm.makePersistent(holderDetached);
-        
-        tx.commit();
-        
-        tx.begin();
-        
-        assertThatThrownBy(() -> {
-            pm.getObjectById(dependentId);
-        })
+            Object dependentId = JDOHelper.getObjectId(pcDependent);
+            Object nonDependentId = JDOHelper.getObjectId(pcNonDependent);
+
+            // Detach
+
+            DetachHolder holderDetached = pm.detachCopy(detachHolder);
+
+            tx.commit();
+
+            // Change to null
+            holderDetached.setPcDependent(null);
+            holderDetached.setPc(null);
+
+            // Attach
+
+            tx.begin();
+
+            pm.makePersistent(holderDetached);
+
+            tx.commit();
+
+            tx.begin();
+
+            assertThatThrownBy(() -> {pm.getObjectById(dependentId);})
             .as("Must delete dependent PC on attach")
             .isInstanceOf(JDOObjectNotFoundException.class);
-        
-        assertThat(pm.getObjectById(nonDependentId))
-            .as("Must not delete non dependent on attach")
-            .isNotNull();
+
+            assertThat(pm.getObjectById(nonDependentId)).as("Must not delete non dependent on attach").isNotNull();
+        }
+        finally
+        {
+            clean(DetachHolder.class);
+            clean(DetachPC.class);
+        }
     }
 }
