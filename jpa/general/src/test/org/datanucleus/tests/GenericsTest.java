@@ -23,12 +23,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.samples.annotations.generics.GenericEnumType;
+import org.datanucleus.samples.annotations.generics.GenericOneOneRelated1;
+import org.datanucleus.samples.annotations.generics.GenericOneOneRelated2;
+import org.datanucleus.samples.annotations.generics.GenericOneOneSub1;
+import org.datanucleus.samples.annotations.generics.GenericOneOneSub2;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.generics.GenericEnumType;
-import org.jpox.samples.annotations.generics.GenericOneOneRelated1;
-import org.jpox.samples.annotations.generics.GenericOneOneRelated2;
-import org.jpox.samples.annotations.generics.GenericOneOneSub1;
-import org.jpox.samples.annotations.generics.GenericOneOneSub2;
 
 /**
  * Testcases for use of generics, and in particular TypeVariable usage.
@@ -97,7 +97,7 @@ public class GenericsTest extends JPAPersistenceTestCase
                 assertEquals(1, subs1.size());
 
                 // Query using enum
-                Query q2 = em.createQuery("SELECT s1 FROM GenericOneOneSub1 s1 WHERE s1.type = org.jpox.samples.annotations.generics.GenericEnumType.TYPE_1");
+                Query q2 = em.createQuery("SELECT s1 FROM GenericOneOneSub1 s1 WHERE s1.type = org.datanucleus.samples.annotations.generics.GenericEnumType.TYPE_1");
                 List<GenericOneOneSub1> subs2 = q2.getResultList();
                 assertEquals(1, subs2.size());
 
@@ -177,7 +177,7 @@ public class GenericsTest extends JPAPersistenceTestCase
                 assertEquals(1, subs1.size());
 
                 // Query using enum
-                Query q2 = em.createQuery("SELECT s1 FROM GenericOneOneSub2 s1 WHERE s1.type = org.jpox.samples.annotations.generics.GenericEnumType.TYPE_1");
+                Query q2 = em.createQuery("SELECT s1 FROM GenericOneOneSub2 s1 WHERE s1.type = org.datanucleus.samples.annotations.generics.GenericEnumType.TYPE_1");
                 List<GenericOneOneSub2> subs2 = q2.getResultList();
                 assertEquals(1, subs2.size());
 

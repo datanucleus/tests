@@ -7,7 +7,7 @@
     <persistence-unit-metadata>
         <persistence-unit-defaults>
             <entity-listeners>
-                <entity-listener class="org.jpox.samples.annotations.callbacks.CallbackListener"/>
+                <entity-listener class="org.datanucleus.samples.annotations.callbacks.CallbackListener"/>
             </entity-listeners>
         </persistence-unit-defaults>
     </persistence-unit-metadata>

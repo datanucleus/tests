@@ -28,9 +28,9 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import org.datanucleus.api.jpa.JPAEntityManagerFactory;
+import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
-import org.jpox.samples.annotations.models.company.Person;
 
 /**
  * Tests for EntityManagerFactory (and PersistenceProvider).

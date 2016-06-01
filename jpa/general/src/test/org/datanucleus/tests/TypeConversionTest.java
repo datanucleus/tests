@@ -23,14 +23,14 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.typeconversion.CollectionConverterHolder;
+import org.datanucleus.samples.typeconversion.ComplicatedType;
+import org.datanucleus.samples.typeconversion.ComplicatedType2;
+import org.datanucleus.samples.typeconversion.MapConverterHolder;
+import org.datanucleus.samples.typeconversion.MyType1;
+import org.datanucleus.samples.typeconversion.MyType2;
+import org.datanucleus.samples.typeconversion.TypeHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.typeconversion.CollectionConverterHolder;
-import org.jpox.samples.typeconversion.ComplicatedType;
-import org.jpox.samples.typeconversion.ComplicatedType2;
-import org.jpox.samples.typeconversion.MapConverterHolder;
-import org.jpox.samples.typeconversion.MyType1;
-import org.jpox.samples.typeconversion.MyType2;
-import org.jpox.samples.typeconversion.TypeHolder;
 
 /**
  * Tests for JPA 2.1 type conversion.

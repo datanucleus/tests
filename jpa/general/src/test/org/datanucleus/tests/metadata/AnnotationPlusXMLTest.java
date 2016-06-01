@@ -40,19 +40,19 @@ import org.datanucleus.metadata.PersistenceUnitMetaData;
 import org.datanucleus.metadata.RelationType;
 import org.datanucleus.metadata.SequenceMetaData;
 import org.datanucleus.metadata.TableGeneratorMetaData;
+import org.datanucleus.samples.ann_xml.many_many.PetroleumCustomer;
+import org.datanucleus.samples.ann_xml.many_many.PetroleumSupplier;
+import org.datanucleus.samples.ann_xml.models.company.Department;
+import org.datanucleus.samples.ann_xml.models.company.Employee;
+import org.datanucleus.samples.ann_xml.models.company.Manager;
+import org.datanucleus.samples.ann_xml.models.company.MyListener;
+import org.datanucleus.samples.ann_xml.models.company.Person;
+import org.datanucleus.samples.ann_xml.models.company.WebSite;
+import org.datanucleus.samples.ann_xml.one_one.bidir.Boiler;
+import org.datanucleus.samples.ann_xml.one_one.bidir.Timer;
+import org.datanucleus.samples.ann_xml.one_one.unidir.Login;
+import org.datanucleus.samples.ann_xml.one_one.unidir.LoginAccount;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.ann_xml.many_many.PetroleumCustomer;
-import org.jpox.samples.ann_xml.many_many.PetroleumSupplier;
-import org.jpox.samples.ann_xml.models.company.Department;
-import org.jpox.samples.ann_xml.models.company.Employee;
-import org.jpox.samples.ann_xml.models.company.Manager;
-import org.jpox.samples.ann_xml.models.company.MyListener;
-import org.jpox.samples.ann_xml.models.company.Person;
-import org.jpox.samples.ann_xml.models.company.WebSite;
-import org.jpox.samples.ann_xml.one_one.bidir.Boiler;
-import org.jpox.samples.ann_xml.one_one.bidir.Timer;
-import org.jpox.samples.ann_xml.one_one.unidir.Login;
-import org.jpox.samples.ann_xml.one_one.unidir.LoginAccount;
 
 /**
  * Tests for the use of JPA Annotations+MetaData.

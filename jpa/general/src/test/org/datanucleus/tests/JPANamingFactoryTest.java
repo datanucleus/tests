@@ -22,14 +22,14 @@ import org.datanucleus.NucleusContext;
 import org.datanucleus.api.jpa.JPAEntityManagerFactory;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.MetaDataManager;
+import org.datanucleus.samples.annotations.array.ByteArray;
+import org.datanucleus.samples.annotations.one_many.unidir_2.UserGroup;
+import org.datanucleus.samples.jpa.datastoreid.MyDatastoreId;
 import org.datanucleus.store.schema.naming.ColumnType;
 import org.datanucleus.store.schema.naming.JPANamingFactory;
 import org.datanucleus.store.schema.naming.NamingCase;
 import org.datanucleus.store.schema.naming.NamingFactory;
 import org.datanucleus.store.schema.naming.SchemaComponent;
-import org.jpox.samples.annotations.array.ByteArray;
-import org.jpox.samples.annotations.one_many.unidir_2.UserGroup;
-import org.jpox.samples.jpa.datastoreid.MyDatastoreId;
 import org.jpox.samples.versioned.Trade4;
 
 /**

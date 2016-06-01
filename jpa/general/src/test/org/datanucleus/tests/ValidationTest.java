@@ -22,11 +22,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.validation.ConstraintViolationException;
 
+import org.datanucleus.samples.validation.ValidatedOwner;
+import org.datanucleus.samples.validation.ValidatedPerson;
+import org.datanucleus.samples.validation.ValidatedPerson2;
+import org.datanucleus.samples.validation.ValidatedPet;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.validation.ValidatedOwner;
-import org.jpox.samples.validation.ValidatedPerson;
-import org.jpox.samples.validation.ValidatedPerson2;
-import org.jpox.samples.validation.ValidatedPet;
 
 /**
  * Tests for validation of JPA entities (javax.validation JSR303).

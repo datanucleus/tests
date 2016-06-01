@@ -23,15 +23,15 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
 
+import org.datanucleus.samples.annotations.callbacks.CallbackBase;
+import org.datanucleus.samples.annotations.callbacks.CallbackListener;
+import org.datanucleus.samples.annotations.callbacks.CallbackSub1;
+import org.datanucleus.samples.annotations.callbacks.CallbackSub1Listener;
+import org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub1;
+import org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub2;
+import org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub2Listener;
+import org.datanucleus.samples.annotations.callbacks.CallbackSub2;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.callbacks.CallbackBase;
-import org.jpox.samples.annotations.callbacks.CallbackListener;
-import org.jpox.samples.annotations.callbacks.CallbackSub1;
-import org.jpox.samples.annotations.callbacks.CallbackSub1Listener;
-import org.jpox.samples.annotations.callbacks.CallbackSub1Sub1;
-import org.jpox.samples.annotations.callbacks.CallbackSub1Sub2;
-import org.jpox.samples.annotations.callbacks.CallbackSub1Sub2Listener;
-import org.jpox.samples.annotations.callbacks.CallbackSub2;
 
 /**
  * Tests for JPA listeners and callbacks.

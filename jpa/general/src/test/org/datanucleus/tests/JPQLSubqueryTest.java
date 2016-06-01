@@ -23,13 +23,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.samples.annotations.models.company.Account;
+import org.datanucleus.samples.annotations.models.company.Employee;
+import org.datanucleus.samples.annotations.models.company.Organisation;
+import org.datanucleus.samples.annotations.models.company.Person;
+import org.datanucleus.samples.annotations.models.company.WebSite;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
-import org.jpox.samples.annotations.models.company.Account;
-import org.jpox.samples.annotations.models.company.Employee;
-import org.jpox.samples.annotations.models.company.Organisation;
-import org.jpox.samples.annotations.models.company.Person;
-import org.jpox.samples.annotations.models.company.WebSite;
 
 /**
  * Tests for subqueries with JPQL.

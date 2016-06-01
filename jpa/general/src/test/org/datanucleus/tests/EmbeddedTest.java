@@ -24,13 +24,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.samples.annotations.embedded.Job;
+import org.datanucleus.samples.annotations.embedded.Processor;
+import org.datanucleus.samples.annotations.models.company.Department;
+import org.datanucleus.samples.annotations.models.company.DepartmentPK;
+import org.datanucleus.samples.annotations.models.company.Project;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.embedded.Job;
-import org.jpox.samples.annotations.embedded.Processor;
-import org.jpox.samples.annotations.models.company.Department;
-import org.jpox.samples.annotations.models.company.DepartmentPK;
-import org.jpox.samples.annotations.models.company.Project;
 
 /**
  * Tests for embedded persistence in JPA.

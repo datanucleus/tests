@@ -29,17 +29,17 @@ import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.Type;
 
+import org.datanucleus.samples.annotations.many_one.ManyOneOwner;
+import org.datanucleus.samples.annotations.models.company.Employee;
+import org.datanucleus.samples.annotations.models.company.Manager;
+import org.datanucleus.samples.annotations.models.company.Person;
+import org.datanucleus.samples.annotations.one_many.bidir.Animal;
+import org.datanucleus.samples.annotations.one_many.bidir.Farm;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
+import org.datanucleus.samples.annotations.one_many.unidir_2.ModeratedUserGroup;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.many_one.ManyOneOwner;
-import org.jpox.samples.annotations.models.company.Employee;
-import org.jpox.samples.annotations.models.company.Manager;
-import org.jpox.samples.annotations.models.company.Person;
-import org.jpox.samples.annotations.one_many.bidir.Animal;
-import org.jpox.samples.annotations.one_many.bidir.Farm;
-import org.jpox.samples.annotations.one_many.unidir_2.ModeratedUserGroup;
 
 /**
  * Tests for the Metamodel API in JPA.

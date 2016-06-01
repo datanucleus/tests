@@ -39,73 +39,73 @@
         <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
         <mapping-file>org/jpox/samples/types/calendar/orm.xml</mapping-file>
 
-        <mapping-file>org/jpox/samples/ann_xml/many_many/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/ann_xml/one_one/unidir/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/ann_xml/one_one/bidir/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/ann_xml/models/company/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/ann_xml/many_many/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/ann_xml/one_one/unidir/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/ann_xml/one_one/bidir/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/ann_xml/models/company/orm.xml</mapping-file>
 
         <class>org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder</class>
         <class>org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue</class>
-        <class>org.jpox.samples.annotations.array.ByteArray</class>
-        <class>org.jpox.samples.annotations.types.enums.EnumHolder</class>
-        <class>org.jpox.samples.annotations.abstractclasses.AbstractSimpleBase</class>
-        <class>org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub1</class>
-        <class>org.jpox.samples.annotations.abstractclasses.ConcreteSimpleSub2</class>
-        <class>org.jpox.samples.annotations.compoundidentity.CompoundHolder</class>
-        <class>org.jpox.samples.annotations.compoundidentity.CompoundSingleTarget</class>
-        <class>org.jpox.samples.annotations.one_one.unidir.Login</class>
-        <class>org.jpox.samples.annotations.one_one.unidir.LoginAccount</class>
-        <class>org.jpox.samples.annotations.one_one.bidir.Equipment</class>
-        <class>org.jpox.samples.annotations.one_one.bidir.Boiler</class>
-        <class>org.jpox.samples.annotations.one_one.bidir.Timer</class>
-        <class>org.jpox.samples.annotations.many_one.ManyOneOwner</class>
-        <class>org.jpox.samples.annotations.many_one.ManyOneOther</class>
-        <class>org.jpox.samples.annotations.many_many.PetroleumSupplier</class>
-        <class>org.jpox.samples.annotations.many_many.OilSupplier</class>
-        <class>org.jpox.samples.annotations.many_many.GasSupplier</class>
-        <class>org.jpox.samples.annotations.many_many.PetroleumCustomer</class>
-        <class>org.jpox.samples.annotations.many_many.OneOffCustomer</class>
-        <class>org.jpox.samples.annotations.many_many.AccountCustomer</class>
-        <class>org.jpox.samples.annotations.one_many.bidir.Farm</class>
-        <class>org.jpox.samples.annotations.one_many.bidir.Animal</class>
-        <class>org.jpox.samples.annotations.one_many.bidir_2.House</class>
-        <class>org.jpox.samples.annotations.one_many.bidir_2.Window</class>
-        <class>org.jpox.samples.annotations.one_many.collection.ListHolder</class>
-        <class>org.jpox.samples.annotations.one_many.collection.PCFKListElement</class>
-        <class>org.jpox.samples.annotations.one_many.unidir_2.ExpertGroupMember</class>
-        <class>org.jpox.samples.annotations.one_many.unidir_2.GroupMember</class>
-        <class>org.jpox.samples.annotations.one_many.unidir_2.MemberDetails</class>
-        <class>org.jpox.samples.annotations.one_many.unidir_2.ModeratedUserGroup</class>
-        <class>org.jpox.samples.annotations.one_many.unidir_2.UserGroup</class>
-        <class>org.jpox.samples.annotations.secondarytable.Printer</class>
-        <class>org.jpox.samples.annotations.idclass.IdClassAccessors</class>
-        <class>org.jpox.samples.annotations.idclass.IdClassPrivateModifier</class>
-        <class>org.jpox.samples.annotations.callbacks.CallbackBase</class>
-        <class>org.jpox.samples.annotations.callbacks.CallbackSub1</class>
-        <class>org.jpox.samples.annotations.callbacks.CallbackSub1Sub1</class>
-        <class>org.jpox.samples.annotations.callbacks.CallbackSub1Sub2</class>
-        <class>org.jpox.samples.annotations.callbacks.CallbackSub2</class>
+        <class>org.datanucleus.samples.annotations.array.ByteArray</class>
+        <class>org.datanucleus.samples.annotations.types.enums.EnumHolder</class>
+        <class>org.datanucleus.samples.annotations.abstractclasses.AbstractSimpleBase</class>
+        <class>org.datanucleus.samples.annotations.abstractclasses.ConcreteSimpleSub1</class>
+        <class>org.datanucleus.samples.annotations.abstractclasses.ConcreteSimpleSub2</class>
+        <class>org.datanucleus.samples.annotations.compoundidentity.CompoundHolder</class>
+        <class>org.datanucleus.samples.annotations.compoundidentity.CompoundSingleTarget</class>
+        <class>org.datanucleus.samples.annotations.one_one.unidir.Login</class>
+        <class>org.datanucleus.samples.annotations.one_one.unidir.LoginAccount</class>
+        <class>org.datanucleus.samples.annotations.one_one.bidir.Equipment</class>
+        <class>org.datanucleus.samples.annotations.one_one.bidir.Boiler</class>
+        <class>org.datanucleus.samples.annotations.one_one.bidir.Timer</class>
+        <class>org.datanucleus.samples.annotations.many_one.ManyOneOwner</class>
+        <class>org.datanucleus.samples.annotations.many_one.ManyOneOther</class>
+        <class>org.datanucleus.samples.annotations.many_many.PetroleumSupplier</class>
+        <class>org.datanucleus.samples.annotations.many_many.OilSupplier</class>
+        <class>org.datanucleus.samples.annotations.many_many.GasSupplier</class>
+        <class>org.datanucleus.samples.annotations.many_many.PetroleumCustomer</class>
+        <class>org.datanucleus.samples.annotations.many_many.OneOffCustomer</class>
+        <class>org.datanucleus.samples.annotations.many_many.AccountCustomer</class>
+        <class>org.datanucleus.samples.annotations.one_many.bidir.Farm</class>
+        <class>org.datanucleus.samples.annotations.one_many.bidir.Animal</class>
+        <class>org.datanucleus.samples.annotations.one_many.bidir_2.House</class>
+        <class>org.datanucleus.samples.annotations.one_many.bidir_2.Window</class>
+        <class>org.datanucleus.samples.annotations.one_many.collection.ListHolder</class>
+        <class>org.datanucleus.samples.annotations.one_many.collection.PCFKListElement</class>
+        <class>org.datanucleus.samples.annotations.one_many.unidir_2.ExpertGroupMember</class>
+        <class>org.datanucleus.samples.annotations.one_many.unidir_2.GroupMember</class>
+        <class>org.datanucleus.samples.annotations.one_many.unidir_2.MemberDetails</class>
+        <class>org.datanucleus.samples.annotations.one_many.unidir_2.ModeratedUserGroup</class>
+        <class>org.datanucleus.samples.annotations.one_many.unidir_2.UserGroup</class>
+        <class>org.datanucleus.samples.annotations.secondarytable.Printer</class>
+        <class>org.datanucleus.samples.annotations.idclass.IdClassAccessors</class>
+        <class>org.datanucleus.samples.annotations.idclass.IdClassPrivateModifier</class>
+        <class>org.datanucleus.samples.annotations.callbacks.CallbackBase</class>
+        <class>org.datanucleus.samples.annotations.callbacks.CallbackSub1</class>
+        <class>org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub1</class>
+        <class>org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub2</class>
+        <class>org.datanucleus.samples.annotations.callbacks.CallbackSub2</class>
 
-        <class>org.jpox.samples.annotations.generics.GenericOneOneRoot1</class>
-        <class>org.jpox.samples.annotations.generics.GenericOneOneSub1</class>
-        <class>org.jpox.samples.annotations.generics.GenericOneOneRelated1</class>
-        <class>org.jpox.samples.annotations.generics.GenericOneOneRoot2</class>
-        <class>org.jpox.samples.annotations.generics.GenericOneOneSub2</class>
-        <class>org.jpox.samples.annotations.generics.GenericOneOneRelated2</class>
+        <class>org.datanucleus.samples.annotations.generics.GenericOneOneRoot1</class>
+        <class>org.datanucleus.samples.annotations.generics.GenericOneOneSub1</class>
+        <class>org.datanucleus.samples.annotations.generics.GenericOneOneRelated1</class>
+        <class>org.datanucleus.samples.annotations.generics.GenericOneOneRoot2</class>
+        <class>org.datanucleus.samples.annotations.generics.GenericOneOneSub2</class>
+        <class>org.datanucleus.samples.annotations.generics.GenericOneOneRelated2</class>
 
-        <class>org.jpox.samples.annotations.models.company.Manager</class>
-        <class>org.jpox.samples.annotations.models.company.Employee</class>
-        <class>org.jpox.samples.annotations.models.company.Account</class>
-        <class>org.jpox.samples.annotations.models.company.PhoneNumber</class>
-        <class>org.jpox.samples.annotations.models.company.Person</class>
-        <class>org.jpox.samples.annotations.models.company.Project</class>
-        <class>org.jpox.samples.annotations.models.company.Department</class>
-        <class>org.jpox.samples.annotations.models.company.DepartmentPK</class>
-        <class>org.jpox.samples.annotations.models.company.WebSite</class>
-        <class>org.jpox.samples.annotations.models.company.MyListener</class>
+        <class>org.datanucleus.samples.annotations.models.company.Manager</class>
+        <class>org.datanucleus.samples.annotations.models.company.Employee</class>
+        <class>org.datanucleus.samples.annotations.models.company.Account</class>
+        <class>org.datanucleus.samples.annotations.models.company.PhoneNumber</class>
+        <class>org.datanucleus.samples.annotations.models.company.Person</class>
+        <class>org.datanucleus.samples.annotations.models.company.Project</class>
+        <class>org.datanucleus.samples.annotations.models.company.Department</class>
+        <class>org.datanucleus.samples.annotations.models.company.DepartmentPK</class>
+        <class>org.datanucleus.samples.annotations.models.company.WebSite</class>
+        <class>org.datanucleus.samples.annotations.models.company.MyListener</class>
 
-        <class>org.jpox.samples.annotations.types.basic.TypeHolder</class>
-        <class>org.jpox.samples.annotations.types.basic.DateHolder</class>
+        <class>org.datanucleus.samples.annotations.types.basic.TypeHolder</class>
+        <class>org.datanucleus.samples.annotations.types.basic.DateHolder</class>
 
         <class>org.jpox.samples.jpa.datastoreid.MyDatastoreId</class>
 

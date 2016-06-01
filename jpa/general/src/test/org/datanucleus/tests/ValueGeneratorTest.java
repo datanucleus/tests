@@ -22,8 +22,8 @@ import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.valuegenerator.CustomUUIDHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.valuegenerator.CustomUUIDHolder;
 
 /**
  * Tests for DN ValueGenerator extension

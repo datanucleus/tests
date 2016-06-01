@@ -31,15 +31,15 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.annotations.models.company.Account;
+import org.datanucleus.samples.annotations.models.company.Person;
+import org.datanucleus.samples.annotations.models.company.Project;
+import org.datanucleus.samples.annotations.versioned.VersionedPerson;
 import org.datanucleus.samples.types.interfaces.Circle;
 import org.datanucleus.samples.types.interfaces.Rectangle;
 import org.datanucleus.samples.types.interfaces.Shape;
 import org.datanucleus.samples.types.interfaces.ShapeHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.models.company.Account;
-import org.jpox.samples.annotations.models.company.Person;
-import org.jpox.samples.annotations.models.company.Project;
-import org.jpox.samples.annotations.versioned.VersionedPerson;
 
 /**
  * Testcases for EntityManagerImpl.
@@ -635,7 +635,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             {
                 tx.begin();
                 p = new Person(101, "Billy", "Nomates", "billy.nomates@nowhere.com");
-                p.getPhoneNumbers().put("Joey", new org.jpox.samples.annotations.models.company.PhoneNumber("Joey", "+44 123456789"));
+                p.getPhoneNumbers().put("Joey", new org.datanucleus.samples.annotations.models.company.PhoneNumber("Joey", "+44 123456789"));
                 em.persist(p);
                 tx.commit();
                 pk = p.getPK();

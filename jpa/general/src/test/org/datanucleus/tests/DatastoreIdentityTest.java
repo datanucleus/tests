@@ -22,8 +22,8 @@ import javax.persistence.EntityTransaction;
 
 import org.datanucleus.api.jpa.NucleusJPAHelper;
 import org.datanucleus.identity.IdentityUtils;
+import org.datanucleus.samples.annotations.datastoreidentity.DSIDHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.datastoreidentity.DSIDHolder;
 
 /**
  * Series of tests for Datastore Identity.

@@ -42,10 +42,10 @@ import org.datanucleus.query.expression.SubqueryExpression;
 import org.datanucleus.query.expression.VariableExpression;
 import org.datanucleus.query.expression.Expression.Operator;
 import org.datanucleus.query.expression.JoinExpression.JoinType;
+import org.datanucleus.samples.annotations.models.company.Department;
+import org.datanucleus.samples.annotations.models.company.Project;
 import org.datanucleus.store.query.QueryCompilerSyntaxException;
 import org.datanucleus.util.NucleusLogger;
-import org.jpox.samples.annotations.models.company.Department;
-import org.jpox.samples.annotations.models.company.Project;
 
 /**
  * Tests for generic JPQL query compiler.

@@ -21,9 +21,9 @@ package org.datanucleus.tests.types;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.array.ArrayHolder;
+import org.datanucleus.samples.annotations.array.Permission;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.array.ArrayHolder;
-import org.jpox.samples.annotations.array.Permission;
 
 /**
  * Tests for array field persistence.

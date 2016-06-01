@@ -23,9 +23,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.compoundidentity.CompoundHolder;
+import org.datanucleus.samples.annotations.compoundidentity.CompoundSingleTarget;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.compoundidentity.CompoundHolder;
-import org.jpox.samples.annotations.compoundidentity.CompoundSingleTarget;
 
 /**
  * Series of tests for Compound Identity (identifying) relations.

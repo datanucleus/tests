@@ -26,17 +26,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.many_many.PetroleumCustomer;
+import org.datanucleus.samples.annotations.many_many.PetroleumSupplier;
+import org.datanucleus.samples.annotations.one_many.bidir.Animal;
+import org.datanucleus.samples.annotations.one_many.bidir.Farm;
+import org.datanucleus.samples.annotations.one_many.bidir_2.House;
+import org.datanucleus.samples.annotations.one_many.bidir_2.Window;
+import org.datanucleus.samples.annotations.one_many.collection.ListHolder;
+import org.datanucleus.samples.annotations.one_many.collection.PCFKListElement;
+import org.datanucleus.samples.annotations.one_one.unidir.Login;
+import org.datanucleus.samples.annotations.one_one.unidir.LoginAccount;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.many_many.PetroleumCustomer;
-import org.jpox.samples.annotations.many_many.PetroleumSupplier;
-import org.jpox.samples.annotations.one_many.bidir.Animal;
-import org.jpox.samples.annotations.one_many.bidir.Farm;
-import org.jpox.samples.annotations.one_many.bidir_2.House;
-import org.jpox.samples.annotations.one_many.bidir_2.Window;
-import org.jpox.samples.annotations.one_many.collection.ListHolder;
-import org.jpox.samples.annotations.one_many.collection.PCFKListElement;
-import org.jpox.samples.annotations.one_one.unidir.Login;
-import org.jpox.samples.annotations.one_one.unidir.LoginAccount;
 import org.jpox.samples.one_many.unidir_2.GroupMember;
 import org.jpox.samples.one_many.unidir_2.UserGroup;
 

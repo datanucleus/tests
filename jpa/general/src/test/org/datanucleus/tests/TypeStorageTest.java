@@ -22,8 +22,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.types.basic.TypeHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.types.basic.TypeHolder;
 
 /**
  * Test case for storage of different types.

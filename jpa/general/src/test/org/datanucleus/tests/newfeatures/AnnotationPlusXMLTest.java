@@ -24,8 +24,8 @@ import org.datanucleus.api.jpa.metadata.JPAMetaDataManager;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.metadata.PersistenceUnitMetaData;
+import org.datanucleus.samples.ann_xml.models.company.Person;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.ann_xml.models.company.Person;
 
 /**
  * Tests for the use of JPA Annotations+MetaData.

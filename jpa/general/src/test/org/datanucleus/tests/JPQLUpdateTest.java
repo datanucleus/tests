@@ -22,12 +22,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.samples.annotations.models.company.Employee;
+import org.datanucleus.samples.annotations.models.company.Person;
+import org.datanucleus.samples.annotations.one_one.bidir.Boiler;
+import org.datanucleus.samples.annotations.one_one.bidir.Timer;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.annotations.models.company.Employee;
-import org.jpox.samples.annotations.models.company.Person;
-import org.jpox.samples.annotations.one_one.bidir.Boiler;
-import org.jpox.samples.annotations.one_one.bidir.Timer;
 
 /**
  * Tests for JPQL "UPDATE" queries.
