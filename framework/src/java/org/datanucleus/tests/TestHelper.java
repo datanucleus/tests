@@ -34,10 +34,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -241,14 +241,14 @@ public class TestHelper
             // delete all objects of this class (and subclasses)
             tx.begin();
 
-            Extent ex = pm.getExtent(cls, true);
-            Iterator iter = ex.iterator();
+            Query q = pm.newQuery(cls);
+            List results = q.executeList();
+            Iterator iter = results.iterator();
             Collection coll = new HashSet();
             while (iter.hasNext())
             {
                 Object obj = iter.next();
-                LOG.info("Cleanup object to delete=" + StringUtils.toJVMIDString(obj) +
-                        " state=" + JDOHelper.getObjectState(obj));
+                LOG.info("Cleanup object to delete=" + StringUtils.toJVMIDString(obj) + " state=" + JDOHelper.getObjectState(obj));
                 coll.add(obj);
             }
             LOG.debug("Cleanup : Number of objects of type " + cls.getName() + " to delete is " + coll.size());
