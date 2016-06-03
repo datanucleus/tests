@@ -17,7 +17,9 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.types;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.jdo.PersistenceManager;
@@ -289,6 +291,53 @@ public class OptionalTest extends JDOPersistenceTestCase
             {
                 LOG.error("Error retrieving Optional data", e);
                 fail("Error retrieving Optional data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Query the data
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query q = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE !(sample3 != null)");
+                q.setClass(OptionalSample2.class);
+                List<OptionalSample2> results = q.executeList();
+                assertNotNull(results);
+                assertEquals(1, results.size());
+
+                // Refer to optional field via get().
+                Query q2 = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE sample3.get().id == :val");
+                q2.setClass(OptionalSample2.class);
+                Map namedParams = new HashMap();
+                namedParams.put("val", 101);
+                q2.setNamedParameters(namedParams);
+                List<OptionalSample2> results2 = q2.executeList();
+                assertNotNull(results2);
+                assertEquals(1, results2.size());
+
+                // Refer to optional field as if the wrapped object
+                Query q3 = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE sample3.id == :val");
+                q3.setClass(OptionalSample2.class);
+                q3.setNamedParameters(namedParams);
+                List<OptionalSample2> results3 = q3.executeList();
+                assertNotNull(results3);
+                assertEquals(1, results3.size());
+
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error querying Optional data", e);
+                fail("Error querying Optional data : " + e.getMessage());
             }
             finally
             {
