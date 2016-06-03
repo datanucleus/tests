@@ -4,6 +4,11 @@
         http://java.sun.com/xml/ns/jdo/jdo_2_1.xsd">
     <package name="org.datanucleus.samples.fetchplan">
         <class name="FP1Base">
+            <inheritance>
+                <discriminator strategy="class-name">
+                    <column name="PRODUCT_TYPE"/>
+                </discriminator>
+            </inheritance>
             <fetch-group name="0">
                 <field name="name"/>
             </fetch-group>
