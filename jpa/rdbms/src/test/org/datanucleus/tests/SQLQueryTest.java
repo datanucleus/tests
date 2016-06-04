@@ -182,6 +182,19 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 // Check the results
                 Query q = em.createNativeQuery("SELECT P.PERSON_ID FROM JPA_AN_PERSON P WHERE P.AGE_COL=?1");
                 q.setParameter(1, 34);
+                try
+                {
+                    q.getParameter(2);
+                    fail("Should have thrown exception but didnt when calling q.getParameter(int)");
+                }
+                catch (IllegalStateException ise)
+                {
+                    // Expected
+                }
+                catch (Throwable thr)
+                {
+                    fail("Incorrect throwable caught when calling q.getParameter(int) : " + thr.getMessage());
+                }
                 List result = q.getResultList();
                 assertEquals(1, result.size());
                 Iterator iter = result.iterator();

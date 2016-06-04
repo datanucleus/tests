@@ -652,6 +652,19 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.flush();
 
                 Query q = em.createQuery("SELECT Object(T) FROM " + Person.class.getName() + " T where T.firstName <> ?1 AND T.firstName = ?2");
+                try
+                {
+                    q.getParameter(3);
+                    fail("Exception not thrown when should have been on q.getParameter(int) call");
+                }
+                catch (IllegalArgumentException iae)
+                {
+                    // Expected
+                }
+                catch (Throwable thr)
+                {
+                    fail("Exception thrown but was wrong type on call to q.getParameter(int) : " + thr.getMessage());
+                }
                 Set params = q.getParameters();
                 assertNotNull(params);
                 assertEquals(2, params.size());
