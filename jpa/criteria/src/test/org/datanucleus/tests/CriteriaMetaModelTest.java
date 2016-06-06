@@ -1512,4 +1512,65 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             em.close();
         }
     }
+
+    /**
+     * Test basic querying using IN clause.
+     */
+    public void testFilterIn()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder qb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            Root<Manager> candidate = crit.from(Manager.class);
+            candidate.alias("m");
+            crit.select(candidate);
+
+            Predicate pred = candidate.get(Manager_.firstName).in("Jose", "Pep");
+            crit.where(pred);
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE m.firstName IN ('Jose','Pep')", crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Manager> managers = q.getResultList();
+
+            assertNotNull("Managers is null!", managers);
+            assertEquals("Number of managers is wrong", 2, managers.size());
+
+            CriteriaQuery<Manager> crit2 = qb.createQuery(Manager.class);
+            Root<Manager> candidate2 = crit2.from(Manager.class);
+            candidate2.alias("m");
+            crit2.select(candidate2);
+
+            Predicate pred2 = candidate2.get(Manager_.firstName).in("Jose", "Pep").not();
+            crit2.where(pred2);
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE !(m.firstName IN ('Jose','Pep'))", crit2.toString());
+
+            Query q2 = em.createQuery(crit2);
+            List<Manager> managers2 = q2.getResultList();
+
+            assertNotNull("Managers is null!", managers2);
+            assertEquals("Number of managers is wrong", 0, managers2.size());
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
 }
