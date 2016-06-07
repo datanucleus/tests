@@ -19,6 +19,7 @@ package org.datanucleus.tests;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -235,8 +236,8 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
-            CriteriaQuery<Team> crit = qb.createQuery(Team.class);
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaQuery<Team> crit = cb.createQuery(Team.class);
             Root<Team> candidate = crit.from(Team.class);
             candidate.alias("t");
             crit.select(candidate);
@@ -291,8 +292,8 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
-            CriteriaQuery<Team> crit = qb.createQuery(Team.class);
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaQuery<Team> crit = cb.createQuery(Team.class);
             Root<Team> candidate = crit.from(Team.class);
             candidate.alias("t");
 
@@ -346,8 +347,8 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
-            CriteriaQuery<Team> crit = qb.createQuery(Team.class);
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaQuery<Team> crit = cb.createQuery(Team.class);
             Root<Team> candidate = crit.from(Team.class);
             candidate.alias("t");
             crit.select(candidate).distinct(true);
@@ -402,14 +403,14 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
 
-            Predicate ageLessThan = qb.lessThan(candidate.get(Manager_.yearsExperience), 5);
+            Predicate ageLessThan = cb.lessThan(candidate.get(Manager_.yearsExperience), 5);
             crit.where(ageLessThan);
 
             // DN extension
@@ -456,9 +457,9 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Player> crit = qb.createQuery(Player.class);
+            CriteriaQuery<Player> crit = cb.createQuery(Player.class);
             Root<Player> candidate = crit.from(Player.class);
             candidate.alias("p");
             crit.select(candidate);
@@ -467,7 +468,7 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             cal.set(Calendar.YEAR, 1987);
             cal.set(Calendar.MONTH, 1);
             cal.set(Calendar.DAY_OF_MONTH, 1);
-            Predicate ageGreaterThan = qb.greaterThan(candidate.get(Player_.startDate), cal.getTime());
+            Predicate ageGreaterThan = cb.greaterThan(candidate.get(Player_.startDate), cal.getTime());
             crit.where(ageGreaterThan);
 
             // DN extension
@@ -514,15 +515,15 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
 
-            Predicate yrsUpper = qb.lessThan(candidate.get(Manager_.yearsExperience), 5);
-            Predicate yrsLower = qb.greaterThanOrEqualTo(candidate.get(Manager_.yearsExperience), 2);
+            Predicate yrsUpper = cb.lessThan(candidate.get(Manager_.yearsExperience), 5);
+            Predicate yrsLower = cb.greaterThanOrEqualTo(candidate.get(Manager_.yearsExperience), 2);
             crit.where(yrsUpper, yrsLower);
 
             // DN extension
@@ -569,9 +570,9 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             Set<Join<Manager, ?>> joins = candidate.getJoins();
             assertNotNull(joins); // Make sure joins returns empty set
@@ -640,9 +641,9 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<LocalDateTime> crit = qb.createQuery(LocalDateTime.class);
+            CriteriaQuery<LocalDateTime> crit = cb.createQuery(LocalDateTime.class);
             Root<Player> candidate = crit.from(Player.class);
             candidate.alias("p");
             crit.multiselect(candidate.get(Player_.dateTime));
@@ -686,9 +687,9 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Tuple> crit = qb.createTupleQuery();
+            CriteriaQuery<Tuple> crit = cb.createTupleQuery();
             Root<Manager> candidate = crit.from(Manager.class);
             Set<Join<Manager, ?>> joins = candidate.getJoins();
             assertNotNull(joins); // Make sure joins returns empty set
@@ -764,9 +765,9 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             Set<Join<Manager, ?>> joins = candidate.getJoins();
             assertNotNull(joins); // Make sure joins returns empty set
@@ -777,8 +778,8 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             candidate.alias("m");
 
             Path<Integer> yrsVar = candidate.get(Manager_.yearsExperience);
-            Predicate lessThan2 = qb.lessThan(yrsVar, 5);
-            crit.multiselect(candidate.get(Manager_.firstName), candidate.get(Manager_.lastName), qb.selectCase().when(lessThan2, "Junior").otherwise("Senior"));
+            Predicate lessThan2 = cb.lessThan(yrsVar, 5);
+            crit.multiselect(candidate.get(Manager_.firstName), candidate.get(Manager_.lastName), cb.selectCase().when(lessThan2, "Junior").otherwise("Senior"));
 
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
@@ -839,14 +840,14 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.multiselect(candidate.get(Manager_.firstName), candidate.get(Manager_.lastName));
 
-            crit.orderBy(qb.desc(candidate.get(Manager_.yearsExperience)));
+            crit.orderBy(cb.desc(candidate.get(Manager_.yearsExperience)));
 
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
@@ -905,17 +906,17 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
 
-            Predicate ageLessThan = qb.greaterThan(candidate.get(Manager_.yearsExperience), 1);
+            Predicate ageLessThan = cb.greaterThan(candidate.get(Manager_.yearsExperience), 1);
             crit.where(ageLessThan);
 
-            crit.orderBy(qb.asc(candidate.get(Manager_.yearsExperience)));
+            crit.orderBy(cb.asc(candidate.get(Manager_.yearsExperience)));
 
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
@@ -958,14 +959,14 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
 
-            Predicate ageLessThan = qb.greaterThan(candidate.get(Manager_.yearsExperience), 1);
+            Predicate ageLessThan = cb.greaterThan(candidate.get(Manager_.yearsExperience), 1);
             crit.where(ageLessThan);
 
             crit.orderBy(Collections.EMPTY_LIST);
@@ -1003,15 +1004,15 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
 
-            ParameterExpression<String> param = qb.parameter(String.class, "myParam");
-            Predicate ageLessThan = qb.like(candidate.get(Manager_.firstName), param);
+            ParameterExpression<String> param = cb.parameter(String.class, "myParam");
+            Predicate ageLessThan = cb.like(candidate.get(Manager_.firstName), param);
             crit.where(ageLessThan);
 
             // DN extension
@@ -1052,15 +1053,15 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
 
-            ParameterExpression<String> param = qb.parameter(String.class);
-            Predicate ageLessThan = qb.like(candidate.get(Manager_.firstName), param);
+            ParameterExpression<String> param = cb.parameter(String.class);
+            Predicate ageLessThan = cb.like(candidate.get(Manager_.firstName), param);
             crit.where(ageLessThan);
 
             // DN extension
@@ -1104,14 +1105,14 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
 //          "SELECT Object(T) FROM " + Team.class.getName() + " T " +
 //          "JOIN T.manager M ON M.lastName = 'Mourinho'").getResultList();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
-            CriteriaQuery<Team> crit = qb.createQuery(Team.class);
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaQuery<Team> crit = cb.createQuery(Team.class);
             Root<Team> candidate = crit.from(Team.class);
             candidate.alias("t");
             crit.select(candidate);
             Join<Team, Manager> mgrRoot = candidate.join(Team_.manager, JoinType.INNER);
             mgrRoot.alias("m");
-            Predicate onCond = qb.equal(mgrRoot.get(Manager_.lastName), "Mourinho");
+            Predicate onCond = cb.equal(mgrRoot.get(Manager_.lastName), "Mourinho");
             mgrRoot.on(onCond);
 
             // DN extension
@@ -1158,11 +1159,11 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
-            CriteriaDelete<Team> crit = qb.createCriteriaDelete(Team.class);
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaDelete<Team> crit = cb.createCriteriaDelete(Team.class);
             Root<Team> candidate = crit.from(Team.class);
             candidate.alias("t");
-            Predicate teamName = qb.equal(candidate.get(Team_.name), "Barcelona");
+            Predicate teamName = cb.equal(candidate.get(Team_.name), "Barcelona");
             crit.where(teamName);
 
             // DN extension
@@ -1195,14 +1196,14 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
-            CriteriaUpdate<Team> crit = qb.createCriteriaUpdate(Team.class);
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaUpdate<Team> crit = cb.createCriteriaUpdate(Team.class);
             Root<Team> candidate = crit.from(Team.class);
 
             candidate.alias("t");
             crit.set(candidate.get(Team_.name), "Barcelona FC");
 
-            Predicate teamName = qb.equal(candidate.get(Team_.id), 2);
+            Predicate teamName = cb.equal(candidate.get(Team_.id), 2);
             crit.where(teamName);
 
             // DN extension
@@ -1235,15 +1236,15 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
 
-            Expression<String> upperExpr = qb.function("UPPER", String.class, candidate.get(Manager_.firstName));
-            Predicate firstNameUpperCaseEquals = qb.equal(upperExpr, "PEP");
+            Expression<String> upperExpr = cb.function("UPPER", String.class, candidate.get(Manager_.firstName));
+            Predicate firstNameUpperCaseEquals = cb.equal(upperExpr, "PEP");
             crit.where(firstNameUpperCaseEquals);
 
             // DN extension
@@ -1287,8 +1288,8 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
-            CriteriaQuery<Player> crit = qb.createQuery(Player.class);
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaQuery<Player> crit = cb.createQuery(Player.class);
             Root<Player> candidate = crit.from(Player.class);
             candidate.alias("p");
             crit.select(candidate);
@@ -1343,8 +1344,8 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                CriteriaBuilder qb = emf.getCriteriaBuilder();
-                CriteriaQuery<Team> crit = qb.createQuery(Team.class);
+                CriteriaBuilder cb = emf.getCriteriaBuilder();
+                CriteriaQuery<Team> crit = cb.createQuery(Team.class);
                 Root<Team> candidate = crit.from(Team.class);
                 candidate.alias("t");
                 crit.select(candidate);
@@ -1474,9 +1475,9 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             em.persist(c);
             em.flush();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<A> crit1 = qb.createQuery(A.class);
+            CriteriaQuery<A> crit1 = cb.createQuery(A.class);
             Root<A> cand1 = crit1.from(A.class);
             cand1.alias("a");
             crit1.select(cand1);
@@ -1524,43 +1525,70 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Manager> crit = qb.createQuery(Manager.class);
+            // Test 1 : IN
+            CriteriaQuery<Manager> crit = cb.createQuery(Manager.class);
             Root<Manager> candidate = crit.from(Manager.class);
             candidate.alias("m");
             crit.select(candidate);
-
             Predicate pred = candidate.get(Manager_.firstName).in("Jose", "Pep");
             crit.where(pred);
-
-            // DN extension
-            assertEquals("Generated JPQL query is incorrect",
-                "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE m.firstName IN ('Jose','Pep')", crit.toString());
+            assertEquals("Generated JPQL query is incorrect", "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE m.firstName IN ('Jose','Pep')", crit.toString());
 
             Query q = em.createQuery(crit);
             List<Manager> managers = q.getResultList();
-
             assertNotNull("Managers is null!", managers);
             assertEquals("Number of managers is wrong", 2, managers.size());
 
-            CriteriaQuery<Manager> crit2 = qb.createQuery(Manager.class);
+            // Test 2 : NOT IN
+            CriteriaQuery<Manager> crit2 = cb.createQuery(Manager.class);
             Root<Manager> candidate2 = crit2.from(Manager.class);
             candidate2.alias("m");
             crit2.select(candidate2);
-
             Predicate pred2 = candidate2.get(Manager_.firstName).in("Jose", "Pep").not();
             crit2.where(pred2);
-
-            // DN extension
-            assertEquals("Generated JPQL query is incorrect",
-                "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE !(m.firstName IN ('Jose','Pep'))", crit2.toString());
+            assertEquals("Generated JPQL query is incorrect", "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE !(m.firstName IN ('Jose','Pep'))", crit2.toString());
 
             Query q2 = em.createQuery(crit2);
             List<Manager> managers2 = q2.getResultList();
-
             assertNotNull("Managers is null!", managers2);
             assertEquals("Number of managers is wrong", 0, managers2.size());
+
+            // Test 3 : IN {collParameter}
+            CriteriaQuery<Manager> crit3 = cb.createQuery(Manager.class);
+            Root<Manager> candidate3 = crit3.from(Manager.class);
+            candidate3.alias("m");
+            crit3.select(candidate3);
+            ParameterExpression paramExpr = cb.parameter(List.class, "inParam");
+            Predicate pred3 = candidate3.get(Manager_.firstName).in(paramExpr);
+            crit3.where(pred3);
+            assertEquals("Generated JPQL query is incorrect", "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE m.firstName IN (:inParam)", crit3.toString());
+
+            Query q3 = em.createQuery(crit3);
+            List<String> inParamColl = new ArrayList();
+            inParamColl.add("Jose");
+            inParamColl.add("Pep");
+            q3.setParameter("inParam", inParamColl);
+            List<Manager> managers3 = q3.getResultList();
+            assertNotNull("Managers is null!", managers3);
+            assertEquals("Number of managers is wrong", 2, managers3.size());
+
+            // Test 3 : IN {stringArrayParameter}
+            CriteriaQuery<Manager> crit4 = cb.createQuery(Manager.class);
+            Root<Manager> candidate4 = crit4.from(Manager.class);
+            candidate4.alias("m");
+            crit4.select(candidate4);
+            ParameterExpression paramExpr4 = cb.parameter(String[].class, "inParam");
+            Predicate pred4 = candidate4.get(Manager_.firstName).in(paramExpr4);
+            crit4.where(pred4);
+            assertEquals("Generated JPQL query is incorrect", "SELECT m FROM org.datanucleus.samples.jpa.query.Manager m WHERE m.firstName IN (:inParam)", crit4.toString());
+
+            Query q4 = em.createQuery(crit4);
+            q4.setParameter("inParam", new String[] {"Jose", "Pep"});
+            List<Manager> managers4 = q4.getResultList();
+            assertNotNull("Managers is null!", managers4);
+            assertEquals("Number of managers is wrong", 2, managers4.size());
 
             tx.rollback();
         }
