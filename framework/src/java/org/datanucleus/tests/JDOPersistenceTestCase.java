@@ -304,7 +304,9 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                 attempts++;
                 if (!retry.isEmpty() && attempts > MAX_CLEANUP_ATTEMPTS)
                 {
-                    throw new Exception("Fail to cleanup the following object(s) after " + attempts + " attempts: " + retry);
+                    // Give up
+                    retry.clear();
+//                    throw new Exception("Fail to cleanup the following object(s) after " + attempts + " attempts: " + retry);
                 }
 
                 // Try again
