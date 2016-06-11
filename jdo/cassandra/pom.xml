@@ -10,9 +10,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>datanucleus-test-jdo-cassandra</artifactId>
-    <name>DataNucleus Cassandra JDO Tests</name>
+    <name>DataNucleus JDO Cassandra-Specific Tests</name>
     <description><![CDATA[
-        DataNucleus Tests for Cassandra.
+        DataNucleus JDO Tests specific to Cassandra.
         ]]></description>
    
     <properties>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-cassandra</artifactId>
-            <version>[3.9, )</version>
+            <version>[${cassandra.min.version}, )</version>
         </dependency>
     </dependencies>
    
