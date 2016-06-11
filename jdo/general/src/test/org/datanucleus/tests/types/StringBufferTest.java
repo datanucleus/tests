@@ -170,7 +170,7 @@ public class StringBufferTest extends JDOPersistenceTestCase
         {
             StringBufferHolder container = new StringBufferHolder();
             container.appendText("text1");
-            
+
             Object id;
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
@@ -180,10 +180,12 @@ public class StringBufferTest extends JDOPersistenceTestCase
                 
                 pm.makePersistent(container);
                 id = JDOHelper.getObjectId(container);
-                
+
                 StringBufferHolder container2 = (StringBufferHolder) pm.getObjectById(id, true);
                 pm.refresh(container2);
                 assertEquals("text1", container2.getText());
+
+                // TODO Cassandra (v3.0) doesn't allow orderby on this field unless part of PK seemingly
                 Query q = pm.newQuery(StringBufferHolder.class);
                 q.setOrdering("sb ascending");
                 q.execute();
