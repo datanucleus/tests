@@ -14,25 +14,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skipCoverage>true</skipCoverage>
 
-        <core.min.version>5.0.0-m3</core.min.version>
-        <api.jdo.min.version>5.0.0-m3</api.jdo.min.version>
-        <api.jpa.min.version>5.0.0-m3</api.jpa.min.version>
+        <core.min.version>5.0.0-m5</core.min.version>
+        <api.jdo.min.version>5.0.0-m5</api.jdo.min.version>
+        <api.jpa.min.version>5.0.0-m5</api.jpa.min.version>
 
-        <rdbms.min.version>5.0.0-m3</rdbms.min.version>
-        <cassandra.min.version>5.0.0-m3</cassandra.min.version>
-        <mongodb.min.version>5.0.0-m3</mongodb.min.version>
-        <hbase.min.version>5.0.0-m3</hbase.min.version>
-        <neo4j.min.version>5.0.0-m3</neo4j.min.version>
-        <neodatis.min.version>5.0.0-m3</neodatis.min.version>
-        <excel.min.version>5.0.0-m3</excel.min.version>
-        <odf.min.version>5.0.0-m3</odf.min.version>
-        <json.min.version>5.0.0-m3</json.min.version>
-        <ldap.min.version>5.0.0-m3</ldap.min.version>
-        <xml.min.version>5.0.0-m3</xml.min.version>
+        <rdbms.min.version>5.0.0-m5</rdbms.min.version>
+        <cassandra.min.version>5.0.0-m5</cassandra.min.version>
+        <mongodb.min.version>5.0.0-m5</mongodb.min.version>
+        <hbase.min.version>5.0.0-m5</hbase.min.version>
+        <neo4j.min.version>5.0.0-m5</neo4j.min.version>
+        <neodatis.min.version>5.0.0-m5</neodatis.min.version>
+        <excel.min.version>5.0.0-m5</excel.min.version>
+        <odf.min.version>5.0.0-m5</odf.min.version>
+        <json.min.version>5.0.0-m5</json.min.version>
+        <ldap.min.version>5.0.0-m5</ldap.min.version>
+        <xml.min.version>5.0.0-m5</xml.min.version>
 
         <jodatime.min.version>5.0.0-m1</jodatime.min.version>
         <geospatial.min.version>5.0.0-m2</geospatial.min.version>
-        <guava.min.version>5.0.0-m1</guava.min.version>
+        <guava.min.version>5.0.0-m2</guava.min.version>
     </properties>
 
     <repositories>
