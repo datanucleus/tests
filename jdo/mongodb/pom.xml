@@ -10,9 +10,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>datanucleus-test-jdo-mongodb</artifactId>
-    <name>DataNucleus MongoDB</name>
+    <name>DataNucleus JDO MongoDB-specific tests</name>
     <description><![CDATA[
-        DataNucleus Tests for MongoDB.
+        DataNucleus Tests for JDO specific to MongoDB.
         ]]></description>
 
     <!-- Software Dependencies -->
@@ -20,7 +20,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>2.13.0</version>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 </project>
