@@ -1645,7 +1645,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(p1);
                 em.flush();
 
-                List result = em.createQuery("SELECT P.firstName FROM " + Person.class.getName() + " P Group By P.firstName HAVING P.firstName = 'Fred'").getResultList();
+                List result = em.createQuery("SELECT P.firstName FROM " + Person.class.getName() + " P GROUP BY P.firstName HAVING P.firstName = 'Fred'").getResultList();
                 assertEquals(1, result.size());
                 assertEquals("Fred", result.get(0).toString());
                 tx.rollback();
