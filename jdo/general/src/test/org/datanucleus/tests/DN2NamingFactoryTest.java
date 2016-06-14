@@ -26,9 +26,11 @@ import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.MetaDataManager;
+import org.datanucleus.samples.annotations.embedded.Device;
 import org.datanucleus.samples.annotations.embedded.EmbCls1;
 import org.datanucleus.samples.annotations.embedded.EmbCls2;
 import org.datanucleus.samples.annotations.embedded.EmbCls3;
+import org.datanucleus.samples.annotations.embedded.Network;
 import org.datanucleus.store.schema.naming.ColumnType;
 import org.datanucleus.store.schema.naming.DN2NamingFactory;
 import org.datanucleus.store.schema.naming.NamingCase;
@@ -176,5 +178,36 @@ public class DN2NamingFactoryTest extends JDOPersistenceTestCase
         colMmds.clear();colMmds.add(embCls2bMmd);colMmds.add(embCls3Mmd);colMmds.add(cls3NameMmd);
         colName = factory.getColumnName(colMmds, 0);
         assertEquals("embcls2b_embcls3_cls3name", colName);
+    }
+
+    /**
+     * Test where the sample has embedded collection element.
+     */
+    public void testEmbeddedCollectionColumnNames()
+    {
+        JDOPersistenceManagerFactory jdoPMF = (JDOPersistenceManagerFactory) pmf;
+        NucleusContext nucCtx = jdoPMF.getNucleusContext();
+        ClassLoaderResolver clr = nucCtx.getClassLoaderResolver(null);
+        MetaDataManager mmgr = nucCtx.getMetaDataManager();
+        DN2NamingFactory factory = new DN2NamingFactory(nucCtx);
+        factory.setMaximumLength(SchemaComponent.COLUMN, 128);
+        factory.setNamingCase(NamingCase.LOWER_CASE);
+
+        AbstractClassMetaData networkCmd = mmgr.getMetaDataForClass(Network.class, clr);
+        AbstractMemberMetaData devicesMmd = networkCmd.getMetaDataForMember("devices");
+
+        AbstractClassMetaData deviceCmd = mmgr.getMetaDataForClass(Device.class, clr);
+        AbstractMemberMetaData deviceNameMmd = deviceCmd.getMetaDataForMember("name");
+        AbstractMemberMetaData deviceDescMmd = deviceCmd.getMetaDataForMember("description");
+
+        List<AbstractMemberMetaData> colMmds = new ArrayList<AbstractMemberMetaData>();
+        colMmds.add(devicesMmd);
+        colMmds.add(deviceNameMmd);
+        String colName = factory.getColumnName(colMmds, 0);
+        assertEquals("device_name", colName);
+
+        colMmds.clear();colMmds.add(devicesMmd);colMmds.add(deviceDescMmd);
+        colName = factory.getColumnName(colMmds, 0);
+        assertEquals("devices_description", colName);
     }
 }
