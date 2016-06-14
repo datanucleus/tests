@@ -103,6 +103,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         // Persist an object of the new type
         NucleusLogger.PERSISTENCE.info(">> Persisting an object of dynamic type");
         persist(runtimeCL);
+
     }
 
     private static byte[] createClass(String className)
@@ -272,16 +273,46 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         NucleusLogger.PERSISTENCE.info(">> registering metadata");
         NucleusLogger.PERSISTENCE.info(filemd);
         pmf.registerMetadata(filemd);
-        PersistenceManager pm = pmf.getPersistenceManager();
 
+        PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
+        Object id = null;
+        try
         {
             tx.begin();
             Class clazz = clr.classForName("test.Client");
             Object o = clazz.newInstance();
             pm.makePersistent(o);
             tx.commit();
+            id = pm.getObjectId(o);
         }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            Object obj = pm.getObjectById(id);
+            pm.deletePersistent(obj);
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+
         pmf.close();
     }
 
