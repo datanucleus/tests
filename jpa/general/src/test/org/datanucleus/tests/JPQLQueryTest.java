@@ -3370,6 +3370,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         }
         finally
         {
+            clean(MapFKValue.class);
             clean(MapFKHolder.class);
         }
     }
@@ -3431,6 +3432,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         finally
         {
             clean(MapJoinHolder.class);
+            clean(MapJoinValue.class);
         }
     }
 
@@ -3452,7 +3454,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                MapJoinHolder holder = new MapJoinHolder(1);
+                MapJoinHolder holder = new MapJoinHolder(2);
                 holder.setName("First Holder");
                 for (int i=0;i<3;i++)
                 {
@@ -3510,7 +3512,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                MapJoinHolder holder = new MapJoinHolder(1);
+                MapJoinHolder holder = new MapJoinHolder(3);
                 holder.setName("First Holder");
                 for (int i=0;i<3;i++)
                 {
