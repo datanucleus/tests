@@ -3,6 +3,9 @@
 <jdo>
     <package name="org.jpox.samples.persistentinterfaces">
         <interface name="ILocation">
+            <inheritance>
+                <discriminator strategy="class-name"/>
+            </inheritance>
             <property name="position"/>
             <property name="name"/>
         </interface>

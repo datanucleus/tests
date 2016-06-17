@@ -33,6 +33,9 @@
 
         <!-- Versioned, using "version-number" strategy in "version field" -->
         <class name="Trade4" detachable="true" identity-type="application">
+            <inheritance>
+                <discriminator strategy="class-name"/>
+            </inheritance>
             <version strategy="version-number">
                 <extension vendor-name="datanucleus" key="field-name" value="version"/>
             </version>
