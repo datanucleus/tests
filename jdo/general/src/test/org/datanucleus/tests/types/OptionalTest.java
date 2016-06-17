@@ -198,6 +198,16 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertTrue(row1Present);
                 assertTrue(row2Present);
 
+                Query q4 = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE stringField.orElse(:param) == null");
+                Map<String, String> paramMap = new HashMap();
+                paramMap.put("param", null);
+                q4.setNamedParameters(paramMap);
+                List<OptionalSample1> results4 = q4.executeList();
+                assertNotNull(results4);
+                assertEquals(1, results4.size());
+                OptionalSample1 os4_1 = results4.get(0);
+                assertEquals(2, os4_1.getId());
+
                 tx.commit();
             }
             catch (Exception e)
