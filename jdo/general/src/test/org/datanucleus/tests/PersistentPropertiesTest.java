@@ -110,6 +110,7 @@ public class PersistentPropertiesTest extends JDOPersistenceTestCase
         {
             // Clean out our data
             clean(SubPropertyType.class);
+            clean(BasePropertyType.class);
             clean(RelatedPropertyType.class);
         }
     }

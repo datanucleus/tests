@@ -17,6 +17,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.annotations.persistentproperties;
 
+import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -25,6 +26,7 @@ import javax.jdo.annotations.PrimaryKey;
  * Base related class using properties access.
  */
 @PersistenceCapable(detachable="true")
+@Discriminator
 public class RelatedPropertyType
 {
     protected long id;

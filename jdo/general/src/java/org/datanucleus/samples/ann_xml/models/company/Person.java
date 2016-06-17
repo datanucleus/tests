@@ -25,6 +25,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 
 import javax.jdo.JDOHelper;
+import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Key;
@@ -39,6 +40,7 @@ import javax.jdo.annotations.Value;
  * Person in a company.
  */
 @PersistenceCapable(objectIdClass=Person.Id.class)
+@Discriminator
 @FetchGroup(name="names", members={@Persistent(name="firstName"), @Persistent(name="lastName")})
 @Query(name="PeopleCalledSmith",language="JDOQL",
     value="SELECT FROM org.jpox.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")

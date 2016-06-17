@@ -26,6 +26,7 @@ import java.util.StringTokenizer;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Index;
@@ -42,6 +43,7 @@ import javax.jdo.annotations.Value;
  * Person in a company.
  */
 @PersistenceCapable(objectIdClass=Person.Id.class)
+@Discriminator
 @Unique(name="PERSON_NAME_EMAIL_UNIQUENESS", members={"firstName", "lastName", "emailAddress"})
 @FetchGroup(name="names", members={@Persistent(name="firstName"), @Persistent(name="lastName")})
 @Query(name="PeopleCalledSmith",language="JDOQL",
