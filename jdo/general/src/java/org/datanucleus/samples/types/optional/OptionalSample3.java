@@ -17,6 +17,8 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.types.optional;
 
+import java.util.Optional;
+
 /**
  * Sample using Java8 Optional.
  */
@@ -25,6 +27,8 @@ public class OptionalSample3
     private long id;
 
     private String name;
+
+    private Optional<OptionalSample3> sample3;
 
     public OptionalSample3(long id, String name)
     {
@@ -49,5 +53,14 @@ public class OptionalSample3
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public Optional<OptionalSample3> getSample3()
+    {
+        return sample3;
+    }
+    public void setSample3(OptionalSample3 s3)
+    {
+        this.sample3 = s3!=null ? Optional.of(s3) : Optional.empty();
     }
 }
