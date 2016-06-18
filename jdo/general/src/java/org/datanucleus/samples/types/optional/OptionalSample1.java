@@ -17,6 +17,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.types.optional;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -28,6 +29,7 @@ public class OptionalSample1
 
     private Optional<String> stringField;
     private Optional<Double> doubleField;
+    private Optional<Date> dateField;
 
     public OptionalSample1(long id, String str, Double dbl)
     {
@@ -62,5 +64,14 @@ public class OptionalSample1
     public void setDoubleField(Double dbl)
     {
         this.doubleField = dbl!=null ? Optional.of(dbl) : Optional.empty();
+    }
+
+    public Optional<Date> getDateField()
+    {
+        return dateField;
+    }
+    public void setDateField(Date date)
+    {
+        this.dateField = date!=null? Optional.of(date) : Optional.empty();
     }
 }

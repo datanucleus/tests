@@ -17,6 +17,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,8 @@ public class OptionalTest extends JDOPersistenceTestCase
      */
     public void testOptionalBasic()
     {
+        Date d1 = new Date(1000000);
+        Date d2 = new Date(2000000);
         try
         {
             // Create some data we can use for access
@@ -70,8 +73,10 @@ public class OptionalTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 OptionalSample1 s = new OptionalSample1(1, "First String", 123.45);
+                s.setDateField(d1);
                 pm.makePersistent(s);
                 OptionalSample1 s2 = new OptionalSample1(2, null, 245.6);
+                s2.setDateField(null);
                 pm.makePersistent(s2);
                 tx.commit();
                 id = pm.getObjectId(s);
@@ -199,7 +204,7 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertTrue(row2Present);
 
                 Query q4 = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE stringField.orElse(:param) == null");
-                Map<String, String> paramMap = new HashMap();
+                Map<String, Object> paramMap = new HashMap();
                 paramMap.put("param", null);
                 q4.setNamedParameters(paramMap);
                 List<OptionalSample1> results4 = q4.executeList();
@@ -207,6 +212,17 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertEquals(1, results4.size());
                 OptionalSample1 os4_1 = results4.get(0);
                 assertEquals(2, os4_1.getId());
+
+                Query q5 = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE dateField.orElse(:otherDate) == :myDate");
+                paramMap = new HashMap();
+                paramMap.put("otherDate", d2);
+                paramMap.put("myDate", d1);
+                q5.setNamedParameters(paramMap);
+                List<OptionalSample1> results5 = q5.executeList();
+                assertNotNull(results5);
+                assertEquals(1, results5.size());
+                OptionalSample1 os5_1 = results5.get(0);
+                assertEquals(1, os5_1.getId());
 
                 tx.commit();
             }
