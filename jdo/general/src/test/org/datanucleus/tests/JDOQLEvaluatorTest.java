@@ -31,8 +31,8 @@ import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.query.compiler.JDOQLCompiler;
 import org.datanucleus.query.compiler.JavaQueryCompiler;
 import org.datanucleus.query.compiler.QueryCompilation;
-import org.datanucleus.query.evaluator.JDOQLEvaluator;
-import org.datanucleus.query.evaluator.JavaQueryEvaluator;
+import org.datanucleus.query.inmemory.JDOQLInMemoryEvaluator;
+import org.datanucleus.query.inmemory.JavaQueryInMemoryEvaluator;
 import org.datanucleus.store.query.Query;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Person;
@@ -85,7 +85,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
@@ -105,7 +105,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             p = (Person)results.get(0);
@@ -162,7 +162,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 2, results.size());
             Iterator iter = results.iterator();
@@ -234,7 +234,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
@@ -291,7 +291,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 2, results.size());
             Iterator iter = results.iterator();
@@ -363,7 +363,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
@@ -423,7 +423,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
@@ -444,7 +444,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             p = (Person)results.get(0);
@@ -505,7 +505,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
@@ -566,7 +566,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
@@ -629,7 +629,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             SetHolder holder = (SetHolder)results.get(0);
@@ -689,7 +689,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             MapHolder holder = (MapHolder)results.get(0);
@@ -749,7 +749,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             MapHolder holder = (MapHolder)results.get(0);
@@ -813,7 +813,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(new HashMap(), null);
 
             // Execute the query
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, null, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, null, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             UserGroup grp = (UserGroup)results.get(0);
@@ -870,7 +870,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             // Execute the query
             HashMap paramValues = new HashMap();
             paramValues.put(new Integer(0), "ald"); // Simulate what org.datanucleus.store.query.Query does
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, paramValues, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, paramValues, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
@@ -932,7 +932,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             HashMap paramValues = new HashMap();
             paramValues.put(new Integer(0), "ald"); // Simulate what org.datanucleus.store.query.Query does
             paramValues.put(new Integer(1), 4);
-            JavaQueryEvaluator eval = new JDOQLEvaluator(query, instances, compilation, paramValues, clr);
+            JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, paramValues, clr);
             List results = (List)eval.execute(true, true, true, true, true);
             assertEquals("Number of result instances was wrong", 1, results.size());
             Person p = (Person)results.get(0);
