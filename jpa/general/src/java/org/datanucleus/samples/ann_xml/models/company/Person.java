@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -33,10 +34,9 @@ import javax.persistence.OneToOne;
 
 /**
  * Person in a company.
- *
- * @version $Revision: 1.1 $
  */
 @Entity
+@DiscriminatorColumn
 @IdClass(Person.PK.class)
 public class Person implements Cloneable, Serializable
 {

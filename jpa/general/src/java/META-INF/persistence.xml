@@ -8,7 +8,7 @@
         <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
         <mapping-file>org/jpox/samples/types/calendar/orm.xml</mapping-file>
         <mapping-file>org/jpox/samples/one_many/map_fk/orm.xml</mapping-file>
-        <class>org.jpox.samples.typeconversion.ComplicatedType2</class>
+        <class>org.datanucleus.samples.typeconversion.ComplicatedType2</class>
     </persistence-unit>
 
     <!-- TEST2 "unit" -->
@@ -107,21 +107,21 @@
         <class>org.datanucleus.samples.annotations.types.basic.TypeHolder</class>
         <class>org.datanucleus.samples.annotations.types.basic.DateHolder</class>
 
-        <class>org.jpox.samples.jpa.datastoreid.MyDatastoreId</class>
+        <class>org.datanucleus.samples.jpa.datastoreid.MyDatastoreId</class>
 
-        <class>org.jpox.samples.ann_xml.models.company.Account</class>
-        <class>org.jpox.samples.ann_xml.models.company.Employee</class>
-        <class>org.jpox.samples.ann_xml.models.company.Manager</class>
-        <class>org.jpox.samples.ann_xml.models.company.WebSite</class>
-        <class>org.jpox.samples.ann_xml.models.company.Person</class>
-        <class>org.jpox.samples.ann_xml.models.company.Project</class>
-        <class>org.jpox.samples.ann_xml.models.company.Department</class>
-        <class>org.jpox.samples.ann_xml.models.company.PhoneNumber</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.Account</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.Employee</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.Manager</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.WebSite</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.Person</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.Project</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.Department</class>
+        <class>org.datanucleus.samples.ann_xml.models.company.PhoneNumber</class>
 
-        <class>org.jpox.samples.validation.ValidatedPerson</class>
-        <class>org.jpox.samples.validation.ValidatedPerson2</class>
-        <class>org.jpox.samples.validation.ValidatedOwner</class>
-        <class>org.jpox.samples.validation.ValidatedPet</class>
+        <class>org.datanucleus.samples.validation.ValidatedPerson</class>
+        <class>org.datanucleus.samples.validation.ValidatedPerson2</class>
+        <class>org.datanucleus.samples.validation.ValidatedOwner</class>
+        <class>org.datanucleus.samples.validation.ValidatedPet</class>
 
         <class>org.datanucleus.samples.types.interfaces.Rectangle</class>
         <class>org.datanucleus.samples.types.interfaces.Circle</class>
@@ -131,7 +131,7 @@
         <class>org.datanucleus.samples.annotations.entitygraph.GraphBase</class>
         <class>org.datanucleus.samples.annotations.entitygraph.GraphRelated</class>
 
-        <class>org.jpox.samples.typeconversion.ComplicatedType2</class>
+        <class>org.datanucleus.samples.typeconversion.ComplicatedType2</class>
     </persistence-unit>
 
 </persistence>

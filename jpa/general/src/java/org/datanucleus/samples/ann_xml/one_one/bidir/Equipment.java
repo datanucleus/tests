@@ -19,14 +19,15 @@ Contributors:
 package org.datanucleus.samples.ann_xml.one_one.bidir;
 
 import javax.persistence.Basic;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
  * Representation of a piece of equipment.
- * @version $Revision: 1.1 $
  */
 @Entity
+@DiscriminatorColumn
 public class Equipment
 {
     @Id
