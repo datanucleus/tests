@@ -359,7 +359,7 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertEquals(1, results3.size());
 
                 // Refer to optional field and then to another optional field (no Sample3 objects have the sample3 field set)
-                Query q4 = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE sample3.sample3.isPresent()");
+                Query q4 = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE sample3 != null && sample3.sample3.isPresent()");
                 q4.setClass(OptionalSample2.class);
                 List<OptionalSample2> results4 = q4.executeList();
                 assertNotNull(results4);
