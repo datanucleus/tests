@@ -58,6 +58,13 @@ public class I18NTest extends JDOPersistenceTestCase
             // Dont run on Postgresql
             return;
         }
+        String datastoreProtocol = TestHelper.getDatastorePluginProtocol(1);
+        if (datastoreProtocol != null && datastoreProtocol.equals("cassandra"))
+        {
+            // Don't run on Cassandra
+            return;
+        }
+
         try
         {
             try
@@ -149,6 +156,13 @@ public class I18NTest extends JDOPersistenceTestCase
             // Dont run on Postgresql
             return;
         }
+        String datastoreProtocol = TestHelper.getDatastorePluginProtocol(1);
+        if (datastoreProtocol != null && datastoreProtocol.equals("cassandra"))
+        {
+            // Don't run on Cassandra
+            return;
+        }
+
         try
         {
             try
@@ -230,12 +244,18 @@ public class I18NTest extends JDOPersistenceTestCase
 
     /**
      * Simple test to load up the UTF8 class.
-     * This class contains fields that have names using accented characters
-     * such as tose found in Locale "es".
+     * This class contains fields that have names using accented characters such as those found in Locale "es".
      **/
     public void testUTF8()
     throws Exception
     {
+        String datastoreProtocol = TestHelper.getDatastorePluginProtocol(1);
+        if (datastoreProtocol != null && datastoreProtocol.equals("cassandra"))
+        {
+            // Don't run on Cassandra
+            return;
+        }
+
         try
         {
             try
