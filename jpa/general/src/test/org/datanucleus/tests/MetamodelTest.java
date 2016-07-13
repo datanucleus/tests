@@ -39,6 +39,8 @@ import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValu
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.samples.annotations.one_many.unidir_2.ModeratedUserGroup;
+import org.datanucleus.samples.annotations.versioned.VersionedEmployee;
+import org.datanucleus.samples.annotations.versioned.VersionedPerson;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
@@ -249,6 +251,44 @@ public class MetamodelTest extends JPAPersistenceTestCase
         catch (IllegalArgumentException iae)
         {
             fail("Error in metamodel tests" + iae.getMessage());
+        }
+    }
+
+    /**
+     * Test for the case with inheritance.
+     */
+    public void testInheritanceOfVersion()
+    {
+        Metamodel model = emf.getMetamodel();
+
+        // Check base class which has the version
+        try
+        {
+            EntityType<?> empType = model.entity(VersionedPerson.class);
+            assertNotNull(empType);
+            SingularAttribute verAttr = empType.getVersion(long.class);
+            assertNotNull(verAttr);
+            assertEquals("version", verAttr.getName());
+            assertEquals(long.class, verAttr.getJavaType());
+        }
+        catch (IllegalArgumentException iae)
+        {
+            fail("Didnt find EntityType for " + VersionedPerson.class.getName());
+        }
+
+        // Check sub-class which doesn't have the version
+        try
+        {
+            EntityType<?> empType = model.entity(VersionedEmployee.class);
+            assertNotNull(empType);
+            SingularAttribute verAttr = empType.getVersion(long.class);
+            assertNotNull(verAttr);
+            assertEquals("version", verAttr.getName());
+            assertEquals(long.class, verAttr.getJavaType());
+        }
+        catch (IllegalArgumentException iae)
+        {
+            fail("Didnt find EntityType for " + VersionedEmployee.class.getName());
         }
     }
 
