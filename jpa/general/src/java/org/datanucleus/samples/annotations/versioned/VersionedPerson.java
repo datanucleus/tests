@@ -19,12 +19,15 @@ package org.datanucleus.samples.annotations.versioned;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Version;
 
 /**
  * Simple class with a version field.
  */
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class VersionedPerson
 {
     @Id

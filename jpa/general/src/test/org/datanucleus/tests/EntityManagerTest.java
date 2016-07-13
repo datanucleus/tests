@@ -34,6 +34,7 @@ import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.annotations.models.company.Account;
 import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.samples.annotations.models.company.Project;
+import org.datanucleus.samples.annotations.versioned.VersionedEmployee;
 import org.datanucleus.samples.annotations.versioned.VersionedPerson;
 import org.datanucleus.samples.types.interfaces.Circle;
 import org.datanucleus.samples.types.interfaces.Rectangle;
@@ -802,6 +803,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
         }
         finally
         {
+            clean(VersionedEmployee.class);
             clean(VersionedPerson.class);
         }
     }
