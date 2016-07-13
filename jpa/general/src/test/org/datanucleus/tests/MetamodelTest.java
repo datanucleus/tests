@@ -29,6 +29,7 @@ import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.Type;
 
+import org.datanucleus.samples.annotations.generics.GenericIdSub;
 import org.datanucleus.samples.annotations.many_one.ManyOneOwner;
 import org.datanucleus.samples.annotations.models.company.Employee;
 import org.datanucleus.samples.annotations.models.company.Manager;
@@ -442,6 +443,31 @@ public class MetamodelTest extends JPAPersistenceTestCase
         catch (IllegalArgumentException iae)
         {
             fail("Didnt find EntityType for " + ManyOneOwner.class.getName());
+        }
+    }
+
+    /**
+     * Test for use of a generic id in the base class.
+     */
+    public void testGenericIdInheritance()
+    {
+        Metamodel model = emf.getMetamodel();
+        try
+        {
+            EntityType<GenericIdSub> subType = model.entity(GenericIdSub.class);
+            assertNotNull(subType);
+            Class idType = subType.getIdType().getJavaType();
+            assertEquals(Long.class, idType);
+
+            SingularAttribute idAttr = subType.getId(Long.class);
+            assertNotNull(idAttr);
+            assertEquals("id", idAttr.getName());
+            // TODO Add this check when metamodel supports generic type info
+//            assertEquals(Long.class, idAttr.getJavaType());
+        }
+        catch (IllegalArgumentException iae)
+        {
+            fail("Didnt find EntityType for " + GenericIdSub.class.getName());
         }
     }
 }
