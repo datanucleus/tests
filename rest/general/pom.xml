@@ -20,9 +20,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-rest</artifactId>
-            <version>(4.0.99, )</version>
+            <version>[${api.rest.min.version}, )</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty</artifactId>
