@@ -60,7 +60,6 @@ public class OptionalTest extends JDOPersistenceTestCase
     public void testOptionalBasic()
     {
         Date d1 = new Date(1000000);
-        Date d2 = new Date(2000000);
         try
         {
             // Create some data we can use for access
@@ -213,17 +212,6 @@ public class OptionalTest extends JDOPersistenceTestCase
                 OptionalSample1 os4_1 = results4.get(0);
                 assertEquals(2, os4_1.getId());
 
-                Query q5 = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE dateField.orElse(:otherDate) == :myDate");
-                paramMap = new HashMap();
-                paramMap.put("otherDate", d2);
-                paramMap.put("myDate", d1);
-                q5.setNamedParameters(paramMap);
-                List<OptionalSample1> results5 = q5.executeList();
-                assertNotNull(results5);
-                assertEquals(1, results5.size());
-                OptionalSample1 os5_1 = results5.get(0);
-                assertEquals(1, os5_1.getId());
-
                 tx.commit();
             }
             catch (Exception e)
@@ -301,9 +289,12 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertEquals("First", s2a.getName());
                 Optional<OptionalSample3> s3fielda = s2a.getSample3();
                 assertNotNull(s3fielda);
-                assertNotNull(s3fielda.get());
                 OptionalSample3 s3 = s3fielda.get();
+                assertNotNull(s3);
                 assertEquals("First S3", s3.getName());
+                Optional s3s3 = s3.getSample3();
+                assertNotNull(s3s3);
+                assertFalse(s3s3.isPresent());
 
                 OptionalSample2 s2b = pm.getObjectById(OptionalSample2.class, id2);
                 assertEquals("Second", s2b.getName());
