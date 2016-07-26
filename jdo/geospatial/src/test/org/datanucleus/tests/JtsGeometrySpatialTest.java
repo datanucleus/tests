@@ -871,7 +871,6 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         }
     }
 
-    @Datastore(POSTGRESQL)
     public void testDistance() throws SQLException, ParseException
     {
         PersistenceManager pm = pmf.getPersistenceManager();
