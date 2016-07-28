@@ -155,7 +155,7 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clearEmployeeData();
+            clearEmployeeData(cachePMF);
         }
     }
 
@@ -195,21 +195,20 @@ public class CacheTest extends JDOPersistenceTestCase
      */
     public void testL2CachedObject()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
         try
         {
-            Properties userProps = new Properties();
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
-            pmf = TestHelper.getPMF(1, userProps);
-            
             // Create some data we can use for access
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             Object woodyId = null;
             Object woodlessId = null;
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Employee.class); // All Employees/Managers get pinned
                 tx.begin();
                 final Employee woody = new Employee(1,"Woody",null,"woody@woodpecker.com",13,"serial 1",new Integer(10));
@@ -241,22 +240,22 @@ public class CacheTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
-            Level2Cache l2Cache = ((JDODataStoreCache)pmf.getDataStoreCache()).getLevel2Cache();
+            Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
             assertTrue("Incorrect number of pinned objects : should have been 3 but is " + l2Cache.getNumberOfPinnedObjects(),
                 l2Cache.getNumberOfPinnedObjects() == 3);
             assertTrue("Level 2 Cache returned that it is empty yet should have pinned object(s)!",
                 !l2Cache.isEmpty());
 
-            pm = pmf.getPersistenceManager();
+            pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
                 tx.begin();
-                
+
                 Employee woody = (Employee)pm.getObjectById(woodyId, false);
                 assertTrue("Object retrieved from L2 cache was null", woody != null);
                 assertTrue("Field of object retrieved from L2 cache was null!", woody.getLastName() != null);
-                
+
                 tx.commit();
             }
             catch (Exception e)
@@ -272,7 +271,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
-            
+
             l2Cache.evict(woodlessId);
             assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet should have 2",
                 l2Cache.getNumberOfPinnedObjects() == 2);
@@ -288,7 +287,8 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clearEmployeeData();
+            clearEmployeeData(cachePMF);
+            cachePMF.close();
         }
     }
 
@@ -328,7 +328,7 @@ public class CacheTest extends JDOPersistenceTestCase
             }
 
             // Clear the L2 cache so we dont have this object
-            Level2Cache l2Cache = ((JDODataStoreCache)pmf.getDataStoreCache()).getLevel2Cache();
+            Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
             l2Cache.evictAll();
             l2Cache.pinAll(Person.class, false); // Pin all Person objects
 
@@ -389,7 +389,8 @@ public class CacheTest extends JDOPersistenceTestCase
         finally
         {
             // Clean out created data
-            clean(Person.class);
+            clean(cachePMF, Person.class);
+            cachePMF.close();
         }
     }
 
@@ -398,20 +399,20 @@ public class CacheTest extends JDOPersistenceTestCase
      */
     public void testSCOAndPCReuse()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+
         try
         {
-            Properties userProps = new Properties();
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
-            pmf = TestHelper.getPMF(1, userProps);
-
             // Create some data
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             Object qualId = null;
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Qualification.class);
                 l2Cache.pinAll(true, Organisation.class);
                 l2Cache.pinAll(true, Person.class);
@@ -453,7 +454,7 @@ public class CacheTest extends JDOPersistenceTestCase
              * Let's see if that changed. The following should cause no SQL
              * execution at all.
              */
-            PersistenceManager pm2 = pmf.getPersistenceManager();
+            PersistenceManager pm2 = cachePMF.getPersistenceManager();
             tx = pm2.currentTransaction();
             try
             {
@@ -487,11 +488,11 @@ public class CacheTest extends JDOPersistenceTestCase
              * sure, that in spite of the changes, it is still reloading fields,
              * when they are not available
              */
-            PersistenceManager pm3 = pmf.getPersistenceManager();
+            PersistenceManager pm3 = cachePMF.getPersistenceManager();
             tx = pm3.currentTransaction();
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.unpinAll(true, Qualification.class);
                 l2Cache.unpinAll(true, Person.class);
                 l2Cache.unpinAll(true, Organisation.class);
@@ -522,9 +523,10 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(Qualification.class);
-            clean(Organisation.class);
-            clean(Person.class);
+            clean(cachePMF, Qualification.class);
+            clean(cachePMF, Organisation.class);
+            clean(cachePMF, Person.class);
+            cachePMF.close();
         }
     }
 
@@ -533,19 +535,19 @@ public class CacheTest extends JDOPersistenceTestCase
     */
     public void testEvictAll()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "soft");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+
         try
         {
-            Properties userProps = new Properties();
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "soft");
-            pmf = TestHelper.getPMF(1, userProps);
-            
             // Create some data we can use for access
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Employee.class); // All Employees/Managers get pinned
 
                 tx.begin();
@@ -584,7 +586,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 pm.close();
             }
 
-            Level2Cache l2Cache = ((JDODataStoreCache)pmf.getDataStoreCache()).getLevel2Cache();
+            Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
 
             // cannot assert reliably existence of unpinned objects as they can get GC'ed any time
             // just check that the following executes without errors and that there are no unpinned objects
@@ -610,7 +612,8 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clearEmployeeData();
+            clearEmployeeData(cachePMF);
+            cachePMF.close();
         }
     }
 
@@ -620,18 +623,18 @@ public class CacheTest extends JDOPersistenceTestCase
     */
     public void testOptimisticTransactionWithL2Cache()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+
         try
         {
-            Properties userProps = new Properties();
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
-            pmf = TestHelper.getPMF(1, userProps);
-
-            DataStoreCache l2Cache = pmf.getDataStoreCache();
+            DataStoreCache l2Cache = cachePMF.getDataStoreCache();
             l2Cache.pinAll(true, Trade1.class); // All Trade1 get pinned
 
             // Create some data we can use for access
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             Object id = null;
             Object version = null;
@@ -664,7 +667,7 @@ public class CacheTest extends JDOPersistenceTestCase
             }
 
             // Start new PM so we know "woody" isnt present in the L1 cache and has to get from L2
-            pm = pmf.getPersistenceManager();
+            pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
@@ -672,8 +675,7 @@ public class CacheTest extends JDOPersistenceTestCase
 
                 Trade1 trade = (Trade1)pm.getObjectById(id);
                 assertNotNull("Version of retrieved L2 cached object is null!!", JDOHelper.getVersion(trade));
-                assertEquals("Versions of original/retrieved objects are different so wasn't L2 cached correctly",
-                    version, JDOHelper.getVersion(trade));
+                assertEquals("Versions of original/retrieved objects are different so wasn't L2 cached correctly", version, JDOHelper.getVersion(trade));
                 trade.setPerson("Donald Duck");
 
                 tx.commit();
@@ -694,7 +696,8 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(Trade1.class);
+            clean(cachePMF, Trade1.class);
+            cachePMF.close();;
         }
     }
 
@@ -731,20 +734,20 @@ public class CacheTest extends JDOPersistenceTestCase
      */
     public void testClassNotCacheable()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+
         try
         {
-            Properties userProps = new Properties();
-            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
-            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-            pmf = TestHelper.getPMF(1, userProps);
-
             // Create some data
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             Object qualId = null;
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Qualification.class);
                 tx.begin();
 
@@ -767,12 +770,12 @@ public class CacheTest extends JDOPersistenceTestCase
                 pm.close();
             }
 
-            JDODataStoreCache jdoCache = (JDODataStoreCache)pmf.getDataStoreCache();
+            JDODataStoreCache jdoCache = (JDODataStoreCache)cachePMF.getDataStoreCache();
             Level2Cache l2Cache = jdoCache.getLevel2Cache();
-            assertNull("QUalification object should not have been L2 cached but was!", l2Cache.get(qualId));
+            assertNull("Qualification object should not have been L2 cached but was!", l2Cache.get(qualId));
 
             // Try to retrieve this object - need a way of detecting if it tried the L2 cache
-            pm = pmf.getPersistenceManager();
+            pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
@@ -800,7 +803,8 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(Qualification.class);
+            clean(cachePMF, Qualification.class);
+            cachePMF.close();
         }
     }
 
@@ -841,7 +845,7 @@ public class CacheTest extends JDOPersistenceTestCase
             }
 
             // Clear the L2 cache so we don't have this object
-            Level2Cache l2Cache = ((JDODataStoreCache)pmf.getDataStoreCache()).getLevel2Cache();
+            Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
             l2Cache.evictAll();
             l2Cache.pinAll(Person.class, false); // Pin all Person objects
 
@@ -894,7 +898,8 @@ public class CacheTest extends JDOPersistenceTestCase
         finally
         {
             // Clean out created data
-            clean(Person.class);
+            clean(cachePMF, Person.class);
+            cachePMF.close();
         }
     }
 
@@ -903,24 +908,23 @@ public class CacheTest extends JDOPersistenceTestCase
      */
     public void testL2CacheAfterReadDatastoreIdentity()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+
         try
         {
-            Properties userProps = new Properties();
-            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
-            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-            pmf = TestHelper.getPMF(1, userProps);
-            
             // Create some data we can use for access
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             Object woodyId = null;
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Employee.class); // All Employees/Managers get pinned
                 tx.begin();
-                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com",
-                    13, "serial 1", new Integer(10));
+                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
                 pm.makePersistent(woody);
                 woodyId = pm.getObjectId(woody);
 
@@ -940,7 +944,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 pm.close();
             }
 
-            Level2Cache l2Cache = ((JDODataStoreCache)pmf.getDataStoreCache()).getLevel2Cache();
+            Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
             assertEquals("Incorrect number of pinned objects", 1, l2Cache.getNumberOfPinnedObjects());
             assertEquals("Incorrect number of unpinned objects", 0, l2Cache.getNumberOfUnpinnedObjects());
             l2Cache.evictAll();
@@ -948,7 +952,7 @@ public class CacheTest extends JDOPersistenceTestCase
             assertEquals("Incorrect number of unpinned objects after evict", 0, l2Cache.getNumberOfUnpinnedObjects());
 
             // Do the query - should load the object into the L2 cache
-            pm = pmf.getPersistenceManager();
+            pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
@@ -991,7 +995,7 @@ public class CacheTest extends JDOPersistenceTestCase
             assertEquals("Incorrect number of unpinned objects after evict", 0, l2Cache.getNumberOfUnpinnedObjects());
 
             // Do getObjectById - should load the object into the L2 cache
-            pm = pmf.getPersistenceManager();
+            pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
@@ -1022,7 +1026,8 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clearEmployeeData();
+            clearEmployeeData(cachePMF);
+            cachePMF.close();
         }
     }
 
@@ -1031,19 +1036,19 @@ public class CacheTest extends JDOPersistenceTestCase
      */
     public void testL2CacheAfterReadApplicationIdentity()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+
         try
         {
-            Properties userProps = new Properties();
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
-            pmf = TestHelper.getPMF(1, userProps);
-
             // Create some data we can use for access
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Vote.class);
                 tx.begin();
 
@@ -1068,7 +1073,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 pm.close();
             }
 
-            Level2Cache l2Cache = ((JDODataStoreCache)pmf.getDataStoreCache()).getLevel2Cache();
+            Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
             assertEquals("Incorrect number of pinned objects", 2, l2Cache.getNumberOfPinnedObjects());
             assertEquals("Incorrect number of unpinned objects", 0, l2Cache.getNumberOfUnpinnedObjects());
             l2Cache.evictAll();
@@ -1076,7 +1081,7 @@ public class CacheTest extends JDOPersistenceTestCase
             assertEquals("Incorrect number of unpinned objects after evict", 0, l2Cache.getNumberOfUnpinnedObjects());
 
             // Try getObjectById
-            pm = pmf.getPersistenceManager();
+            pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
@@ -1109,7 +1114,7 @@ public class CacheTest extends JDOPersistenceTestCase
             assertEquals("Incorrect number of unpinned objects after evict", 0, l2Cache.getNumberOfUnpinnedObjects());
 
             // Try Query
-            pm = pmf.getPersistenceManager();
+            pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
@@ -1142,7 +1147,8 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(Vote.class);
+            clean(cachePMF, Vote.class);
+            cachePMF.close();
         }
     }
 
@@ -1155,24 +1161,23 @@ public class CacheTest extends JDOPersistenceTestCase
      */
     public void testMultithreadObjectRead()
     {
+        Properties userProps = new Properties();
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
+        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+
         try
-        {
-            Properties userProps = new Properties();
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-            userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
-            pmf = TestHelper.getPMF(1, userProps);
-            
+        {            
             // Create some data we can use for access
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = cachePMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             Object woodyId = null;
             try
             {
-                DataStoreCache l2Cache = pmf.getDataStoreCache();
+                DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Employee.class);
                 tx.begin();
-                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13,
-                    "serial 1", new Integer(10));
+                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
                 Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
                 woody.setManager(bart);
                 pm.makePersistent(woody);
@@ -1195,7 +1200,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
-            Level2Cache l2Cache = ((JDODataStoreCache)pmf.getDataStoreCache()).getLevel2Cache();
+            Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
             assertTrue("Incorrect number of pinned objects : should have been 2 but is " + 
                 l2Cache.getNumberOfPinnedObjects(),
                 l2Cache.getNumberOfPinnedObjects() == 2);
@@ -1215,7 +1220,7 @@ public class CacheTest extends JDOPersistenceTestCase
                         public void run()
                         {
                             boolean success = true;
-                            PersistenceManager pmthread = pmf.getPersistenceManager();
+                            PersistenceManager pmthread = cachePMF.getPersistenceManager();
                             Transaction txthread = pmthread.currentTransaction();
                             try
                             {
@@ -1293,11 +1298,12 @@ public class CacheTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clearEmployeeData();
+            clearEmployeeData(cachePMF);
+            cachePMF.close();
         }
     }
 
-    protected void clearEmployeeData()
+    protected void clearEmployeeData(PersistenceManagerFactory pmf)
     {
         Extent ext = null;
         java.util.Iterator it = null;
@@ -1400,8 +1406,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 l2Cache.pinAll(true, Employee.class);
                 tx.begin();
 
-                Employee empl = new Employee(101, "Clint", "Eastwood", "clint.eastwood@hollywood.com", 
-                    1000000, "1234567");
+                Employee empl = new Employee(101, "Clint", "Eastwood", "clint.eastwood@hollywood.com", 1000000, "1234567");
                 pm.makePersistent(empl);
 
                 tx.commit();
@@ -1653,7 +1658,5 @@ public class CacheTest extends JDOPersistenceTestCase
             }
             clean(User1.class);
         }
-
     }
-
 }
