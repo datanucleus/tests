@@ -24,6 +24,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.schema.ClassWithDefaultCols;
+import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
@@ -121,7 +122,7 @@ public class SchemaColumnTest extends JDOPersistenceTestCase
     public void testColumnDefaultsStoringNullWhenNull()
     {
         Properties props = new Properties();
-        props.setProperty("datanucleus.rdbms.useColumnDefaultWhenNull", "false");
+        props.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_COLUMN_DEFAULT_WHEN_NULL, "false");
         PersistenceManagerFactory pmf = TestHelper.getConfigurablePMF(1, props);
 
         try
