@@ -98,7 +98,20 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
             initialised = true;
         }
     }
-    
+
+    // TODO Provide a way of closing this after all tests
+    private PersistenceManagerFactory _pmf2 = null;
+
+    protected PersistenceManagerFactory getPersistenceManagerFactory2()
+    {
+        if (_pmf2 == null)
+        {
+            // Use the second datastore
+            _pmf2 = TestHelper.getPMF(2, PMF_PROPS);
+        }
+        return _pmf2;
+    }
+
     /**
      * Another test of replication, with no relations. Just the object
      */
@@ -823,18 +836,6 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
         {
             fail(messagePrefix + "Both employees have the same personNum!");
         }
-    }
-
-    private PersistenceManagerFactory _pmf2 = null;
-
-    protected PersistenceManagerFactory getPersistenceManagerFactory2()
-    {
-        if (_pmf2 == null)
-        {
-            // Use the second datastore
-            _pmf2 = TestHelper.getPMF(2, PMF_PROPS);
-        }
-        return _pmf2;
     }
 
     /**
