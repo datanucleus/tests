@@ -41,53 +41,60 @@ public class ManagedConnectionTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty("datanucleus.connection.nontx.releaseAfterUse", "false");
         PersistenceManagerFactory thePMF = TestHelper.getPMF(1, userProps);
-        PersistenceManager pm = thePMF.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-
-        // Create sample data
-        Object acctId = null; 
         try
         {
-            tx.begin();
-            LoginAccount acct = new LoginAccount("Barney", "Rubble", "brubble", "bambam");
-            pm.makePersistent(acct);
-            acctId = JDOHelper.getObjectId(acct);
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception while creating data", e);
-            fail("Exception thrown while creating data : " + e.getMessage());
+            PersistenceManager pm = thePMF.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            // Create sample data
+            Object acctId = null; 
+            try
+            {
+                tx.begin();
+                LoginAccount acct = new LoginAccount("Barney", "Rubble", "brubble", "bambam");
+                pm.makePersistent(acct);
+                acctId = JDOHelper.getObjectId(acct);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception while creating data", e);
+                fail("Exception thrown while creating data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            try
+            {
+                for (int i = 0; i < 60; i++)
+                {
+                    pm = thePMF.getPersistenceManager();
+                    pm.getObjectById(acctId);
+                    pm.close();
+                }
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception while getting connections", e);
+                fail("Exception thrown while getting connections : " + e.getMessage());
+            }
+            finally
+            {
+                if (!pm.isClosed())
+                {
+                    pm.close();
+                }
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        try
-        {
-            for (int i = 0; i < 60; i++)
-            {
-                pm = thePMF.getPersistenceManager();
-                pm.getObjectById(acctId);
-                pm.close();
-            }
-        }
-        catch (Exception e)
-        {
-            LOG.error("Exception while getting connections", e);
-            fail("Exception thrown while getting connections : " + e.getMessage());
-        }
-        finally
-        {
-            if (!pm.isClosed())
-            {
-                pm.close();
-            }
+            thePMF.close();
         }
     }
 }
