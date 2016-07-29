@@ -19,10 +19,15 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.jdo.JDOException;
 import javax.jdo.JDOFatalUserException;
@@ -839,6 +844,83 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         finally
         {
             clean(Person.class);
+        }
+    }
+
+    /**
+     * Test that when PM's are closed that they are removed from the "pmCache" in the PMF.
+     */
+    public void testPmClosureCount()
+    {
+        Class cls = JDOPersistenceManagerFactory.class;
+        Field pmCacheField = null;
+
+        // Get the number of open PMs
+        long initSize = 0;
+        try
+        {
+            pmCacheField = cls.getDeclaredField("pmCache");
+            pmCacheField.setAccessible(true);
+            Collection coll = (Collection)pmCacheField.get(pmf);
+            if (coll != null)
+            {
+                initSize = coll.size();
+            }
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
+        }
+
+        // Create 50 PMs
+        Set<PersistenceManager> pms = new HashSet<>();
+        for (int i=0;i<50;i++)
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            pms.add(pm);
+        }
+
+        try
+        {
+            long intermediateSize = 0;
+            Collection coll = (Collection)pmCacheField.get(pmf);
+            if (coll != null)
+            {
+                intermediateSize = coll.size();
+            }
+            assertEquals(initSize + 50, intermediateSize);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
+        }
+
+        // Close the PMs we opened
+        Iterator<PersistenceManager> pmIter = pms.iterator();
+        while (pmIter.hasNext())
+        {
+            PersistenceManager pm = pmIter.next();
+            pm.close();
+        }
+        pms.clear();
+
+        // Check the size
+        try
+        {
+            long finalSize = 0;
+            Collection coll = (Collection)pmCacheField.get(pmf);
+            if (coll != null)
+            {
+                finalSize = coll.size();
+            }
+            assertEquals(initSize, finalSize);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception in test", e);
+            fail("Exception in test : " + e.getMessage());
         }
     }
 }
