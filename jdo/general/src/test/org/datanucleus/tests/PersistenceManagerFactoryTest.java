@@ -301,12 +301,10 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         props.setAutoCreateConstraints(autoCreateConstraints);
         props.setTransactionIsolation(transactionIsolation);
 
-        PersistenceManagerFactory pmf =
-            JDOHelper.getPersistenceManagerFactory(props);
-        assertTrue("PMF should be org.datanucleus.api.jdo.JDOPersistenceManagerFactory.",
-                   (pmf instanceof JDOPersistenceManagerFactory));
-        assertTrue("PMF from JDOHelper doesn't match expected properties (" +
-                   props.toString() + ").", props.matchesPMF(pmf));
+        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
+        assertTrue("PMF should be org.datanucleus.api.jdo.JDOPersistenceManagerFactory.", (pmf instanceof JDOPersistenceManagerFactory));
+        assertTrue("PMF from JDOHelper doesn't match expected properties (" + props.toString() + ").", props.matchesPMF(pmf));
+        pmf.close();
 
         // Test whether NonTransactionalWrite was correctly handled 
         props.setNontransactionalWrite(true);
@@ -505,8 +503,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
                 props.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             }
             pmf = JDOHelper.getPersistenceManagerFactory(props);
-            assertTrue("PMF from JDOHelper doesn't match expected properties (" +
-                       props.toString() + ").", props.matchesPMF(pmf));
+            assertTrue("PMF from JDOHelper doesn't match expected properties (" + props.toString() + ").", props.matchesPMF(pmf));
 
             pmf.setConnectionUserName("bobjones");
             assertTrue("Setting properties after frozen should throw exception.", false);
@@ -535,8 +532,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
          */
         props.setProperty("datanucleus.MyTestUnknownProperty", "unknown");
         pmf = JDOHelper.getPersistenceManagerFactory(props);
-        assertTrue("PMF from JDOHelper doesn't match expected properties (" +
-                   props.toString() + ").", props.matchesPMF(pmf));
+        assertTrue("PMF from JDOHelper doesn't match expected properties (" + props.toString() + ").", props.matchesPMF(pmf));
         pmf.close();
     }
 
@@ -716,7 +712,9 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         Map map = new HashMap();
         map.putAll(props);
         map.put("javax.jdo.option.Mapping", null);
-        assertNotNull(JDOHelper.getPersistenceManagerFactory(map));
+        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(map);
+        assertNotNull(pmf);
+        pmf.close();
     }
 
     /**
@@ -730,8 +728,15 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         map.put("javax.jdo.option.Mapping", new Object());
         try
         {
-            JDOHelper.getPersistenceManagerFactory(map);
-            fail("Expected JDOFatalInternalException");
+            PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(map);
+            try
+            {
+                fail("Expected JDOFatalInternalException");
+            }
+            finally
+            {
+                pmf.close();
+            }
         }
         catch (JDOFatalUserException ex)
         {

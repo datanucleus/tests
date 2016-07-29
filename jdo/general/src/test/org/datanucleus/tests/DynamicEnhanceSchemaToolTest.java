@@ -267,53 +267,58 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         // Persist
         Map props = getPropertiesForDatastore(runtimeCL);
         PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
-        ClassLoaderResolver clr = ((JDOPersistenceManagerFactory)pmf).getNucleusContext().getClassLoaderResolver(runtimeCL);
-        JDOMetadata filemd = pmf.newMetadata();
-        createMetadata(filemd);
-        NucleusLogger.PERSISTENCE.info(">> registering metadata");
-        NucleusLogger.PERSISTENCE.info(filemd);
-        pmf.registerMetadata(filemd);
-
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        Object id = null;
         try
         {
-            tx.begin();
-            Class clazz = clr.classForName("test.Client");
-            Object o = clazz.newInstance();
-            pm.makePersistent(o);
-            tx.commit();
-            id = pm.getObjectId(o);
+            ClassLoaderResolver clr = ((JDOPersistenceManagerFactory)pmf).getNucleusContext().getClassLoaderResolver(runtimeCL);
+            JDOMetadata filemd = pmf.newMetadata();
+            createMetadata(filemd);
+            NucleusLogger.PERSISTENCE.info(">> registering metadata");
+            NucleusLogger.PERSISTENCE.info(filemd);
+            pmf.registerMetadata(filemd);
+
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            Object id = null;
+            try
+            {
+                tx.begin();
+                Class clazz = clr.classForName("test.Client");
+                Object o = clazz.newInstance();
+                pm.makePersistent(o);
+                tx.commit();
+                id = pm.getObjectId(o);
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Object obj = pm.getObjectById(id);
+                pm.deletePersistent(obj);
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
+            pmf.close();
         }
-
-        pm = pmf.getPersistenceManager();
-        tx = pm.currentTransaction();
-        try
-        {
-            tx.begin();
-            Object obj = pm.getObjectById(id);
-            pm.deletePersistent(obj);
-            tx.commit();
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-
-        pmf.close();
     }
 
     protected Map getPropertiesForDatastore(DynamicEnhanceSchemaToolClassLoader runtimeCL)
@@ -334,33 +339,39 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
     {
         Map props = getPropertiesForDatastore(runtimeCL);
         JDOPersistenceManagerFactory pmf = (JDOPersistenceManagerFactory) JDOHelper.getPersistenceManagerFactory(props);
-        JDOMetadata filemd = pmf.newMetadata();
-        createMetadata(filemd);
-        pmf.registerMetadata(filemd);
-
-        Set<String> classNames = new HashSet();
-        classNames.add("test.Client");
-
-        PersistenceNucleusContext nucCtx = pmf.getNucleusContext();
-        StoreManager storeMgr = nucCtx.getStoreManager();
-        if (!(storeMgr instanceof SchemaAwareStoreManager))
-        {
-            // Can't create schema with this datastore
-            return;
-        }
-
         try
         {
-            SchemaTool schematool = new SchemaTool();
-            schematool.setDdlFile("target/schema.ddl");
-            schematool.setCompleteDdl(true);
-            SchemaAwareStoreManager schemaStoreMgr = (SchemaAwareStoreManager) nucCtx.getStoreManager();
-            schematool.createSchemaForClasses(schemaStoreMgr, classNames);
+            JDOMetadata filemd = pmf.newMetadata();
+            createMetadata(filemd);
+            pmf.registerMetadata(filemd);
+
+            Set<String> classNames = new HashSet();
+            classNames.add("test.Client");
+
+            PersistenceNucleusContext nucCtx = pmf.getNucleusContext();
+            StoreManager storeMgr = nucCtx.getStoreManager();
+            if (!(storeMgr instanceof SchemaAwareStoreManager))
+            {
+                // Can't create schema with this datastore
+                return;
+            }
+
+            try
+            {
+                SchemaTool schematool = new SchemaTool();
+                schematool.setDdlFile("target/schema.ddl");
+                schematool.setCompleteDdl(true);
+                SchemaAwareStoreManager schemaStoreMgr = (SchemaAwareStoreManager) nucCtx.getStoreManager();
+                schematool.createSchemaForClasses(schemaStoreMgr, classNames);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
-        catch (Exception e)
+        finally
         {
-            e.printStackTrace();
+            pmf.close();
         }
-        pmf.close();
     }
 }
