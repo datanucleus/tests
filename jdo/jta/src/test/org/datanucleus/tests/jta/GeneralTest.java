@@ -571,6 +571,7 @@ public class GeneralTest extends JDOPersistenceTestCase
         finally
         {
             clean(myPMF, Account.class);
+            myPMF.close();
         }
     }
 

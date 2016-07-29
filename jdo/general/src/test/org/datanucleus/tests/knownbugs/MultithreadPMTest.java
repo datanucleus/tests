@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import javax.jdo.FetchPlan;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
@@ -59,15 +60,15 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
      */
     public void testMultipleTransitionRead()
     {
+        Properties multiProps = new Properties();
+        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
         try
         {
-            Properties multiProps = new Properties();
-            multiProps.setProperty("datanucleus.Multithreaded", "true");
-            pmf = TestHelper.getPMF(1, multiProps);
             int THREAD_SIZE = 1000;
             Thread[] threads = new Thread[THREAD_SIZE];
             
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
             final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
@@ -115,7 +116,8 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
         }
         finally
         {
-            CompanyHelper.clearCompanyData(pmf);
+            CompanyHelper.clearCompanyData(myPMF);
+            myPMF.close();
         }
     }
 
@@ -124,16 +126,16 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
      */
     public void testMultipleNonTransactionalRead()
     {
+        Properties multiProps = new Properties();
+        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+
         try
         {
-            Properties multiProps = new Properties();
-            multiProps.setProperty("datanucleus.Multithreaded", "true");
-            pmf = TestHelper.getPMF(1, multiProps);
-
             int THREAD_SIZE = 1000;
             Thread[] threads = new Thread[THREAD_SIZE];
             
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
             final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
@@ -181,7 +183,8 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
         }
         finally
         {
-            CompanyHelper.clearCompanyData(pmf);
+            CompanyHelper.clearCompanyData(myPMF);
+            myPMF.close();
         }
     }
 
@@ -190,16 +193,16 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
      */
     public void testMultipleTransitionWrite()
     {
+        Properties multiProps = new Properties();
+        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        
         try
         {
-            Properties multiProps = new Properties();
-            multiProps.setProperty("datanucleus.Multithreaded", "true");
-            pmf = TestHelper.getPMF(1, multiProps);
-            
             int THREAD_SIZE = 1000;
             Thread[] threads = new Thread[THREAD_SIZE];
             
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
             final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
@@ -248,7 +251,8 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
         }
         finally
         {
-            CompanyHelper.clearCompanyData(pmf);
+            CompanyHelper.clearCompanyData(myPMF);
+            myPMF.close();
         }
     }
 
@@ -257,17 +261,17 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
      */
     public void testEvictAllAndWrites()
     {
+        Properties multiProps = new Properties();
+        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        
         try
         {
-            Properties multiProps = new Properties();
-            multiProps.setProperty("datanucleus.Multithreaded", "true");
-            pmf = TestHelper.getPMF(1, multiProps);
-            
             int THREAD_SIZE = 1000;
             Thread[] threads = new Thread[THREAD_SIZE];
             Thread[] threads2 = new Thread[THREAD_SIZE];
             
-            final PersistenceManager pm = pmf.getPersistenceManager();
+            final PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
             final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
@@ -330,7 +334,8 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
         }
         finally
         {
-            CompanyHelper.clearCompanyData(pmf);
+            CompanyHelper.clearCompanyData(myPMF);
+            myPMF.close();
         }
     }
 
@@ -339,16 +344,16 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
      */
     public void testMultipleNonTransitionWrite()
     {
+        Properties multiProps = new Properties();
+        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        
         try
         {
-            Properties multiProps = new Properties();
-            multiProps.setProperty("datanucleus.Multithreaded", "true");
-            pmf = TestHelper.getPMF(1, multiProps);
-            
             int THREAD_SIZE = 1000;
             Thread[] threads = new Thread[THREAD_SIZE];
             
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
             final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
@@ -397,23 +402,24 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
         }
         finally
         {
-            CompanyHelper.clearCompanyData(pmf);
+            CompanyHelper.clearCompanyData(myPMF);
+            myPMF.close();
         }
     }
 
     public void testMultipleDetachCopy()
     {
+        Properties multiProps = new Properties();
+        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        
         try
         {
-            Properties multiProps = new Properties();
-            multiProps.setProperty("datanucleus.Multithreaded", "true");
-            pmf = TestHelper.getPMF(1, multiProps);
-            
             int THREAD_SIZE = 1000;
             Thread[] threads = new Thread[THREAD_SIZE];
             MultithreadDetachRunner[] runner = new MultithreadDetachRunner[THREAD_SIZE];
             
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
             Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
@@ -455,7 +461,8 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
         }
         finally
         {
-            CompanyHelper.clearCompanyData(pmf);
+            CompanyHelper.clearCompanyData(myPMF);
+            myPMF.close();
         }
     }
     
@@ -500,17 +507,17 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
 
     public void testMultipleDetachCopyAndFetchPlanModification()
     {
+        Properties multiProps = new Properties();
+        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        
         try
         {
-            Properties multiProps = new Properties();
-            multiProps.setProperty("datanucleus.Multithreaded", "true");
-            pmf = TestHelper.getPMF(1, multiProps);
-            
             int THREAD_SIZE = 1000;
             Thread[] threads = new Thread[THREAD_SIZE];
             Runnable[] runner = new Runnable[THREAD_SIZE];
             
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
             Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
@@ -569,7 +576,8 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
         }
         finally
         {
-            CompanyHelper.clearCompanyData(pmf);
+            CompanyHelper.clearCompanyData(myPMF);
+            myPMF.close();
         }
     }
     
