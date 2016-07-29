@@ -198,7 +198,8 @@ public class ValidationTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(ValidatedPerson2.class);
+            clean(validationPMF, ValidatedPerson2.class);
+            validationPMF.close();
         }
     }
 
@@ -263,7 +264,8 @@ public class ValidationTest extends JDOPersistenceTestCase
         }
         finally
         {
-            clean(ValidatedPerson3.class);
+            clean(validationPMF, ValidatedPerson3.class);
+            validationPMF.close();
         }
     }
 }
