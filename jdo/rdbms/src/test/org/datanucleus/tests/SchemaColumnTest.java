@@ -123,11 +123,11 @@ public class SchemaColumnTest extends JDOPersistenceTestCase
     {
         Properties props = new Properties();
         props.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_COLUMN_DEFAULT_WHEN_NULL, "false");
-        PersistenceManagerFactory pmf = TestHelper.getConfigurablePMF(1, props);
+        PersistenceManagerFactory myPMF = TestHelper.getConfigurablePMF(1, props);
 
         try
         {
-            PersistenceManager pm = pmf.getPersistenceManager();
+            PersistenceManager pm = myPMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
             try
             {
@@ -151,10 +151,10 @@ public class SchemaColumnTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
-            pmf.getDataStoreCache().evictAll();
+            myPMF.getDataStoreCache().evictAll();
 
             // Retrieve and check data
-            pm = pmf.getPersistenceManager();
+            pm = myPMF.getPersistenceManager();
             tx = pm.currentTransaction();
             try
             {
@@ -184,9 +184,8 @@ public class SchemaColumnTest extends JDOPersistenceTestCase
         finally
         {
             // Clean out our data
-            clean(ClassWithDefaultCols.class);
+            clean(myPMF, ClassWithDefaultCols.class);
+            myPMF.close();
         }
-
-        pmf.close();
     }
 }
