@@ -301,7 +301,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
     }
 
     /**
-     * Tests for "String.equals(Literal)" in filter.
+     * Tests for "String = Literal" in filter.
      */
     public void testFilterWithStringEqualsLiteral()
     {
@@ -310,8 +310,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         try
         {
             compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
-                null, Project.class, null, "name.equals(\"Kettle\")", null, null, null, null, null, 
-                null, null);
+                null, Project.class, null, "name = \"Kettle\"", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
         catch (NucleusException ne)
@@ -320,17 +319,16 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
             fail("compilation of filter with valid field threw exception : " + ne.getMessage());
         }
         Expression expr = compilation.getExprFilter();
-        assertTrue("Compiled expression should have been InvokeExpression but wasnt", expr instanceof InvokeExpression);
-        InvokeExpression invExpr = (InvokeExpression)expr;
-        assertTrue("InvokeExpression should have been invoked on PrimaryExpression but wasnt",
-            invExpr.getLeft() instanceof PrimaryExpression);
-        assertEquals("Name of field upon which we invoke the method was wrong", "name", 
-            ((PrimaryExpression)invExpr.getLeft()).getId());
-        assertEquals("Name of invoked method was wrong", "equals", invExpr.getOperation());
-        assertEquals("Number of parameters is wrong", 1, invExpr.getArguments().size());
-        Object param = invExpr.getArguments().get(0);
-        assertTrue("Parameter to equals() is of wrong type", param instanceof Literal);
-        Literal paramLit = (Literal)param;
+        assertTrue("Compiled expression should have been DyadicExpression but wasnt", expr instanceof DyadicExpression);
+        DyadicExpression dyExpr = (DyadicExpression)expr;
+
+        assertTrue("DyadicExpression should have left of PrimaryExpression but hasnt", dyExpr.getLeft() instanceof PrimaryExpression);
+        assertEquals("Name of field upon which we invoke the method was wrong", "name", ((PrimaryExpression)dyExpr.getLeft()).getId());
+
+        assertTrue("Name of invoked method was wrong", dyExpr.getOperator() == Expression.OP_EQ);
+
+        assertTrue("DyadicExpression should right of Literal but hasnt", dyExpr.getRight() instanceof Literal);
+        Literal paramLit = (Literal)dyExpr.getRight();
         assertEquals("Parameter to equals() has wrong value", "Kettle", paramLit.getLiteral());
     }
 
@@ -344,7 +342,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         try
         {
             compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
-                null, Project.class, null, "name.indexOf(\"nd\", 3)", null, null, null, null, null, 
+                null, Project.class, null, "LENGTH(name) > 5", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -353,25 +351,24 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
             NucleusLogger.QUERY.error("Exception during compile", ne);
             fail("compilation of filter with valid field threw exception : " + ne.getMessage());
         }
+
         Expression expr = compilation.getExprFilter();
-        assertTrue("Compiled expression should have been InvokeExpression but wasnt", expr instanceof InvokeExpression);
-        InvokeExpression invExpr = (InvokeExpression)expr;
-        assertTrue("InvokeExpression should have been invoked on PrimaryExpression but wasnt",
-            invExpr.getLeft() instanceof PrimaryExpression);
-        assertEquals("Name of field upon which we invoke the method was wrong", "name", 
-            ((PrimaryExpression)invExpr.getLeft()).getId());
-        assertEquals("Name of invoked method was wrong", "indexOf", invExpr.getOperation());
-        assertEquals("Number of parameters is wrong", 2, invExpr.getArguments().size());
+        assertTrue("Compiled expression should have been DyadicExpression but wasnt", expr instanceof DyadicExpression);
+        DyadicExpression dyExpr = (DyadicExpression)expr;
+        assertTrue("DyadicExpression operator should have been > but wasnt", dyExpr.getOperator() == Expression.OP_GT);
 
-        Object param1 = invExpr.getArguments().get(0);
-        assertTrue("Parameter1 to indexOf() is of wrong type", param1 instanceof Literal);
-        Literal param1Lit = (Literal)param1;
-        assertEquals("Parameter1 to indexOf() has wrong value", "nd", param1Lit.getLiteral());
+        assertTrue("DyadicExpression left should have been InvokeExpression but wasnt", dyExpr.getLeft() instanceof InvokeExpression);
+        InvokeExpression leftInvExpr = (InvokeExpression)dyExpr.getLeft();
+        assertTrue("InvokeExpression invoked object should have been PrimaryExpression but wasnt", leftInvExpr.getLeft() instanceof PrimaryExpression);
+        PrimaryExpression invPrimExpr = (PrimaryExpression)leftInvExpr.getLeft();
+        assertEquals("PrimaryExpression field is wrong", "name", invPrimExpr.getId());
+        assertEquals("InvokeExpression method is wrong", "length", leftInvExpr.getOperation());
+        List args = leftInvExpr.getArguments();
+        assertTrue("Number of args should be 0 but isnt", args == null || args.isEmpty());
 
-        Object param2 = invExpr.getArguments().get(1);
-        assertTrue("Parameter2 to indexOf() is of wrong type", param2 instanceof Literal);
-        Literal param2Lit = (Literal)param2;
-        assertEquals("Parameter2 to indexOf() has wrong value", new Long(3), param2Lit.getLiteral());
+        assertTrue("DyadicExpression left should have been Literal but wasnt", dyExpr.getRight() instanceof Literal);
+        Literal rightExpr = (Literal)dyExpr.getRight();
+        assertEquals("Parameter2 to indexOf() has wrong value", new Long(5), rightExpr.getLiteral());
     }
 
     /**
