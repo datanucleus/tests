@@ -23,6 +23,7 @@ import java.util.Set;
 
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.IdentifiableType;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.MapAttribute;
 import javax.persistence.metamodel.Metamodel;
@@ -102,6 +103,9 @@ public class MetamodelTest extends JPAPersistenceTestCase
             {
                 fail("Didnt find Attribute for \"farm\" field of " + Animal.class.getName());
             }
+
+            // Supertype should be null
+            assertNull(animalType.getSupertype());
         }
         catch (IllegalArgumentException iae)
         {
@@ -236,6 +240,14 @@ public class MetamodelTest extends JPAPersistenceTestCase
             {
                 fail("Didnt find Attribute for \"firstName\" field of " + Person.class.getName());
             }
+
+            // Supertype should not be null
+            IdentifiableType empType = mgrType.getSupertype();
+            assertNotNull(empType);
+            IdentifiableType persType = empType.getSupertype();
+            assertNotNull(persType);
+            IdentifiableType superType = persType.getSupertype();
+            assertNull(superType);
         }
         catch (IllegalArgumentException iae)
         {
