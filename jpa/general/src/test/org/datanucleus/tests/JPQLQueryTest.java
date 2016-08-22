@@ -42,6 +42,8 @@ import javax.persistence.TypedQuery;
 import org.datanucleus.api.jpa.JPAQuery;
 import org.datanucleus.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.datanucleus.samples.annotations.abstractclasses.ConcreteSimpleSub1;
+import org.datanucleus.samples.annotations.embedded.Job;
+import org.datanucleus.samples.annotations.embedded.Processor;
 import org.datanucleus.samples.annotations.models.company.Employee;
 import org.datanucleus.samples.annotations.models.company.Manager;
 import org.datanucleus.samples.annotations.models.company.Organisation;
@@ -95,7 +97,8 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                     House.class, Window.class, Boiler.class, Timer.class, Login.class, LoginAccount.class,
                     UserGroup.class, GroupMember.class, ModeratedUserGroup.class, ExpertGroupMember.class,
                     MapFKHolder.class, MapFKValue.class, MapFKValueBase.class,
-                    MapJoinHolder.class, MapJoinValue.class
+                    MapJoinHolder.class, MapJoinValue.class,
+                    Processor.class, Job.class,
                 });
         }
     }
@@ -3779,6 +3782,60 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         {
             clean(Employee.class);
             clean(Person.class);
+        }
+    }
+
+    /**
+     * Test for query of embedded collection elements.
+     */
+    public void testQueryOfEmbeddedElement()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Processor proc1 = new Processor(1, "quad-core");
+                Job j1 = new Job("dn1", 1);
+                Job j2 = new Job("dn2", 2);
+                proc1.addJob(j1);
+                proc1.addJob(j2);
+                Processor proc2 = new Processor(2, "dual-core");
+                Job j3 = new Job("dn3", 1);
+                proc2.addJob(j3);
+                em.persist(proc1);
+                em.persist(proc2);
+                em.flush();
+
+                Query q = em.createQuery("SELECT p FROM Processor p JOIN p.jobs j WHERE j.name='dn1'");
+                List<Processor> results = q.getResultList();
+                assertEquals(1, results.size());
+                Processor pr1 = results.get(0);
+                assertEquals(2, pr1.getNumberOfJobs());
+                assertEquals("quad-core", pr1.getType());
+
+                tx.rollback();
+            }
+            catch (PersistenceException e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Processor.class);
         }
     }
 
