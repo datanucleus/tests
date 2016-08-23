@@ -14,25 +14,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skipCoverage>true</skipCoverage>
 
-        <core.min.version>5.0.0-release</core.min.version>
-        <api.jdo.min.version>5.0.0-release</api.jdo.min.version>
-        <api.jpa.min.version>5.0.0-release</api.jpa.min.version>
+        <core.min.version>5.0.1</core.min.version>
+        <api.jdo.min.version>5.0.1</api.jdo.min.version>
+        <api.jpa.min.version>5.0.1</api.jpa.min.version>
         <api.rest.min.version>5.0.0-release</api.rest.min.version>
 
-        <rdbms.min.version>5.0.0-release</rdbms.min.version>
+        <rdbms.min.version>5.0.1</rdbms.min.version>
         <cassandra.min.version>5.0.0-release</cassandra.min.version>
         <mongodb.min.version>5.0.0-release</mongodb.min.version>
         <hbase.min.version>5.0.0-release</hbase.min.version>
-        <neo4j.min.version>5.0.0-release</neo4j.min.version>
+        <neo4j.min.version>5.0.1</neo4j.min.version>
         <neodatis.min.version>5.0.0-release</neodatis.min.version>
-        <excel.min.version>5.0.0-release</excel.min.version>
+        <excel.min.version>5.0.1</excel.min.version>
         <odf.min.version>5.0.0-release</odf.min.version>
         <json.min.version>5.0.0-release</json.min.version>
         <ldap.min.version>5.0.0-release</ldap.min.version>
         <xml.min.version>5.0.0-release</xml.min.version>
 
         <jodatime.min.version>5.0.0-release</jodatime.min.version>
-        <geospatial.min.version>5.0.0-release</geospatial.min.version>
+        <geospatial.min.version>5.0.1</geospatial.min.version>
         <guava.min.version>5.0.0-release</guava.min.version>
     </properties>
 
