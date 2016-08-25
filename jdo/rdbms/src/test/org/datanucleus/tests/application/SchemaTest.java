@@ -36,6 +36,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.store.connection.ManagedConnection;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
@@ -409,10 +410,9 @@ public class SchemaTest extends JDOPersistenceTestCase
 
             // Create a PMF for our read-only schema
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.readOnlyDatastore", "true");
+            userProps.setProperty(PropertyNames.PROPERTY_DATASTORE_READONLY, "true");
             PersistenceManagerFactory pmf2 = TestHelper.getPMF(1, userProps);
-            assertTrue("The PMF should have had the ReadOnlyDatastore property, yet hasn't", 
-                getConfigurationForPMF(pmf2).getBooleanProperty("datanucleus.readOnlyDatastore"));
+            assertTrue("The PMF should have had the ReadOnlyDatastore property, yet hasn't", getConfigurationForPMF(pmf2).getBooleanProperty(PropertyNames.PROPERTY_DATASTORE_READONLY));
 
             PersistenceManager pm2 = pmf2.getPersistenceManager();
 
@@ -534,7 +534,7 @@ public class SchemaTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test of the Fixed datastore facility.
+     * Test of the fixed datastore facility.
      * Should prevent all attempts to change tables in the datastore, yet allow insert/delete of rows.
      */
     public void testFixedDatastore()
@@ -563,10 +563,10 @@ public class SchemaTest extends JDOPersistenceTestCase
 
             // Create a PMF for our read-only schema
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.fixedDatastore", "true");
+            userProps.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES, "false");
             PersistenceManagerFactory pmf2 = TestHelper.getPMF(1, userProps);
-            assertTrue("The PMF should have had the FixedSchema property, yet hasn't",
-                getConfigurationForPMF(pmf2).getBooleanProperty("datanucleus.fixedDatastore"));
+            assertFalse("The PMF should have had the AutoCreate property as false, yet hasn't",
+                getConfigurationForPMF(pmf2).getBooleanProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES));
 
             PersistenceManager pm2=pmf2.getPersistenceManager();
 
@@ -575,14 +575,13 @@ public class SchemaTest extends JDOPersistenceTestCase
             try
             {
                 tx2.begin();
-                Employee e = new Employee(123, "Barney", "Rubble", "barney.rubble@warnerbros.com", 
-                    (float)123.45, "1245D");
+                Employee e = new Employee(123, "Barney", "Rubble", "barney.rubble@warnerbros.com", (float)123.45, "1245D");
                 pm2.makePersistent(e);
                 tx2.commit();
             }
             catch (Exception e)
             {
-                assertTrue("Should not have thrown an exception when trying makePersistent on ReadOnly datastore", false);
+                assertTrue("Should not have thrown an exception when trying makePersistent on fixed datastore", false);
                 LOG.error(e);
             }
             finally
@@ -610,7 +609,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                assertTrue("Should not have thrown an exception when trying deletePersistent on Fixed datastore", false);
+                assertTrue("Should not have thrown an exception when trying deletePersistent on fixed datastore", false);
                 LOG.error(e);
             }
             finally
@@ -639,7 +638,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                assertTrue("Should not have thrown an exception when modifying an object on Fixed datastore", false);
+                assertTrue("Should not have thrown an exception when modifying an object on fixed datastore", false);
                 LOG.error(e);
             }
             finally
@@ -668,7 +667,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                assertTrue("Should have been able to access objects on a Fixed datastore", false);
+                assertTrue("Should have been able to access objects on a fixed datastore", false);
                 LOG.error(e);
             }
             finally
