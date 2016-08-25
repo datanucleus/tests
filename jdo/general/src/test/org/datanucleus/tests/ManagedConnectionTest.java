@@ -24,6 +24,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import org.datanucleus.PropertyNames;
 import org.jpox.samples.one_one.unidir.LoginAccount;
 
 public class ManagedConnectionTest extends JDOPersistenceTestCase
@@ -39,7 +40,7 @@ public class ManagedConnectionTest extends JDOPersistenceTestCase
     public void testNontransactionalReleaseAfterUseFalse()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("datanucleus.connection.nontx.releaseAfterUse", "false");
+        userProps.setProperty(PropertyNames.PROPERTY_CONNECTION_NONTX_RELEASE_AFTER_USE, "false");
         PersistenceManagerFactory thePMF = TestHelper.getPMF(1, userProps);
         try
         {

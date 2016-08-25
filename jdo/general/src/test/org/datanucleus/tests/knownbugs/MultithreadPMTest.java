@@ -24,6 +24,7 @@ import javax.jdo.FetchPlan;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
 import org.jpox.samples.models.company.CompanyHelper;
@@ -61,7 +62,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     public void testMultipleTransitionRead()
     {
         Properties multiProps = new Properties();
-        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
         PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
         try
         {
@@ -127,7 +128,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     public void testMultipleNonTransactionalRead()
     {
         Properties multiProps = new Properties();
-        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
         PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
 
         try
@@ -194,7 +195,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     public void testMultipleTransitionWrite()
     {
         Properties multiProps = new Properties();
-        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
         PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
         
         try
@@ -262,7 +263,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     public void testEvictAllAndWrites()
     {
         Properties multiProps = new Properties();
-        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
         PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
         
         try
@@ -345,7 +346,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     public void testMultipleNonTransitionWrite()
     {
         Properties multiProps = new Properties();
-        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
         PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
         
         try
@@ -410,7 +411,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     public void testMultipleDetachCopy()
     {
         Properties multiProps = new Properties();
-        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
         PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
         
         try
@@ -508,7 +509,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     public void testMultipleDetachCopyAndFetchPlanModification()
     {
         Properties multiProps = new Properties();
-        multiProps.setProperty("datanucleus.Multithreaded", "true");
+        multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
         PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
         
         try

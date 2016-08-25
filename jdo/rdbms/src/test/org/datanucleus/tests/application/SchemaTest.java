@@ -39,6 +39,7 @@ import javax.jdo.Transaction;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.store.connection.ManagedConnection;
+import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.RDBMSTestHelper;
@@ -324,8 +325,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Employee e = new Employee(245, "Fred", "Flintstone", "fred.flintstone@warnerbros.com", (float)178.90, 
-                    "123456789012345");
+                Employee e = new Employee(245, "Fred", "Flintstone", "fred.flintstone@warnerbros.com", (float)178.90, "123456789012345");
                 pm.makePersistent(e);
                 tx.commit();
                 fail("Persisted an object with a field value that was too long for the column storing it!");
@@ -345,7 +345,7 @@ public class SchemaTest extends JDOPersistenceTestCase
 
             // 2). Persist an object with a "serialNo" too long for the column, and use PMF option to truncate
             Properties userProps = new Properties();
-            userProps.setProperty("datanucleus.rdbms.stringLengthExceededAction", "TRUNCATE");
+            userProps.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_STRING_LENGTH_EXCEEDED_ACTION, "TRUNCATE");
             PersistenceManagerFactory pmf2 = TestHelper.getPMF(1, userProps);
             pm = pmf2.getPersistenceManager();
             tx = pm.currentTransaction();

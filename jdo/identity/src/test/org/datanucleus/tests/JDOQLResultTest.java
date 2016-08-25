@@ -35,6 +35,7 @@ import javax.jdo.Transaction;
 
 import junit.framework.Assert;
 
+import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.many_many.AccountCustomer;
 import org.jpox.samples.many_many.GasSupplier;
@@ -2543,8 +2544,8 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
             Employee bunny = new Employee(3,"Bugs","Bunny","bugs.bunny@warnerbros.com",12,"serial 3"); //Eh, what's up, doc?
             Employee roadrunner = new Employee(4,"Road","Runner","road.runner@warnerbros.com",11,"serial 4"); //Meep! Meep!
 
-            getConfigurationForPMF(pmf).setProperty("datanucleus.rdbms.query.resultSetType", "scroll-insensitive");
-            getConfigurationForPMF(pmf).setProperty("datanucleus.rdbms.query.fetchDirection", "forward");
+            getConfigurationForPMF(pmf).setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_QUERY_RESULT_SET_TYPE, "scroll-insensitive");
+            getConfigurationForPMF(pmf).setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_QUERY_FETCH_DIRECTION, "forward");
 
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
