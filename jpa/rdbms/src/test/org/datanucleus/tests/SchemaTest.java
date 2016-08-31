@@ -30,6 +30,8 @@ import org.datanucleus.samples.annotations.embedded.collection.EmbeddedCollEleme
 import org.datanucleus.samples.annotations.embedded.collection.EmbeddedCollectionOwner;
 import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapKey;
 import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapValue;
+import org.datanucleus.samples.annotations.embedded.pc.EmbeddedPC;
+import org.datanucleus.samples.annotations.embedded.pc.EmbeddedPCOwner;
 import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapOwner;
 import org.datanucleus.samples.annotations.inheritance.InheritA;
 import org.datanucleus.samples.annotations.inheritance.InheritA1;
@@ -521,6 +523,53 @@ public class SchemaTest extends JPAPersistenceTestCase
             columnNames2.add("COLL_ELEM_NAME"); // Element "name"
             columnNames2.add("COLL_ELEM_VALUE"); // Element "value"
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_COLL_EMB_OVERRIDE", columnNames2);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA embedded PC.
+     */
+    public void testEmbeddedPC()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {EmbeddedPCOwner.class, EmbeddedPC.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // Map with embedded value taking default value column names
+            Set<String> columnNames = new HashSet<String>();
+            columnNames.add("ID"); // Id
+            columnNames.add("EMB_NAME"); // PC "name"
+            columnNames.add("EMB_VALUE"); // PC "value"
+            columnNames.add("PC_EMB_NAME"); // PC "name" (overridden)
+            columnNames.add("PC_EMB_VALUE"); // PC "value" (overridden)
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_PC_EMBEDDED_OWNER", columnNames);
         }
         catch (Exception e)
         {
