@@ -1,15 +1,21 @@
 package org.datanucleus.tests;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.tests.annotations.Datastore;
 import org.jpox.samples.models.company.Office;
 
 import javax.jdo.*;
 import java.util.List;
 import java.util.Objects;
 
+import static org.datanucleus.tests.annotations.Datastore.DatastoreKey.POSTGRESQL;
+
 /**
  * Created by pica on 02/03/16.
  */
+
+
+@Datastore({POSTGRESQL})
 public class QueryTimeoutTest extends JDOPersistenceTestCase{
 
     // pseudo unique description for our data
@@ -83,11 +89,27 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
 
     public void testSQLTimeout() {
 
+        /*
+        DatastoreAdapter dba = getDatastoreAdapter();
+        boolean lock = false;
+        Boolean val = (Boolean)getValueForExtension("lock-for-update");
+         */
+
+        /*
+        if (lock && !dba.supportsOption(DatastoreAdapter.LOCK_WITH_SELECT_FOR_UPDATE) &&
+            !dba.supportsOption(DatastoreAdapter.LOCK_OPTION_PLACED_AFTER_FROM) &&
+            !dba.supportsOption(DatastoreAdapter.LOCK_OPTION_PLACED_WITHIN_JOIN))
+        {
+            NucleusLogger.QUERY.warn("Requested locking of query statement, but this RDBMS doesn't support a convenient mechanism");
+        }
+
+         */
         if (!pmf.supportedOptions().contains("javax.jdo.option.DatastoreTimeout"))
         {
             // Datastore doesn't support query timeouts
             return;
         }
+        //pmf
 
         Runnable sleeper = new SerializedSleepyLister(pmf, true, 2000);
         RunnerThrowable searcher = new ImpatientSearcher(pmf, true, 1000);
