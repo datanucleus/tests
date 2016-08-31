@@ -83,7 +83,7 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
 
     public void testSQLTimeout() {
 
-        if (!pmf.supportedOptions().contains("javax.jdo.option.Datastore.Timeout"))
+        if (!pmf.supportedOptions().contains("javax.jdo.option.DatastoreTimeout"))
         {
             // Datastore doesn't support query timeouts
             return;
