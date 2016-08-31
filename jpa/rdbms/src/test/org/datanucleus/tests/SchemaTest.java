@@ -455,19 +455,17 @@ public class SchemaTest extends JPAPersistenceTestCase
             // Map with embedded key taking default key column names
             Set<String> columnNames3 = new HashSet<String>();
             columnNames3.add("EMBEDDEDOWNER_ID"); // FK to owner
-            columnNames3.add("NAME"); // Key
-            columnNames3.add("VALUE"); // Value "name"
+            columnNames3.add("NAME"); // Key "name"
+            columnNames3.add("VALUE"); // Key "value"
             columnNames3.add("MAPEMBEDDEDKEY_VALUE"); // Value
-            columnNames3.add("MAPEMBEDDEDKEY_ORDER"); // Extra column to be part of PK TODO Check with spec for this
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_KEY", columnNames3);
 
             // Map with embedded key overriding the key column names
             Set<String> columnNames4 = new HashSet<String>();
             columnNames4.add("EMBEDDEDOWNER_ID"); // FK to owner
-            columnNames4.add("MAP_KEY_NAME"); // Key
-            columnNames4.add("MAP_KEY_VALUE"); // Value "name"
+            columnNames4.add("MAP_KEY_NAME"); // Key "name"
+            columnNames4.add("MAP_KEY_VALUE"); // Key "value"
             columnNames4.add("MAPEMBEDDEDKEYOVERRIDE_VALUE"); // Value
-            columnNames4.add("MAPEMBEDDEDKEYOVERRIDE_ORDER"); // Extra column to be part of PK TODO Check with spec for this
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_KEY_OVERRIDE", columnNames4);
         }
         catch (Exception e)
