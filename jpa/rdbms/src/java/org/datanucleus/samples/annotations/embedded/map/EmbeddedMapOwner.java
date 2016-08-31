@@ -27,25 +27,26 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 /**
- * Owner class with fields that are embedded.
+ * Owner class with map fields that are embedded.
  */
 @Entity
-@Table(name="JPA_EMBEDDED_OWNER")
-public class EmbeddedOwner
+@Table(name="JPA_MAP_EMBEDDED_OWNER")
+public class EmbeddedMapOwner
 {
     @Id
     long id;
 
     @ElementCollection
-    @CollectionTable(name="JPA_MAP_EMB_VALUE")
+    @CollectionTable(name="JPA_MAP_EMB_VALUE", joinColumns=@JoinColumn(name="JPA_MAP_EMB_OWNER_ID"))
     Map<String, EmbeddedMapValue> mapEmbeddedValue = new HashMap<>();
 
     @ElementCollection
-    @CollectionTable(name="JPA_MAP_EMB_VALUE_OVERRIDE")
+    @CollectionTable(name="JPA_MAP_EMB_VALUE_OVERRIDE", joinColumns=@JoinColumn(name="JPA_MAP_EMB_OWNER_ID"))
     @MapKeyColumn(name="MAP_KEY")
     @AttributeOverrides({
         @AttributeOverride(name="value.name", column=@Column(name="MAP_VALUE_NAME")), 
@@ -53,17 +54,17 @@ public class EmbeddedOwner
     Map<String, EmbeddedMapValue> mapEmbeddedValueOverride = new HashMap<>();
 
     @ElementCollection
-    @CollectionTable(name="JPA_MAP_EMB_KEY")
+    @CollectionTable(name="JPA_MAP_EMB_KEY", joinColumns=@JoinColumn(name="JPA_MAP_EMB_OWNER_ID"))
     Map<EmbeddedMapKey, String> mapEmbeddedKey = new HashMap<>();
 
     @ElementCollection
-    @CollectionTable(name="JPA_MAP_EMB_KEY_OVERRIDE")
+    @CollectionTable(name="JPA_MAP_EMB_KEY_OVERRIDE", joinColumns=@JoinColumn(name="JPA_MAP_EMB_OWNER_ID"))
     @AttributeOverrides({
         @AttributeOverride(name="key.name", column=@Column(name="MAP_KEY_NAME")), 
         @AttributeOverride(name="key.value", column=@Column(name="MAP_KEY_VALUE"))})
     Map<EmbeddedMapKey, String> mapEmbeddedKeyOverride = new HashMap<>();
 
-    public EmbeddedOwner(long id)
+    public EmbeddedMapOwner(long id)
     {
         this.id = id;
     }

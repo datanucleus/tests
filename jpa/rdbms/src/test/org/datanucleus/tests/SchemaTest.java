@@ -26,9 +26,11 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.embedded.collection.EmbeddedCollElement;
+import org.datanucleus.samples.annotations.embedded.collection.EmbeddedCollectionOwner;
 import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapKey;
 import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapValue;
-import org.datanucleus.samples.annotations.embedded.map.EmbeddedOwner;
+import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapOwner;
 import org.datanucleus.samples.annotations.inheritance.InheritA;
 import org.datanucleus.samples.annotations.inheritance.InheritA1;
 import org.datanucleus.samples.annotations.inheritance.InheritA2;
@@ -423,7 +425,7 @@ public class SchemaTest extends JPAPersistenceTestCase
     public void testEmbeddedMap()
     throws Exception
     {
-        addClassesToSchema(new Class[] {EmbeddedOwner.class, EmbeddedMapKey.class, EmbeddedMapValue.class});
+        addClassesToSchema(new Class[] {EmbeddedMapOwner.class, EmbeddedMapKey.class, EmbeddedMapValue.class});
 
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -438,7 +440,7 @@ public class SchemaTest extends JPAPersistenceTestCase
 
             // Map with embedded value taking default value column names
             Set<String> columnNames = new HashSet<String>();
-            columnNames.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames.add("JPA_MAP_EMB_OWNER_ID"); // FK to owner
             columnNames.add("MAPEMBEDDEDVALUE_KEY"); // Key
             columnNames.add("NAME"); // Value "name"
             columnNames.add("VALUE"); // Value "value"
@@ -446,15 +448,15 @@ public class SchemaTest extends JPAPersistenceTestCase
 
             // Map with embedded value overriding the value column names
             Set<String> columnNames2 = new HashSet<String>();
-            columnNames2.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames2.add("JPA_MAP_EMB_OWNER_ID"); // FK to owner
             columnNames2.add("MAP_KEY"); // Key "name"
-            columnNames2.add("MAP_VALUE_NAME"); // Key "value"
+            columnNames2.add("MAP_VALUE_NAME"); // Value "name"
             columnNames2.add("MAP_VALUE_VALUE"); // Value "value"
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_VALUE_OVERRIDE", columnNames2);
 
             // Map with embedded key taking default key column names
             Set<String> columnNames3 = new HashSet<String>();
-            columnNames3.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames3.add("JPA_MAP_EMB_OWNER_ID"); // FK to owner
             columnNames3.add("NAME"); // Key "name"
             columnNames3.add("VALUE"); // Key "value"
             columnNames3.add("MAPEMBEDDEDKEY_VALUE"); // Value
@@ -462,11 +464,63 @@ public class SchemaTest extends JPAPersistenceTestCase
 
             // Map with embedded key overriding the key column names
             Set<String> columnNames4 = new HashSet<String>();
-            columnNames4.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames4.add("JPA_MAP_EMB_OWNER_ID"); // FK to owner
             columnNames4.add("MAP_KEY_NAME"); // Key "name"
             columnNames4.add("MAP_KEY_VALUE"); // Key "value"
             columnNames4.add("MAPEMBEDDEDKEYOVERRIDE_VALUE"); // Value
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_KEY_OVERRIDE", columnNames4);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA embedded collection elements.
+     */
+    public void testEmbeddedCollection()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {EmbeddedCollectionOwner.class, EmbeddedCollElement.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // Map with embedded value taking default value column names
+            Set<String> columnNames = new HashSet<String>();
+            columnNames.add("JPA_COLL_EMB_OWNER_ID"); // FK to owner
+            columnNames.add("NAME"); // Element "name"
+            columnNames.add("VALUE"); // Element "value"
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_COLL_EMB", columnNames);
+
+            // Map with embedded value overriding the value column names
+            Set<String> columnNames2 = new HashSet<String>();
+            columnNames2.add("JPA_COLL_EMB_OWNER_ID"); // FK to owner
+            columnNames2.add("COLL_ELEM_NAME"); // Element "name"
+            columnNames2.add("COLL_ELEM_VALUE"); // Element "value"
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_COLL_EMB_OVERRIDE", columnNames2);
         }
         catch (Exception e)
         {
