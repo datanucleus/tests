@@ -21,10 +21,14 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapKey;
+import org.datanucleus.samples.annotations.embedded.map.EmbeddedMapValue;
+import org.datanucleus.samples.annotations.embedded.map.EmbeddedOwner;
 import org.datanucleus.samples.annotations.inheritance.InheritA;
 import org.datanucleus.samples.annotations.inheritance.InheritA1;
 import org.datanucleus.samples.annotations.inheritance.InheritA2;
@@ -393,6 +397,78 @@ public class SchemaTest extends JPAPersistenceTestCase
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "MAPHOLDER1XML_PROPERTIES2", columnNames3);
 
             tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA embedded map keys/values.
+     */
+    public void testEmbeddedMap()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {EmbeddedOwner.class, EmbeddedMapKey.class, EmbeddedMapValue.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // Map with embedded value taking default value column names
+            Set<String> columnNames = new HashSet<String>();
+            columnNames.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames.add("MAPEMBEDDEDVALUE_KEY"); // Key
+            columnNames.add("NAME"); // Value "name"
+            columnNames.add("VALUE"); // Value "value"
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_VALUE", columnNames);
+
+            // Map with embedded value overriding the value column names
+            Set<String> columnNames2 = new HashSet<String>();
+            columnNames2.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames2.add("MAP_KEY"); // Key "name"
+            columnNames2.add("MAP_VALUE_NAME"); // Key "value"
+            columnNames2.add("MAP_VALUE_VALUE"); // Value "value"
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_VALUE_OVERRIDE", columnNames2);
+
+            // Map with embedded key taking default key column names
+            Set<String> columnNames3 = new HashSet<String>();
+            columnNames3.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames3.add("NAME"); // Key
+            columnNames3.add("VALUE"); // Value "name"
+            columnNames3.add("MAPEMBEDDEDKEY_VALUE"); // Value
+            columnNames3.add("MAPEMBEDDEDKEY_ORDER"); // Extra column to be part of PK TODO Check with spec for this
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_KEY", columnNames3);
+
+            // Map with embedded key overriding the key column names
+            Set<String> columnNames4 = new HashSet<String>();
+            columnNames4.add("EMBEDDEDOWNER_ID"); // FK to owner
+            columnNames4.add("MAP_KEY_NAME"); // Key
+            columnNames4.add("MAP_KEY_VALUE"); // Value "name"
+            columnNames4.add("MAPEMBEDDEDKEYOVERRIDE_VALUE"); // Value
+            columnNames4.add("MAPEMBEDDEDKEYOVERRIDE_ORDER"); // Extra column to be part of PK TODO Check with spec for this
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_MAP_EMB_KEY_OVERRIDE", columnNames4);
         }
         catch (Exception e)
         {
