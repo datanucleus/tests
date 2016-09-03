@@ -28,6 +28,7 @@
     <entity class="org.jpox.samples.one_many.map_fk.MapFKValueBase">
         <table name="JPA_MAP_FK_VALUE"/>
         <inheritance strategy="SINGLE_TABLE"/>
+        <discriminator-column length="255"/>
         <attributes>
             <id name="id"/>
             <basic name="key"/>
@@ -36,9 +37,9 @@
 
     <entity class="org.jpox.samples.one_many.map_fk.MapFKValue">
         <attributes>
-            <many-to-one name="holder"/>
             <basic name="name"/>
             <basic name="description"/>
+            <many-to-one name="holder"/>
         </attributes>
     </entity>
 </entity-mappings>
