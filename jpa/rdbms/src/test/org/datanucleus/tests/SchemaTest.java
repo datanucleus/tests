@@ -206,6 +206,7 @@ public class SchemaTest extends JPAPersistenceTestCase
             columnNames.add("NAME");
             columnNames.add("NAME1");
             columnNames.add("NAME2");
+            columnNames.add("DTYPE");
 
             // Check base table column names
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_INHERIT_C", columnNames);
