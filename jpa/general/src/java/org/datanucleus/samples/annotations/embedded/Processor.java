@@ -62,7 +62,7 @@ public class Processor
 
     public final List<Job> getJobs()
     {
-        return new ArrayList(jobs);
+        return new ArrayList<>(jobs);
     }
 
     public void addJob(Job job)

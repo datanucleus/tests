@@ -24,12 +24,10 @@ import java.util.Iterator;
 
 /**
  * Sample container of elements using "identity" strategy.
- * 
- * @version $Revision: 1.1 $
  */
 public class IdentityGeneratorItemContainer
 {
-    Collection members = new ArrayList();
+    Collection<IdentityGeneratorItem> members = new ArrayList<>();
 
     public IdentityGeneratorItemContainer(IdentityGeneratorItem[] members)
     {

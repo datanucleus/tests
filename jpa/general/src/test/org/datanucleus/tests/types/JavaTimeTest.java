@@ -465,7 +465,7 @@ public class JavaTimeTest extends JPAPersistenceTestCase
                     " s WHERE s.localDate1 < :dateParam");
                 LocalDate dateParam = LocalDate.of(2001, 6, 25);
                 q.setParameter("dateParam", dateParam);
-                List<JavaTimeSample2> results = (List<JavaTimeSample2>) q.getResultList();
+                List<JavaTimeSample2> results = q.getResultList();
                 assertEquals("Number of results is wrong", 1, results.size());
                 JavaTimeSample2 s = results.get(0);
                 LocalDate ld1 = s.getLocalDate1();

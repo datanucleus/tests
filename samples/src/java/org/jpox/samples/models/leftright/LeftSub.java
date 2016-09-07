@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class LeftSub extends LeftBase
 {
-    List members = new ArrayList();
+    List<LeftBase> members = new ArrayList<>();
 
     public LeftSub(int id, LeftBase[] members)
     {

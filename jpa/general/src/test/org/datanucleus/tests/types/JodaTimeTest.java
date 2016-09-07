@@ -602,7 +602,7 @@ public class JodaTimeTest extends JPAPersistenceTestCase
                     " s WHERE s.localDate1 < :dateParam");
                 LocalDate dateParam = new LocalDate(2001, 6, 25);
                 q.setParameter("dateParam", dateParam);
-                List<JodaSample2> results = (List<JodaSample2>) q.getResultList();
+                List<JodaSample2> results = q.getResultList();
                 assertEquals("Number of results is wrong", 1, results.size());
                 JodaSample2 s = results.get(0);
                 LocalDate ld1 = s.getLocalDate1();

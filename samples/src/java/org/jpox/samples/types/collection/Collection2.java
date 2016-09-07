@@ -25,8 +25,6 @@ import org.jpox.samples.types.container.CollectionHolder;
 
 /**
  * Container object for FK Collection tests.
- *
- * @version $Revision: 1.1 $
  */
 public class Collection2 implements CollectionHolder
 {

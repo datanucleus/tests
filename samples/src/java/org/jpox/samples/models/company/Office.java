@@ -34,7 +34,7 @@ public class Office implements Cloneable, Serializable
     private String roomName; // PK when app-id
 
     private String description;
-    private Set<Department> departments = new HashSet(); // 1-N uni relation using join table
+    private Set<Department> departments = new HashSet<>(); // 1-N uni relation using join table
     private Date date;
 
     public Office()

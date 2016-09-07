@@ -68,7 +68,7 @@ public class ListHolder
         return listNonPC1;
     }
 
-    public List getJoinListPC()
+    public List<PCFKListElement> getJoinListPC()
     {
         if (joinListPC == null)
         {

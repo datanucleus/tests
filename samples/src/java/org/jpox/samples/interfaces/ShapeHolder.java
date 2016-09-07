@@ -39,8 +39,8 @@ public class ShapeHolder
     protected Shape shape1 = null;
     protected Shape shape2 = null;
 
-    protected List<Shape> shapeList1 = new ArrayList();
-    protected Set<Shape> shapeSet1 = new HashSet();
+    protected List<Shape> shapeList1 = new ArrayList<>();
+    protected Set<Shape> shapeSet1 = new HashSet<>();
 
     public ShapeHolder(int id)
     {

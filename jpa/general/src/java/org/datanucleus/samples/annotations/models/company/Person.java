@@ -95,7 +95,7 @@ public class Person implements Cloneable, Serializable
         return bestFriend;
     }
 
-    public Map getPhoneNumbers()
+    public Map<String, PhoneNumber> getPhoneNumbers()
     {
         return phoneNumbers;
     }

@@ -30,7 +30,7 @@ public class House
     private int number;
     private String street;
 
-    private Set<Window> windows = new HashSet();
+    private Set<Window> windows = new HashSet<>();
 
     public House(int number, String street)
     {
@@ -44,7 +44,7 @@ public class House
         return "House [number=" + number + ", " + (street != null ? "street=" + street + ", " : "") + (windows != null ? "windows=" + windows : "") + "]";
     }
 
-    public final Collection getWindows()
+    public final Collection<Window> getWindows()
     {
         return windows;
     }
@@ -76,9 +76,9 @@ public class House
      * Method to set new windows
      * @param windows The windows to replace the former collection
      */
-    public void setWindows(Collection windows)
+    public void setWindows(Collection<? extends Window> windows)
     {
-        this.windows = new HashSet(windows);
+        this.windows = new HashSet<>(windows);
     }
 
     /**

@@ -31,7 +31,7 @@ public class ReachableHolder
 
     ReachableItem item1 = null; // Not persisted by reachability
 
-    Set<ReachableItem> set1 = new HashSet(); // Not persisted by reachability
+    Set<ReachableItem> set1 = new HashSet<>(); // Not persisted by reachability
 
     public ReachableHolder(String name)
     {

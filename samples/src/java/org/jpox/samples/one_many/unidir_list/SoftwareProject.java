@@ -27,7 +27,7 @@ public class SoftwareProject
 {
     protected long id;
     protected String name;
-    protected List<Donation> donations = new ArrayList();
+    protected List<Donation> donations = new ArrayList<>();
 
     /**
      * Constructor.

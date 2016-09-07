@@ -30,7 +30,7 @@ public class UserGroup
     private long id;
     private String name;
 
-    private List<GroupMember> members = new ArrayList();
+    private List<GroupMember> members = new ArrayList<>();
 
     public UserGroup(long id, String name)
     {
@@ -43,7 +43,7 @@ public class UserGroup
         return members;
     }
 
-    public void setMembers(List members)
+    public void setMembers(List<GroupMember> members)
     {
         this.members = members;
     }

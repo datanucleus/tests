@@ -26,7 +26,7 @@ import java.util.Set;
 public class Shape5Holder
 {
     private int id;
-    protected Set<Shape5> shapeSet = new HashSet();
+    protected Set<Shape5> shapeSet = new HashSet<>();
 
     public Shape5Holder()
     {

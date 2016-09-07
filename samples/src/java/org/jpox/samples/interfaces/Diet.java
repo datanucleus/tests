@@ -28,7 +28,7 @@ public class Diet
     private int id;
     protected Food favouriteFood = null;
 
-    protected Set<Food> foods = new HashSet();
+    protected Set<Food> foods = new HashSet<>();
 
     public Diet(int id)
     {

@@ -47,7 +47,7 @@ public abstract class AbstractSky
     {
         if (this.clouds == null)
         {
-            this.clouds = new ArrayList();
+            this.clouds = new ArrayList<>();
         }
         this.clouds.add(cl);
     }

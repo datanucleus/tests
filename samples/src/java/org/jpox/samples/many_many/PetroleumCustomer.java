@@ -23,16 +23,14 @@ import java.util.HashSet;
 
 /**
  * Customer for petroleum.
- *
- * @version $Revision: 1.2 $    
- **/
+ */
 public class PetroleumCustomer
 {
     protected long id; // PK for app id
 
     protected String name=null;
 
-    Collection suppliers = new HashSet();
+    Collection<PetroleumSupplier> suppliers = new HashSet<>();
 
     public PetroleumCustomer(String name)
     {
@@ -59,7 +57,7 @@ public class PetroleumCustomer
         return suppliers.size();
     }
 
-    public Collection getSuppliers()
+    public Collection<PetroleumSupplier> getSuppliers()
     {
         return suppliers;
     }

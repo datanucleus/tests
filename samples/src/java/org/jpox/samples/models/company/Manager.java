@@ -40,8 +40,8 @@ public class Manager extends Employee implements Serializable
     public Manager(long id, String firstname, String lastname, String email, float salary, String serial)
     {
         super(id, firstname, lastname, email, salary, serial);
-        this.departments = new HashSet();
-        this.subordinates = new HashSet();
+        this.departments = new HashSet<>();
+        this.subordinates = new HashSet<>();
     }
 
     public Set<Employee> getSubordinates()
@@ -59,7 +59,7 @@ public class Manager extends Employee implements Serializable
         this.subordinates.remove(e);
     }
 
-    public void addSubordinates(Collection c)
+    public void addSubordinates(Collection<? extends Employee> c)
     {
         this.subordinates.addAll(c);
     }
@@ -97,7 +97,7 @@ public class Manager extends Employee implements Serializable
      * @return <tt>true</tt> if the sets compare equal, <tt>false</tt>
      * otherwise.
      */
-    public static boolean compareSet(Set s1, Set s2)
+    public static boolean compareSet(Set s1, Set<? extends Object> s2)
     {
         if (s1 == null)
         {
@@ -113,7 +113,7 @@ public class Manager extends Employee implements Serializable
             return false;
         }
 
-        s2 = new HashSet(s2);
+        s2 = new HashSet<>(s2);
         Iterator i = s1.iterator();
         while (i.hasNext())
         {
@@ -145,10 +145,9 @@ public class Manager extends Employee implements Serializable
      * contain the same number of objects and each element of the first set has
      * a corresponding element in the second set whose fields compare equal
      * according to the compareTo() method.
-     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt>
-     * otherwise.
+     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt> otherwise.
      */
-    public static boolean compareElementsContained(Set s1, Set s2)
+    public static boolean compareElementsContained(Set s1, Set<? extends Object> s2)
     {
         if (s1 == null)
         {
@@ -164,7 +163,7 @@ public class Manager extends Employee implements Serializable
             return false;
         }
 
-        s2 = new HashSet(s2);
+        s2 = new HashSet<>(s2);
         Iterator i = s1.iterator();
         while (i.hasNext())
         {

@@ -18,6 +18,7 @@ Contributors:
 package org.jpox.samples.versioned;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Block of trades in a financial system.
@@ -27,7 +28,7 @@ public class Trade6Holder
 {
     long id; // Can be used for PK
     String name = null;
-    HashSet trades = new HashSet();
+    Set<Trade6> trades = new HashSet<>();
 
     public Trade6Holder(String name)
     {
@@ -39,12 +40,12 @@ public class Trade6Holder
         return id;
     }
 
-    public HashSet getTrades()
+    public Set<Trade6> getTrades()
     {
         return trades;
     }
 
-    public void setTrades(HashSet trades)
+    public void setTrades(Set<Trade6> trades)
     {
         this.trades = trades;
     }

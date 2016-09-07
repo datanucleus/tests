@@ -23,8 +23,6 @@ import java.util.HashSet;
 
 /**
  * Supplier of petroleum.
- *
- * @version $Revision: 1.2 $    
  */
 public class PetroleumSupplier
 {
@@ -32,7 +30,7 @@ public class PetroleumSupplier
 
     protected String name=null;
 
-    Collection customers=new HashSet();
+    Collection<PetroleumCustomer> customers=new HashSet<>();
 
     public PetroleumSupplier(String name)
     {
@@ -59,7 +57,7 @@ public class PetroleumSupplier
         return customers.size();
     }
 
-    public Collection getCustomers()
+    public Collection<PetroleumCustomer> getCustomers()
     {
         return customers;
     }

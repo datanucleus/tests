@@ -30,7 +30,7 @@ public class Processor
 {
     private long id; // Used by application identity
     private String type;
-    private ArrayList jobs = new ArrayList();
+    private List<Job> jobs = new ArrayList<>();
 
     public Processor(String type)
     {
@@ -49,7 +49,7 @@ public class Processor
 
     public final List getJobs()
     {
-        return new ArrayList(jobs);
+        return new ArrayList<>(jobs);
     }
 
     public void addJob(Job job)

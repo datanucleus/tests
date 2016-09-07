@@ -26,7 +26,7 @@ import java.util.Set;
 public class ShapeHolder3
 {
     private int id;
-    protected Set<ShapeInverse> shapeSet = new HashSet();
+    protected Set<ShapeInverse> shapeSet = new HashSet<>();
 
     public ShapeHolder3()
     {

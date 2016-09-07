@@ -61,7 +61,7 @@ public class Manager extends Employee implements Serializable
         super(id, firstname, lastname, email, salary, serial);
     }
 
-    public Set getSubordinates()
+    public Set<Employee> getSubordinates()
     {
         return this.subordinates;
     }

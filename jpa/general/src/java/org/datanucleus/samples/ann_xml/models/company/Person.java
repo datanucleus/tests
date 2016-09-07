@@ -59,7 +59,7 @@ public class Person implements Cloneable, Serializable
     @OneToMany(targetEntity=PhoneNumber.class)
     @MapKeyColumn(name="phoneNumbers_key1")
     @MapKey(name="name")
-    private Map<String, PhoneNumber> phoneNumbers = new HashMap();
+    private Map<String, PhoneNumber> phoneNumbers = new HashMap<>();
 
     public Person()
     {

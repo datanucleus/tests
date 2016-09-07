@@ -18,6 +18,7 @@ Contributors:
 package org.jpox.samples.linkedlist;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class with a set of children (of the same type), and a 1-1 uni relation with the next object in the list.
@@ -29,12 +30,12 @@ public class ParentChildLink
     private int id; // May be used as PK
     public String name;
     public ParentChildLink nextObj;
-    public HashSet children;
+    public Set<ParentChildLink> children;
 
     public ParentChildLink(String name, ParentChildLink next)
     {
         nextObj = next;
-        children = new HashSet();
+        children = new HashSet<>();
 
         this.name = name;
     }
@@ -49,7 +50,7 @@ public class ParentChildLink
         return name;
     }
 
-    public HashSet getChildren()
+    public Set<ParentChildLink> getChildren()
     {
         return children;
     }

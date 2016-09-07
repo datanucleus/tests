@@ -29,7 +29,7 @@ public class Currency
     private int id; // PK for app id
 
     private String currencyCode;
-    private List<Rate> rates = new ArrayList();
+    private List<Rate> rates = new ArrayList<>();
 
     public Currency(String currencyCode)
     {

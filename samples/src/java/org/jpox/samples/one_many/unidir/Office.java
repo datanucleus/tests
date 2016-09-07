@@ -29,7 +29,7 @@ import java.util.HashSet;
 public class Office
 {
     String name;
-    Collection<Computer> computers = new HashSet();
+    Collection<Computer> computers = new HashSet<>();
 
     public Office(String name)
     {

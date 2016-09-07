@@ -46,7 +46,7 @@ public class ShapeHolder
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable
-    protected Set<Shape> shapeSet1 = new HashSet();
+    protected Set<Shape> shapeSet1 = new HashSet<>();
 
     public ShapeHolder(int id)
     {
@@ -75,7 +75,7 @@ public class ShapeHolder
         return shape1;
     }
 
-    public Set getShapeSet1()
+    public Set<Shape> getShapeSet1()
     {
         return shapeSet1;
     }

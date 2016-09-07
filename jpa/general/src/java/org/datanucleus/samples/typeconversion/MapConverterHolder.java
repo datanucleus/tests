@@ -38,12 +38,12 @@ public class MapConverterHolder
     @ElementCollection
     @CollectionTable
     @Convert(attributeName="value", converter=MyType1StringConverter.class)
-    Map<String, MyType1> map1 = new HashMap();
+    Map<String, MyType1> map1 = new HashMap<>();
 
     @ElementCollection
     @CollectionTable
     @Convert(attributeName="key", converter=MyType2StringConverter.class)
-    Map<MyType2, String> map2 = new HashMap();
+    Map<MyType2, String> map2 = new HashMap<>();
 
     public MapConverterHolder(long id)
     {

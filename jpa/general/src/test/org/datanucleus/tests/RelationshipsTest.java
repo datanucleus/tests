@@ -148,7 +148,7 @@ public class RelationshipsTest extends JPAPersistenceTestCase
                 UserGroup grp = new UserGroup(1, "JDO Expert Group");
                 GroupMember member1 = new GroupMember(1, "Craig Russell");
                 GroupMember member2 = new GroupMember(2, "David Jordan");
-                ArrayList members = new ArrayList();
+                List<GroupMember> members = new ArrayList<>();
                 members.add(member1);
                 members.add(member2);
                 grp.setMembers(members);
@@ -442,7 +442,6 @@ public class RelationshipsTest extends JPAPersistenceTestCase
     /**
      * Test of 1-N List of entity elements using an order column.
      */
-    @SuppressWarnings("unchecked")
     public void testOneToManyOrderColumn()
     {
         try

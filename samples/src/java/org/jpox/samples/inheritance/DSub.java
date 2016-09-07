@@ -24,12 +24,11 @@ import java.util.HashSet;
 /**
  * Subclass for Inheritance tests - sample "D".
  * This sample has a container in the subclass.
- * @version $Revision: 1.1 $
  */
 public class DSub extends DBase
 {
     private double value;
-    private Collection elements = new HashSet();
+    private Collection<DElemSub> elements = new HashSet<>();
     
     public DSub()
     {
@@ -51,7 +50,7 @@ public class DSub extends DBase
         elements.add(elem);
     }
 
-    public Collection getElements()
+    public Collection<DElemSub> getElements()
     {
         return elements;
     }

@@ -29,29 +29,29 @@ public class JBowl extends JBase
 {
     private String name;
 
-    private HashSet spottedMarbles;
+    private Set<JMarble> spottedMarbles;
 
-    private HashSet transparentMarbles;
+    private Set<JMarble> transparentMarbles;
 
     public JBowl()
     {
-        spottedMarbles = new HashSet();
-        transparentMarbles = new HashSet();
+        spottedMarbles = new HashSet<>();
+        transparentMarbles = new HashSet<>();
     }
 
     public JBowl(final String name)
     {
         setName(name);
-        spottedMarbles = new HashSet();
-        transparentMarbles = new HashSet();
+        spottedMarbles = new HashSet<>();
+        transparentMarbles = new HashSet<>();
     }
 
     public JBowl(int id,final String name)
     {
         setId(new Integer(id));
         setName(name);
-        spottedMarbles = new HashSet();
-        transparentMarbles = new HashSet();
+        spottedMarbles = new HashSet<>();
+        transparentMarbles = new HashSet<>();
     }
 
     public void addMarble(JMarble marble)
@@ -71,7 +71,7 @@ public class JBowl extends JBase
         return spottedMarbles.size();
     }
 
-    public Set getSpottedMarbles()
+    public Set<JMarble> getSpottedMarbles()
     {
         return spottedMarbles;
     }

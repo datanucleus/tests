@@ -64,7 +64,7 @@ public class EntityGraphTest extends JPAPersistenceTestCase
             assertEquals("baseGraph", eg.getName());
             assertEquals(GraphBase.class, eg.getClassType());
             assertFalse(eg.getIncludeAllAttributes());
-            List<AttributeNode> egNodes = eg.getAttributeNodes();
+            List<AttributeNode<?>> egNodes = eg.getAttributeNodes();
             assertNotNull(egNodes);
             assertEquals(3, egNodes.size());
             boolean idPresent = false;
@@ -89,7 +89,7 @@ public class EntityGraphTest extends JPAPersistenceTestCase
                     Map.Entry<Class, Subgraph> subgraphEntry = subgraphsByClass.entrySet().iterator().next();
                     assertEquals(GraphRelated.class, subgraphEntry.getKey());
                     Subgraph subgraph = subgraphEntry.getValue();
-                    List<AttributeNode> subNodes = subgraph.getAttributeNodes();
+                    List<AttributeNode<?>> subNodes = subgraph.getAttributeNodes();
                     assertNotNull(subNodes);
                     assertEquals(1, subNodes.size());
                     AttributeNode subNode = subNodes.iterator().next();

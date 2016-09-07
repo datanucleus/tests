@@ -18,16 +18,16 @@ Contributors:
 package org.jpox.samples.versioned;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Block of trades in a financial system.
- * @version $Revision: 1.1 $
  */
 public class Trade1Holder
 {
     long id; // Can be used for PK
     String name = null;
-    HashSet trades = new HashSet();
+    Set<Trade1> trades = new HashSet<>();
 
     public Trade1Holder(String name)
     {
@@ -39,7 +39,7 @@ public class Trade1Holder
         return id;
     }
 
-    public HashSet getTrades()
+    public Set<Trade1> getTrades()
     {
         return trades;
     }

@@ -24,12 +24,11 @@ import java.util.HashSet;
 /**
  * Subclass for Inheritance tests - sample "E".
  * This sample has a container in the subclass.
- * @version $Revision: 1.1 $
  */
 public class ESub extends EBase
 {
     private double value;
-    private Collection elements = new HashSet();
+    private Collection<EElemSub> elements = new HashSet<>();
     
     public ESub()
     {
@@ -51,7 +50,7 @@ public class ESub extends EBase
         elements.add(elem);
     }
 
-    public Collection getElements()
+    public Collection<EElemSub> getElements()
     {
         return elements;
     }

@@ -201,7 +201,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
                 p1.setGlobalNum("First");
                 Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setGlobalNum("Second");
-                Collection people = new HashSet();
+                Collection<Person> people = new HashSet<>();
                 people.add(p1);
                 people.add(p2);
                 em.persist(people);

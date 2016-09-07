@@ -22,8 +22,6 @@ import java.util.Map;
 
 /**
  * Sample class with various Map fields, testing all combinations of the types of Map field possible.
- * 
- * @version $Revision: 1.3 $
  */
 public class MapHolder
 {
@@ -78,7 +76,7 @@ public class MapHolder
     {
         if (joinMapNonNon == null)
         {
-            joinMapNonNon = new HashMap();
+            joinMapNonNon = new HashMap<>();
         }
         return joinMapNonNon;
     }
@@ -87,7 +85,7 @@ public class MapHolder
     {
         if (joinMapNonNon2 == null)
         {
-            joinMapNonNon2 = new HashMap();
+            joinMapNonNon2 = new HashMap<>();
         }
         return joinMapNonNon2;
     }
@@ -96,7 +94,7 @@ public class MapHolder
     {
         if (joinMapNonPC == null)
         {
-            joinMapNonPC = new HashMap();
+            joinMapNonPC = new HashMap<>();
         }
         return joinMapNonPC;
     }
@@ -105,7 +103,7 @@ public class MapHolder
     {
         if (joinMapPCNon == null)
         {
-            joinMapPCNon = new HashMap();
+            joinMapPCNon = new HashMap<>();
         }
         return joinMapPCNon;
     }
@@ -114,7 +112,7 @@ public class MapHolder
     {
         if (joinMapPCPC == null)
         {
-            joinMapPCPC = new HashMap();
+            joinMapPCPC = new HashMap<>();
         }
         return joinMapPCPC;
     }
@@ -123,7 +121,7 @@ public class MapHolder
     {
         if (joinMapNonPCSerial == null)
         {
-            joinMapNonPCSerial = new HashMap();
+            joinMapNonPCSerial = new HashMap<>();
         }
         return joinMapNonPCSerial;
     }
@@ -132,7 +130,7 @@ public class MapHolder
     {
         if (fkMapKey == null)
         {
-            fkMapKey = new HashMap();
+            fkMapKey = new HashMap<>();
         }
         return fkMapKey;
     }
@@ -141,7 +139,7 @@ public class MapHolder
     {
         if (fkMapKey2 == null)
         {
-            fkMapKey2 = new HashMap();
+            fkMapKey2 = new HashMap<>();
         }
         return fkMapKey2;
     }
@@ -150,7 +148,7 @@ public class MapHolder
     {
         if (fkMapValue == null)
         {
-            fkMapValue = new HashMap();
+            fkMapValue = new HashMap<>();
         }
         return fkMapValue;
     }
@@ -159,7 +157,7 @@ public class MapHolder
     {
         if (mapNonNon == null)
         {
-            mapNonNon = new HashMap();
+            mapNonNon = new HashMap<>();
         }
         return mapNonNon;
     }
@@ -168,7 +166,7 @@ public class MapHolder
     {
         if (mapSerial == null)
         {
-            mapSerial = new HashMap();
+            mapSerial = new HashMap<>();
         }
         return mapSerial;
     }

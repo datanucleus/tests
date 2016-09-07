@@ -30,7 +30,7 @@ public class Network
     private long id; // Used by application identity
     private String name;
 
-    private Collection<Device> devices = new HashSet();
+    private Collection<Device> devices = new HashSet<>();
 
     public Network(String name)
     {
