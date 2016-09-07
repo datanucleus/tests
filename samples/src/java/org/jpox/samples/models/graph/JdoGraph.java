@@ -22,14 +22,14 @@ import java.util.Set;
 
 public class JdoGraph extends JdoGraphEntity
 {
-    private Set allGraphEntities;
-    private Set allNodes;
+    private Set<JdoNode> allGraphEntities;
+    private Set<JdoNode> allNodes;
 
     public JdoGraph(JdoGraphEntityClass type)
     {
         super(type, null);
-        allGraphEntities = new HashSet();
-        allNodes = new HashSet();
+        allGraphEntities = new HashSet<>();
+        allNodes = new HashSet<>();
     }
 
     public JdoNode createNode(JdoGraphEntityClass type)
