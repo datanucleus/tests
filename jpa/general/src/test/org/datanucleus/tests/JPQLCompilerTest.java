@@ -462,7 +462,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         assertEquals("FROM candidate+IN clause join expression has incorrect alias", "n", joinExpr1.getAlias());
         assertEquals("FROM candidate+IN clause join expression has incorrect join type", 
             JoinType.JOIN_INNER, joinExpr1.getType());
-        PrimaryExpression joinPrimExpr1 = (PrimaryExpression)joinExpr1.getPrimaryExpression();
+        PrimaryExpression joinPrimExpr1 = (PrimaryExpression)joinExpr1.getJoinedExpression();
         assertEquals("FROM candidate+IN clause join primary expression is incorrect",
             "d.projects", joinPrimExpr1.getId());
     }
