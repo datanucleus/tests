@@ -337,7 +337,7 @@
             <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>datanucleus-maven-plugin</artifactId>
-                <version>5.0.0-release</version>
+                <version>5.0.1</version>
                 <configuration>
                     <fork>false</fork>
                     <verbose>false</verbose>
