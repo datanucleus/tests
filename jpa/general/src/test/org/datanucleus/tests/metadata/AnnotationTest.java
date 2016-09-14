@@ -17,6 +17,8 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.metadata;
 
+import java.util.List;
+
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
@@ -802,11 +804,11 @@ public class AnnotationTest extends JPAPersistenceTestCase
         assertEquals("has incorrect number of persistent fields", cmd.getNoOfManagedMembers(), 5);
 
         // Check JoinMetaData at class-level
-        JoinMetaData[] joinmds = cmd.getJoinMetaData();
+        List<JoinMetaData> joinmds = cmd.getJoinMetaData();
         assertNotNull("JoinMetaData at class-level is null!", joinmds);
-        assertEquals("Number of JoinMetaData at class-level is wrong!", joinmds.length, 1);
-        assertEquals("Table of JoinMetaData at class-level is wrong", "JPA_AN_PRINTER_TONER", joinmds[0].getTable());
-        ColumnMetaData[] joinColmds = joinmds[0].getColumnMetaData();
+        assertEquals("Number of JoinMetaData at class-level is wrong!", joinmds.size(), 1);
+        assertEquals("Table of JoinMetaData at class-level is wrong", "JPA_AN_PRINTER_TONER", joinmds.get(0).getTable());
+        ColumnMetaData[] joinColmds = joinmds.get(0).getColumnMetaData();
         assertEquals("Number of columns with MetaData in secondary table is incorrect", 1, joinColmds.length);
         assertEquals("Column of JoinMetaData at class-level is wrong", joinColmds[0].getName(), "PRINTER_ID");
 

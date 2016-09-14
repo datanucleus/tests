@@ -45,7 +45,7 @@ import org.datanucleus.samples.metadata.index.IndexSamples;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
- * Tests for JDO2.3 metadata API.
+ * Tests for JDO metadata API.
  */
 public class JDOMetadataAPITest extends JDOPersistenceTestCase
 {
@@ -205,11 +205,14 @@ public class JDOMetadataAPITest extends JDOPersistenceTestCase
 
         // Class level
         final IndexMetadata[] indices = metadata.getIndices();
-        for (final IndexMetadata indexMetadata : indices)
+        if (indices != null)
         {
-            if ((uniqueFlag && indexMetadata.getUnique()) || (!uniqueFlag && !indexMetadata.getUnique()))
+            for (final IndexMetadata indexMetadata : indices)
             {
-                indexes.add(indexMetadata);
+                if ((uniqueFlag && indexMetadata.getUnique()) || (!uniqueFlag && !indexMetadata.getUnique()))
+                {
+                    indexes.add(indexMetadata);
+                }
             }
         }
 
@@ -230,8 +233,7 @@ public class JDOMetadataAPITest extends JDOPersistenceTestCase
         return indexes;
     }
 
-    private void assertFields(final Class<?> clazz, final List<IndexMetadata> indexes,
-            final String... fieldNames)
+    private void assertFields(final Class<?> clazz, final List<IndexMetadata> indexes, final String... fieldNames)
     {
         if (fieldNames == null)
         {

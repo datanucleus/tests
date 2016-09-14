@@ -19,6 +19,7 @@ Contributors:
 package org.datanucleus.tests.metadata;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.datanucleus.ClassLoaderResolver;
@@ -435,8 +436,8 @@ public class AnnotationTest extends JDOPersistenceTestCase
     {
         ClassMetaData cmd1 = (ClassMetaData) metaDataMgr.getMetaDataForClass(Person.class.getName(), clr);
         assertNotNull("JDOPerson metadata should have had a Unique constraint but didnt", cmd1.getUniqueMetaData());
-        assertEquals("JDOPerson metadata has incorrect Unique constraints", 1, cmd1.getUniqueMetaData().length);
-        UniqueMetaData unimd = cmd1.getUniqueMetaData()[0];
+        assertEquals("JDOPerson metadata has incorrect Unique constraints", 1, cmd1.getUniqueMetaData().size());
+        UniqueMetaData unimd = cmd1.getUniqueMetaData().get(0);
         assertEquals("PERSON_NAME_EMAIL_UNIQUENESS", unimd.getName());
         assertEquals(3, unimd.getNumberOfMembers());
     }
@@ -471,11 +472,11 @@ public class AnnotationTest extends JDOPersistenceTestCase
         assertEquals("has incorrect number of persistent fields", 4, cmd.getNoOfManagedMembers());
 
         // Check JoinMetaData at class-level
-        JoinMetaData[] joinmds = cmd.getJoinMetaData();
+        List<JoinMetaData> joinmds = cmd.getJoinMetaData();
         assertNotNull("JoinMetaData at class-level is null!", joinmds);
-        assertEquals("Number of JoinMetaData at class-level is wrong!", 1, joinmds.length);
-        assertEquals("Table of JoinMetaData at class-level is wrong", "JDO_AN_PRINTER_TONER", joinmds[0].getTable());
-        ColumnMetaData[] joinColmds = joinmds[0].getColumnMetaData();
+        assertEquals("Number of JoinMetaData at class-level is wrong!", 1, joinmds.size());
+        assertEquals("Table of JoinMetaData at class-level is wrong", "JDO_AN_PRINTER_TONER", joinmds.get(0).getTable());
+        ColumnMetaData[] joinColmds = joinmds.get(0).getColumnMetaData();
         assertEquals("Number of columns with MetaData in secondary table is incorrect", 1, joinColmds.length);
         assertEquals("Column of JoinMetaData at class-level is wrong", "PRINTER_REFID", joinColmds[0].getName());
 
