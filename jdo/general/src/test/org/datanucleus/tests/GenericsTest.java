@@ -15,23 +15,27 @@
  Contributors:
  ...
  **********************************************************************/
-package org.datanucleus.tests.metadata;
+package org.datanucleus.tests;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.generics.GenericsBase;
+import org.datanucleus.samples.generics.GenericsBaseSubRelated;
+import org.datanucleus.samples.generics.GenericsBaseSubSub;
 import org.datanucleus.samples.generics.GenericsContainer;
 import org.datanucleus.samples.generics.GenericsElement;
 import org.datanucleus.samples.generics.GenericsValue;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
- * Test for metadata when using JDK1.5 generics.
- * @version $Revision: 1.1 $
+ * Test use of Java generics.
  */
 public class GenericsTest extends JDOPersistenceTestCase
 {
@@ -44,7 +48,7 @@ public class GenericsTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test for using JDK 1.5 generics and not specifying <collection>, <map> in MetaData
+     * Test for using Java generics and not specifying <collection>, <map> in MetaData
      */
     public void testCollectionMapGenerics()
     {
@@ -116,5 +120,79 @@ public class GenericsTest extends JDOPersistenceTestCase
             clean(GenericsElement.class);
             clean(GenericsValue.class);
         }
+    }
+
+    /**
+     * Test for using Java generics in the inheritance tree.
+     */
+    public void testInheritanceGenerics()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                GenericsBaseSubSub sub = new GenericsBaseSubSub();
+                sub.setId(1l);
+                sub.setName("First Sub");
+                sub.setLongValue(101l);
+                GenericsBaseSubRelated rel = new GenericsBaseSubRelated();
+                rel.setId(150);
+                rel.setBaseSub(sub);
+                sub.setRelated(rel);
+                pm.makePersistent(rel);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query q = pm.newQuery(GenericsBase.class);
+                List<GenericsBase> results = q.executeList();
+                assertEquals(1, results.size());
+                GenericsBase base = results.get(0);
+                assertNotNull(base);
+                assertTrue(base instanceof GenericsBaseSubSub);
+                GenericsBaseSubSub sub = (GenericsBaseSubSub)base;
+                assertEquals("First Sub", sub.getName());
+                assertEquals(101l, sub.getLongValue());
+                assertEquals(new Long(1), sub.getId());
+                GenericsBaseSubRelated rel = sub.getRelated();
+                assertNotNull(rel);
+                assertEquals(150, rel.getId());
+                assertEquals(rel.getBaseSub(), sub);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(GenericsBaseSubRelated.class);
+            clean(GenericsBaseSubSub.class);
+        }        
     }
 }
