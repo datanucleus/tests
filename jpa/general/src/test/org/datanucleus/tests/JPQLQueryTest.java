@@ -3010,7 +3010,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     }
 
     /**
-     * Test for TREAT in WHERE clause if we ever support it.
+     * Test for TREAT in WHERE clause.
      */
     public void testWhereTREAT()
     {
@@ -3051,6 +3051,66 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 LOG.error("Exception in test", e);
                 fail("Exception in TREAT WHERE test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            removeManagerEmployeeRelation();
+            clean(Qualification.class);
+            clean(Manager.class);
+        }
+    }
+
+    /**
+     * Test for TREAT in FROM clause.
+     */
+    public void testFromTREAT()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Manager homer = new Manager(1,"Homer","Simpson","homer@simpson.com",1,"serial 1");
+                Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
+                Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
+                Manager boss2 = new Manager(4,"Boss","WakesUp2","boss2@wakes.up",5,"serial 4");
+                bart.addSubordinate(boss);
+                bart.addSubordinate(boss2);
+                Qualification q1 = new Qualification("q1");
+                q1.setPerson(boss);
+                Qualification q2 = new Qualification("q2");
+                q2.setPerson(boss2);
+                em.persist(bart);
+                em.persist(homer);
+                em.persist(boss);
+                em.persist(boss2);
+                em.persist(q1);
+                em.persist(q2);
+                em.flush();
+
+                List<Qualification> results = em.createQuery(
+                    "SELECT q FROM " + Qualification.class.getName() + " q JOIN TREAT(q.person AS " + Employee.class.getName() + ") e WHERE e.serialNo = \"serial 3\"").getResultList();
+                assertEquals(1, results.size());
+                assertEquals("q1", ((Qualification) results.iterator().next()).getName());
+
+                tx.rollback();
+            }
+            catch (PersistenceException e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in TREAT FROM test : " + e.getMessage());
             }
             finally
             {
@@ -3213,7 +3273,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             catch (PersistenceException e)
             {
                 LOG.error("Exception in test", e);
-                fail("Exception in TREAT WHERE test : " + e.getMessage());
+                fail("Exception in multiple Date parameter test : " + e.getMessage());
             }
             finally
             {
