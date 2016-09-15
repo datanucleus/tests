@@ -973,7 +973,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datatnucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -986,6 +986,18 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 result = em.createQuery(
                     "SELECT Object(P) FROM " + Person.class.getName() + " P INNER JOIN FETCH P.bestFriend").getResultList();
                 assertEquals(0, result.size());
+
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
+                em.persist(p2);
+                p1.setBestFriend(p2);
+                em.flush();
+
+                result = em.createQuery(
+                    "SELECT p FROM " + Person.class.getName() + " p JOIN FETCH p.bestFriend").getResultList();
+                assertEquals(1, result.size());
+
+                // TODO Add test for 1-N where we have multiple elements, should get as many rows as elements for each root
+
                 tx.rollback();
             }
             finally
@@ -3836,6 +3848,53 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         finally
         {
             clean(Processor.class);
+        }
+    }
+
+    /**
+     * Test use of JOIN ON where the ON clause contains a subquery.
+     */
+    public void testJoinOnWithSubquery()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@dn.org");
+                p1.setAge(31);
+                em.persist(p1);
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@dn.org");
+                p2.setAge(35);
+                em.persist(p2);
+                Qualification q1 = new Qualification("BSc in Maths");
+                q1.setPerson(p1);
+                q1.setDate(new Date());
+                em.flush();
+
+                // Just check that this is queryable
+                Query q = em.createQuery("SELECT q.name FROM " + Qualification.class.getName() + " q JOIN q.person p ON p.age < (SELECT AVG(p2.age) FROM " + Person.class.getName() + " p2)");
+                q.getResultList();
+                // TODO Add some asserts, or choose a good example for this
+
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Qualification.class);
+            clean(Person.class);
         }
     }
 
