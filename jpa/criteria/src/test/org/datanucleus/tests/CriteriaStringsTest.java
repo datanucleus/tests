@@ -217,9 +217,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
@@ -286,9 +286,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             crit.select(candidate);
 
@@ -354,15 +354,15 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
 
             Path ageField = candidate.get("age");
-            Predicate ageLessThan = qb.lessThan(ageField, 36);
+            Predicate ageLessThan = cb.lessThan(ageField, 36);
             crit.where(ageLessThan);
 
             // DN extension
@@ -409,9 +409,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Qualification> crit = qb.createQuery(Qualification.class);
+            CriteriaQuery<Qualification> crit = cb.createQuery(Qualification.class);
             Root<Qualification> candidate = crit.from(Qualification.class);
             candidate.alias("q");
             crit.select(candidate);
@@ -422,7 +422,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             cal.set(Calendar.DAY_OF_MONTH, 1);
             Date date = new Date(cal.getTime().getTime());
             Path dateField = candidate.get("date");
-            Predicate dateLessThan = qb.lessThan(dateField, date);
+            Predicate dateLessThan = cb.lessThan(dateField, date);
             crit.where(dateLessThan);
 
             // DN extension
@@ -460,20 +460,20 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
 
             Path firstNameField = candidate.get("firstName");
-            Expression firstNameUpperExpr = qb.upper(firstNameField);
-            Predicate firstNameUpperEquals = qb.equal(firstNameUpperExpr, "FRED");
+            Expression firstNameUpperExpr = cb.upper(firstNameField);
+            Predicate firstNameUpperEquals = cb.equal(firstNameUpperExpr, "FRED");
 
             Path lastNameField = candidate.get("lastName");
-            Expression lastNameLowerExpr = qb.lower(lastNameField);
-            Predicate lastNameUpperEquals = qb.equal(lastNameLowerExpr, "flintstone");
+            Expression lastNameLowerExpr = cb.lower(lastNameField);
+            Predicate lastNameUpperEquals = cb.equal(lastNameLowerExpr, "flintstone");
 
             crit.where(firstNameUpperEquals, lastNameUpperEquals);
 
@@ -523,17 +523,17 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
 
             Path firstNameField = candidate.get("firstName");
-            Predicate firstName1 = qb.equal(firstNameField, "Fred");
-            Predicate firstName2 = qb.equal(firstNameField, "Joe");
-            Predicate eitherFirstName = qb.or(firstName1, firstName2);
+            Predicate firstName1 = cb.equal(firstNameField, "Fred");
+            Predicate firstName2 = cb.equal(firstNameField, "Joe");
+            Predicate eitherFirstName = cb.or(firstName1, firstName2);
             crit.where(eitherFirstName);
 
             // DN extension
@@ -649,15 +649,15 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
 
             Path firstNameField = candidate.get("firstName");
-            Order orderFirstName = qb.desc(firstNameField);
+            Order orderFirstName = cb.desc(firstNameField);
             crit.orderBy(orderFirstName);
 
             // DN extension
@@ -714,20 +714,20 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
 
             Path firstNameField = candidate.get("firstName");
-            ParameterExpression param1 = qb.parameter(String.class, "param1");
-            Predicate firstNameEquals = qb.equal(firstNameField, param1);
+            ParameterExpression param1 = cb.parameter(String.class, "param1");
+            Predicate firstNameEquals = cb.equal(firstNameField, param1);
 
             Path lastNameField = candidate.get("lastName");
-            ParameterExpression param2 = qb.parameter(String.class, "param2");
-            Predicate lastNameEquals = qb.equal(lastNameField, param2);
+            ParameterExpression param2 = cb.parameter(String.class, "param2");
+            Predicate lastNameEquals = cb.equal(lastNameField, param2);
 
             crit.where(firstNameEquals, lastNameEquals);
 
@@ -779,9 +779,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
 
@@ -854,13 +854,13 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
 
-            crit.multiselect(qb.concat(candidate.<String> get("firstName"), candidate.<String> get("lastName")));
+            crit.multiselect(cb.concat(candidate.<String> get("firstName"), candidate.<String> get("lastName")));
 
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
@@ -925,15 +925,15 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Employee> crit = qb.createQuery(Employee.class);
+            CriteriaQuery<Employee> crit = cb.createQuery(Employee.class);
             Root<Employee> candidate = crit.from(Employee.class);
             candidate.alias("e");
             crit.select(candidate);
 
             Path firstNameField = candidate.get("firstName");
-            Predicate firstNameEquals = qb.equal(firstNameField, "Joe");
+            Predicate firstNameEquals = cb.equal(firstNameField, "Joe");
             crit.where(firstNameEquals);
 
             // DN extension
@@ -982,9 +982,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Employee> crit = qb.createQuery(Employee.class);
+            CriteriaQuery<Employee> crit = cb.createQuery(Employee.class);
             Root<Employee> candidate = crit.from(Employee.class);
             candidate.alias("e");
             crit.select(candidate);
@@ -1046,9 +1046,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Employee> crit = qb.createQuery(Employee.class);
+            CriteriaQuery<Employee> crit = cb.createQuery(Employee.class);
             Root<Employee> candidate = crit.from(Employee.class);
             candidate.alias("e");
             crit.select(candidate);
@@ -1112,9 +1112,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Farm> crit = qb.createQuery(Farm.class);
+            CriteriaQuery<Farm> crit = cb.createQuery(Farm.class);
             Root<Farm> candidate = crit.from(Farm.class);
             candidate.alias("f");
             crit.select(candidate);
@@ -1126,7 +1126,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             animalJoin.alias("a");
 
             Path nameField = animalJoin.get("name");
-            Predicate nameEquals = qb.equal(nameField, "Woolly Sheep");
+            Predicate nameEquals = cb.equal(nameField, "Woolly Sheep");
             crit.where(nameEquals);
 
             // DN extension
@@ -1165,9 +1165,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Farm> crit = qb.createQuery(Farm.class);
+            CriteriaQuery<Farm> crit = cb.createQuery(Farm.class);
             Root<Animal> candidate = crit.from(Animal.class);
             candidate.alias("a");
             Path<Farm> farmPath = candidate.get("farm");
@@ -1210,9 +1210,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Farm> crit = qb.createQuery(Farm.class);
+            CriteriaQuery<Farm> crit = cb.createQuery(Farm.class);
             Root<Farm> candidate = crit.from(Farm.class);
             candidate.alias("f");
             crit.select(candidate);
@@ -1221,7 +1221,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             animalJoin.alias("a");
 
             Path nameField = animalJoin.get("name");
-            Predicate nameEquals = qb.equal(nameField, "Woolly Sheep");
+            Predicate nameEquals = cb.equal(nameField, "Woolly Sheep");
             crit.where(nameEquals);
 
             // DN extension
@@ -1260,9 +1260,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Employee> crit = qb.createQuery(Employee.class);
+            CriteriaQuery<Employee> crit = cb.createQuery(Employee.class);
             Root<Employee> candidate = crit.from(Employee.class);
             candidate.alias("e");
             crit.select(candidate);
@@ -1273,9 +1273,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             Root<Employee> subCandidate = subCrit.from(Employee.class);
             subCandidate.alias("e2");
             Path salary2Field = subCandidate.get("salary");
-            Subquery<Double> avgSalary = subCrit.select(qb.avg(salary2Field));
+            Subquery<Double> avgSalary = subCrit.select(cb.avg(salary2Field));
 
-            Predicate lessThanAvgSalary = qb.lessThan(salaryField, avgSalary);
+            Predicate lessThanAvgSalary = cb.lessThan(salaryField, avgSalary);
             crit.where(lessThanAvgSalary);
 
             // DN extension
@@ -1318,9 +1318,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
@@ -1330,10 +1330,10 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             subCandidate.alias("p2");
             subCrit.select(subCandidate);
             Path bestFriendField = subCandidate.get("bestFriend");
-            Predicate bestFriendEqual = qb.equal(bestFriendField, candidate);
+            Predicate bestFriendEqual = cb.equal(bestFriendField, candidate);
             subCrit.where(bestFriendEqual);
 
-            Predicate existsBestFriend = qb.exists(subCrit);
+            Predicate existsBestFriend = cb.exists(subCrit);
             crit.where(existsBestFriend);
 
             // DN extension
@@ -1376,9 +1376,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
@@ -1436,15 +1436,15 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Person> crit = qb.createQuery(Person.class);
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
             Root<Person> candidate = crit.from(Person.class);
             candidate.alias("p");
             crit.select(candidate);
 
             // form IN via QueryBuilder
-            In firstNameIn = qb.in(candidate.get("firstName"));
+            In firstNameIn = cb.in(candidate.get("firstName"));
             firstNameIn.value("Fred");
             firstNameIn.value("George");
 
@@ -1495,9 +1495,9 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Qualification> crit = qb.createQuery(Qualification.class);
+            CriteriaQuery<Qualification> crit = cb.createQuery(Qualification.class);
             Root<Qualification> candidate = crit.from(Qualification.class);
             candidate.alias("q");
             crit.select(candidate);
@@ -1511,7 +1511,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
             Path datePath = candidate.get("date");
-            crit.where(qb.lessThan(datePath, new java.sql.Date(cal.getTime().getTime())));
+            crit.where(cb.lessThan(datePath, new java.sql.Date(cal.getTime().getTime())));
 
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
@@ -1547,16 +1547,16 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Qualification> crit = qb.createQuery(Qualification.class);
+            CriteriaQuery<Qualification> crit = cb.createQuery(Qualification.class);
             Root<Qualification> candidate = crit.from(Qualification.class);
             candidate.alias("q");
             crit.select(candidate);
 
-            Path<Employee> empPath = qb.treat(candidate.get("person"), Employee.class);
+            Path<Employee> empPath = cb.treat(candidate.get("person"), Employee.class);
             Path agePath = empPath.get("age");
-            crit.where(qb.gt(agePath, 40));
+            crit.where(cb.gt(agePath, 40));
 
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
@@ -1603,10 +1603,10 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             em.persist(c);
             em.flush();
 
-            CriteriaBuilder qb = emf.getCriteriaBuilder();
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
 
             // First method, using join("b").join("c")
-            CriteriaQuery<A> crit1 = qb.createQuery(A.class);
+            CriteriaQuery<A> crit1 = cb.createQuery(A.class);
             Root<A> cand1 = crit1.from(A.class);
             cand1.alias("a");
             crit1.select(cand1);
@@ -1627,7 +1627,7 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             assertEquals("First A", resultA1.getName());
 
             // Second method, using join("b.c")
-            CriteriaQuery<A> crit2 = qb.createQuery(A.class);
+            CriteriaQuery<A> crit2 = cb.createQuery(A.class);
             Root<A> cand2 = crit2.from(A.class);
             cand2.alias("a");
             crit2.select(cand2);
