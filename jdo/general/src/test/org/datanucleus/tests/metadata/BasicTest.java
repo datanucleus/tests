@@ -32,6 +32,7 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
+import org.datanucleus.api.jdo.metadata.JDOMetaDataHelper;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
@@ -478,6 +479,8 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testMetaDataManagerI18N()
     {
+        JDOMetaDataHelper mdProc = new JDOMetaDataHelper();
+
         String filename = "/org/jpox/samples/i18n/UTF8.jdo";
         MetaDataManager mmgr1 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         MetaDataParser parser1 = new MetaDataParser(mmgr1, mmgr1.getNucleusContext().getPluginManager(), true);
@@ -491,7 +494,7 @@ public class BasicTest extends JDOPersistenceTestCase
         MetaDataManager mmgr2 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
         mmgr2.setValidate(false);
         org.datanucleus.metadata.AbstractClassMetaData cmd = mmgr2.getMetaDataForClass(UTF8.class, new ClassLoaderResolverImpl());
-        if (!cmd.toString().equals(cmd1.toString()))
+        if (!mdProc.getXMLForMetaData(cmd, "", "").equals(mdProc.getXMLForMetaData(cmd1, "", "")))
         {
             fail("i18n UTF-8 issues in parser");
         }
@@ -510,7 +513,7 @@ public class BasicTest extends JDOPersistenceTestCase
         cmd1.populate(new ClassLoaderResolverImpl(), null, mmgr4);
         cmd1.initialise(null);
         cmd = mmgr4.getMetaDataForClass(ISO8859_2.class, new ClassLoaderResolverImpl());
-        if (!cmd.toString().equals(cmd1.toString()))
+        if (!mdProc.getXMLForMetaData(cmd, "", "").equals(mdProc.getXMLForMetaData(cmd1, "", "")))
         {
             fail("i18n ISO8859_2 issues in parser");
         }
