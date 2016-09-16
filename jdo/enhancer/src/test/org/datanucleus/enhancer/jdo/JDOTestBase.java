@@ -185,7 +185,7 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
             {
                 ClassMetaData cmd = pmd.getClass(j);
                 cmd.populate(clr, null, mgr);
-                cmd.initialise(clr, mgr);
+                cmd.initialise(clr);
             }
         }
 
