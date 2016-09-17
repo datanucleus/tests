@@ -273,8 +273,8 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
             JDOMetadata filemd = pmf.newMetadata();
             createMetadata(filemd);
             NucleusLogger.PERSISTENCE.info(">> registering metadata");
-            NucleusLogger.PERSISTENCE.info(filemd);
             pmf.registerMetadata(filemd);
+            NucleusLogger.PERSISTENCE.info(filemd);
 
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
