@@ -18,6 +18,8 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.metadata;
 
+import java.util.Map;
+
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.NucleusContext;
@@ -25,7 +27,6 @@ import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.ColumnMetaData;
-import org.datanucleus.metadata.ExtensionMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
 import org.datanucleus.metadata.IdentityStrategy;
 import org.datanucleus.metadata.IdentityType;
@@ -334,15 +335,11 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
         assertEquals("column JDBC type incorrect", JdbcType.TIMESTAMP, colmds[0].getJdbcType());
 
         // package.orm (additional)
-        ExtensionMetaData[] extmds = fmd.getExtensions();
+        Map<String, String> extmds = fmd.getExtensions();
         assertNotNull(prefix + "extension info is null!", extmds);
-        assertEquals(prefix + "incorrect number of extensions", 1, extmds.length);
-        assertEquals(prefix + "extension vendor incorrect",
-                     "datanucleus", extmds[0].getVendorName());
-        assertEquals(prefix + "extension key incorrect",
-                     "insert-function", extmds[0].getKey());
-        assertEquals(prefix + "extension value incorrect",
-                     "CURRENT_TIMESTAMP", extmds[0].getValue());
+        assertEquals(prefix + "incorrect number of extensions", 1, extmds.size());
+        assertTrue("extension not present", extmds.containsKey("insert-function"));
+        assertEquals("extension value is incorrect", "CURRENT_TIMESTAMP", extmds.get("insert-function"));
     }
 
     public void testCollectionSet()
@@ -353,8 +350,7 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
 
         AbstractMemberMetaData fmd = cmd.getMetaDataForMember("projects");
         assertNotNull(prefix + "doesnt have required field", fmd);
-        assertEquals(prefix + "should be persistent",
-                     FieldPersistenceModifier.PERSISTENT, fmd.getPersistenceModifier());
+        assertEquals(prefix + "should be persistent", FieldPersistenceModifier.PERSISTENT, fmd.getPersistenceModifier());
         assertFalse(prefix + "dfg is wrong", fmd.isDefaultFetchGroup());
         assertNotNull(prefix + "has no container specified!", fmd.getCollection());
         assertEquals(prefix + "should have collection of Project elements but hasnt",

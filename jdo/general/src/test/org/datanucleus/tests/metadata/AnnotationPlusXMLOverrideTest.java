@@ -18,6 +18,8 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.metadata;
 
+import java.util.Map;
+
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.PersistenceNucleusContextImpl;
@@ -25,7 +27,6 @@ import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.ColumnMetaData;
-import org.datanucleus.metadata.ExtensionMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
 import org.datanucleus.metadata.IdentityStrategy;
 import org.datanucleus.metadata.JdbcType;
@@ -118,29 +119,22 @@ public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
         // "dateOfBirth" - JDBC type is TIMESTAMP in "package.jdo"
         AbstractMemberMetaData fmd = cmd.getMetaDataForMember("dateOfBirth");
         ColumnMetaData[] colmds = fmd.getColumnMetaData();
-        assertEquals("column identifier incorrect",
-                     "DATE_OF_BIRTH", colmds[0].getName());
+        assertEquals("column identifier incorrect", "DATE_OF_BIRTH", colmds[0].getName());
         assertEquals("column JDBC type incorrect", JdbcType.DATE, colmds[0].getJdbcType());
 
         // package.orm (additional)
-        ExtensionMetaData[] extmds = fmd.getExtensions();
+        Map<String,String> extmds = fmd.getExtensions();
         assertNotNull(prefix + "extension info is null!", extmds);
-        assertEquals(prefix + "incorrect number of extensions", 1, extmds.length);
-        assertEquals(prefix + "extension vendor incorrect",
-                     "datanucleus", extmds[0].getVendorName());
-        assertEquals(prefix + "extension key incorrect",
-                     "insert-function", extmds[0].getKey());
-        assertEquals(prefix + "extension value incorrect",
-                     "CURRENT_TIMESTAMP", extmds[0].getValue());
+        assertEquals(prefix + "incorrect number of extensions", 1, extmds.size());
+        assertTrue("Extension not present", extmds.containsKey("insert-function"));
+        assertEquals("Extension value is incorrect", "CURRENT_TIMESTAMP", extmds.get("insert-function"));
 
         // package.orm (overriding)
         // "emailAddress" - package.jdo VARCHAR(128), package.orm CHAR(100)
         fmd = cmd.getMetaDataForMember("emailAddress");
         colmds = fmd.getColumnMetaData();
-        assertEquals(prefix + "column identifier incorrect",
-                     "EMAIL_ADDRESS", colmds[0].getName());
-        assertEquals(prefix + "column length incorrect",
-                     new Integer(100), colmds[0].getLength());
+        assertEquals(prefix + "column identifier incorrect", "EMAIL_ADDRESS", colmds[0].getName());
+        assertEquals(prefix + "column length incorrect", new Integer(100), colmds[0].getLength());
         assertEquals(prefix + "column JDBC type incorrect", JdbcType.CHAR, colmds[0].getJdbcType());
     }
 

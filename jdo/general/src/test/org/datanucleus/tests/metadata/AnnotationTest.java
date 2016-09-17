@@ -20,6 +20,7 @@ package org.datanucleus.tests.metadata;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.datanucleus.ClassLoaderResolver;
@@ -32,7 +33,6 @@ import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.ClassPersistenceModifier;
 import org.datanucleus.metadata.CollectionMetaData;
 import org.datanucleus.metadata.ColumnMetaData;
-import org.datanucleus.metadata.ExtensionMetaData;
 import org.datanucleus.metadata.FetchGroupMemberMetaData;
 import org.datanucleus.metadata.FetchGroupMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
@@ -301,38 +301,23 @@ public class AnnotationTest extends JDOPersistenceTestCase
         String prefix = cmd1.getFullClassName() + " : ";
 
         // Test class level @Extension
-        ExtensionMetaData[] extmds1 = cmd1.getExtensions();
+        Map<String,String> extmds1 = cmd1.getExtensions();
         assertNotNull(prefix + "extension info is null!", extmds1);
-        assertTrue(prefix + "extension info has incorrect number of extensions", extmds1.length == 1);
-        assertEquals(prefix + "extension vendor incorrect", "datanucleus", extmds1[0].getVendorName());
-        assertEquals(prefix + "extension vendor incorrect", "someExtensionProp", extmds1[0].getKey());
-        assertEquals(prefix + "extension vendor incorrect", "My Value", extmds1[0].getValue());
+        assertTrue(prefix + "extension info has incorrect number of extensions", extmds1.size() == 1);
+        assertTrue("extension not present", extmds1.containsKey("someExtensionProp"));
+        assertEquals("extension value is incorrect", "My Value", extmds1.get("someExtensionProp"));
 
         // Test field level @Extensions
         AbstractMemberMetaData fmd = cmd1.getMetaDataForMember("departments");
         assertNotNull(prefix + "doesnt have required field", fmd);
 
-        ExtensionMetaData[] extmds2 = fmd.getExtensions();
+        Map<String,String> extmds2 = fmd.getExtensions();
         assertNotNull(prefix + "extension info is null!", extmds2);
-        assertEquals(prefix + "extension info has incorrect number of extensions", 2, extmds2.length);
-        if (extmds2[0].getKey().equals("prop1"))
-        {
-            assertEquals(prefix + "extension vendor incorrect", "datanucleus", extmds2[0].getVendorName());
-            assertEquals(prefix + "extension vendor incorrect", "prop1", extmds2[0].getKey());
-            assertEquals(prefix + "extension vendor incorrect", "val1", extmds2[0].getValue());
-            assertEquals(prefix + "extension vendor incorrect", "datanucleus", extmds2[1].getVendorName());
-            assertEquals(prefix + "extension vendor incorrect", "prop2", extmds2[1].getKey());
-            assertEquals(prefix + "extension vendor incorrect", "val2", extmds2[1].getValue());
-        }
-        else
-        {
-            assertEquals(prefix + "extension vendor incorrect", "datanucleus", extmds2[0].getVendorName());
-            assertEquals(prefix + "extension vendor incorrect", "prop2", extmds2[0].getKey());
-            assertEquals(prefix + "extension vendor incorrect", "val2", extmds2[0].getValue());
-            assertEquals(prefix + "extension vendor incorrect", "datanucleus", extmds2[1].getVendorName());
-            assertEquals(prefix + "extension vendor incorrect", "prop1", extmds2[1].getKey());
-            assertEquals(prefix + "extension vendor incorrect", "val1", extmds2[1].getValue());
-        }
+        assertEquals(prefix + "extension info has incorrect number of extensions", 2, extmds2.size());
+        assertTrue("extension not present", extmds2.containsKey("prop1"));
+        assertTrue("extension not present", extmds2.containsKey("prop2"));
+        assertEquals("extension value is incorrect", "val1", extmds2.get("prop1"));
+        assertEquals("extension value is incorrect", "val2", extmds2.get("prop2"));
     }
 
     /**
