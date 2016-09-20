@@ -143,8 +143,119 @@ public class PersistenceManagerProxyTest extends JDOPersistenceTestCase
 
     /**
      * Test for use of PM proxy using multiple threads.
-     * TODO Enable this. The current problem is that we start a txn in the main thread and then spawn other threads. They then inherit the PM of the main thread and so are reliant
-     * on support for javax.jdo.option.Multithreaded
+     * In this test we create a proxy in sub threads only, so don't re-use the underlying PM of the main thread.
+     */
+    public void testProxyInMultiThreads() throws Exception
+    {
+        try
+        {
+            // Persist some objects in main thread (without proxy)
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Manager m1 = new Manager(101, "Daffy", "Duck", "daffy.duck@warnerbros.com", 105.45f, "123407");
+                pm.makePersistent(m1);
+                Manager m2 = new Manager(102, "Donald", "Duck", "donald.duck@warnerbros.com", 105.46f, "123408");
+                pm.makePersistent(m2);
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Start multiple threads to persist the object
+            int THREAD_SIZE = 5;
+            Thread[] threads = new Thread[THREAD_SIZE];
+            for (int i = 0; i < THREAD_SIZE; i++)
+            {
+                final int threadNo = i;
+                threads[i] = new Thread(new Runnable()
+                {
+                    public void run()
+                    {
+                        PersistenceManager pmthread = pmf.getPersistenceManagerProxy();
+                        try
+                        {
+                            pmthread.currentTransaction().begin();
+                            Manager m2 = new Manager(110 + threadNo, "Donald", "Duck", "donald.duck@warnerbros.com", 105.46f, "123408");
+                            pmthread.makePersistent(m2);
+                            pmthread.currentTransaction().commit();
+                        }
+                        catch (Exception e)
+                        {
+                            NucleusLogger.GENERAL.error("Exception while persisting object in thread " + threadNo, e);
+                            fail("Exception thrown while accessing object in thread " + threadNo + " : " + e.getMessage());
+                        }
+                        finally
+                        {
+                            if (pmthread.currentTransaction().isActive())
+                            {
+                                pmthread.currentTransaction().rollback();
+                            }
+                            pmthread.close();
+                        }
+                    }
+                });
+            }
+
+            // Start the threads
+            for (int i = 0; i < THREAD_SIZE; i++)
+            {
+                threads[i].start();
+            }
+
+            // Wait for the end of the threads
+            for (int i = 0; i < THREAD_SIZE; i++)
+            {
+                try
+                {
+                    threads[i].join();
+                }
+                catch (InterruptedException e)
+                {
+                    fail(e.getMessage());
+                }
+            }
+
+            // Get a new PM and check
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                // Check that our objects are persisted
+                tx.begin();
+                Query q = pm.newQuery(Manager.class);
+                Collection<Manager> results = (Collection<Manager>)q.execute();
+                assertEquals("Number of persisted objects is incorrect", 7, results.size());
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(Manager.class);
+        }
+    }
+
+    /**
+     * Test for use of PM proxy using multiple threads.
+     * In this test we create a proxy in main thread and sub threads, so re-use the underlying PM of the main thread.
+     * This means that we are using a single underlying PM and so totally dependent on the Multithreaded capability of the PM. TODO enable this when we fully support it
      */
     public void xtestProxyInMultiThread() throws Exception
     {
@@ -152,7 +263,6 @@ public class PersistenceManagerProxyTest extends JDOPersistenceTestCase
         {
             // Create a PM proxy
             PersistenceManager pm = pmf.getPersistenceManagerProxy();
-            pm.setMultithreaded(true);
             Transaction tx = pm.currentTransaction();
             try
             {
