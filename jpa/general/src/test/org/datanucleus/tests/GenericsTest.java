@@ -24,6 +24,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.datanucleus.samples.annotations.generics.GenericEnumType;
+import org.datanucleus.samples.annotations.generics.GenericIdPropSub1;
+import org.datanucleus.samples.annotations.generics.GenericIdPropSub2Sub;
 import org.datanucleus.samples.annotations.generics.GenericOneOneRelated1;
 import org.datanucleus.samples.annotations.generics.GenericOneOneRelated2;
 import org.datanucleus.samples.annotations.generics.GenericOneOneSub1;
@@ -196,6 +198,105 @@ public class GenericsTest extends JPAPersistenceTestCase
         {
             clean(GenericOneOneRelated2.class);
             clean(GenericOneOneSub2.class);
+        }
+    }
+
+    public void testGenericIdProps()
+    {
+        try
+        {
+            // Try Sub1
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                
+                GenericIdPropSub1 sub1 = new GenericIdPropSub1("First sub1");
+                em.persist(sub1);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                // Check Sub1 objects
+                Query q1 = em.createQuery("SELECT s1 FROM GenericIdPropSub1 s1");
+                List<GenericIdPropSub1> subs1 = q1.getResultList();
+                assertEquals(1, subs1.size());
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            // Try Sub2
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                
+                GenericIdPropSub2Sub sub2 = new GenericIdPropSub2Sub("First sub2", 1);
+                em.persist(sub2);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                // Check Sub1 objects
+                Query q1 = em.createQuery("SELECT s2 FROM GenericIdPropSub2Sub s2");
+                List<GenericIdPropSub2Sub> subs2 = q1.getResultList();
+                assertEquals(1, subs2.size());
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(GenericIdPropSub1.class);
+            clean(GenericIdPropSub2Sub.class);
         }
     }
 }
