@@ -152,18 +152,20 @@ public class SqlTimeTest extends AbstractTypeTestCase
             pm.flush();
 
             // Query when stored in "native"
-            Query q = pm.newQuery(getSimpleClass(), "value == p");
+            Query<SqlTimeHolder> q = pm.newQuery(SqlTimeHolder.class, "value == p");
             q.declareParameters("java.sql.Time p");
-            Collection c = (Collection) q.execute(holder.getValue());
+            q.setParameters(holder.getValue());
+            Collection<SqlTimeHolder> c = q.executeList();
             assertEquals(1, c.size());
-            assertEquals(generateTestValue3(), ((SqlTimeHolder)c.iterator().next()).getValue());
+            assertEquals(generateTestValue3(), c.iterator().next().getValue());
 
             // Query when stored as String
-            q = pm.newQuery(getSimpleClass(), "value2 == p");
+            q = pm.newQuery(SqlTimeHolder.class, "value2 == p");
             q.declareParameters("java.sql.Time p");
-            c = (Collection) q.execute(holder.getValue2());
+            q.setParameters(holder.getValue2());
+            c = q.executeList();
             assertEquals(1, c.size());
-            assertEquals(generateTestValue3(), ((SqlTimeHolder)c.iterator().next()).getValue2());
+            assertEquals(generateTestValue3(), c.iterator().next().getValue2());
 
             tx.commit();
         }

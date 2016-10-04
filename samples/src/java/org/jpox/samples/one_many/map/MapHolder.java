@@ -33,7 +33,7 @@ public class MapHolder
     private Map<String, MapValueItem> joinMapNonPC; // Map<String,MapValueItem> using join table
     private Map<MapKeyItem, String> joinMapPCNon; // Map<MapKeyitem,String> using join table
     private Map<MapKeyItem, MapValueItem> joinMapPCPC; // Map<MapKeyItem,MapValueItem> using join table
-    private Map joinMapNonPCSerial; // Map<String,MapValueItem> using join table with value serialised into join table
+    private Map<String, MapValueItem> joinMapNonPCSerial; // Map<String,MapValueItem> using join table with value serialised into join table
 
     private Map<String, MapFKValueItem> fkMapKey; // Map<String,MapFKValueItem> with key stored in value
     private Map fkMapKey2; // Map<String,MapHolder> with key stored in value
@@ -117,7 +117,7 @@ public class MapHolder
         return joinMapPCPC;
     }
 
-    public Map getJoinMapNonPCSerial()
+    public Map<String, MapValueItem> getJoinMapNonPCSerial()
     {
         if (joinMapNonPCSerial == null)
         {

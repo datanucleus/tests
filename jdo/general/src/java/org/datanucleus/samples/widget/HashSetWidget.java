@@ -1,9 +1,23 @@
-/*
- * The terms of the JPOX License are distributed with the software documentation
- */
+/**********************************************************************
+Copyright (c) 2005 Andy Jefferson and others. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. 
+
+
+Contributors:
+    ...
+**********************************************************************/
 package org.datanucleus.samples.widget;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -19,36 +33,32 @@ import junit.framework.Assert;
 public class HashSetWidget extends Widget implements HasNormalSetField, InstanceCallbacks
 {
     private static final long serialVersionUID = -8307610520582621488L;
-    private HashSet normalSet;
+
+    private Set<Widget> normalSet;
     private int numWidgets;
 
 
     public HashSetWidget()
     {
-        normalSet = new HashSet();
+        normalSet = new HashSet<>();
     }
-
 
     public Set getNormalSet()
     {
         return normalSet;
     }
 
-
     public int getNumWidgets()
     {
         return numWidgets;
     }
 
-
     public Object clone()
     {
         HashSetWidget sw = (HashSetWidget)super.clone();
 
-        HashSet ns = new HashSet();
-
-        Iterator i = normalSet.iterator();
-
+        Set<Widget> ns = new HashSet<>();
+        Iterator<Widget> i = normalSet.iterator();
         while (i.hasNext())
         {
             Widget w = (Widget)((Widget)i.next()).clone();
@@ -87,16 +97,15 @@ public class HashSetWidget extends Widget implements HasNormalSetField, Instance
     {
         super.fillRandom();
 
-        /*
-         * Clear normalSet iteratively in order to test remove().
-         */
+        // Clear normalSet iteratively in order to test remove()
         PersistenceManager myPM = JDOHelper.getPersistenceManager(this);
-        Iterator i = new ArrayList(normalSet).iterator();
 
+        Set<Widget> copySet = new HashSet<>();
+        copySet.addAll(normalSet);
+        Iterator<Widget> i = copySet.iterator();
         while (i.hasNext())
         {
-            Object obj = i.next();
-
+            Widget obj = i.next();
             Assert.assertTrue("normalSet.remove() did not return true after removing existing object", normalSet.remove(obj));
             Assert.assertTrue("normalSet.remove() did not return false attempting to remove non-existent object", !normalSet.remove(obj));
 
@@ -104,13 +113,10 @@ public class HashSetWidget extends Widget implements HasNormalSetField, Instance
                 myPM.deletePersistent(obj);
         }
 
-        /*
-         * Fill up normalSet with random Widget objects of random types.
-         */
-
+        // Fill up normalSet with random Widget objects of random types.
         this.numWidgets = numWidgets;
 
-        if( numWidgets > 0 )
+        if (numWidgets > 0)
         {
             // In general, must have at least one date
             Widget obj = new DateWidget();

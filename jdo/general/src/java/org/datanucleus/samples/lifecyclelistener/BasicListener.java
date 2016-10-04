@@ -40,7 +40,7 @@ import org.datanucleus.util.StringUtils;
 public class BasicListener implements CreateLifecycleListener, DeleteLifecycleListener, LoadLifecycleListener, StoreLifecycleListener, 
                                       DetachLifecycleListener, AttachLifecycleListener, ClearLifecycleListener, DirtyLifecycleListener 
 {
-    List registeredEvents = new ArrayList();
+    List<Integer> registeredEvents = new ArrayList<>();
     boolean logging = false;
 
     /**

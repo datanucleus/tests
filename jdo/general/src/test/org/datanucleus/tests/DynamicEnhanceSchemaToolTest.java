@@ -323,7 +323,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
 
     protected Map getPropertiesForDatastore(DynamicEnhanceSchemaToolClassLoader runtimeCL)
     {
-        Map props = new HashMap();
+        Map props = new HashMap<>();
         Properties properties = TestHelper.getPropertiesForDatastore(1);
         props.putAll(properties);
         props.put("javax.jdo.PersistenceManagerFactoryClass","org.datanucleus.api.jdo.JDOPersistenceManagerFactory");

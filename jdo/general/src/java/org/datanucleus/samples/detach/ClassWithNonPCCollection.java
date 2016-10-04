@@ -21,24 +21,20 @@ package org.datanucleus.samples.detach;
 
 import java.util.ArrayList;
 
-/**
- * @author erik
- * @version $Revision: 1.1 $
- */
 public class ClassWithNonPCCollection
 {
-    private ArrayList elements = new ArrayList();
+    private ArrayList<String> elements = new ArrayList<>();
     /**
      * @return Returns the elements.
      */
-    public ArrayList getElements()
+    public ArrayList<String> getElements()
     {
         return elements;
     }
     /**
      * @param elements The elements to set.
      */
-    public void setElements(ArrayList elements)
+    public void setElements(ArrayList<String> elements)
     {
         this.elements = elements;
     }

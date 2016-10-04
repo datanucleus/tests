@@ -216,7 +216,8 @@ public class JDOQLInMemoryTest extends JDOPersistenceTestCase
             tx.begin();
             Query q = pm.newQuery(getQueryLanguage(), "SELECT :param, firstName FROM " + Person.class.getName());
             q.addExtension("datanucleus.query.evaluateInMemory", "true");
-            List<Object[]> results = (List<Object[]>)q.executeWithArray("FirstParam");
+            q.setParameters("FirstParam");
+            List results = q.executeResultList();
             assertEquals(3, results.size());
             Iterator iter = results.iterator();
             while (iter.hasNext())
@@ -552,13 +553,13 @@ public class JDOQLInMemoryTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Query q = pm.newQuery(getQueryLanguage(), 
-                "SELECT FROM " + Person.class.getName()  + " WHERE :param1.toUpperCase().startsWith(:param2.toUpperCase())");
+            Query<Person> q = pm.newQuery(Person.class, ":param1.toUpperCase().startsWith(:param2.toUpperCase())");
             q.addExtension("datanucleus.query.evaluateInMemory", "true");
-            Map params = new HashMap();
+            Map<String, String> params = new HashMap<>();
             params.put("param1", "First");
             params.put("param2", "f");
-            List results = (List) q.executeWithMap(params);
+            q.setNamedParameters(params);
+            List results = q.executeList();
             assertEquals(3, results.size());
 
             tx.commit();
@@ -650,12 +651,13 @@ public class JDOQLInMemoryTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Query q = pm.newQuery(getQueryLanguage(), "SELECT FROM " + Person.class.getName());
+            Query<Person> q = pm.newQuery(Person.class);
             q.addExtension("datanucleus.query.evaluateInMemory", "true");
             q.setFilter("personNum == :param1");
-            Map params = new HashMap();
+            Map<String, Integer> params = new HashMap<>();
             params.put("param1", 4);
-            Collection c = (Collection)q.executeWithMap(params);
+            q.setNamedParameters(params);
+            Collection<Person> c = q.executeList();
             assertEquals(1, c.size());
             tx.commit();
         }

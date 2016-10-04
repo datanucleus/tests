@@ -21,25 +21,23 @@ package org.jpox.samples.types.linkedhashmap;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Container object for LinkedHashMap tests.
- *
- * @version $Revision: 1.1 $    
  **/
-public class LinkedHashMap2 implements MapHolder
+public class LinkedHashMap2 implements MapHolder<String, LinkedHashMap2Item>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.LinkedHashMap items=new java.util.LinkedHashMap();
+    java.util.LinkedHashMap<String, LinkedHashMap2Item> items=new java.util.LinkedHashMap<>();
 
     public LinkedHashMap2()
     {
@@ -47,7 +45,7 @@ public class LinkedHashMap2 implements MapHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Map getItems()
+    public java.util.Map<String, LinkedHashMap2Item> getItems()
     {
         return items;
     }
@@ -57,37 +55,37 @@ public class LinkedHashMap2 implements MapHolder
         return items.size();
     }
 
-    public Object getItem(Object key)
+    public LinkedHashMap2Item getItem(String key)
     {
         return items.get(key);
     }
 
-    public Set getEntrySet()
+    public Set<Entry<String, LinkedHashMap2Item>> getEntrySet()
     {
         return items.entrySet();
     }
 
-    public Set getKeySet()
+    public Set<String> getKeySet()
     {
         return items.keySet();
     }    
 
-    public Collection getValues()
+    public Collection<LinkedHashMap2Item> getValues()
     {
         return items.values();
     }
 
-    public void putItem(Object key,Object item)
+    public void putItem(String key,LinkedHashMap2Item item)
     {
         items.put(key,item);
     }
 
-    public void putItems(java.util.Map m)
+    public void putItems(java.util.Map<String, LinkedHashMap2Item> m)
     {
         items.putAll(m);
     }
 
-    public void removeItem(Object key)
+    public void removeItem(String key)
     {
         items.remove(key);
     }
@@ -122,9 +120,10 @@ public class LinkedHashMap2 implements MapHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Map items)
+    public void setItems(java.util.Map<String, LinkedHashMap2Item> items)
     {
-        this.items = (LinkedHashMap) items;
+        this.items.clear();
+        this.items.putAll(items);
     }
 
     public String toString()
@@ -132,12 +131,12 @@ public class LinkedHashMap2 implements MapHolder
         return "LinkedHashMapInverse : [" + items.size() + " items]";
     }
     
-    public boolean containsKey(Object key)
+    public boolean containsKey(String key)
     {
         return items.containsKey(key);
     }
 
-    public boolean containsValue(Object value)
+    public boolean containsValue(LinkedHashMap2Item value)
     {
         return items.containsValue(value);
     }

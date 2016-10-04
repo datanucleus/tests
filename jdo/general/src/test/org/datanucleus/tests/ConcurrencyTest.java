@@ -96,7 +96,7 @@ public class ConcurrencyTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            LinkedList threads = new LinkedList();
+            LinkedList<Thread> threads = new LinkedList<>();
             Extent ext = pm.getExtent(Transfer.class, true);
             Iterator iter = ext.iterator();
             while (iter.hasNext())

@@ -17,14 +17,14 @@ Contributions
 ***********************************************************************/
 package org.jpox.samples.types.container;
 
-public interface ListHolder extends CollectionHolder
+public interface ListHolder<E> extends CollectionHolder<E>
 {
     /**
      * Accessor for an item in the container.
      * @param position The position in the container.
      * @return The item
      **/
-    public Object getItem(int position);
+    public E getItem(int position);
 
     /**
      * Method to retrieve the number of items in the container.
@@ -37,7 +37,7 @@ public interface ListHolder extends CollectionHolder
      * @param item Item to add.
      * @param position The position
      **/
-    public void addItem(Object item, int position);
+    public void addItem(E item, int position);
 
     /**
      * Method to remove an item from the container at a position.

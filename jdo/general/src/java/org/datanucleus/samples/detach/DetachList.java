@@ -23,13 +23,11 @@ import java.util.List;
 
 /**
  * Object containing a List that will be detached.
- * 
- * @version $Revision: 1.1 $
  */
 public class DetachList
 {
     String name;
-    List elements = new ArrayList();
+    List<DetachListElement> elements = new ArrayList<>();
 
     public DetachList(String name)
     {
@@ -41,7 +39,7 @@ public class DetachList
         elements.add(element);
     }
 
-    public List getElements()
+    public List<DetachListElement> getElements()
     {
         return elements;
     }

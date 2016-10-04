@@ -584,7 +584,7 @@ public class EnumTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Collection enumColl = new HashSet();
+                Collection<Colour> enumColl = new HashSet<>();
                 enumColl.add(Colour.RED);
                 enumColl.add(Colour.GREEN);
                 Collection c = (Collection) pm.newQuery(Palette.class, ":param.contains(colour)").execute(enumColl);
@@ -671,8 +671,8 @@ public class EnumTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery(AlternativePalette.class, "this.colour == org.jpox.samples.types.enums.AlternativeColour.GREEN");
-                List<AlternativePalette> result = (List<AlternativePalette>) q.execute();
+                Query<AlternativePalette> q = pm.newQuery(AlternativePalette.class, "this.colour == org.jpox.samples.types.enums.AlternativeColour.GREEN");
+                List<AlternativePalette> result = q.executeList();
                 assertEquals(1, result.size());
                 p = result.get(0);
                 assertEquals(100, p.getAmount());

@@ -77,7 +77,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                List entries = new ArrayList();
+                List<LogEntry> entries = new ArrayList<>();
                 LogEntry entry = new LogEntry(LogEntry.WARNING, "Datastore adapter not found. Falling back to default");
                 entries.add(entry);
                 entries.add(new LogEntry(LogEntry.ERROR, "No datastore specified"));
@@ -191,7 +191,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                List entries = new ArrayList();
+                List<LogEntry> entries = new ArrayList<>();
                 LogEntry entry = new LogEntry(LogEntry.WARNING, "Datastore adapter not found. Falling back to default");
                 entries.add(entry);
                 entries.add(new LogEntry(LogEntry.ERROR, "No datastore specified"));
@@ -307,7 +307,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                List entries = new ArrayList();
+                List<LogEntry> entries = new ArrayList<>();
                 LogEntry entry = new LogEntry(LogEntry.WARNING, "Datastore adapter not found. Falling back to default");
                 entries.add(entry);
                 entries.add(new LogEntry(LogEntry.ERROR, "No datastore specified"));
@@ -392,7 +392,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                List entries = new ArrayList();
+                List<LogEntry> entries = new ArrayList<>();
                 LogEntry entry = new LogEntry(LogEntry.WARNING, "Datastore adapter not found. Falling back to default");
                 entries.add(entry);
                 entries.add(new LogEntry(LogEntry.ERROR, "No datastore specified"));
@@ -418,7 +418,7 @@ public class NondurableIdTest extends JDOPersistenceTestCase
             pm = pmf.getPersistenceManager();
             try
             {
-                Query q = pm.newQuery(LogEntry.class);
+                Query<LogEntry> q = pm.newQuery(LogEntry.class);
                 List<LogEntry> entries = q.executeList();
                 for (LogEntry entry : entries)
                 {

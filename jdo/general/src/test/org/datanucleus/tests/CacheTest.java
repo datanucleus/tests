@@ -1421,10 +1421,10 @@ public class CacheTest extends JDOPersistenceTestCase
             }
 
             // Test object state of instance multiple times; using (auto) detachment.
-            List employees;
+            List<Employee> employees;
             for (int i = 0; i < loops; i++)
             {
-                Collection data = null;
+                Collection<Employee> data = null;
 
                 // Retrieve and detach the object (detachAllAtCommit)
                 pm = cachePMF.getPersistenceManager();
@@ -1434,9 +1434,10 @@ public class CacheTest extends JDOPersistenceTestCase
                 {
                     tx.begin();
 
-                    Query query = pm.newQuery(Employee.class);
-                    data = (Collection) query.execute();
-                    employees = new ArrayList(data);
+                    Query<Employee> query = pm.newQuery(Employee.class);
+                    data = query.executeList();
+                    employees = new ArrayList<>();
+                    employees.addAll(data);
 
                     tx.commit();
                 }
@@ -1450,7 +1451,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 }
 
                 // Check that it is detached
-                Iterator iter = employees.iterator();
+                Iterator<Employee> iter = employees.iterator();
                 while (iter.hasNext())
                 {
                     Employee employee = (Employee)iter.next();

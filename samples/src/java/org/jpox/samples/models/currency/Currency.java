@@ -66,7 +66,7 @@ public class Currency
         this.rates.add(rate);
     }
 
-    public final void setRates(List rates)
+    public final void setRates(List<Rate> rates)
     {
         this.rates = rates;
     }

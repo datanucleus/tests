@@ -26,12 +26,12 @@ import org.jpox.samples.types.container.CollectionHolder;
 /**
  * Container object for FK Collection tests.
  */
-public class Collection2 implements CollectionHolder
+public class Collection2 implements CollectionHolder<Collection2Item>
 {
     private int identifierA;
     private String identifierB;
 
-    java.util.Collection items = new java.util.HashSet();
+    java.util.Collection<Collection2Item> items = new java.util.HashSet<>();
 
     public Collection2()
     {
@@ -40,7 +40,7 @@ public class Collection2 implements CollectionHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection  getItems()
+    public java.util.Collection<Collection2Item> getItems()
     {
         return items;
     }
@@ -50,27 +50,27 @@ public class Collection2 implements CollectionHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(Collection2Item item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<Collection2Item> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(Collection2Item item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<Collection2Item> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<Collection2Item> c)
     {
         items.retainAll(c);
     }
@@ -105,7 +105,7 @@ public class Collection2 implements CollectionHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Collection items)
+    public void setItems(java.util.Collection<Collection2Item> items)
     {
         this.items = items;
     }
@@ -115,12 +115,12 @@ public class Collection2 implements CollectionHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean contains(Object value)
+    public boolean contains(Collection2Item value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<Collection2Item> values)
     {
         return items.containsAll(values);
     }

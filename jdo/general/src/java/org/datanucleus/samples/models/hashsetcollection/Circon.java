@@ -20,6 +20,7 @@ Contributors:
 package org.datanucleus.samples.models.hashsetcollection;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.io.Serializable;
 
 /**
@@ -31,14 +32,14 @@ public class Circon implements Serializable
 
     private String id;
 
-    private HashSet masters = new HashSet();
+    private Set<Master> masters = new HashSet<>();
     private Detail detail;
 
     public Circon()
     {
     }
 
-    public HashSet getMasters()
+    public Set<Master> getMasters()
     {
         return masters;
     }

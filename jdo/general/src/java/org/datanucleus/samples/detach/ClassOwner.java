@@ -32,9 +32,9 @@ import javax.jdo.JDOHelper;
 public class ClassOwner
 {
     String description;
-    Set elements;
-    Map mapToCheckPrefetch;
-    List listToCheckPrefetch;
+    Set<ClassElements> elements;
+    Map<String, ClassElements> mapToCheckPrefetch;
+    List<ClassElements> listToCheckPrefetch;
     
     /**
      * Accessor for description
@@ -55,7 +55,7 @@ public class ClassOwner
      * Accessor for elements
      * @return Returns the elements.
      */
-    public final Set getElements()
+    public final Set<ClassElements> getElements()
     {
         return elements;
     }
@@ -66,7 +66,7 @@ public class ClassOwner
     /**
      * @param elements The elements to set.
      */
-    public final void setElements(Set elements)
+    public final void setElements(Set<ClassElements> elements)
     {
         this.elements = elements;
     }
@@ -75,28 +75,28 @@ public class ClassOwner
     /**
      * @return Returns the listToCheckPrefetch.
      */
-    public List getListToCheckPrefetch()
+    public List<ClassElements> getListToCheckPrefetch()
     {
         return listToCheckPrefetch;
     }
     /**
      * @param listToCheckPrefetch The listToCheckPrefetch to set.
      */
-    public void setListToCheckPrefetch(List listToCheckPrefetch)
+    public void setListToCheckPrefetch(List<ClassElements> listToCheckPrefetch)
     {
         this.listToCheckPrefetch = listToCheckPrefetch;
     }
     /**
      * @return Returns the mapToCheckPrefetch.
      */
-    public Map getMapToCheckPrefetch()
+    public Map<String, ClassElements> getMapToCheckPrefetch()
     {
         return mapToCheckPrefetch;
     }
     /**
      * @param mapToCheckPrefetch The mapToCheckPrefetch to set.
      */
-    public void setMapToCheckPrefetch(Map mapToCheckPrefetch)
+    public void setMapToCheckPrefetch(Map<String, ClassElements> mapToCheckPrefetch)
     {
         this.mapToCheckPrefetch = mapToCheckPrefetch;
     }
@@ -106,8 +106,8 @@ public class ClassOwner
     public ClassOwner()
     {
         super();
-        elements = new HashSet();
-        listToCheckPrefetch = new ArrayList();
+        elements = new HashSet<>();
+        listToCheckPrefetch = new ArrayList<>();
     }
     /**
      * @param description
@@ -116,8 +116,8 @@ public class ClassOwner
     {
         this();
         this.description = description;
-        elements = new HashSet();
-        mapToCheckPrefetch = new HashMap();
+        elements = new HashSet<>();
+        mapToCheckPrefetch = new HashMap<>();
     }
     
     /* (non-Javadoc)

@@ -157,8 +157,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getYear() == 2008");
-                    q.setClass(JavaTimeSample1.class);
+                    Query<JavaTimeSample1> q = pm.newQuery(JavaTimeSample1.class, "dateTime1.getYear() == 2008");
                     List<JavaTimeSample1> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -173,8 +172,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getMonthValue() == 3");
-                    q.setClass(JavaTimeSample1.class);
+                    Query<JavaTimeSample1> q = pm.newQuery(JavaTimeSample1.class, "dateTime1.getMonthValue() == 3");
                     List<JavaTimeSample1> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -189,8 +187,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getDayOfMonth() == 14");
-                    q.setClass(JavaTimeSample1.class);
+                    Query<JavaTimeSample1> q = pm.newQuery(JavaTimeSample1.class, "dateTime1.getDayOfMonth() == 14");
                     List<JavaTimeSample1> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -205,8 +202,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getHour() == 15");
-                    q.setClass(JavaTimeSample1.class);
+                    Query<JavaTimeSample1> q = pm.newQuery(JavaTimeSample1.class, "dateTime1.getHour() == 15");
                     List<JavaTimeSample1> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -221,8 +217,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getMinute() == 9");
-                    q.setClass(JavaTimeSample1.class);
+                    Query<JavaTimeSample1> q = pm.newQuery(JavaTimeSample1.class, "dateTime1.getMinute() == 9");
                     List<JavaTimeSample1> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -237,8 +232,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample1.class.getName() + " WHERE dateTime1.getSecond() == 26");
-                    q.setClass(JavaTimeSample1.class);
+                    Query<JavaTimeSample1> q = pm.newQuery(JavaTimeSample1.class, "dateTime1.getSecond() == 26");
                     List<JavaTimeSample1> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -356,8 +350,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample2.class.getName() + " WHERE localDate1.getYear() == 2008");
-                    q.setClass(JavaTimeSample2.class);
+                    Query<JavaTimeSample2> q = pm.newQuery(JavaTimeSample2.class, "localDate1.getYear() == 2008");
                     List<JavaTimeSample2> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -369,8 +362,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample2.class.getName() + " WHERE localDate1.getMonthValue() == 3");
-                    q.setClass(JavaTimeSample2.class);
+                    Query<JavaTimeSample2> q = pm.newQuery(JavaTimeSample2.class, "localDate1.getMonthValue() == 3");
                     List<JavaTimeSample2> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -382,8 +374,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Day was wrong", 14, dt.getDayOfMonth());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample2.class.getName() + " WHERE localDate1.getDayOfMonth() == 14");
-                    q.setClass(JavaTimeSample2.class);
+                    Query<JavaTimeSample2> q = pm.newQuery(JavaTimeSample2.class, "localDate1.getDayOfMonth() == 14");
                     List<JavaTimeSample2> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -498,8 +489,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() + " WHERE localTime1.getHour() == 15");
-                    q.setClass(JavaTimeSample3.class);
+                    Query<JavaTimeSample3> q = pm.newQuery(JavaTimeSample3.class, "localTime1.getHour() == 15");
                     List<JavaTimeSample3> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -511,8 +501,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() + " WHERE localTime1.getMinute() == 9");
-                    q.setClass(JavaTimeSample3.class);
+                    Query<JavaTimeSample3> q = pm.newQuery(JavaTimeSample3.class, "localTime1.getMinute() == 9");
                     List<JavaTimeSample3> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -524,8 +513,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                     assertEquals("Timestamp : Second was wrong", 26, dt.getSecond());
                 }
                 {
-                    Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() + " WHERE localTime1.getSecond() == 26");
-                    q.setClass(JavaTimeSample3.class);
+                    Query<JavaTimeSample3> q = pm.newQuery(JavaTimeSample3.class, "localTime1.getSecond() == 26");
                     List<JavaTimeSample3> results = q.executeList();
                     assertNotNull(results);
                     assertEquals(1, results.size());
@@ -602,10 +590,10 @@ public class JavaTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + JavaTimeSample3.class.getName() +
-                    " WHERE localTime1 < :timeParam");
+                Query<JavaTimeSample3> q = pm.newQuery(JavaTimeSample3.class, "localTime1 < :timeParam");
                 LocalTime timeParam = LocalTime.of(11, 9, 26);
-                List<JavaTimeSample3> results = (List<JavaTimeSample3>) q.execute(timeParam);
+                q.setParameters(timeParam);
+                List<JavaTimeSample3> results = q.executeList();
                 assertEquals("Number of results is wrong", 1, results.size());
                 JavaTimeSample3 s = results.get(0);
                 LocalTime lt1 = s.getLocalTime1();
@@ -895,8 +883,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 // Query the MonthDay that was stored as a DATE
-                Query q1 = pm.newQuery("SELECT FROM " + JavaTimeSample5.class.getName() + " WHERE monthDay1.getMonthValue() == 5");
-                q1.setClass(JavaTimeSample5.class);
+                Query<JavaTimeSample5> q1 = pm.newQuery(JavaTimeSample5.class, "monthDay1.getMonthValue() == 5");
                 List<JavaTimeSample5> results1 = q1.executeList();
                 assertNotNull(results1);
                 assertEquals(1, results1.size());
@@ -904,8 +891,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 assertEquals("MonthDay.dayOfMonth is wrong for queried monthValue", 20, s.getMonthDay1().getDayOfMonth());
 
                 // Query the MonthDay that was stored as a DATE
-                Query q2 = pm.newQuery("SELECT FROM " + JavaTimeSample5.class.getName() + " WHERE monthDay1.getDayOfMonth() == 20");
-                q2.setClass(JavaTimeSample5.class);
+                Query<JavaTimeSample5> q2 = pm.newQuery(JavaTimeSample5.class, "monthDay1.getDayOfMonth() == 20");
                 List<JavaTimeSample5> results2 = q2.executeList();
                 assertNotNull(results2);
                 assertEquals(1, results2.size());
@@ -1014,8 +1000,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 // Query the YearMonth that was stored as a DATE
-                Query q1 = pm.newQuery("SELECT FROM " + JavaTimeSample6.class.getName() + " WHERE yearMonth1.getMonthValue() == 5");
-                q1.setClass(JavaTimeSample6.class);
+                Query<JavaTimeSample6> q1 = pm.newQuery(JavaTimeSample6.class, "yearMonth1.getMonthValue() == 5");
                 List<JavaTimeSample6> results1 = q1.executeList();
                 assertNotNull(results1);
                 assertEquals(1, results1.size());
@@ -1023,8 +1008,7 @@ public class JavaTimeTest extends JDOPersistenceTestCase
                 assertEquals("YearMonth.dayOfMonth is wrong for queried monthValue", 2001, s.getYearMonth1().getYear());
 
                 // Query the YearMonth that was stored as a DATE
-                Query q2 = pm.newQuery("SELECT FROM " + JavaTimeSample6.class.getName() + " WHERE yearMonth1.getYear() == 2001");
-                q2.setClass(JavaTimeSample6.class);
+                Query<JavaTimeSample6> q2 = pm.newQuery(JavaTimeSample6.class, "yearMonth1.getYear() == 2001");
                 List<JavaTimeSample6> results2 = q2.executeList();
                 assertNotNull(results2);
                 assertEquals(1, results2.size());

@@ -18,35 +18,34 @@ Contributions
 package org.jpox.samples.types.container;
 
 import java.util.Collection;
+import java.util.Map.Entry;
 import java.util.Set;
 
 
 /**
  * Interface to be implemented by all map-based container sample classes.
- *
- * @version $Revision: 1.1 $
  */
-public interface MapHolder extends ContainerHolder
+public interface MapHolder<K, V> extends ContainerHolder
 {
-    public boolean containsKey(Object key);
+    public boolean containsKey(K key);
 
-    public boolean containsValue(Object value);
+    public boolean containsValue(V value);
 
-    public java.util.Map getItems();
+    public java.util.Map<K, V> getItems();
 
-    public Object getItem(Object key);
+    public V getItem(K key);
 
-    public Set getEntrySet();
+    public Set<Entry<K, V>> getEntrySet();
 
-    public Set getKeySet();
+    public Set<K> getKeySet();
 
-    public Collection getValues();
+    public Collection<V> getValues();
     
-    public void putItem(Object key,Object item);
+    public void putItem(K key,V item);
 
-    public void putItems(java.util.Map m);
+    public void putItems(java.util.Map<K, V> m);
 
-    public void removeItem(Object key);
+    public void removeItem(K key);
 
-    public void setItems(java.util.Map items);
+    public void setItems(java.util.Map<K, V> items);
 }

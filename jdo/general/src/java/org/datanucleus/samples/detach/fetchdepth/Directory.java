@@ -19,6 +19,7 @@ Contributors:
 package org.datanucleus.samples.detach.fetchdepth;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Sample representation of a directory.
@@ -28,7 +29,7 @@ public class Directory
 {
     String name;
     Directory parent;
-    HashSet children = new HashSet();
+    Set<Directory> children = new HashSet<>();
 
     public Directory(String name)
     {
@@ -60,7 +61,7 @@ public class Directory
         return parent;
     }
 
-    public HashSet getChildren()
+    public Set<Directory> getChildren()
     {
         return children;
     }

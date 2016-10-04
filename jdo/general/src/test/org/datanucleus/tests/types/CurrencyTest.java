@@ -311,8 +311,9 @@ LOG.info(">> Currency being retrieved for checking");
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(CurrencyHolder.class, "currencyField == :p");
-                List<CurrencyHolder> results = (List<CurrencyHolder>) q.execute(Currency.getInstance("USD"));
+                Query<CurrencyHolder> q = pm.newQuery(CurrencyHolder.class, "currencyField == :p");
+                q.setParameters(Currency.getInstance("USD"));
+                List<CurrencyHolder> results = q.executeList();
                 assertEquals(1, results.size());
                 CurrencyHolder curr = results.get(0);
                 assertNotNull("Currency field is null", curr.getCurrencyField());

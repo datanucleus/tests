@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -199,16 +198,16 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             {
                 //test detach and attach
                 tx.begin();
-                Query query = pm.newQuery(ClassOwner.class);
+                Query<ClassOwner> query = pm.newQuery(ClassOwner.class);
 
-                Collection result = (Collection) query.execute();
+                Collection<ClassOwner> result = query.executeList();
                 //add a group just above the detach, so we can see if the detachCopyAll retrieves the fields
                 pm.getFetchPlan().addGroup("collection");
                 pm.getFetchPlan().setMaxFetchDepth(2);
                 result = pm.detachCopyAll(result);
 
                 tx.commit();
-                ClassOwner ownerResult = (ClassOwner)result.iterator().next();
+                ClassOwner ownerResult = result.iterator().next();
                 assertEquals("Expected 2 elements",2,ownerResult.getElements().size());
             }
             catch( Exception e )
@@ -2071,7 +2070,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             {
                 LOG.info("Detached farm : " + detachedFarm);
                 Set<Animal> animals = detachedFarm.getAnimals();
-                Iterator animalsIter = animals.iterator();
+                Iterator<Animal> animalsIter = animals.iterator();
                 while (animalsIter.hasNext())
                 {
                     LOG.info("Detached animal : " + animalsIter.next());
@@ -2960,7 +2959,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             // Create a Gym with 3 Wardrobes
             Gym testGym = new Gym();
 
-            Map wardrobes = new HashMap();
+            Map<String, Wardrobe> wardrobes = new HashMap<>();
             Wardrobe wSmall = new Wardrobe();
             wSmall.setModel("small");
             Wardrobe wMedium = new Wardrobe();
@@ -3744,17 +3743,19 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
-            List detachedAloneElements = new ArrayList();
+
             // Retrieve the objects and detach them
             pm = newPM();
             tx = pm.currentTransaction();
+            List<DetachListElement> detachedAloneElements = new ArrayList<>();
             try
             {
                 tx.begin();
 
                 DetachList list = (DetachList)pm.getObjectById(listId);
                 assertEquals("List persisted has incorrect number of elements", list.getNumberOfElements(), 4);
-                detachedAloneElements = new ArrayList(pm.detachCopyAll(new ArrayList(list.getElements())));
+                detachedAloneElements = new ArrayList<>();
+                detachedAloneElements.addAll(pm.detachCopyAll(new ArrayList<DetachListElement>(list.getElements())));
                 detachedList = (DetachList)pm.detachCopy(list);
 
                 tx.commit();
@@ -4071,7 +4072,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             try
             {
                 // Check that we have the 1st level of children
-                HashSet level1children = detachedDir.getChildren();
+                Set level1children = detachedDir.getChildren();
                 Iterator level1childIter = level1children.iterator();
                 while (level1childIter.hasNext())
                 {
@@ -4081,7 +4082,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                     try
                     {
                         // Check that we have the 2nd level of children
-                        HashSet level2children = child.getChildren();
+                        Set level2children = child.getChildren();
                         Iterator level2childIter = level2children.iterator();
                         while (level2childIter.hasNext())
                         {
@@ -4090,7 +4091,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                             try
                             {
                                 // Check that we dont have the 3rd level of children
-                                HashSet level3children = grandchild.getChildren();
+                                Set level3children = grandchild.getChildren();
                                 Iterator level3childIter = level3children.iterator();
                                 while (level3childIter.hasNext())
                                 {
@@ -4315,7 +4316,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                 tx.commit();
 
                 // add a storeLifeCycleListener to check what gets stored
-                final Collection storedElements = new ArrayList();
+                final Collection<Object> storedElements = new ArrayList<>();
                 pm.addInstanceLifecycleListener(new StoreLifecycleListener()
                 {
                     public void preStore(InstanceLifecycleEvent event)
@@ -4762,9 +4763,9 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                 // No max fetch-depth is defined, so they default to 1.
                 pm.getFetchPlan().setGroup("groupA");
 
-                Query query = pm.newQuery(pm.getExtent(Employee.class, true));
+                Query<Employee> query = pm.newQuery(pm.getExtent(Employee.class, true));
                 query.setOrdering("firstName descending");
-                Collection c = (Collection) query.execute();
+                Collection<Employee> c = query.executeList();
                 c = pm.detachCopyAll(c);
                 tx.commit();
 

@@ -21,7 +21,7 @@ package org.jpox.samples.types.hashtable;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Hashtable;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -29,17 +29,15 @@ import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Container object for Hashtable tests.
- *
- * @version $Revision: 1.1 $    
  **/
-public class Hashtable3 implements MapHolder
+public class Hashtable3 implements MapHolder<String, String>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.Hashtable items=new java.util.Hashtable();
+    java.util.Hashtable<String, String> items=new java.util.Hashtable<>();
 
     public Hashtable3()
     {
@@ -47,7 +45,7 @@ public class Hashtable3 implements MapHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Map getItems()
+    public java.util.Map<String, String> getItems()
     {
         return items;
     }
@@ -57,22 +55,22 @@ public class Hashtable3 implements MapHolder
         return items.size();
     }
 
-    public Object getItem(Object key)
+    public String getItem(String key)
     {
         return items.get(key);
     }
 
-    public void putItem(Object key,Object value)
+    public void putItem(String key,String value)
     {
         items.put(key,value);
     }
 
-    public void putItems(java.util.Map m)
+    public void putItems(java.util.Map<String, String> m)
     {
         items.putAll(m);
     }
 
-    public void removeItem(Object key)
+    public void removeItem(String key)
     {
         items.remove(key);
     }
@@ -107,9 +105,10 @@ public class Hashtable3 implements MapHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Map items)
+    public void setItems(java.util.Map<String, String> items)
     {
-        this.items = (Hashtable) items;
+        this.items.clear();
+        this.items.putAll(items);
     }
 
     public String toString()
@@ -166,27 +165,27 @@ public class Hashtable3 implements MapHolder
         }
     }
 
-    public Set getEntrySet()
+    public Set<Entry<String, String>> getEntrySet()
     {
         return items.entrySet();
     }
 
-    public Set getKeySet()
+    public Set<String> getKeySet()
     {
         return items.keySet();
     }
 
-    public Collection getValues()
+    public Collection<String>getValues()
     {
         return items.values();
     }
     
-    public boolean containsKey(Object key)
+    public boolean containsKey(String key)
     {
         return items.containsKey(key);
     }
 
-    public boolean containsValue(Object value)
+    public boolean containsValue(String value)
     {
         return items.containsValue(value);
     }    

@@ -25,17 +25,15 @@ import org.jpox.samples.types.container.CollectionHolder;
 
 /**
  * Container object for FK Collection serialised tests.
- *
- * @version $Revision: 1.1 $    
  **/
-public class Collection4 implements CollectionHolder
+public class Collection4 implements CollectionHolder<Collection4Item>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.Collection items=new java.util.HashSet();
+    java.util.Collection<Collection4Item> items=new java.util.HashSet<>();
 
     public Collection4()
     {
@@ -43,7 +41,7 @@ public class Collection4 implements CollectionHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection  getItems()
+    public java.util.Collection<Collection4Item> getItems()
     {
         return items;
     }
@@ -53,27 +51,27 @@ public class Collection4 implements CollectionHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(Collection4Item item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<Collection4Item> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(Collection4Item item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<Collection4Item> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<Collection4Item> c)
     {
         items.retainAll(c);
     }
@@ -108,7 +106,7 @@ public class Collection4 implements CollectionHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Collection items)
+    public void setItems(java.util.Collection<Collection4Item> items)
     {
         this.items = items;
     }
@@ -118,12 +116,12 @@ public class Collection4 implements CollectionHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean contains(Object value)
+    public boolean contains(Collection4Item value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<Collection4Item> values)
     {
         return items.containsAll(values);
     }

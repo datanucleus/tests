@@ -24,15 +24,13 @@ import org.jpox.samples.types.container.ListHolder;
 
 /**
  * Container object for FK Stack tests.
- *
- * @version $Revision: 1.1 $    
- **/
-public class Stack2 implements ListHolder
+ */
+public class Stack2 implements ListHolder<Stack2Item>
 {
     private int identifierA;
     private String identifierB;
 
-    java.util.Stack items=new java.util.Stack();
+    java.util.Stack<Stack2Item> items=new java.util.Stack<>();
 
     public Stack2()
     {
@@ -41,12 +39,12 @@ public class Stack2 implements ListHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection getItems()
+    public java.util.Collection<Stack2Item> getItems()
     {
         return items;
     }
 
-    public Object getItem(int position)
+    public Stack2Item getItem(int position)
     {
         return items.get(position);
     }
@@ -56,17 +54,17 @@ public class Stack2 implements ListHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(Stack2Item item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<Stack2Item> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(Stack2Item item)
     {
         items.remove(item);
     }
@@ -120,22 +118,23 @@ public class Stack2 implements ListHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Collection items)
+    public void setItems(java.util.Collection<Stack2Item> items)
     {
-        this.items = (java.util.Stack) items;
+        this.items.clear();
+        this.items.addAll(items);
     }
 
-    public boolean contains(Object value)
+    public boolean contains(Stack2Item value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<Stack2Item> values)
     {
         return items.containsAll(values);
     }
 
-    public void addItem(Object item, int position)
+    public void addItem(Stack2Item item, int position)
     {
         this.items.add(position,item);        
     }

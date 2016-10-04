@@ -123,7 +123,7 @@ public class FetchPlanTest extends JDOPersistenceTestCase
         FetchPlan fp = getFetchPlan();
 
         // setGroups(Collection)
-        HashSet set = new HashSet();
+        Set<String> set = new HashSet<>();
         set.add("grp1");
 
         fp.setGroups(set);
@@ -159,7 +159,7 @@ public class FetchPlanTest extends JDOPersistenceTestCase
     {
         FetchPlan fp = getFetchPlan();
 
-        HashSet set = new HashSet();
+        Set<String> set = new HashSet<>();
 
         fp.clearGroups();
         set.add("grp1");
@@ -195,7 +195,8 @@ public class FetchPlanTest extends JDOPersistenceTestCase
         {
             //expected
         }
-        List elms = new ArrayList();
+
+        List<Class> elms = new ArrayList();
         elms.add(Class.class);
         fp.setDetachmentRoots(elms);
         assertEquals(1, fp.getDetachmentRoots().size());

@@ -33,17 +33,13 @@ import javax.jdo.listener.InstanceLifecycleEvent;
 import javax.jdo.listener.LoadLifecycleListener;
 import javax.jdo.listener.StoreLifecycleListener;
 
-
-/**
- * @version $Revision: 1.1 $
- */
 public class LifeListener implements CreateLifecycleListener, DeleteLifecycleListener, LoadLifecycleListener, StoreLifecycleListener, DetachLifecycleListener, AttachLifecycleListener, ClearLifecycleListener, DirtyLifecycleListener 
 {
     String ownerID;
     String anotherField;
     
     int index = 0;
-    transient List registeredEvents = new ArrayList();
+    transient List<Integer> registeredEvents = new ArrayList<>();
     
     /**
      * 

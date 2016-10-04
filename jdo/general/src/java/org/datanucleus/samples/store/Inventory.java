@@ -21,30 +21,25 @@ package org.datanucleus.samples.store;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Definition of an Inventory of Products.
- *
- * @version $Revision: 1.1 $    
  **/
 public class Inventory
 {
-    /**
-     * Products in the Inventory.
-     **/
-    HashSet products=null;
+    Set<Product> products=null;
 
     /** Default constructor. */
     public Inventory()
     {
     }
 
-    // -------------------------------- Accessors ------------------------------
     /**
      * Accessor for the products from the Inventory.
      * @return  The products.
      **/
-    public Collection getProducts()
+    public Collection<Product> getProducts()
     {
         return products;
     }
@@ -72,7 +67,7 @@ public class Inventory
     {
         if (products == null)
         {
-            products = new HashSet();
+            products = new HashSet<>();
         }
         products.add(product);
     }

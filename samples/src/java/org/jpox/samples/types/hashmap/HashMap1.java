@@ -21,25 +21,24 @@ package org.jpox.samples.types.hashmap;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
+import org.jpox.samples.types.container.ContainerItem;
 import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Container object for HashMap tests.
- *
- * @version $Revision: 1.1 $    
  **/
-public class HashMap1 implements MapHolder
+public class HashMap1 implements MapHolder<String, ContainerItem>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.HashMap items=new java.util.HashMap();
+    java.util.HashMap<String, ContainerItem> items=new java.util.HashMap<>();
 
     public HashMap1()
     {
@@ -47,7 +46,7 @@ public class HashMap1 implements MapHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Map getItems()
+    public java.util.Map<String, ContainerItem> getItems()
     {
         return items;
     }
@@ -57,37 +56,37 @@ public class HashMap1 implements MapHolder
         return items.size();
     }
 
-    public Object getItem(Object key)
+    public ContainerItem getItem(String key)
     {
         return items.get(key);
     }
 
-    public Set getEntrySet()
+    public Set<Entry<String, ContainerItem>> getEntrySet()
     {
         return items.entrySet();
     }
 
-    public Set getKeySet()
+    public Set<String> getKeySet()
     {
         return items.keySet();
     }    
 
-    public Collection getValues()
+    public Collection<ContainerItem> getValues()
     {
         return items.values();
     }
 
-    public void putItem(Object key,Object item)
+    public void putItem(String key,ContainerItem item)
     {
         items.put(key,item);
     }
 
-    public void putItems(java.util.Map m)
+    public void putItems(java.util.Map<String, ContainerItem> m)
     {
         items.putAll(m);
     }
 
-    public void removeItem(Object key)
+    public void removeItem(String key)
     {
         items.remove(key);
     }
@@ -122,9 +121,10 @@ public class HashMap1 implements MapHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Map items)
+    public void setItems(java.util.Map<String, ContainerItem> items)
     {
-        this.items = (HashMap) items;
+        this.items.clear();
+        this.items.putAll(items);
     }
 
     public String toString()
@@ -132,12 +132,12 @@ public class HashMap1 implements MapHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean containsKey(Object key)
+    public boolean containsKey(String key)
     {
         return items.containsKey(key);
     }
 
-    public boolean containsValue(Object value)
+    public boolean containsValue(ContainerItem value)
     {
         return items.containsValue(value);
     }

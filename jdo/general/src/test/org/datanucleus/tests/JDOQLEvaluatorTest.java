@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
@@ -65,7 +66,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
             Person p3 = new Person(103, "Minnie", "Mouse", "minnie.mouse@warnerbros.com");
@@ -142,7 +143,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
             Person p3 = new Person(103, "Minnie", "Mouse", "minnie.mouse@warnerbros.com");
@@ -214,7 +215,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
             Person p3 = new Person(103, "Minnie", "Mouse", "minnie.mouse@warnerbros.com");
@@ -271,7 +272,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person>instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
             Person p3 = new Person(103, "Minnie", "Mouse", "minnie.mouse@warnerbros.com");
@@ -343,7 +344,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
             Person p3 = new Person(103, "Minnie", "Mouse", "minnie.mouse@warnerbros.com");
@@ -400,7 +401,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             p1.setAge(34);
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
@@ -482,7 +483,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             p1.setAge(34);
             Employee p2 = new Employee(102, "Donald", "Duck", "donald.duck@warnerbros.com", 13400.0f, "12345");
@@ -543,7 +544,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             p1.setAge(34);
             Employee p2 = new Employee(102, "Donald", "Duck", "donald.duck@warnerbros.com", 13400.0f, "12345");
@@ -604,7 +605,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<SetHolder> instances = new ArrayList<>();
             SetHolder holder1 = new SetHolder("First");
             SetHolder holder2 = new SetHolder("Second");
             SetHolder holder3 = new SetHolder("Third");
@@ -664,7 +665,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<MapHolder> instances = new ArrayList<>();
             MapHolder holder1 = new MapHolder("First");
             MapHolder holder2 = new MapHolder("Second");
             MapHolder holder3 = new MapHolder("Third");
@@ -724,7 +725,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<MapHolder> instances = new ArrayList<>();
             MapHolder holder1 = new MapHolder("First");
             MapHolder holder2 = new MapHolder("Second");
             MapHolder holder3 = new MapHolder("Third");
@@ -784,7 +785,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<UserGroup> instances = new ArrayList<>();
             UserGroup grp1 = new UserGroup(101, "First Group");
             UserGroup grp2 = new UserGroup(102, "Second Group");
             UserGroup grp3 = new UserGroup(103, "Third Group");
@@ -848,7 +849,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
             Person p3 = new Person(103, "Minnie", "Mouse", "minnie.mouse@warnerbros.com");
@@ -868,7 +869,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(null, null);
 
             // Execute the query
-            HashMap paramValues = new HashMap();
+            Map<Integer, Object> paramValues = new HashMap<>();
             paramValues.put(new Integer(0), "ald"); // Simulate what org.datanucleus.store.query.Query does
             JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, paramValues, clr);
             List results = (List)eval.execute(true, true, true, true, true);
@@ -907,7 +908,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create some instances to query over
-            List instances = new ArrayList();
+            List<Person> instances = new ArrayList<>();
             Person p1 = new Person(101, "Mickey", "Mouse", "mickey.mouse@warnerbros.com");
             Person p2 = new Person(102, "Donald", "Duck", "donald.duck@warnerbros.com");
             Person p3 = new Person(103, "Minnie", "Mouse", "minnie.mouse@warnerbros.com");
@@ -929,7 +930,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             QueryCompilation compilation = compiler.compile(null, null);
 
             // Execute the query
-            HashMap paramValues = new HashMap();
+            Map<Integer, Object> paramValues = new HashMap<>();
             paramValues.put(new Integer(0), "ald"); // Simulate what org.datanucleus.store.query.Query does
             paramValues.put(new Integer(1), 4);
             JavaQueryInMemoryEvaluator eval = new JDOQLInMemoryEvaluator(query, instances, compilation, paramValues, clr);

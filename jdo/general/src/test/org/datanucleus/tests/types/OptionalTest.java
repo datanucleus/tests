@@ -147,8 +147,7 @@ public class OptionalTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE stringField.isPresent()");
-                q.setClass(OptionalSample1.class);
+                Query<OptionalSample1> q = pm.newQuery(OptionalSample1.class, "stringField.isPresent()");
                 List<OptionalSample1> results = q.executeList();
                 assertNotNull(results);
                 assertEquals(1, results.size());
@@ -181,13 +180,14 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertTrue(row2Present);
 
                 Query q3 = pm.newQuery("SELECT id, stringField.orElse('NotPresent') FROM " + OptionalSample1.class.getName());
-                List<Object[]> results3 = q3.executeResultList();
+                List results3 = q3.executeResultList();
                 assertNotNull(results3);
                 assertEquals(2, results3.size());
                 row1Present = false;
                 row2Present = false;
-                for (Object[] result : results3)
+                for (Object resultRow : results3)
                 {
+                    Object[] result = (Object[])resultRow;
                     if (((Number)result[0]).intValue() == 1)
                     {
                         row1Present = true;
@@ -202,8 +202,8 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertTrue(row1Present);
                 assertTrue(row2Present);
 
-                Query q4 = pm.newQuery("SELECT FROM " + OptionalSample1.class.getName() + " WHERE stringField.orElse(:param) == null");
-                Map<String, Object> paramMap = new HashMap();
+                Query<OptionalSample1> q4 = pm.newQuery(OptionalSample1.class, "stringField.orElse(:param) == null");
+                Map<String, Object> paramMap = new HashMap<>();
                 paramMap.put("param", null);
                 q4.setNamedParameters(paramMap);
                 List<OptionalSample1> results4 = q4.executeList();
@@ -325,16 +325,15 @@ public class OptionalTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE !(sample3 != null)");
-                q.setClass(OptionalSample2.class);
+                Query<OptionalSample2> q = pm.newQuery(OptionalSample2.class, "!(sample3 != null)");
                 List<OptionalSample2> results = q.executeList();
                 assertNotNull(results);
                 assertEquals(1, results.size());
 
                 // Refer to optional field via get().
-                Query q2 = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE sample3.get().id == :val");
+                Query<OptionalSample2> q2 = pm.newQuery(OptionalSample2.class, "sample3.get().id == :val");
                 q2.setClass(OptionalSample2.class);
-                Map namedParams = new HashMap();
+                Map<String, Integer> namedParams = new HashMap<>();
                 namedParams.put("val", 101);
                 q2.setNamedParameters(namedParams);
                 List<OptionalSample2> results2 = q2.executeList();
@@ -342,16 +341,14 @@ public class OptionalTest extends JDOPersistenceTestCase
                 assertEquals(1, results2.size());
 
                 // Refer to optional field as if the wrapped object
-                Query q3 = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE sample3.id == :val");
-                q3.setClass(OptionalSample2.class);
+                Query<OptionalSample2> q3 = pm.newQuery(OptionalSample2.class, "sample3.id == :val");
                 q3.setNamedParameters(namedParams);
                 List<OptionalSample2> results3 = q3.executeList();
                 assertNotNull(results3);
                 assertEquals(1, results3.size());
 
                 // Refer to optional field and then to another optional field (no Sample3 objects have the sample3 field set)
-                Query q4 = pm.newQuery("SELECT FROM " + OptionalSample2.class.getName() + " WHERE sample3 != null && sample3.sample3.isPresent()");
-                q4.setClass(OptionalSample2.class);
+                Query<OptionalSample2> q4 = pm.newQuery(OptionalSample2.class, "sample3 != null && sample3.sample3.isPresent()");
                 List<OptionalSample2> results4 = q4.executeList();
                 assertNotNull(results4);
                 assertEquals(0, results4.size());

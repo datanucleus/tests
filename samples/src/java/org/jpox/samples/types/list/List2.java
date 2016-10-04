@@ -24,17 +24,15 @@ import org.jpox.samples.types.container.ListHolder;
 
 /**
  * Container object for FK List tests.
- *
- * @version $Revision: 1.1 $    
  **/
-public class List2 implements ListHolder
+public class List2 implements ListHolder<List2Item>
 {
 	private Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.List items=new java.util.ArrayList();
+    java.util.List<List2Item> items=new java.util.ArrayList<>();
 
     public List2()
     {
@@ -42,12 +40,12 @@ public class List2 implements ListHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection getItems()
+    public java.util.Collection<List2Item> getItems()
     {
         return items;
     }
 
-    public Object getItem(int position)
+    public List2Item getItem(int position)
     {
         return items.get(position);
     }
@@ -57,27 +55,27 @@ public class List2 implements ListHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(List2Item item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<List2Item> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(List2Item item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<List2Item> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<List2Item> c)
     {
         items.retainAll(c);
     }
@@ -121,22 +119,23 @@ public class List2 implements ListHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Collection items)
+    public void setItems(java.util.Collection<List2Item> items)
     {
-        this.items = (java.util.List) items;
+        this.items.clear();
+        this.items.addAll(items);
     }
 
-    public boolean contains(Object value)
+    public boolean contains(List2Item value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<List2Item> values)
     {
         return items.containsAll(values);
     }
 
-    public void addItem(Object item, int position)
+    public void addItem(List2Item item, int position)
     {
         this.items.add(position,item);        
     }

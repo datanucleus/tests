@@ -554,10 +554,10 @@ public class JodaTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + JodaSample3.class.getName() +
-                    " WHERE localTime1 < :timeParam");
+                Query<JodaSample3> q = pm.newQuery(JodaSample3.class, "localTime1 < :timeParam");
                 LocalTime timeParam = new LocalTime(11, 9, 26);
-                List<JodaSample3> results = (List<JodaSample3>) q.execute(timeParam);
+                q.setParameters(timeParam);
+                List<JodaSample3> results = q.executeList();
                 assertEquals("Number of results is wrong", 1, results.size());
                 JodaSample3 s = results.get(0);
                 LocalTime lt1 = s.getLocalTime1();
@@ -631,10 +631,10 @@ public class JodaTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + JodaSample2.class.getName() +
-                    " WHERE localDate1 < :dateParam");
+                Query<JodaSample2> q = pm.newQuery(JodaSample2.class, "localDate1 < :dateParam");
                 LocalDate dateParam = new LocalDate(2001, 6, 25);
-                List<JodaSample2> results = (List<JodaSample2>) q.execute(dateParam);
+                q.setParameters(dateParam);
+                List<JodaSample2> results = q.executeList();
                 assertEquals("Number of results is wrong", 1, results.size());
                 JodaSample2 s = results.get(0);
                 LocalDate ld1 = s.getLocalDate1();
@@ -717,9 +717,10 @@ public class JodaTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + JodaSample5.class.getName() + " WHERE interval1.getStart() < :timeParam");
+                Query<JodaSample5> q = pm.newQuery(JodaSample5.class, "interval1.getStart() < :timeParam");
                 DateTime timeParam = baseTime.plusHours(2).plusMinutes(30);
-                List<JodaSample5> results = (List<JodaSample5>) q.execute(timeParam);
+                q.setParameters(timeParam);
+                List<JodaSample5> results = q.executeList();
                 assertEquals("Number of results is wrong", 1, results.size());
                 JodaSample5 s = results.get(0);
                 Interval sit1 = s.getInterval1();
@@ -749,9 +750,10 @@ public class JodaTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + JodaSample5.class.getName() + " WHERE interval1.getEnd() > :timeParam");
+                Query<JodaSample5> q = pm.newQuery(JodaSample5.class, "interval1.getEnd() > :timeParam");
                 DateTime timeParam = baseTime.plusHours(5);
-                List<JodaSample5> results = (List<JodaSample5>) q.execute(timeParam);
+                q.setParameters(timeParam);
+                List<JodaSample5> results = q.executeList();
                 assertEquals("Number of results is wrong", 1, results.size());
                 JodaSample5 s = results.get(0);
                 Interval sit1 = s.getInterval1();
@@ -823,11 +825,11 @@ public class JodaTimeTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery("SELECT FROM " + JodaSample2.class.getName() + " WHERE " +
-                    "(localDate1 == null || localDate1 < :param1)");
-                Map params = new HashMap();
+                Query<JodaSample2> q = pm.newQuery(JodaSample2.class, "(localDate1 == null || localDate1 < :param1)");
+                Map<String, LocalDate> params = new HashMap<>();
                 params.put("param1", new LocalDate(2009, 3, 14));
-                List<JodaSample2> results = (List<JodaSample2>)q.executeWithMap(params);
+                q.setNamedParameters(params);
+                List<JodaSample2> results = q.executeList();
                 assertNotNull(results);
                 assertEquals(2, results.size());
                 

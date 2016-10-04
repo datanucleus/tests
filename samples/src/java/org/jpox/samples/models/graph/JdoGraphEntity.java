@@ -23,7 +23,7 @@ import java.util.Map;
 
 public abstract class JdoGraphEntity
 {
-    private Map attributes;
+    private Map<JdoAttribute, JdoAttributeHolder> attributes;
     private JdoGraphEntityClass entityType;
     private JdoGraph parent;
 
@@ -31,7 +31,7 @@ public abstract class JdoGraphEntity
     {
         this.entityType = type;
         this.parent = parent;
-        this.attributes = new HashMap();
+        this.attributes = new HashMap<>();
     }
 
     public Serializable getAttributeValue(JdoAttribute attribute)
@@ -60,7 +60,7 @@ public abstract class JdoGraphEntity
         return attributes;
     }
 
-    public void setAttributes(Map attributes)
+    public void setAttributes(Map<JdoAttribute, JdoAttributeHolder> attributes)
     {
         this.attributes = attributes;
     }

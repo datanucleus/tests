@@ -31,7 +31,7 @@ public class Gym
     private String name;
 
     //this must be initialized in the constructor. dont change it
-    private Map wardrobes; // store Wardrobe in values
+    private Map<String, Wardrobe> wardrobes; // store Wardrobe in values
     private Map wardrobes2; // store Wardrobe in keys
     private Map wardrobesInverse; // store Wardrobe in values
     private Map wardrobesInverse2; // store Wardrobe in keys
@@ -54,19 +54,19 @@ public class Gym
     public Gym()
     {
         //this must be initialized in the constructor. dont change it
-        wardrobes = new HashMap();
-        equipments = new HashMap();
-        partners = new HashMap();
-        wardrobes2 = new HashMap();
-        equipments2 = new HashMap();
-        partners2 = new HashMap();
-        wardrobesInverse = new HashMap();
-        equipmentsInverse = new HashMap();
-        partnersInverse = new HashMap();
-        wardrobesInverse2 = new HashMap();
-        equipmentsInverse2 = new HashMap();
-        partnersInverse2 = new HashMap();
-        codes = new HashMap();
+        wardrobes = new HashMap<>();
+        equipments = new HashMap<>();
+        partners = new HashMap<>();
+        wardrobes2 = new HashMap<>();
+        equipments2 = new HashMap<>();
+        partners2 = new HashMap<>();
+        wardrobesInverse = new HashMap<>();
+        equipmentsInverse = new HashMap<>();
+        partnersInverse = new HashMap<>();
+        wardrobesInverse2 = new HashMap<>();
+        equipmentsInverse2 = new HashMap<>();
+        partnersInverse2 = new HashMap<>();
+        codes = new HashMap<>();
     }
     
     /**
@@ -86,14 +86,14 @@ public class Gym
     /**
      * @return Returns the wardrobes.
      */
-    public Map getWardrobes()
+    public Map<String, Wardrobe> getWardrobes()
     {
         return wardrobes;
     }
     /**
      * @param wardrobes The wardrobes to set.
      */
-    public void setWardrobes(Map wardrobes)
+    public void setWardrobes(Map<String, Wardrobe> wardrobes)
     {
         this.wardrobes = wardrobes;
     }

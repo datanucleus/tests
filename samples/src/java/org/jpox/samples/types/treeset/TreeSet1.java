@@ -19,23 +19,21 @@ package org.jpox.samples.types.treeset;
 
 import java.io.Serializable;
 import java.util.Random;
-import java.util.TreeSet;
 
 import org.jpox.samples.types.container.CollectionHolder;
+import org.jpox.samples.types.container.ContainerItem;
 
 /**
  * Container object for join TreeSet tests.
- *
- * @version $Revision: 1.1 $    
  **/
-public class TreeSet1 implements CollectionHolder
+public class TreeSet1 implements CollectionHolder<ContainerItem>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.TreeSet items=new java.util.TreeSet();
+    java.util.TreeSet<ContainerItem> items=new java.util.TreeSet<>();
 
     public TreeSet1()
     {
@@ -43,7 +41,7 @@ public class TreeSet1 implements CollectionHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection  getItems()
+    public java.util.Collection<ContainerItem> getItems()
     {
         return items;
     }
@@ -53,27 +51,27 @@ public class TreeSet1 implements CollectionHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(ContainerItem item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<ContainerItem> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(ContainerItem item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<ContainerItem> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<ContainerItem> c)
     {
         items.retainAll(c);
     }
@@ -108,9 +106,10 @@ public class TreeSet1 implements CollectionHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Collection items)
+    public void setItems(java.util.Collection<ContainerItem> items)
     {
-        this.items = (TreeSet) items;
+        this.items.clear();
+        this.items.addAll(items);
     }
 
     public String toString()
@@ -118,12 +117,12 @@ public class TreeSet1 implements CollectionHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean contains(Object value)
+    public boolean contains(ContainerItem value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<ContainerItem> values)
     {
         return items.containsAll(values);
     }

@@ -21,21 +21,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Sample class with various Set fields, testing all combinations
- * of the types of Set field possible.
- * 
- * @version $Revision: 1.5 $
+ * Sample class with various Set fields, testing all combinations of the types of Set field possible.
  */
 public class SetHolder
 {
     private long id; // Used for app identity
+
     private String name;
 
     private Set joinSetPC; // Using join table, with PC elements
-    private Set joinSetNonPC1; // Using join table, with String elements
+    private Set<String> joinSetNonPC1; // Using join table, with String elements
     private Set joinSetNonPC2; // Using join table, with Date elements
     private Set joinSetNonPC3; // Using join table, with String elements
-    private Set joinSetPCSerial; // Using join table with PC elements serialised
+    private Set<PCJoinElement> joinSetPCSerial; // Using join table with PC elements serialised
     private Set joinSetPCShared1; // Using join table (shared), with PC elements
     private Set joinSetPCShared2; // Using join table (shared), with PC elements
 
@@ -85,16 +83,16 @@ public class SetHolder
     {
         if (joinSetPC == null)
         {
-            joinSetPC = new HashSet();
+            joinSetPC = new HashSet<>();
         }
         return joinSetPC;
     }
 
-    public Set getJoinSetNonPC1()
+    public Set<String> getJoinSetNonPC1()
     {
         if (joinSetNonPC1 == null)
         {
-            joinSetNonPC1 = new HashSet();
+            joinSetNonPC1 = new HashSet<>();
         }
         return joinSetNonPC1;
     }
@@ -103,7 +101,7 @@ public class SetHolder
     {
         if (joinSetNonPC2 == null)
         {
-            joinSetNonPC2 = new HashSet();
+            joinSetNonPC2 = new HashSet<>();
         }
         return joinSetNonPC2;
     }
@@ -112,16 +110,16 @@ public class SetHolder
     {
         if (joinSetNonPC3 == null)
         {
-            joinSetNonPC3 = new HashSet();
+            joinSetNonPC3 = new HashSet<>();
         }
         return joinSetNonPC3;
     }
 
-    public Set getJoinSetPCSerial()
+    public Set<PCJoinElement> getJoinSetPCSerial()
     {
         if (joinSetPCSerial == null)
         {
-            joinSetPCSerial = new HashSet();
+            joinSetPCSerial = new HashSet<>();
         }
         return joinSetPCSerial;
     }
@@ -130,7 +128,7 @@ public class SetHolder
     {
         if (joinSetPCShared1 == null)
         {
-            joinSetPCShared1 = new HashSet();
+            joinSetPCShared1 = new HashSet<>();
         }
         return joinSetPCShared1;
     }
@@ -139,7 +137,7 @@ public class SetHolder
     {
         if (joinSetPCShared2 == null)
         {
-            joinSetPCShared2 = new HashSet();
+            joinSetPCShared2 = new HashSet<>();
         }
         return joinSetPCShared2;
     }
@@ -148,7 +146,7 @@ public class SetHolder
     {
         if (fkSetPC == null)
         {
-            fkSetPC = new HashSet();
+            fkSetPC = new HashSet<>();
         }
         return fkSetPC;
     }
@@ -157,7 +155,7 @@ public class SetHolder
     {
         if (fkSetPC2 == null)
         {
-            fkSetPC2 = new HashSet();
+            fkSetPC2 = new HashSet<>();
         }
         return fkSetPC2;
     }
@@ -166,7 +164,7 @@ public class SetHolder
     {
         if (fkSetPCShared1 == null)
         {
-            fkSetPCShared1 = new HashSet();
+            fkSetPCShared1 = new HashSet<>();
         }
         return fkSetPCShared1;
     }
@@ -175,7 +173,7 @@ public class SetHolder
     {
         if (fkSetPCShared2 == null)
         {
-            fkSetPCShared2 = new HashSet();
+            fkSetPCShared2 = new HashSet<>();
         }
         return fkSetPCShared2;
     }
@@ -184,7 +182,7 @@ public class SetHolder
     {
         if (setNonPCSerial1 == null)
         {
-            setNonPCSerial1 = new HashSet();
+            setNonPCSerial1 = new HashSet<>();
         }
         return setNonPCSerial1;
     }
@@ -193,7 +191,7 @@ public class SetHolder
     {
         if (setNonPCSerial2 == null)
         {
-            setNonPCSerial2 = new HashSet();
+            setNonPCSerial2 = new HashSet<>();
         }
         return setNonPCSerial2;
     }
@@ -202,7 +200,7 @@ public class SetHolder
     {
         if (setNonPC1 == null)
         {
-            setNonPC1 = new HashSet();
+            setNonPC1 = new HashSet<>();
         }
         return setNonPC1;
     }
@@ -211,7 +209,7 @@ public class SetHolder
     {
         if (setNonPC2 == null)
         {
-            setNonPC2 = new HashSet();
+            setNonPC2 = new HashSet<>();
         }
         return setNonPC2;
     }
@@ -220,7 +218,7 @@ public class SetHolder
     {
         if (setPCEmbedded == null)
         {
-            setPCEmbedded = new HashSet();
+            setPCEmbedded = new HashSet<>();
         }
         return setPCEmbedded;
     }

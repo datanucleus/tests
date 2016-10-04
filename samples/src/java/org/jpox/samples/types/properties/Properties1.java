@@ -21,7 +21,10 @@ package org.jpox.samples.types.properties;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -29,10 +32,8 @@ import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Container object for Properties.
- *
- * @version $Revision: 1.1 $    
  **/
-public class Properties1 implements MapHolder
+public class Properties1 implements MapHolder<String, String>
 {
     private int identifierA;
     private String identifierB;
@@ -46,9 +47,14 @@ public class Properties1 implements MapHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Map getItems()
+    public java.util.Map<String, String> getItems()
     {
-        return items;
+        Map<String, String> dummy = new HashMap<>();
+        for (Entry<Object, Object> entry : items.entrySet())
+        {
+            dummy.put("" + entry.getKey(), "" + entry.getValue());
+        }
+        return dummy;
     }
 
     public int getNoOfItems()
@@ -56,37 +62,54 @@ public class Properties1 implements MapHolder
         return items.size();
     }
 
-    public Object getItem(Object key)
+    public String getItem(String key)
     {
-        return items.getProperty((String) key);
+        return items.getProperty(key);
     }
 
-    public Set getEntrySet()
+    public Set<Entry<String, String>> getEntrySet()
     {
-        return items.entrySet();
+        Map<String, String> dummy = new HashMap<>();
+        for (Entry<Object, Object> entry : items.entrySet())
+        {
+            dummy.put("" + entry.getKey(), "" + entry.getValue());
+        }
+        return dummy.entrySet();
     }
 
-    public Set getKeySet()
+    public Set<String> getKeySet()
     {
-        return items.keySet();
+        Set<String> keys = new HashSet<>();
+        Collection itemsKeys = items.keySet();
+        for (Object key : itemsKeys)
+        {
+            keys.add("" + key);
+        }
+        return keys;
     }    
 
-    public Collection getValues()
+    public Collection<String> getValues()
     {
-        return items.values();
+        Collection<String> vals = new HashSet<>();
+        Collection itemsVals = items.values();
+        for (Object val : itemsVals)
+        {
+            vals.add("" + val);
+        }
+        return vals;
     }
 
-    public void putItem(Object key,Object item)
+    public void putItem(String key,String item)
     {
-        items.setProperty((String)key,(String)item);
+        items.setProperty(key, item);
     }
 
-    public void putItems(java.util.Map m)
+    public void putItems(java.util.Map<String, String> m)
     {
         items.putAll(m);
     }
 
-    public void removeItem(Object key)
+    public void removeItem(String key)
     {
         items.remove(key);
     }
@@ -121,9 +144,10 @@ public class Properties1 implements MapHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Map items)
+    public void setItems(java.util.Map<String, String> items)
     {
-        this.items = (Properties) items;
+        this.items.clear();
+        this.items.putAll(items);
     }
 
     public String toString()
@@ -131,12 +155,12 @@ public class Properties1 implements MapHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean containsKey(Object key)
+    public boolean containsKey(String key)
     {
         return items.containsKey(key);
     }
 
-    public boolean containsValue(Object value)
+    public boolean containsValue(String value)
     {
         return items.containsValue(value);
     }

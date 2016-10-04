@@ -97,8 +97,8 @@ public class MultithreadedTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 LOG.debug(">> Querying Employees");
-                Query q = pm.newQuery(Employee.class);
-                List<Employee> emps = (List<Employee>) q.execute();
+                Query<Employee> q = pm.newQuery(Employee.class);
+                List<Employee> emps = q.executeList();
                 for (Employee e : emps)
                 {
                     LOG.debug(">> emp=" + e + " e.mgr=" + e.getManager());
@@ -185,8 +185,8 @@ public class MultithreadedTest extends JDOPersistenceTestCase
             {
                 tx.begin();
             }
-            Query q = pm.newQuery(Employee.class);
-            List<Employee> emps = (List<Employee>) q.execute();
+            Query<Employee> q = pm.newQuery(Employee.class);
+            List<Employee> emps = q.executeList();
             results = new ArrayList<Employee>(emps);
             if (transaction)
             {
@@ -308,8 +308,8 @@ public class MultithreadedTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(Employee.class);
-                List<Employee> emps = (List<Employee>) q.execute();
+                Query<Employee> q = pm.newQuery(Employee.class);
+                List<Employee> emps = q.executeList();
                 for (Employee e : emps)
                 {
                     LOG.debug(">> emp=" + e + " e.mgr=" + e.getManager());

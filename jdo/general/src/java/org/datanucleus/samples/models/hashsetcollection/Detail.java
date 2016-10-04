@@ -20,24 +20,24 @@ Contributors:
 package org.datanucleus.samples.models.hashsetcollection;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.io.Serializable;
 
 /**
  * Detail object
- * @version $Revision: 1.1 $
  */
 public class Detail implements Serializable
 {
     private static final long serialVersionUID = -1948694805364569431L;
     private String id;
     private Master master;
-    private HashSet circons = new HashSet();
+    private Set<Circon> circons = new HashSet<>();
     
     public Detail()
     {
     }
 
-    public HashSet getCircons()
+    public Set<Circon> getCircons()
     {
         return circons;
     }

@@ -50,12 +50,13 @@ public class URLTest extends AbstractTypeTestCase
                 pm.makePersistent(url);
                 pm.flush();
 
-                Query q = pm.newQuery(getSimpleClass(), "url == p");
+                Query<URLHolder> q = pm.newQuery(URLHolder.class, "url == p");
                 q.declareImports("import java.net.URL");
                 q.declareParameters("URL p");
-                Collection c = (Collection) q.execute(url.getUrl());
+                q.setParameters(url.getUrl());
+                Collection<URLHolder> c = q.executeList();
                 assertEquals(1, c.size());
-                assertEquals("http://www.jpox.org/", ((URLHolder) c.iterator().next()).getUrl().toString());
+                assertEquals("http://www.jpox.org/", c.iterator().next().getUrl().toString());
                 tx.commit();
             }
             finally

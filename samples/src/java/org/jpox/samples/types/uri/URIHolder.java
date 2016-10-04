@@ -24,14 +24,12 @@ import java.util.List;
 
 /**
  * Object with a URI.
- *
- * @version $Revision: 1.1 $
  */
 public class URIHolder
 {
     URI key;
     URI uri;
-    List strings = new ArrayList();
+    List<String> strings = new ArrayList<>();
 
     /**
      * Accessor for the URI
@@ -51,7 +49,7 @@ public class URIHolder
         this.uri = uri;
     }
     
-    public List getStrings()
+    public List<String> getStrings()
     {
         return strings;
     }

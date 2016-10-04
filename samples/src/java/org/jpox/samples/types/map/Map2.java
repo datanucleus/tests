@@ -19,6 +19,7 @@ package org.jpox.samples.types.map;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -27,17 +28,15 @@ import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Container object for FK Map tests.
- *
- * @version $Revision: 1.1 $    
  */
-public class Map2 implements MapHolder
+public class Map2 implements MapHolder<String, Map2Item>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.Map items=new java.util.HashMap();
+    java.util.Map<String, Map2Item> items=new java.util.HashMap<>();
 
     public Map2()
     {
@@ -46,7 +45,7 @@ public class Map2 implements MapHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Map getItems()
+    public java.util.Map<String, Map2Item> getItems()
     {
         return items;
     }
@@ -56,37 +55,37 @@ public class Map2 implements MapHolder
         return items.size();
     }
 
-    public Object getItem(Object key)
+    public Map2Item getItem(String key)
     {
         return items.get(key);
     }
 
-    public Set getEntrySet()
+    public Set<Entry<String, Map2Item>> getEntrySet()
     {
         return items.entrySet();
     }
 
-    public Set getKeySet()
+    public Set<String> getKeySet()
     {
         return items.keySet();
     }    
 
-    public Collection getValues()
+    public Collection<Map2Item> getValues()
     {
         return items.values();
     }    
 
-    public void putItem(Object key,Object item)
+    public void putItem(String key,Map2Item item)
     {
         items.put(key,item);
     }
 
-    public void putItems(java.util.Map m)
+    public void putItems(java.util.Map<String, Map2Item> m)
     {
         items.putAll(m);
     }
 
-    public void removeItem(Object key)
+    public void removeItem(String key)
     {
         items.remove(key);
     }
@@ -121,17 +120,17 @@ public class Map2 implements MapHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Map items)
+    public void setItems(java.util.Map<String, Map2Item> items)
     {
         this.items = items;
     }
 
-    public boolean containsKey(Object key)
+    public boolean containsKey(String key)
     {
         return items.containsKey(key);
     }
 
-    public boolean containsValue(Object value)
+    public boolean containsValue(Map2Item value)
     {
         return items.containsValue(value);
     }

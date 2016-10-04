@@ -24,34 +24,31 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @version $Revision: 1.1 $
- */
 public class Owner
 {
-    private List elements;
-    private Set setElements;
+    private List<String> elements;
+    private Set<String> setElements;
     
     /**
      * 
      */
     public Owner()
     {
-        elements = new ArrayList();
-        setElements = new HashSet(); 
+        elements = new ArrayList<>();
+        setElements = new HashSet<>(); 
     }
     
     /**
      * @return Returns the elements.
      */
-    public List getElements()
+    public List<String> getElements()
     {
         return elements;
     }
     /**
      * @param elements The elements to set.
      */
-    public void setElements(List elements)
+    public void setElements(List<String> elements)
     {
         this.elements = elements;
     }
@@ -59,14 +56,14 @@ public class Owner
     /**
      * @return Returns the setElements.
      */
-    public Set getSetElements()
+    public Set<String> getSetElements()
     {
         return setElements;
     }
     /**
      * @param setElements The setElements to set.
      */
-    public void setSetElements(Set setElements)
+    public void setSetElements(Set<String> setElements)
     {
         this.setElements = setElements;
     }

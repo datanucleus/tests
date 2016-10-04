@@ -13,13 +13,11 @@ import java.util.Queue;
 
 /**
  * Sample object having a Queue using a join table.
- * 
- * @version $Revision: 1.1 $
  */
 public class Queue1
 {
     String name;
-    Queue queue = new PriorityQueue();
+    Queue<Queue1Item> queue = new PriorityQueue<>();
 
     public Queue1(String name)
     {

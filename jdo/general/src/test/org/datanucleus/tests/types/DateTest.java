@@ -111,18 +111,20 @@ public class DateTest extends AbstractTypeTestCase
             Date val2Date = holder3.getValue2();
 
             // Query comparing with first "value" field
-            Query q = pm.newQuery(getSimpleClass(), "value == p");
+            Query<DateHolderC> q = pm.newQuery(DateHolderC.class, "value == p");
             q.declareParameters("java.util.Date p");
-            Collection c = (Collection) q.execute(val1Date);
+            q.setParameters(val1Date);
+            Collection<DateHolderC> c = q.executeList();
             assertEquals(1, c.size());
-            assertEquals(val1Date, ((DateHolderC)c.iterator().next()).getValue());
+            assertEquals(val1Date, c.iterator().next().getValue());
 
             // Query comparing with second "value" field
-            q = pm.newQuery(getSimpleClass(), "value2 == p");
+            q = pm.newQuery(DateHolderC.class, "value2 == p");
             q.declareParameters("java.util.Date p");
-            c = (Collection) q.execute(val2Date);
+            q.setParameters(val2Date);
+            c = q.executeList();
             assertEquals(1, c.size());
-            assertEquals(val2Date, ((DateHolderC)c.iterator().next()).getValue2());
+            assertEquals(val2Date, c.iterator().next().getValue2());
 
             tx.commit();
         }

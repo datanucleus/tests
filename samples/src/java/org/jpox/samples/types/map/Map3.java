@@ -19,25 +19,25 @@ package org.jpox.samples.types.map;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
 import org.jpox.samples.types.container.AppIdUtilities;
+import org.jpox.samples.types.container.ContainerItem;
 import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Container object for FK Map tests.
- *
- * @version $Revision: 1.1 $    
  */
-public class Map3 implements MapHolder
+public class Map3 implements MapHolder<ContainerItem, Map3Item>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.Map items=new java.util.HashMap();
+    java.util.Map<ContainerItem, Map3Item> items=new java.util.HashMap<>();
 
     public Map3()
     {
@@ -46,7 +46,7 @@ public class Map3 implements MapHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Map getItems()
+    public java.util.Map<ContainerItem, Map3Item> getItems()
     {
         return items;
     }
@@ -56,37 +56,37 @@ public class Map3 implements MapHolder
         return items.size();
     }
 
-    public Object getItem(Object key)
+    public Map3Item getItem(ContainerItem key)
     {
         return items.get(key);
     }
 
-    public Set getEntrySet()
+    public Set<Entry<ContainerItem, Map3Item>> getEntrySet()
     {
         return items.entrySet();
     }
 
-    public Set getKeySet()
+    public Set<ContainerItem> getKeySet()
     {
         return items.keySet();
     }    
 
-    public Collection getValues()
+    public Collection<Map3Item> getValues()
     {
         return items.values();
     }    
 
-    public void putItem(Object key,Object item)
+    public void putItem(ContainerItem key,Map3Item item)
     {
         items.put(key,item);
     }
 
-    public void putItems(java.util.Map m)
+    public void putItems(java.util.Map<ContainerItem, Map3Item> m)
     {
         items.putAll(m);
     }
 
-    public void removeItem(Object key)
+    public void removeItem(ContainerItem key)
     {
         items.remove(key);
     }
@@ -121,17 +121,17 @@ public class Map3 implements MapHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Map items)
+    public void setItems(java.util.Map<ContainerItem, Map3Item> items)
     {
         this.items = items;
     }
 
-    public boolean containsKey(Object key)
+    public boolean containsKey(ContainerItem key)
     {
         return items.containsKey(key);
     }
 
-    public boolean containsValue(Object value)
+    public boolean containsValue(Map3Item value)
     {
         return items.containsValue(value);
     }

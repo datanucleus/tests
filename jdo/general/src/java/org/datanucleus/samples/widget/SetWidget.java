@@ -1,6 +1,21 @@
-/*
- * The terms of the JPOX License are distributed with the software documentation
- */
+/**********************************************************************
+Copyright (c) 2005 Andy Jefferson and others. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. 
+
+
+Contributors:
+    ...
+**********************************************************************/
 package org.datanucleus.samples.widget;
 
 import java.util.HashSet;
@@ -11,24 +26,22 @@ import javax.jdo.InstanceCallbacks;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 
-
 import junit.framework.Assert;
 
 
-public class SetWidget extends Widget
-    implements HasNormalSetField, HasInverseSetField, InstanceCallbacks
+public class SetWidget extends Widget implements HasNormalSetField, HasInverseSetField, InstanceCallbacks
 {
     private static final long serialVersionUID = -2141075211861939630L;
-    private Set normalSet;
-    private Set inverseSet;
+    private Set<Widget> normalSet;
+    private Set<Widget> inverseSet;
     private int numWidgets;
     private int numElementWidgets;
 
 
     public SetWidget()
     {
-        normalSet = new HashSet();
-        inverseSet = new HashSet();
+        normalSet = new HashSet<>();
+        inverseSet = new HashSet<>();
         numWidgets = 0;
         numElementWidgets = 0;
     }
@@ -62,15 +75,13 @@ public class SetWidget extends Widget
     {
         SetWidget sw = (SetWidget)super.clone();
 
-        HashSet ns = new HashSet();
-        HashSet is = new HashSet();
-
-        Iterator i = normalSet.iterator();
+        Set<Widget> ns = new HashSet<>();
+        Set<Widget> is = new HashSet<>();
+        Iterator<Widget> i = normalSet.iterator();
 
         while (i.hasNext())
         {
-            Widget w = (Widget)((Widget)i.next()).clone();
-
+            Widget w = (Widget)i.next().clone();
             ns.add(w);
 
             if (w instanceof ElementWidget)

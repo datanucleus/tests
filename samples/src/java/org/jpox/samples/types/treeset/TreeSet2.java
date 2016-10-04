@@ -25,17 +25,15 @@ import org.jpox.samples.types.container.CollectionHolder;
 
 /**
  * Container object for FK TreeSet tests.
- *
- * @version $Revision: 1.1 $
  */
-public class TreeSet2 implements CollectionHolder
+public class TreeSet2 implements CollectionHolder<TreeSet2Item>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.TreeSet items=new java.util.TreeSet();
+    java.util.TreeSet<TreeSet2Item> items=new java.util.TreeSet<>();
 
     public TreeSet2()
     {
@@ -43,7 +41,7 @@ public class TreeSet2 implements CollectionHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection  getItems()
+    public java.util.Collection<TreeSet2Item> getItems()
     {
         return items;
     }
@@ -53,27 +51,27 @@ public class TreeSet2 implements CollectionHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(TreeSet2Item item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<TreeSet2Item> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(TreeSet2Item item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<TreeSet2Item> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<TreeSet2Item> c)
     {
         items.retainAll(c);
     }
@@ -108,7 +106,7 @@ public class TreeSet2 implements CollectionHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.TreeSet items)
+    public void setItems(java.util.TreeSet<TreeSet2Item> items)
     {
         this.items = items;
     }
@@ -118,7 +116,7 @@ public class TreeSet2 implements CollectionHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean contains(Object value)
+    public boolean contains(TreeSet2Item value)
     {
         return items.contains(value);
     }

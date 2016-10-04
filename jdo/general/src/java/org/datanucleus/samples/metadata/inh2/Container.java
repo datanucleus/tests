@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public class Container
 {
-    Collection members = new ArrayList();
+    Collection<Base> members = new ArrayList<>();
 
     public Container(Base[] members)
     {
@@ -28,14 +28,14 @@ public class Container
     /**
      * @return Returns the members.
      */
-    public Collection getMembers()
+    public Collection<Base> getMembers()
     {
         return members;
     }
     /**
      * @param members The members to set.
      */
-    public void setMembers(Collection members)
+    public void setMembers(Collection<Base> members)
     {
         this.members = members;
     }

@@ -54,6 +54,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                     <encoding>ISO-8859-1</encoding>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <!-- compilerArgument>-Xlint:unchecked</compilerArgument-->
                 </configuration>
             </plugin>
         </plugins>

@@ -83,7 +83,7 @@ public class AttributeConverterTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query<CollectionConverterHolder> q = pm.newQuery("SELECT FROM " + CollectionConverterHolder.class.getName() + " WHERE this.name == :name");
+                Query<CollectionConverterHolder> q = pm.newQuery(CollectionConverterHolder.class, "this.name == :name");
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("name", "First");
                 q.setNamedParameters(params);
@@ -198,7 +198,7 @@ public class AttributeConverterTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query<CollectionConverterHolder> q = pm.newQuery("SELECT FROM " + CollectionConverterHolder.class.getName() + " WHERE this.name == :name");
+                Query<CollectionConverterHolder> q = pm.newQuery(CollectionConverterHolder.class, "this.name == :name");
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("name", "First");
                 q.setNamedParameters(params);
@@ -297,7 +297,7 @@ public class AttributeConverterTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query<MapConverterHolder> q = pm.newQuery("SELECT FROM " + MapConverterHolder.class.getName() + " WHERE this.name == :name");
+                Query<MapConverterHolder> q = pm.newQuery(MapConverterHolder.class, "this.name == :name");
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("name", "First");
                 q.setNamedParameters(params);
@@ -402,7 +402,7 @@ public class AttributeConverterTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query<MapConverterHolder> q = pm.newQuery("SELECT FROM " + MapConverterHolder.class.getName() + " WHERE this.name == :name");
+                Query<MapConverterHolder> q = pm.newQuery(MapConverterHolder.class, "this.name == :name");
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("name", "First");
                 q.setNamedParameters(params);
@@ -510,7 +510,7 @@ public class AttributeConverterTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query<MapConverterHolder> q = pm.newQuery("SELECT FROM " + MapConverterHolder.class.getName() + " WHERE this.name == :name");
+                Query<MapConverterHolder> q = pm.newQuery(MapConverterHolder.class, "this.name == :name");
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("name", "First");
                 q.setNamedParameters(params);

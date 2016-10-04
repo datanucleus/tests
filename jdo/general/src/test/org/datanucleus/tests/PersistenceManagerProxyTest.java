@@ -119,8 +119,8 @@ public class PersistenceManagerProxyTest extends JDOPersistenceTestCase
             {
                 // Check that our objects are persisted
                 tx.begin();
-                Query q = pm.newQuery(Manager.class);
-                Collection<Manager> results = (Collection<Manager>)q.execute();
+                Query<Manager> q = pm.newQuery(Manager.class);
+                Collection<Manager> results = q.executeList();
                 assertEquals("Number of persisted objects is incorrect", 2, results.size());
                 tx.commit();
             }
@@ -231,8 +231,8 @@ public class PersistenceManagerProxyTest extends JDOPersistenceTestCase
             {
                 // Check that our objects are persisted
                 tx.begin();
-                Query q = pm.newQuery(Manager.class);
-                Collection<Manager> results = (Collection<Manager>)q.execute();
+                Query<Manager> q = pm.newQuery(Manager.class);
+                Collection<Manager> results = q.executeList();
                 assertEquals("Number of persisted objects is incorrect", 7, results.size());
                 tx.commit();
             }
@@ -362,8 +362,8 @@ public class PersistenceManagerProxyTest extends JDOPersistenceTestCase
             {
                 // Check that our objects are persisted
                 tx.begin();
-                Query q = pm.newQuery(Manager.class);
-                Collection<Manager> results = (Collection<Manager>)q.execute();
+                Query<Manager> q = pm.newQuery(Manager.class);
+                Collection<Manager> results = q.executeList();
                 assertEquals("Number of persisted objects is incorrect", 7, results.size());
                 tx.commit();
             }

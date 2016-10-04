@@ -162,7 +162,7 @@ public class GenericsTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query q = pm.newQuery(GenericsBase.class);
+                Query<GenericsBase> q = pm.newQuery(GenericsBase.class);
                 List<GenericsBase> results = q.executeList();
                 assertEquals(1, results.size());
                 GenericsBase base = results.get(0);

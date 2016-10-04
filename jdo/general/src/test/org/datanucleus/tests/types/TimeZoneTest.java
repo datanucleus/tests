@@ -310,8 +310,9 @@ public class TimeZoneTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(TimeZoneHolder.class, "timeZoneField == :p");
-                List<TimeZoneHolder> results = (List<TimeZoneHolder>) q.execute(TimeZone.getTimeZone("CET"));
+                Query<TimeZoneHolder> q = pm.newQuery(TimeZoneHolder.class, "timeZoneField == :p");
+                q.setParameters(TimeZone.getTimeZone("CET"));
+                List<TimeZoneHolder> results = q.executeList();
                 assertEquals(1, results.size());
                 TimeZoneHolder curr = results.get(0);
                 assertNotNull("TimeZone field is null", curr.getTimeZoneField());

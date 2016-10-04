@@ -109,17 +109,17 @@ public class I18NTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Extent e=pm.getExtent(org.jpox.samples.i18n.ISO8859_1.class,false);
-                Query q=pm.newQuery(e);
-                Collection c=(Collection)q.execute();
+                Extent<ISO8859_1> e=pm.getExtent(org.jpox.samples.i18n.ISO8859_1.class,false);
+                Query<ISO8859_1> q = pm.newQuery(e);
+                Collection<ISO8859_1> c = q.executeList();
                 LOG.info("No of ISO8859_1 objects=" + c.size());
 
                 assertTrue("Number of ISO8859_1 objects is incorrect (" + c.size() + ") : should have been 1",c.size() == 1);
 
-                Iterator iter=c.iterator();
+                Iterator<ISO8859_1> iter = c.iterator();
                 while (iter.hasNext())
                 {
-                    ISO8859_1   obj=(ISO8859_1)iter.next();
+                    ISO8859_1 obj = iter.next();
                     LOG.info(obj);
                 }
 
@@ -184,7 +184,7 @@ public class I18NTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                ISO8859_2 obj=new ISO8859_2("����","����");
+                ISO8859_2 obj = new ISO8859_2("����","����");
                 pm.makePersistent(obj);
 
                 tx.commit();
@@ -207,16 +207,16 @@ public class I18NTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Extent e=pm.getExtent(org.jpox.samples.i18n.ISO8859_2.class,false);
-                Query q=pm.newQuery(e);
-                Collection c=(Collection)q.execute();
+                Extent<ISO8859_2> e=pm.getExtent(org.jpox.samples.i18n.ISO8859_2.class,false);
+                Query<ISO8859_2> q = pm.newQuery(e);
+                Collection<ISO8859_2> c = q.executeList();
 
                 assertTrue("Number of ISO8859_2 objects is incorrect (" + c.size() + ") : should have been 1",c.size() == 1);
 
-                Iterator iter=c.iterator();
+                Iterator<ISO8859_2> iter=c.iterator();
                 while (iter.hasNext())
                 {
-                    ISO8859_2   obj=(ISO8859_2)iter.next();
+                    ISO8859_2 obj = iter.next();
                     LOG.info(obj);
                 }
 
@@ -300,9 +300,9 @@ public class I18NTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Extent e=pm.getExtent(org.jpox.samples.i18n.UTF8.class,false);
-                Query q=pm.newQuery(e);
-                Collection<UTF8> c = (Collection)q.execute();
+                Extent<UTF8> e=pm.getExtent(org.jpox.samples.i18n.UTF8.class,false);
+                Query<UTF8> q = pm.newQuery(e);
+                Collection<UTF8> c = q.executeList();
                 LOG.info("No of UTF8 objects=" + c.size());
 
                 assertTrue("Number of UTF8 objects is incorrect (" + c.size() + ") : should have been 1",c.size() == 1);

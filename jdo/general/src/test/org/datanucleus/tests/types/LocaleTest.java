@@ -310,8 +310,9 @@ public class LocaleTest extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery(LocaleHolder.class, "locale == :p");
-                List<LocaleHolder> results = (List<LocaleHolder>) q.execute(Locale.ENGLISH);
+                Query<LocaleHolder> q = pm.newQuery(LocaleHolder.class, "locale == :p");
+                q.setParameters(Locale.ENGLISH);
+                List<LocaleHolder> results = q.executeList();
                 assertEquals(1, results.size());
                 LocaleHolder locale = results.get(0);
                 assertNotNull("Locale field is null", locale.getLocale());

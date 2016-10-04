@@ -20,21 +20,20 @@ package org.jpox.samples.types.arraylist;
 import java.io.Serializable;
 import java.util.Random;
 
+import org.jpox.samples.types.container.ContainerItem;
 import org.jpox.samples.types.container.ListHolder;
 
 /**
  * Container object for join ArrayList tests.
- *
- * @version $Revision: 1.1 $    
  */
-public class ArrayList1 implements ListHolder
+public class ArrayList1 implements ListHolder<ContainerItem>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.ArrayList items = new java.util.ArrayList();
+    java.util.ArrayList<ContainerItem> items = new java.util.ArrayList<>();
 
     public ArrayList1()
     {
@@ -42,12 +41,12 @@ public class ArrayList1 implements ListHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection getItems()
+    public java.util.Collection<ContainerItem> getItems()
     {
         return items;
     }
 
-    public Object getItem(int position)
+    public ContainerItem getItem(int position)
     {
         return items.get(position);
     }
@@ -57,32 +56,32 @@ public class ArrayList1 implements ListHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(ContainerItem item)
     {
         items.add(item);
     }
 
-    public void addItem(Object item, int position)
+    public void addItem(ContainerItem item, int position)
     {
         this.items.add(position,item);        
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<ContainerItem> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(ContainerItem item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<ContainerItem> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<ContainerItem> c)
     {
         items.retainAll(c);
     }
@@ -126,17 +125,18 @@ public class ArrayList1 implements ListHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Collection items)
+    public void setItems(java.util.Collection<ContainerItem> items)
     {
-        this.items = (java.util.ArrayList) items;
+        this.items.clear();
+        this.items.addAll(items);
     }
 
-    public boolean contains(Object value)
+    public boolean contains(ContainerItem value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<ContainerItem> values)
     {
         return items.containsAll(values);
     }

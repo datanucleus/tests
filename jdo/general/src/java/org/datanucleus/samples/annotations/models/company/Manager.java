@@ -66,8 +66,8 @@ public class Manager extends Employee implements Serializable
     public Manager(long id, String firstname, String lastname, String email, float salary, String serial)
     {
         super(id, firstname, lastname, email, salary, serial);
-        this.departments = new HashSet();
-        this.subordinates = new HashSet();
+        this.departments = new HashSet<>();
+        this.subordinates = new HashSet<>();
     }
 
     public Set<Employee> getSubordinates()

@@ -56,10 +56,11 @@ public class URITest extends AbstractTypeTestCase
                 pm.makePersistent(uri);
                 pm.flush();
 
-                Query q = pm.newQuery(getSimpleClass(),"uri == p");
+                Query<URIHolder> q = pm.newQuery(URIHolder.class,"uri == p");
                 q.declareImports("import java.net.URI");
                 q.declareParameters("URI p");
-                Collection c = (Collection) q.execute(uri.getUri());
+                q.setParameters(uri.getUri());
+                Collection c = q.executeList();
                 assertEquals(1,c.size());
                 assertEquals("http://www.jpox.org/",((URIHolder)c.iterator().next()).getUri().toString());
                 tx.commit();

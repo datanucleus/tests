@@ -675,7 +675,7 @@ public class SerializationTest extends JDOPersistenceTestCase
                 assertTrue("Holder name is incorrect", holder.getName().equals("Holder(3)"));
                 assertEquals("Number of serialised elements is incorrect", holder.getJoinSetPCSerial().size(), 1);
 
-                PCJoinElement elem = (PCJoinElement)holder.getJoinSetPCSerial().iterator().next();
+                PCJoinElement elem = holder.getJoinSetPCSerial().iterator().next();
                 assertEquals("Serialised collection element has incorrect description", elem.getName(), "Element 1");
 
                 // Add 2 new elements and remove original

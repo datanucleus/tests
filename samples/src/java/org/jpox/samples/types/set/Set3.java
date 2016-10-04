@@ -25,17 +25,15 @@ import org.jpox.samples.types.container.CollectionHolder;
 
 /**
  * Container object for FK Set tests.
- *
- * @version $Revision: 1.1 $
  */
-public class Set3 implements CollectionHolder
+public class Set3 implements CollectionHolder<Set3Item>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.Set items = new java.util.HashSet();
+    java.util.Set<Set3Item> items = new java.util.HashSet<>();
 
     public Set3()
     {
@@ -43,7 +41,7 @@ public class Set3 implements CollectionHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection  getItems()
+    public java.util.Collection<Set3Item> getItems()
     {
         return items;
     }
@@ -53,27 +51,27 @@ public class Set3 implements CollectionHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(Set3Item item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<Set3Item> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(Set3Item item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<Set3Item> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<Set3Item> c)
     {
         items.retainAll(c);
     }
@@ -108,7 +106,7 @@ public class Set3 implements CollectionHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Set items)
+    public void setItems(java.util.Set<Set3Item> items)
     {
         this.items = items;
     }
@@ -118,12 +116,12 @@ public class Set3 implements CollectionHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean contains(Object value)
+    public boolean contains(Set3Item value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<Set3Item> values)
     {
         return items.containsAll(values);
     }

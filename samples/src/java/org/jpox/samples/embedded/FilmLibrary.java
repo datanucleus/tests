@@ -24,14 +24,12 @@ import java.util.Map;
 
 /**
  * Representation of a film library.
- * 
- * @version $Revision: 1.1 $
  */
 public class FilmLibrary
 {
     private long id; // Used by application identity
     private String owner;
-    private Map films = new HashMap();
+    private Map<String, Film> films = new HashMap<>();
 
     public FilmLibrary(String owner)
     {
@@ -73,7 +71,7 @@ public class FilmLibrary
         return (getFilm(alias) != null);
     }
 
-    public Collection getFilms()
+    public Collection<Film> getFilms()
     {
         return films.values();
     }

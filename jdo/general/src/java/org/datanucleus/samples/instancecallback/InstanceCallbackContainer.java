@@ -7,19 +7,19 @@ import java.util.Set;
 
 public class InstanceCallbackContainer
 {
-    private Map icTestersByPersistentValue;
-    private Set icTesters;
-    
+    private Map<String, InstanceCallbackTester> icTestersByPersistentValue;
+    private Set<InstanceCallbackTester> icTesters;
+
     public InstanceCallbackContainer()
     {
-        icTesters = new HashSet();
-        icTestersByPersistentValue = new HashMap();
+        icTesters = new HashSet<>();
+        icTestersByPersistentValue = new HashMap<>();
     }
     
     /**
      * @return Returns the icTesters.
      */
-    public Set getIcTesters()
+    public Set<InstanceCallbackTester> getIcTesters()
     {
         return icTesters;
     }
@@ -37,7 +37,7 @@ public class InstanceCallbackContainer
     /**
      * @return Returns the icTestersByPersistentValue.
      */
-    public Map getIcTestersByPersistentValue()
+    public Map<String, InstanceCallbackTester> getIcTestersByPersistentValue()
     {
         return icTestersByPersistentValue;
     }

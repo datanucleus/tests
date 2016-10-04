@@ -368,9 +368,10 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
             pm.flush();
 
             // Query when stored in "native"
-            Query q = pm.newQuery(SqlTimestampHolder.class, "value == p");
+            Query<SqlTimestampHolder> q = pm.newQuery(SqlTimestampHolder.class, "value == p");
             q.declareParameters("java.sql.Timestamp p");
-            List<SqlTimestampHolder> c = (List<SqlTimestampHolder>) q.execute(holder.getValue());
+            q.setParameters(holder.getValue());
+            List<SqlTimestampHolder> c = q.executeList();
             assertEquals(1, c.size());
             SqlTimestampHolder queryHolder = c.iterator().next();
             assertEquals(holder.getKey(), queryHolder.getKey());
@@ -379,7 +380,8 @@ public class SqlTimestampTest extends JDOPersistenceTestCase
             // Query when stored as String
             q = pm.newQuery(SqlTimestampHolder.class, "value2 == p");
             q.declareParameters("java.sql.Timestamp p");
-            c = (List<SqlTimestampHolder>) q.execute(holder.getValue2());
+            q.setParameters(holder.getValue2());
+            c = q.executeList();
             assertEquals(1, c.size());
             queryHolder = c.iterator().next();
             assertEquals(holder.getValue2(), queryHolder.getValue2());

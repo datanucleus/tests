@@ -25,17 +25,15 @@ import org.jpox.samples.types.container.CollectionHolder;
 
 /**
  * Container object for FK LinkedHashSet tests.
- *
- * @version $Revision: 1.1 $
  */
-public class LinkedHashSet2 implements CollectionHolder
+public class LinkedHashSet2 implements CollectionHolder<LinkedHashSet2Item>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.LinkedHashSet items=new java.util.LinkedHashSet();
+    java.util.LinkedHashSet<LinkedHashSet2Item> items=new java.util.LinkedHashSet<>();
 
     public LinkedHashSet2()
     {
@@ -43,7 +41,7 @@ public class LinkedHashSet2 implements CollectionHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Collection  getItems()
+    public java.util.Collection<LinkedHashSet2Item> getItems()
     {
         return items;
     }
@@ -53,27 +51,27 @@ public class LinkedHashSet2 implements CollectionHolder
         return items.size();
     }
 
-    public void addItem(Object item)
+    public void addItem(LinkedHashSet2Item item)
     {
         items.add(item);
     }
 
-    public void addItems(java.util.Collection c)
+    public void addItems(java.util.Collection<LinkedHashSet2Item> c)
     {
         items.addAll(c);
     }
 
-    public void removeItem(Object item)
+    public void removeItem(LinkedHashSet2Item item)
     {
         items.remove(item);
     }
 
-    public void removeItems(java.util.Collection c)
+    public void removeItems(java.util.Collection<LinkedHashSet2Item> c)
     {
         items.removeAll(c);
     }
 
-    public void retainItems(java.util.Collection c)
+    public void retainItems(java.util.Collection<LinkedHashSet2Item> c)
     {
         items.retainAll(c);
     }
@@ -108,7 +106,7 @@ public class LinkedHashSet2 implements CollectionHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.LinkedHashSet items)
+    public void setItems(java.util.LinkedHashSet<LinkedHashSet2Item> items)
     {
         this.items = items;
     }
@@ -118,12 +116,12 @@ public class LinkedHashSet2 implements CollectionHolder
         return getClass().getName() + " : [" + items.size() + " items]";
     }
 
-    public boolean contains(Object value)
+    public boolean contains(LinkedHashSet2Item value)
     {
         return items.contains(value);
     }
 
-    public boolean containsAll(java.util.Collection values)
+    public boolean containsAll(java.util.Collection<LinkedHashSet2Item> values)
     {
         return items.containsAll(values);
     }

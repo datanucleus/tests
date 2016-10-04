@@ -20,11 +20,11 @@ Contributors:
 package org.datanucleus.samples.models.hashsetcollection;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.io.Serializable;
 
 /**
  * Master object
- * @version $Revision: 1.1 $
  */
 public class Master implements Serializable
 {
@@ -32,20 +32,20 @@ public class Master implements Serializable
 
     private String id;
 
-    private HashSet details = new HashSet();
-    private HashSet otherDetails = new HashSet();
+    private Set<Detail> details = new HashSet<>();
+    private Set<OtherDetail> otherDetails = new HashSet<>();
     private Circon circon;
 
     public Master()
     {
     }
 
-    public HashSet getDetails()
+    public Set<Detail> getDetails()
     {
         return details;
     }
 
-    public HashSet getOtherDetails()
+    public Set<OtherDetail> getOtherDetails()
     {
         return otherDetails;
     }

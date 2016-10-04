@@ -21,22 +21,21 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Random;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Container object for join Map tests.
- *
- * @version $Revision: 1.1 $    
  */
-public class Map5 implements MapHolder
+public class Map5 implements MapHolder<String, String>
 {
 	private static Random r = new Random(0);
 	
     private int identifierA;
     private String identifierB;
 
-    java.util.Map items=new java.util.HashMap();
+    java.util.Map<String, String> items=new java.util.HashMap<>();
 
     public Map5()
     {
@@ -44,7 +43,7 @@ public class Map5 implements MapHolder
         identifierB = String.valueOf(r.nextInt());
     }
 
-    public java.util.Map getItems()
+    public java.util.Map<String, String> getItems()
     {
         return items;
     }
@@ -54,22 +53,22 @@ public class Map5 implements MapHolder
         return items.size();
     }
 
-    public Object getItem(Object key)
+    public String getItem(String key)
     {
         return items.get(key);
     }
 
-    public void putItem(Object key,Object value)
+    public void putItem(String key,String value)
     {
         items.put(key,value);
     }
 
-    public void putItems(java.util.Map m)
+    public void putItems(java.util.Map<String, String> m)
     {
         items.putAll(m);
     }
 
-    public void removeItem(Object key)
+    public void removeItem(String key)
     {
         items.remove(key);
     }
@@ -104,32 +103,32 @@ public class Map5 implements MapHolder
         this.identifierB = identifierB;
     }
 
-    public void setItems(java.util.Map items)
+    public void setItems(java.util.Map<String, String> items)
     {
         this.items = items;
     }
 
-    public Set getEntrySet()
+    public Set<Entry<String, String>> getEntrySet()
     {
         return items.entrySet();
     }
 
-    public Set getKeySet()
+    public Set<String> getKeySet()
     {
         return items.keySet();
     }
 
-    public Collection getValues()
+    public Collection<String> getValues()
     {
         return items.values();
     }
     
-    public boolean containsKey(Object key)
+    public boolean containsKey(String key)
     {
         return items.containsKey(key);
     }
 
-    public boolean containsValue(Object value)
+    public boolean containsValue(String value)
     {
         return items.containsValue(value);
     }

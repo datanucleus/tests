@@ -19,9 +19,9 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.metadata;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
@@ -261,7 +261,7 @@ public class BasicTest extends JDOPersistenceTestCase
         ThreadGroup group = new ThreadGroup("tgroup");
         Thread threads[] = new Thread[500];
         
-        final List errors = new Vector();
+        final List<String> errors = new ArrayList<>();
         final Object lock = new Object();        
         for(int i=0; i<500; i++)
         {

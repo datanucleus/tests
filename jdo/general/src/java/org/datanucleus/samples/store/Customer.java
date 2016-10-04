@@ -23,20 +23,12 @@ import java.util.HashSet;
 
 /**
  * Definition of a Customer that sells products.
- *
- * @version $Revision: 1.1 $    
- **/
+ */
 public class Customer
 {
-    /** 
-     * Name of the Customer
-     **/
     protected String name=null;
 
-    /**
-     * Suppliers for the Customer.
-     **/
-    Collection suppliers = new HashSet();
+    Collection<Supplier> suppliers = new HashSet<>();
 
     /** Default constructor. */
     protected Customer()
@@ -49,7 +41,6 @@ public class Customer
         this.name = name;
     }
 
-    // -------------------------------- Accessors ------------------------------
     /** Accessor for the name of the Customer.
      * @return Customer name */
     public String  getName()
@@ -68,7 +59,7 @@ public class Customer
 
     /** Accessor for the suppliers.
      * @return The suppliers. */
-    public Collection getSuppliers()
+    public Collection<Supplier> getSuppliers()
     {
         return suppliers;
     }

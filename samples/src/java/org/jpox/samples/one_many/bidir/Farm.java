@@ -43,7 +43,7 @@ public class Farm
         return name;
     }
 
-    public Set getAnimals()
+    public Set<Animal> getAnimals()
     {
         return animals;
     }

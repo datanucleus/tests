@@ -537,9 +537,9 @@ public class CalendarTest  extends JDOPersistenceTestCase
             try
             {
                 tx.begin();
-                Query q = pm.newQuery("SELECT FROM " + CalendarHolder.class.getName() +
-                    " WHERE cal2 == :cal");
-                List<CalendarHolder> results = (List<CalendarHolder>)q.execute(cal);
+                Query<CalendarHolder> q = pm.newQuery(CalendarHolder.class, "cal2 == :cal");
+                q.setParameters(cal);
+                List<CalendarHolder> results = q.executeList();
                 assertEquals("Number of holders returned by query was incorrect", 1, results.size());
                 CalendarHolder holder = results.iterator().next();
                 assertEquals("Returned holder is incorrect", id, JDOHelper.getObjectId(holder));

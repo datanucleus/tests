@@ -23,13 +23,13 @@ import java.util.Map;
 
 public class JdoGraphEntityClass
 {
-    private Map declaredAttributes;
+    private Map<String, JdoAttribute> declaredAttributes;
     private String name;
 
     public JdoGraphEntityClass(String name)
     {
         this.name = name;
-        this.declaredAttributes = new HashMap();
+        this.declaredAttributes = new HashMap<>();
     }
 
     public JdoAttribute declareAttribute(String attribName, Class type)

@@ -4563,19 +4563,16 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             tx.setRetainValues(true);
             tx.begin();
 
-            Extent clnManager = pm.getExtent(Manager.class, true);
-            Query q = pm.newQuery(clnManager);
+            Extent<Manager> clnManager = pm.getExtent(Manager.class, true);
+            Query<Manager> q = pm.newQuery(clnManager);
 
             try
             {
-                Collection managers = (Collection) q.execute();
-
-                Iterator i = managers.iterator();
-
+                Collection<Manager> managers =  q.executeList();
+                Iterator<Manager> i = managers.iterator();
                 while (i.hasNext())
                 {
-                    Manager p = (Manager) i.next();
-
+                    Manager p = i.next();
                     if (p.getPersonNum() == managerNum)
                     {
                         return p;

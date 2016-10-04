@@ -129,19 +129,21 @@ public class SqlDateTest extends AbstractTypeTestCase
             pm.makePersistent(holder);
             pm.flush();
 
-            Query q = pm.newQuery(getSimpleClass(), "value == p");
+            Query<SqlDateHolder> q = pm.newQuery(SqlDateHolder.class, "value == p");
             q.declareImports("import java.util.Date");
             q.declareParameters("Date p");
-            Collection c = (Collection) q.execute(holder.getValue());
+            q.setParameters(holder.getValue());
+            Collection<SqlDateHolder> c = q.executeList();
             assertEquals(1, c.size());
-            assertEquals(generateTestValue2(), ((SqlDateHolder)c.iterator().next()).getValue());
+            assertEquals(generateTestValue2(), c.iterator().next().getValue());
 
-            q = pm.newQuery(getSimpleClass(), "value2 == p");
+            q = pm.newQuery(SqlDateHolder.class, "value2 == p");
             q.declareImports("import java.util.Date");
             q.declareParameters("Date p");
-            c = (Collection) q.execute(holder.getValue2());
+            q.setParameters(holder.getValue2());
+            c = q.executeList();
             assertEquals(1, c.size());
-            assertEquals(generateTestValue2(), ((SqlDateHolder)c.iterator().next()).getValue2());
+            assertEquals(generateTestValue2(), c.iterator().next().getValue2());
 
             tx.commit();
         }
