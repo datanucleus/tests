@@ -129,8 +129,8 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            Query q = pm.newQuery(Team.class);
-            List<Team> teams = (List<Team>) q.execute();
+            Query<Team> q = pm.newQuery(Team.class);
+            List<Team> teams = q.executeList();
             Iterator<Team> teamIter = teams.iterator();
             while (teamIter.hasNext())
             {
@@ -426,7 +426,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             assertEquals("Number of results is wrong", 2, results.size());
             boolean mourinho = false;
             boolean guardiola = false;
-            Iterator<Object[]> resultIter = results.iterator();
+            Iterator resultIter = results.iterator();
             while (resultIter.hasNext())
             {
                 Object[] result = (Object[])resultIter.next();
@@ -712,8 +712,8 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             assertEquals("Number of records updated was wrong", 1, number);
             tq.closeAll();
 
-            Query q = pm.newQuery("SELECT FROM " + Team.class.getName() + " WHERE id == 2");
-            List<Team> results = (List<Team>) q.execute();
+            Query<Team> q = pm.newQuery(Team.class, "id == 2");
+            List<Team> results = q.executeList();
             assertNotNull(results);
             assertEquals(1, results.size());
             Team team = results.iterator().next();
@@ -754,8 +754,8 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             assertEquals("Number of records deleted was wrong", 1, number);
             tq.closeAll();
 
-            Query q = pm.newQuery("SELECT FROM " + Team.class.getName() + " WHERE id == 2");
-            List<Team> results = (List<Team>) q.execute();
+            Query<Team> q = pm.newQuery(Team.class, "id == 2");
+            List<Team> results = q.executeList();
             assertEquals(0, results.size());
             q.closeAll();
 
