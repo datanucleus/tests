@@ -714,7 +714,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
     public void testNullProperties()
     {
         Properties props = TestHelper.getPropertiesForDatastore(1);
-        Map map = new HashMap();
+        Map<Object, Object> map = new HashMap<>();
         map.putAll(props);
         map.put("javax.jdo.option.Mapping", null);
         PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(map);
@@ -728,7 +728,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
     public void testObjectForStringProperty()
     {
         Properties props = TestHelper.getPropertiesForDatastore(1);
-        Map map = new HashMap();
+        Map<Object, Object> map = new HashMap<>();
         map.putAll(props);
         map.put("javax.jdo.option.Mapping", new Object());
         try

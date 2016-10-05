@@ -183,12 +183,13 @@ public class FetchPlanTest extends JDOPersistenceTestCase
     public void testDetachmentRoots()
     {
         FetchPlan fp = getFetchPlan();
+        FP2Base baseObj = new FP2Base();
 
         assertEquals(0, fp.getDetachmentRoots().size());
         //verify immutable
         try
         {
-            fp.getDetachmentRoots().add(Class.class);
+            fp.getDetachmentRoots().add(baseObj);
             fail("exception UnsupportedOperationException");
         }
         catch( UnsupportedOperationException ex)
@@ -196,17 +197,19 @@ public class FetchPlanTest extends JDOPersistenceTestCase
             //expected
         }
 
-        List<Class> elms = new ArrayList();
-        elms.add(Class.class);
+        List<Object> elms = new ArrayList<>();
+        elms.add(baseObj);
         fp.setDetachmentRoots(elms);
         assertEquals(1, fp.getDetachmentRoots().size());
+
         //verify if immutable by changing original collection
-        elms.add(FetchPlan.class);
+        FP2Base baseObj2 = new FP2Base();
+        elms.add(baseObj2);
         assertEquals(1, fp.getDetachmentRoots().size());
         //verify immutable after setting roots
         try
         {
-            fp.getDetachmentRoots().add(Class.class);
+            fp.getDetachmentRoots().add(baseObj);
             fail("exception UnsupportedOperationException");
         }
         catch( UnsupportedOperationException ex)
@@ -224,8 +227,9 @@ public class FetchPlanTest extends JDOPersistenceTestCase
 
         assertEquals(0, fp.getDetachmentRootClasses().length);
         assertEquals(Class.class, fp.getDetachmentRootClasses().getClass().getComponentType());
-        List elms = new ArrayList();
-        elms.add(Class.class);
+
+        List<Class> elms = new ArrayList<>();
+        elms.add(FP2Base.class);
         fp.setDetachmentRootClasses((Class[])elms.toArray(new Class[elms.size()]));
         assertEquals(1, fp.getDetachmentRootClasses().length);
     }

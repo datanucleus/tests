@@ -321,9 +321,9 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
         }
     }
 
-    protected Map getPropertiesForDatastore(DynamicEnhanceSchemaToolClassLoader runtimeCL)
+    protected Map<Object, Object> getPropertiesForDatastore(DynamicEnhanceSchemaToolClassLoader runtimeCL)
     {
-        Map props = new HashMap<>();
+        Map<Object, Object> props = new HashMap<>();
         Properties properties = TestHelper.getPropertiesForDatastore(1);
         props.putAll(properties);
         props.put("javax.jdo.PersistenceManagerFactoryClass","org.datanucleus.api.jdo.JDOPersistenceManagerFactory");
@@ -345,7 +345,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
             createMetadata(filemd);
             pmf.registerMetadata(filemd);
 
-            Set<String> classNames = new HashSet();
+            Set<String> classNames = new HashSet<>();
             classNames.add("test.Client");
 
             PersistenceNucleusContext nucCtx = pmf.getNucleusContext();
