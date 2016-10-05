@@ -1527,8 +1527,9 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
             clean(Window.class);
         }
     }
-    
-    <T> Set<T> createSet(T... elements) 
+
+    @SafeVarargs
+    static <T> Set<T> createSet(T... elements) 
     {
         Set<T> result = new HashSet<T>();
         for (T t : elements)

@@ -50,7 +50,8 @@ public class ManagedRelationshipTest extends JDOPersistenceTestCase
         }
     }
 
-    <T> Set<T> createSet(T... elements) 
+    @SafeVarargs
+    static <T> Set<T> createSet(T... elements) 
     {
         Set<T> result = new HashSet<T>();
         for (T t : elements)
