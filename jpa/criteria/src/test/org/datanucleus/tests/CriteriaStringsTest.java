@@ -704,6 +704,72 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
     }
 
     /**
+     * Test basic generation of query with candidate and alias, with ordering.
+     */
+    public void testBasicWithOrderAndNulls()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
+            Root<Person> candidate = crit.from(Person.class);
+            candidate.alias("p");
+            crit.select(candidate);
+
+            Path firstNameField = candidate.get("firstName");
+            Order orderFirstName = cb.desc(firstNameField);
+            orderFirstName.nullsFirst();
+            crit.orderBy(orderFirstName);
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT p FROM org.datanucleus.samples.annotations.models.company.Person p ORDER BY p.firstName DESC NULLS FIRST",
+                crit.toString());
+
+            Query q = em.createQuery(crit);
+            List<Person> results = q.getResultList();
+
+            assertNotNull("Null results returned!", results);
+            assertEquals("Number of results is incorrect", 4, results.size());
+            Person per0 = results.get(0);
+            Person per1 = results.get(1);
+            Person per2 = results.get(2);
+            Person per3 = results.get(3);
+            if (!per0.getFirstName().equals("Nigel") || !per0.getLastName().equals("Bloggs") || per0.getPersonNum() != 106)
+            {
+                fail("Nigel Bloggs was not result 0");
+            }
+            if (!per1.getFirstName().equals("Joe") || !per1.getLastName().equals("Bloggs") || per1.getPersonNum() != 105)
+            {
+                fail("Joe Bloggs was not result 1");
+            }
+            if (!per2.getFirstName().equals("Fred") || !per2.getLastName().equals("Flintstone") || per2.getPersonNum() != 101)
+            {
+                fail("Fred Flintstone was not result 2");
+            }
+            if (!per3.getFirstName().equals("Barney") || !per3.getLastName().equals("Rubble") || per3.getPersonNum() != 102)
+            {
+                fail("Barney Rubble was not result 3");
+            }
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
      * Test basic generation of query with candidate and alias and filter with input params.
      */
     public void testBasicWithFilterAndParams()
