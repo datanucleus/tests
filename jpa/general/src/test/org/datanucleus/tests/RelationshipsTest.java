@@ -25,6 +25,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.datanucleus.samples.annotations.many_many.PetroleumCustomer;
 import org.datanucleus.samples.annotations.many_many.PetroleumSupplier;
@@ -32,6 +33,8 @@ import org.datanucleus.samples.annotations.one_many.bidir.Animal;
 import org.datanucleus.samples.annotations.one_many.bidir.Farm;
 import org.datanucleus.samples.annotations.one_many.bidir_2.House;
 import org.datanucleus.samples.annotations.one_many.bidir_2.Window;
+import org.datanucleus.samples.annotations.one_many.bidir_3.Contact;
+import org.datanucleus.samples.annotations.one_many.bidir_3.Document;
 import org.datanucleus.samples.annotations.one_many.collection.ListHolder;
 import org.datanucleus.samples.annotations.one_many.collection.PCFKListElement;
 import org.datanucleus.samples.annotations.one_one.unidir.Login;
@@ -847,6 +850,7 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             clean(PCFKListElement.class);
         }
     }
+
     /**
      * Test of 1-N List of entity elements and use of orphan removal flag when removing the element from the list.
      */
@@ -952,6 +956,119 @@ public class RelationshipsTest extends JPAPersistenceTestCase
         {
             clean(ListHolder.class);
             clean(PCFKListElement.class);
+        }
+    }
+
+    /**
+     * Test of 1-N bidir with element having embedded PC, and 1-1 bidir with embedded PC, and using "mappedBy" with DOT notation.
+     */
+    public void testOneToManyBidirMappedByDotNotation()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Contact c1 = new Contact("John Doe");
+                Document d1 = new Document("Doc1", c1);
+                Document d2 = new Document("Doc2", c1);
+                c1.setMainDocument(d1);
+                d1.getDetails().setOwner(c1);
+                c1.getDocuments().add(d2);
+                d2.getDetails().setOwner(c1);
+                em.persist(c1);
+                em.persist(d1);
+                em.persist(d2);
+
+                Contact c2 = new Contact("Jane Dose");
+                em.persist(c2);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail("Exception thrown while creating data");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            // Query the datastore and check the results
+            em = getEM();
+            tx = em.getTransaction();
+            List<Document> documents = null;
+            try
+            {
+                tx.begin();
+
+                TypedQuery<Document> query = em.createQuery("SELECT d FROM Document d JOIN FETCH d.details.owner owner_1 WHERE d.name = 'Doc2'", Document.class);
+                documents = query.getResultList();
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail("Exception thrown while retrieving data");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            assertEquals(1, documents.size());
+            assertEquals("Doc2", documents.get(0).getName());
+            assertEquals("John Doe", documents.get(0).getDetails().getOwner().getName());
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                // Null out the relations
+                TypedQuery<Contact> query = em.createQuery("SELECT c FROM " + Contact.class.getName() + " c", Contact.class);
+                List<Contact> contacts = query.getResultList();
+                for (Contact c : contacts)
+                {
+                    c.setMainDocument(null);
+                    c.getDocuments().clear();
+                }
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail("Exception thrown while retrieving data");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+        }
+        finally
+        {
+            clean(Contact.class);
+            clean(Document.class);
         }
     }
 }
