@@ -2709,12 +2709,23 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(e);
                 em.flush();
 
-                List result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) <> Employee_Ann").getResultList();
+                List<Person> result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) <> Employee_Ann").getResultList();
                 assertEquals(1, result.size());
+                Person p1 = result.get(0);
+                assertTrue(p1 instanceof Person && !(p1 instanceof Employee));
+
                 List result2 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) IN (Employee_Ann, Person_Ann)").getResultList();
                 assertEquals(2, result2.size());
-                List result3 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) IN (Employee_Ann)").getResultList();
+
+                List<Person> result3 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) IN (Employee_Ann)").getResultList();
                 assertEquals(1, result3.size());
+                Person p3 = result3.get(0);
+                assertTrue(p3 instanceof Employee);
+
+                List<Person> result4 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) NOT IN (Employee_Ann)").getResultList();
+                assertEquals(1, result4.size());
+                Person p4 = result4.get(0);
+                assertTrue(p4 instanceof Person && !(p4 instanceof Employee));
 
                 tx.rollback();
             }
