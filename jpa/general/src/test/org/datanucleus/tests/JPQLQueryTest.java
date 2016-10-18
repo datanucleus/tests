@@ -2711,7 +2711,17 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
 
                 List result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) <> Employee_Ann").getResultList();
                 assertEquals(1, result.size());
+                List result2 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) IN (Employee_Ann, Person_Ann)").getResultList();
+                assertEquals(2, result2.size());
+                List result3 = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) IN (Employee_Ann)").getResultList();
+                assertEquals(1, result3.size());
+
                 tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in query", e);
+                fail("Exception in TYPE handling : " + e.getMessage());
             }
             finally
             {
