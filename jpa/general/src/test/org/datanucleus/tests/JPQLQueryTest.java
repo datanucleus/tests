@@ -2727,6 +2727,22 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 Person p4 = result4.get(0);
                 assertTrue(p4 instanceof Person && !(p4 instanceof Employee));
 
+                Collection<String> collParam = new ArrayList<>();
+                collParam.add("Employee_Ann");
+                collParam.add("Person_Ann");
+                TypedQuery<Person> q5 = (TypedQuery<Person>) em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) IN :collParam");
+                q5.setParameter("collParam", collParam);
+                List<Person> result5 = q5.getResultList();
+                assertEquals(2, result5.size());
+
+                Collection<Class> collParam2 = new ArrayList<>();
+                collParam2.add(Employee.class);
+                collParam2.add(Person.class);
+                TypedQuery<Person> q6 = (TypedQuery<Person>) em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TYPE(p) IN :collParam");
+                q6.setParameter("collParam", collParam2);
+                List<Person> result6 = q6.getResultList();
+                assertEquals(2, result6.size());
+
                 tx.rollback();
             }
             catch (Exception e)
