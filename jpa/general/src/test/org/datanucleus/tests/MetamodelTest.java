@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.metamodel.Attribute;
+import javax.persistence.metamodel.Bindable.BindableType;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.IdentifiableType;
 import javax.persistence.metamodel.ListAttribute;
@@ -30,6 +31,8 @@ import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.Type;
 
+import org.datanucleus.samples.annotations.embedded.Computer;
+import org.datanucleus.samples.annotations.embedded.ComputerCard;
 import org.datanucleus.samples.annotations.generics.GenericIdSub;
 import org.datanucleus.samples.annotations.many_one.ManyOneOwner;
 import org.datanucleus.samples.annotations.models.company.Employee;
@@ -480,6 +483,49 @@ public class MetamodelTest extends JPAPersistenceTestCase
         catch (IllegalArgumentException iae)
         {
             fail("Didnt find EntityType for " + GenericIdSub.class.getName());
+        }
+    }
+
+    /**
+     * Test for embedded types with metamodel.
+     */
+    public void testEmbedded()
+    {
+        Metamodel model = emf.getMetamodel();
+        try
+        {
+            EntityType<?> computerType = model.entity(Computer.class);
+            assertNotNull(computerType);
+            assertEquals("Number of attributes is wrong", 4, computerType.getAttributes().size());
+            Class idType = computerType.getIdType().getJavaType();
+            assertEquals(long.class, idType);
+
+            try
+            {
+                // String field (Id)
+                Attribute attr = computerType.getAttribute("soundCard");
+                assertNotNull(attr);
+                assertEquals(attr.getName(), "soundCard");
+                assertEquals(attr.getJavaType(), ComputerCard.class);
+                assertEquals(attr.getJavaMember().getName(), "soundCard");
+                assertFalse(attr.isCollection());
+                assertTrue(attr.isAssociation());
+                assertEquals(Attribute.PersistentAttributeType.EMBEDDED, attr.getPersistentAttributeType());
+                assertTrue(attr instanceof SingularAttribute);
+                SingularAttribute sattr = (SingularAttribute)attr;
+                assertTrue(sattr.isOptional());
+                assertFalse(sattr.isVersion());
+                assertEquals(BindableType.SINGULAR_ATTRIBUTE, sattr.getBindableType());
+                assertEquals(ComputerCard.class, sattr.getBindableJavaType());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"soundCard\" field of " + Computer.class.getName());
+            }
+        }
+        catch (IllegalArgumentException iae)
+        {
+            fail("Didnt find EntityType for " + Computer.class.getName());
         }
     }
 }
