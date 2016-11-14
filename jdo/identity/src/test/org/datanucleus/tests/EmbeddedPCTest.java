@@ -19,6 +19,7 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.jdo.FetchPlan;
 import javax.jdo.JDOHelper;
@@ -34,7 +35,9 @@ import org.jpox.samples.embedded.Computer;
 import org.jpox.samples.embedded.ComputerCard;
 import org.jpox.samples.embedded.DigitalCamera;
 import org.jpox.samples.embedded.EmbeddedObject;
+import org.jpox.samples.embedded.EmbeddedObject2;
 import org.jpox.samples.embedded.EmbeddedOwner1;
+import org.jpox.samples.embedded.EmbeddedOwner2;
 import org.jpox.samples.embedded.FittedBathroom;
 import org.jpox.samples.embedded.FittedKitchen;
 import org.jpox.samples.embedded.Manufacturer;
@@ -58,8 +61,7 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
         {
             if (storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
             {
-                addClassesToSchema(new Class[]
-                        {
+                addClassesToSchema(new Class[] {
                         Computer.class,
                         ComputerCard.class,
                         Manufacturer.class,
@@ -67,8 +69,8 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
                         MusicPlayer.class,
                         FittedKitchen.class, Oven.class, MultifunctionOven.class,
                         FittedBathroom.class, Bath.class, ShowerBath.class,
-                        }
-                        );
+                        EmbeddedOwner2.class, EmbeddedObject2.class,
+                        });
             }
             initialised = true;
         }
@@ -1927,6 +1929,96 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
         {
             // Clean out created data
             clean(EmbeddedOwner1.class);
+        }
+    }
+
+    /**
+     * Test for an embedded PC object which has a Set<NonPC>.
+     * @throws Exception
+     */
+    public void testEmbeddedPCObjectWithSetNonPC() 
+    throws Exception
+    {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            
+            // ------------------ Check the persistence of an object with embedded objects -----------------
+            try
+            {
+                tx.begin();
+
+                EmbeddedOwner2 owner = new EmbeddedOwner2(1, "First");
+                EmbeddedObject2 emb = new EmbeddedObject2("The Embedded");
+                emb.getStringSet().add("One");
+                emb.getStringSet().add("Two");
+                emb.getStringSet().add("Three");
+                owner.setEmbeddedObject(emb);
+                pm.makePersistent(owner);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while creating objects with embedded field(s) : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+            
+            // -------------- Check the retrieval of objects with embedded subobjects -----------------
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                EmbeddedOwner2 owner = pm.getObjectById(EmbeddedOwner2.class, 1);
+                assertTrue("Unable to retrieve object with embedded object(s)", owner != null);
+                assertEquals("Name of owner is wrong", "First", owner.getName());
+                EmbeddedObject2 emb = owner.getEmbeddedObject();
+                assertNotNull("Embedded object is null but shouldnt be", emb);
+                assertEquals("The Embedded", emb.getName());
+                Set<String> embVals = emb.getStringSet();
+                assertNotNull(embVals);
+                assertEquals(3, embVals.size());
+                assertTrue(embVals.contains("One"));
+                assertTrue(embVals.contains("Two"));
+                assertTrue(embVals.contains("Three"));
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while fetching objects with embedded field(s) : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out created data
+            clean(EmbeddedOwner2.class);
         }
     }
 }

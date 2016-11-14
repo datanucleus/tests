@@ -293,21 +293,42 @@
             <field name="id" primary-key="true"/>
             <field name="name"/>
         </class>
-
         <class name="EmbeddedOwner1" detachable="true">
             <field name="longValue"/>
             <field name="bytesValue"/>
             <field name="embeddedObject" persistence-modifier="persistent" default-fetch-group="true">
                 <embedded>
                     <field name="name" column="EMBEDDED_NAME"/>
-                    <field name="bytesValue" persistent="true" column="EMBEDDED_BYTES"/>
+                    <field name="bytesValue" persistence-modifier="true" column="EMBEDDED_BYTES"/>
                 </embedded>
             </field>
         </class>
-
         <class name="EmbeddedObject" embedded-only="true" detachable="true">
             <field name="name"/>
             <field name="bytesValue"/>
+        </class>
+
+        <class name="EmbeddedOwner2" detachable="true" table="EMB_OWNER2">
+            <field name="id" primary-key="true"/>
+            <field name="name"/>
+            <field name="embeddedObject" persistence-modifier="persistent" default-fetch-group="true">
+                <embedded>
+                    <field name="name" column="EMBEDDED_NAME"/>
+                    <field name="stringSet" table="EMB_OWNER2_STRINGSET">
+                        <collection/>
+                        <join column="OWNER_ID"/>
+                        <element column="STRING_VALUE"/>
+                    </field>
+                </embedded>
+            </field>
+        </class>
+        <class name="EmbeddedObject2" embedded-only="true" detachable="true">
+            <field name="name"/>
+            <field name="stringSet">
+                <collection/>
+                <join column="OWNER_ID"/>
+                <element column="STRING_VALUE"/>
+            </field>
         </class>
     </package>
 </jdo>
