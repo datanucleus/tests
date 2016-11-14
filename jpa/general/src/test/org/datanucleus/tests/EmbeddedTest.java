@@ -19,11 +19,14 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.datanucleus.samples.annotations.embedded.EmbeddedObject2;
+import org.datanucleus.samples.annotations.embedded.EmbeddedOwner2;
 import org.datanucleus.samples.annotations.embedded.Job;
 import org.datanucleus.samples.annotations.embedded.Processor;
 import org.datanucleus.samples.annotations.models.company.Department;
@@ -238,6 +241,89 @@ public class EmbeddedTest extends JPAPersistenceTestCase
         finally
         {
             clean(Processor.class);
+        }
+    }
+
+    /**
+     * Test of embedding 1-1 with (join) table field.
+     */
+    public void testEmbeddableObjectWithSetNonPC()
+    {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                EmbeddedOwner2 owner = new EmbeddedOwner2(1, "First");
+                EmbeddedObject2 emb = new EmbeddedObject2("The Embedded");
+                emb.getStringSet().add("One");
+                emb.getStringSet().add("Two");
+                emb.getStringSet().add("Three");
+                owner.setEmbeddedObject(emb);
+                em.persist(owner);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception thrown creating data", e);
+                fail("Exception thrown while creating data (see log for details) : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            // Check the contents of the datastore
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                EmbeddedOwner2 owner = em.find(EmbeddedOwner2.class, 1);
+                assertNotNull(owner);
+                EmbeddedObject2 emb = owner.getEmbeddedObject();
+                assertNotNull(emb);
+                Set<String> embSet = emb.getStringSet();
+                assertNotNull(embSet);
+                assertEquals(3, embSet.size());
+                assertTrue(embSet.contains("One"));
+                assertTrue(embSet.contains("Two"));
+                assertTrue(embSet.contains("Three"));
+
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception thrown retrieving data", e);
+                fail("Exception thrown while retrieving data " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(EmbeddedOwner2.class);
         }
     }
 }
