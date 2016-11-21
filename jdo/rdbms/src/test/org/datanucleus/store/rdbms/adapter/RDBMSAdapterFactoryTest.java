@@ -64,16 +64,13 @@ public class RDBMSAdapterFactoryTest extends TestCase
         assertEquals("org.datanucleus.store.rdbms.adapter.FirebirdAdapter", factory.getAdapterClass(pluginMgr, null, "Firebird", clr).getName());
         assertEquals("org.datanucleus.store.rdbms.adapter.FirebirdAdapter", factory.getAdapterClass(pluginMgr, null, "Interbase", clr).getName());
 
-        assertEquals("org.datanucleus.store.rdbms.adapter.MSSQLServerAdapter", factory.getAdapterClass(pluginMgr, null, "Microsoft SQL Server", clr).getName());
+        assertEquals("org.datanucleus.store.rdbms.adapter.SQLServerAdapter", factory.getAdapterClass(pluginMgr, null, "Microsoft SQL Server", clr).getName());
 
         assertEquals("org.datanucleus.store.rdbms.adapter.H2Adapter", factory.getAdapterClass(pluginMgr, null, "H2", clr).getName());
 
         assertEquals("org.datanucleus.store.rdbms.adapter.HSQLAdapter", factory.getAdapterClass(pluginMgr, null, "HSQL Database Engine", clr).getName());
 
         assertEquals("org.datanucleus.store.rdbms.adapter.InformixAdapter", factory.getAdapterClass(pluginMgr, null, "Informix", clr).getName());
-
-        assertEquals("org.datanucleus.store.rdbms.adapter.McKoiAdapter", factory.getAdapterClass(pluginMgr, null, "McKoi", clr).getName());
-        assertEquals("org.datanucleus.store.rdbms.adapter.McKoiAdapter", factory.getAdapterClass(pluginMgr, null, "Mckoi SQL Database", clr).getName());
 
         assertEquals("org.datanucleus.store.rdbms.adapter.MySQLAdapter", factory.getAdapterClass(pluginMgr, null, "MySQL", clr).getName());
 
