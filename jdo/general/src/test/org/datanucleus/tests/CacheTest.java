@@ -93,8 +93,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL1WeakRefL2()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         runL2CacheTestForPMF(cachePMF);
@@ -106,8 +106,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL1SoftRefL2()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "soft");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "soft");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         runL2CacheTestForPMF(cachePMF);
@@ -196,8 +196,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL2CachedObject()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
         try
         {
@@ -241,10 +241,8 @@ public class CacheTest extends JDOPersistenceTestCase
                 pm.close();
             }
             Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
-            assertTrue("Incorrect number of pinned objects : should have been 3 but is " + l2Cache.getNumberOfPinnedObjects(),
-                l2Cache.getNumberOfPinnedObjects() == 3);
-            assertTrue("Level 2 Cache returned that it is empty yet should have pinned object(s)!",
-                !l2Cache.isEmpty());
+            assertTrue("Incorrect number of pinned objects : should have been 3 but is " + l2Cache.getNumberOfPinnedObjects(), l2Cache.getNumberOfPinnedObjects() == 3);
+            assertTrue("Level 2 Cache returned that it is empty yet should have pinned object(s)!", !l2Cache.isEmpty());
 
             pm = cachePMF.getPersistenceManager();
             tx = pm.currentTransaction();
@@ -278,12 +276,9 @@ public class CacheTest extends JDOPersistenceTestCase
 
             // Clear the cache and check if the objects are released
             l2Cache.evictAll();
-            assertTrue("Level 2 Cache returned that it is not empty yet we just cleared it!",
-                l2Cache.isEmpty());
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet we just cleared it!",
-                l2Cache.getNumberOfPinnedObjects() == 0);
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!",
-                l2Cache.getNumberOfUnpinnedObjects() == 0);
+            assertTrue("Level 2 Cache returned that it is not empty yet we just cleared it!", l2Cache.isEmpty());
+            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet we just cleared it!", l2Cache.getNumberOfPinnedObjects() == 0);
+            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!", l2Cache.getNumberOfUnpinnedObjects() == 0);
         }
         finally
         {
@@ -298,8 +293,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL2LoadedFields()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "soft");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "soft");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -400,8 +395,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testSCOAndPCReuse()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -503,8 +498,8 @@ public class CacheTest extends JDOPersistenceTestCase
 
                 assertEquals("Person's first name is not what expected", qual.getPerson().getFirstName(), "Tweety");
                 assertEquals("Person's last name is not what expected", qual.getPerson().getLastName(), "Pie");
-
                 assertEquals("From date is not what expected", qual.getDate(), new GregorianCalendar(2005, 8, 02).getTime());
+
                 tx.commit();
             }
             catch (Exception e)
@@ -536,8 +531,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testEvictAll()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "soft");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "soft");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -592,23 +587,17 @@ public class CacheTest extends JDOPersistenceTestCase
             // just check that the following executes without errors and that there are no unpinned objects
             // afterwards
             l2Cache.evictAll(Qualification.class, true);
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!",
-                l2Cache.getNumberOfUnpinnedObjects() == 0);
+            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!", l2Cache.getNumberOfUnpinnedObjects() == 0);
             
             // check whether it was only the Qualification objects that got evicted
-            assertTrue("Incorrect number of pinned objects : should have been 3 but is " + l2Cache.getNumberOfPinnedObjects(),
-                l2Cache.getNumberOfPinnedObjects() == 3);
-            assertTrue("Level 2 Cache returned that it is empty yet should have pinned object(s)!",
-                !l2Cache.isEmpty());
+            assertTrue("Incorrect number of pinned objects : should have been 3 but is " + l2Cache.getNumberOfPinnedObjects(), l2Cache.getNumberOfPinnedObjects() == 3);
+            assertTrue("Level 2 Cache returned that it is empty yet should have pinned object(s)!", !l2Cache.isEmpty());
 
             // evict all Employee + subclass objects and check if the objects are released
             l2Cache.evictAll(Employee.class, true);
-            assertTrue("Level 2 Cache returned that it is not empty yet we just cleared it!",
-                l2Cache.isEmpty());
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet we just cleared it!",
-                l2Cache.getNumberOfPinnedObjects() == 0);
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!",
-                l2Cache.getNumberOfUnpinnedObjects() == 0);
+            assertTrue("Level 2 Cache returned that it is not empty yet we just cleared it!", l2Cache.isEmpty());
+            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet we just cleared it!", l2Cache.getNumberOfPinnedObjects() == 0);
+            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!", l2Cache.getNumberOfUnpinnedObjects() == 0);
         }
         finally
         {
@@ -624,8 +613,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testOptimisticTransactionWithL2Cache()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -1037,8 +1026,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testL2CacheAfterReadApplicationIdentity()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -1162,8 +1151,8 @@ public class CacheTest extends JDOPersistenceTestCase
     public void testMultithreadObjectRead()
     {
         Properties userProps = new Properties();
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L1_TYPE", "weak");
-        userProps.setProperty("PropertyNames.PROPERTY_CACHE_L2_TYPE", "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
         PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
 
         try
@@ -1201,9 +1190,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 pm.close();
             }
             Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
-            assertTrue("Incorrect number of pinned objects : should have been 2 but is " + 
-                l2Cache.getNumberOfPinnedObjects(),
-                l2Cache.getNumberOfPinnedObjects() == 2);
+            assertTrue("Incorrect number of pinned objects : should have been 2 but is " + l2Cache.getNumberOfPinnedObjects(), l2Cache.getNumberOfPinnedObjects() == 2);
 
             // Start multiple threads to retrieve the object
             // All should find it in the L2 cache
@@ -1251,7 +1238,7 @@ public class CacheTest extends JDOPersistenceTestCase
                             }
                             catch (Exception e)
                             {
-                                e.printStackTrace();
+                                LOG.error("Exception in test", e);
                                 fail("Exception thrown while accessing object in thread " + threadNo + " : " + e.getMessage());
                             }
                             finally
