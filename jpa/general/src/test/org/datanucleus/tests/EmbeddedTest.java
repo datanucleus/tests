@@ -326,4 +326,108 @@ public class EmbeddedTest extends JPAPersistenceTestCase
             clean(EmbeddedOwner2.class);
         }
     }
+
+    /**
+     * Test of embedding 1-1 with nested 1-N embedded,with recursion.
+     */
+    /*public void testEmbeddableObjectWithNestingAndRecursion()
+    {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_PC))
+        {
+            return;
+        }
+
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                EmbeddedOwner3 owner1 = new EmbeddedOwner3();
+                owner1.setName("A1");
+                owner1.setId(new EmbeddedOwner3Id("First", "Blue"));
+                owner1.getA().setNameA("Owner1-A");
+                owner1.getA().getB().setNameB("Owner1-B");
+
+                EmbeddedOwner3 owner2 = new EmbeddedOwner3();
+                owner2.setName("A2");
+                owner2.setId(new EmbeddedOwner3Id("Second", "Green"));
+                owner2.getA().setNameA("Owner2-A");
+                owner2.getA().getB().setNameB("Owner2-B");
+
+                owner1.getA().getB().getOwners().add(owner2);
+
+                em.persist(owner1);
+                em.persist(owner2);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception thrown creating data", e);
+                fail("Exception thrown while creating data (see log for details) : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            // Check the contents of the datastore
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                EmbeddedOwner3 owner = em.find(EmbeddedOwner3.class, new EmbeddedOwner3Id("First", "Blue"));
+                Set<EmbeddedOwner3> abOwners = owner.getA().getB().getOwners();
+                assertEquals(1, abOwners.size());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception thrown retrieving data", e);
+                fail("Exception thrown while retrieving data " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                EmbeddedOwner3 owner = em.find(EmbeddedOwner3.class, new EmbeddedOwner3Id("First", "Blue"));
+                owner.getA().getB().getOwners().clear();
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            clean(EmbeddedOwner3.class);
+        }
+    }*/
 }
