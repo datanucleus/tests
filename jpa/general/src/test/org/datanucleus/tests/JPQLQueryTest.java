@@ -2402,19 +2402,19 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.flush();
 
                 // Leading
-                List result = em.createQuery("SELECT P FROM " + Person.class.getName() + " P WHERE TRIM(LEADING FROM lastName) = 'Flintstone'").getResultList();
+                List result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(LEADING FROM p.lastName) = 'Flintstone'").getResultList();
                 assertEquals(1, result.size());
 
                 // Trailing
-                result = em.createQuery("SELECT P FROM " + Person.class.getName() + " P WHERE TRIM(TRAILING FROM firstName) = 'Fred'").getResultList();
+                result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(TRAILING FROM p.firstName) = 'Fred'").getResultList();
                 assertEquals(1, result.size());
 
                 // Both
-                result = em.createQuery("SELECT P FROM " + Person.class.getName() + " P WHERE TRIM(emailAddress) = 'fred.flintstone@jpox.com'").getResultList();
+                result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(p.emailAddress) = 'fred.flintstone@jpox.com'").getResultList();
                 assertEquals(1, result.size());
 
                 // Both (using keyword)
-                result = em.createQuery("SELECT P FROM " + Person.class.getName() + " P WHERE TRIM(BOTH FROM emailAddress) = 'fred.flintstone@jpox.com'").getResultList();
+                result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(BOTH FROM p.emailAddress) = 'fred.flintstone@jpox.com'").getResultList();
                 assertEquals(1, result.size());
                 tx.rollback();
             }
