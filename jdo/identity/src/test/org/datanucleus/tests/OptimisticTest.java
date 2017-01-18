@@ -235,12 +235,12 @@ public class OptimisticTest extends JDOPersistenceTestCase
             //commit tx1
             tx1.commit();
 
-            // Check that the version is 2 (JPOX-specific behaviour since JDO2 doesnt define it)
-            tx1.begin();
+            // Check that the version is 2 (JPOX-specific behaviour since JDO2 doesnt define it). 
+            // THIS IS NOW COMMENTED OUT SINCE BEHAVIOUR REMOVED in 5.1
+            /*tx1.begin();
             t1 = (Trade3)pm1.getObjectById(id);
-            assertEquals("Version of unversioned object is incorrect after update",
-                new Long(2), JDOHelper.getVersion(t1));
-            tx1.commit();
+            assertEquals("Version of unversioned object is incorrect after update", new Long(2), JDOHelper.getVersion(t1));
+            tx1.commit();*/
 
             boolean success = false;
             try
