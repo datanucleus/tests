@@ -29,7 +29,6 @@
         <mongodb.min.version>5.0.99</mongodb.min.version>
         <hbase.min.version>5.0.99</hbase.min.version>
         <neo4j.min.version>5.0.99</neo4j.min.version>
-        <neodatis.min.version>5.0.0-release</neodatis.min.version>
         <excel.min.version>5.0.99</excel.min.version>
         <odf.min.version>5.0.99</odf.min.version>
         <json.min.version>5.0.99</json.min.version>
@@ -79,7 +78,6 @@
         <module>../jdo/rdbms/</module>
         <module>../jdo/spreadsheet/</module>
         <module>../jdo/ldap/</module>
-        <module>../jdo/neodatis/</module>
         <module>../jdo/xml/</module>
         <module>../jdo/hbase/</module>
         <module>../jdo/mongodb/</module>
@@ -377,7 +375,6 @@
                             <directory>${basedir}</directory>
                             <includes>
                                 <include>**/*.log</include>
-                                <include>**/neodatis.odb</include>
                                 <include>**/test.xml</include>
                                 <include>**/test.xls</include>
                                 <include>**/test.xlsx</include>
@@ -649,28 +646,6 @@
             </dependencies>
             <properties>
                 <maven.datanucleus.datastore>oracle</maven.datanucleus.datastore>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>neodatis</id>
-            <modules>
-                <module>../jdo/neodatis/</module>
-            </modules>
-            <dependencies>
-                <dependency>
-                    <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-neodatis</artifactId>
-                    <version>[${neodatis.min.version}, )</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.neodatis.odb</groupId>
-                    <artifactId>neodatis-odb</artifactId>
-                    <version>1.9.30.689</version>
-                </dependency>
-            </dependencies>
-            <properties>
-                <maven.datanucleus.datastore>neodatis</maven.datanucleus.datastore>
             </properties>
         </profile>
 
