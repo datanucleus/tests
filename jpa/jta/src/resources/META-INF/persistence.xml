@@ -16,6 +16,7 @@
         <properties>
             <property name="datanucleus.transaction.jta.transactionManagerLocator" value="custom_jndi"/>
             <property name="datanucleus.transaction.jta.transactionManagerJNDI" value="java:comp/TransactionManager"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="datanucleus.storeManagerType" value="rdbms"/>
         </properties>
     </persistence-unit>

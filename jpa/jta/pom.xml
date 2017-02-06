@@ -71,6 +71,17 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>maven.datanucleus.test.skip.reset</name> <!-- TURN OFF stupid cleanup listener since it uses JDO! -->
+                            <value>true</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
         	<plugins>
