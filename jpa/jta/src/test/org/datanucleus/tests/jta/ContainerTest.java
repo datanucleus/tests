@@ -79,8 +79,8 @@ public class ContainerTest extends JPAPersistenceTestCase
             PersistenceUnitInfoImpl unitInfo = new PersistenceUnitInfoImpl("org.datanucleus.api.jpa.PersistenceProviderImpl", "TEST_JTA", 
                 PersistenceUnitTransactionType.JTA, rootURL);
             unitInfo.setJtaDataSource(jtaDataSource);
-            unitInfo.getProperties().setProperty("datanucleus.jtaLocator", "custom_jndi");
-            unitInfo.getProperties().setProperty("datanucleus.jtaJndiLocation", "java:comp/TransactionManager");
+            unitInfo.getProperties().setProperty("datanucleus.transaction.jta.transactionManagerLocator", "custom_jndi");
+            unitInfo.getProperties().setProperty("datanucleus.transaction.jta.transactionManagerJNDI", "java:comp/TransactionManager");
             unitInfo.getProperties().setProperty("datanucleus.storeManagerType", "rdbms");
             unitInfo.getProperties().setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
             unitInfo.addManagedClassName("org.datanucleus.samples.annotations.Person");

@@ -196,7 +196,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         public void setTransactionIsolation(int i)
         {
             this.isolationLevel = i;
-            this.setProperty("datanucleus.transactionIsolation", 
+            this.setProperty("datanucleus.transaction.isolation", 
                 TransactionUtils.getNameForTransactionIsolationLevel(isolationLevel));
         }
 

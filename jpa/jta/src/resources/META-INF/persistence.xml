@@ -14,8 +14,8 @@
         <jta-data-source>java:comp/env/NucleusDS</jta-data-source>
         <class>org.datanucleus.samples.annotations.Person</class>
         <properties>
-            <property name="datanucleus.jtaLocator" value="custom_jndi"/>
-            <property name="datanucleus.jtaJndiLocation" value="java:comp/TransactionManager"/>
+            <property name="datanucleus.transaction.jta.transactionManagerLocator" value="custom_jndi"/>
+            <property name="datanucleus.transaction.jta.transactionManagerJNDI" value="java:comp/TransactionManager"/>
             <property name="datanucleus.storeManagerType" value="rdbms"/>
         </properties>
     </persistence-unit>
