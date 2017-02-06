@@ -82,7 +82,7 @@ public class ContainerTest extends JPAPersistenceTestCase
             unitInfo.getProperties().setProperty("datanucleus.jtaLocator", "custom_jndi");
             unitInfo.getProperties().setProperty("datanucleus.jtaJndiLocation", "java:comp/TransactionManager");
             unitInfo.getProperties().setProperty("datanucleus.storeManagerType", "rdbms");
-            unitInfo.getProperties().setProperty("datanucleus.schema.autoCreateTables", "true");
+            unitInfo.getProperties().setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
             unitInfo.addManagedClassName("org.datanucleus.samples.annotations.Person");
             unitInfo.setExcludeUnlistedClasses(true);
             Map overridingProps = null;
