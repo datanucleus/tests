@@ -21,7 +21,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jpa</artifactId>
-            <version>[${api.jpa.min.version}, )</version>
+            <version>[${api.jpa.min.version}, 5.0.99)</version>
         </dependency>
 
         <dependency>
