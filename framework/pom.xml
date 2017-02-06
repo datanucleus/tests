@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
     <artifactId>datanucleus-test-framework</artifactId>
-    <version>5.0</version>
+    <version>5.1</version>
     <name>DataNucleus TestFramework</name>
     <description><![CDATA[
         DataNucleus Test Framework, providing the base classes for persistence testing.
@@ -25,17 +25,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>[5.0.0-release, )</version>
+            <version>[5.0.99, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
-            <version>[5.0.0-release, )</version>
+            <version>[5.0.99, )</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[5.0.0-release, )</version>
+            <version>[5.0.99, )</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

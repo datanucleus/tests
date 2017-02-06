@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
     <artifactId>datanucleus-test-maven-parent</artifactId>
-    <version>5.0</version>
+    <version>5.1</version>
     <name>DataNucleus AccessPlatform Integration Tests</name>
     <description>Build and run integration tests (profiles "h2" and "rdbms" are active by default)</description>
     <packaging>pom</packaging>
@@ -19,20 +19,20 @@
         <javax.persistence.min.version>2.1.3</javax.persistence.min.version>
         <javax.persistence.max.version>2.1.99</javax.persistence.max.version>
 
-        <core.min.version>5.0.3</core.min.version>
-        <api.jdo.min.version>5.0.3</api.jdo.min.version>
-        <api.jpa.min.version>5.0.3</api.jpa.min.version>
+        <core.min.version>5.0.99</core.min.version>
+        <api.jdo.min.version>5.0.99</api.jdo.min.version>
+        <api.jpa.min.version>5.0.99</api.jpa.min.version>
         <api.rest.min.version>5.0.2</api.rest.min.version>
 
-        <rdbms.min.version>5.0.3</rdbms.min.version>
-        <cassandra.min.version>5.0.2</cassandra.min.version>
-        <mongodb.min.version>5.0.2</mongodb.min.version>
-        <hbase.min.version>5.0.2</hbase.min.version>
-        <neo4j.min.version>5.0.3</neo4j.min.version>
+        <rdbms.min.version>5.0.99</rdbms.min.version>
+        <cassandra.min.version>5.0.99</cassandra.min.version>
+        <mongodb.min.version>5.0.99</mongodb.min.version>
+        <hbase.min.version>5.0.99</hbase.min.version>
+        <neo4j.min.version>5.0.99</neo4j.min.version>
         <neodatis.min.version>5.0.0-release</neodatis.min.version>
-        <excel.min.version>5.0.3</excel.min.version>
-        <odf.min.version>5.0.2</odf.min.version>
-        <json.min.version>5.0.2</json.min.version>
+        <excel.min.version>5.0.99</excel.min.version>
+        <odf.min.version>5.0.99</odf.min.version>
+        <json.min.version>5.0.99</json.min.version>
         <ldap.min.version>5.0.1</ldap.min.version>
         <xml.min.version>5.0.0-release</xml.min.version>
 
@@ -96,12 +96,12 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-framework</artifactId>
-            <version>5.0</version>
+            <version>5.1</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-samples</artifactId>
-            <version>5.0</version>
+            <version>5.1</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
