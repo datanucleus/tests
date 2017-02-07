@@ -40,12 +40,12 @@ import org.datanucleus.samples.annotations.Person;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
- * Tests for use of JTA with JPA, using the EMF constructor used by a JavaEE container to simulate container usage.
+ * Tests for use of JTA with JPA, using container-managed EMF.
  */
-public class ContainerTest extends JPAPersistenceTestCase
+public class ContainerManagedTest extends JPAPersistenceTestCase
 {
     static EntityManagerFactory jtaEMF = null;
-    public ContainerTest(String name)
+    public ContainerManagedTest(String name)
     {
         super(name);
         if (jtaEMF == null)

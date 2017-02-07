@@ -32,14 +32,13 @@ import org.datanucleus.samples.annotations.Person;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
- * Series of general tests for using JTA with JPA.
- * Refer to http://en.wikibooks.org/wiki/Java_Persistence/Transactions#Example_JTA_transaction
- * for some examples of what the spec requires.
+ * Series of tests for using JTA with JPA using application-managed EMF.
+ * Refer to http://en.wikibooks.org/wiki/Java_Persistence/Transactions#Example_JTA_transaction for some examples of what the spec requires.
  */
-public class GeneralTest extends JPAPersistenceTestCase
+public class ApplicationManagedTest extends JPAPersistenceTestCase
 {
     static EntityManagerFactory jtaEMF = null;
-    public GeneralTest(String name)
+    public ApplicationManagedTest(String name)
     {
         super(name);
         if (jtaEMF == null)
