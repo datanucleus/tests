@@ -37,6 +37,8 @@ import org.datanucleus.samples.annotations.one_many.bidir_3.Contact;
 import org.datanucleus.samples.annotations.one_many.bidir_3.Document;
 import org.datanucleus.samples.annotations.one_many.collection.ListHolder;
 import org.datanucleus.samples.annotations.one_many.collection.PCFKListElement;
+import org.datanucleus.samples.annotations.one_many.map_keyclass.MapHolderWithKeyClass;
+import org.datanucleus.samples.annotations.one_many.map_keyclass.MapKeyClassTarget;
 import org.datanucleus.samples.annotations.one_one.unidir.Login;
 import org.datanucleus.samples.annotations.one_one.unidir.LoginAccount;
 import org.datanucleus.tests.JPAPersistenceTestCase;
@@ -1069,6 +1071,77 @@ public class RelationshipsTest extends JPAPersistenceTestCase
         {
             clean(Contact.class);
             clean(Document.class);
+        }
+    }
+
+
+    /**
+     * Test of 1-N map using @MapKeyClass
+     */
+    public void testOneToManyMapKeyClass()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                MapHolderWithKeyClass holder = new MapHolderWithKeyClass(1);
+                MapKeyClassTarget val1 = new MapKeyClassTarget(1);
+                holder.getMap().put("First", val1);
+                em.persist(holder);
+                em.persist(val1);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail("Exception thrown while creating data");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                MapHolderWithKeyClass holder = em.find(MapHolderWithKeyClass.class, 1);
+                assertNotNull(holder);
+                assertEquals(1, holder.getMap().size());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail("Exception thrown while retrieving data");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+        }
+        finally
+        {
+            clean(MapHolderWithKeyClass.class);
+            clean(MapKeyClassTarget.class);
         }
     }
 }

@@ -136,6 +136,8 @@
         <class>org.datanucleus.samples.annotations.entitygraph.GraphRelated</class>
 
         <class>org.datanucleus.samples.typeconversion.ComplicatedType2</class>
+        <class>org.datanucleus.samples.annotations.one_many.map_keyclass.MapHolderWithKeyClass</class>
+        <class>org.datanucleus.samples.annotations.one_many.map_keyclass.MapKeyClassTarget</class>
     </persistence-unit>
 
 </persistence>
