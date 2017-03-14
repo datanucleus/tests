@@ -318,7 +318,7 @@ public class MetamodelTest extends JPAPersistenceTestCase
         {
             EntityType<?> mapHolderType = model.entity(MapJoinHolder.class);
             assertNotNull(mapHolderType);
-            assertEquals("Number of attributes is wrong", 5, mapHolderType.getAttributes().size());
+            assertEquals("Number of attributes is wrong", 6, mapHolderType.getAttributes().size());
 
             try
             {
