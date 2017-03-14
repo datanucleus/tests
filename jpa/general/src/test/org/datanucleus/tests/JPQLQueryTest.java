@@ -59,6 +59,7 @@ import org.datanucleus.samples.annotations.one_many.collection.ListHolder;
 import org.datanucleus.samples.annotations.one_many.collection.PCFKListElement;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder;
+import org.datanucleus.samples.annotations.one_many.map_join.MapJoinKey;
 import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.samples.annotations.one_many.unidir_2.ExpertGroupMember;
 import org.datanucleus.samples.annotations.one_many.unidir_2.GroupMember;
@@ -3671,6 +3672,65 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
         finally
         {
             clean(MapJoinHolder.class);
+        }
+    }
+
+    /**
+     * Test for KEY and VALUE use with Map field in the FROM clause.
+     */
+    public void testMapJoinWithKEYandVALUEInFROM()
+    {
+        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_EMBEDDED_MAP))
+        {
+            return;
+        }
+
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                MapJoinHolder holder = new MapJoinHolder(1);
+                holder.setName("First Holder");
+                for (int i=0;i<3;i++)
+                {
+                    MapJoinKey key = new MapJoinKey(i, "Map key " + i, "Key description " + i);
+                    MapJoinValue val = new MapJoinValue(i, "Map value " + i, "Value description " + i);
+                    holder.getMap4().put(key, val);
+                }
+                em.persist(holder);
+                em.flush();
+
+                Query q = em.createQuery("SELECT k.description, v.description FROM MapJoinHolder h LEFT JOIN h.map4 v LEFT JOIN KEY(v) k");
+                List<Object[]> results = q.getResultList();
+
+                assertNotNull(results);
+                assertEquals(3, results.size());
+
+                tx.rollback();
+            }
+            catch (PersistenceException e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(MapJoinHolder.class);
+            clean(MapJoinValue.class);
+            clean(MapJoinKey.class);
         }
     }
 

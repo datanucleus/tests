@@ -53,6 +53,10 @@ public class MapJoinHolder
     @CollectionTable(name="JPA_AN_MAPJOINHOLDER_MAP3")
     private Map<String, MapJoinEmbeddedValue> map3;
 
+    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name="JPA_AN_MAPJOINHOLDER_MAP4")
+    private Map<MapJoinKey, MapJoinValue> map4;
+
     public MapJoinHolder()
     {
     }
@@ -107,5 +111,14 @@ public class MapJoinHolder
             map3 = new HashMap<String, MapJoinEmbeddedValue>();
         }
         return map3;
+    }
+
+    public Map<MapJoinKey, MapJoinValue> getMap4()
+    {
+        if (map4 == null)
+        {
+            map4 = new HashMap<MapJoinKey, MapJoinValue>();
+        }
+        return map4;
     }
 }

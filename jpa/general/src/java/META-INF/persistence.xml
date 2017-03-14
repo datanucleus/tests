@@ -47,6 +47,7 @@
         <class>org.datanucleus.samples.annotations.embedded.EmbeddedOwner2</class>
         <class>org.datanucleus.samples.annotations.embedded.EmbeddedObject2</class>
         <class>org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder</class>
+        <class>org.datanucleus.samples.annotations.one_many.map_join.MapJoinKey</class>
         <class>org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue</class>
         <class>org.datanucleus.samples.annotations.array.ByteArray</class>
         <class>org.datanucleus.samples.annotations.types.enums.EnumHolder</class>
