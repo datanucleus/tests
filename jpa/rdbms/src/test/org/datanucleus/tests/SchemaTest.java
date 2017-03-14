@@ -43,7 +43,11 @@ import org.datanucleus.samples.annotations.inheritance.InheritB2;
 import org.datanucleus.samples.annotations.inheritance.InheritC;
 import org.datanucleus.samples.annotations.inheritance.InheritC1;
 import org.datanucleus.samples.annotations.inheritance.InheritC2;
+import org.datanucleus.samples.annotations.one_many.collection.CollectionHolder1;
+import org.datanucleus.samples.annotations.one_many.collection.CollectionHolder1Element;
 import org.datanucleus.samples.annotations.one_many.map.MapHolder1;
+import org.datanucleus.samples.annotations.one_many.map.MapHolder1Key;
+import org.datanucleus.samples.annotations.one_many.map.MapHolder1Value;
 import org.datanucleus.samples.annotations.types.basic.DateHolder;
 import org.datanucleus.samples.xml.one_many.map.MapHolder1Xml;
 import org.datanucleus.store.connection.ManagedConnection;
@@ -571,6 +575,162 @@ public class SchemaTest extends JPAPersistenceTestCase
             columnNames.add("PC_EMB_NAME"); // PC "name" (overridden)
             columnNames.add("PC_EMB_VALUE"); // PC "value" (overridden)
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_PC_EMBEDDED_OWNER", columnNames);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA map using join table with entity keys/values.
+     */
+    public void testMapJoinTableEntityEntity()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {MapHolder1.class, MapHolder1Key.class, MapHolder1Value.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // Map with user-specified join table namings
+            Set<String> columnNames = new HashSet<String>();
+            columnNames.add("MAP4_OWNER_ID"); // FK to owner
+            columnNames.add("MAP4_KEY"); // Key
+            columnNames.add("MAP4_VALUE"); // Value
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_MAPHOLDER1_MAP4", columnNames);
+
+            // Map with default join table namings
+            columnNames = new HashSet<String>();
+            columnNames.add("MAPHOLDER1_JPA_AN_MAPHOLDER1_ID"); // FK to owner
+            columnNames.add("MAP3_KEY"); // Key
+            columnNames.add("MAP3_ID"); // Value
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_MAPHOLDER1_MAPHOLDER1VALUE", columnNames);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA Collection<NonPC> using annotations.
+     */
+    public void testCollectionOfSimpleViaAnnotations()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {MapHolder1.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            HashSet<String> columnNames = new HashSet<String>();
+            columnNames.add("JPA_AN_COLLHOLDER1_ID");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_COLLHOLDER1", columnNames);
+
+            HashSet<String> columnNames2 = new HashSet<String>();
+            columnNames2.add("COLLHOLDER1_ID");
+            columnNames2.add("PROP_VALUE");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_COLLHOLDER1_STRINGS", columnNames2);
+
+            HashSet<String> columnNames3 = new HashSet<String>();
+            columnNames3.add("COLLECTIONHOLDER1_JPA_AN_COLLHOLDER1_ID");
+            columnNames3.add("COLLBASIC2_ELEMENT");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "COLLECTIONHOLDER1_COLLBASIC2", columnNames3);
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA collection using join table with entity elements.
+     */
+    public void testCollectionJoinTableEntity()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {CollectionHolder1.class, CollectionHolder1Element.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // User-specified join table namings
+            Set<String> columnNames = new HashSet<String>();
+            columnNames.add("COLLECTIONHOLDER1_JPA_AN_COLLHOLDER1_ID"); // FK to owner
+            columnNames.add("COLL3_ID"); // Element FK
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_COLLHOLDER1_COLLECTIONHOLDER1ELEMENT", columnNames);
+
+            // Default join table namings
+            columnNames = new HashSet<String>();
+            columnNames.add("COLL4_OWNER_ID"); // FK to owner
+            columnNames.add("COLL4_ELEMENT"); // Element FK
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_COLLHOLDER1_COLL4", columnNames);
         }
         catch (Exception e)
         {

@@ -26,7 +26,10 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -49,6 +52,17 @@ public class MapHolder1
     @ElementCollection
     @CollectionTable
     Map<String, String> properties2 = new HashMap<String, String>();
+
+    // Example of Map<Entity,Entity> with default namings
+    @OneToMany
+    @JoinTable
+    Map<MapHolder1Key, MapHolder1Value> map3;
+
+    // Example of Map<Entity,Entity> with specified namings
+    @OneToMany
+    @JoinTable(name="JPA_AN_MAPHOLDER1_MAP4", joinColumns=@JoinColumn(name="MAP4_VALUE"), inverseJoinColumns=@JoinColumn(name="MAP4_OWNER_ID"))
+    @MapKeyJoinColumn(name="MAP4_KEY")
+    Map<MapHolder1Key, MapHolder1Value> map4;
 
     public MapHolder1(long id)
     {
