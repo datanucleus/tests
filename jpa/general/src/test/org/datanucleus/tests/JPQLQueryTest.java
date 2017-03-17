@@ -3457,6 +3457,25 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
 
                 em.flush();
 
+/**
+This will generate:
+
+QueryCompilation:
+  [result:PrimaryExpression{h.name},PrimaryExpression{m#VALUE.name}]
+  [from:ClassExpression(alias=h join=
+    JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{h.map} alias=m})]
+  [filter:DyadicExpression{PrimaryExpression{m#KEY}  =  Literal{Key1}}]
+  [symbols: 
+    m#VALUE type=org.jpox.samples.one_many.map_fk.MapFKValue, 
+    h type=org.jpox.samples.one_many.map_fk.MapFKHolder, 
+    m#KEY type=java.lang.String, 
+    m type=org.jpox.samples.one_many.map_fk.MapFKValue]
+
+SELECT H."NAME",M."NAME" 
+FROM JPA_MAP_FK_HOLDER H 
+LEFT OUTER JOIN JPA_MAP_FK_VALUE M ON H.ID = M.HOLDER_ID 
+WHERE M."KEY" = 'Key1'
+ */
                 List<Object[]> results = em.createQuery("SELECT h.name, VALUE(m).name FROM " + MapFKHolder.class.getName() + " h LEFT OUTER JOIN h.map m WHERE KEY(m) = 'Key1'").getResultList();
                 assertNotNull(results);
                 assertEquals(1, results.size());
@@ -3516,6 +3535,24 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(holder);
                 em.flush();
 
+/**
+This will generate:
+
+QueryCompilation:
+  [result:PrimaryExpression{m#VALUE}]
+  [from:ClassExpression(alias=h join=JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{h.map} alias=m on=DyadicExpression{PrimaryExpression{m#KEY}  =  ParameterExpression{key}}})]
+  [symbols: 
+    m#VALUE type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue,
+    h type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder,
+    m#KEY type=java.lang.String, 
+    m type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue,
+    key type=java.lang.String]
+
+SELECT M.DESCRIPTION,M.ID,M."NAME" 
+FROM JPA_AN_MAPJOINHOLDER H 
+LEFT OUTER JOIN JPA_AN_MAPJOINHOLDER_MAP M_MAP ON H.ID = M_MAP.MAPJOINHOLDER_ID
+LEFT OUTER JOIN JPA_AN_MAPJOINVALUE M ON M_MAP.MAP_ID = M.ID AND M_MAP.MAP_KEY = ?
+ */
                 TypedQuery<MapJoinValue> q = em.createQuery("SELECT VALUE(m) FROM MapJoinHolder h LEFT JOIN h.map m ON KEY(m) = :key", MapJoinValue.class);
                 q.setParameter("key", "Key2");
                 List<MapJoinValue> results = q.getResultList();
@@ -3576,6 +3613,23 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(holder);
                 em.flush();
 
+/**
+This will generate
+
+QueryCompilation:
+  [result:PrimaryExpression{m2#VALUE}]
+  [from:ClassExpression(alias=h join=JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{h.map2} alias=m2 on=DyadicExpression{PrimaryExpression{m2#KEY}  =  ParameterExpression{key}}})]
+  [symbols: 
+    m2#KEY type=java.lang.Integer, 
+    m2 type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder,
+    h type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder,
+    m2#VALUE type=java.lang.String, key type=java.lang.Integer]
+
+
+SELECT M2.MAP2_VALUE 
+FROM JPA_AN_MAPJOINHOLDER H 
+LEFT OUTER JOIN JPA_AN_MAPJOINHOLDER_MAP2 M2 ON H.ID = M2.MAPJOINHOLDER_ID AND M2.MAP2_KEY = <1>
+ */
                 Query q = em.createQuery("SELECT VALUE(m2) FROM MapJoinHolder h LEFT JOIN h.map2 m2 ON KEY(m2) = :key");
                 q.setParameter("key", new Integer(1));
                 List results = q.getResultList();
@@ -3635,6 +3689,26 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(holder);
                 em.flush();
 
+/**
+This will generate:
+
+QueryCompilation:
+  [result:PrimaryExpression{m3#VALUE}]
+  [from:ClassExpression(alias=h 
+    join=JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{h.map3} alias=m3 
+    on=DyadicExpression{PrimaryExpression{m3#KEY}  =  ParameterExpression{key}}})]
+  [symbols: 
+    m3 type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue, 
+    m3#VALUE type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinEmbeddedValue, 
+    h type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder,
+    m3#KEY type=java.lang.String, 
+    key type=unknown]
+
+
+SELECT M3.DESCRIPTION,M3."NAME" 
+FROM JPA_AN_MAPJOINHOLDER H 
+LEFT OUTER JOIN JPA_AN_MAPJOINHOLDER_MAP3 M3 ON H.ID = M3.MAPJOINHOLDER_ID AND M3.MAP3_KEY = ?
+ */
                 TypedQuery<MapJoinEmbeddedValue> q = em.createQuery("SELECT VALUE(m3) FROM MapJoinHolder h LEFT JOIN h.map3 m3 ON KEY(m3) = :key", MapJoinEmbeddedValue.class);
                 q.setParameter("key", "Key1");
                 List<MapJoinEmbeddedValue> results = q.getResultList();
@@ -3704,12 +3778,53 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(holder);
                 em.flush();
 
+/**
+This will generate
+QueryCompilation:
+  [result:PrimaryExpression{k.description},PrimaryExpression{v.description}]
+  [from:ClassExpression(alias=h join=
+    JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{h.map4#VALUE} alias=v join=
+    JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{v#KEY} alias=k}})]
+  [symbols: 
+    v type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue,
+    v#VALUE type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue, 
+    h type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder,
+    k type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinKey, 
+    v#KEY type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinKey]
+
+SELECT K.DESCRIPTION,V.DESCRIPTION 
+FROM JPA_AN_MAPJOINHOLDER H 
+LEFT OUTER JOIN JPA_AN_MAPJOINHOLDER_MAP4 V_MAP ON H.ID = V_MAP.MAPJOINHOLDER_ID
+LEFT OUTER JOIN JPA_AN_MAPJOINVALUE V ON V_MAP.MAP4_ID = V.ID 
+LEFT OUTER JOIN JPA_AN_MAPJOINKEY K ON V_MAP.MAP4_KEY = K.ID
+ */
                 Query q = em.createQuery("SELECT k.description, v.description FROM MapJoinHolder h LEFT JOIN VALUE(h.map4) v LEFT JOIN KEY(v) k");
                 List<Object[]> results = q.getResultList();
 
                 assertNotNull(results);
                 assertEquals(3, results.size());
 
+/**
+This will generate:
+
+QueryCompilation:
+  [result:PrimaryExpression{k.description},PrimaryExpression{v.description}]
+  [from:ClassExpression(alias=h join=
+    JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{h.map4} alias=v join=
+    JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{v#KEY} alias=k}})]
+  [symbols: 
+    v type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue, 
+    v#VALUE type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue, 
+    h type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder,
+    k type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinKey,
+    v#KEY type=org.datanucleus.samples.annotations.one_many.map_join.MapJoinKey]
+
+SELECT K.DESCRIPTION,V.DESCRIPTION 
+FROM JPA_AN_MAPJOINHOLDER H
+LEFT OUTER JOIN JPA_AN_MAPJOINHOLDER_MAP4 V_MAP ON H.ID = V_MAP.MAPJOINHOLDER_ID
+LEFT OUTER JOIN JPA_AN_MAPJOINVALUE V ON V_MAP.MAP4_ID = V.ID 
+LEFT OUTER JOIN JPA_AN_MAPJOINKEY K ON V_MAP.MAP4_KEY = K.ID
+ */
                 Query q2 = em.createQuery("SELECT k.description, v.description FROM MapJoinHolder h LEFT JOIN h.map4 v LEFT JOIN KEY(v) k");
                 List<Object[]> results2 = q2.getResultList();
 
