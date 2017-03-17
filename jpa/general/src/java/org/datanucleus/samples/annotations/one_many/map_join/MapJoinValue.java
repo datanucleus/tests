@@ -38,6 +38,9 @@ public class MapJoinValue implements Serializable
     String name;
     String description;
 
+    public MapJoinValue()
+    {
+    }
     public MapJoinValue(long id, String name, String description)
     {
         this.id = id;
