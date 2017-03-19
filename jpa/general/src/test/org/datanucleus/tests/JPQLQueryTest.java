@@ -4155,6 +4155,16 @@ LEFT OUTER JOIN JPA_AN_MAPJOINKEY K ON V_MAP.MAP4_KEY = K.ID
                 em.persist(acct1);
                 em.flush();
 
+/**
+This will generate the following
+
+QueryCompilation:
+  [result:PrimaryExpression{p.name},PrimaryExpression{p.budget}]
+  [from:ClassExpression(alias=p join=JoinExpression{JOIN_INNER PrimaryExpression{Account} alias=a on=DyadicExpression{PrimaryExpression{p.name}  =  PrimaryExpression{a.username}}})]
+  [symbols: p type=org.datanucleus.samples.annotations.models.company.Project, a type=org.datanucleus.samples.annotations.models.company.Account]
+
+SELECT P."NAME",P.BUDGET FROM JPA_AN_PROJECT P INNER JOIN JPA_AN_ACCOUNT A ON P."NAME" = A.USERNAME
+ */
                 Query q = em.createQuery("SELECT p.name, p.budget FROM " + Project.class.getName() + " p JOIN Account a ON p.name = a.username");
                 List<Object[]> results = q.getResultList();
                 assertNotNull(results);
