@@ -44,12 +44,14 @@ import org.datanucleus.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.datanucleus.samples.annotations.abstractclasses.ConcreteSimpleSub1;
 import org.datanucleus.samples.annotations.embedded.Job;
 import org.datanucleus.samples.annotations.embedded.Processor;
+import org.datanucleus.samples.annotations.models.company.Account;
 import org.datanucleus.samples.annotations.models.company.Employee;
 import org.datanucleus.samples.annotations.models.company.Manager;
 import org.datanucleus.samples.annotations.models.company.Organisation;
 import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.samples.annotations.models.company.Person1;
 import org.datanucleus.samples.annotations.models.company.Person2;
+import org.datanucleus.samples.annotations.models.company.Project;
 import org.datanucleus.samples.annotations.models.company.Qualification;
 import org.datanucleus.samples.annotations.one_many.bidir.Animal;
 import org.datanucleus.samples.annotations.one_many.bidir.Farm;
@@ -3553,7 +3555,7 @@ FROM JPA_AN_MAPJOINHOLDER H
 LEFT OUTER JOIN JPA_AN_MAPJOINHOLDER_MAP M_MAP ON H.ID = M_MAP.MAPJOINHOLDER_ID
 LEFT OUTER JOIN JPA_AN_MAPJOINVALUE M ON M_MAP.MAP_ID = M.ID AND M_MAP.MAP_KEY = ?
  */
-                TypedQuery<MapJoinValue> q = em.createQuery("SELECT VALUE(m) FROM MapJoinHolder h LEFT JOIN h.map m ON KEY(m) = :key", MapJoinValue.class);
+                TypedQuery<MapJoinValue> q = em.createQuery("SELECT VALUE(m) AS x FROM MapJoinHolder h LEFT JOIN h.map m ON KEY(m) = :key", MapJoinValue.class);
                 q.setParameter("key", "Key2");
                 List<MapJoinValue> results = q.getResultList();
 
@@ -4126,6 +4128,60 @@ LEFT OUTER JOIN JPA_AN_MAPJOINKEY K ON V_MAP.MAP4_KEY = K.ID
         finally
         {
             clean(Processor.class);
+        }
+    }
+
+    /**
+     * Test use of JPQL JOIN to another root using ON (DataNucleus Extension).
+     */
+    public void testJoinRootOn()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Project prj1 = new Project("DataNucleus", 1000000);
+                em.persist(prj1);
+                Project prj2 = new Project("JPOX", 50000);
+                em.persist(prj2);
+
+                Account acct1 = new Account();
+                acct1.setUsername("DataNucleus");
+                acct1.setId(1);
+                em.persist(acct1);
+                em.flush();
+
+                Query q = em.createQuery("SELECT p.name, p.budget FROM " + Project.class.getName() + " p JOIN Account a ON p.name = a.username");
+                List<Object[]> results = q.getResultList();
+                assertNotNull(results);
+                assertEquals(1, results.size());
+                for (Object[] row : results)
+                {
+                    assertEquals(2, row.length);
+                    assertEquals("DataNucleus", row[0]);
+                    assertEquals(new Long(1000000), row[1]);
+                }
+                // TODO Add some asserts, or choose a good example for this
+
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Account.class);
+            clean(Project.class);
         }
     }
 
