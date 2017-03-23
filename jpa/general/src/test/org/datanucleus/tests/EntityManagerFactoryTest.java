@@ -25,10 +25,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import javax.persistence.PersistenceUnitUtil;
 import javax.persistence.TypedQuery;
 
 import org.datanucleus.api.jpa.JPAEntityManagerFactory;
 import org.datanucleus.samples.annotations.models.company.Person;
+import org.datanucleus.samples.annotations.versioned.VersionedPerson;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
 
@@ -183,6 +185,52 @@ public class EntityManagerFactoryTest extends JPAPersistenceTestCase
         finally
         {
             clean(Person.class);
+        }
+    }
+
+    /**
+     * Test for emf.getPersistenceUnitUtil.getIdentifier() method
+     */
+    public void testPersistenceUnitUtilGetIdentifier()
+    {
+        try
+        {
+            PersistenceUnitUtil util = emf.getPersistenceUnitUtil();
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                p.setGlobalNum("First");
+                em.persist(p);
+                assertTrue(util.getIdentifier(p) instanceof Person.PK);
+
+                VersionedPerson vp = new VersionedPerson(1, 1);
+                em.persist(vp);
+                Object vpId = util.getIdentifier(vp);
+                assertTrue(vpId instanceof Long && ((Long)vpId) == 1);
+
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception on persist before serialisation", e);
+                fail("Exception on persist : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            // No cleanup needed
         }
     }
 }
