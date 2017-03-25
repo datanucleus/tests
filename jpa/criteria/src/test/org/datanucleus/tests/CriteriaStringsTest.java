@@ -30,6 +30,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
@@ -1712,6 +1713,55 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             A resultA2 = results2.get(0);
             assertEquals(Long.valueOf(1), resultA2.getId());
             assertEquals("First A", resultA2.getName());
+
+            tx.rollback();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown during test", e);
+            fail("Exception caught during test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test update query using Criteria.
+     */
+    public void testCriteriaUpdate()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            Account acc1 = new Account();
+            acc1.setUsername("Joe");
+            acc1.setEnabled(true);
+            em.persist(acc1);
+            em.flush();
+            long id = acc1.getId();
+
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaUpdate<Account> update = cb.createCriteriaUpdate(Account.class);
+            Root<Account> root = update.from(Account.class);
+            ParameterExpression<String> paramExpr = cb.parameter(String.class);
+            update.set(root.<String>get("username"), paramExpr);
+
+            Path idField = root.get("id");
+            Predicate idEquals = cb.equal(idField, id);
+            update.where(idEquals);
+            Query q = em.createQuery(update);
+            q.setParameter(paramExpr, "Jim"); // change from Joe to Jim
+            int numUpdated = q.executeUpdate();
+            assertEquals(1, numUpdated);
 
             tx.rollback();
         }
