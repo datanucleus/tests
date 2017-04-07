@@ -44,6 +44,8 @@ import org.datanucleus.samples.annotations.abstractclasses.AbstractSimpleBase;
 import org.datanucleus.samples.annotations.abstractclasses.ConcreteSimpleSub1;
 import org.datanucleus.samples.annotations.embedded.Job;
 import org.datanucleus.samples.annotations.embedded.Processor;
+import org.datanucleus.samples.annotations.inherited.SuperUser;
+import org.datanucleus.samples.annotations.inherited.User;
 import org.datanucleus.samples.annotations.models.company.Account;
 import org.datanucleus.samples.annotations.models.company.Employee;
 import org.datanucleus.samples.annotations.models.company.Manager;
@@ -2745,6 +2747,24 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 q6.setParameter("collParam", collParam2);
                 List<Person> result6 = q6.getResultList();
                 assertEquals(2, result6.size());
+
+                // Test for TYPE using a discriminator sample
+
+                User u = new User(1, "Basic User");
+                em.persist(u);
+                SuperUser su = new SuperUser(2, "Root", "Admin");
+                em.persist(su);
+                em.flush();
+
+                List<Object[]> result7 = em.createQuery("SELECT u.name, TYPE(u) FROM " + User.class.getName() + " u ORDER BY u.id").getResultList();
+                assertEquals(2, result7.size());
+                Object[] result7_0 = result7.get(0);
+                Object[] result7_1 = result7.get(1);
+                assertEquals(2, result7_0.length);
+                assertEquals("Basic User", result7_0[0]);
+                assertEquals("User", result7_0[1]);
+                assertEquals("Root", result7_1[0]);
+                assertEquals("SuperUser", result7_1[1]);
 
                 tx.rollback();
             }
