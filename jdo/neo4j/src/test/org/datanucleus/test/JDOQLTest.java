@@ -408,4 +408,39 @@ public class JDOQLTest extends JDOPersistenceTestCase
             clean(Person.class);
         }
     }
+
+    public void testEmptyOnEmptyResult() throws Exception
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                Query q = pm.newQuery("SELECT FROM " + Person.class.getName());
+                List<Person> results = q.executeList();
+                assertTrue(results.isEmpty());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception during query", e);
+                fail("Exception thrown when running test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(Person.class);
+        }
+    }
 }
