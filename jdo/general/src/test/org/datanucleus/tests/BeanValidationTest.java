@@ -34,7 +34,7 @@ import org.datanucleus.tests.TestHelper;
 /**
  * Tests for javax.validation with JDO.
  */
-public class ValidationTest extends JDOPersistenceTestCase
+public class BeanValidationTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
 
@@ -42,7 +42,7 @@ public class ValidationTest extends JDOPersistenceTestCase
      * Constructor.
      * @param name Name of the test (not used)
      */
-    public ValidationTest(String name)
+    public BeanValidationTest(String name)
     {
         super(name);
         if (!initialised)

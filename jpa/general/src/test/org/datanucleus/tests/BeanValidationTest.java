@@ -31,9 +31,9 @@ import org.datanucleus.tests.JPAPersistenceTestCase;
 /**
  * Tests for validation of JPA entities (javax.validation JSR303).
  */
-public class ValidationTest extends JPAPersistenceTestCase
+public class BeanValidationTest extends JPAPersistenceTestCase
 {
-    public ValidationTest(String name)
+    public BeanValidationTest(String name)
     {
         super(name);
     }
