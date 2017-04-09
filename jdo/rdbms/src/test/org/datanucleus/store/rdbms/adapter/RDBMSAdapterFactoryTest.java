@@ -26,6 +26,8 @@ import org.datanucleus.NucleusContext;
 import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.plugin.PluginManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
+import org.datanucleus.util.Localiser;
+import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatabaseMetaData;
 
 /**
@@ -43,6 +45,9 @@ public class RDBMSAdapterFactoryTest extends TestCase
         NucleusContext ctxt = new PersistenceNucleusContextImpl("JDO", null);
         pluginMgr = ctxt.getPluginManager();
         clr = ctxt.getClassLoaderResolver(null);
+
+        // Load RDBMS resources since this is normally done on the init of RDBMSStoreManager and we aren't doing that
+        Localiser.registerBundle("org.datanucleus.store.rdbms.Localisation", RDBMSStoreManager.class.getClassLoader());
 
         factory = DatastoreAdapterFactory.getInstance();
     }
