@@ -116,8 +116,15 @@ public class EntityManagerTest extends JPAPersistenceTestCase
         try
         {
             EntityManager em = getEM();
-            em.setProperty("datanucleus.cassandra.enforceUniquenessInApplication", "true");
-            em.setProperty("datanucleus.hbase.enforceUniquenessInApplication", "true");
+            if ("cassandra".equals(storeMgr.getStoreManagerKey()))
+            {
+                em.setProperty("datanucleus.cassandra.enforceUniquenessInApplication", "true");
+            }
+            else if ("hbase".equals(storeMgr.getStoreManagerKey()))
+            {
+                em.setProperty("datanucleus.hbase.enforceUniquenessInApplication", "true");
+            }
+
             EntityTransaction tx = em.getTransaction();
             try
             {
