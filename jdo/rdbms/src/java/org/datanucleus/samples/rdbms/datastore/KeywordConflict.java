@@ -17,16 +17,12 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.rdbms.datastore;
 
-import javax.jdo.JDOHelper;
-
-import org.datanucleus.tests.TestObject;
+import java.util.Random;
 
 /**
  * A test object using Java identifiers intentionally chosen to conflict with reserved SQL keywords.
- * 
- * @version $Revision: 1.1 $
  */
-public class KeywordConflict extends TestObject
+public class KeywordConflict
 {
     private int column;
     private int select;
@@ -84,6 +80,7 @@ public class KeywordConflict extends TestObject
 
     public void fillRandom()
     {
+        Random r = new Random();
         column  = r.nextInt();
         select  = r.nextInt();
         where   = r.nextInt();
@@ -94,30 +91,10 @@ public class KeywordConflict extends TestObject
         _surrounding_ = r.nextInt();
     }
 
-    public boolean compareTo(Object obj)
-    {
-        if (obj == this)
-            return true;
-        if (!(obj instanceof KeywordConflict))
-            return false;
-
-        KeywordConflict kc = (KeywordConflict)obj;
-        return column  == kc.column
-            && select  == kc.select
-            && where   == kc.where
-            && varchar == kc.varchar
-            && decimal == kc.decimal
-            && _leading == kc._leading
-            && trailing_ == kc.trailing_
-            && _surrounding_ == kc._surrounding_;
-    }
-
     public String toString()
     {
         StringBuffer s = new StringBuffer(getClass().getName() + ":");
         s.append("  JVM id = ").append(System.identityHashCode(this));
-        s.append('\n');
-        s.append("  JDO id = ").append(JDOHelper.getObjectId(this));
         s.append('\n');
         s.append("  column = ").append(column);
         s.append('\n');

@@ -19,34 +19,14 @@ package org.datanucleus.samples.rdbms.datastore;
 
 /**
  * A test object using Java identifiers intentionally chosen to overflow Oracle's identifier limits.
- * 
- * @version $Revision: 1.1 $
  */
-public class AReallyObnoxiouslyLongWindedNamedObject extends KeywordConflict
+public class AReallyObnoxiouslyLongWindedNamedObject
 {
-    private KeywordConflict aReallyObnoxiouslyLongWindedNamedField;
+    private String aReallyObnoxiouslyLongWindedNamedField;
 
-    public AReallyObnoxiouslyLongWindedNamedObject()
+    public AReallyObnoxiouslyLongWindedNamedObject(String field)
     {
-        super();
-    }
-
-    public void fillRandom()
-    {
-        super.fillRandom();
-
-        aReallyObnoxiouslyLongWindedNamedField = null;
-    }
-
-    public boolean compareTo(Object obj)
-    {
-        if (obj == this)
-            return true;
-        if (!(obj instanceof AReallyObnoxiouslyLongWindedNamedObject) || !super.compareTo(obj))
-            return false;
-
-        AReallyObnoxiouslyLongWindedNamedObject o = (AReallyObnoxiouslyLongWindedNamedObject)obj;
-        return aReallyObnoxiouslyLongWindedNamedField == o.aReallyObnoxiouslyLongWindedNamedField;
+        this.aReallyObnoxiouslyLongWindedNamedField = field;
     }
 
     public String toString()

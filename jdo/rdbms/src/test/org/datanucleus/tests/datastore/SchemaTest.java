@@ -47,7 +47,6 @@ import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.RDBMSTestHelper;
-import org.datanucleus.tests.StorageTester;
 import org.jpox.samples.array.ArrayElement;
 import org.jpox.samples.array.IntArray;
 import org.jpox.samples.array.PersistableArray;
@@ -96,12 +95,9 @@ import org.jpox.samples.secondarytable.Printer;
  */
 public class SchemaTest extends JDOPersistenceTestCase
 {
-    StorageTester tester = null;
-
     public SchemaTest(String name)
     {
         super(name);
-        tester = new StorageTester(pmf);
     }
 
     /**
@@ -701,33 +697,73 @@ public class SchemaTest extends JDOPersistenceTestCase
     throws Exception
     {
         addClassesToSchema(new Class[] {KeywordConflict.class});
+
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
         try
         {
-            tester.runStorageTestForClass(KeywordConflict.class);
+            tx.begin();
+
+            KeywordConflict obj = new KeywordConflict();
+            obj.fillRandom();
+            pm.makePersistent(obj);
+            pm.flush();
+
+            pm.getExtent(KeywordConflict.class);
+
+            tx.rollback();
+        }
+        catch(Exception e)
+        {
+            LOG.error(e);
+            fail(e.toString());             
         }
         finally
         {
-            clean(KeywordConflict.class);
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
 
     /**
-     * Test for a class with a very long name that exceeds the maximum
-     * length for the schema. Checks that the name of the table in the schema
-     * is truncated.
+     * Test for a class with a very long name that exceeds the maximum length for the schema. 
+     * Checks that the name of the table in the schema is truncated (or rather that it doesnt throw an exception, i.e auto-truncates it).
      * @throws Exception
      */
     public void testClassWithLongName()
     throws Exception
     {
         addClassesToSchema(new Class[] {AReallyObnoxiouslyLongWindedNamedObject.class});
+
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
         try
         {
-            tester.runStorageTestForClass(AReallyObnoxiouslyLongWindedNamedObject.class);
+            tx.begin();
+            
+            AReallyObnoxiouslyLongWindedNamedObject obj = new AReallyObnoxiouslyLongWindedNamedObject("Test");
+            pm.makePersistent(obj);
+            pm.flush();
+
+            pm.getExtent(AReallyObnoxiouslyLongWindedNamedObject.class);
+
+            tx.rollback();
+        }
+        catch(Exception e)
+        {
+            LOG.error(e);
+            fail(e.toString());             
         }
         finally
         {
-            clean(AReallyObnoxiouslyLongWindedNamedObject.class);
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
     

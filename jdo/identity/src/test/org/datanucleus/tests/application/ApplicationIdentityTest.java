@@ -255,33 +255,6 @@ public class ApplicationIdentityTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test for SingleField ObjectIdentity.
-     * NOTE THAT THIS IS NOT RUN SINCE IT IS UNRELIABLE TO RELY ON MILLISECS FOR PK ID ON A FAST MACHINE.
-     * @throws Exception
-     */
-    /*public void testObjectSingleFieldIdentity()
-    throws Exception
-    {
-        if (storeMgr instanceof RDBMSStoreManager)
-        {
-            DatastoreAdapter dba = ((RDBMSStoreManager)storeMgr).getDatastoreAdapter();
-            if (!dba.supportsOption(DatastoreAdapter.DATETIME_STORES_MILLISECS))
-            {
-                LOG.warn("Database doesnt support storing milliseconds in DATETIME fields so omitting test");
-                return;
-            }
-        }
-        try
-        {
-            tester.runStorageTestForClass(SFAIDDateIdentity.class);
-        }
-        finally
-        {
-            clean(SFAIDDateIdentity.class);
-        }
-    }*/
-
-    /**
      * Test for PK using int.
      * @throws Exception
      */
