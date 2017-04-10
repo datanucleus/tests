@@ -24,6 +24,7 @@ import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 import javax.transaction.UserTransaction;
@@ -283,7 +284,7 @@ public class ApplicationManagedTest extends JPAPersistenceTestCase
      */
     public void testResourceLocalJNDI() throws Exception
     {
-        emf = getEMF("TEST_RESOURCELOCAL");
+        emf = Persistence.createEntityManagerFactory("TEST_RESOURCELOCAL");
 
         try
         {

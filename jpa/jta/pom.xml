@@ -6,7 +6,7 @@
     <artifactId>datanucleus-test-jpa-jta</artifactId>
     <name>org.datanucleus.test.jpa.jta</name>
     <description><![CDATA[
-        DataNucleus Tests for JPA (jta).
+        DataNucleus JPA Tests for use of data sources (using RDBMS), with and without JTA.
         ]]></description> 
 
     <parent>
