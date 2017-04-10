@@ -2438,20 +2438,20 @@ public class DependentFieldTest extends JDOPersistenceTestCase
 
             tx.commit();
 
-            TestHelper.clean(pmf, DependentHolder.class);
-            TestHelper.clean(pmf, DependentElement1.class);
-            TestHelper.clean(pmf, DependentElement2.class);
-            TestHelper.clean(pmf, DependentElement3.class);
-            TestHelper.clean(pmf, DependentElement4.class);
-            TestHelper.clean(pmf, DependentElement5.class);
-            TestHelper.clean(pmf, DependentElement6.class);
-            TestHelper.clean(pmf, DependentElement7.class);
-            TestHelper.clean(pmf, DependentElement8.class);
-            TestHelper.clean(pmf, DependentElement9.class);
-            TestHelper.clean(pmf, DependentElement10.class);
-            TestHelper.clean(pmf, DependentHolder.class);
-            TestHelper.clean(pmf, DepInterfaceImpl1.class);
-            TestHelper.clean(pmf, DepInterfaceImpl2.class);
+            clean(pmf, DependentHolder.class);
+            clean(pmf, DependentElement1.class);
+            clean(pmf, DependentElement2.class);
+            clean(pmf, DependentElement3.class);
+            clean(pmf, DependentElement4.class);
+            clean(pmf, DependentElement5.class);
+            clean(pmf, DependentElement6.class);
+            clean(pmf, DependentElement7.class);
+            clean(pmf, DependentElement8.class);
+            clean(pmf, DependentElement9.class);
+            clean(pmf, DependentElement10.class);
+            clean(pmf, DependentHolder.class);
+            clean(pmf, DepInterfaceImpl1.class);
+            clean(pmf, DepInterfaceImpl2.class);
         }
         finally
         {

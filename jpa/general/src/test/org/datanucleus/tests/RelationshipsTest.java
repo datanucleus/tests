@@ -141,7 +141,7 @@ public class RelationshipsTest extends JPAPersistenceTestCase
      */
     public void testOneToManyJoinTableIndexedList()
     {
-        EntityManagerFactory emf2 = TestHelper.getEMF(1, "JPATest", null);
+        EntityManagerFactory emf2 = getEMF(1, "JPATest", null);
         try
         {
             EntityManager em = emf2.createEntityManager();

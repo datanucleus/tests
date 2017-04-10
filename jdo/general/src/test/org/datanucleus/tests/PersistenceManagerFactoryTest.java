@@ -654,7 +654,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         {
             Properties userProps = new Properties();
             userProps.setProperty("javax.jdo.option.ServerTimeZoneID", "JPOX_CENTRAL_TIMEZONE");
-            pmf = TestHelper.getPMF(1, userProps);
+            pmf = getPMF(1, userProps);
             fail("Expected a JDOUserException when setting the ServerTimeZoneID to an invalid value but worked!");
         }
         catch (JDOFatalUserException jdoe)
@@ -674,7 +674,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         {
             Properties userProps = new Properties();
             userProps.setProperty("javax.jdo.option.ServerTimeZoneID", "UTC");
-            pmf = TestHelper.getPMF(1, userProps);
+            pmf = getPMF(1, userProps);
             assertEquals("ServerTimeZoneID was not set correctly", ((JDOPersistenceManagerFactory)pmf).getServerTimeZoneID(), "UTC");
         }
         catch (Exception e)
@@ -692,7 +692,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         // Try leaving it unset and check the value
         try
         {
-            pmf = TestHelper.getPMF(1, null);
+            pmf = getPMF(1, null);
             assertEquals("ServerTimeZoneID was not set correctly", ((JDOPersistenceManagerFactory)pmf).getServerTimeZoneID(), null);
         }
         catch (Exception e)

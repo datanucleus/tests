@@ -293,7 +293,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     
     public void testQueryUsingEntityNameNotYetLoaded()
     {
-        EntityManagerFactory emf = TestHelper.getEMF(1, "JPATest", null); // Swap to "JPATest" EMF
+        EntityManagerFactory emf = getEMF(1, "JPATest", null); // Swap to "JPATest" EMF
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try

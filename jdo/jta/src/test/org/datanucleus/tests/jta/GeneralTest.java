@@ -517,7 +517,7 @@ public class GeneralTest extends JDOPersistenceTestCase
             // Create PMF with no batching
             Properties props = new Properties();
             props.put("datanucleus.rdbms.statementBatchLimit", "0");
-            myPMF = TestHelper.getPMF(1, props);
+            myPMF = getPMF(1, props);
 
             PersistenceManager pm = myPMF.getPersistenceManager();
             Transaction tx = pm.currentTransaction();

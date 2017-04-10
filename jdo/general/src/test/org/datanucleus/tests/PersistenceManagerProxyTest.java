@@ -391,9 +391,9 @@ public class PersistenceManagerProxyTest extends JDOPersistenceTestCase
     {
         BasicListener listener = new BasicListener(true);
 
-        PersistenceManagerFactory pmf = TestHelper.getConfigurablePMF(1, null);
+        PersistenceManagerFactory pmf = getConfigurablePMF(1, null);
         pmf.addInstanceLifecycleListener(listener, null);
-        TestHelper.freezePMF(pmf);
+        freezePMF(pmf);
 
         try
         {

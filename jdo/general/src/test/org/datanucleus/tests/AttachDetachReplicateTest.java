@@ -46,7 +46,6 @@ import org.datanucleus.samples.models.hashsetcollection.Master;
 import org.datanucleus.samples.models.hashsetcollection.OtherDetail;
 import org.datanucleus.samples.store.Product;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 import org.datanucleus.tests.annotations.Datastore;
 import org.datanucleus.tests.annotations.TransactionMode;
 import org.jpox.samples.models.company.Department;
@@ -107,7 +106,7 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
         if (_pmf2 == null)
         {
             // Use the second datastore
-            _pmf2 = TestHelper.getPMF(2, PMF_PROPS);
+            _pmf2 = getPMF(2, PMF_PROPS);
         }
         return _pmf2;
     }
@@ -1231,7 +1230,7 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
             props.setProperty(PropertyNames.PROPERTY_AUTOSTART_CLASSNAMES,
                 "org.jpox.samples.one_many.unidir_2.GroupMember,org.jpox.samples.one_many.unidir_2.ExpertGroupMember," +
                 "org.jpox.samples.one_many.unidir_2.UserGroup,org.jpox.samples.one_many.unidir_2.ModeratedUserGroup");
-            pmf1 = TestHelper.getPMF(1, props);
+            pmf1 = getPMF(1, props);
 
             // Persist data to "datastore1"
             PersistenceManager pm1 = pmf1.getPersistenceManager();
@@ -1301,7 +1300,7 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
             }
 
             // Connect to "datastore2"
-            pmf2 = TestHelper.getPMF(2, props);
+            pmf2 = getPMF(2, props);
 
             // Attach data to "datastore2"
             PersistenceManager pm2 = pmf2.getPersistenceManager();

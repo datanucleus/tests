@@ -29,7 +29,6 @@ import org.datanucleus.samples.validation.ValidatedPerson;
 import org.datanucleus.samples.validation.ValidatedPerson2;
 import org.datanucleus.samples.validation.ValidatedPerson3;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 
 /**
  * Tests for javax.validation with JDO.
@@ -62,7 +61,7 @@ public class BeanValidationTest extends JDOPersistenceTestCase
     {
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
-        PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory validationPMF = getPMF(1, userProps);
 
         try
         {
@@ -102,7 +101,7 @@ public class BeanValidationTest extends JDOPersistenceTestCase
     {
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
-        PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory validationPMF = getPMF(1, userProps);
 
         try
         {
@@ -144,7 +143,7 @@ public class BeanValidationTest extends JDOPersistenceTestCase
     {
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
-        PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory validationPMF = getPMF(1, userProps);
 
         try
         {
@@ -210,7 +209,7 @@ public class BeanValidationTest extends JDOPersistenceTestCase
     {
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_VALIDATION_MODE, "auto");
-        PersistenceManagerFactory validationPMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory validationPMF = getPMF(1, userProps);
 
         try
         {

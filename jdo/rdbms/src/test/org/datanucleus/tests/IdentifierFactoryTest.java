@@ -336,7 +336,7 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
     {
         Properties props = new Properties();
         props.put("datanucleus.identifierFactory", "jpox");
-        PersistenceManagerFactory pmf2 = TestHelper.getPMF(1, props);
+        PersistenceManagerFactory pmf2 = getPMF(1, props);
         PersistenceManager pm = pmf2.getPersistenceManager();
         ExecutionContext ec = ((JDOPersistenceManager)pm).getExecutionContext();
         IdentifierFactory identifierFactory = ((RDBMSStoreManager)ec.getStoreManager()).getIdentifierFactory();

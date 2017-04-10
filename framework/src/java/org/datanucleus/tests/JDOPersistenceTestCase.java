@@ -19,9 +19,12 @@ Contributors:
 *****************************************************************/
 package org.datanucleus.tests;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -31,6 +34,7 @@ import java.util.function.Consumer;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.listener.DeleteLifecycleListener;
 import javax.jdo.listener.InstanceLifecycleEvent;
@@ -92,8 +96,38 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
     }
 
     /**
-     * Method to obtain the PMF to use allowing specification of custom user PMF properties. Creates a new PMF
-     * on each call.
+     * Method to return a PMF for the specified datastore number, adding on the user-provided properties. The returned factory can be further configured.
+     * @param number Number of the datastore (equates to a property file in the CLASSPATH)
+     * @param userProps The user properties (null if not required)
+     * @return The PMF
+     */
+    public static PersistenceManagerFactory getConfigurablePMF(int number, Properties userProps)
+    {
+        return new JDOPersistenceManagerFactory(TestHelper.getFactoryProperties(number, userProps));
+    }
+
+    /**
+     * Method to return a PMF for the specified datastore number, adding on the user-provided properties
+     * @param number Number of the datastore (equates to a property file in the CLASSPATH)
+     * @param userProps The user properties (null if not required)
+     * @return The PMF
+     */
+    public static PersistenceManagerFactory getPMF(int number, Properties userProps)
+    {
+        return JDOHelper.getPersistenceManagerFactory(TestHelper.getFactoryProperties(number, userProps));
+    }
+
+    /**
+     * Method to freeze the PMF so that it can't be changed.
+     * @param pmf The PMF
+     */
+    public static void freezePMF(PersistenceManagerFactory pmf)
+    {
+        pmf.getDataStoreCache(); // Freezes the PMF configuration
+    }
+
+    /**
+     * Method to obtain the PMF to use allowing specification of custom user PMF properties. Creates a new PMF on each call.
      * @param userProps The custom PMF props to use when creating the PMF
      * @return The PMF (also stored in the local "pmf" variable)
      */
@@ -107,8 +141,8 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
                 pmf.close();
             }
         }
-        pmf = TestHelper.getPMF(1, userProps);
-        TestHelper.freezePMF(pmf);
+        pmf = JDOPersistenceTestCase.getPMF(1, userProps);
+        freezePMF(pmf);
 
         // Set up the StoreManager
         storeMgr = ((JDOPersistenceManagerFactory) pmf).getNucleusContext().getStoreManager();
@@ -180,7 +214,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
      */
     protected void clean(PersistenceManagerFactory pmf, Class<?> cls)
     {
-        TestHelper.clean(pmf, cls);
+        JDOPersistenceTestCase.cleanClassForPMF(pmf, cls);
     }
 
     protected Configuration getConfigurationForPMF(PersistenceManagerFactory pmf)
@@ -350,6 +384,63 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
         {
             Object id = ((Persistable) event.getSource()).dnGetObjectId();
             idsToCleanup.remove(id);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void cleanClassForPM(PersistenceManager pm, Class cls)
+    {
+        javax.jdo.Transaction tx = pm.currentTransaction();
+        tx.setOptimistic(false);
+
+        try
+        {
+            // delete all objects of this class (and subclasses)
+            tx.begin();
+
+            Query q = pm.newQuery(cls);
+            List results = q.executeList();
+            Iterator iter = results.iterator();
+            Collection coll = new HashSet();
+            while (iter.hasNext())
+            {
+                Object obj = iter.next();
+                LOG.info("Cleanup object to delete=" + StringUtils.toJVMIDString(obj) + " state=" + JDOHelper.getObjectState(obj));
+                coll.add(obj);
+            }
+            LOG.debug("Cleanup : Number of objects of type " + cls.getName() + " to delete is " + coll.size());
+            pm.deletePersistentAll(coll);
+            LOG.debug("Cleanup : Number of objects deleted is " + coll.size());
+
+            tx.commit();
+        }
+        catch (RuntimeException e)
+        {
+            LOG.error("Exception in clean", e);
+            throw e;
+        }
+    }
+    
+    /**
+     * Convenience method to remove all objects of the passed class in JDO.
+     * @param pmf PersistenceManagerFactory
+     * @param cls The class
+     */
+    public static void cleanClassForPMF(PersistenceManagerFactory pmf, Class cls)
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        try
+        {
+            cleanClassForPM(pm, cls);
+        }
+        finally
+        {
+            Transaction tx = pm.currentTransaction();
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
 }

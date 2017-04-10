@@ -41,7 +41,7 @@ public class ManagedConnectionTest extends JDOPersistenceTestCase
     {
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CONNECTION_NONTX_RELEASE_AFTER_USE, "false");
-        PersistenceManagerFactory thePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory thePMF = getPMF(1, userProps);
         try
         {
             PersistenceManager pm = thePMF.getPersistenceManager();

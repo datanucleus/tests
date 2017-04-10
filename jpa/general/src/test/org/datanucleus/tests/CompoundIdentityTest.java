@@ -44,7 +44,7 @@ public class CompoundIdentityTest extends JPAPersistenceTestCase
      */
     public void testOneToOneUniSingleAnnotations()
     {
-        EntityManagerFactory emf = TestHelper.getEMF(1, "JPATest", null); // Swap to "JPATest" EMF
+        EntityManagerFactory emf = getEMF(1, "JPATest", null); // Swap to "JPATest" EMF
         try
         {
             CompoundSingleTarget targets[] = new CompoundSingleTarget[6];
@@ -157,7 +157,7 @@ public class CompoundIdentityTest extends JPAPersistenceTestCase
      */
     public void testOneToOneUniSingleXML()
     {
-        EntityManagerFactory emf = TestHelper.getEMF(1, "JPATest", null); // Swap to "JPATest" EMF
+        EntityManagerFactory emf = getEMF(1, "JPATest", null); // Swap to "JPATest" EMF
         try
         {
             org.jpox.samples.compoundidentity.CompoundSingleTarget targets[] = 

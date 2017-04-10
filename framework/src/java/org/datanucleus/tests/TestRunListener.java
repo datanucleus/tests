@@ -87,7 +87,7 @@ public class TestRunListener extends RunListener
             return;
         }
 
-        JDOPersistenceManagerFactory pmf = (JDOPersistenceManagerFactory) TestHelper.getPMF(number, null);
+        JDOPersistenceManagerFactory pmf = (JDOPersistenceManagerFactory) JDOPersistenceTestCase.getPMF(number, null);
         PersistenceNucleusContext ctx = pmf.getNucleusContext();
         if (ctx.getStoreManager() instanceof RDBMSStoreManager)
         {

@@ -17,10 +17,12 @@ Contributors:
 *****************************************************************/
 package org.datanucleus.tests;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.PersistenceNucleusContext;
@@ -56,6 +58,22 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
     }
 
     /**
+     * Method to return a EMF for the specified datastore number, adding on the user-provided properties
+     * @param number Number of the datastore (equates to a property file in the CLASSPATH)
+     * @param unitName Name of the persistence-unit to use (if any - defaults to TEST)
+     * @param userProps The user properties (null if not required)
+     * @return The EMF
+     */
+    public static EntityManagerFactory getEMF(int number, String unitName, Properties userProps)
+    {
+        if (unitName == null)
+        {
+            unitName = "TEST";
+        }
+        return javax.persistence.Persistence.createEntityManagerFactory(unitName, TestHelper.getFactoryProperties(number, userProps));
+    }
+
+    /**
      * Method to obtain the EMF to use allowing specification of custom user EMF properties.
      * Creates a new EMF on each call.
      * NOTE : THIS SETS THE "emf" AND "storeMgr" FIELDS.
@@ -65,7 +83,7 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
      */
     protected synchronized EntityManagerFactory getEMF(String unitName, Properties userProps)
     {
-        emf = TestHelper.getEMF(1, unitName, userProps);
+        emf = getEMF(1, unitName, userProps);
         storeMgr = emf.unwrap(PersistenceNucleusContext.class).getStoreManager();
 
         ClassLoaderResolver clr = storeMgr.getNucleusContext().getClassLoaderResolver(null);
@@ -122,6 +140,36 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
      */
     protected void clean(EntityManagerFactory emf, Class cls)
     {
-        TestHelper.clean(emf, cls);
+        cleanClassForEMF(emf, cls);
+    }
+
+    /**
+     * Convenience method to remove all objects of the passed class in JPA.
+     * @param emf EntityManagerFactory
+     * @param cls The class
+     */
+    public static void cleanClassForEMF(EntityManagerFactory emf, Class cls)
+    {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+            List result = em.createQuery("SELECT Object(T) FROM " + cls.getName() + " T").getResultList();
+            LOG.debug("Cleanup : Number of objects of type " + cls.getName() + " to delete is " + result.size());
+            for (int i = 0; i < result.size(); i++)
+            {
+                em.remove(result.get(i));
+            }
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
     }
 }

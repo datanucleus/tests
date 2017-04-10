@@ -24,7 +24,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.TestHelper;
+import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.NucleusLogger;
 
 public class CompanyHelper
@@ -119,14 +119,14 @@ public class CompanyHelper
             }
             tx.commit();
 
-            TestHelper.clean(pmf, Manager.class);
-            TestHelper.clean(pmf, Employee.class);
-            TestHelper.clean(pmf, Qualification.class);
-            TestHelper.clean(pmf, Department.class);
-            TestHelper.clean(pmf, Person.class);
-            TestHelper.clean(pmf, Office.class);
-            TestHelper.clean(pmf, Account.class);
-            TestHelper.clean(pmf, Project.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Manager.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Employee.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Qualification.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Department.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Person.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Office.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Account.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Project.class);
         }
 		catch (Exception e)
         {

@@ -45,7 +45,6 @@ import org.datanucleus.cache.CachedPC;
 import org.datanucleus.cache.Level2Cache;
 import org.datanucleus.samples.metadata.user.User1;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Employee;
@@ -95,7 +94,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         runL2CacheTestForPMF(cachePMF);
     }
@@ -108,7 +107,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "soft");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         runL2CacheTestForPMF(cachePMF);
     }
@@ -198,7 +197,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
         try
         {
             // Create some data we can use for access
@@ -295,7 +294,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "soft");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -397,7 +396,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -533,7 +532,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "soft");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -615,7 +614,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -699,7 +698,7 @@ public class CacheTest extends JDOPersistenceTestCase
         userProps.setProperty(PropertyNames.PROPERTY_DETACH_ALL_ON_COMMIT, "true");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "none");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         runL2CacheDetachmentTestForPMF(cachePMF, 5);
     }
@@ -713,7 +712,7 @@ public class CacheTest extends JDOPersistenceTestCase
         userProps.setProperty(PropertyNames.PROPERTY_DETACH_ALL_ON_COMMIT, "true");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         runL2CacheDetachmentTestForPMF(cachePMF, 5);
     }
@@ -726,7 +725,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -806,7 +805,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "soft");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -900,7 +899,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -1028,7 +1027,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {
@@ -1153,7 +1152,7 @@ public class CacheTest extends JDOPersistenceTestCase
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
         userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
-        PersistenceManagerFactory cachePMF = TestHelper.getPMF(1, userProps);
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
 
         try
         {            

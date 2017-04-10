@@ -26,7 +26,6 @@ import javax.jdo.PersistenceManagerFactory;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Developer;
 import org.jpox.samples.models.company.Employee;
@@ -63,7 +62,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     {
         Properties multiProps = new Properties();
         multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
-        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        PersistenceManagerFactory myPMF = getPMF(1, multiProps);
         try
         {
             int THREAD_SIZE = 1000;
@@ -129,7 +128,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     {
         Properties multiProps = new Properties();
         multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
-        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        PersistenceManagerFactory myPMF = getPMF(1, multiProps);
 
         try
         {
@@ -196,7 +195,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     {
         Properties multiProps = new Properties();
         multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
-        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        PersistenceManagerFactory myPMF = getPMF(1, multiProps);
         
         try
         {
@@ -264,7 +263,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     {
         Properties multiProps = new Properties();
         multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
-        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        PersistenceManagerFactory myPMF = getPMF(1, multiProps);
         
         try
         {
@@ -347,7 +346,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     {
         Properties multiProps = new Properties();
         multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
-        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        PersistenceManagerFactory myPMF = getPMF(1, multiProps);
         
         try
         {
@@ -412,7 +411,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     {
         Properties multiProps = new Properties();
         multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
-        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        PersistenceManagerFactory myPMF = getPMF(1, multiProps);
         
         try
         {
@@ -510,7 +509,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
     {
         Properties multiProps = new Properties();
         multiProps.setProperty(PropertyNames.PROPERTY_MULTITHREADED, "true");
-        PersistenceManagerFactory myPMF = TestHelper.getPMF(1, multiProps);
+        PersistenceManagerFactory myPMF = getPMF(1, multiProps);
         
         try
         {

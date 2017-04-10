@@ -26,91 +26,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import javax.jdo.JDOHelper;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-
 import org.datanucleus.PropertyNames;
-import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.util.NucleusLogger;
-import org.datanucleus.util.StringUtils;
 
 /**
- * Utility class for assisting in the process of generating PMFs for the datastores used
- * by the unit tests suite. A PMF can be created at any time by calling <B>getPMF</B>
- * with the number of the datastore (corresponds to the System property
- * "org.datanucleus.test.properties.{number}") and any "user properties" to be used on that PMF.
- * This means that a user can create a PMF with the base properties for the datastore
- * (e.g number 1) and add on their own fine tuning properties, e.g turning on L2 cache.
+ * Utility class for assisting in the process of extracting persistence properties used by the unit tests suite.
+ * The persistence properties are for a datastore "number" (corresponds to the System property "org.datanucleus.test.properties.{number}").
  */
 public class TestHelper
 {
     /** Log for unit testing. */
     public static final NucleusLogger LOG = NucleusLogger.getLoggerInstance("DataNucleus.Test");
-
-    /**
-     * Method to return a PMF for the specified datastore number, adding on the user-provided
-     * properties. The returned factory can be further configured.
-     * @param number Number of the datastore (equates to a property file in the CLASSPATH)
-     * @param userProps The user properties (null if not required)
-     * @return The PMF
-     */
-    public static PersistenceManagerFactory getConfigurablePMF(int number, Properties userProps)
-    {
-        return new JDOPersistenceManagerFactory(getFactoryProperties(number, userProps));
-    }
-
-    /**
-     * Method to return a PMF for the specified datastore number, adding on the user-provided
-     * properties
-     * @param number Number of the datastore (equates to a property file in the CLASSPATH)
-     * @param userProps The user properties (null if not required)
-     * @return The PMF
-     */
-    public static PersistenceManagerFactory getPMF(int number, Properties userProps)
-    {
-        return JDOHelper.getPersistenceManagerFactory(getFactoryProperties(number, userProps));
-    }
-
-    /**
-     * Method to return a EMF for the specified datastore number, adding on the user-provided
-     * properties
-     * @param number Number of the datastore (equates to a property file in the CLASSPATH)
-     * @param unitName Name of the persistence-unit to use (if any - defaults to TEST)
-     * @param userProps The user properties (null if not required)
-     * @return The EMF
-     */
-    public static EntityManagerFactory getEMF(int number, String unitName, Properties userProps)
-    {
-        if (unitName == null)
-        {
-            unitName = "TEST";
-        }
-        return javax.persistence.Persistence.createEntityManagerFactory(unitName,
-            getFactoryProperties(number, userProps));
-    }
-
-    /**
-     * Method to freeze the PMF so that it can't be changed.
-     * @param pmf The PMF
-     */
-    public static void freezePMF(PersistenceManagerFactory pmf)
-    {
-        pmf.getDataStoreCache(); // Freezes the PMF configuration
-    }
 
     /**
      * Method to return the properties for a particular datastore. Tries the following
@@ -131,7 +62,7 @@ public class TestHelper
         InputStream in = TestHelper.class.getClassLoader().getResourceAsStream(filename);
         if (in == null)
         {
-            LOG.debug("Could not obtain PMF/EMF properties using " + filename);
+            LOG.debug("Could not obtain persistence properties using " + filename);
 
             // Try "datanucleus.test{num}.properties"
             filename = System.getProperty("datanucleus.test" + number + ".properties");
@@ -157,7 +88,7 @@ public class TestHelper
                         try
                         {
                             in = new FileInputStream(file);
-                            LOG.info("PMF/EMF properties obtained using " + filename);
+                            LOG.info("Persistence properties obtained using " + filename);
                         }
                         catch (FileNotFoundException e)
                         {
@@ -165,8 +96,8 @@ public class TestHelper
                     }
                     if (in == null)
                     {
-                        LOG.debug("PMF/EMF properties couldn't be obtained using " + filename);
-                        System.out.println("PMF could not be created using supported property file locations");
+                        LOG.debug("Persistence properties couldn't be obtained using " + filename);
+                        System.out.println("Persistence properties could not be taken from supported property file locations");
                         filename = "datanucleus-hsql." + number + ".properties";
                         in = getResourceAsStream(filename);
                         if (in != null)
@@ -175,7 +106,7 @@ public class TestHelper
                         }
                         else
                         {
-                            System.out.println("PMF could not be created using default property file location " + filename);
+                            System.out.println("Persistence properties could not be taken from default property file location " + filename);
                             System.exit(2);
                         }
                     }
@@ -220,101 +151,13 @@ public class TestHelper
         in = TestHelper.class.getClassLoader().getResourceAsStream(filename);
         if (in != null)
         {
-            LOG.info("PMF/EMF created using " + filename);
+            LOG.info("Persistence properties taken from " + filename);
         }
         else
         {
-            LOG.debug("PMF/EMF couldn't be created using " + filename);
+            LOG.debug("Persistence properties couldn't be read from " + filename);
         }
         return in;
-    }
-
-    
-    @SuppressWarnings("unchecked")
-    public static void clean(PersistenceManager pm, Class cls)
-    {
-        javax.jdo.Transaction tx = pm.currentTransaction();
-        tx.setOptimistic(false);
-
-        try
-        {
-            // delete all objects of this class (and subclasses)
-            tx.begin();
-
-            Query q = pm.newQuery(cls);
-            List results = q.executeList();
-            Iterator iter = results.iterator();
-            Collection coll = new HashSet();
-            while (iter.hasNext())
-            {
-                Object obj = iter.next();
-                LOG.info("Cleanup object to delete=" + StringUtils.toJVMIDString(obj) + " state=" + JDOHelper.getObjectState(obj));
-                coll.add(obj);
-            }
-            LOG.debug("Cleanup : Number of objects of type " + cls.getName() + " to delete is " + coll.size());
-            pm.deletePersistentAll(coll);
-            LOG.debug("Cleanup : Number of objects deleted is " + coll.size());
-
-            tx.commit();
-        }
-        catch (RuntimeException e)
-        {
-            LOG.error("Exception in clean", e);
-            throw e;
-        }
-    }
-    
-    /**
-     * Convenience method to remove all objects of the passed class in JDO.
-     * @param pmf PersistenceManagerFactory
-     * @param cls The class
-     */
-    public static void clean(PersistenceManagerFactory pmf, Class cls)
-    {
-        PersistenceManager pm = pmf.getPersistenceManager();
-        try
-        {
-            clean(pm, cls);
-        }
-        finally
-        {
-            Transaction tx = pm.currentTransaction();
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            pm.close();
-        }
-    }
-
-    /**
-     * Convenience method to remove all objects of the passed class in JPA.
-     * @param emf EntityManagerFactory
-     * @param cls The class
-     */
-    public static void clean(EntityManagerFactory emf, Class cls)
-    {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        try
-        {
-            tx.begin();
-            List result = em.createQuery("SELECT Object(T) FROM " + cls.getName() + " T").getResultList();
-            LOG.debug("Cleanup : Number of objects of type " + cls.getName() + " to delete is " + result.size());
-            for (int i = 0; i < result.size(); i++)
-            {
-                em.remove(result.get(i));
-            }
-            tx.commit();
-        }
-        finally
-        {
-            if (tx.isActive())
-            {
-                tx.rollback();
-            }
-            em.close();
-        }
     }
 
     /**
@@ -352,7 +195,7 @@ public class TestHelper
         return tokeniser.nextToken();
     }
 
-    private static Properties getFactoryProperties(int number, Properties userProps)
+    public static Properties getFactoryProperties(int number, Properties userProps)
     {
         // Retrieve the default properties for this datastore
         Properties props = getPropertiesForDatastore(number);

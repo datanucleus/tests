@@ -23,7 +23,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.TestHelper;
+import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Convenience methods for the "fitness" sample.
@@ -81,10 +81,10 @@ public class FitnessHelper
             tx.commit();
 
             tx.begin();
-            TestHelper.clean(pmf, Gym.class);
-            TestHelper.clean(pmf, GymEquipment.class);
-            TestHelper.clean(pmf, Wardrobe.class);
-            TestHelper.clean(pmf, Cloth.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Gym.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, GymEquipment.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Wardrobe.class);
+            JDOPersistenceTestCase.cleanClassForPMF(pmf, Cloth.class);
             tx.commit();
         }
         finally

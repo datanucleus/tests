@@ -72,7 +72,6 @@ import org.datanucleus.samples.widget.Primitive;
 import org.datanucleus.samples.widget.Widget;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Department;
@@ -3386,9 +3385,9 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
     {
         BasicListener listener = new BasicListener(true);
 
-        PersistenceManagerFactory pmf = TestHelper.getConfigurablePMF(1, null);
+        PersistenceManagerFactory pmf = getConfigurablePMF(1, null);
         pmf.addInstanceLifecycleListener(listener, null);
-        TestHelper.freezePMF(pmf);
+        freezePMF(pmf);
 
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();

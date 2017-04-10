@@ -43,7 +43,6 @@ import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.RDBMSTestHelper;
-import org.datanucleus.tests.TestHelper;
 import org.jpox.samples.array.ArrayElement;
 import org.jpox.samples.array.IntArray;
 import org.jpox.samples.array.PersistableArray;
@@ -346,7 +345,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             // 2). Persist an object with a "serialNo" too long for the column, and use PMF option to truncate
             Properties userProps = new Properties();
             userProps.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_STRING_LENGTH_EXCEEDED_ACTION, "TRUNCATE");
-            PersistenceManagerFactory pmf2 = TestHelper.getPMF(1, userProps);
+            PersistenceManagerFactory pmf2 = getPMF(1, userProps);
             pm = pmf2.getPersistenceManager();
             tx = pm.currentTransaction();
             try
@@ -411,7 +410,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             // Create a PMF for our read-only schema
             Properties userProps = new Properties();
             userProps.setProperty(PropertyNames.PROPERTY_DATASTORE_READONLY, "true");
-            PersistenceManagerFactory pmf2 = TestHelper.getPMF(1, userProps);
+            PersistenceManagerFactory pmf2 = getPMF(1, userProps);
             assertTrue("The PMF should have had the ReadOnlyDatastore property, yet hasn't", getConfigurationForPMF(pmf2).getBooleanProperty(PropertyNames.PROPERTY_DATASTORE_READONLY));
 
             PersistenceManager pm2 = pmf2.getPersistenceManager();
@@ -564,7 +563,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             // Create a PMF for our read-only schema
             Properties userProps = new Properties();
             userProps.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES, "false");
-            PersistenceManagerFactory pmf2 = TestHelper.getPMF(1, userProps);
+            PersistenceManagerFactory pmf2 = getPMF(1, userProps);
             assertFalse("The PMF should have had the AutoCreate property as false, yet hasn't",
                 getConfigurationForPMF(pmf2).getBooleanProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES));
 
