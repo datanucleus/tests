@@ -24,6 +24,7 @@ import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 import javax.transaction.UserTransaction;
@@ -36,10 +37,10 @@ import org.datanucleus.tests.JPAPersistenceTestCase;
  * Refer to http://en.wikibooks.org/wiki/Java_Persistence/Transactions#Example_JTA_transaction
  * for some examples of what the spec requires.
  */
-public class GeneralTest extends JPAPersistenceTestCase
+public class ApplicationManagedTest extends JPAPersistenceTestCase
 {
     static EntityManagerFactory jtaEMF = null;
-    public GeneralTest(String name)
+    public ApplicationManagedTest(String name)
     {
         super(name);
         if (jtaEMF == null)
@@ -284,7 +285,7 @@ public class GeneralTest extends JPAPersistenceTestCase
      */
     public void testResourceLocalJNDI() throws Exception
     {
-        emf = getEMF("TEST_RESOURCELOCAL");
+        emf = Persistence.createEntityManagerFactory("TEST_RESOURCELOCAL");
 
         try
         {
