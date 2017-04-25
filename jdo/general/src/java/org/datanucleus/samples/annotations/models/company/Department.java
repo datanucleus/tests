@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -44,7 +43,6 @@ public class Department implements Serializable
     private Manager manager;
 
     @Persistent
-    @Element(types=Project.class)
     @Join
     private Set<Project> projects = new HashSet<>();
 

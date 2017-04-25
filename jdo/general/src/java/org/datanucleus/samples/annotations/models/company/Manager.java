@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.Extensions;
 import javax.jdo.annotations.Inheritance;
@@ -49,14 +48,11 @@ public class Manager extends Employee implements Serializable
     private static final long serialVersionUID = -6399411635335820362L;
 
     @Persistent(mappedBy="manager", table="MANAGER_EMPLOYEES")
-    @Element(types=Employee.class)
     @Join(column="MANAGER_ID")
     protected Set<Employee> subordinates;
 
     @Persistent(mappedBy="manager")
-    @Element(types=Department.class)
-    @Extensions({@Extension(vendorName="datanucleus", key="prop1", value="val1"), 
-        @Extension(vendorName="datanucleus", key="prop2", value="val2")})
+    @Extensions({@Extension(vendorName="datanucleus", key="prop1", value="val1"), @Extension(vendorName="datanucleus", key="prop2", value="val2")})
     protected Set<Department> departments;
 
     protected Manager() 

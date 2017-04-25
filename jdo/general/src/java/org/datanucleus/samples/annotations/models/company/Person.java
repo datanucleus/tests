@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (c) 2003 Mike Martin (TJDO) and others. All rights reserved.
+Copyright (c) 2013 Andy Jefferson and others. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -37,7 +37,6 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.Query;
 import javax.jdo.annotations.Unique;
-import javax.jdo.annotations.Value;
 
 /**
  * Person in a company.
@@ -46,8 +45,7 @@ import javax.jdo.annotations.Value;
 @Discriminator
 @Unique(name="PERSON_NAME_EMAIL_UNIQUENESS", members={"firstName", "lastName", "emailAddress"})
 @FetchGroup(name="names", members={@Persistent(name="firstName"), @Persistent(name="lastName")})
-@Query(name="PeopleCalledSmith",language="JDOQL",
-    value="SELECT FROM org.jpox.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")
+@Query(name="PeopleCalledSmith",language="JDOQL", value="SELECT FROM org.jpox.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")
 public class Person implements Cloneable, Serializable
 {
     private static final long serialVersionUID = 2849934518360227025L;
@@ -72,9 +70,8 @@ public class Person implements Cloneable, Serializable
     private Person bestFriend;
 
     @Persistent
-    @Key(types=String.class, mappedBy="name")
-    @Value(types=PhoneNumber.class)
-    private Map phoneNumbers = new HashMap();
+    @Key(mappedBy="name")
+    private Map<String, PhoneNumber> phoneNumbers = new HashMap();
 
     /** Used for the querying of static fields. */
     public static final String FIRSTNAME="Woody";
