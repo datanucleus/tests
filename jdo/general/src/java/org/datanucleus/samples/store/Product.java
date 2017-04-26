@@ -28,26 +28,10 @@ public class Product implements Cloneable
 
     protected Guarantee guarantee;
 
-    /**
-     * Default constructor. 
-     **/
     protected Product()
     {
     }
 
-    /**
-     * Constructor.
-     * @param   id          id of product
-     * @param   name        name of product
-     * @param   description description of product
-     * @param   image_url   URL of image of product
-     * @param   currency    Currency of product price
-     * @param   price       Price of product
-     * @param   old_price   Old price of product
-     * @param   list_price  List price of product
-     * @param   tax_percent Tax percentage on this product
-     * @param   status_id   Status id of this product
-     **/
     public Product(String id,
                     String name,
                     String description,

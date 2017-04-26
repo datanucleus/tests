@@ -34,7 +34,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.Query;
-import javax.jdo.annotations.Value;
 
 /**
  * Person in a company.
@@ -65,9 +64,8 @@ public class Person implements Cloneable, Serializable
     private Person bestFriend;
 
     @NotPersistent
-    @Key(types=String.class, mappedBy="name")
-    @Value(types=PhoneNumber.class)
-    private Map phoneNumbers = new HashMap();
+    @Key(mappedBy="name")
+    private Map<String, PhoneNumber> phoneNumbers = new HashMap();
 
     @Persistent
     private Date dateOfBirth;
@@ -121,7 +119,7 @@ public class Person implements Cloneable, Serializable
         return bestFriend;
     }
 
-    public Map getPhoneNumbers()
+    public Map<String, PhoneNumber> getPhoneNumbers()
     {
         return phoneNumbers;
     }

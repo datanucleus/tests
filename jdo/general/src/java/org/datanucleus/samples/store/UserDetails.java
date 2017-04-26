@@ -22,77 +22,45 @@ package org.datanucleus.samples.store;
 /**
  * The details for a User of a system.
  * Used to demonstrate a 1-1 bidirectional relationship (with User) using 2 FKs.
- *
- * @version $Revision: 1.1 $
  **/
 public class UserDetails
 {
-    /**
-     * Forename.
-     **/
     protected String forename=null;
 
-    /**
-     * Surname
-     **/
     protected String surname=null;
 
-    /**
-     * The User associated with these details.
-     **/
     protected User user=null;
 
-    /** Default constructor. */
     protected UserDetails()
     {
     }
 
-    /** Constructor.
-     * @param forename forename of the user
-     * @param surname  surname of the user
-     **/
     public UserDetails(String forename,String surname)
     {
         this.forename = forename;
         this.surname  = surname;
     }
 
-    // ------------------------------- Accessors -------------------------------
-    /** Accessor for the forename
-     * @return forename
-     **/
     public String getForename()
     {
         return forename;
     }
 
-    /** Accessor for the surname
-     * @return surname
-     **/
     public String getSurname()
     {
         return surname;
     }
 
-    /** Accessor for the user.
-     * @return User.
-     **/
     public User getUser()
     {
         return user;
     }
 
-    // ------------------------------- Mutators --------------------------------
-    /** Mutator for the user
-     * @param user The user
-     **/
     public void setUser(User user)
     {
         this.user = user;
     }
 
-    /** Utility to return the object as a string.
-     * @return  Stringified version of this object. */
     public String   toString()
     {
         StringBuffer str=new StringBuffer("UserDetails : " + forename + " " + surname);

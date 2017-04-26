@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.jdo.annotations.Column;
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.Extensions;
 import javax.jdo.annotations.Inheritance;
@@ -40,25 +39,21 @@ import javax.jdo.annotations.PrimaryKey;
  */
 @PersistenceCapable(detachable="true")
 @Extension(vendorName="datanucleus", key="someExtensionProp", value="My Value")
-@PrimaryKey(columns={
-        @Column(name="MGR_ID",target="PERSON_ID"), 
-        @Column(name="MGR_GLOBAL_ID", target="PERSON_GLOB_ID")})
+@PrimaryKey(columns={@Column(name="MGR_ID",target="PERSON_ID"), @Column(name="MGR_GLOBAL_ID", target="PERSON_GLOB_ID")})
 @Inheritance(strategy=InheritanceStrategy.NEW_TABLE)
 public class Manager extends Employee implements Serializable
 {
     private static final long serialVersionUID = 6219370954318760847L;
 
     @Persistent(mappedBy="manager", table="MANAGER_EMPLOYEES")
-    @Element(types=Employee.class)
     @Join(column="MANAGER_ID")
-    protected Set subordinates;
+    protected Set<Employee> subordinates;
 
     @Persistent(mappedBy="manager")
-    @Element(types=Department.class)
     @Join
     @Extensions({@Extension(vendorName="datanucleus", key="prop1", value="val1"), 
         @Extension(vendorName="datanucleus", key="prop2", value="val2")})
-    protected Set departments;
+    protected Set<Department> departments;
 
     protected Manager() 
     {
@@ -71,12 +66,11 @@ public class Manager extends Employee implements Serializable
         this.subordinates = new HashSet();
     }
 
-    public Set getSubordinates()
+    public Set<Employee> getSubordinates()
     {
         return this.subordinates;
     }
 
-    @SuppressWarnings("unchecked")
     public void addSubordinate(Employee e)
     {
         this.subordinates.add(e);
@@ -87,8 +81,7 @@ public class Manager extends Employee implements Serializable
         this.subordinates.remove(e);
     }
 
-    @SuppressWarnings("unchecked")
-    public void addSubordinates(Collection c)
+    public void addSubordinates(Collection<Employee> c)
     {
         this.subordinates.addAll(c);
     }
@@ -98,12 +91,11 @@ public class Manager extends Employee implements Serializable
         this.subordinates.clear();
     }
 
-    public Set getDepartments()
+    public Set<Department> getDepartments()
     {
         return this.departments;
     }
 
-    @SuppressWarnings("unchecked")
     public void addDepartment(Department d)
     {
         this.departments.add(d);

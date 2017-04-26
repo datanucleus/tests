@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -43,9 +42,8 @@ public class Department implements Serializable
     private Manager manager;
 
     @Persistent
-    @Element(types=Project.class)
     @Join
-    private Set projects = new HashSet();
+    private Set<Project> projects = new HashSet();
 
     public Department(String name)
     {
@@ -72,17 +70,16 @@ public class Department implements Serializable
         return this.manager;
     }
 
-    public Set getProjects()
+    public Set<Project> getProjects()
     {
         return projects;
     }
 
-    public void setProjects(Set projects)
+    public void setProjects(Set<Project> projects)
     {
         this.projects = projects;
     }
 
-    @SuppressWarnings("unchecked")
     public void addProject(Project proj)
     {
         this.projects.add(proj);

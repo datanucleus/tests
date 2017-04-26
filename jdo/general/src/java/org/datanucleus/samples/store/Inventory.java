@@ -30,26 +30,11 @@ public class Inventory
 {
     Set<Product> products=null;
 
-    /** Default constructor. */
-    public Inventory()
-    {
-    }
-
-    /**
-     * Accessor for the products from the Inventory.
-     * @return  The products.
-     **/
     public Collection<Product> getProducts()
     {
         return products;
     }
 
-    // -------------------------------- Mutators -------------------------------
-
-    /**
-     * Method to return the number of products in the Inventory.
-     * @return No of products.
-     **/
     public int getNoOfProducts()
     {
         if (products == null)
@@ -59,10 +44,6 @@ public class Inventory
         return products.size();
     }
 
-    /**
-     * Method to add a product to the Inventory.
-     * @param product Product to add.
-     **/
     public void addProduct(Product product)
     {
         if (products == null)
@@ -72,10 +53,6 @@ public class Inventory
         products.add(product);
     }
 
-    /**
-     * Method to remove a product from the Inventory.
-     * @param product Product to remove.
-     **/
     public void removeProduct(Product product)
     {
         if (products == null)
