@@ -71,7 +71,7 @@ public class Person implements Cloneable, Serializable
 
     @Persistent
     @Key(mappedBy="name")
-    private Map<String, PhoneNumber> phoneNumbers = new HashMap();
+    private Map<String, PhoneNumber> phoneNumbers = new HashMap<>();
 
     /** Used for the querying of static fields. */
     public static final String FIRSTNAME="Woody";

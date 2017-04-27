@@ -71,7 +71,6 @@ public class Manager extends Employee implements Serializable
         return this.subordinates;
     }
 
-    @SuppressWarnings("unchecked")
     public void addSubordinate(Employee e)
     {
         this.subordinates.add(e);
@@ -82,8 +81,7 @@ public class Manager extends Employee implements Serializable
         this.subordinates.remove(e);
     }
 
-    @SuppressWarnings("unchecked")
-    public void addSubordinates(Collection c)
+    public void addSubordinates(Collection<Employee> c)
     {
         this.subordinates.addAll(c);
     }
@@ -98,7 +96,6 @@ public class Manager extends Employee implements Serializable
         return this.departments;
     }
 
-    @SuppressWarnings("unchecked")
     public void addDepartment(Department d)
     {
         this.departments.add(d);

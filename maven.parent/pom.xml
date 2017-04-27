@@ -265,6 +265,7 @@
                     <encoding>ISO-8859-1</encoding>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <!--compilerArgument>-Xlint:unchecked</compilerArgument-->
                 </configuration>
             </plugin>
             <plugin>

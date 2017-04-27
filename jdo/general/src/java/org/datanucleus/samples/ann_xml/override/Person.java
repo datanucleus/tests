@@ -65,7 +65,7 @@ public class Person implements Cloneable, Serializable
 
     @NotPersistent
     @Key(mappedBy="name")
-    private Map<String, PhoneNumber> phoneNumbers = new HashMap();
+    private Map<String, PhoneNumber> phoneNumbers = new HashMap<>();
 
     @Persistent
     private Date dateOfBirth;

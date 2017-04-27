@@ -111,7 +111,7 @@ public class SoftDeleteTest extends JDOPersistenceTestCase
                 // Check that a query finds it
                 Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.softdelete.SDPerson WHERE this.name.startsWith('Geo')");
                 q.extension("datanucleus.query.compilation.cached", "false");
-                List<SDPerson> results = q.executeList();
+                List results = q.executeList();
                 assertNotNull(results);
                 assertEquals(1, results.size());
 
@@ -147,14 +147,14 @@ public class SoftDeleteTest extends JDOPersistenceTestCase
 
                 Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.softdelete.SDPerson WHERE this.name.startsWith('Geo')");
                 q.extension("datanucleus.query.compilation.cached", "false");
-                List<SDPerson> results = q.executeList();
+                List results = q.executeList();
                 assertNotNull(results);
                 assertEquals(0, results.size());
-LOG.info(">> Executing new query with include-soft-deletes");
+
                 // Check query extension that includes soft-deleted objects
                 Query q2 = pm.newQuery("SELECT FROM org.datanucleus.samples.softdelete.SDPerson WHERE this.name.startsWith('Geo') ");
                 q2.extension("include-soft-deletes", "true");
-                List<SDPerson> results2 = q2.executeList();
+                List results2 = q2.executeList();
                 assertNotNull(results2);
                 assertEquals(1, results2.size());
 

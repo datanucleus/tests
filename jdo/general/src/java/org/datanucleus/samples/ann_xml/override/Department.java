@@ -43,7 +43,7 @@ public class Department implements Serializable
 
     @Persistent
     @Join
-    private Set<Project> projects = new HashSet();
+    private Set<Project> projects = new HashSet<>();
 
     public Department(String name)
     {
