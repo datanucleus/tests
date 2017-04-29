@@ -2949,30 +2949,10 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 }
             }
 
-            // Query using Object[] result output
             try
             {
                 tx.begin();
-                try
-                {
-                    Query q = pm.newQuery(pm.getExtent(Person.class, false));
-                    q.setFilter("age > 25");
-                    q.setResultClass(Object[].class);
-                    List results = (List)q.execute();
-                    Iterator resultsIter = results.iterator();
-                    while (resultsIter.hasNext())
-                    {
-                        Object obj = resultsIter.next();
-                        assertEquals("ResultClass of query is incorrect.",
-                            Object[].class.getName(), obj.getClass().getName());
-                    }
-                    q.closeAll();
-                }
-                catch (JDOUserException e)
-                {
-                    fail(e.getMessage());
-                }
-                
+
                 // Query using user-defined result output : user class has constructor of right type
                 try
                 {
@@ -2984,8 +2964,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                     while (resultsIter.hasNext())
                     {
                         Object obj = resultsIter.next();
-                        assertEquals("ResultClass of query is incorrect.",
-                            Identity1.class.getName(), obj.getClass().getName());
+                        assertEquals("ResultClass of query is incorrect.", Identity1.class.getName(), obj.getClass().getName());
                     }
                     q.closeAll();
                 }
@@ -3005,8 +2984,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                     while (resultsIter.hasNext())
                     {
                         Object obj = resultsIter.next();
-                        assertEquals("ResultClass of query is incorrect.",
-                            Identity2.class.getName(), obj.getClass().getName());
+                        assertEquals("ResultClass of query is incorrect.", Identity2.class.getName(), obj.getClass().getName());
                     }
                     q.closeAll();
                 }
@@ -3026,8 +3004,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                     while (resultsIter.hasNext())
                     {
                         Object obj = resultsIter.next();
-                        assertEquals("ResultClass of query is incorrect.",
-                            Identity3.class.getName(), obj.getClass().getName());
+                        assertEquals("ResultClass of query is incorrect.", Identity3.class.getName(), obj.getClass().getName());
                     }
                     q.closeAll();
                 }
@@ -3047,8 +3024,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                     while (resultsIter.hasNext())
                     {
                         Object obj = resultsIter.next();
-                        assertEquals("ResultClass of query is incorrect.",
-                            Identity4.class.getName(), obj.getClass().getName());
+                        assertEquals("ResultClass of query is incorrect.", Identity4.class.getName(), obj.getClass().getName());
                     }
                     q.closeAll();
                 }
