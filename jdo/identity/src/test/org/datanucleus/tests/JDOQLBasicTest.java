@@ -4453,6 +4453,44 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
     }
 
     /**
+     * test use of executeUnique()
+     */
+    public void testExecuteUnique()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            Manager homer = new Manager(1, "Homer", "Simpson","homer@simpson.com", 1, "serial 1");
+            pm.makePersistent(homer);
+            pm.flush();
+
+            try
+            {
+                Query q = pm.newQuery(Manager.class).filter("firstName == :myName").setParameters("Homer");
+                Object obj = q.executeUnique(); // Should return single object not a List
+                assertNotNull(obj);
+                assertTrue(obj instanceof Manager);
+            }
+            catch (JDOUserException ue)
+            {
+                // Expected
+            }
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                pm.currentTransaction().rollback();
+            }
+            pm.close();
+        }
+    }
+    
+    /**
      * test query with use of parameter field comparison with field
      */
     public void testQueryWithParameterFieldComparison()
