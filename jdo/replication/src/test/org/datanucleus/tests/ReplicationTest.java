@@ -133,12 +133,12 @@ public class ReplicationTest extends JDOPersistenceTestCase
         }
         finally
         {
-            TestHelper.clean(pmf, Office.class);
-            TestHelper.clean(pmf, LaptopComputer.class);
-            TestHelper.clean(pmf, DesktopComputer.class);
-            TestHelper.clean(pmf2, Office.class);
-            TestHelper.clean(pmf2, LaptopComputer.class);
-            TestHelper.clean(pmf2, DesktopComputer.class);
+            clean(pmf, Office.class);
+            clean(pmf, LaptopComputer.class);
+            clean(pmf, DesktopComputer.class);
+            clean(pmf2, Office.class);
+            clean(pmf2, LaptopComputer.class);
+            clean(pmf2, DesktopComputer.class);
         }
     }
 
@@ -198,12 +198,12 @@ public class ReplicationTest extends JDOPersistenceTestCase
         }
         finally
         {
-            TestHelper.clean(pmf, Office.class);
-            TestHelper.clean(pmf, LaptopComputer.class);
-            TestHelper.clean(pmf, DesktopComputer.class);
-            TestHelper.clean(pmf2, Office.class);
-            TestHelper.clean(pmf2, LaptopComputer.class);
-            TestHelper.clean(pmf2, DesktopComputer.class);
+            clean(pmf, Office.class);
+            clean(pmf, LaptopComputer.class);
+            clean(pmf, DesktopComputer.class);
+            clean(pmf2, Office.class);
+            clean(pmf2, LaptopComputer.class);
+            clean(pmf2, DesktopComputer.class);
         }
     }
 
@@ -285,12 +285,12 @@ public class ReplicationTest extends JDOPersistenceTestCase
         }
         finally
         {
-            TestHelper.clean(pmf, Office.class);
-            TestHelper.clean(pmf, LaptopComputer.class);
-            TestHelper.clean(pmf, DesktopComputer.class);
-            TestHelper.clean(pmf2, Office.class);
-            TestHelper.clean(pmf2, LaptopComputer.class);
-            TestHelper.clean(pmf2, DesktopComputer.class);
+            clean(pmf, Office.class);
+            clean(pmf, LaptopComputer.class);
+            clean(pmf, DesktopComputer.class);
+            clean(pmf2, Office.class);
+            clean(pmf2, LaptopComputer.class);
+            clean(pmf2, DesktopComputer.class);
         }
     }
 
@@ -351,12 +351,12 @@ public class ReplicationTest extends JDOPersistenceTestCase
         }
         finally
         {
-            TestHelper.clean(pmf, Office.class);
-            TestHelper.clean(pmf, LaptopComputer.class);
-            TestHelper.clean(pmf, DesktopComputer.class);
-            TestHelper.clean(pmf2, Office.class);
-            TestHelper.clean(pmf2, LaptopComputer.class);
-            TestHelper.clean(pmf2, DesktopComputer.class);
+            clean(pmf, Office.class);
+            clean(pmf, LaptopComputer.class);
+            clean(pmf, DesktopComputer.class);
+            clean(pmf2, Office.class);
+            clean(pmf2, LaptopComputer.class);
+            clean(pmf2, DesktopComputer.class);
         }
     }
 }
