@@ -2953,6 +2953,25 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
+                try
+                {
+                    Query q = pm.newQuery(pm.getExtent(Person.class, false));
+                    q.setFilter("age > 25");
+                    q.setResultClass(Object[].class);
+                    List results = (List)q.execute();
+                    Iterator resultsIter = results.iterator();
+                    while (resultsIter.hasNext())
+                    {
+                        Object obj = resultsIter.next();
+                        assertEquals("ResultClass of query is incorrect.", Object[].class.getName(), obj.getClass().getName());
+                    }
+                    q.closeAll();
+                }
+                catch (JDOUserException e)
+                {
+                    fail(e.getMessage());
+                }
+
                 // Query using user-defined result output : user class has constructor of right type
                 try
                 {
