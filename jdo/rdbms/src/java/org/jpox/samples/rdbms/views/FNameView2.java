@@ -18,20 +18,22 @@ Contributors:
 package org.jpox.samples.rdbms.views;
 
 import javax.jdo.annotations.Extension;
-import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable(detachable="true", identityType=IdentityType.NONDURABLE)
+@PersistenceCapable(detachable="true")
 @Extension(vendorName="datanucleus", key="view-definition", 
-    value="CREATE VIEW {this} ({this.id},{this.name}) AS "+
-        "SELECT {NameObject}.{NameObject.id}, {NameObject}.{NameObject.name} FROM {NameObject} WHERE {NameObject}.{NameObject.name} LIKE 'F%'")
+value="CREATE VIEW {this} ({this.id},{this.name}) AS "+
+    "SELECT {NameObject}.{NameObject.id}, {NameObject}.{NameObject.name} FROM {NameObject} WHERE {NameObject}.{NameObject.name} LIKE 'F%'")
 @Extension(vendorName="datanucleus", key="view-imports", value="import org.jpox.samples.rdbms.views.NameObject;")
-public class FNameView 
+public class FNameView2 
 {
+    @PrimaryKey
     Long id;
+
     String name;
 
-    public FNameView(long id, String name)
+    public FNameView2(long id, String name)
     {
         this.id = id;
         this.name = name;
