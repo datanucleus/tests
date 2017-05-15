@@ -17,7 +17,7 @@
         <javax.jdo.min.version>3.2.0-m6</javax.jdo.min.version>
         <javax.jdo.max.version>3.2.99</javax.jdo.max.version>
         <javax.persistence.min.version>2.1.3</javax.persistence.min.version>
-        <javax.persistence.max.version>2.1.99</javax.persistence.max.version>
+        <javax.persistence.max.version>2.2.99</javax.persistence.max.version>
 
         <core.min.version>5.0.99</core.min.version>
         <api.jdo.min.version>5.0.99</api.jdo.min.version>
