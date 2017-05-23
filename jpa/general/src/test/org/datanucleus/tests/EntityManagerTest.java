@@ -27,6 +27,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
@@ -811,6 +812,62 @@ public class EntityManagerTest extends JPAPersistenceTestCase
         finally
         {
             clean(VersionedEmployee.class);
+            clean(VersionedPerson.class);
+        }
+    }
+
+    /**
+     * Test of lock type OPTIMISTIC_FORCE_INCREMENT
+     */
+    public void testLockOptimisticForceIncrement()
+    {
+        try
+        {
+            // Persist an object
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                VersionedPerson p = new VersionedPerson(1, 1);
+                em.persist(p);
+                tx.commit();
+                assertEquals(1, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            // Retrieve the object and lock it with OPTIMISTIC_FORCE_INCREMENT
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                VersionedPerson p = em.find(VersionedPerson.class, 1);
+                em.lock(p, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+
+                tx.commit();
+                assertEquals(2, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
             clean(VersionedPerson.class);
         }
     }
