@@ -23,7 +23,7 @@ import javax.persistence.Id;
 /**
  * Simple class with no inheritance or relations, used in test of bulk insert.
  */
-@Entity
+@Entity(name="MySimpleClass")
 public class SimpleClass
 {
     @Id

@@ -68,7 +68,7 @@ public class JPQLInsertTest extends JPAPersistenceTestCase
                 em.persist(p);
                 em.flush();
 
-                Query q = em.createQuery("INSERT INTO SimpleClass (id, name) SELECT p.personNum, p.lastName FROM Person_Ann p");
+                Query q = em.createQuery("INSERT INTO MySimpleClass (id, name) SELECT p.personNum, p.lastName FROM Person_Ann p");
                 int val = q.executeUpdate();
                 assertEquals("Number of records inserted by query was incorrect", 1, val);
 

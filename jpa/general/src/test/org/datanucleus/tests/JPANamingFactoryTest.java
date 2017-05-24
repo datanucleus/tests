@@ -24,6 +24,7 @@ import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.samples.annotations.array.ByteArray;
 import org.datanucleus.samples.annotations.one_many.unidir_2.UserGroup;
+import org.datanucleus.samples.annotations.simple.SimpleClass;
 import org.datanucleus.samples.jpa.datastoreid.MyDatastoreId;
 import org.datanucleus.store.schema.naming.ColumnType;
 import org.datanucleus.store.schema.naming.JPANamingFactory;
@@ -63,6 +64,10 @@ public class JPANamingFactoryTest extends JPAPersistenceTestCase
 
         factory.setNamingCase(NamingCase.UPPER_CASE_QUOTED);
         assertEquals("Table name is incorrect", "\"BYTEARRAY\"", factory.getTableName(cmd1));
+
+        AbstractClassMetaData cmd2 = mmgr.getMetaDataForClass(SimpleClass.class, clr);
+        factory.setNamingCase(NamingCase.LOWER_CASE);
+        assertEquals("Table name is incorrect", "mysimpleclass", factory.getTableName(cmd2));
     }
 
     public void testJoinTableName()
