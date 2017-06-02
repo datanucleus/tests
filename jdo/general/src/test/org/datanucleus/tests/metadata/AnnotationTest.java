@@ -51,6 +51,7 @@ import org.datanucleus.metadata.QueryMetaData;
 import org.datanucleus.metadata.UniqueMetaData;
 import org.datanucleus.metadata.VersionMetaData;
 import org.datanucleus.samples.annotations.array.ByteArray;
+import org.datanucleus.samples.annotations.meta.MyMetaClass;
 import org.datanucleus.samples.annotations.models.company.Department;
 import org.datanucleus.samples.annotations.models.company.Employee;
 import org.datanucleus.samples.annotations.models.company.Manager;
@@ -487,5 +488,19 @@ public class AnnotationTest extends JDOPersistenceTestCase
         AbstractMemberMetaData fmd = cmd.getMetaDataForMember("mood");
 
         assertEquals(prefix + "field should be non-persistent", FieldPersistenceModifier.NONE, fmd.getPersistenceModifier());
+    }
+
+    /**
+     * Test of meta-annotations.
+     */
+    public void testMetaAnnotations()
+    {
+        // Checks for Department
+        ClassMetaData cmd1 = (ClassMetaData) metaDataMgr.getMetaDataForClass(MyMetaClass.class.getName(), clr);
+        assertNotNull(cmd1);
+        assertTrue(cmd1.isDetachable());
+        assertTrue(cmd1.isRequiresExtent());
+        assertFalse(cmd1.isCacheable());
+        assertEquals(cmd1.getIdentityType(), IdentityType.DATASTORE);
     }
 }
