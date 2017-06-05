@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.jdo.metadata.TypeMetadata;
+
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.PersistenceNucleusContextImpl;
@@ -495,12 +497,12 @@ public class AnnotationTest extends JDOPersistenceTestCase
      */
     public void testMetaAnnotations()
     {
-        // Checks for Department
-        ClassMetaData cmd1 = (ClassMetaData) metaDataMgr.getMetaDataForClass(MyMetaClass.class.getName(), clr);
-        assertNotNull(cmd1);
-        assertTrue(cmd1.isDetachable());
-        assertTrue(cmd1.isRequiresExtent());
-        assertFalse(cmd1.isCacheable());
-        assertEquals(cmd1.getIdentityType(), IdentityType.DATASTORE);
+        // Check that metadata has been read in correctly
+        TypeMetadata typeMD = pmf.getMetadata(MyMetaClass.class.getName());
+        assertNotNull(typeMD);
+        assertTrue(typeMD.getDetachable());
+        assertFalse(typeMD.getCacheable());
+        assertTrue(typeMD.getRequiresExtent());
+        assertEquals(javax.jdo.annotations.IdentityType.DATASTORE, typeMD.getIdentityType());
     }
 }
