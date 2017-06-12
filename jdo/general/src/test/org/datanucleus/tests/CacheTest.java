@@ -240,7 +240,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 pm.close();
             }
             Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
-            assertTrue("Incorrect number of pinned objects : should have been 3 but is " + l2Cache.getNumberOfPinnedObjects(), l2Cache.getNumberOfPinnedObjects() == 3);
+            assertEquals("Incorrect number of pinned objects : should have been 3 but is " + l2Cache.getNumberOfPinnedObjects(), 3, l2Cache.getNumberOfPinnedObjects());
             assertTrue("Level 2 Cache returned that it is empty yet should have pinned object(s)!", !l2Cache.isEmpty());
 
             pm = cachePMF.getPersistenceManager();
@@ -270,14 +270,13 @@ public class CacheTest extends JDOPersistenceTestCase
             }
 
             l2Cache.evict(woodlessId);
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet should have 2",
-                l2Cache.getNumberOfPinnedObjects() == 2);
+            assertEquals("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet should have 2", 2, l2Cache.getNumberOfPinnedObjects());
 
             // Clear the cache and check if the objects are released
             l2Cache.evictAll();
             assertTrue("Level 2 Cache returned that it is not empty yet we just cleared it!", l2Cache.isEmpty());
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet we just cleared it!", l2Cache.getNumberOfPinnedObjects() == 0);
-            assertTrue("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!", l2Cache.getNumberOfUnpinnedObjects() == 0);
+            assertEquals("Level 2 Cache returned that it has " + l2Cache.getNumberOfPinnedObjects() + " pinned objects, yet we just cleared it!", 0, l2Cache.getNumberOfPinnedObjects());
+            assertEquals("Level 2 Cache returned that it has " + l2Cache.getNumberOfUnpinnedObjects() + " unpinned objects, yet we just cleared it!", 0, l2Cache.getNumberOfUnpinnedObjects());
         }
         finally
         {
