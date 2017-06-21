@@ -2256,15 +2256,13 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 {
                     Query q = pm.newQuery("SELECT UNIQUE FROM " + Employee.class.getName() + " EXCLUDE SUBCLASSES  WHERE firstName == \"Bugs\"");
                     q.setClass(Employee.class);
-                    Object results=q.execute();
-                    assertTrue("UNIQUE query returned an object of an incorrect type : should have been Employee but was " + results,
-                        results instanceof Employee);
+                    Object results = q.execute();
+                    assertTrue("UNIQUE query returned an object of an incorrect type : should have been Employee but was " + results, results instanceof Employee);
                     q.closeAll();
                     q = pm.newQuery("SELECT UNIQUE FROM " + Employee.class.getName() + " EXCLUDE SUBCLASSES  WHERE firstName == \"Bugs\" import "+Employee.class.getName());
                     q.setClass(Employee.class);
-                    results=q.execute();
-                    assertTrue("UNIQUE query returned an object of an incorrect type : should have been Employee but was " + results,
-                        results instanceof Employee);
+                    results = q.execute();
+                    assertTrue("UNIQUE query returned an object of an incorrect type : should have been Employee but was " + results, results instanceof Employee);
                     q.closeAll();
                 }
                 catch (JDOUserException e)
@@ -2353,8 +2351,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 Query q = pm.newQuery("SELECT FROM " + Employee.class.getName() + " EXCLUDE SUBCLASSES WHERE firstName == christianname PARAMETERS java.lang.String christianname");
                 List results = (List)q.execute("Bart");
-                assertTrue("Query returned incorrect number of objects from single-string parameter query : was " + results.size() + " but should have been 1",
-                    results.size() == 1);
+                assertEquals("Query returned incorrect number of objects from single-string parameter query : was " + results.size() + " but should have been 1", 1, results.size());
                 q.closeAll();
                 tx.commit();
             }
@@ -4042,8 +4039,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             Query q = pm.newQuery(pm.getExtent(BasicTypeHolder.class,false), "longField % 2 == 1");
             List c = (List) q.execute();
-            assertTrue("Number of items returned from modulo query was incorrect : should have been 3 but was " + c.size(),
-                c.size() == 3);
+            assertTrue("Number of items returned from modulo query was incorrect : should have been 3 but was " + c.size(), c.size() == 3);
 
             for (int i=0;i<c.size();i++)
             {
@@ -5240,6 +5236,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             this.idValue3 = idValue3;
         }
 
+        @SuppressWarnings("serial")
         public void run()
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -5297,14 +5294,16 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 Map map2 = new HashMap();
                 q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 1\")").parameters("java.util.Map map").setParameters(map2);
-                c = (Collection) q.execute(map2);
+                c = (Collection) q.executeList();
                 Assert.assertEquals(0, c.size());
 
-                Map map3 = new HashMap();
-                map3.put("Item 1", value1);
-                map3.put("Item 2", value2);
-                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 3\")").parameters("java.util.Map map").setParameters(map3);
-                c = (Collection) q.execute(map3);
+                
+                q = pm.newQuery(MapValueItem.class, "this == map.get(\"Item 3\")").parameters("java.util.Map map").setParameters(
+                    new HashMap<String, Object> () {{   
+                        put("Item 1", value1); 
+                        put("Item 2", value2);
+                    }});
+                c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
                 tx.commit();
