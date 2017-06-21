@@ -31,6 +31,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.MonthDay;
+import java.time.Year;
 import java.time.YearMonth;
 
 import org.datanucleus.samples.types.javatime.JavaTimeSample1;
@@ -39,6 +40,7 @@ import org.datanucleus.samples.types.javatime.JavaTimeSample3;
 import org.datanucleus.samples.types.javatime.JavaTimeSample4;
 import org.datanucleus.samples.types.javatime.JavaTimeSample5;
 import org.datanucleus.samples.types.javatime.JavaTimeSample6;
+import org.datanucleus.samples.types.javatime.JavaTimeSample7;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
@@ -1034,6 +1036,75 @@ public class JavaTimeTest extends JDOPersistenceTestCase
         finally
         {
             clean(JavaTimeSample6.class);
+        }
+    }
+
+    /**
+     * Test for Year query.
+     */
+    public void testYearQuery()
+    {
+        try
+        {
+            // Create some data we can use for access
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            try
+            {
+                tx.begin();
+                JavaTimeSample7 s1 = new JavaTimeSample7(1, Year.of(1999));
+                pm.makePersistent(s1);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error persisting Year sample", e);
+                fail("Error persisting Year sample");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve the data by query
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Query<JavaTimeSample7> q = pm.newQuery(JavaTimeSample7.class, "this.year1 == :year");
+                q.setParameters(Year.of(1999));
+                List<JavaTimeSample7> results = q.executeList();
+                assertEquals("Number of results is wrong", 1, results.size());
+                JavaTimeSample7 s = results.get(0);
+                assertNotNull("Retrieved Year was null!", s.getYear1());
+                assertEquals("Year was wrong", 1999, s.getYear1().getValue());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Error retrieving Year data", e);
+                fail("Error retrieving Year data : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(JavaTimeSample7.class);
         }
     }
 }
