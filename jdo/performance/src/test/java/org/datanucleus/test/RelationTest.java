@@ -27,9 +27,8 @@ import mydomain.model.*;
 import org.datanucleus.util.NucleusLogger;
 
 /**
- * Performance-style tests using relational data.
- * Note that this data was utilised previously in the blog post
- * http://datanucleus.blogspot.co.uk/2013/02/performance-effect-of-various-features.html
+ * Performance tests using relational data.
+ * Note that this data was utilised previously in the blog post https://datanucleus.wordpress.com/2013/02/07/performance-effect-of-various-features/
  */
 public class RelationTest
 {
@@ -42,15 +41,18 @@ public class RelationTest
     public void testMakePersistent()
     throws Exception
     {
-        performPersist(100000);
+        // TODO Obtain PMF using standard test mechanism
+        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
+
+        performPersist(pmf, 100000);
+
+        pmf.close();
     }
 
-    public void performPersist(final int numObjects)
+    public void performPersist(PersistenceManagerFactory pmf, final int numObjects)
     throws Exception
     {
         NucleusLogger.GENERAL.info(">> test START");
-        // TODO Obtain PMF using standard test mechanism
-        final PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
 
         long start = System.currentTimeMillis();
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -91,7 +93,5 @@ public class RelationTest
             pm.close();
         }
         System.out.println("makePersistent(objs=" + numObjects + " Student+Thesis+Credit) time(ms)=" + (System.currentTimeMillis() - start));
-
-        pmf.close();
     }
 }

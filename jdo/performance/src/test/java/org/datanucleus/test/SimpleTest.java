@@ -21,26 +21,36 @@ package org.datanucleus.test;
 import org.junit.*;
 import javax.jdo.*;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import mydomain.model.*;
 import org.datanucleus.util.NucleusLogger;
 
+/**
+ * Performance tests using a simple model class (no relations).
+ */
 public class SimpleTest
 {
     private Random r = new Random();
 
     /**
      * Test for the retrieval of objects using pm.getObjectById, in a separate ExecutionContext multithreaded.
-     * This uses 2000 objects with 1 threads.
-     * @throws Exception If an error occurs in the multithreading process or creating a PMF.
+     * This uses 2000 objects with 1 thread.
+     * @throws Exception If an error occurs in the threading process or creating a PMF.
      */
     @Test
     public void testGetObjectByIdInExecutionContext1()
     throws Exception
     {
-        performGetObjectByIdMultithreadTest(1, 2000, 200000);
+        // TODO Obtain PMF using framework test mechanism
+        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
+
+        long millis = performUserMultithreadTest(pmf, 1, 2000, 200000, TestType.GET_OBJECT_BY_ID);
+        System.out.println("getObjectById(objs=" + 200000 + ", threads=" + 1 + ", triesPerThread=" + 2000 + ") time(ms)=" + millis);
+
+        pmf.close();
     }
 
     /**
@@ -52,15 +62,43 @@ public class SimpleTest
     public void testGetObjectByIdInExecutionContext2()
     throws Exception
     {
-        performGetObjectByIdMultithreadTest(10, 2000, 60000);
+        // TODO Obtain PMF using framework test mechanism
+        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
+
+        long millis = performUserMultithreadTest(pmf, 10, 2000, 60000, TestType.GET_OBJECT_BY_ID);
+        System.out.println("getObjectById(objs=" + 60000 + ", threads=" + 10 + ", triesPerThread=" + 2000 + ") time(ms)=" + millis);
+
+        pmf.close();
     }
 
-    public void performGetObjectByIdMultithreadTest(final int numThreads, final int numObjects, final int numTriesPerThread)
+    /**
+     * Test for the retrieval of objects using pm.newQuery, in a separate ExecutionContext multithreaded.
+     * This uses 200000 objects with 1 threads.
+     * @throws Exception If an error occurs in the multithreading process or creating a PMF.
+     */
+    @Test
+    public void testQueryInExecutionContext()
+    throws Exception
+    {
+        // TODO Obtain PMF using framework test mechanism
+        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
+
+        long millis = performUserMultithreadTest(pmf, 1, 1, 40000, TestType.QUERY);
+        System.out.println("query(objs=" + 40000 + ", threads=" + 1 + ", triesPerThread=" + 1 + ") time(ms)=" + millis);
+
+        pmf.close();
+    }
+
+    protected enum TestType
+    {
+        GET_OBJECT_BY_ID,
+        QUERY
+    }
+
+    public long performUserMultithreadTest(PersistenceManagerFactory pmf, final int numThreads, final int numObjects, final int numTriesPerThread, TestType testType)
     throws Exception
     {
         NucleusLogger.GENERAL.info(">> test START");
-        // TODO Obtain PMF using standard test mechanism
-        final PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
 
         // Create data
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -70,7 +108,7 @@ public class SimpleTest
             tx.begin();
             for (int i = 0; i < numObjects; i++)
             {
-                pm.makePersistent(new User((long)i));            
+                pm.makePersistent(new User("User" + i, (long)i));            
             }
             tx.commit();
         }
@@ -84,7 +122,6 @@ public class SimpleTest
         }
 
         int threadCount = numThreads;
-        final int count = numTriesPerThread;
         final Semaphore semaphore = new Semaphore(threadCount);
         semaphore.acquire(threadCount);
 
@@ -99,40 +136,15 @@ public class SimpleTest
                 @Override
                 public void run()
                 {
-                    for (int j = 0; j < count; j++) 
+                    for (int j = 0; j < numTriesPerThread; j++) 
                     {
-                        PersistenceManager pm = pmf.getPersistenceManager();
-                        Transaction tx = pm.currentTransaction();
-                        try
+                        if (testType == TestType.GET_OBJECT_BY_ID)
                         {
-                            tx.begin();
-                            for (long ctr = 0; ctr < 5; ctr++) 
-                            {
-                                User ro = null;
-                                long id = r.nextInt(numObjects);
-                                try 
-                                {
-                                    ro = pm.getObjectById(User.class, id);
-                                } 
-                                catch (Exception e) 
-                                {
-                                    ro = new User(id);
-                                }
-                                ro.getBalance();
-                            }
-                            tx.commit();
+                            runGetObjectById(pmf, numObjects);
                         }
-                        catch (Exception e)
+                        else if (testType == TestType.QUERY)
                         {
-                            NucleusLogger.GENERAL.error(">> Exception in test", e);
-                        }
-                        finally 
-                        {
-                            if (tx.isActive())
-                            {
-                                tx.rollback();
-                            }
-                            pm.close();
+                            runQuery(pmf, numObjects);
                         }
                     }
                     semaphore.release();
@@ -141,9 +153,84 @@ public class SimpleTest
         }
 
         semaphore.acquire(threadCount);
-        System.out.println("getObjectById(objs=" + numObjects + ", threads=" + numThreads + ", triesPerThread=" + numTriesPerThread + ") time(ms)=" + (System.currentTimeMillis() - start));
         NucleusLogger.GENERAL.info(">> test END");
+        return (System.currentTimeMillis() - start);
+    }
 
-        pmf.close();
+    protected void runGetObjectById(PersistenceManagerFactory pmf, int numObjects)
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            for (long ctr = 0; ctr < 5; ctr++) 
+            {
+                User ro = null;
+                long id = r.nextInt(numObjects);
+                try 
+                {
+                    ro = pm.getObjectById(User.class, id);
+                } 
+                catch (Exception e) 
+                {
+                    ro = new User(id);
+                }
+                ro.getBalance();
+            }
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            NucleusLogger.GENERAL.error(">> Exception in test", e);
+        }
+        finally 
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    protected void runQuery(PersistenceManagerFactory pmf, int numObjects)
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            for (long ctr = 0; ctr < 5; ctr++) 
+            {
+                User ro = null;
+                long id = r.nextInt(numObjects);
+                try 
+                {
+                    Query q = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE this.userName == :name");
+                    q.setParameters("User" + id);
+                    List<User> results = q.executeList();
+                    ro = results.get(0);
+                } 
+                catch (Exception e) 
+                {
+                    ro = new User(id);
+                }
+                ro.getBalance();
+            }
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            NucleusLogger.GENERAL.error(">> Exception in test", e);
+        }
+        finally 
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
     }
 }
