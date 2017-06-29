@@ -20,6 +20,8 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import static org.datanucleus.tests.annotations.Datastore.DatastoreKey.RDBMS;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -33,12 +35,13 @@ import javax.jdo.Transaction;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.concurrency.Account;
 import org.datanucleus.samples.concurrency.Transfer;
-import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
+import org.datanucleus.tests.annotations.Datastore;
 
 /**
  * Tests for concurrent operations operating correctly and in the correct order.
  */
+@Datastore(RDBMS)
 public class ConcurrencyTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
@@ -67,11 +70,6 @@ public class ConcurrencyTest extends JDOPersistenceTestCase
 
     public void testBasicConcurrency()
     {
-        if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_TRANSACTION_ACID))
-        {
-            return;
-        }
-
         // Persist Accounts and Transfers
         PersistenceManager pm = pmf.getPersistenceManager();
         pm.setProperty(PropertyNames.PROPERTY_SERIALIZE_READ, "true");
