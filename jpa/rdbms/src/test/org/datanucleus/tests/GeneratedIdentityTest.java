@@ -58,7 +58,7 @@ public class GeneratedIdentityTest extends JPAPersistenceTestCase
 
             // Check the structure of the table
             RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
-            Connection conn = (Connection)databaseMgr.getConnection(0).getConnection();
+            Connection conn = (Connection)databaseMgr.getConnectionManager().getConnection(0).getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check PAYMENTS table column names

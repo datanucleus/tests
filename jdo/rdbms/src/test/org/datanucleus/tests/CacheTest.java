@@ -164,7 +164,7 @@ public class CacheTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0);
+            mconn = databaseMgr.getConnectionManager().getConnection(0);
             conn = (Connection) mconn.getConnection();
 
             // TODO Make sure this works on all datastores (e.g case of identifiers)

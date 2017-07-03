@@ -129,7 +129,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             columnNames.add("BESTFRIEND_PERSON_ID_OID");
             columnNames.add("BIRTHDATE");
 
-            mconn = databaseMgr.getConnection(0);
+            mconn = databaseMgr.getConnectionManager().getConnection(0);
             conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
@@ -171,7 +171,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
             RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
-            DatabaseMetaData dmd = ((Connection)databaseMgr.getConnection(0).getConnection()).getMetaData();
+            DatabaseMetaData dmd = ((Connection)databaseMgr.getConnectionManager().getConnection(0).getConnection()).getMetaData();
             LOG.info("JDBC Types CHAR = " + Types.CHAR + ", VARCHAR=" + Types.VARCHAR + 
                 ", INTEGER=" + Types.INTEGER + ", DOUBLE=" + Types.DOUBLE + ", BINARY=" + Types.BINARY + ", LONGVARBINARY=" + Types.LONGVARBINARY +
                 ", NUMERIC=" + Types.NUMERIC + ", VARBINARY=" + Types.VARBINARY);
@@ -888,7 +888,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             timerColumnNames.add("BOILER_ID");
             timerColumnNames.add("BOILER2_BOILER_ID_OID");
 
-            mconn = databaseMgr.getConnection(0);
+            mconn = databaseMgr.getConnectionManager().getConnection(0);
             conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
@@ -945,7 +945,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             tonerColumnNames.add("MODEL");
             tonerColumnNames.add("LIFETIME");
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check PRINTER table names
@@ -993,7 +993,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
             HashSet columnNames = new HashSet();
 
@@ -1067,7 +1067,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
             HashSet columnNames = new HashSet();
 
@@ -1120,7 +1120,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check primary table
@@ -1188,7 +1188,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             loginColumnNames.add("USERNAME");
             loginColumnNames.add("PASSWORD");
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check LOGIN table names
@@ -1235,7 +1235,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet columnNames = new HashSet();
@@ -1293,7 +1293,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet columnNames = new HashSet();
@@ -1353,7 +1353,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet columnNames = new HashSet();
@@ -1415,7 +1415,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             embeddedColumnNames.add("SOUND_TYPE");
             embeddedColumnNames.add("SOUND_MANUFACTURER_ID");
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check container columns
@@ -1469,7 +1469,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             joinColumnNames.add("DEVICE_IP_ADDR");
             joinColumnNames.add("DEVICE_NAME");
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check NETWORK table names
@@ -1525,7 +1525,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             joinColumnNames.add("JOB_NAME");
             joinColumnNames.add("JOB_PRIORITY");
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check NETWORK table names
@@ -1582,7 +1582,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             joinColumnNames.add("FILM_DIRECTOR");
             joinColumnNames.add("FILM_NAME");
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check FILM_LIBRARY table names
@@ -1641,7 +1641,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             joinColumnNames.add("CUSTOMER_ID");
             joinColumnNames.add("SUPPLIER_ID");
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Check CUSTOMER table names
@@ -1692,7 +1692,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             tx.begin();
 
             HashSet tableColumnNames = new HashSet();
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Main table with serialised int[]
@@ -1752,7 +1752,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
             HashSet tableColumnNames = new HashSet();
 
@@ -1806,7 +1806,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet columnNames = new HashSet();
@@ -1911,7 +1911,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet columnNames = new HashSet();
@@ -2017,7 +2017,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet columnNames = new HashSet();
@@ -2207,7 +2207,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             columnNames.add("UNMAPPED_INTEGER");
             columnNames.add("UNMAPPED_CHAR");
 
-            mconn = databaseMgr.getConnection(0);
+            mconn = databaseMgr.getConnectionManager().getConnection(0);
             conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
@@ -2876,7 +2876,7 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             LOG.debug(stmt);
             pm.currentTransaction().begin();
-            con = (Connection) ((RDBMSStoreManager)storeMgr).getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+            con = (Connection) ((RDBMSStoreManager)storeMgr).getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
             con.prepareStatement(stmt).execute();
             pm.currentTransaction().commit();
         }

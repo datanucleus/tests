@@ -76,7 +76,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         String procName = "DN_PROC_NOPARAMS_RS";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
@@ -188,7 +188,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         String procName = "DN_PROC_NOPARAMS_RS";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
@@ -296,7 +296,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         String procName = "DN_PROC_OUTPUTPARAM";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
@@ -406,7 +406,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         String procName = "DN_PROC_INPUTPARAM_OUTPUTPARAM";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
@@ -520,7 +520,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         String procName = "DN_PROC_NAMED_RS";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
@@ -633,7 +633,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
         String procName = "DN_PROC_NAMED_RS2";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();

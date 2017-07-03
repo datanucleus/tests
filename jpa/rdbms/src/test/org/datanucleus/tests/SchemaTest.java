@@ -83,7 +83,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet<String> columnNames = new HashSet<String>();
@@ -144,7 +144,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet<String> columnNames = new HashSet<String>();
@@ -202,7 +202,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet<String> columnNames = new HashSet<String>();
@@ -253,7 +253,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet<String> columnNames = new HashSet<String>();
@@ -330,7 +330,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet<String> columnNames = new HashSet<String>();
@@ -386,7 +386,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet<String> columnNames = new HashSet<String>();
@@ -442,7 +442,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Map with embedded value taking default value column names
@@ -512,7 +512,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Map with embedded value taking default value column names
@@ -564,7 +564,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Map with embedded value taking default value column names
@@ -611,7 +611,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // Map with user-specified join table namings
@@ -663,7 +663,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             HashSet<String> columnNames = new HashSet<String>();
@@ -717,7 +717,7 @@ public class SchemaTest extends JPAPersistenceTestCase
         {
             tx.begin();
 
-            mconn = databaseMgr.getConnection(0); conn = (Connection) mconn.getConnection();
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
             DatabaseMetaData dmd = conn.getMetaData();
 
             // User-specified join table namings

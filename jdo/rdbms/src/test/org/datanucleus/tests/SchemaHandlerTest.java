@@ -64,7 +64,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         ClassLoaderResolver clr = storeMgr.getNucleusContext().getClassLoaderResolver(null);
-        Connection con = (Connection) databaseMgr.getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
 
         // Retrieve and check the table for SchemaClass1
         DatastoreClass table1 = databaseMgr.getDatastoreClass(SchemaClass1.class.getName(), clr);
@@ -145,7 +145,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
 
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
-        Connection con = (Connection) databaseMgr.getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
         RDBMSTableFKInfo fkInfo = (RDBMSTableFKInfo)handler.getSchemaData(con, "foreign-keys", new Object[] {table1});
 
         // Expecting single FK between SchemaClass1.other and SchemaClass2
@@ -177,7 +177,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
 
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
-        Connection con = (Connection) databaseMgr.getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
         RDBMSTablePKInfo pkInfo1 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", new Object[] {table1});
         RDBMSTablePKInfo pkInfo2 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", new Object[] {table2});
 
@@ -215,7 +215,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
 
         // Check for the indices using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
-        Connection con = (Connection) databaseMgr.getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
 
         RDBMSTableIndexInfo indexInfo = (RDBMSTableIndexInfo)handler.getSchemaData(con, "indices", new Object[] {table1});
         int numIndices = 3;

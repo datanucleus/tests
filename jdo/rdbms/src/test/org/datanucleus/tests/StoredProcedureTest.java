@@ -73,7 +73,7 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
         String procName = "DN_PROC_NOPARAMS_RS";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
@@ -183,7 +183,7 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
         String procName = "DN_PROC_OUTPUTPARAM";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
@@ -291,7 +291,7 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
         String procName = "DN_PROC_INPUTPARAM_OUTPUTPARAM";
 
         RDBMSStoreManager rdbmsMgr = (RDBMSStoreManager)storeMgr;
-        ManagedConnection mc = rdbmsMgr.getConnection(-1);
+        ManagedConnection mc = rdbmsMgr.getConnectionManager().getConnection(-1);
         try
         {
             Connection conn = (Connection)mc.getConnection();
