@@ -139,7 +139,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
                     Magazine.class, MediaWork.class, Newspaper.class, Reader.class,
                     DesktopComputer.class, LaptopComputer.class, Office.class,
                 });
-            if (storeMgr.supportsValueStrategy("identity"))
+            if (storeMgr.supportsValueGenerationStrategy("identity"))
             {
                 addClassesToSchema(new Class[] {Rate.class, Currency.class});
             }
@@ -2277,7 +2277,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
     throws Exception
     {
         // This test currently relies on identity fields
-        if (!storeMgr.supportsValueStrategy("identity"))
+        if (!storeMgr.supportsValueGenerationStrategy("identity"))
         {
             // Lets just say it passed :-)
             return;

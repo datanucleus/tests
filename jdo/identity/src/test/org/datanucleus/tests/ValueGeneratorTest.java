@@ -72,7 +72,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 }
             );
             
-            if (storeMgr.supportsValueStrategy("sequence"))
+            if (storeMgr.supportsValueGenerationStrategy("sequence"))
             {
                 addClassesToSchema(new Class[]
                     {
@@ -80,7 +80,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                     }
                 );
             }
-            if (storeMgr.supportsValueStrategy("identity"))
+            if (storeMgr.supportsValueGenerationStrategy("identity"))
             {
                 addClassesToSchema(new Class[]
                     {
@@ -392,7 +392,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testUUIDStringGenerator()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("uuid-string"))
+        if (!storeMgr.supportsValueGenerationStrategy("uuid-string"))
         {
             return;
         }
@@ -500,7 +500,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testUUIDHexGenerator()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("uuid-hex"))
+        if (!storeMgr.supportsValueGenerationStrategy("uuid-hex"))
         {
             return;
         }
@@ -708,7 +708,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testMaxGenerator()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("max"))
+        if (!storeMgr.supportsValueGenerationStrategy("max"))
         {
             return;
         }
@@ -824,7 +824,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testSequenceGenerator()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("sequence"))
+        if (!storeMgr.supportsValueGenerationStrategy("sequence"))
         {
             // Lets just say it passed :-)
             return;
@@ -943,7 +943,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testIdentityGenerator()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("identity"))
+        if (!storeMgr.supportsValueGenerationStrategy("identity"))
         {
             // Adapter doesnt support autoincrement so lets just say it passed :-)
             return;
@@ -1056,7 +1056,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testAutoIncrementWithNoOtherFields()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("identity"))
+        if (!storeMgr.supportsValueGenerationStrategy("identity"))
         {
             // Adapter doesnt support autoincrement so let's just say it passed :-)
             return;
@@ -1106,7 +1106,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     public void testAutoIncrementWithInheritance()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("identity"))
+        if (!storeMgr.supportsValueGenerationStrategy("identity"))
         {
             // Adapter doesnt support autoincrement so let's just say it passed :-)
             return;

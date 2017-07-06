@@ -80,7 +80,7 @@ public class PersistenceModelsTest extends JDOPersistenceTestCase
      */
     public void testClassWithoutFields()
     {
-        if (!storeMgr.supportsValueStrategy("identity"))
+        if (!storeMgr.supportsValueGenerationStrategy("identity"))
         {
             return;
         }

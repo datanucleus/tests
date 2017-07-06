@@ -86,7 +86,7 @@ public class SequenceTest extends JDOPersistenceTestCase
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
 
-        if (!storeMgr.supportsValueStrategy("sequence"))
+        if (!storeMgr.supportsValueGenerationStrategy("sequence"))
         {
             // Doesn't support SEQUENCE strategy so test doesn't apply
             return;
@@ -135,7 +135,7 @@ public class SequenceTest extends JDOPersistenceTestCase
     {
         PersistenceManager pm = pmf.getPersistenceManager();
 
-        if (!storeMgr.supportsValueStrategy("sequence"))
+        if (!storeMgr.supportsValueGenerationStrategy("sequence"))
         {
             // Doesn't support SEQUENCE strategy so test doesn't apply
             return;

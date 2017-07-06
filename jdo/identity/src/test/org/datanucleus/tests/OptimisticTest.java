@@ -1780,7 +1780,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
     public void testOptimisticWithIdentityFieldObjects()
     throws Exception
     {
-        if (!storeMgr.supportsValueStrategy("identity"))
+        if (!storeMgr.supportsValueGenerationStrategy("identity"))
         {
             // Lets just say it passed
             return;
