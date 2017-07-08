@@ -21,10 +21,9 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.exceptions.NucleusException;
 import org.datanucleus.exceptions.NucleusUserException;
-import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.query.compiler.JPQLCompiler;
 import org.datanucleus.query.compiler.JavaQueryCompiler;
 import org.datanucleus.query.compiler.QueryCompilation;
@@ -55,14 +54,12 @@ import org.datanucleus.util.NucleusLogger;
  */
 public class JPQLCompilerTest extends JPAPersistenceTestCase
 {
-    protected static NucleusContext nucCtx;
-    protected static MetaDataManager mmgr;
+    protected static PersistenceNucleusContext nucCtx;
 
     public JPQLCompilerTest(String name)
     {
         super(name);
         nucCtx = storeMgr.getNucleusContext();
-        mmgr = nucCtx.getMetaDataManager();
     }
 
     /**
@@ -73,7 +70,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         // Test use of invalid field in filter
         try
         {
-            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            JPQLCompiler compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "illegalField = 2", null, null, null, null, null, 
                 null, null);
             compiler.compile(null, null);
@@ -94,7 +91,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "budget = 2", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -119,7 +116,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
 
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "100.0 > budget", null, null, null, null, null, 
                 null, null);
         }
@@ -153,7 +150,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "budget = 2 AND 'Sales' = name", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -204,7 +201,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "(budget = 2 AND 'Sales' = name) OR (budget >= 50 AND name = 'Marketing')", 
                 null, null, null, null, null, null, null);
             compilation = compiler.compile(null, null);
@@ -288,7 +285,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
     {
         try
         {
-            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            JPQLCompiler compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "(budget = 2 AND 'Sales' == name) OR (budget >= 50 AND name == 'Marketing'", 
                 null, null, null, null, null, null, null);
             compiler.compile(null, null);
@@ -309,7 +306,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "name = \"Kettle\"", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -341,7 +338,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "LENGTH(name) > 5", null, null, null, null, null, 
                 null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -380,7 +377,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "NOT (budget > 32)", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -421,7 +418,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 Department.class.getName() + " d, IN(d.projects) n",
                 null, null, null, null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -472,7 +469,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         JavaQueryCompiler compiler = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 Department.class.getName() + " d," +
                 "IN(d.products) n",
                 null, null, null, null, null, null, null, null, null, null);
@@ -494,7 +491,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "1 > -1", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -516,7 +513,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, "EXISTS (SUBQ_1)", null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -544,7 +541,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Department.class, null, ":param MEMBER OF projects",
                 null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -579,7 +576,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         // Test use of UPDATE clause
         try
         {
-            JPQLCompiler compiler = new JPQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            JPQLCompiler compiler = new JPQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Project.class, null, null, null, null, null, null, null, 
                 null, "name = \"Sample Name\"");
             QueryCompilation compilation = compiler.compile(null, null);

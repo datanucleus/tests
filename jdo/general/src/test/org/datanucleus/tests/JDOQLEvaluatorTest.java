@@ -28,7 +28,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.api.jdo.JDOQuery;
-import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.query.compiler.JDOQLCompiler;
 import org.datanucleus.query.compiler.JavaQueryCompiler;
 import org.datanucleus.query.compiler.QueryCompilation;
@@ -78,8 +77,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "firstName == 'Mickey'");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -98,8 +96,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             q = (JDOQuery)pm.newQuery(Person.class, "lastName != 'Mouse'");
             query = q.getInternalQuery();
             clr = query.getExecutionContext().getClassLoaderResolver();
-            mmgr = query.getExecutionContext().getMetaDataManager();
-            compiler = new JDOQLCompiler(mmgr, clr, 
+            compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -155,8 +152,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "firstName == 'Mickey' || lastName == 'Mouse'");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -227,8 +223,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "firstName == 'Mickey' && lastName == 'Mouse'");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -284,8 +279,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "firstName.startsWith('Mi')");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -356,8 +350,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "firstName.endsWith('d')");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -416,8 +409,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "age > 34");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -437,8 +429,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             q = (JDOQuery)pm.newQuery(Person.class, "age+2 < 35");
             query = q.getInternalQuery();
             clr = query.getExecutionContext().getClassLoaderResolver();
-            mmgr = query.getExecutionContext().getMetaDataManager();
-            compiler = new JDOQLCompiler(mmgr, clr, 
+            compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -498,8 +489,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "this instanceof " + Employee.class.getName());
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -559,8 +549,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "!(age > 32)");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -622,8 +611,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(SetHolder.class, "joinSetNonPC1.contains('Third Element')");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -682,8 +670,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(MapHolder.class, "joinMapNonNon.containsKey('Third')");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -742,8 +729,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(MapHolder.class, "joinMapNonNon.containsValue('Third Element')");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -806,8 +792,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             q.declareVariables(GroupMember.class.getName() + " el");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -861,8 +846,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
             JDOQuery q = (JDOQuery)pm.newQuery(Person.class, "firstName.endsWith(:param)");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);
@@ -922,8 +906,7 @@ public class JDOQLEvaluatorTest extends JDOPersistenceTestCase
                 + " && lastName.length() == :param2");
             Query query = q.getInternalQuery();
             ClassLoaderResolver clr = query.getExecutionContext().getClassLoaderResolver();
-            MetaDataManager mmgr = query.getExecutionContext().getMetaDataManager();
-            JavaQueryCompiler compiler = new JDOQLCompiler(mmgr, clr, 
+            JavaQueryCompiler compiler = new JDOQLCompiler(query.getExecutionContext().getNucleusContext(), clr, 
                 null, query.getCandidateClass(), null, 
                 query.getFilter(), query.getParsedImports(), query.getOrdering(), query.getResult(), 
                 query.getGrouping(), query.getHaving(), query.getExplicitParametersDeclaration(), query.getExplicitVariablesDeclaration(), null);

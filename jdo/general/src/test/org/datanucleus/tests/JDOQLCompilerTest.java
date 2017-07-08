@@ -25,7 +25,7 @@ import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-import org.datanucleus.NucleusContext;
+import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.exceptions.NucleusException;
 import org.datanucleus.exceptions.NucleusUserException;
 import org.datanucleus.metadata.MetaDataManager;
@@ -56,7 +56,7 @@ import org.jpox.samples.models.company.Person;
  */
 public class JDOQLCompilerTest extends JDOPersistenceTestCase
 {
-    protected static NucleusContext nucCtx = null;
+    protected static PersistenceNucleusContext nucCtx = null;
     protected static MetaDataManager mmgr = null;
 
     public JDOQLCompilerTest(String name)
@@ -76,7 +76,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "notaField == 2", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(null, null);
@@ -109,7 +109,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == :param1", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(null, null);
@@ -142,7 +142,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compilation = compiler.compile(null, null);
@@ -174,7 +174,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "statusId == 2", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -199,7 +199,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
 
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "100.0 > price", null, null, null, null, null, 
                 null, null, null);
         }
@@ -233,7 +233,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "statusId == 2 && 100.0 > price", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -285,7 +285,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "(statusId == 2 && 100.0 > price) || (price >= 50 && price <= 95)", 
                 null, null, null, null, null, null, null, null);
             compilation = compiler.compile(null, null);
@@ -370,7 +370,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
     {
         try
         {
-            JDOQLCompiler compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            JDOQLCompiler compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "(statusId == 2 && 100.0 > price) || (price >= 50 && price <= 95", 
                 null, null, null, null, null, null, null, null);
             compiler.compile(null, null);
@@ -391,7 +391,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name.equals(\"Kettle\")", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -425,7 +425,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name.indexOf(\"nd\", 3)", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -465,7 +465,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Inventory.class, null, "products.contains(element) && element.price < 200", 
                 null, null, null, null, null, null, Product.class.getName() + " element", null);
             compilation = compiler.compile(new HashMap(), null);
@@ -539,7 +539,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Inventory.class, null, "products.contains(element) && element.guarantee.numberOfYears < 3", 
                 null, null, null, null, null, null, Product.class.getName() + " element", null);
             compilation = compiler.compile(new HashMap(), null);
@@ -614,7 +614,7 @@ LOG.info(">> expr=" + dyExpr);
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "!(price > 32)", null, null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -655,7 +655,7 @@ LOG.info(">> expr=" + dyExpr);
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Inventory.class, null, "1 > -1", null, null, null, null, null, null, null, null);
             compilation = compiler.compile(new HashMap(), null);
         }
@@ -677,7 +677,7 @@ LOG.info(">> expr=" + dyExpr);
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "\"SomeString\".startsWith(name)", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -713,7 +713,7 @@ LOG.info(">> expr=" + dyExpr);
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "((Book)this).author == 'Tolkien'", null, null, null, null, null, 
                 null, null, null);
             compilation = compiler.compile(new HashMap(), null);
@@ -779,7 +779,7 @@ LOG.info(">> expr=" + dyExpr);
         JavaQueryCompiler compiler = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == :param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compiler.compile(null, null);
@@ -801,7 +801,7 @@ LOG.info(">> expr=" + dyExpr);
         JavaQueryCompiler compiler = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Person.class, null, null, null, null, "birthDate.getYear() AS YEAR", 
                 "birthDate.getYear()", null, null, null, null);
             compiler.compile(null, null);
@@ -814,7 +814,7 @@ LOG.info(">> expr=" + dyExpr);
 
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Person.class, null, null, null, null, "birthDate.getYear()/10", 
                 "birthDate.getYear()/10", null, null, null, null);
             compiler.compile(null, null);
@@ -836,7 +836,7 @@ LOG.info(">> expr=" + dyExpr);
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compilation = compiler.compile(null, null);
@@ -924,7 +924,7 @@ LOG.info(">> expr=" + dyExpr);
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, "name == param1", null, null, null, null, null, 
                 "java.lang.String param1", null, null);
             compilation = compiler.compile(null, null);
@@ -1004,9 +1004,8 @@ LOG.info(">> expr=" + dyExpr);
         QueryCompilation compilation = null;
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
-                null, Product.class, null, null, null, "name ASC", null, null, null, 
-                null, null, null);
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
+                null, Product.class, null, null, null, "name ASC", null, null, null, null, null, null);
             compilation = compiler.compile(null, null);
         }
         catch (NucleusUserException ne)
@@ -1026,7 +1025,7 @@ LOG.info(">> expr=" + dyExpr);
         // Test use of NULLS
         try
         {
-            compiler = new JDOQLCompiler(mmgr, nucCtx.getClassLoaderResolver(null), 
+            compiler = new JDOQLCompiler(nucCtx, nucCtx.getClassLoaderResolver(null), 
                 null, Product.class, null, null, null, "name ASC NULLS FIRST", null, null, null, 
                 null, null, null);
             compilation = compiler.compile(null, null);
