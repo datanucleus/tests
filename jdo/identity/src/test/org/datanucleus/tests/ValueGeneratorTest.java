@@ -97,10 +97,10 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test the use of TablePoidGenerator. This is for all datastores.
+     * Test the use of "increment" strategy. This is for all datastores.
      * Note : if this impacts on subsequent tests, comment it out.
      */
-    public void testTablePoidMultiThreadedNewPM()
+    public void testIncrementMultiThreadedNewPM()
     throws Exception
     {
         try
