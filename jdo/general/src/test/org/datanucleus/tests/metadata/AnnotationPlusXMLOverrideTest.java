@@ -28,7 +28,7 @@ import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.ColumnMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
-import org.datanucleus.metadata.IdentityStrategy;
+import org.datanucleus.metadata.ValueGenerationStrategy;
 import org.datanucleus.metadata.JdbcType;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.metadata.QueryMetaData;
@@ -103,7 +103,7 @@ public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
 
         // package.orm (overriding) - Annotation: NATIVE, .jdo: IDENTITY
         assertEquals(prefix + "PK value strategy incorrect",
-                     IdentityStrategy.SEQUENCE, fmd.getValueStrategy());
+                     ValueGenerationStrategy.SEQUENCE, fmd.getValueStrategy());
     }
 
     /**

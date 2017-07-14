@@ -38,7 +38,7 @@ import org.datanucleus.metadata.ColumnMetaData;
 import org.datanucleus.metadata.FetchGroupMemberMetaData;
 import org.datanucleus.metadata.FetchGroupMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
-import org.datanucleus.metadata.IdentityStrategy;
+import org.datanucleus.metadata.ValueGenerationStrategy;
 import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.IndexMetaData;
 import org.datanucleus.metadata.InheritanceMetaData;
@@ -414,7 +414,7 @@ public class AnnotationTest extends JDOPersistenceTestCase
     public void testStrategyValue()
     {
         ClassMetaData cmd1 = (ClassMetaData) metaDataMgr.getMetaDataForClass(Person.class.getName(), clr);
-        assertEquals(IdentityStrategy.INCREMENT, cmd1.getMetaDataForMember("personNum").getValueStrategy());
+        assertEquals(ValueGenerationStrategy.INCREMENT, cmd1.getMetaDataForMember("personNum").getValueStrategy());
     }
 
     /**

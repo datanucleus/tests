@@ -28,7 +28,7 @@ import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.ColumnMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
-import org.datanucleus.metadata.IdentityStrategy;
+import org.datanucleus.metadata.ValueGenerationStrategy;
 import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.InheritanceMetaData;
 import org.datanucleus.metadata.InheritanceStrategy;
@@ -211,7 +211,7 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
         assertTrue(prefix + "pk is wrong", fmd.isPrimaryKey());
 
         assertEquals(prefix + "pk value strategy incorrect",
-                     IdentityStrategy.IDENTITY, fmd.getValueStrategy());
+                     ValueGenerationStrategy.IDENTITY, fmd.getValueStrategy());
     }
 
     /**

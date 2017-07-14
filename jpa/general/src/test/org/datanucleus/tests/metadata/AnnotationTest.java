@@ -35,7 +35,7 @@ import org.datanucleus.metadata.ColumnMetaData;
 import org.datanucleus.metadata.ElementMetaData;
 import org.datanucleus.metadata.EventListenerMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
-import org.datanucleus.metadata.IdentityStrategy;
+import org.datanucleus.metadata.ValueGenerationStrategy;
 import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.InheritanceMetaData;
 import org.datanucleus.metadata.InheritanceStrategy;
@@ -458,7 +458,7 @@ public class AnnotationTest extends JPAPersistenceTestCase
 
         AbstractMemberMetaData fmd1 = cmd1.getMetaDataForMember("id");
         assertNotNull("Account has no id field!", fmd1);
-        assertEquals("Account has incorrect value strategy", fmd1.getValueStrategy(), IdentityStrategy.INCREMENT);
+        assertEquals("Account has incorrect value strategy", fmd1.getValueStrategy(), ValueGenerationStrategy.INCREMENT);
     }
 
     /**
