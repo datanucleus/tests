@@ -30,8 +30,8 @@
                 <version>2.3.2</version>
                 <configuration>
                     <encoding>ISO-8859-1</encoding>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
