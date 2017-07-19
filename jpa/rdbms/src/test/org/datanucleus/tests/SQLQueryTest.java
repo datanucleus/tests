@@ -511,4 +511,64 @@ public class SQLQueryTest extends JPAPersistenceTestCase
             clean(Login.class);
         }
     }
+
+    /**
+     * Test of an SQL query using a result class as an Entity.
+     */
+    public void testSQLResultEntity()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Login login = new Login("flintstone","pwd");
+                em.persist(login);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                // Execute a query
+                List<Login> result = em.createNativeQuery("SELECT * FROM JPA_AN_LOGIN", Login.class).getResultList();
+                assertEquals(1, result.size());
+
+                Login l = result.get(0);
+                assertNotNull(l);
+
+                // Check that the result entity is managed by this EntityManager
+                assertTrue(em.contains(l));
+
+                tx.rollback();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(Login.class);
+        }
+    }
 }
