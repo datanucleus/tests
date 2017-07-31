@@ -2609,10 +2609,8 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test adding and removing elements from Collections whose members are
-     * defined as a non-PC superclass or interface
+     * Test adding and removing elements from Collections whose members are defined as a non-PC superclass or interface
      */
-    @SuppressWarnings("unchecked")
     public void testNormalFCOCollectionFieldPersistence4()
     {
         if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_COLLECTION_ELEMENT))
@@ -3850,7 +3848,6 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
      * persisting an object with a collection field, add objects to the
      * collection, make the owning object transient, and then persist it again.
      */
-    @SuppressWarnings("unchecked")
     public void testJoinTableCollectionFieldPersistence1()
     {
         if (!storeMgr.getSupportedOptions().contains(StoreManager.OPTION_ORM_SERIALISED_COLLECTION_ELEMENT))

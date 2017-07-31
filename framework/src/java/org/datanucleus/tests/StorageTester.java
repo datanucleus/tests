@@ -113,7 +113,6 @@ public class StorageTester
         Assert.assertTrue("Incorrect field values in object, was " + actual + ", should be " + expected, actual.compareTo(expected));
     }
 
-    @SuppressWarnings("unchecked")
     public static void assertResultsEqual(Set expected, Collection results)
     {
         if (!expected.isEmpty() || !results.isEmpty())
@@ -326,7 +325,6 @@ public class StorageTester
         }
     }
 
-    @SuppressWarnings("unchecked")
     protected void iterateUsingExtent(Class c)
     throws Exception
     {

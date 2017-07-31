@@ -120,11 +120,7 @@ public class DataNucleusTestWatcher extends TestWatcher
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private <T extends Annotation> Optional<T> findAnnotationAtMethodOrClass(
-            Class<T> annotation,
-            Description description,
-            Class<?> testClass)
+    private <T extends Annotation> Optional<T> findAnnotationAtMethodOrClass(Class<T> annotation, Description description, Class<?> testClass)
     {
         Annotation foundAnnotation = description.getAnnotation(annotation);
         if (foundAnnotation == null)

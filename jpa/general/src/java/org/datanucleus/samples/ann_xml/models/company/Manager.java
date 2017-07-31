@@ -60,7 +60,6 @@ public class Manager extends Employee implements Serializable
         return this.subordinates;
     }
 
-    @SuppressWarnings("unchecked")
     public void addSubordinate(Employee e)
     {
         this.subordinates.add(e);
@@ -71,7 +70,6 @@ public class Manager extends Employee implements Serializable
         this.subordinates.remove(e);
     }
 
-    @SuppressWarnings("unchecked")
     public void addSubordinates(Collection c)
     {
         this.subordinates.addAll(c);
@@ -87,7 +85,6 @@ public class Manager extends Employee implements Serializable
         return this.departments;
     }
 
-    @SuppressWarnings("unchecked")
     public void addDepartment(Department d)
     {
         this.departments.add(d);
@@ -108,10 +105,8 @@ public class Manager extends Employee implements Serializable
      * contain the same number of objects and each element of the first set has
      * a corresponding element in the second set whose fields compare equal
      * according to the compareTo() method.
-     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt>
-     * otherwise.
+     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt> otherwise.
      */
-    @SuppressWarnings("unchecked")
     public static boolean compareSet(Set s1, Set s2)
     {
         if (s1 == null)

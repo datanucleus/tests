@@ -362,7 +362,6 @@ public class RelationshipsTest extends JPAPersistenceTestCase
     /**
      * Test of 1-N List of NonPC elements (String).
      */
-    @SuppressWarnings("unchecked")
     public void testOneToManyNonPC()
     {
         try

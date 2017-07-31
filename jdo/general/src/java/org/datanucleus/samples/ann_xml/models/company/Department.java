@@ -82,7 +82,6 @@ public class Department implements Serializable
         this.projects = projects;
     }
 
-    @SuppressWarnings("unchecked")
     public void addProject(Project proj)
     {
         this.projects.add(proj);

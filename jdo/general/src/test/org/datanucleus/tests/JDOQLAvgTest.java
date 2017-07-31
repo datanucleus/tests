@@ -135,12 +135,9 @@ public class JDOQLAvgTest extends JDOPersistenceTestCase
                                 + ") == 7.5 GROUP BY charField ");
 
                 tx.begin();
-                @SuppressWarnings("unchecked")
-                List<Character> result = (List<Character>) query.execute();
 
-                assertThat(result)
-                        .as("Should filter based on AVG decimal value")
-                        .containsExactly('a');
+                List<Character> result = (List<Character>) query.execute();
+                assertThat(result).as("Should filter based on AVG decimal value").containsExactly('a');
 
                 tx.commit();
             }

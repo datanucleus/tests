@@ -76,7 +76,6 @@ public class Manager extends Employee implements Serializable
         this.subordinates.remove(e);
     }
 
-    @SuppressWarnings("unchecked")
     public void addSubordinates(Collection c)
     {
         this.subordinates.addAll(c);
@@ -115,7 +114,6 @@ public class Manager extends Employee implements Serializable
      * @return <tt>true</tt> if the sets compare equal, <tt>false</tt>
      * otherwise.
      */
-    @SuppressWarnings("unchecked")
     public static boolean compareSet(Set s1, Set s2)
     {
         if (s1 == null)

@@ -387,7 +387,6 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static void cleanClassForPM(PersistenceManager pm, Class cls)
     {
         javax.jdo.Transaction tx = pm.currentTransaction();

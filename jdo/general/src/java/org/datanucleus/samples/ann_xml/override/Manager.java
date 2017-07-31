@@ -116,10 +116,8 @@ public class Manager extends Employee implements Serializable
      * contain the same number of objects and each element of the first set has
      * a corresponding element in the second set whose fields compare equal
      * according to the compareTo() method.
-     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt>
-     * otherwise.
+     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt> otherwise.
      */
-    @SuppressWarnings("unchecked")
     public static boolean compareSet(Set s1, Set s2)
     {
         if (s1 == null)

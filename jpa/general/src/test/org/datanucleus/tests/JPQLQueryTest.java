@@ -1148,7 +1148,6 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
     /**
      * Test for Inner Join 1-N unidirectional FK relation from the owner side.
      */
-    @SuppressWarnings("unchecked")
     public void testInnerJoinOneToManyUniFKOwner()
     {
         try
