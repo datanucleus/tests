@@ -17,11 +17,13 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.types;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import org.datanucleus.samples.typeconversion.CollectionConverterHolder;
 import org.datanucleus.samples.typeconversion.ComplicatedType;
@@ -79,6 +81,7 @@ public class AttributeConverterTest extends JPAPersistenceTestCase
                 emf.getCache().evictAll();
             }
 
+            // Check the persisted info
             em = getEM();
             tx = em.getTransaction();
             try
@@ -93,6 +96,36 @@ public class AttributeConverterTest extends JPAPersistenceTestCase
                 assertNotNull(comp2);
                 assertEquals("String 78", comp2.getName1());
                 assertEquals("Number 34", comp2.getName2());
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during retrieve when using type converter", e);
+                fail("Failure on retrieve with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            // Try a query using the converted type as a parameter
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                Query q = em.createQuery("SELECT h FROM " + TypeHolder.class.getName() + " h WHERE h.details = :value1");
+                q.setParameter("value1", new ComplicatedType("String 45", "Number 23"));
+                List<TypeHolder> results = q.getResultList();
+                assertNotNull(results);
+                assertEquals(1, results.size());
 
                 tx.commit();
             }

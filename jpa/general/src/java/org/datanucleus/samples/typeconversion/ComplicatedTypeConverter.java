@@ -20,10 +20,12 @@ package org.datanucleus.samples.typeconversion;
 import java.util.StringTokenizer;
 
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
 /**
  * Simple converter to String for a ComplicatedType.
  */
+@Converter(autoApply=true)
 public class ComplicatedTypeConverter implements AttributeConverter<ComplicatedType, String>
 {
     /* (non-Javadoc)
