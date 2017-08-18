@@ -15,7 +15,7 @@ limitations under the License.
 Contributors:
     ...
 **********************************************************************/
-package org.datanucleus.tests;
+package org.datanucleus.tests.types;
 
 import java.util.List;
 
@@ -26,19 +26,19 @@ import org.datanucleus.samples.annotations.types.basic.TypeHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
- * Test case for storage of different types.
+ * Test case for storage of different LOB types.
  */
-public class TypeStorageTest extends JPAPersistenceTestCase
+public class LobTest extends JPAPersistenceTestCase
 {
-    public TypeStorageTest(String name)
+    public LobTest(String name)
     {
         super(name);
     }
 
     /**
-     * Test of lobs
+     * Test of CLOB
      */
-    public void testLobs()
+    public void testClob()
     {
         try
         {
@@ -81,10 +81,10 @@ public class TypeStorageTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                List result = em.createQuery("SELECT Object(T) FROM " + TypeHolder.class.getName() + " T").getResultList();
+                List result = em.createQuery("SELECT T FROM " + TypeHolder.class.getName() + " T").getResultList();
                 assertEquals(1, result.size());
                 TypeHolder holder = (TypeHolder)result.get(0);
-                assertEquals("The CLOB-stored description is incorrect", desc, holder.getString1());
+                assertEquals("The LOB-stored description is incorrect", desc, holder.getString1());
 
                 tx.rollback();
             }
