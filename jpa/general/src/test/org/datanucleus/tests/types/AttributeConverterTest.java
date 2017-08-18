@@ -15,7 +15,7 @@ limitations under the License.
 Contributors:
     ...
 **********************************************************************/
-package org.datanucleus.tests;
+package org.datanucleus.tests.types;
 
 import java.util.Map;
 import java.util.Set;
@@ -35,9 +35,9 @@ import org.datanucleus.tests.JPAPersistenceTestCase;
 /**
  * Tests for JPA 2.1 type conversion.
  */
-public class TypeConversionTest extends JPAPersistenceTestCase
+public class AttributeConverterTest extends JPAPersistenceTestCase
 {
-    public TypeConversionTest(String name)
+    public AttributeConverterTest(String name)
     {
         super(name);
     }
