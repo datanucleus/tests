@@ -45,7 +45,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         // Retrieve the metadata from the MetaDataManager (populates and initialises everything)

@@ -72,7 +72,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         ClassMetaData cmd1 = (ClassMetaData)metaDataMgr.getMetaDataForClass(LoginAccount.class.getName(), clr);
@@ -99,7 +99,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         // non-owner side
@@ -132,7 +132,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         // owner side
@@ -168,7 +168,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         // owner side
@@ -234,7 +234,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         // owner side
@@ -281,7 +281,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         // owner side
@@ -328,7 +328,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         // owner side
@@ -355,7 +355,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         ClassMetaData cmd1 = (ClassMetaData)metaDataMgr.getMetaDataForClass(Employee.class.getName(), clr);
@@ -380,7 +380,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         ClassMetaData cmd1 = (ClassMetaData)metaDataMgr.getMetaDataForClass(Department.class.getName(), clr);
@@ -403,7 +403,7 @@ public class AnnotationPlusXMLTest extends JPAPersistenceTestCase
         NucleusContext nucleusCtx = new PersistenceNucleusContextImpl("JPA", null);
         ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
         MetaDataManager metaDataMgr = new JPAMetaDataManager(nucleusCtx);
-        PersistenceUnitMetaData pumd = metaDataMgr.getMetaDataForPersistenceUnit("JPATest");
+        PersistenceUnitMetaData pumd = getMetaDataForPersistenceUnit(nucleusCtx, "JPATest");
         metaDataMgr.loadPersistenceUnit(pumd, null);
 
         ClassMetaData cmd1 = (ClassMetaData)metaDataMgr.getMetaDataForClass(WebSite.class.getName(), clr);
