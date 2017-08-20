@@ -165,7 +165,7 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
 
         NucleusContext context = new EnhancementNucleusContextImpl("JDO", null);
         MetaDataManager mgr = new JDOMetaDataManager(context);
-        MetaDataParser parser = new MetaDataParser(mgr, context.getPluginManager(), true);
+        MetaDataParser parser = new MetaDataParser(mgr, context.getPluginManager(), true, true);
         ClassLoaderResolverImpl clr = new ClassLoaderResolverImpl();
 
         // Parse the MetaData
