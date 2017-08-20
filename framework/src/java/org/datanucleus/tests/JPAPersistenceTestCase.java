@@ -25,8 +25,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.datanucleus.ClassLoaderResolver;
+import org.datanucleus.NucleusContext;
 import org.datanucleus.PersistenceNucleusContext;
+import org.datanucleus.PropertyNames;
 import org.datanucleus.exceptions.ClassNotResolvedException;
+import org.datanucleus.metadata.MetaDataUtils;
+import org.datanucleus.metadata.PersistenceUnitMetaData;
 
 /**
  * Abstract base class for all JPA unit tests needing access to an entity manager factory.
@@ -171,5 +175,20 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
             }
             em.close();
         }
+    }
+
+    /**
+     * Convenience method to extract the metadata for a persistence-unit.
+     * @param nucleusCtx NucleusContext
+     * @param persistenceUnitName Name of the persistence-unit
+     * @return MetaData for the persistence-unit (or null if not found)
+     */
+    public PersistenceUnitMetaData getMetaDataForPersistenceUnit(NucleusContext nucleusCtx, String persistenceUnitName)
+    {
+        String filename = nucleusCtx.getConfiguration().getStringProperty(PropertyNames.PROPERTY_PERSISTENCE_XML_FILENAME);
+        boolean validateXML = nucleusCtx.getConfiguration().getBooleanProperty(PropertyNames.PROPERTY_METADATA_XML_VALIDATE);
+        boolean supportXMLNamespaces = nucleusCtx.getConfiguration().getBooleanProperty(PropertyNames.PROPERTY_METADATA_XML_NAMESPACE_AWARE);
+        ClassLoaderResolver clr = nucleusCtx.getClassLoaderResolver(null);
+        return MetaDataUtils.getMetaDataForPersistenceUnit(nucleusCtx.getPluginManager(), filename, persistenceUnitName, validateXML, supportXMLNamespaces, clr);
     }
 }
