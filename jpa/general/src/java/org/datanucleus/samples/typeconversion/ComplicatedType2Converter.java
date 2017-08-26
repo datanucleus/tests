@@ -33,7 +33,7 @@ public class ComplicatedType2Converter implements AttributeConverter<Complicated
      */
     public String convertToDatabaseColumn(ComplicatedType2 comp)
     {
-        return comp.getName1() + ":" + comp.getName2();
+        return comp.getName1() + "::" + comp.getName2();
     }
 
     /* (non-Javadoc)
