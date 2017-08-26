@@ -28,6 +28,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
@@ -52,6 +53,8 @@ import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.samples.annotations.models.company.Qualification;
 import org.datanucleus.samples.annotations.one_many.bidir.Animal;
 import org.datanucleus.samples.annotations.one_many.bidir.Farm;
+import org.datanucleus.samples.attributeconverter.ComplicatedType;
+import org.datanucleus.samples.attributeconverter.TypeHolder;
 import org.datanucleus.samples.jpa.criteria.embedded.A;
 import org.datanucleus.samples.jpa.criteria.embedded.B;
 import org.datanucleus.samples.jpa.criteria.embedded.C;
@@ -1762,6 +1765,99 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             q.setParameter(paramExpr, "Jim"); // change from Joe to Jim
             int numUpdated = q.executeUpdate();
             assertEquals(1, numUpdated);
+
+            tx.rollback();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown during test", e);
+            fail("Exception caught during test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test query of entity with AttributeConverter field using Criteria and a literal of the converter type
+     */
+    public void testCriteriaAttributeConverterLiteral()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            TypeHolder h = new TypeHolder(1, "First");
+            h.setDetails(new ComplicatedType("FirstName", "LastName"));
+            em.persist(h);
+            em.flush();
+            long id = h.getId();
+
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaQuery<TypeHolder> cq = cb.createQuery(TypeHolder.class);
+            Root<TypeHolder> root = cq.from(TypeHolder.class);
+            cq.where(cb.equal(root.get("details"), cb.literal(new ComplicatedType("FirstName", "LastName"))));
+            TypedQuery q = em.createQuery(cq);
+            List<TypeHolder> results = q.getResultList();
+
+            assertNotNull(results);
+            assertEquals(1, results.size());
+            TypeHolder hr = results.get(0);
+            assertEquals(id, hr.getId());
+
+            tx.rollback();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown during test", e);
+            fail("Exception caught during test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test query of entity with AttributeConverter field using Criteria and a parameter of the converter type
+     */
+    public void testCriteriaAttributeConverterParameter()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            TypeHolder h = new TypeHolder(1, "First");
+            h.setDetails(new ComplicatedType("FirstName", "LastName"));
+            em.persist(h);
+            em.flush();
+            long id = h.getId();
+
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+            CriteriaQuery<TypeHolder> cq = cb.createQuery(TypeHolder.class);
+            Root<TypeHolder> root = cq.from(TypeHolder.class);
+            cq.where(cb.equal(root.get("details"), cb.parameter(ComplicatedType.class, "theDetails")));
+            TypedQuery q = em.createQuery(cq);
+            q.setParameter("theDetails", new ComplicatedType("FirstName", "LastName"));
+            List<TypeHolder> results = q.getResultList();
+
+            assertNotNull(results);
+            assertEquals(1, results.size());
+            TypeHolder hr = results.get(0);
+            assertEquals(id, hr.getId());
 
             tx.rollback();
         }
