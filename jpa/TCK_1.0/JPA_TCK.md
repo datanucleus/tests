@@ -79,36 +79,32 @@ Edit bin/ts.jte if necessary to make sure the DataNucleus jars in _datanucleus_ 
 listed.
 
 
+### Setup on Linux
+
+    export TS_HOME="{location_of_jpa_tck}"
+    PATH=$PATH:${TS_HOME}/bin
+    export ANT_HOME=$TS_HOME/tools/ant
+
+
 ### To setup the database
 
-    set TS_HOME={location-of-jpa-tck}
-    set ANT_HOME=%TS_HOME%\tools\ant
-    cd %TS_HOME%\bin
+    cd $TS_HOME/bin
     tsant -f initdb.xml init.database
 
  
-### To build the tck
+### To build the tck (and enhance the classes)
 
-    set TS_HOME={location-of-jpa-tck}
-    set ANT_HOME=%TS_HOME%\tools\ant
-    cd %TS_HOME%\src
-    %TS_HOME%\bin\tsant clean
-    %TS_HOME%\bin\tsant build
+    cd $TS_HOME/src
+    tsant clean
+    tsant build
+    tsant tslib
 
  
 ### To run the tck
 
-    set TS_HOME={location-of-jpa-tck}
-    set ANT_HOME=%TS_HOME%\tools\ant
-    cd %TS_HOME%\src\com\sun\ts\tests\ejb30\persistence
-    %TS_HOME%\bin\tsant runclient
+    cd $TS_HOME\bin
+    tsant gui
 
  
-### To run tests individually
-
-    set TS_HOME={location-of-jpa-tck}
-    set ANT_HOME=%TS_HOME%\tools\ant
-    cd %TS_HOME%\src\com\sun\ts\tests\ejb30\persistence\basic
-    %TS_HOME%/bin/tsant runclient
 
  
