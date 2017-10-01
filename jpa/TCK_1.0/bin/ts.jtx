@@ -1,0 +1,61 @@
+/*
+ * Copyright 2006 Sun Microsystems, Inc. All rights reserved.
+ * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
+
+/*
+ * @(#)ts.jtx	1.7 07/01/29
+ *
+ */
+
+##############
+#
+# Bug 6423666
+#
+##############
+com/sun/ts/tests/ejb30/persistence/query/language/Client.java#queryTest57_from_standalone
+##############
+#
+# Bug 6443329
+#
+##############
+com/sun/ts/tests/ejb30/persistence/entitytest/apitests/Client.java#entityAPITest11_from_standalone
+##############
+#
+# Bug 6443337
+#
+##############
+com/sun/ts/tests/ejb30/persistence/entitytest/persist/oneXmany/Client.java#persist1XMTest2_from_standalone
+##############
+#
+# Bug 6429997
+#
+##############
+com/sun/ts/tests/ejb30/persistence/query/language/Client.java#test_trimHavingClause_01_from_standalone
+com/sun/ts/tests/ejb30/persistence/query/language/Client.java#test_trimHavingClause_02_from_standalone
+com/sun/ts/tests/ejb30/persistence/query/language/Client.java#test_trimHavingClause_03_from_standalone
+##############
+#
+# Bug 6429479
+#
+##############
+com/sun/ts/tests/ejb30/persistence/query/language/Client.java#queryTest46_from_standalone
+##############
+#
+# Bug 6435690
+#
+##############
+com/sun/ts/tests/ejb30/persistence/entitytest/remove/oneXmany/Client.java#remove1XMTest8_from_standalone
+
+# Bug 6512734
+#############
+com/sun/ts/tests/ejb30/persistence/entitytest/apitests/Client.java#entityAPITest5_from_standalone
+
+# Bug 6514233
+############
+com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#prePersistRuntimeExceptionTest_from_standalone
+com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#prePersistRuntimeExceptionTest2_from_standalone
+com/sun/ts/tests/ejb30/persistence/callback/listener/Client.java#prePersistRuntimeExceptionTest_from_standalone
+com/sun/ts/tests/ejb30/persistence/callback/listeneroverride/Client.java#prePersistRuntimeExceptionTest_from_standalone
+com/sun/ts/tests/ejb30/persistence/callback/method/Client.java#prePersistRuntimeExceptionTest_from_standalone
+com/sun/ts/tests/ejb30/persistence/callback/methodoverride/Client.java#prePersistRuntimeExceptionTest_from_standalone

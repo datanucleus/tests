@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project name="ejb3" basedir="." default="usage"> 
+  
+   <!-- IMPORTS -->
+
+   <import file="${ts.home}/src/com/sun/ts/tests/ejb30/persistence/common/persistence-import.xml"/>
+   <import file="${ts.home}/bin/xml/ts.import.xml"/>
+
+   <property name="app.name" value="ejb3_inherit_mappedsc"/>
+
+   <property name="par.classes"
+      value="${pkg.dir}/Employee.class,
+                 ${pkg.dir}/Department.class,
+                 ${pkg.dir}/Project.class,
+                 ${pkg.dir}/PartTimeEmployee.class,
+                 ${pkg.dir}/FullTimeEmployee.class"/>
+
+    <target name="package">
+
+      <ts.par descriptor="persistence.xml"
+                descriptordir="${ejb3.persistence.common.pkg}/template"
+        	archivename="${app.name}"
+      		includedefaultfiles="false">
+      		<fileset dir="${class.dir}"
+                includes="${par.classes},
+                 com/sun/ts/tests/ejb30/persistence/inheritance/mappedsc/annotation/AbstractPersonnel.class"/>
+
+        </ts.par>
+    
+        <ts.vehicles name="${app.name}" singleear="true">
+        <ear-elements>
+          <zipfileset dir="${dist.dir}/${pkg.dir}"
+                includes="${app.name}.jar"
+                prefix="lib"/>
+        </ear-elements>
+
+        </ts.vehicles>
+
+    </target>
+
+</project>

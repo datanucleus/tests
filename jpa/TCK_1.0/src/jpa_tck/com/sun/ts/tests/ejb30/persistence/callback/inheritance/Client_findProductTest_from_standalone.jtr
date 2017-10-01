@@ -1,0 +1,101 @@
+#Test Results (version 2)
+#Tue Sep 15 19:23:45 BST 2015
+#checksum:875826fc94d1c35
+#-----testdescription-----
+$file=/usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java
+$root=/usr/local/jpa_tck/src
+assertion_ids=PERSISTENCE:SPEC:735  See assertion html documents.
+classname=com.sun.ts.tests.ejb30.persistence.callback.inheritance.Client
+direction=forward
+finder=cts
+id=findProductTest_from_standalone
+keywords=all forward
+service_eetest=yes
+testName=findProductTest
+testProps=
+test_directory=com/sun/ts/tests/ejb30/persistence/callback/inheritance
+
+#-----environment-----
+JAVA_HOME=/usr/java/jdk1.7.0_79/jre
+SYSTEMROOT=${env.SystemRoot}
+TS_HOME=/home/andy/work/datanucleus/tests/jpa/TCK/
+command.testExecute=com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=${ts.run.classpath}:${ts.harness.classpath}:${JAVA_HOME}/../lib/tools.jar:DISPLAY=${ts.display} HOME="${user.home}" windir=${windir} SYSTEMROOT=${SYSTEMROOT} ${JAVA_HOME}/bin/java -Dcts.tmp=$harness.temp.directory -Djava.security.policy=${ts.home}/bin/harness.policy -Ddeliverable.class=${deliverable.class} $testExecuteClass $testExecuteArgs
+database.classes=${jdbc.lib.class.path}/postgresql-jdbc.jar
+deliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable
+harness.log.delayseconds=1
+harness.log.port=2000
+harness.log.traceflag=false
+harness.socket.retry.count=10
+harness.temp.directory=${ts.home}/tmp
+jdbc.lib.class.path=${jpa.home}/jdbc/lib
+jpa.classes=${jpa.home}/lib/persistence-api.jar:${jpa.home}/datanucleus/datanucleus-core.jar:${jpa.home}/datanucleus/datanucleus-rdbms.jar:${jpa.home}/datanucleus/datanucleus-api-jpa.jar:${jpa.home}/datanucleus/log4j.jar:${jpa.home}/datanucleus/classes
+jpa.home=/usr/local/jpa_tck
+persistence.unit.name=JPATCK
+persistence.unit.properties.file.full.path=${ts.home}/bin/datanucleus-provider.properties
+platform.mode=standalone
+porting.ts.url.class.1=com.sun.ts.lib.implementation.sun.common.SunRIURL
+ts.display=:0.0
+ts.harness.classpath=${ts.home}/lib/tsharness.jar:${ts.home}/lib/sigtest.jar:${ts.run.classpath}:${ts.home}/lib/javatest.jar:${ts.home}/tools/ant/lib/ant.jar
+ts.home=/home/andy/work/datanucleus/tests/jpa/TCK/
+ts.run.classpath=${ts.home}/classes:${database.classes}:${jpa.classes}
+user.home=/home/andy
+windir=${env.windir}
+
+#-----testresult-----
+description=file:///usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#findProductTest_from_standalone
+end=Tue Sep 15 19:23:45 BST 2015
+environment=ts_unix
+execStatus=Passed.
+javatestOS=Linux 3.19.8-desktop-3.mga5 (amd64)
+javatestVersion=3.2.1
+script=com.sun.ts.lib.harness.TSScript 
+sections=script_messages TestRun
+start=Tue Sep 15 19:23:42 BST 2015
+test=com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#findProductTest_from_standalone
+timeoutSeconds=600
+work=/usr/local/jpa_tck/src/jpa_tck/com/sun/ts/tests/ejb30/persistence/callback/inheritance
+
+#section:script_messages
+----------messages:(0/0)----------
+
+#section:TestRun
+----------messages:(1/1682)----------
+command: com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=/home/andy/work/datanucleus/tests/jpa/TCK//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/home/andy/work/datanucleus/tests/jpa/TCK//lib/tsharness.jar:/home/andy/work/datanucleus/tests/jpa/TCK//lib/sigtest.jar:/home/andy/work/datanucleus/tests/jpa/TCK//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/home/andy/work/datanucleus/tests/jpa/TCK//lib/javatest.jar:/home/andy/work/datanucleus/tests/jpa/TCK//tools/ant/lib/ant.jar:/usr/java/jdk1.7.0_79/jre/../lib/tools.jar:DISPLAY=:0.0:/home/andy/work/datanucleus/tests/jpa/TCK/dist/com/sun/ts/tests/ejb30/persistence/callback/inheritance/ejb3_pm_callback_inheritance.jar HOME=/home/andy windir= SYSTEMROOT= /usr/java/jdk1.7.0_79/jre/bin/java -Dcts.tmp=/home/andy/work/datanucleus/tests/jpa/TCK//tmp -Djava.security.policy=/home/andy/work/datanucleus/tests/jpa/TCK//bin/harness.policy -Ddeliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable com.sun.ts.tests.common.vehicle.VehicleClient -p /home/andy/work/datanucleus/tests/jpa/TCK//tmp/tstest.jte -t findProductTest -vehicle standalone
+----------log:(33/2994)----------
+************************************************************
+* props file set to "/tmp/andy-cts-props.txt"
+************************************************************
+setup
+platform.mode is set to standalone, so tests are running in J2SE environment standalone mode.persistence.unit.name is set to JPATCK
+persistence unit properites from user: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persistence unit properites verified: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+PricedPartProduct: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.GenerictListener@77aa13c5
+PricedPartProduct: In PartProductListener.prePersist.
+This callback PrePersist in ProductListener should not be invoked. The one in the entity subclass should be invoked
+PricedPartProduct: In postPersist.
+This callback PostPersist in PartProductListener should not be invoked. The one in the entity subclass should be invoked
+This callback PostPersist in ProductListener should not be invoked. The one in the entity subclass should be invoked
+finding object using Product.class and id 'findProductTest'
+found object of type class com.sun.ts.tests.ejb30.persistence.callback.inheritance.PricedPartProduct
+finding object using PricedPartProduct.class and id 'findProductTest'
+found object of type class com.sun.ts.tests.ejb30.persistence.callback.inheritance.PricedPartProduct
+The two entities are identical
+Find All PricedPartProducts
+Find All PricedPartProduct_2s
+PricedPartProducts found: cleaning up 
+DEBUG: Found PricedPartProduct: findProductTest
+PricedPartProduct: In preRemove.
+This callback PreRemove in PartProductListener should not be invoked. The one in the entity subclass should be invoked
+This callback PreRemove in ProductListener should not be invoked. The one in the entity subclass should be invoked
+PricedPartProduct: In preRemove.
+This callback PreRemove in PartProductListener should not be invoked. The one in the entity subclass should be invoked
+This callback PreRemove in ProductListener should not be invoked. The one in the entity subclass should be invoked
+PricedPartProduct: In postRemove.
+This callback PostRemove in PartProductListener should not be invoked. The one in the entity subclass should be invoked
+This callback PostRemove in ProductListener should not be invoked. The one in the entity subclass should be invoked
+cleanup complete, calling super.cleanup
+STATUS:Passed.
+result: Passed.
+
+
+test result: Passed.

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<!--
+ Copyright 2006 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!--
+ @(#)build.xml	1.1 06/04/13
+-->
+
+<project name="signaturetest" basedir="." default="usage"> 
+  
+  <property name="fw.pkg.dir" value="com/sun/ts/tests/signaturetest"/>
+  <property name="pkg.dir"    value="${fw.pkg.dir}/jpa"/>  
+  <property name="pkg"        value="com.sun.ts.tests.signaturetest.jpa"/>  
+
+  <target name="build.framework">
+    <ant antfile="build.xml" inheritAll="false" dir="${basedir}/.." target="build.framework"/>
+  </target>
+
+  <target name="clean.framework">
+    <ant antfile="build.xml" inheritAll="false" dir="${basedir}/.." target="clean.framework"/>
+  </target>
+
+  <target name="compile" depends="clean.framework,build.framework">
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="compile"/>
+  </target>
+
+  <target name="package"/>
+
+  <target name="deploy"/>
+
+  <target name="runclient">
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="runclient"/>
+  </target>
+
+  <target name="build" depends="compile, package"/>
+  
+  <target name="clean" depends="clean.framework">
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="clean"/>
+  </target>
+
+  <target name="usage">
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="usage"/>
+  </target>
+
+</project>

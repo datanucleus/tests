@@ -1,0 +1,7 @@
+<project name="persistence common import" basedir=".">
+
+  <property name="par.archive" value="${app.name}.par"/>
+  <property name="ejb3.persistence.dir" value="${ts.home}/src/com/sun/ts/tests/ejb30/persistence"/>
+  <property name="ejb3.persistence.common.pkg" value="${ejb3.persistence.dir}/common"/>
+
+</project>

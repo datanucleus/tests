@@ -1,0 +1,98 @@
+# Trace file started at Tue Sep 15 19:23:11 BST 2015
+# JavaTest version 3.2.1
+# class directory: /home/andy/work/datanucleus/tests/jpa/TCK/lib/javatest.jar
+# using java: /usr/java/jdk1.7.0_79/jre
+Starting tests.
+Test suite class: com.sun.ts.lib.harness.TS
+Test finder class: com.sun.javatest.finder.BinaryTestFinder
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/entity/Client.java#annotationEntityTest1_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/entity/Client.java#annotationEntityTest1_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/entity/Client.java#annotationEntityTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/entity/Client.java#annotationEntityTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/mapkey/Client.java#annotationMapKeyTest1_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/mapkey/Client.java#annotationMapKeyTest1_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/mapkey/Client.java#annotationMapKeyTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/mapkey/Client.java#annotationMapKeyTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest1_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest1_from_standalone: Failed. Test case throws exception: nativeQueryTest1 failed
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest3_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest3_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest1_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest1_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest3_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest3_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest4_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/annotations/orderby/Client.java#orderByTest4_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/basic/Client.java#updateOrderTest_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/basic/Client.java#updateOrderTest_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#findProductTest_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#findProductTest_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#postLoadTest_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#postLoadTest_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#postLoadTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#postLoadTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#prePersistTest_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#prePersistTest_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#prePersistTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#prePersistTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preRemoveTest_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preRemoveTest_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preRemoveTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preRemoveTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preUpdateTest_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preUpdateTest_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preUpdateTest2_from_standalone
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/inheritance/Client.java#preUpdateTest2_from_standalone: Passed.
+
+Test starting: com/sun/ts/tests/ejb30/persistence/callback/listener/Client.java#postLoadMultiTest_from_standalone
+Stopping tests
+
+Test finished: com/sun/ts/tests/ejb30/persistence/callback/listener/Client.java#postLoadMultiTest_from_standalone: Error. Program `/usr/java/jdk1.7.0_79/jre/bin/java' interrupted! (timed out?)
+Doing post-run cleanup
+Completed: Some tests did not pass

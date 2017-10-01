@@ -1,0 +1,140 @@
+#Test Results (version 2)
+#Tue Sep 15 10:10:31 BST 2015
+#checksum:3986d329bf6b6cfb
+#-----testdescription-----
+$file=/usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/relationship/descriptors/Client.java
+$root=/usr/local/jpa_tck/src
+assertion_ids=PERSISTENCE:SPEC:919  See assertion html documents.\nPERSISTENCE:SPEC:921  See assertion html documents.\nPERSISTENCE:SPEC:1144  See assertion html documents.
+classname=com.sun.ts.tests.ejb30.persistence.relationship.descriptors.Client
+direction=forward
+finder=cts
+id=descriptorMappingTest6_from_standalone
+keywords=all forward
+service_eetest=yes
+testName=descriptorMappingTest6
+testProps=
+test_directory=com/sun/ts/tests/ejb30/persistence/relationship/descriptors
+
+#-----environment-----
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre
+SYSTEMROOT=${env.SystemRoot}
+TS_HOME=/usr/local/jpa_tck/
+command.testExecute=com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=${ts.run.classpath}:${ts.harness.classpath}:${JAVA_HOME}/../lib/tools.jar:DISPLAY=${ts.display} HOME="${user.home}" windir=${windir} SYSTEMROOT=${SYSTEMROOT} ${JAVA_HOME}/bin/java -Dcts.tmp=$harness.temp.directory -Djava.security.policy=${ts.home}/bin/harness.policy -Ddeliverable.class=${deliverable.class} $testExecuteClass $testExecuteArgs
+database.classes=${jdbc.lib.class.path}/postgresql-jdbc.jar
+deliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable
+harness.log.delayseconds=1
+harness.log.port=2000
+harness.log.traceflag=false
+harness.socket.retry.count=10
+harness.temp.directory=${ts.home}/tmp
+jdbc.lib.class.path=${jpa.home}/jdbc/lib
+jpa.classes=${jpa.home}/lib/persistence-api.jar:${jpa.home}/datanucleus/datanucleus-core.jar:${jpa.home}/datanucleus/datanucleus-rdbms.jar:${jpa.home}/datanucleus/datanucleus-api-jpa.jar:${jpa.home}/datanucleus/log4j.jar:${jpa.home}/datanucleus/classes
+jpa.home=/usr/local/jpa_tck
+persistence.unit.name=JPATCK
+persistence.unit.properties.file.full.path=${ts.home}/bin/datanucleus-provider.properties
+platform.mode=standalone
+porting.ts.url.class.1=com.sun.ts.lib.implementation.sun.common.SunRIURL
+ts.display=:0.0
+ts.harness.classpath=${ts.home}/lib/tsharness.jar:${ts.home}/lib/sigtest.jar:${ts.run.classpath}:${ts.home}/lib/javatest.jar:${ts.home}/tools/ant/lib/ant.jar
+ts.home=/usr/local/jpa_tck/
+ts.run.classpath=${ts.home}/classes:${database.classes}:${jpa.classes}
+user.home=/home/andy
+windir=${env.windir}
+
+#-----testresult-----
+description=file:///usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/relationship/descriptors/Client.java#descriptorMappingTest6_from_standalone
+end=Tue Sep 15 10:10:31 BST 2015
+environment=ts_unix
+execStatus=Passed.
+javatestOS=Linux 3.19.8-desktop-3.mga5 (amd64)
+javatestVersion=3.2.1
+script=com.sun.ts.lib.harness.TSScript 
+sections=script_messages TestRun
+start=Tue Sep 15 10:10:28 BST 2015
+test=com/sun/ts/tests/ejb30/persistence/relationship/descriptors/Client.java#descriptorMappingTest6_from_standalone
+timeoutSeconds=600
+work=/usr/local/jpa_tck/src/jpa_tck/com/sun/ts/tests/ejb30/persistence/relationship/descriptors
+
+#section:script_messages
+----------messages:(0/0)----------
+
+#section:TestRun
+----------messages:(1/1542)----------
+command: com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/tsharness.jar:/usr/local/jpa_tck//lib/sigtest.jar:/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/javatest.jar:/usr/local/jpa_tck//tools/ant/lib/ant.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/../lib/tools.jar:DISPLAY=:0.0:/usr/local/jpa_tck/dist/com/sun/ts/tests/ejb30/persistence/relationship/descriptors/ejb3_relationship_descriptors.jar HOME=/home/andy windir= SYSTEMROOT= /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/bin/java -Dcts.tmp=/usr/local/jpa_tck//tmp -Djava.security.policy=/usr/local/jpa_tck//bin/harness.policy -Ddeliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable com.sun.ts.tests.common.vehicle.VehicleClient -p /usr/local/jpa_tck//tmp/tstest.jte -t descriptorMappingTest6 -vehicle standalone
+----------log:(72/5832)----------
+************************************************************
+* props file set to "/tmp/andy-cts-props.txt"
+************************************************************
+setup
+platform.mode is set to standalone, so tests are running in J2SE environment standalone mode.persistence.unit.name is set to JPATCK
+Begin descriptorMappingTest6
+createPeople
+Create 20 People
+Start to persist people 
+persistence unit properites from user: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persistence unit properites verified: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@62bd765
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@6d2a209c
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@670002
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@1f3f4916
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@48aaecc3
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@4ddced80
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@3eb7fc54
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@1b1473ab
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@78b66d36
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@76908cc0
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@be64738
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@418e7838
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@3e92efc3
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@5a63f509
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@67a20f67
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@6580cfdd
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@31d7b7bf
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@636be97c
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@4ac3c60d
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@2145b572
+Create 5 Projects
+Start to persist projects 
+persisted project com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XProject@3d51f06e
+persisted project com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XProject@2c767a52
+persisted project com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XProject@61df66b6
+persisted project com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XProject@7193666c
+persisted project com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XProject@6eda5c9
+Check Collection for Karen Tegan Projects
+Found Project for Karen Tegan: Sidewinder
+Check Collection for Karen Tegan Projects
+Found Project for Karen Tegan: Asp
+Check Collection for Karen Tegan Projects
+Found Project for Karen Tegan: Python
+Check Collection for William Keaton Projects
+Found Project for William Keaton: Boa
+Check Collection for William Keaton Projects
+Found Project for William Keaton: Asp
+Check Collection for William Keaton Projects
+Found Project for William Keaton: King Cobra
+descriptorMappingTest6: Expected results received
+Projects found: cleaning up 
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@62bd765
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@6d2a209c
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@670002
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@1f3f4916
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@48aaecc3
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@3eb7fc54
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@1b1473ab
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@76908cc0
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@be64738
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@418e7838
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@3e92efc3
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@5a63f509
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@67a20f67
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@6580cfdd
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@31d7b7bf
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@636be97c
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@4ac3c60d
+removed person com.sun.ts.tests.ejb30.persistence.relationship.descriptors.XPerson@2145b572
+Cleanup Complete, calling super.cleanup
+STATUS:Passed.
+result: Passed.
+
+
+test result: Passed.

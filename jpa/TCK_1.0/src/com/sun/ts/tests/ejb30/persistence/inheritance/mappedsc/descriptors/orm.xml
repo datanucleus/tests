@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" version="1.0">
+	<package>com.sun.ts.tests.ejb30.persistence.inheritance.mappedsc.descriptors</package>
+	<mapped-superclass class="Employee" access="PROPERTY">
+		<attributes>
+			<id name="id">
+				<column name="IDxx"/>
+			</id>
+			<basic name="firstName">
+				<column name="FIRSTNAMExx"/>
+			</basic>
+			<basic name="lastName">
+				<column name="LASTNAMExx"/>
+			</basic>
+			<basic name="hireDate">
+				<column name="HIREDATExx"/>
+			</basic>
+			<many-to-one name="department" fetch="EAGER">
+				<join-column name="FK_DEPT"/>
+			</many-to-one>
+			<one-to-one name="project" fetch="EAGER">
+				<join-column name="FK_PROJECT"/>
+			</one-to-one>
+		</attributes>
+	</mapped-superclass>
+	<entity name="Department" class="Department" access="PROPERTY">
+		<table name="DEPARTMENT"/>
+		<attributes>
+			<id name="id">
+				<column name="ID"/>
+			</id>
+			<basic name="name">
+				<column name="NAME"/>
+			</basic>
+		</attributes>
+	</entity>
+	<entity name="FullTimeEmployee" class="FullTimeEmployee" access="PROPERTY">
+		<table name="EMPLOYEE"/>
+		<attribute-override name="id">
+			<column name="ID"/>
+		</attribute-override>
+		<attribute-override name="firstName">
+			<column name="FIRSTNAME"/>
+		</attribute-override>
+		<attribute-override name="lastName">
+			<column name="LASTNAME"/>
+		</attribute-override>
+		<attribute-override name="hireDate">
+			<column name="HIREDATE"/>
+		</attribute-override>
+		<attributes>
+			<basic name="salary">
+				<column name="SALARY"/>
+			</basic>
+		</attributes>
+	</entity>
+	<entity name="PartTimeEmployee" class="PartTimeEmployee" access="PROPERTY">
+		<table name="EMPLOYEE"/>
+		<attribute-override name="id">
+			<column name="ID"/>
+		</attribute-override>
+		<attribute-override name="firstName">
+			<column name="FIRSTNAME"/>
+		</attribute-override>
+		<attribute-override name="lastName">
+			<column name="LASTNAME"/>
+		</attribute-override>
+		<attribute-override name="hireDate">
+			<column name="HIREDATE"/>
+		</attribute-override>
+		<attributes>
+			<basic name="wage">
+				<column name="SALARY"/>
+			</basic>
+		</attributes>
+	</entity>
+	<entity name="Project" class="Project" access="PROPERTY">
+		<table name="PROJECT"/>
+		<attributes>
+			<id name="projId">
+				<column name="PROJID"/>
+			</id>
+			<basic name="name">
+				<column name="NAME"/>
+			</basic>
+			<basic name="budget">
+				<column name="BUDGET"/>
+			</basic>
+			<one-to-one name="projectLead" mapped-by="project">
+          		</one-to-one>
+		</attributes>
+	</entity>
+</entity-mappings>

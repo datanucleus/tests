@@ -1,0 +1,213 @@
+<project name="ejb30 common import" basedir="." default="usage">
+<!--
+How deployment descriptors are defined and used:
+1. application.xml:
+  if exists ./application.xml, include it in EAR.
+  gen.application.xml target can be used to generate one, but it's skipped.
+  It copies from template/application.xml to ${dist.dir}/${pkg.dir}, and set
+  ${application.xml} to it. The generation step has been skipped since application.xml
+  is not required.
+
+3. ejb-jar.xml, application-client.xml, web.xml:
+  ${ejb.jar.xml} set to ${app.name}_ejb.xml
+  ${application.client.xml} set to ${app.name}_client.xml
+  ${web.xml} set to ${app.name}_web.xml
+  
+4. client.jar META-INF/MANIFEST.MF:
+  generated in place
+
+5. sun-application.xml, sun-ejb-jar.xml, sun-application-client.xml, sun-web.xml:
+  ${sun.ejb.jar.xml}: 
+  ${dist.dir}/${pkg.dir}/${ejb3.archive}.sun-ejb-jar.xml
+  
+  ${sun.application.client.xml}: 
+  ${dist.dir}/${pkg.dir}/${appclient.archive}.sun-application-client.xml
+  
+  ${sun.application.xml}: 
+  ${dist.dir}/${pkg.dir}/${application.archive}.sun-application.xml
+
+  ${sun.web.xml}:
+  ${dist.dir}/${pkg.dir}/${ejb3.archive}.sun-web.xml
+  
+6. If the property no.application.client has been set, package.appclient.jar target
+   will NOT be run.
+   
+7. package.war target is noop. If needed, leaf level
+   build.xml should import war-import.xml.  If the test directory only contains
+   ejb-jar and war without any application-client.jar, then leaf-level build.xml
+   should set property no.application.client (see #6).
+-->
+
+  <import file="${ts.home}/bin/xml/ts.import.xml"/>
+
+  <property name="ejb3.common.pkg" value="com/sun/ts/tests/ejb30/common"/>
+  <property name="ejb3.archive" value="${app.name}_ejb.jar"/>
+  <property name="appclient.archive" value="${app.name}_client.jar"/>
+  <property name="war.archive" value="${app.name}_web.war"/>
+  
+  <property name="ejb.jar.xml" value="${app.name}_ejb.xml"/>
+  <property name="application.client.xml" value="${app.name}_client.xml"/>
+  <property name="web.xml" value="${app.name}_web.xml"/>
+  
+  <property name="deletecomponentarchives" value="true"/>
+
+  <!-- modify this property to deploy to other appserver -->
+  <!-- ts.home/bin/build.xml contains targets that deploy with jsr88 and in a portable way -->
+  <condition property="deploy.build.xml" value="sjsas.xml">
+      <available file="${javaee.home}/domains/domain1/autodeploy" type="dir"/>
+  </condition>
+  
+  <!-- ==================================================================-->
+  <!-- compile targets -->
+  <target name="compile" depends="compile.common">
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="compile"/>
+  </target>
+  
+  <target name="compile.common">
+    <javac srcdir="${ts.home}/src" destdir="${class.dir}" fork="true"
+      includes="${ejb3.common.pkg}/**/*.java, 
+                ${app.common}/**/*.java, 
+                ${app.common.2}/**/*.java,
+                ${app.common.3}/**/*.java"
+      debug="on"
+      classpath="${ts.classpath}">
+    </javac>
+  </target>
+
+  <!-- =============================================================== -->
+  <!-- package targets -->
+  <target name="package" 
+          depends="package.ejb.jar, package.appclient.jar, package.war, package.ear">
+  </target>
+  
+  <target name="package.ejb.jar">
+    <dirname property="ejb.jar.xml.dir" file="${ejb.jar.xml}"/>
+    <basename property="ejb.jar.xml.base" file="${ejb.jar.xml}"/>
+    <ts.ejbjar descriptor="${ejb.jar.xml.base}" descriptordir="${ejb.jar.xml.dir}"
+               archivename="${app.name}" includedefaultfiles="false">
+      <fileset dir="${class.dir}" includes="${ejb.jar.classes}"/>
+    </ts.ejbjar>
+  </target>
+  
+  <target name="package.appclient.jar" unless="no.application.client">
+    <dirname property="application.client.xml.dir" file="${application.client.xml}"/>
+    <basename property="application.client.xml.base" file="${application.client.xml}"/>
+    <ts.clientjar descriptor="${application.client.xml.base}" 
+                  descriptordir="${application.client.xml.dir}"
+                  archivename="${app.name}" includedefaultfiles="false"
+                  mainclass="${client}">
+      <fileset dir="${class.dir}" includes="${appclient.jar.classes}">
+      </fileset>
+    </ts.clientjar>
+  </target>
+  
+  <target name="package.war">
+    <echo message="noop in import.package.war"/>
+  </target>
+  
+  <target name="package.ear">
+    <ts.ear archivename="${app.name}" descriptor="application.xml"
+            deletecomponentarchives="${deletecomponentarchives}">
+    </ts.ear>
+  </target>
+
+  <!-- =============================================================== -->
+  <!-- direct deploy/undeploy targets -->
+  
+  <target name="my.deploy">
+     <ant antfile="${ts.home}/src/${ejb3.common.pkg}/${deploy.build.xml}" target="deploy"/>
+  </target>
+ 
+  <target name="my.undeploy">
+     <ant antfile="${ts.home}/src/${ejb3.common.pkg}/${deploy.build.xml}" target="undeploy"/>
+  </target>
+
+  <!-- ================================================================== -->
+  <!-- private convenience targets -->
+  <target name="c">
+    <antcall target="get.dependency">
+      <param name="get.dependency.in" value="${pkg.dir}/*Client*.java"/>
+      <param name="get.dependency.ex" value=""/>
+      <param name="get.dependency.out" value="c.txt"/>
+    </antcall>
+  </target>
+  
+  <target name="c.all">
+    <dosubdirs srcdir="${user.dir}" todo="c" />
+  </target>
+  
+  <target name="b">
+    <antcall target="get.dependency">
+      <param name="get.dependency.in" value="${pkg.dir}/*.java"/>
+      <param name="get.dependency.ex" 
+             value="${pkg.dir}/*Client*.java, **/*ClientBase*.java"/>
+      <param name="get.dependency.out" value="b.txt"/>
+    </antcall>
+  </target>
+
+   <target name="w">
+    <antcall target="get.dependency">
+      <param name="get.dependency.in" value="${pkg.dir}/*Servlet*.java"/>
+      <param name="get.dependency.ex" 
+             value="${pkg.dir}/*Client*.java, **/*ClientBase*.java"/>
+      <param name="get.dependency.out" value="w.txt"/>
+    </antcall>
+  </target>
+  
+  <target name="b.all">
+    <dosubdirs srcdir="${user.dir}" todo="b" />
+  </target>
+  
+  <target name="get.dependency">
+    <delete failonerror="no">
+      <fileset dir="${class.dir}"
+        includes="${pkg.dir}/*.class, com/sun/ts/lib/harness/*EET*.class">
+      </fileset>
+      <fileset dir="${class.dir}"
+        includes="com/sun/ts/tests/**/*.class"
+        excludes="**/Dependency.class">
+      </fileset>
+      <fileset dir="${class.dir}"
+        includes="com/sun/ts/tests/jms/**/*.class">
+      </fileset>
+      <fileset dir="${class.dir}"
+        includes="com/sun/ts/tests/servlet/**/*.class">
+      </fileset>
+    </delete>
+    <echo message="about to javac ${pkg.dir}/*Client*.java"/>
+    
+    <record name="out.txt" action="start"/>
+    <javac srcdir="${ts.home}/src" destdir="${class.dir}" fork="true"
+      includes="${get.dependency.in}"
+      excludes="${get.dependency.ex}"
+      debug="on" verbose="true"
+      classpath="${ts.classpath}">
+    </javac>
+    <record name="out.txt" action="start"/>
+    
+    <taskdef name="depn" classname="com.sun.ts.tests.ejb30.common.Dependency"
+             classpath="${class.dir}"/>
+    <depn javacout="out.txt" depout="${get.dependency.out}"/>
+  </target>
+  
+  <target name="gen.sun.ejb.xml">
+    <copy overwrite="false" tofile="${ejb3.archive}.sun-ejb-jar.xml"
+          file="${ts.home}/src/${ejb3.common.pkg}/template/sun-ejb-jar.xml"
+          verbose="true">
+      <filterset>
+        <filter token="APP.NAME" value="${app.name}"/>
+      </filterset>
+    </copy>
+    <replace file="${ejb3.archive}.sun-ejb-jar.xml" token=".Client" value="."/>
+  </target>
+  
+  <target name="gen.sun.appclient.xml">
+    <copy overwrite="false" tofile="${appclient.archive}.sun-application-client.xml"
+          file="${ts.home}/src/${ejb3.common.pkg}/template/sun-application-client.xml"
+          verbose="true">
+      <filterset>
+        <filter token="APP.NAME" value="${app.name}"/>
+      </filterset>
+    </copy>
+  </target>
+</project>

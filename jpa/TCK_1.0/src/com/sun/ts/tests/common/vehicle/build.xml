@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<project name="common_vehicle" basedir="." default="usage"> 
+  <property name="pkg.dir" value="com/sun/ts/tests/common/vehicle"/>
+
+  <target name="compile">
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="compile"/>
+  </target>
+
+  <target name="package">
+  </target>
+  
+  <target name="build" depends="compile"/>
+
+  <target name="clean" >
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="clean"/>
+  </target>
+
+  <target name="usage">
+    <ant antfile="build.xml" dir="${ts.home}/bin" target="usage"/>
+  </target>
+</project>

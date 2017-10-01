@@ -1,0 +1,1218 @@
+#Signature file v3.1
+#Version 1.0_se6
+CLSS abstract public interface !annotation javax.persistence.AssociationOverride
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.AssociationOverride.name()
+meth abstract public javax.persistence.JoinColumn[] javax.persistence.AssociationOverride.joinColumns()
+CLSS abstract public interface !annotation javax.persistence.AssociationOverrides
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.AssociationOverride[] javax.persistence.AssociationOverrides.value()
+CLSS abstract public interface !annotation javax.persistence.AttributeOverride
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.AttributeOverride.name()
+meth abstract public javax.persistence.Column javax.persistence.AttributeOverride.column()
+CLSS abstract public interface !annotation javax.persistence.AttributeOverrides
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.AttributeOverride[] javax.persistence.AttributeOverrides.value()
+CLSS abstract public interface !annotation javax.persistence.Basic
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault boolean javax.persistence.Basic.optional()
+meth abstract public !hasdefault javax.persistence.FetchType javax.persistence.Basic.fetch()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public final !enum javax.persistence.CascadeType
+fld public static final javax.persistence.CascadeType javax.persistence.CascadeType.ALL
+fld public static final javax.persistence.CascadeType javax.persistence.CascadeType.MERGE
+fld public static final javax.persistence.CascadeType javax.persistence.CascadeType.PERSIST
+fld public static final javax.persistence.CascadeType javax.persistence.CascadeType.REFRESH
+fld public static final javax.persistence.CascadeType javax.persistence.CascadeType.REMOVE
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.CascadeType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.CascadeType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.CascadeType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.CascadeType[] javax.persistence.CascadeType.values()
+meth public static javax.persistence.CascadeType javax.persistence.CascadeType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.CascadeType>
+CLSS abstract public interface !annotation javax.persistence.Column
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault boolean javax.persistence.Column.insertable()
+meth abstract public !hasdefault boolean javax.persistence.Column.nullable()
+meth abstract public !hasdefault boolean javax.persistence.Column.unique()
+meth abstract public !hasdefault boolean javax.persistence.Column.updatable()
+meth abstract public !hasdefault int javax.persistence.Column.length()
+meth abstract public !hasdefault int javax.persistence.Column.precision()
+meth abstract public !hasdefault int javax.persistence.Column.scale()
+meth abstract public !hasdefault java.lang.String javax.persistence.Column.columnDefinition()
+meth abstract public !hasdefault java.lang.String javax.persistence.Column.name()
+meth abstract public !hasdefault java.lang.String javax.persistence.Column.table()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.ColumnResult
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.ColumnResult.name()
+CLSS abstract public interface !annotation javax.persistence.DiscriminatorColumn
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault int javax.persistence.DiscriminatorColumn.length()
+meth abstract public !hasdefault java.lang.String javax.persistence.DiscriminatorColumn.columnDefinition()
+meth abstract public !hasdefault java.lang.String javax.persistence.DiscriminatorColumn.name()
+meth abstract public !hasdefault javax.persistence.DiscriminatorType javax.persistence.DiscriminatorColumn.discriminatorType()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public final !enum javax.persistence.DiscriminatorType
+fld public static final javax.persistence.DiscriminatorType javax.persistence.DiscriminatorType.CHAR
+fld public static final javax.persistence.DiscriminatorType javax.persistence.DiscriminatorType.INTEGER
+fld public static final javax.persistence.DiscriminatorType javax.persistence.DiscriminatorType.STRING
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.DiscriminatorType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.DiscriminatorType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.DiscriminatorType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.DiscriminatorType[] javax.persistence.DiscriminatorType.values()
+meth public static javax.persistence.DiscriminatorType javax.persistence.DiscriminatorType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.DiscriminatorType>
+CLSS abstract public interface !annotation javax.persistence.DiscriminatorValue
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.DiscriminatorValue.value()
+CLSS abstract public interface !annotation javax.persistence.Embeddable
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.Embedded
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.EmbeddedId
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.Entity
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.Entity.name()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public javax.persistence.EntityExistsException
+cons public javax.persistence.EntityExistsException()
+cons public javax.persistence.EntityExistsException(java.lang.String)
+cons public javax.persistence.EntityExistsException(java.lang.String,java.lang.Throwable)
+cons public javax.persistence.EntityExistsException(java.lang.Throwable)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException javax.persistence.PersistenceException
+CLSS abstract public interface !annotation javax.persistence.EntityListeners
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.Class[] javax.persistence.EntityListeners.value()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface javax.persistence.EntityManager
+meth abstract public <%0 extends java.lang.Object> {%%0} javax.persistence.EntityManager.find(java.lang.Class<{%%0}>,java.lang.Object)
+meth abstract public <%0 extends java.lang.Object> {%%0} javax.persistence.EntityManager.getReference(java.lang.Class<{%%0}>,java.lang.Object)
+meth abstract public <%0 extends java.lang.Object> {%%0} javax.persistence.EntityManager.merge({%%0})
+meth abstract public boolean javax.persistence.EntityManager.contains(java.lang.Object)
+meth abstract public boolean javax.persistence.EntityManager.isOpen()
+meth abstract public java.lang.Object javax.persistence.EntityManager.getDelegate()
+meth abstract public javax.persistence.EntityTransaction javax.persistence.EntityManager.getTransaction()
+meth abstract public javax.persistence.FlushModeType javax.persistence.EntityManager.getFlushMode()
+meth abstract public javax.persistence.Query javax.persistence.EntityManager.createNamedQuery(java.lang.String)
+meth abstract public javax.persistence.Query javax.persistence.EntityManager.createNativeQuery(java.lang.String)
+meth abstract public javax.persistence.Query javax.persistence.EntityManager.createNativeQuery(java.lang.String,java.lang.Class)
+meth abstract public javax.persistence.Query javax.persistence.EntityManager.createNativeQuery(java.lang.String,java.lang.String)
+meth abstract public javax.persistence.Query javax.persistence.EntityManager.createQuery(java.lang.String)
+meth abstract public void javax.persistence.EntityManager.clear()
+meth abstract public void javax.persistence.EntityManager.close()
+meth abstract public void javax.persistence.EntityManager.flush()
+meth abstract public void javax.persistence.EntityManager.joinTransaction()
+meth abstract public void javax.persistence.EntityManager.lock(java.lang.Object,javax.persistence.LockModeType)
+meth abstract public void javax.persistence.EntityManager.persist(java.lang.Object)
+meth abstract public void javax.persistence.EntityManager.refresh(java.lang.Object)
+meth abstract public void javax.persistence.EntityManager.remove(java.lang.Object)
+meth abstract public void javax.persistence.EntityManager.setFlushMode(javax.persistence.FlushModeType)
+CLSS abstract public interface javax.persistence.EntityManagerFactory
+meth abstract public boolean javax.persistence.EntityManagerFactory.isOpen()
+meth abstract public javax.persistence.EntityManager javax.persistence.EntityManagerFactory.createEntityManager()
+meth abstract public javax.persistence.EntityManager javax.persistence.EntityManagerFactory.createEntityManager(java.util.Map)
+meth abstract public void javax.persistence.EntityManagerFactory.close()
+CLSS public javax.persistence.EntityNotFoundException
+cons public javax.persistence.EntityNotFoundException()
+cons public javax.persistence.EntityNotFoundException(java.lang.String)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException javax.persistence.PersistenceException
+CLSS abstract public interface !annotation javax.persistence.EntityResult
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.EntityResult.discriminatorColumn()
+meth abstract public !hasdefault javax.persistence.FieldResult[] javax.persistence.EntityResult.fields()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class javax.persistence.EntityResult.entityClass()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface javax.persistence.EntityTransaction
+meth abstract public boolean javax.persistence.EntityTransaction.getRollbackOnly()
+meth abstract public boolean javax.persistence.EntityTransaction.isActive()
+meth abstract public void javax.persistence.EntityTransaction.begin()
+meth abstract public void javax.persistence.EntityTransaction.commit()
+meth abstract public void javax.persistence.EntityTransaction.rollback()
+meth abstract public void javax.persistence.EntityTransaction.setRollbackOnly()
+CLSS public final !enum javax.persistence.EnumType
+fld public static final javax.persistence.EnumType javax.persistence.EnumType.ORDINAL
+fld public static final javax.persistence.EnumType javax.persistence.EnumType.STRING
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.EnumType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.EnumType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.EnumType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.EnumType[] javax.persistence.EnumType.values()
+meth public static javax.persistence.EnumType javax.persistence.EnumType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.EnumType>
+CLSS abstract public interface !annotation javax.persistence.Enumerated
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault javax.persistence.EnumType javax.persistence.Enumerated.value()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.ExcludeDefaultListeners
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.ExcludeSuperclassListeners
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public final !enum javax.persistence.FetchType
+fld public static final javax.persistence.FetchType javax.persistence.FetchType.EAGER
+fld public static final javax.persistence.FetchType javax.persistence.FetchType.LAZY
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.FetchType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.FetchType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.FetchType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.FetchType[] javax.persistence.FetchType.values()
+meth public static javax.persistence.FetchType javax.persistence.FetchType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.FetchType>
+CLSS abstract public interface !annotation javax.persistence.FieldResult
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.FieldResult.column()
+meth abstract public java.lang.String javax.persistence.FieldResult.name()
+CLSS public final !enum javax.persistence.FlushModeType
+fld public static final javax.persistence.FlushModeType javax.persistence.FlushModeType.AUTO
+fld public static final javax.persistence.FlushModeType javax.persistence.FlushModeType.COMMIT
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.FlushModeType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.FlushModeType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.FlushModeType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.FlushModeType[] javax.persistence.FlushModeType.values()
+meth public static javax.persistence.FlushModeType javax.persistence.FlushModeType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.FlushModeType>
+CLSS abstract public interface !annotation javax.persistence.GeneratedValue
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.GeneratedValue.generator()
+meth abstract public !hasdefault javax.persistence.GenerationType javax.persistence.GeneratedValue.strategy()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public final !enum javax.persistence.GenerationType
+fld public static final javax.persistence.GenerationType javax.persistence.GenerationType.AUTO
+fld public static final javax.persistence.GenerationType javax.persistence.GenerationType.IDENTITY
+fld public static final javax.persistence.GenerationType javax.persistence.GenerationType.SEQUENCE
+fld public static final javax.persistence.GenerationType javax.persistence.GenerationType.TABLE
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.GenerationType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.GenerationType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.GenerationType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.GenerationType[] javax.persistence.GenerationType.values()
+meth public static javax.persistence.GenerationType javax.persistence.GenerationType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.GenerationType>
+CLSS abstract public interface !annotation javax.persistence.Id
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.IdClass
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class javax.persistence.IdClass.value()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.Inheritance
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault javax.persistence.InheritanceType javax.persistence.Inheritance.strategy()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public final !enum javax.persistence.InheritanceType
+fld public static final javax.persistence.InheritanceType javax.persistence.InheritanceType.JOINED
+fld public static final javax.persistence.InheritanceType javax.persistence.InheritanceType.SINGLE_TABLE
+fld public static final javax.persistence.InheritanceType javax.persistence.InheritanceType.TABLE_PER_CLASS
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.InheritanceType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.InheritanceType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.InheritanceType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.InheritanceType[] javax.persistence.InheritanceType.values()
+meth public static javax.persistence.InheritanceType javax.persistence.InheritanceType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.InheritanceType>
+CLSS abstract public interface !annotation javax.persistence.JoinColumn
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault boolean javax.persistence.JoinColumn.insertable()
+meth abstract public !hasdefault boolean javax.persistence.JoinColumn.nullable()
+meth abstract public !hasdefault boolean javax.persistence.JoinColumn.unique()
+meth abstract public !hasdefault boolean javax.persistence.JoinColumn.updatable()
+meth abstract public !hasdefault java.lang.String javax.persistence.JoinColumn.columnDefinition()
+meth abstract public !hasdefault java.lang.String javax.persistence.JoinColumn.name()
+meth abstract public !hasdefault java.lang.String javax.persistence.JoinColumn.referencedColumnName()
+meth abstract public !hasdefault java.lang.String javax.persistence.JoinColumn.table()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.JoinColumns
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.JoinColumn[] javax.persistence.JoinColumns.value()
+CLSS abstract public interface !annotation javax.persistence.JoinTable
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.JoinTable.catalog()
+meth abstract public !hasdefault java.lang.String javax.persistence.JoinTable.name()
+meth abstract public !hasdefault java.lang.String javax.persistence.JoinTable.schema()
+meth abstract public !hasdefault javax.persistence.JoinColumn[] javax.persistence.JoinTable.inverseJoinColumns()
+meth abstract public !hasdefault javax.persistence.JoinColumn[] javax.persistence.JoinTable.joinColumns()
+meth abstract public !hasdefault javax.persistence.UniqueConstraint[] javax.persistence.JoinTable.uniqueConstraints()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.Lob
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public final !enum javax.persistence.LockModeType
+fld public static final javax.persistence.LockModeType javax.persistence.LockModeType.READ
+fld public static final javax.persistence.LockModeType javax.persistence.LockModeType.WRITE
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.LockModeType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.LockModeType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.LockModeType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.LockModeType[] javax.persistence.LockModeType.values()
+meth public static javax.persistence.LockModeType javax.persistence.LockModeType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.LockModeType>
+CLSS abstract public interface !annotation javax.persistence.ManyToMany
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.Class javax.persistence.ManyToMany.targetEntity()
+meth abstract public !hasdefault java.lang.String javax.persistence.ManyToMany.mappedBy()
+meth abstract public !hasdefault javax.persistence.CascadeType[] javax.persistence.ManyToMany.cascade()
+meth abstract public !hasdefault javax.persistence.FetchType javax.persistence.ManyToMany.fetch()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.ManyToOne
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault boolean javax.persistence.ManyToOne.optional()
+meth abstract public !hasdefault java.lang.Class javax.persistence.ManyToOne.targetEntity()
+meth abstract public !hasdefault javax.persistence.CascadeType[] javax.persistence.ManyToOne.cascade()
+meth abstract public !hasdefault javax.persistence.FetchType javax.persistence.ManyToOne.fetch()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.MapKey
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.MapKey.name()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.MappedSuperclass
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.NamedNativeQueries
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.NamedNativeQuery[] javax.persistence.NamedNativeQueries.value()
+CLSS abstract public interface !annotation javax.persistence.NamedNativeQuery
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.Class javax.persistence.NamedNativeQuery.resultClass()
+meth abstract public !hasdefault java.lang.String javax.persistence.NamedNativeQuery.resultSetMapping()
+meth abstract public !hasdefault javax.persistence.QueryHint[] javax.persistence.NamedNativeQuery.hints()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.NamedNativeQuery.name()
+meth abstract public java.lang.String javax.persistence.NamedNativeQuery.query()
+CLSS abstract public interface !annotation javax.persistence.NamedQueries
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.NamedQuery[] javax.persistence.NamedQueries.value()
+CLSS abstract public interface !annotation javax.persistence.NamedQuery
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault javax.persistence.QueryHint[] javax.persistence.NamedQuery.hints()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.NamedQuery.name()
+meth abstract public java.lang.String javax.persistence.NamedQuery.query()
+CLSS public javax.persistence.NoResultException
+cons public javax.persistence.NoResultException()
+cons public javax.persistence.NoResultException(java.lang.String)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException javax.persistence.PersistenceException
+CLSS public javax.persistence.NonUniqueResultException
+cons public javax.persistence.NonUniqueResultException()
+cons public javax.persistence.NonUniqueResultException(java.lang.String)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException javax.persistence.PersistenceException
+CLSS abstract public interface !annotation javax.persistence.OneToMany
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.Class javax.persistence.OneToMany.targetEntity()
+meth abstract public !hasdefault java.lang.String javax.persistence.OneToMany.mappedBy()
+meth abstract public !hasdefault javax.persistence.CascadeType[] javax.persistence.OneToMany.cascade()
+meth abstract public !hasdefault javax.persistence.FetchType javax.persistence.OneToMany.fetch()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.OneToOne
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault boolean javax.persistence.OneToOne.optional()
+meth abstract public !hasdefault java.lang.Class javax.persistence.OneToOne.targetEntity()
+meth abstract public !hasdefault java.lang.String javax.persistence.OneToOne.mappedBy()
+meth abstract public !hasdefault javax.persistence.CascadeType[] javax.persistence.OneToOne.cascade()
+meth abstract public !hasdefault javax.persistence.FetchType javax.persistence.OneToOne.fetch()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public javax.persistence.OptimisticLockException
+cons public javax.persistence.OptimisticLockException()
+cons public javax.persistence.OptimisticLockException(java.lang.Object)
+cons public javax.persistence.OptimisticLockException(java.lang.String)
+cons public javax.persistence.OptimisticLockException(java.lang.String,java.lang.Throwable)
+cons public javax.persistence.OptimisticLockException(java.lang.String,java.lang.Throwable,java.lang.Object)
+cons public javax.persistence.OptimisticLockException(java.lang.Throwable)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.Object javax.persistence.OptimisticLockException.getEntity()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException javax.persistence.PersistenceException
+CLSS abstract public interface !annotation javax.persistence.OrderBy
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.OrderBy.value()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public javax.persistence.Persistence
+cons public javax.persistence.Persistence()
+fld protected static final java.util.Set<javax.persistence.spi.PersistenceProvider> javax.persistence.Persistence.providers
+fld public static final java.lang.String javax.persistence.Persistence.PERSISTENCE_PROVIDER = "javax.persistence.spi.PeristenceProvider"
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.String java.lang.Object.toString()
+meth public static javax.persistence.EntityManagerFactory javax.persistence.Persistence.createEntityManagerFactory(java.lang.String)
+meth public static javax.persistence.EntityManagerFactory javax.persistence.Persistence.createEntityManagerFactory(java.lang.String,java.util.Map)
+supr java.lang.Object
+CLSS abstract public interface !annotation javax.persistence.PersistenceContext
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.PersistenceContext.name()
+meth abstract public !hasdefault java.lang.String javax.persistence.PersistenceContext.unitName()
+meth abstract public !hasdefault javax.persistence.PersistenceContextType javax.persistence.PersistenceContext.type()
+meth abstract public !hasdefault javax.persistence.PersistenceProperty[] javax.persistence.PersistenceContext.properties()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS public final !enum javax.persistence.PersistenceContextType
+fld public static final javax.persistence.PersistenceContextType javax.persistence.PersistenceContextType.EXTENDED
+fld public static final javax.persistence.PersistenceContextType javax.persistence.PersistenceContextType.TRANSACTION
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.PersistenceContextType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.PersistenceContextType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.PersistenceContextType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.PersistenceContextType[] javax.persistence.PersistenceContextType.values()
+meth public static javax.persistence.PersistenceContextType javax.persistence.PersistenceContextType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.PersistenceContextType>
+CLSS abstract public interface !annotation javax.persistence.PersistenceContexts
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.PersistenceContext[] javax.persistence.PersistenceContexts.value()
+CLSS public javax.persistence.PersistenceException
+cons public javax.persistence.PersistenceException()
+cons public javax.persistence.PersistenceException(java.lang.String)
+cons public javax.persistence.PersistenceException(java.lang.String,java.lang.Throwable)
+cons public javax.persistence.PersistenceException(java.lang.Throwable)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException
+CLSS abstract public interface !annotation javax.persistence.PersistenceProperty
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.PersistenceProperty.name()
+meth abstract public java.lang.String javax.persistence.PersistenceProperty.value()
+CLSS abstract public interface !annotation javax.persistence.PersistenceUnit
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.PersistenceUnit.name()
+meth abstract public !hasdefault java.lang.String javax.persistence.PersistenceUnit.unitName()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PersistenceUnits
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.PersistenceUnit[] javax.persistence.PersistenceUnits.value()
+CLSS abstract public interface !annotation javax.persistence.PostLoad
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PostPersist
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PostRemove
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PostUpdate
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PrePersist
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PreRemove
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PreUpdate
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PrimaryKeyJoinColumn
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.PrimaryKeyJoinColumn.columnDefinition()
+meth abstract public !hasdefault java.lang.String javax.persistence.PrimaryKeyJoinColumn.name()
+meth abstract public !hasdefault java.lang.String javax.persistence.PrimaryKeyJoinColumn.referencedColumnName()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.PrimaryKeyJoinColumns
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.PrimaryKeyJoinColumn[] javax.persistence.PrimaryKeyJoinColumns.value()
+CLSS abstract public interface javax.persistence.Query
+meth abstract public int javax.persistence.Query.executeUpdate()
+meth abstract public java.lang.Object javax.persistence.Query.getSingleResult()
+meth abstract public java.util.List javax.persistence.Query.getResultList()
+meth abstract public javax.persistence.Query javax.persistence.Query.setFirstResult(int)
+meth abstract public javax.persistence.Query javax.persistence.Query.setFlushMode(javax.persistence.FlushModeType)
+meth abstract public javax.persistence.Query javax.persistence.Query.setHint(java.lang.String,java.lang.Object)
+meth abstract public javax.persistence.Query javax.persistence.Query.setMaxResults(int)
+meth abstract public javax.persistence.Query javax.persistence.Query.setParameter(int,java.lang.Object)
+meth abstract public javax.persistence.Query javax.persistence.Query.setParameter(int,java.util.Calendar,javax.persistence.TemporalType)
+meth abstract public javax.persistence.Query javax.persistence.Query.setParameter(int,java.util.Date,javax.persistence.TemporalType)
+meth abstract public javax.persistence.Query javax.persistence.Query.setParameter(java.lang.String,java.lang.Object)
+meth abstract public javax.persistence.Query javax.persistence.Query.setParameter(java.lang.String,java.util.Calendar,javax.persistence.TemporalType)
+meth abstract public javax.persistence.Query javax.persistence.Query.setParameter(java.lang.String,java.util.Date,javax.persistence.TemporalType)
+CLSS abstract public interface !annotation javax.persistence.QueryHint
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.QueryHint.name()
+meth abstract public java.lang.String javax.persistence.QueryHint.value()
+CLSS public javax.persistence.RollbackException
+cons public javax.persistence.RollbackException()
+cons public javax.persistence.RollbackException(java.lang.String)
+cons public javax.persistence.RollbackException(java.lang.String,java.lang.Throwable)
+cons public javax.persistence.RollbackException(java.lang.Throwable)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException javax.persistence.PersistenceException
+CLSS abstract public interface !annotation javax.persistence.SecondaryTable
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.SecondaryTable.catalog()
+meth abstract public !hasdefault java.lang.String javax.persistence.SecondaryTable.schema()
+meth abstract public !hasdefault javax.persistence.PrimaryKeyJoinColumn[] javax.persistence.SecondaryTable.pkJoinColumns()
+meth abstract public !hasdefault javax.persistence.UniqueConstraint[] javax.persistence.SecondaryTable.uniqueConstraints()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.SecondaryTable.name()
+CLSS abstract public interface !annotation javax.persistence.SecondaryTables
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.SecondaryTable[] javax.persistence.SecondaryTables.value()
+CLSS abstract public interface !annotation javax.persistence.SequenceGenerator
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault int javax.persistence.SequenceGenerator.allocationSize()
+meth abstract public !hasdefault int javax.persistence.SequenceGenerator.initialValue()
+meth abstract public !hasdefault java.lang.String javax.persistence.SequenceGenerator.sequenceName()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.SequenceGenerator.name()
+CLSS abstract public interface !annotation javax.persistence.SqlResultSetMapping
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault javax.persistence.ColumnResult[] javax.persistence.SqlResultSetMapping.columns()
+meth abstract public !hasdefault javax.persistence.EntityResult[] javax.persistence.SqlResultSetMapping.entities()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.SqlResultSetMapping.name()
+CLSS abstract public interface !annotation javax.persistence.SqlResultSetMappings
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.SqlResultSetMapping[] javax.persistence.SqlResultSetMappings.value()
+CLSS abstract public interface !annotation javax.persistence.Table
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault java.lang.String javax.persistence.Table.catalog()
+meth abstract public !hasdefault java.lang.String javax.persistence.Table.name()
+meth abstract public !hasdefault java.lang.String javax.persistence.Table.schema()
+meth abstract public !hasdefault javax.persistence.UniqueConstraint[] javax.persistence.Table.uniqueConstraints()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.TableGenerator
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[TYPE, METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public !hasdefault int javax.persistence.TableGenerator.allocationSize()
+meth abstract public !hasdefault int javax.persistence.TableGenerator.initialValue()
+meth abstract public !hasdefault java.lang.String javax.persistence.TableGenerator.catalog()
+meth abstract public !hasdefault java.lang.String javax.persistence.TableGenerator.pkColumnName()
+meth abstract public !hasdefault java.lang.String javax.persistence.TableGenerator.pkColumnValue()
+meth abstract public !hasdefault java.lang.String javax.persistence.TableGenerator.schema()
+meth abstract public !hasdefault java.lang.String javax.persistence.TableGenerator.table()
+meth abstract public !hasdefault java.lang.String javax.persistence.TableGenerator.valueColumnName()
+meth abstract public !hasdefault javax.persistence.UniqueConstraint[] javax.persistence.TableGenerator.uniqueConstraints()
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String javax.persistence.TableGenerator.name()
+CLSS abstract public interface !annotation javax.persistence.Temporal
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public javax.persistence.TemporalType javax.persistence.Temporal.value()
+CLSS public final !enum javax.persistence.TemporalType
+fld public static final javax.persistence.TemporalType javax.persistence.TemporalType.DATE
+fld public static final javax.persistence.TemporalType javax.persistence.TemporalType.TIME
+fld public static final javax.persistence.TemporalType javax.persistence.TemporalType.TIMESTAMP
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.TemporalType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.TemporalType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.TemporalType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.TemporalType[] javax.persistence.TemporalType.values()
+meth public static javax.persistence.TemporalType javax.persistence.TemporalType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.TemporalType>
+CLSS public javax.persistence.TransactionRequiredException
+cons public javax.persistence.TransactionRequiredException()
+cons public javax.persistence.TransactionRequiredException(java.lang.String)
+intf java.io.Serializable
+meth protected java.lang.Object java.lang.Object.clone() throws java.lang.CloneNotSupportedException
+meth protected void java.lang.Object.finalize() throws java.lang.Throwable
+meth public boolean java.lang.Object.equals(java.lang.Object)
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public int java.lang.Object.hashCode()
+meth public java.lang.StackTraceElement[] java.lang.Throwable.getStackTrace()
+meth public java.lang.String java.lang.Throwable.getLocalizedMessage()
+meth public java.lang.String java.lang.Throwable.getMessage()
+meth public java.lang.String java.lang.Throwable.toString()
+meth public java.lang.Throwable java.lang.Throwable.fillInStackTrace()
+meth public java.lang.Throwable java.lang.Throwable.getCause()
+meth public java.lang.Throwable java.lang.Throwable.initCause(java.lang.Throwable)
+meth public void java.lang.Throwable.printStackTrace()
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintStream)
+meth public void java.lang.Throwable.printStackTrace(java.io.PrintWriter)
+meth public void java.lang.Throwable.setStackTrace(java.lang.StackTraceElement[])
+supr java.lang.Object java.lang.Throwable java.lang.Exception java.lang.RuntimeException javax.persistence.PersistenceException
+CLSS abstract public interface !annotation javax.persistence.Transient
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface !annotation javax.persistence.UniqueConstraint
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+meth abstract public java.lang.String[] javax.persistence.UniqueConstraint.columnNames()
+CLSS abstract public interface !annotation javax.persistence.Version
+ anno 0 java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy value=RUNTIME)
+ anno 0 java.lang.annotation.Target(java.lang.annotation.ElementType[] value=[METHOD, FIELD])
+intf @ java.lang.annotation.Annotation
+meth abstract public boolean java.lang.annotation.Annotation.equals(java.lang.Object)
+meth abstract public int java.lang.annotation.Annotation.hashCode()
+meth abstract public java.lang.Class<? extends java.lang.annotation.Annotation> java.lang.annotation.Annotation.annotationType()
+meth abstract public java.lang.String java.lang.annotation.Annotation.toString()
+CLSS abstract public interface javax.persistence.spi.ClassTransformer
+meth abstract public byte[] javax.persistence.spi.ClassTransformer.transform(java.lang.ClassLoader,java.lang.String,java.lang.Class<?>,java.security.ProtectionDomain,byte[]) throws java.lang.instrument.IllegalClassFormatException
+CLSS abstract public interface javax.persistence.spi.PersistenceProvider
+meth abstract public javax.persistence.EntityManagerFactory javax.persistence.spi.PersistenceProvider.createContainerEntityManagerFactory(javax.persistence.spi.PersistenceUnitInfo,java.util.Map)
+meth abstract public javax.persistence.EntityManagerFactory javax.persistence.spi.PersistenceProvider.createEntityManagerFactory(java.lang.String,java.util.Map)
+CLSS abstract public interface javax.persistence.spi.PersistenceUnitInfo
+meth abstract public boolean javax.persistence.spi.PersistenceUnitInfo.excludeUnlistedClasses()
+meth abstract public java.lang.ClassLoader javax.persistence.spi.PersistenceUnitInfo.getClassLoader()
+meth abstract public java.lang.ClassLoader javax.persistence.spi.PersistenceUnitInfo.getNewTempClassLoader()
+meth abstract public java.lang.String javax.persistence.spi.PersistenceUnitInfo.getPersistenceProviderClassName()
+meth abstract public java.lang.String javax.persistence.spi.PersistenceUnitInfo.getPersistenceUnitName()
+meth abstract public java.net.URL javax.persistence.spi.PersistenceUnitInfo.getPersistenceUnitRootUrl()
+meth abstract public java.util.List<java.lang.String> javax.persistence.spi.PersistenceUnitInfo.getManagedClassNames()
+meth abstract public java.util.List<java.lang.String> javax.persistence.spi.PersistenceUnitInfo.getMappingFileNames()
+meth abstract public java.util.List<java.net.URL> javax.persistence.spi.PersistenceUnitInfo.getJarFileUrls()
+meth abstract public java.util.Properties javax.persistence.spi.PersistenceUnitInfo.getProperties()
+meth abstract public javax.persistence.spi.PersistenceUnitTransactionType javax.persistence.spi.PersistenceUnitInfo.getTransactionType()
+meth abstract public javax.sql.DataSource javax.persistence.spi.PersistenceUnitInfo.getJtaDataSource()
+meth abstract public javax.sql.DataSource javax.persistence.spi.PersistenceUnitInfo.getNonJtaDataSource()
+meth abstract public void javax.persistence.spi.PersistenceUnitInfo.addTransformer(javax.persistence.spi.ClassTransformer)
+CLSS public final !enum javax.persistence.spi.PersistenceUnitTransactionType
+fld public static final javax.persistence.spi.PersistenceUnitTransactionType javax.persistence.spi.PersistenceUnitTransactionType.JTA
+fld public static final javax.persistence.spi.PersistenceUnitTransactionType javax.persistence.spi.PersistenceUnitTransactionType.RESOURCE_LOCAL
+intf java.io.Serializable
+intf java.lang.Comparable<javax.persistence.spi.PersistenceUnitTransactionType>
+meth protected final java.lang.Object java.lang.Enum.clone() throws java.lang.CloneNotSupportedException
+meth protected final void java.lang.Enum.finalize()
+meth public final boolean java.lang.Enum.equals(java.lang.Object)
+meth public final int java.lang.Enum.compareTo(javax.persistence.spi.PersistenceUnitTransactionType)
+meth public final int java.lang.Enum.hashCode()
+meth public final int java.lang.Enum.ordinal()
+meth public final java.lang.Class<?> java.lang.Object.getClass()
+meth public final java.lang.Class<javax.persistence.spi.PersistenceUnitTransactionType> java.lang.Enum.getDeclaringClass()
+meth public final java.lang.String java.lang.Enum.name()
+meth public final void java.lang.Object.notify()
+meth public final void java.lang.Object.notifyAll()
+meth public final void java.lang.Object.wait() throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long) throws java.lang.InterruptedException
+meth public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+meth public java.lang.String java.lang.Enum.toString()
+meth public static <%0 extends java.lang.Enum<{%%0}>> {%%0} java.lang.Enum.valueOf(java.lang.Class<{%%0}>,java.lang.String)
+meth public static final javax.persistence.spi.PersistenceUnitTransactionType[] javax.persistence.spi.PersistenceUnitTransactionType.values()
+meth public static javax.persistence.spi.PersistenceUnitTransactionType javax.persistence.spi.PersistenceUnitTransactionType.valueOf(java.lang.String)
+supr java.lang.Object java.lang.Enum<javax.persistence.spi.PersistenceUnitTransactionType>

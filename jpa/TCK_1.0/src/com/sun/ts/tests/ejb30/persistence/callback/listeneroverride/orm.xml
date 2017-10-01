@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" version="1.0">
+    <persistence-unit-metadata>
+        <persistence-unit-defaults>
+            <entity-listeners>
+                <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA">
+                </entity-listener>
+            </entity-listeners>
+        </persistence-unit-defaults>
+    </persistence-unit-metadata>
+
+    <package>com.sun.ts.tests.ejb30.persistence.callback.listeneroverride</package>
+
+    <entity name="Product" class="Product">
+        <entity-listeners>
+        <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB"/>
+        <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC"/>
+        </entity-listeners>
+    </entity>
+
+    <entity name="Order" class="Order">
+        <entity-listeners>
+        <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB"/>
+        <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC"/>
+        </entity-listeners>
+    </entity>
+
+    <entity name="LineItem" class="LineItem">
+        <entity-listeners>
+        <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB"/>
+        <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC"/>
+        </entity-listeners>
+    </entity>
+
+</entity-mappings>
+
+

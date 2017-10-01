@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Java Persistence API TCK, Version 1.0 Release Notes, March 2007</title>
+  <style type="text/css">
+   <!--
+   body {  background-color: #ffffdd; color: #000000}
+   pre {  background-color: #eeeeee; color: #000099; font-size: smaller}
+   code {  color: #000099; font-size: smaller}
+   h1 {  color: #000099}
+   h2 {  color: #000099}
+   h3 {  color: #000099; text-decoration: underline}
+   h4 {  font-style: italic; color: #000099}
+   th {  background-color: #eeeeee; padding-left: 2pt; padding-right: 2pt;}
+   .tabletitle {  font-style: italic; color: #ffffcc; font-size: small; font-variant: small-caps}
+   .subtitle {  font-style: italic; color: #ffffcc; font-variant: small-caps}
+   .emphasize  {  font-style: italic; color: #000099}
+   .step  { font-weight: bold}
+   .note { background-color: #fffff0; border-bottom-width: thin; border-top-width: thin; border-top-style: inset; border-bottom-style: inset; font-size: -10%;}
+   -->
+   </style>
+</head>
+<body>
+<div align="center">
+<h1>Java&#8482; Persistence API<br>
+Technology Compatibility Kit, Version 1.0<br>
+<em class="emphasize">Release Notes, March 2007</em></h1>
+</div>
+
+<table class="note">
+ <tr valign="top">
+ <th><p>Note</p></th>
+ <td><p><em>This is a patch release of the TCK. The Release Notes file that is posted on the <a href="https://java-partner.sun.com" target="_blank">Java Partner Engineering</a> Web site contains the most current information about the TCK, including any last minute changes. Always check that file for the most up-to-date information.</em></p>
+ <p><em>Also note that this patch is a full, comprehensive release of the TCK bundle. You do not need to install any previous TCK bundles before installing this patch bundle.</em></p></td>
+ </tr>
+</table>
+
+<h2><a name="kit_contents">Kit Contents</a></h2>
+<p>The Java&#8482; Persistence API, Version 1.0 Technology Compatibility Kit (Java Persistence API TCK) includes the following items:</p>
+
+<ul>
+ <li><p><strong>JavaTest harness version 3.2.1 and related documentation:</strong></p>
+   <ul type="square">
+      <li><p>The JavaTest harness <cite>Release Notes</cite> are provided in the JavaTest documentation directory in the JPA TCK 1.0 documentation bundle.</p></li>
+      <li><p>The JavaTest harness provides three User's Guides in PDF format. The JavaTest User's Guides are also available in JavaHelp format, and can be displayed either in the JavaTest harness or in a separate viewer launched from the command line.</p>
+      <ul type="circle">
+         <li>
+<cite>JavaTest User's Guide: Graphical User Interface</cite> contains information on using the test harness GUI.</li>
+         <li><cite>JavaTest User's Guide: Command Line Interface</cite> contains information on running tests by using the test harness command line.</li>
+         <li><cite>JavaTest Agent User's Guide</cite> contains information on running tests by using the test harness agent.</li>
+      </ul>
+      </li>
+   </ul>
+   </li>
+ <li>
+    <p><strong>Java Persistence API TCK Signature and API tests:</strong></p>
+    <ul>
+      <li>
+        <p><strong>Signature test</strong>s that check that all of the
+public APIs are supported or defined as specified in the Java
+Persistence API, Version 1.0 implementation that is being tested.</p>
+      </li>
+      <li>
+        <p><strong>API tests</strong> for all of the public APIs
+defined by the Java Persistence API 1.0 Specification.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr>
+<h2>Bugs Fixed in the JPA TCK 1.0 B Patch Release</h2>
+<p>The following bugs were fixed in the JPA TCK 1.0 B Patch release. Complete descriptions of these bugs can be found online in the <a href="http://sunsolve.sun.com/pub-cgi/show.pl?target=home">SunSolve</a> database.</p>
+
+<ul>
+   <li><p><strong>Bug ID #6489570</strong> - SigTests need to update <code>sigtest.jar</code> and <code>sigtestdev.jar</code> files</p></li>
+   <li><p><strong>Bug ID #6478678</strong> - Missing <code>PRICED_PRODUCT_TABLE</code> entry in db2 <code>ddl.persistence.sql</code> file.</p></li>
+   <li><p><strong>Bug ID #6502018</strong> - <code>ejb30.persistence.inheritance.abstractentity.Project.projectLead</code></p></li>
+   <li><p><strong>Bug ID #6519191</strong> - <code>Tests/ejb30/persistence/inheritance/mappedsc/descriptors</code></p></li>
+</ul>
+
+<hr>
+<h2>Bugs Fixed in the Java Persistence TCK 1.0 A Patch Release</h2>
+<p>The following bugs were fixed in the Java Persistence TCK 1.0 A Patch release. Descriptions of these bugs can be found online in the <a href="http://sunsolve.sun.com/pub-cgi/show.pl?target=home">SunSolve</a> database.</p>
+
+<ul>
+   <li><p><strong>Bug ID #6424950</strong> - Case inconsistency issues uncovered when running ejb30/persistence tests with Sybase</p></li>
+   <li><p><strong>Bug ID #6428749</strong> - <code>db2.ddl.persistence.sql</code> file is incorrect</p></li>
+   <li><p><strong>Bug ID #6429428</strong> - Case issue with Sybase; the column was built with <code>ID NOT NULL</code>, but Annotation is returning <code>id</code></p></li>
+   <li><p><strong>Bug ID #6429457</strong> - JPQL query in <code>test_leftouterjoin_1xM</code> expects <code>DISTINCT</code> results but <code>DISTINCT</code> is not specified</p></li>
+   <li><p><strong>Bug ID #6433916</strong> - <code>ejb30.persistence.types.field.DataTypes.java</code></p></li>
+   <li><p><strong>Bug ID #6435681</strong> - Entity Manager remove method with parameter null</p></li>
+   <li><p><strong>Bug ID #6437476</strong> - <code>com.sun.ts.tests.ejb30.persistence.query.language.schema30.Customer</code></p></li>
+   <li><p><strong>Bug ID #6441018</strong> - JPQL queries must not JOIN embedded enties</p></li>
+   <li><p><strong>Bug ID #6442401</strong> - Both <code>com.sun.ts.tests.ejb30.persistence.callback.inheritance.Product</code> and <code>com.sun.ts.tests.ejb30.persistence.callback.inheritance.PricedPartProduct_2 entities</code> are mapped on the same underlying table.</p></li>
+   <li><p><strong>Bug ID #6442407</strong> - Both <code>com.sun.ts.tests.ejb30.persistence.callback.inheritance.Product</code> and <code>com.sun.ts.tests.ejb30.persistence.callback.inheritance.PricedPartProduct_2</code> entities are mapped on the same underlying table.</p></li>
+   <li><p><strong>Bug ID #6442408</strong> - Both <code>com.sun.ts.tests.ejb30.persistence.callback.inheritance.Product</code> and <code>com.sun.ts.tests.ejb30.persistence.callback.inheritance.PricedPartProduct_2</code> entities are mapped on the same underlying table.</p></li>
+   <li><p><strong>Bug ID #6443329</strong> - <code>ejb30\persistence\ee\propagation\cm\jta\ejb3_cmjta_propagation_web.xml</code> conatinas a line fined in the <code>web-app</code> element for the element value <code>xmlns:xsi</code> which causes a failure to deploy the ears</p></li>
+   <li><p><strong>Bug ID #6443341</strong> - <code>com.sun.ts.tests.ejb30.persistence.entitytest.apitests-entityAPITest16</code></p></li>
+   <li><p><strong>Bug ID #6446953</strong> - <code>com/sun/ts/tests/ejb30/persistence/versioning/Client.java#versionTest1</code></p></li>
+   <li><p><strong>Bug ID #6447351</strong> - Persist detached entities: <code>com/sun/ts/tests/ejb30/persistence/entitytest/detach/manyXone</code></p></li>
+   <li><p><strong>Bug ID #6451612</strong> - <code>com.sun.ts.tests.ejb30.persistence.callback.inheritance.PricedPartProductListener</code> <code>EntityListener</code> class has no callback methods declared</p></li>
+   <li><p><strong>Bug ID #6453214</strong> - <code>com/sun/ts/tests/ejb30/persistence/versioning/</code> test may not be valid</p></li>
+   <li><p><strong>Bug ID #6458551</strong> - Incorrect JPA signatures for <code>javax.persistence.NamedQuery,NamedNativeQuery</code>, <code>JoinColumn</code>, <code>JoinColumns</code></p></li>
+   <li><p><strong>Bug ID #6461639</strong> - JPA <code>initdb.xml</code> hardcodes the delimiter for the sql files</p></li>
+   <li><p><strong>Bug ID #6461642</strong> - Cleanup method of persistence tests needs to be revised</p></li>
+   <li><p><strong>Bug ID #6462679</strong> - <code>com.sun.ts.tests.ejb30.persistence.query.language.test_locateHavingClause</code></p></li>
+   <li><p><strong>Bug ID #6466209</strong> - Wrong terminating character in <code>postgresql.ddl.persistence.sql</code> file</p></li>
+</ul>
+
+<hr>
+<h2><a name="platform">Platform Notes</a></h2>
+<ul>
+  <li>
+    <p>The JPA TCK tests have been built and tested with the Java&#8482;
+Platform, Standard Edition SDK, Version 1.5 (Java SE 1.5) and Java&#8482;
+Platform, Enterprise Edition reference implementation, Version 5 (Java
+EE 5 RI).</p>
+  </li>
+  <li>
+    <p>In the instructions in this document, variables in angle
+brackets need to be expanded for each platform. For example, <code>&lt;TS_HOME&gt;</code>
+becomes <code>$TS_HOME</code> on Solaris/Linux and <code>%TS_HOME%</code>
+on Windows 2000. In addition, the forward slashes (<code>/</code>) used
+in all of the examples need to be replaced with backslashes (<code>\</code>)
+for Windows 2000.</p>
+  </li>
+</ul>
+
+<hr>
+<h2>Known Problems and Workarounds</h2>
+
+<h3>Signature Tests</h3>
+
+<p>The changes for signature tests include the following:</p>
+
+<ol>
+   <li>New naming scheme for all existing signature files</li>
+   <li><code>sig-test.map</code> and <code>sig-test-pkg-list.txt</code> files</li>
+</ol>
+
+<p>Details about these changes are described below.</p>
+
+<h4>New naming scheme for all existing signature files</h4>
+
+<p>The new signature test files have a new naming scheme that uses the following format:</p>
+
+<blockquote><pre><em>&lt;technology_package&gt;</em>.sig_<em>&lt;technology_version&gt;</em>_<em>&lt;Java_version&gt;</em></pre></blockquote>
+
+<p>For example:</p>
+
+<blockquote><pre>javax.persistence.sig_1.0_se5</pre></blockquote>
+
+<p>Where:</p>
+<dl>
+	<dt><code><em>technology_package</em></code></dt>
+  	<dd>High-level Java package name for a given technology area. For example, for the JPA technology area, the <code><em>technology_package</em></code> name is <code>javax.persistence</code>.</dd>
+  	<dt><code><em>technology_version</em></code></dt>
+   <dd>Version of the technology to which the signature file applies. In the JPA example above, this signature file is for JPA 1.0.</dd>
+   <dt><code><em>Java_version</em></code></dt>
+   <dd>Java SE version that was used to record the signature files. In the JPA example above, the Java SE version is Java SE5. Currently, the supported version types are <code>_se5</code>, <code>_se6</code>, and <code>_se5_se6</code>, where the latter indicates that the same file can be used for both Java SE5 and Java SE6. Note that when verifying signatures, the technology under test must also be running with the correct version of Java that is being qualified.</dd>
+</dl>
+
+<h4><code>sig-test.map</code> and <code>sig-test-pkg-list.txt</code> files</h4>
+
+<p>Since there is a need to support SE5 and SE6, there are more signatures that need to be supported. To simplify end user requirements, there were some new files added to the system that are used to isolate the list of signature files required by the user. While extra files were added, there should be no extra effort on the end users part.</p>
+
+<p>The new files are located in the <code>TS_HOME/bin</code> directory. The following files are now used by signature tests:</p>
+
+<ul>
+   <li><code>ts_home/bin/sig-test_se5.map</code></li>
+   <li><code>ts_home/bin/sig-test_se6.map</code></li>
+   <li><code>ts_home/bin/sig-test.map</code></li>
+   <li><code>ts_home/bin/sig-test-pkg-list_se5.txt</code></li>
+   <li><code>ts_home/bin/sig-test-pkg-list_se6.txt</code></li>
+   <li><code>ts_home/bin/sig-test-pkg-list.txt</code></li>
+</ul>
+
+<p>The signature test framework should automatically choose the correct file based on the version of Java SE being used. The signature test framework chooses the files to use based on the following logic:</p>
+
+<blockquote><pre>
+if (Java SE 5)
+   use TS_HOME/bin/sig-test_se5.map
+   use TS_HOME/bin/sig-test-pkg-list_se5.txt
+else if (Java SE 6)
+   use TS_HOME/bin/sig-test_se6.map
+   use TS_HOME/bin/sig-test-pkg-list_se6.txt
+else
+   use TS_HOME/bin/sig-test.map
+   use TS_HOME/bin/sig-test-pkg-list.txt
+</pre></blockquote>
+
+<table class="note">
+ <tr valign="top">
+ <th>Note</th>
+ <td><em><code>sig-test.map</code> defaults to the same values as <code>sig-test_se5.map</code> and <code>sig-test-pkg-list.txt</code> defaults to the same values as <code>sig-test-pkg-list_se5.txt</code>. If for some reason, there is a need for the sigtest framework to use a different map file (for example, when using an unlisted SE version) then you can customize the <code>TS_HOME/bin/sig-test.map</code> file and it will be used when the sigtest framework cannot properly identify or support the Java SE version being used.</em></td>
+ </tr>
+</table>
+
+<hr>
+<h2><a name="install_setup_run">Installing, Setting Up, and Running the Java Persistence API TCK</a></h2>
+<p>Please refer to the <cite>Java&#8482; Persistence API Technology Compatibility Kit User's Guide</cite> for complete installation, configuration, and usage instructions.</p>
+<hr>
+<p><small><em><a href="COPYRIGHT.html">Copyright &copy; 2007 Sun Microsystems, Inc. All rights reserved.</a></em></small></p>
+</body>
+</html>

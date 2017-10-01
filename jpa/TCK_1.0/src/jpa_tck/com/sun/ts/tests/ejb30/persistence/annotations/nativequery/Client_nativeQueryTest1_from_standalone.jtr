@@ -1,0 +1,160 @@
+#Test Results (version 2)
+#Tue Sep 15 19:23:24 BST 2015
+#checksum:6b4290c120f489e8
+#-----testdescription-----
+$file=/usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java
+$root=/usr/local/jpa_tck/src
+assertion_ids=PERSISTENCE:JAVADOC:41  See assertion html documents.\nPERSISTENCE:JAVADOC:64  See assertion html documents.\nPERSISTENCE:JAVADOC:199  See assertion html documents.\nPERSISTENCE:SPEC:1009  See assertion html documents.
+classname=com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Client
+direction=forward
+finder=cts
+id=nativeQueryTest1_from_standalone
+keywords=all forward
+service_eetest=yes
+testName=nativeQueryTest1
+testProps=
+test_directory=com/sun/ts/tests/ejb30/persistence/annotations/nativequery
+
+#-----environment-----
+JAVA_HOME=/usr/java/jdk1.7.0_79/jre
+SYSTEMROOT=${env.SystemRoot}
+TS_HOME=/home/andy/work/datanucleus/tests/jpa/TCK/
+command.testExecute=com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=${ts.run.classpath}:${ts.harness.classpath}:${JAVA_HOME}/../lib/tools.jar:DISPLAY=${ts.display} HOME="${user.home}" windir=${windir} SYSTEMROOT=${SYSTEMROOT} ${JAVA_HOME}/bin/java -Dcts.tmp=$harness.temp.directory -Djava.security.policy=${ts.home}/bin/harness.policy -Ddeliverable.class=${deliverable.class} $testExecuteClass $testExecuteArgs
+database.classes=${jdbc.lib.class.path}/postgresql-jdbc.jar
+deliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable
+harness.log.delayseconds=1
+harness.log.port=2000
+harness.log.traceflag=false
+harness.socket.retry.count=10
+harness.temp.directory=${ts.home}/tmp
+jdbc.lib.class.path=${jpa.home}/jdbc/lib
+jpa.classes=${jpa.home}/lib/persistence-api.jar:${jpa.home}/datanucleus/datanucleus-core.jar:${jpa.home}/datanucleus/datanucleus-rdbms.jar:${jpa.home}/datanucleus/datanucleus-api-jpa.jar:${jpa.home}/datanucleus/log4j.jar:${jpa.home}/datanucleus/classes
+jpa.home=/usr/local/jpa_tck
+persistence.unit.name=JPATCK
+persistence.unit.properties.file.full.path=${ts.home}/bin/datanucleus-provider.properties
+platform.mode=standalone
+porting.ts.url.class.1=com.sun.ts.lib.implementation.sun.common.SunRIURL
+ts.display=:0.0
+ts.harness.classpath=${ts.home}/lib/tsharness.jar:${ts.home}/lib/sigtest.jar:${ts.run.classpath}:${ts.home}/lib/javatest.jar:${ts.home}/tools/ant/lib/ant.jar
+ts.home=/home/andy/work/datanucleus/tests/jpa/TCK/
+ts.run.classpath=${ts.home}/classes:${database.classes}:${jpa.classes}
+user.home=/home/andy
+windir=${env.windir}
+
+#-----testresult-----
+description=file:///usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest1_from_standalone
+end=Tue Sep 15 19:23:24 BST 2015
+environment=ts_unix
+execStatus=Failed. Test case throws exception: nativeQueryTest1 failed
+javatestOS=Linux 3.19.8-desktop-3.mga5 (amd64)
+javatestVersion=3.2.1
+script=com.sun.ts.lib.harness.TSScript 
+sections=script_messages TestRun
+start=Tue Sep 15 19:23:22 BST 2015
+test=com/sun/ts/tests/ejb30/persistence/annotations/nativequery/Client.java#nativeQueryTest1_from_standalone
+timeoutSeconds=600
+work=/usr/local/jpa_tck/src/jpa_tck/com/sun/ts/tests/ejb30/persistence/annotations/nativequery
+
+#section:script_messages
+----------messages:(0/0)----------
+
+#section:TestRun
+----------messages:(1/1686)----------
+command: com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=/home/andy/work/datanucleus/tests/jpa/TCK//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/home/andy/work/datanucleus/tests/jpa/TCK//lib/tsharness.jar:/home/andy/work/datanucleus/tests/jpa/TCK//lib/sigtest.jar:/home/andy/work/datanucleus/tests/jpa/TCK//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/home/andy/work/datanucleus/tests/jpa/TCK//lib/javatest.jar:/home/andy/work/datanucleus/tests/jpa/TCK//tools/ant/lib/ant.jar:/usr/java/jdk1.7.0_79/jre/../lib/tools.jar:DISPLAY=:0.0:/home/andy/work/datanucleus/tests/jpa/TCK/dist/com/sun/ts/tests/ejb30/persistence/annotations/nativequery/ejb3_annotations_nativequery.jar HOME=/home/andy windir= SYSTEMROOT= /usr/java/jdk1.7.0_79/jre/bin/java -Dcts.tmp=/home/andy/work/datanucleus/tests/jpa/TCK//tmp -Djava.security.policy=/home/andy/work/datanucleus/tests/jpa/TCK//bin/harness.policy -Ddeliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable com.sun.ts.tests.common.vehicle.VehicleClient -p /home/andy/work/datanucleus/tests/jpa/TCK//tmp/tstest.jte -t nativeQueryTest1 -vehicle standalone
+----------log:(92/8016)----------
+************************************************************
+* props file set to "/tmp/andy-cts-props.txt"
+************************************************************
+setup
+platform.mode is set to standalone, so tests are running in J2SE environment standalone mode.persistence.unit.name is set to JPATCK
+Begin nativeQueryTest1
+persistence unit properites from user: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persistence unit properites verified: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+nativeQueryTest1: Create Items
+nativeQueryTest1: Create Order1s
+nativeQueryTest1 - Execute Query 
+Unexpection Exception :javax.persistence.PersistenceException: Insert of object "com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Item@2ada7e5d" using statement "INSERT INTO item (itemname,id) VALUES (?,?)" failed : ERROR: duplicate key value violates unique constraint "item_pkey"
+  Detail: Key (id)=(4) already exists.
+javax.persistence.PersistenceException: Insert of object "com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Item@2ada7e5d" using statement "INSERT INTO item (itemname,id) VALUES (?,?)" failed : ERROR: duplicate key value violates unique constraint "item_pkey"
+  Detail: Key (id)=(4) already exists.
+	at org.datanucleus.api.jpa.NucleusJPAHelper.getJPAExceptionForNucleusException(NucleusJPAHelper.java:317)
+	at org.datanucleus.api.jpa.JPAEntityManager.flush(JPAEntityManager.java:946)
+	at org.datanucleus.api.jpa.JPAQuery.getResultList(JPAQuery.java:184)
+	at com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Client.nativeQueryTest1(Client.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.sun.ts.lib.harness.EETest.run(EETest.java:495)
+	at com.sun.ts.lib.harness.ServiceEETest.run(ServiceEETest.java:112)
+	at com.sun.ts.tests.common.vehicle.EmptyVehicleRunner.run(EmptyVehicleRunner.java:30)
+	at com.sun.ts.lib.harness.ServiceEETest.run(ServiceEETest.java:102)
+	at com.sun.ts.lib.harness.EETest.getPropsReady(EETest.java:392)
+	at com.sun.ts.lib.harness.ServiceEETest.run(ServiceEETest.java:209)
+	at com.sun.ts.lib.harness.EETest.run(EETest.java:204)
+	at com.sun.ts.tests.common.vehicle.VehicleClient.main(VehicleClient.java:27)
+Caused by: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "item_pkey"
+  Detail: Key (id)=(4) already exists.
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2270)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:1998)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:255)
+	at org.postgresql.jdbc2.AbstractJdbc2Statement.execute(AbstractJdbc2Statement.java:570)
+	at org.postgresql.jdbc2.AbstractJdbc2Statement.executeWithFlags(AbstractJdbc2Statement.java:420)
+	at org.postgresql.jdbc2.AbstractJdbc2Statement.executeUpdate(AbstractJdbc2Statement.java:366)
+	at org.datanucleus.store.rdbms.datasource.dbcp.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:103)
+	at org.datanucleus.store.rdbms.datasource.dbcp.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:103)
+	at org.datanucleus.store.rdbms.ParamLoggingPreparedStatement.executeUpdate(ParamLoggingPreparedStatement.java:393)
+	at org.datanucleus.store.rdbms.SQLController.executeStatementUpdate(SQLController.java:431)
+	at org.datanucleus.store.rdbms.request.InsertRequest.execute(InsertRequest.java:413)
+	at org.datanucleus.store.rdbms.RDBMSPersistenceHandler.insertObjectInTable(RDBMSPersistenceHandler.java:162)
+	at org.datanucleus.store.rdbms.RDBMSPersistenceHandler.insertObject(RDBMSPersistenceHandler.java:138)
+	at org.datanucleus.state.StateManagerImpl.internalMakePersistent(StateManagerImpl.java:3363)
+	at org.datanucleus.state.StateManagerImpl.flush(StateManagerImpl.java:4518)
+	at org.datanucleus.store.rdbms.mapping.java.PersistableMapping.setObjectAsValue(PersistableMapping.java:450)
+	at org.datanucleus.store.rdbms.mapping.java.PersistableMapping.setObject(PersistableMapping.java:326)
+	at org.datanucleus.store.rdbms.fieldmanager.ParameterSetter.storeObjectField(ParameterSetter.java:191)
+	at org.datanucleus.state.AbstractStateManager.providedObjectField(AbstractStateManager.java:1460)
+	at org.datanucleus.state.StateManagerImpl.providedObjectField(StateManagerImpl.java:119)
+	at com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Order1.dnProvideField(Order1.java)
+	at com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Order1.dnProvideFields(Order1.java)
+	at org.datanucleus.state.StateManagerImpl.provideFields(StateManagerImpl.java:1169)
+	at org.datanucleus.store.rdbms.request.InsertRequest.execute(InsertRequest.java:292)
+	at org.datanucleus.store.rdbms.RDBMSPersistenceHandler.insertObjectInTable(RDBMSPersistenceHandler.java:162)
+	at org.datanucleus.store.rdbms.RDBMSPersistenceHandler.insertObject(RDBMSPersistenceHandler.java:138)
+	at org.datanucleus.state.StateManagerImpl.internalMakePersistent(StateManagerImpl.java:3363)
+	at org.datanucleus.state.StateManagerImpl.flush(StateManagerImpl.java:4518)
+	at org.datanucleus.flush.FlushOrdered.execute(FlushOrdered.java:106)
+	at org.datanucleus.ExecutionContextImpl.flushInternal(ExecutionContextImpl.java:4058)
+	at org.datanucleus.ExecutionContextImpl.flush(ExecutionContextImpl.java:4004)
+	at org.datanucleus.api.jpa.JPAEntityManager.flush(JPAEntityManager.java:942)
+	... 14 more
+09-15-2015 19:23:23:  ERROR: nativeQueryTest1 failed
+09-15-2015 19:23:23:  ERROR: Exception at: 
+09-15-2015 19:23:23:  ERROR: com.sun.ts.lib.harness.EETest$Fault: nativeQueryTest1 failed
+	at com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Client.nativeQueryTest1(Client.java:194)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.sun.ts.lib.harness.EETest.run(EETest.java:495)
+	at com.sun.ts.lib.harness.ServiceEETest.run(ServiceEETest.java:112)
+	at com.sun.ts.tests.common.vehicle.EmptyVehicleRunner.run(EmptyVehicleRunner.java:30)
+	at com.sun.ts.lib.harness.ServiceEETest.run(ServiceEETest.java:102)
+	at com.sun.ts.lib.harness.EETest.getPropsReady(EETest.java:392)
+	at com.sun.ts.lib.harness.ServiceEETest.run(ServiceEETest.java:209)
+	at com.sun.ts.lib.harness.EETest.run(EETest.java:204)
+	at com.sun.ts.tests.common.vehicle.VehicleClient.main(VehicleClient.java:27)
+
+Entering cleanup . . .
+removed order com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Order1@28308c62
+removed order com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Order1@20c9b767
+removed order com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Order1@668db25b
+removed item com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Item@6b0b8552
+removed item com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Item@55dd153b
+removed item com.sun.ts.tests.ejb30.persistence.annotations.nativequery.Item@7b5ce015
+cleanup complete, call super.cleanup
+STATUS:Failed.Test case throws exception: nativeQueryTest1 failed
+result: Failed. Test case throws exception: nativeQueryTest1 failed
+
+
+test result: Failed. Test case throws exception: nativeQueryTest1 failed

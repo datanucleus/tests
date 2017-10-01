@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TS top level" default="usage">
+    <!-- Do NOT load bin/build.properties.  It's already loaded by TSBuildListener
+     Besides properties in bin/build.properties, the following properties are also
+     defined by TSBuildListener:
+     ts.home
+     class.dir: defined as ${ts.home}/classes
+     vehicle.dir: defined as com/sun/ts/tests/common/vehicle
+     -->
+
+    <target name="usage">
+        <echo message="Usage:tsant [command]" />
+        <echo message="  build" />
+        <echo message="  clean" />
+        <echo message="  clean.all" />
+        <echo message="  gui" />
+        <echo message="  runclient [-Dtest=InitConfigTest [-Dtest.client=URLClient.java]]" />
+        <echo message="  tsharness" />
+        <echo message="         build.all.jars" />
+        <echo message="  tslib" />
+        <echo message="  usage" />
+        <echo message="  ts.version" />
+    </target>
+
+
+
+    <property name="lib.dir" value="com/sun/ts/lib" />
+
+    <target name="get.harness.debug" if="env.HARNESS_DEBUG">
+        <property name="cts.harness.debug" value="${env.HARNESS_DEBUG}" />
+    </target>
+
+    <target name="default.harness.debug" unless="env.HARNESS_DEBUG">
+        <property name="cts.harness.debug" value="false" />
+    </target>
+
+    <target name="init" depends="get.harness.debug, default.harness.debug">
+        <!-- create the time stamp -->
+        <tstamp />
+        <!-- create the build directory structure used by compile -->
+        <translatepath propname="ts.classpath" />
+    </target>
+    <target name="setup.dirs" depends="init">
+        <mkdir dir="${class.dir}" />
+        <mkdir dir="${dist.dir}" />
+    </target>
+
+    <target name="compile" depends="setup.dirs">
+        <javac srcdir="${ts.home}/src" destdir="${class.dir}" includes="${pkg.dir}/**/*.java" debug="on" deprecation="on">
+            <classpath>
+                <pathelement path="${ts.classpath}" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="build" depends="setup.dirs,check.in.bin,compile">
+        <dosubdirs srcdir="${user.dir}" todo="build" />
+    </target>
+
+    <target name="move.work.dir" if="work.dir.present">
+        <property name="work.dir.copy" value="${work.dir}copy" />
+        <delete failonerror="false" dir="${work.dir.copy}" />
+        <mkdir dir="${work.dir.copy}" />
+        <move todir="${work.dir.copy}">
+            <fileset dir="${work.dir}" />
+        </move>
+    </target>
+
+    <target name="prepare.work.dir">
+        <!-- /tmp works for both platforms -->
+        <property name="work.dir" value="/tmp/JTwork" />
+        <available file="${work.dir}" type="dir" property="work.dir.present" />
+        <antcall target="move.work.dir" />
+        <mkdir dir="${work.dir}" />
+    </target>
+
+
+    <target name="set.env">
+        <condition property="ts.env" value="ts_win32">
+            <and>
+                <os family="windows" />
+            </and>
+        </condition>
+        <condition property="ts.env" value="ts_unix">
+            <and>
+                <os family="unix" />
+            </and>
+        </condition>
+    </target>
+
+    <target name="get.client" if="test" unless="test.client">
+        <getclient srcdir="${ts.home}/src/${pkg.dir}" />
+    </target>
+    <target name="check.selected.test" if="test" depends="get.client">
+        <property name="one.test" value="${test.client}#${test}" />
+    </target>
+    <target name="no.selected.test" unless="test">
+        <property name="one.test" value="" />
+    </target>
+
+    <target name="check.java.options" if="env.JAVA_OPTIONS">
+        <property name="java.options" value="${env.JAVA_OPTIONS}" />
+    </target>
+    <target name="no.java.options" unless="env.JAVA_OPTIONS">
+        <property name="java.options" value="" />
+    </target>
+
+    <target name="runclient" depends="init,check.in.bin,set.env,prepare.work.dir,check.selected.test,no.selected.test, check.java.options, no.java.options">
+        <property name="report.arg" value="" />
+        <!-- property name="report.arg" value="-writereport ${report.dir}"/ -->
+        <condition property="tests.string" value="${multiple.tests}">
+            <not>
+                <or>
+                    <equals arg1="${multiple.tests}" arg2="$${multiple.tests}" />
+                    <equals arg1="${multiple.tests}" arg2="" />
+                </or>
+            </not>
+        </condition>
+        <condition property="tests.string" value="${ts.home}/src/${pkg.dir}/${one.test}">
+            <or>
+                <equals arg1="${multiple.tests}" arg2="$${multiple.tests}" />
+                <equals arg1="${multiple.tests}" arg2="" />
+            </or>
+        </condition>
+        <translatepath propname="tests.string" type="initialfile" />
+
+        <java classname="com.sun.javatest.tool.Main" fork="yes">
+            <classpath>
+                <pathelement path="${ts.classpath}" />
+            </classpath>
+            <sysproperty key="java.compiler" value="NONE" />
+            <sysproperty key="TS_HOME" value="${ts.home}" />
+            <sysproperty key="ts.home" value="${ts.home}" />
+            <sysproperty key="JAVA_HOME" value="${java.home}" />
+            <sysproperty key="JAVA_OPTIONS" value="${java.options}" />
+            <sysproperty key="cts.jtroutput" value="true" />
+            <sysproperty key="windir" value="${env.windir}" />
+            <sysproperty key="SYSTEMROOT" value="${env.SystemRoot}" />
+            <sysproperty key="javatest.security.allowPropertiesAccess" value="true" />
+            <sysproperty key="java.security.policy" value="${ts.home}/bin/harness.policy" />
+            <sysproperty key="harness.log.traceflag" value="${harness.log.traceflag}" />
+            <sysproperty key="TZ" value="${tz}" />
+            <sysproperty key="cts.harness.debug" value="${cts.harness.debug}" />
+            <sysproperty key="deliverable.class" value="${deliverable.class}" />
+            <sysproperty key="harness.executeMode" value="${harness.executeMode}" />
+            <arg line=" -EsysProps" />
+            <arg line=" -batch" />
+            <arg line=" -testsuite ${ts.home}/src" />
+            <arg line=" -workDir ${work.dir}" />
+            <arg line=" -envFiles ${ts.home}/bin/ts.jte" />
+            <arg line=" -env ${ts.env}" />
+            <arg line=" -excludeList ${ts.home}/bin/ts.jtx" />
+            <arg line=" -tests ${tests.string}" />
+            <arg line=" -runtests ${report.arg}" />
+            <jvmarg value="-Xmx150m" />
+        </java>
+    </target>
+
+    <target name="gui" depends="init">
+        <java classname="com.sun.javatest.tool.Main" fork="yes" dir="${ts.home}/src">
+            <classpath>
+                <pathelement path="${ts.classpath}" />
+            </classpath>
+            <sysproperty key="java.compiler" value="NONE" />
+            <sysproperty key="TS_HOME" value="${ts.home}" />
+            <sysproperty key="ts.home" value="${ts.home}" />
+            <sysproperty key="JAVA_HOME" value="${java.home}" />
+            <sysproperty key="JAVA_OPTIONS" value="${java.options}" />
+            <sysproperty key="cts.jtroutput" value="true" />
+            <sysproperty key="windir" value="${env.windir}" />
+            <sysproperty key="SYSTEMROOT" value="${env.SystemRoot}" />
+            <sysproperty key="javatest.security.allowPropertiesAccess" value="true" />
+            <sysproperty key="java.security.policy" value="${ts.home}/bin/harness.policy" />
+            <sysproperty key="harness.log.traceflag" value="${harness.log.traceflag}" />
+            <sysproperty key="TZ" value="${tz}" />
+            <sysproperty key="cts.harness.debug" value="${cts.harness.debug}" />
+            <sysproperty key="deliverable.class" value="${deliverable.class}" />
+            <sysproperty key="harness.executeMode" value="${harness.executeMode}" />
+            <arg line="-EsysProps" />
+            <jvmarg value="-Xms150m" />
+            <jvmarg value="-Xmx150m" />
+        </java>
+    </target>
+
+    <target name="clean">
+      <condition property="delete.pkg.dir" value="${pkg.dir}">
+        <isset property="pkg.dir" />
+      </condition>
+      <property name="delete.pkg.dir" value="" />
+      <delete failonerror="false" includeEmptyDirs="true">
+        <fileset dir="${class.dir}/${delete.pkg.dir}" includes="**/*" excludes="?lace?older*" />
+        <fileset dir="${dist.dir}/${delete.pkg.dir}" includes="**/*" excludes="?lace?older*" />
+      </delete>
+    </target>
+
+    <target name="clean.all">
+        <delete failonerror="false" includeEmptyDirs="true">
+            <fileset dir="${class.dir}">
+                <exclude name="PlaceHolder,SCCS/**" />
+            </fileset>
+        </delete>
+        <delete failonerror="false" includeEmptyDirs="true">
+            <fileset dir="${dist.dir}">
+                <exclude name="PlaceHolder,SCCS/**" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="set.in.bin">
+        <condition property="in.bin">
+            <equals arg1="${user.dir}" arg2="${ts.home}/bin" />
+        </condition>
+    </target>
+    <target name="check.in.bin" depends="set.in.bin" if="in.bin">
+        <fail message="This target can not be used in the bin directory, it should only be used under the src directory " />
+    </target>
+
+    <target name="does.version.file.exist">
+        <available file="${ts.home}/bin/version" type="file" property="version.file.exists" />
+    </target>
+    <target name="check.version.file" depends="does.version.file.exist" unless="version.file.exists">
+        <fail message="version file (${ts.home}/bin/version) does not exist " />
+    </target>
+    <target name="ts.version" depends="check.version.file">
+        <property file="${ts.home}/bin/version" />
+        <echo message="${ts.version} build ${ts.build}" />
+    </target>
+
+    <!-- Tasks for managing ts specific library classes.  These automatically call
+  the pkg target in the src/com/sun/ts/lib/build.xml file  -->
+  <!-- ts specific library classes will be compiled to TS_HOME/classes -->
+
+        <target name="does.bin.workspace.file.exist">
+                <available file="${ts.home}/bin/workspace.xml" type="file" property="bin.workspace.file.exists" />
+        </target>
+        <target name="check.bin.workspace.file" depends="does.bin.workspace.file.exist" unless="bin.workspace.file.exists">
+            <echo message="WARNING: The workspace file (${ts.home}/bin/workspace.xml) does not exist - ${msg}" />
+        </target>
+
+        <target name="tslib.error.msg">
+                <property name="msg" value="building of jpa library classes is not allowed." />
+        </target>
+
+        <target name="tslib" depends="tslib.error.msg,check.bin.workspace.file" if="bin.workspace.file.exists">
+                <tstamp />
+                <ant antfile="workspace.xml" dir="${ts.home}/bin" target="build" />
+        </target>
+
+        <target name="tsharness">
+        <ant antfile="build.xml" dir="${ts.home}/src/com/sun/ts/lib" target="build" />
+        </target>
+
+        <target name="build.all.jars" depends="tsharness,tslib" /> 
+<target name="print.version" if="cts.version.found">
+              <loadfile property="cts.version.file" srcFile="${ts.home}/bin/version" />
+              <echo message="${cts.version.file}" />
+            </target><target name="print.cts.internal.version" if="cts.internal.version.found">
+              <loadfile property="cts.internal.version.file" srcFile="${ts.home}/bin/version-cts-internal" />
+              <echo message="${cts.internal.version.file}" />
+            </target><target name="print.no.version" unless="has.version">
+              <echo message="No version information available." />
+            </target><target name="version">
+              <available property="cts.version.found" file="${ts.home}/bin/version" />
+              <available property="cts.internal.version.found" file="${ts.home}/bin/version-cts-internal" />
+              <condition property="has.version">
+                <or>
+                  <istrue value="${cts.version.found}" />
+                  <istrue value="${cts.internal.version.found}" />
+                </or>
+              </condition>
+              <antcall target="print.version" />
+              <antcall target="print.cts.internal.version" />
+              <antcall target="print.no.version" />
+            </target></project>

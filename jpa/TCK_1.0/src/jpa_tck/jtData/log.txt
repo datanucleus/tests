@@ -1,0 +1,208 @@
+[25Jun2011 16:52BST]  Starting test run
+[19Apr2015 12:26BST]  Starting test run
+[19Apr2015 12:26BST]  Completed test run: ok
+[19Apr2015 12:26BST]  Starting test run
+[19Apr2015 12:44BST]  Completed test run: not ok
+[20Apr2015 11:07BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 49)
+java.io.UTFDataFormatException: malformed input around byte 49
+	at java.io.DataInputStream.readUTF(DataInputStream.java:634)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:965)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[20Apr2015 11:07BST]  Starting test run
+[20Apr2015 11:08BST]  Completed test run: not ok
+[20Apr2015 11:11BST]  Starting test run
+[20Apr2015 11:11BST]  Completed test run: ok
+[21Apr2015 12:54BST]  Starting test run
+[21Apr2015 13:11BST]  Completed test run: not ok
+[26Apr2015 08:00BST]  Starting test run
+[26Apr2015 08:18BST]  Completed test run: not ok
+[26Apr2015 11:39BST]  Starting test run
+[26Apr2015 11:56BST]  Completed test run: not ok
+[26Apr2015 15:08BST]  Starting test run
+[26Apr2015 15:25BST]  Completed test run: not ok
+[30Apr2015 13:49BST]  Starting test run
+[30Apr2015 14:07BST]  Completed test run: not ok
+[04May2015 09:30BST]  Starting test run
+[04May2015 09:47BST]  Completed test run: not ok
+[04May2015 11:42BST]  Starting test run
+[04May2015 12:00BST]  Completed test run: not ok
+[05May2015 07:50BST]  Starting test run
+[05May2015 08:07BST]  Completed test run: not ok
+[05May2015 08:25BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 21)
+java.io.UTFDataFormatException: malformed input around byte 21
+	at java.io.DataInputStream.readUTF(DataInputStream.java:634)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:965)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[05May2015 08:26BST]  Starting test run
+[05May2015 08:26BST]  Completed test run: ok
+[05May2015 08:26BST]  Starting test run
+[05May2015 08:44BST]  Completed test run: not ok
+[05May2015 09:00BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 111)
+java.io.UTFDataFormatException: malformed input around byte 111
+	at java.io.DataInputStream.readUTF(DataInputStream.java:656)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:965)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[05May2015 09:00BST]  Starting test run
+[05May2015 09:07BST]  Completed test run: ok
+[05May2015 10:09BST]  Starting test run
+[05May2015 10:26BST]  Completed test run: not ok
+[05May2015 19:58BST]  Starting test run
+[05May2015 20:16BST]  Completed test run: not ok
+[06May2015 09:57BST]  Starting test run
+[06May2015 10:15BST]  Completed test run: not ok
+[13May2015 16:54BST]  Starting test run
+[13May2015 17:12BST]  Completed test run: not ok
+[18May2015 09:04BST]  Starting test run
+[18May2015 09:22BST]  Completed test run: not ok
+[22May2015 16:48BST]  Starting test run
+[22May2015 17:05BST]  Completed test run: not ok
+[23May2015 08:36BST]  Starting test run
+[23May2015 08:53BST]  Completed test run: not ok
+[10Jun2015 15:36BST]  Starting test run
+[10Jun2015 15:54BST]  Completed test run: not ok
+[10Jun2015 15:55BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 51)
+java.io.UTFDataFormatException: malformed input around byte 51
+	at java.io.DataInputStream.readUTF(DataInputStream.java:656)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:965)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[10Jun2015 15:55BST]  Starting test run
+[10Jun2015 15:55BST]  Completed test run: not ok
+[10Jun2015 16:00BST]  Starting test run
+[10Jun2015 16:00BST]  Completed test run: not ok
+[10Jun2015 16:03BST]  Starting test run
+[10Jun2015 16:03BST]  Completed test run: not ok
+[10Jun2015 16:07BST]  Starting test run
+[10Jun2015 16:07BST]  Completed test run: not ok
+[10Jun2015 16:12BST]  Starting test run
+[10Jun2015 16:12BST]  Completed test run: not ok
+[10Jun2015 16:23BST]  Starting test run
+[10Jun2015 16:23BST]  Completed test run: ok
+[10Jun2015 16:25BST]  Starting test run
+[10Jun2015 16:25BST]  Completed test run: ok
+[10Jun2015 16:27BST]  Starting test run
+[10Jun2015 16:27BST]  Completed test run: ok
+[10Jun2015 16:31BST]  Starting test run
+[10Jun2015 16:49BST]  Completed test run: not ok
+[11Jun2015 18:06BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 49)
+java.io.UTFDataFormatException: malformed input around byte 49
+	at java.io.DataInputStream.readUTF(DataInputStream.java:634)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:965)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[11Jun2015 18:06BST]  Starting test run
+[11Jun2015 18:24BST]  Completed test run: not ok
+[17Jun2015 15:04BST]  Starting test run
+[17Jun2015 15:22BST]  Completed test run: not ok
+[23Jun2015 19:19BST]  Starting test run
+[23Jun2015 19:36BST]  Starting test run
+[24Jun2015 07:29BST]  Starting test run
+[24Jun2015 07:45BST]  Completed test run: not ok
+[24Jun2015 18:47BST]  Starting test run
+[24Jun2015 18:49BST]  Starting test run
+[24Jun2015 19:08BST]  Completed test run: not ok
+[24Jun2015 19:11BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 77)
+java.io.UTFDataFormatException: malformed input around byte 77
+	at java.io.DataInputStream.readUTF(DataInputStream.java:648)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:965)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[24Jun2015 19:11BST]  Starting test run
+[24Jun2015 19:11BST]  Completed test run: not ok
+[24Jun2015 19:13BST]  Starting test run
+[24Jun2015 19:13BST]  Completed test run: not ok
+[24Jun2015 19:16BST]  Starting test run
+[24Jun2015 19:16BST]  Completed test run: ok
+[24Jun2015 19:16BST]  Starting test run
+[24Jun2015 19:16BST]  Completed test run: ok
+[24Jun2015 19:19BST]  Starting test run
+[24Jun2015 19:19BST]  Completed test run: ok
+[24Jun2015 19:22BST]  Starting test run
+[24Jun2015 19:22BST]  Completed test run: not ok
+[24Jun2015 19:28BST]  Starting test run
+[24Jun2015 19:28BST]  Completed test run: ok
+[24Jun2015 19:29BST]  Starting test run
+[24Jun2015 19:29BST]  Completed test run: ok
+[10Jul2015 14:14BST]  Starting test run
+[10Jul2015 14:32BST]  Completed test run: not ok
+[13Jul2015 15:06BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 35)
+java.io.UTFDataFormatException: malformed input around byte 35
+	at java.io.DataInputStream.readUTF(DataInputStream.java:634)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:965)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[13Jul2015 15:06BST]  Starting test run
+[13Jul2015 15:24BST]  Completed test run: not ok
+[02Aug2015 09:05BST]  Starting test run
+[02Aug2015 09:23BST]  Completed test run: not ok
+[04Aug2015 15:38BST]  Starting test run
+[04Aug2015 15:57BST]  Completed test run: not ok
+[12Aug2015 13:52BST]  Starting test run
+[12Aug2015 14:10BST]  Completed test run: not ok
+[12Aug2015 17:12BST]  Starting test run
+[12Aug2015 17:12BST]  Starting test run
+[12Aug2015 17:30BST]  Completed test run: not ok
+[18Aug2015 12:01BST]  Starting test run
+[18Aug2015 12:02BST]  Starting test run
+[18Aug2015 12:20BST]  Completed test run: not ok
+[26Aug2015 11:50BST]  Starting test run
+[26Aug2015 12:08BST]  Completed test run: not ok
+[02Sep2015 19:22BST]  Starting test run
+[02Sep2015 19:40BST]  Completed test run: not ok
+[03Sep2015 12:20BST]  Starting test run
+[03Sep2015 12:38BST]  Completed test run: not ok
+[03Sep2015 15:23BST]  Starting test run
+[03Sep2015 15:41BST]  Completed test run: not ok
+[11Sep2015 15:40BST]  Starting test run
+[11Sep2015 15:58BST]  Completed test run: not ok
+[13Sep2015 19:27BST]  Starting test run
+[13Sep2015 19:45BST]  Completed test run: not ok
+[14Sep2015 13:44BST]  Starting test run
+[14Sep2015 14:03BST]  Completed test run: not ok
+[15Sep2015 09:54BST]  Starting test run
+[15Sep2015 10:12BST]  Completed test run: not ok
+[15Sep2015 19:21BST]  Starting test run
+[15Sep2015 19:21BST]  Completed test run: not ok
+[15Sep2015 19:22BST]  Error reading test result cache (java.io.UTFDataFormatException: malformed input around byte 43)
+java.io.UTFDataFormatException: malformed input around byte 43
+	at java.io.DataInputStream.readUTF(DataInputStream.java:656)
+	at java.io.RandomAccessFile.readUTF(RandomAccessFile.java:989)
+	at com.sun.javatest.TestResultCache.readCacheEntries(TestResultCache.java:546)
+	at com.sun.javatest.TestResultCache.readCache(TestResultCache.java:515)
+	at com.sun.javatest.TestResultCache.doWork(TestResultCache.java:294)
+	at com.sun.javatest.TestResultCache.doWorkUntilDone(TestResultCache.java:211)
+	at com.sun.javatest.TestResultCache.access$000(TestResultCache.java:28)
+	at com.sun.javatest.TestResultCache$1.run(TestResultCache.java:119)
+[15Sep2015 19:23BST]  Starting test run
+[15Sep2015 19:24BST]  Completed test run: not ok

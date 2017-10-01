@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<!--
+ Copyright 2003 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!--
+ @(#)build.xml	1.12 03/05/01
+-->
+
+
+<project name="Harness" default="build" >
+
+  <property name="pkg.dir" value="com/sun/ts/lib" />
+
+  <target name="clean">
+      <delete>
+	  <fileset dir="${class.dir}">
+      	    <include name="${pkg.dir}/harness/**/*.class"/>
+	    <include name="${pkg.dir}/util/**/*.class"/>
+	    <include name="${pkg.dir}/porting/**/*.class"/>
+	    <include name="${pkg.dir}/deliverable/*.class"/>
+	    <include name="com/sun/javatest/"/>
+	    <include name="${pkg.dir}/javatest/"/>
+         </fileset>
+      </delete>
+      <delete dir="${ts.home}/src/${pkg.dir}/porting/app"/>
+      <delete dir="${ts.home}/src/${pkg.dir}/porting/appclient"/>
+      <delete dir="${ts.home}/src/${pkg.dir}/porting/ejb"/>
+      <delete dir="${ts.home}/src/${pkg.dir}/porting/web"/>
+      <delete file="${ts.home}/lib/tsharness.jar"/>
+   </target>
+
+	<target name="compile" >
+		<javac srcdir="${ts.home}/src"
+			debug="on"
+                        destdir="${class.dir}"
+			deprecation="on" >
+			<include name="${pkg.dir}/harness/**/*.java"/>
+			<include name="${pkg.dir}/util/**/*.java"/>
+			<include name="${pkg.dir}/porting/**/*.java"/>
+			<include name="${pkg.dir}/deliverable/*.java"/>
+			<include name="${pkg.dir}/javatest/**/*.java"/>
+                        <exclude name="${pkg.dir}/porting/TSDeploymentInterface2.java"/>
+                        <exclude name="${pkg.dir}/porting/TSDeployment2.java"/>
+                        <exclude name="${pkg.dir}/porting/TSJMSObjects*.java"/>
+			<classpath>
+        		<pathelement path="${ts.home}/lib/javatest.jar" />
+      		</classpath>
+		</javac>
+	</target>
+
+	<target name="does.workspace.file.exist" >
+		<available file="${ts.home}/src/com/sun/ts/lib/workspace.xml" type="file" property="workspace.file.exists"/>
+	</target>
+	<target name="check.workspace.file" depends="does.workspace.file.exist" unless="workspace.file.exists">
+		<echo message="The workspace file (${ts.home}/src/com/sun/ts/lib/workspace.xml) does not exist, only compiling is allowed) "/>
+	</target>
+
+  <target name="build" depends="check.workspace.file,compile" if="workspace.file.exists">
+    <tstamp/>
+     <ant antfile="workspace.xml" dir="${ts.home}/src/com/sun/ts/lib" target="build" />
+  	<echo message="Core harness library jar, 'tsharness.jar', has been built."/>
+  </target>
+
+
+  <target name="build.all.jars" >
+        <ant antfile="build.xml" dir="${ts.home}/bin" target="build.all.jars" />
+  </target>
+
+
+</project>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<project name="ejb3" basedir="." default="usage"> 
+  
+   <!-- IMPORTS -->
+
+   <import file="${ts.home}/src/com/sun/ts/tests/ejb30/persistence/common/persistence-import.xml"/>
+   <import file="${ts.home}/bin/xml/ts.import.xml"/>
+
+   <property name="app.name" value="ejb3_query_language"/>
+
+  <property name="par.classes"
+     value="com/sun/ts/tests/ejb30/persistence/query/language/schema30/Address.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Alias.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Country.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/CreditCard.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Customer.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/HardwareProduct.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Info.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/LineItem.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Order.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Phone.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Product.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/ShelfLife.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/SoftwareProduct.class,
+                com/sun/ts/tests/ejb30/persistence/query/language/schema30/Spouse.class"/>
+
+
+    <target name="package">
+
+      <ts.par descriptor="persistence.xml"
+                descriptordir="${ejb3.persistence.common.pkg}/template"
+        	archivename="${app.name}"
+      		includedefaultfiles="false">
+      		<fileset dir="${class.dir}"
+               		includes="${par.classes}"/>
+      </ts.par>
+    
+      <ts.vehicles name="${app.name}" singleear="true">
+
+        <jar-elements>
+          <fileset dir="${class.dir}"
+             includes="com/sun/ts/tests/ejb30/persistence/query/language/Util.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/AddressException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/CreditCardException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/InfoException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/LineItemException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/PhoneException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/SpouseException.class"/>
+        </jar-elements>
+
+       <servlet-elements>
+          <zipfileset dir="${class.dir}"
+             includes="com/sun/ts/tests/ejb30/persistence/query/language/Util.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/AddressException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/CreditCardException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/InfoException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/LineItemException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/PhoneException.class,
+             com/sun/ts/tests/ejb30/persistence/query/language/schema30/SpouseException.class"
+             prefix="WEB-INF/classes"/>
+        </servlet-elements>
+
+        <ear-elements>
+          <zipfileset dir="${dist.dir}/${pkg.dir}"
+                includes="${app.name}.jar"
+                prefix="lib"/>
+        </ear-elements>
+        </ts.vehicles>
+
+    </target>
+
+</project>

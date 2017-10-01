@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project name="TestImport" basedir="." default="usage">
+
+    <!-- 
+    This is the main import file for all leaf test directory build.xml files.
+    It contains targets and properties necessary in lower level build files.
+    -->
+    
+    <!-- IMPORTS -->
+    <import file="${ts.home}/bin/xml/ts.vehicles.xml"/>
+    
+    <!-- PROPERTIES -->
+    
+    <!-- MACROS -->
+    
+    <!-- TARGETS -->
+    <target name="build" depends="compile, package"/>
+
+    <target name="compile">
+        <ts.javac/>
+        <antcall target="enhance" />
+    </target>
+    
+    <!-- libs necessary to build the module -->
+    <path id="enhancer.classpath">
+        <fileset dir="${ts.home}/datanucleus">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement path="${ts.classpath}" />
+    </path>
+
+    <target name="enhance" description="Class enhancement">
+        <taskdef name="datanucleusenhancer" classpathref="enhancer.classpath" classname="org.datanucleus.enhancer.EnhancerTask" />
+        <datanucleusenhancer classpathref="enhancer.classpath"
+            dir="${class.dir}" failonerror="false" verbose="true" api="JPA">
+            <fileset dir="${ts.home}">
+                <include name="classes/**/*.class"/>
+                <include name="src/${pkg.dir}/orm.xml"/>
+            </fileset>
+        </datanucleusenhancer>
+    </target>
+
+    <target name="clean">
+        <ts.clean/>
+    </target>
+
+    <target name="runclient">
+        <ant antfile="build.xml" dir="${ts.home}/bin" target="runclient"/>
+    </target>
+
+    <target name="usage">
+        <ant antfile="build.xml" dir="${ts.home}/bin" target="usage"/>
+    </target>
+  
+    <target name="deploy">
+        <ant antfile="build.xml" dir="${ts.home}/bin" target="deploy"/>
+    </target>
+    
+    <target name="undeploy">
+        <ant antfile="build.xml" dir="${ts.home}/bin" target="undeploy"/>
+    </target>
+    
+    <target name="deploy.special.webservices.common.apps">
+        <ant antfile="build.xml" dir="${ts.home}/bin" target="javatest.batch">
+            <property name="exec.mode" value="1"/>
+            <property name="common.apps.only" value="true"/>
+        </ant>
+    </target>
+    
+    <target name="undeploy.special.webservices.common.apps">
+        <ant antfile="build.xml" dir="${ts.home}/bin" target="javatest.batch">
+            <property name="exec.mode" value="3"/>
+            <property name="common.apps.only" value="true"/>
+        </ant>
+    </target>
+  
+</project>

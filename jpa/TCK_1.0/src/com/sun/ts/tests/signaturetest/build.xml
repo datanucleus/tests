@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<!--
+ Copyright 2006 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!--
+ @(#)build.xml	1.12 06/04/06
+-->
+
+
+<!-- ************************************************************ -->
+<!-- This build file builds the signature test framework classes. -->
+<!-- Signature tests utilizing this framework should add a build  -->
+<!-- target to ensure the framework is built before their         -->
+<!-- signature test classes are built.  It would also be nice if  -->
+<!-- they added a dependency from their clean target to this      -->
+<!-- clean.framework target.  See the Java EE signature test as   -->
+<!-- an example.                                                     -->
+<!-- ************************************************************ -->
+
+<project name="signaturetest" basedir="." default="usage"> 
+  
+  <property name="pkg.dir" value="com/sun/ts/tests/signaturetest"/>  
+  <property name="build"   value="${ts.home}/classes"/>
+  <property name="src.dir" value="${ts.home}/src"/>
+
+  <target name="build.framework">
+    <javac srcdir="${src.dir}" destdir="${build}" includes="${pkg.dir}/*.java" debug="on">
+      <classpath>
+        <pathelement location="${ts.home}/lib/apiCheck.jar"/>
+        <pathelement location="${ts.home}/lib/javatest.jar"/>
+        <pathelement location="${ts.home}/lib/tsharness.jar"/>
+        <pathelement path="${ts.home}/classes"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="clean.framework">
+    <delete quiet="true">
+      <fileset dir="${build}/${pkg.dir}" includes="*.class"/>
+    </delete>
+  </target>
+
+  <target name="usage">
+    <echo message="Available targets include:"/>
+    <echo message="  usage          : prints this message"/>
+    <echo message="  build.framework: builds the signature test framework"/>
+    <echo message="  clean.framework: removes the signature test framework classes"/>
+  </target>
+
+  <target name="package"> 
+    <echo message="signaturetest-package target: This is a dummy target to keep the build happy"/>
+  </target>
+
+  <target name="deploy"/>
+
+</project>

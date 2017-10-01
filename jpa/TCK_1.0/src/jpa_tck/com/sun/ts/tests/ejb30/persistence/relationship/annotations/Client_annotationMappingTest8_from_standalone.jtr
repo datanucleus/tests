@@ -1,0 +1,141 @@
+#Test Results (version 2)
+#Tue Sep 15 10:09:55 BST 2015
+#checksum:7ad3b734d53c8543
+#-----testdescription-----
+$file=/usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/relationship/annotations/Client.java
+$root=/usr/local/jpa_tck/src
+assertion_ids=PERSISTENCE:JAVADOC:99  See assertion html documents.\nPERSISTENCE:JAVADOC:100  See assertion html documents.\nPERSISTENCE:JAVADOC:101  See assertion html documents.\nPERSISTENCE:JAVADOC:1099  See assertion html documents.\nPERSISTENCE:SPEC:561  See assertion html documents.\nPERSISTENCE:SPEC:565  See assertion html documents.\nPERSISTENCE:SPEC:568  See assertion html documents.\nPERSISTENCE:SPEC:1097  See assertion html documents.\nPERSISTENCE:SPEC:1098  See assertion html documents.
+classname=com.sun.ts.tests.ejb30.persistence.relationship.annotations.Client
+direction=forward
+finder=cts
+id=annotationMappingTest8_from_standalone
+keywords=all forward
+service_eetest=yes
+testName=annotationMappingTest8
+testProps=
+test_directory=com/sun/ts/tests/ejb30/persistence/relationship/annotations
+
+#-----environment-----
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre
+SYSTEMROOT=${env.SystemRoot}
+TS_HOME=/usr/local/jpa_tck/
+command.testExecute=com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=${ts.run.classpath}:${ts.harness.classpath}:${JAVA_HOME}/../lib/tools.jar:DISPLAY=${ts.display} HOME="${user.home}" windir=${windir} SYSTEMROOT=${SYSTEMROOT} ${JAVA_HOME}/bin/java -Dcts.tmp=$harness.temp.directory -Djava.security.policy=${ts.home}/bin/harness.policy -Ddeliverable.class=${deliverable.class} $testExecuteClass $testExecuteArgs
+database.classes=${jdbc.lib.class.path}/postgresql-jdbc.jar
+deliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable
+harness.log.delayseconds=1
+harness.log.port=2000
+harness.log.traceflag=false
+harness.socket.retry.count=10
+harness.temp.directory=${ts.home}/tmp
+jdbc.lib.class.path=${jpa.home}/jdbc/lib
+jpa.classes=${jpa.home}/lib/persistence-api.jar:${jpa.home}/datanucleus/datanucleus-core.jar:${jpa.home}/datanucleus/datanucleus-rdbms.jar:${jpa.home}/datanucleus/datanucleus-api-jpa.jar:${jpa.home}/datanucleus/log4j.jar:${jpa.home}/datanucleus/classes
+jpa.home=/usr/local/jpa_tck
+persistence.unit.name=JPATCK
+persistence.unit.properties.file.full.path=${ts.home}/bin/datanucleus-provider.properties
+platform.mode=standalone
+porting.ts.url.class.1=com.sun.ts.lib.implementation.sun.common.SunRIURL
+ts.display=:0.0
+ts.harness.classpath=${ts.home}/lib/tsharness.jar:${ts.home}/lib/sigtest.jar:${ts.run.classpath}:${ts.home}/lib/javatest.jar:${ts.home}/tools/ant/lib/ant.jar
+ts.home=/usr/local/jpa_tck/
+ts.run.classpath=${ts.home}/classes:${database.classes}:${jpa.classes}
+user.home=/home/andy
+windir=${env.windir}
+
+#-----testresult-----
+description=file:///usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/relationship/annotations/Client.java#annotationMappingTest8_from_standalone
+end=Tue Sep 15 10:09:55 BST 2015
+environment=ts_unix
+execStatus=Passed.
+javatestOS=Linux 3.19.8-desktop-3.mga5 (amd64)
+javatestVersion=3.2.1
+script=com.sun.ts.lib.harness.TSScript 
+sections=script_messages TestRun
+start=Tue Sep 15 10:09:53 BST 2015
+test=com/sun/ts/tests/ejb30/persistence/relationship/annotations/Client.java#annotationMappingTest8_from_standalone
+timeoutSeconds=600
+work=/usr/local/jpa_tck/src/jpa_tck/com/sun/ts/tests/ejb30/persistence/relationship/annotations
+
+#section:script_messages
+----------messages:(0/0)----------
+
+#section:TestRun
+----------messages:(1/1542)----------
+command: com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/tsharness.jar:/usr/local/jpa_tck//lib/sigtest.jar:/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/javatest.jar:/usr/local/jpa_tck//tools/ant/lib/ant.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/../lib/tools.jar:DISPLAY=:0.0:/usr/local/jpa_tck/dist/com/sun/ts/tests/ejb30/persistence/relationship/annotations/ejb3_relationship_annotations.jar HOME=/home/andy windir= SYSTEMROOT= /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/bin/java -Dcts.tmp=/usr/local/jpa_tck//tmp -Djava.security.policy=/usr/local/jpa_tck//bin/harness.policy -Ddeliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable com.sun.ts.tests.common.vehicle.VehicleClient -p /usr/local/jpa_tck//tmp/tstest.jte -t annotationMappingTest8 -vehicle standalone
+----------log:(73/5922)----------
+************************************************************
+* props file set to "/tmp/andy-cts-props.txt"
+************************************************************
+setup
+platform.mode is set to standalone, so tests are running in J2SE environment standalone mode.persistence.unit.name is set to JPATCK
+createPeople
+Create 20 People
+Start to persist people 
+persistence unit properites from user: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persistence unit properites verified: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@4387b79e
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@384ad17b
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@52e6fdee
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@5e0826e7
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@74e52303
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@694abbdc
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@4f6ee6e4
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@7b9a4292
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@7ec7ffd3
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@515aebb0
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@5158b42f
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@3a93b025
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@1d2adfbe
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@131774fe
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@c8c12ac
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@4efbca5a
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@35e2d654
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@293a5bf6
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@38d8f54a
+persisted person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@799f10e1
+Create 3 Insurance Carriers
+Start to persist insurance 
+persisted insurance com.sun.ts.tests.ejb30.persistence.relationship.annotations.Insurance@6302bbb1
+persisted insurance com.sun.ts.tests.ejb30.persistence.relationship.annotations.Insurance@48f2bd5b
+persisted insurance com.sun.ts.tests.ejb30.persistence.relationship.annotations.Insurance@235834f2
+Check Insurance Carriers for Shelly McGowan
+Found Insurance Carrier for Shelly McGowan: Prudential
+Check Insurance Carriers for Shelly McGowan
+Found Insurance Carrier for Shelly McGowan: Sentry
+Check Insurance Carriers for Cheng Fang
+Found Insurance Carrier for Cheng Fang: Cigna
+Check Insurance Carriers for Cheng Fang
+Found Insurance Carrier for Cheng Fang: Sentry
+Check Insurance Carriers for Nicole Martin
+Found Insurance Carrier for Nicole Martin: Prudential
+Check Insurance Carriers for Nicole Martin
+Found Insurance Carrier for Nicole Martin: Cigna
+Check Insurance Carriers for Nicole Martin
+Found Insurance Carrier for Nicole Martin: Sentry
+annotationMappingTest8: Expected results received
+Entering Cleanup
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@4387b79e
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@384ad17b
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@52e6fdee
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@5e0826e7
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@74e52303
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@694abbdc
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@4f6ee6e4
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@7b9a4292
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@7ec7ffd3
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@515aebb0
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@5158b42f
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@3a93b025
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@1d2adfbe
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@131774fe
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@c8c12ac
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@4efbca5a
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@35e2d654
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@293a5bf6
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@38d8f54a
+removed person com.sun.ts.tests.ejb30.persistence.relationship.annotations.Person@799f10e1
+Cleanup Complete, calling super.cleanup
+STATUS:Passed.
+result: Passed.
+
+
+test result: Passed.

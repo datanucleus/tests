@@ -1,0 +1,215 @@
+#Test Results (version 2)
+#Tue Sep 15 09:55:20 BST 2015
+#checksum:110f36c404142915
+#-----testdescription-----
+$file=/usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/callback/listener/Client.java
+$root=/usr/local/jpa_tck/src
+assertion_ids=PERSISTENCE:SPEC:695  See assertion html documents.\nPERSISTENCE:SPEC:719  See assertion html documents.\nPERSISTENCE:SPEC:720  See assertion html documents.
+classname=com.sun.ts.tests.ejb30.persistence.callback.listener.Client
+direction=forward
+finder=cts
+id=postLoadTest_from_standalone
+keywords=all forward
+service_eetest=yes
+testName=postLoadTest
+testProps=
+test_directory=com/sun/ts/tests/ejb30/persistence/callback/listener
+
+#-----environment-----
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre
+SYSTEMROOT=${env.SystemRoot}
+TS_HOME=/usr/local/jpa_tck/
+command.testExecute=com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=${ts.run.classpath}:${ts.harness.classpath}:${JAVA_HOME}/../lib/tools.jar:DISPLAY=${ts.display} HOME="${user.home}" windir=${windir} SYSTEMROOT=${SYSTEMROOT} ${JAVA_HOME}/bin/java -Dcts.tmp=$harness.temp.directory -Djava.security.policy=${ts.home}/bin/harness.policy -Ddeliverable.class=${deliverable.class} $testExecuteClass $testExecuteArgs
+database.classes=${jdbc.lib.class.path}/postgresql-jdbc.jar
+deliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable
+harness.log.delayseconds=1
+harness.log.port=2000
+harness.log.traceflag=false
+harness.socket.retry.count=10
+harness.temp.directory=${ts.home}/tmp
+jdbc.lib.class.path=${jpa.home}/jdbc/lib
+jpa.classes=${jpa.home}/lib/persistence-api.jar:${jpa.home}/datanucleus/datanucleus-core.jar:${jpa.home}/datanucleus/datanucleus-rdbms.jar:${jpa.home}/datanucleus/datanucleus-api-jpa.jar:${jpa.home}/datanucleus/log4j.jar:${jpa.home}/datanucleus/classes
+jpa.home=/usr/local/jpa_tck
+persistence.unit.name=JPATCK
+persistence.unit.properties.file.full.path=${ts.home}/bin/datanucleus-provider.properties
+platform.mode=standalone
+porting.ts.url.class.1=com.sun.ts.lib.implementation.sun.common.SunRIURL
+ts.display=:0.0
+ts.harness.classpath=${ts.home}/lib/tsharness.jar:${ts.home}/lib/sigtest.jar:${ts.run.classpath}:${ts.home}/lib/javatest.jar:${ts.home}/tools/ant/lib/ant.jar
+ts.home=/usr/local/jpa_tck/
+ts.run.classpath=${ts.home}/classes:${database.classes}:${jpa.classes}
+user.home=/home/andy
+windir=${env.windir}
+
+#-----testresult-----
+description=file:///usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/callback/listener/Client.java#postLoadTest_from_standalone
+end=Tue Sep 15 09:55:20 BST 2015
+environment=ts_unix
+execStatus=Passed.
+javatestOS=Linux 3.19.8-desktop-3.mga5 (amd64)
+javatestVersion=3.2.1
+script=com.sun.ts.lib.harness.TSScript 
+sections=script_messages TestRun
+start=Tue Sep 15 09:55:18 BST 2015
+test=com/sun/ts/tests/ejb30/persistence/callback/listener/Client.java#postLoadTest_from_standalone
+timeoutSeconds=600
+work=/usr/local/jpa_tck/src/jpa_tck/com/sun/ts/tests/ejb30/persistence/callback/listener
+
+#section:script_messages
+----------messages:(0/0)----------
+
+#section:TestRun
+----------messages:(1/1521)----------
+command: com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/tsharness.jar:/usr/local/jpa_tck//lib/sigtest.jar:/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/javatest.jar:/usr/local/jpa_tck//tools/ant/lib/ant.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/../lib/tools.jar:DISPLAY=:0.0:/usr/local/jpa_tck/dist/com/sun/ts/tests/ejb30/persistence/callback/listener/ejb3_pm_callback_listener.jar HOME=/home/andy windir= SYSTEMROOT= /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/bin/java -Dcts.tmp=/usr/local/jpa_tck//tmp -Djava.security.policy=/usr/local/jpa_tck//bin/harness.policy -Ddeliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable com.sun.ts.tests.common.vehicle.VehicleClient -p /usr/local/jpa_tck//tmp/tstest.jte -t postLoadTest -vehicle standalone
+----------log:(147/16069)----------
+************************************************************
+* props file set to "/tmp/andy-cts-props.txt"
+************************************************************
+setup
+platform.mode is set to standalone, so tests are running in J2SE environment standalone mode.persistence.unit.name is set to JPATCK
+persistence unit properites from user: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persistence unit properites verified: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+Product: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@18ce0030
+Product: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@4445629
+Product: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@45b9a632
+Product: In postPersist.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@7ed7259e
+Product: In postPersist.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@28eaa59a
+Product: In postPersist.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@3427b02d
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@6aba2b86
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@158da8e
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@74e52303
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@3cd3e762
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@1fa121e2
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@7eac9008
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@7c6908d7
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@3c9754d8
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@3bf7ca37
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@4d1c00d0
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@4b2bac3f
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@4e08711f
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@26794848
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@302552ec
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@3d285d7e
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@2cd76f31
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@367ffa75
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@49438269
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@1c1bbc4e
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@55fe41ea
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@fbd1f6
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@5dda768f
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@7a8c8dcf
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@24269709
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@24aed80c
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@3a52dba3
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@2a5c8d3f
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@279fedbd
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@b3ca52e
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@45c7e403
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@710f4dc7
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@1ff4931d
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@65e98b1c
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@6ad82709
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@510f3d34
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@7817fd62
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@2362f559
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@b2c9a9c
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@4c178a76
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@544fa968
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@d35dea7
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@5e5d171f
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@7d20d0b
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@77f1baf5
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@41a2befb
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@55b0dcab
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@2df3b89c
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@70325e14
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@20d525
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@6200f9cb
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@2002fc1d
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@6f4a47c7
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@ae13544
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@3d34d211
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@4009e306
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@43c1b556
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@587e5365
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@2de23121
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@63475ace
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@4988d8b8
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@305b7c14
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@6913c1fb
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@66d18979
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@609cd4d8
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@17f7cd29
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@7d8704ef
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@158a8276
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@3c3d9b6b
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@79d8407f
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@1e66f1f5
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@4e50c791
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@7530ad9c
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@71e9ddb4
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@394df057
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@4961f6af
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@65d09a04
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@33c911a1
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@75db5df9
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@1190200a
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@6a2f6f80
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@45b4c3a9
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@291caca8
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@385e9564
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@5b94b04d
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@4c39bec8
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@f79e
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@7ee8290b
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@1e178745
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@192c3f1e
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@26b3fd41
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@561b6512
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@2e377400
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@1757cd72
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@49e5f737
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@5c671d7f
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@757277dc
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@e4487af
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@6aaceffd
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@c86b9e3
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@3af9c5b7
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@37271612
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@ed7f8b4
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@38102d01
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@37883b97
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@6ab778a
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@77f80c04
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@1dac5ef
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@5c90e579
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@6f45df59
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@38e79ae3
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@63070bab
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@291b4bf5
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@2d2ffcb7
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@762ef0ea
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@424e1977
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@10d68fcd
+Product: In postLoad.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@117e949d
+[com.sun.ts.tests.ejb30.persistence.callback.listener.Product@3b0090a4, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@198b6731, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@79079097, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@bcec361, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@40005471, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@ba2f4ec, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@1ce24091, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@2aceadd4, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@752325ad, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@2925bf5b, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@61322f9d, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@8297b3a, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@fa4c865, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@24313fcc, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@7bedc48a, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@7c9d8e2, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@2a32de6c, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@69453e37, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@7dc0f706, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@22fcf7ab, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@c0c2f8d, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@bccb269, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@13b6aecc, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@5fbe4146, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@58a9760d, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@5aebe890, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@707194ba, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@399c4be1, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@8c3b9d, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@1f59a598, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@7494f96a, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@445b295b, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@687e99d8, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@10aa41f2, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@4c309d4d, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@4e3958e7, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@58ea606c, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@68e5eea7, com.sun.ts.tests.ejb30.persistence.callback.listener.Product@31f9b85e]
+Product: postLoad was called after the query result was returned.
+Find All Products
+Find All Orders
+Find All LineItems
+Products found: cleaning up 
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@11c9af63
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@757acd7b
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@36b4fe2a
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@574b560f
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@ba54932
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@28975c28
+Product: In postRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@6bf0219d
+Product: In postRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@dd0c991
+Product: In postRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@5f16132a
+Cleanup done, calling super.cleanup
+STATUS:Passed.
+result: Passed.
+
+
+test result: Passed.

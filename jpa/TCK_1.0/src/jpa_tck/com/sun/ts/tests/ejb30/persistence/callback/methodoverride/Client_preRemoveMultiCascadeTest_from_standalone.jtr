@@ -1,0 +1,119 @@
+#Test Results (version 2)
+#Tue Sep 15 09:56:53 BST 2015
+#checksum:250502b5a497b262
+#-----testdescription-----
+$file=/usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/callback/methodoverride/Client.java
+$root=/usr/local/jpa_tck/src
+assertion_ids=PERSISTENCE:SPEC:694  See assertion html documents.\nPERSISTENCE:SPEC:708  See assertion html documents.\nPERSISTENCE:SPEC:722  See assertion html documents.
+classname=com.sun.ts.tests.ejb30.persistence.callback.methodoverride.Client
+direction=forward
+finder=cts
+id=preRemoveMultiCascadeTest_from_standalone
+keywords=all forward
+service_eetest=yes
+testName=preRemoveMultiCascadeTest
+testProps=
+test_directory=com/sun/ts/tests/ejb30/persistence/callback/methodoverride
+
+#-----environment-----
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre
+SYSTEMROOT=${env.SystemRoot}
+TS_HOME=/usr/local/jpa_tck/
+command.testExecute=com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=${ts.run.classpath}:${ts.harness.classpath}:${JAVA_HOME}/../lib/tools.jar:DISPLAY=${ts.display} HOME="${user.home}" windir=${windir} SYSTEMROOT=${SYSTEMROOT} ${JAVA_HOME}/bin/java -Dcts.tmp=$harness.temp.directory -Djava.security.policy=${ts.home}/bin/harness.policy -Ddeliverable.class=${deliverable.class} $testExecuteClass $testExecuteArgs
+database.classes=${jdbc.lib.class.path}/postgresql-jdbc.jar
+deliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable
+harness.log.delayseconds=1
+harness.log.port=2000
+harness.log.traceflag=false
+harness.socket.retry.count=10
+harness.temp.directory=${ts.home}/tmp
+jdbc.lib.class.path=${jpa.home}/jdbc/lib
+jpa.classes=${jpa.home}/lib/persistence-api.jar:${jpa.home}/datanucleus/datanucleus-core.jar:${jpa.home}/datanucleus/datanucleus-rdbms.jar:${jpa.home}/datanucleus/datanucleus-api-jpa.jar:${jpa.home}/datanucleus/log4j.jar:${jpa.home}/datanucleus/classes
+jpa.home=/usr/local/jpa_tck
+persistence.unit.name=JPATCK
+persistence.unit.properties.file.full.path=${ts.home}/bin/datanucleus-provider.properties
+platform.mode=standalone
+porting.ts.url.class.1=com.sun.ts.lib.implementation.sun.common.SunRIURL
+ts.display=:0.0
+ts.harness.classpath=${ts.home}/lib/tsharness.jar:${ts.home}/lib/sigtest.jar:${ts.run.classpath}:${ts.home}/lib/javatest.jar:${ts.home}/tools/ant/lib/ant.jar
+ts.home=/usr/local/jpa_tck/
+ts.run.classpath=${ts.home}/classes:${database.classes}:${jpa.classes}
+user.home=/home/andy
+windir=${env.windir}
+
+#-----testresult-----
+description=file:///usr/local/jpa_tck/src/com/sun/ts/tests/ejb30/persistence/callback/methodoverride/Client.java#preRemoveMultiCascadeTest_from_standalone
+end=Tue Sep 15 09:56:53 BST 2015
+environment=ts_unix
+execStatus=Passed.
+javatestOS=Linux 3.19.8-desktop-3.mga5 (amd64)
+javatestVersion=3.2.1
+script=com.sun.ts.lib.harness.TSScript 
+sections=script_messages TestRun
+start=Tue Sep 15 09:56:51 BST 2015
+test=com/sun/ts/tests/ejb30/persistence/callback/methodoverride/Client.java#preRemoveMultiCascadeTest_from_standalone
+timeoutSeconds=600
+work=/usr/local/jpa_tck/src/jpa_tck/com/sun/ts/tests/ejb30/persistence/callback/methodoverride
+
+#section:script_messages
+----------messages:(0/0)----------
+
+#section:TestRun
+----------messages:(1/1546)----------
+command: com.sun.ts.lib.harness.ExecTSTestCmd CLASSPATH=/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/tsharness.jar:/usr/local/jpa_tck//lib/sigtest.jar:/usr/local/jpa_tck//classes:/usr/local/jpa_tck/jdbc/lib/postgresql-jdbc.jar:/usr/local/jpa_tck/lib/persistence-api.jar:/usr/local/jpa_tck/datanucleus/datanucleus-core.jar:/usr/local/jpa_tck/datanucleus/datanucleus-rdbms.jar:/usr/local/jpa_tck/datanucleus/datanucleus-api-jpa.jar:/usr/local/jpa_tck/datanucleus/log4j.jar:/usr/local/jpa_tck/datanucleus/classes:/usr/local/jpa_tck//lib/javatest.jar:/usr/local/jpa_tck//tools/ant/lib/ant.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/../lib/tools.jar:DISPLAY=:0.0:/usr/local/jpa_tck/dist/com/sun/ts/tests/ejb30/persistence/callback/methodoverride/ejb3_pm_callback_methodoverride.jar HOME=/home/andy windir= SYSTEMROOT= /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.51-1.b16.1.mga5.x86_64/jre/bin/java -Dcts.tmp=/usr/local/jpa_tck//tmp -Djava.security.policy=/usr/local/jpa_tck//bin/harness.policy -Ddeliverable.class=com.sun.ts.lib.deliverable.jpa.JPADeliverable com.sun.ts.tests.common.vehicle.VehicleClient -p /usr/local/jpa_tck//tmp/tstest.jte -t preRemoveMultiCascadeTest -vehicle standalone
+----------log:(51/4389)----------
+************************************************************
+* props file set to "/tmp/andy-cts-props.txt"
+************************************************************
+setup
+platform.mode is set to standalone, so tests are running in J2SE environment standalone mode.persistence.unit.name is set to JPATCK
+persistence unit properites from user: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+persistence unit properites verified: {datanucleus.ConnectionPassword=, datanucleus.ConnectionURL=jdbc:postgresql:jpatck, datanucleus.ConnectionDriverName=org.postgresql.Driver, datanucleus.identifier.case=lowercase, datanucleus.findObject.typeConversion=false, javax.persistence.provider=org.datanucleus.api.jpa.PersistenceProviderImpl, datanucleus.ConnectionUserName=postgres}
+Product: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@7a4ccb53
+Product: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@309e345f
+Product: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@56a6d5a6
+Product: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.GenerictListenerImpl@45b9a632
+Order: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@4df50bcc
+Order: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@6b26e945
+Order: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@63a65a25
+Order: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.GenerictListenerImpl@54c562f7
+LineItem: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@1a04f701
+LineItem: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@4e91d63f
+LineItem: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@d4342c2
+LineItem: In prePersist in class com.sun.ts.tests.ejb30.persistence.callback.common.GenerictListenerImpl@2bbf180e
+Order: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@12b0404f
+Order: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@769e7ee8
+Order: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@5276e6b0
+Order: In preRemove.
+LineItem: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@647fd8ce
+LineItem: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@159f197
+LineItem: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@78aab498
+LineItem: In preRemove.
+Got expected result list: [ListenerA, ListenerB, ListenerC, Order]
+Got expected result list: [ListenerA, ListenerB, ListenerC, LineItem]
+Product: In postPersist.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@6a192cfe
+Product: In postPersist.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@5119fb47
+Product: In postPersist.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@7193666c
+Product: In postPersist.
+Find All Products
+Find All Orders
+Find All LineItems
+Products found: cleaning up 
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@37ceb1df
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@7c9d8e2
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@20d525
+Product: In preRemove.
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@6200f9cb
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@2002fc1d
+Product: In preRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@69453e37
+Product: In preRemove.
+Product: In postRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA@587e5365
+Product: In postRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB@22fcf7ab
+Product: In postRemove.com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC@2de23121
+Product: In postRemove.
+Cleanup complete, calling super.cleanup
+STATUS:Passed.
+result: Passed.
+
+
+test result: Passed.

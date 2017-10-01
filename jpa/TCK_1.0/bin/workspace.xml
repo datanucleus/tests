@@ -1,0 +1,33 @@
+<project name="bin workspace xml" default="usage">
+<!-- Do NOT load bin/ts.jte  It's already loaded by TSBuildListener
+ Besides properties in bin/ts.jte, the following properties are also 
+ defined by TSBuildListener:
+ ts.home
+ class.dir: defined as ${ts.home}/classes
+ vehicle.dir: defined as com/sun/ts/tests/common/vehicle
+ dist.dir: defined as ${ts.home}/dist
+ -->
+
+    <target name="build" depends="compile"/>
+
+    <target name="clean" >
+        <delete failonerror="false">
+            <fileset dir="${class.dir}">
+                <include name="${lib.dir}/deliverable/jpa/**" />
+                <include name="${lib.dir}/implementation/sun/common/**" />
+            </fileset>
+        </delete>
+    </target>
+    
+    <target name="compile" depends="clean">
+        <javac srcdir="${ts.home}/src" destdir="${class.dir}" debug="on" deprecation="on">
+            <include name="${lib.dir}/deliverable/jpa/**" />
+            <include name="${lib.dir}/implementation/sun/common/SunRIURL.java" />
+            <classpath>
+                <pathelement path="${ts.classpath}" />
+            </classpath>
+        </javac>
+    </target>
+
+</project>
+

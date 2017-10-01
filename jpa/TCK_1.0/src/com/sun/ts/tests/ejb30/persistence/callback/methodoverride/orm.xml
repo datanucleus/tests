@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" version="1.0">
+<persistence-unit-metadata>
+  <persistence-unit-defaults>
+    <entity-listeners>
+      <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerA">
+      </entity-listener>
+      <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerB">
+      </entity-listener>
+      <entity-listener class="com.sun.ts.tests.ejb30.persistence.callback.common.ListenerC">
+      </entity-listener>
+    </entity-listeners>
+  </persistence-unit-defaults>
+</persistence-unit-metadata>
+
+<package>com.sun.ts.tests.ejb30.persistence.callback.methodoverride</package>
+
+    <entity name="Product" class="Product">
+        <pre-persist method-name="prePersist"/>
+        <post-persist method-name="postPersist"/>
+        <pre-remove method-name="preRemove"/>
+        <post-remove method-name="postRemove"/>
+        <pre-update method-name="preUpdate"/>
+        <post-update method-name="postUpdate"/>
+        <post-load method-name="postLoad"/>
+    </entity>
+
+    <entity name="Order" class="Order">
+        <pre-persist method-name="prePersist"/>
+        <post-persist method-name="postPersist"/>
+        <pre-remove method-name="preRemove"/>
+        <post-remove method-name="postRemove"/>
+        <pre-update method-name="preUpdate"/>
+        <post-update method-name="postUpdate"/>
+        <post-load method-name="postLoad"/>
+    </entity>
+
+    <entity name="LineItem" class="LineItem">
+        <pre-persist method-name="prePersist"/>
+        <post-persist method-name="postPersist"/>
+        <pre-remove method-name="preRemove"/>
+        <post-remove method-name="postRemove"/>
+        <pre-update method-name="preUpdate"/>
+        <post-update method-name="postUpdate"/>
+        <post-load method-name="postLoad"/>
+    </entity>
+
+</entity-mappings>
+
+

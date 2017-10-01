@@ -1,0 +1,26 @@
+#JavaTest Configuration Interview
+#Fri May 15 09:52:58 BST 2009
+CHECKSUM=7b16130aae521150
+INTERVIEW=com.sun.ts.lib.javatest.TSLegacyParameters
+LOCALE=en_GB
+QUESTION=jtwiz.prolog2
+TESTSUITE=/usr/local/tck/jpa/src
+WORKDIR=/usr/local/tck/jpa/workdir
+jtwiz.concurrency.concurrency=1
+jtwiz.environment.env=ts_unix
+jtwiz.environment.envFiles=/usr/local/tck/jpa/bin/ts.jte
+jtwiz.excludeList.customFiles=
+jtwiz.excludeList.excludeListType=initial
+jtwiz.excludeList.latestAutoCheck=No
+jtwiz.excludeList.latestAutoCheckInterval=7
+jtwiz.excludeList.latestAutoCheckMode=everyXDays
+jtwiz.excludeList.needExcludeList=Yes
+jtwiz.keywords.keywords.mode=expr
+jtwiz.keywords.keywords.value=
+jtwiz.keywords.needKeywords=No
+jtwiz.priorStatus.needStatus=No
+jtwiz.priorStatus.status=
+jtwiz.tests.needTests=No
+jtwiz.tests.tests=com/sun/ts/tests/ejb30/persistence/types
+jtwiz.tests.treeOrFile=tree
+jtwiz.timeout.timeout=1

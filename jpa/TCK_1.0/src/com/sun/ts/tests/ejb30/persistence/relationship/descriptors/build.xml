@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project name="ejb3" basedir="." default="usage"> 
+  
+   <!-- IMPORTS -->
+   <import file="${ts.home}/src/com/sun/ts/tests/ejb30/persistence/common/persistence-import.xml"/>
+   <import file="${ts.home}/bin/xml/ts.import.xml"/>
+
+   <property name="app.name" value="ejb3_relationship_descriptors"/>
+
+    <property name="par.classes"
+      	value="${pkg.dir}/XAddress.class,
+        	${pkg.dir}/XCompany.class,
+        	${pkg.dir}/XTeam.class,
+        	${pkg.dir}/XPerson.class,
+        	${pkg.dir}/XAnnualReview.class,
+        	${pkg.dir}/XInsurance.class,
+        	${pkg.dir}/XProject.class"/>
+
+    <target name="package">
+ 	<ts.par descriptor="persistence.xml"
+                descriptordir="${ejb3.persistence.common.pkg}/template"
+      		archivename="${app.name}"
+      		includedefaultfiles="false">
+      		<fileset dir="${class.dir}"
+               		includes="${par.classes}"/>
+      		<zipfileset dir="."
+               		includes="orm.xml" prefix="META-INF"/>
+        </ts.par>
+    
+        <ts.vehicles name="${app.name}" singleear="true">
+        <ear-elements>
+          <zipfileset dir="${dist.dir}/${pkg.dir}"
+                includes="${app.name}.jar"
+                prefix="lib"/>
+        </ear-elements>
+
+        </ts.vehicles>
+
+    </target>
+
+</project>

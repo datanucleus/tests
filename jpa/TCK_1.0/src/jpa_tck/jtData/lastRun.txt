@@ -1,0 +1,5 @@
+#Last test run info
+#Tue Sep 15 19:24:07 BST 2015
+finishTime=1442341447533
+startTime=1442341391794
+configName=ts_unix
