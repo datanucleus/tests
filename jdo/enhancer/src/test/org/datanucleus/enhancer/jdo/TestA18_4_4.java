@@ -2,9 +2,6 @@ package org.datanucleus.enhancer.jdo;
 
 import java.lang.reflect.Method;
 
-import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
-import org.datanucleus.enhancement.Persistable;
-
 /**
  */
 public class TestA18_4_4 extends JDOTestBase 
@@ -16,8 +13,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            assertEquals("jdo field num is 55", 55, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -33,15 +28,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            String fieldNames[] = ev.getFieldNames();
-            for (int i = 0; i < fieldNames.length; i++) {
-                String expectedValue = (i < 10) ? "field0" + i : "field" + i;
-                assertEquals(
-                    "check field name \"" + expectedValue + "\"",
-                    expectedValue,
-                    fieldNames[i]);
-            }
         }
         catch (Throwable e)
         {
@@ -57,26 +43,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            byte fieldFlags[] = ev.getFieldFlags();
-            int expectedValue;
-            int serializeSupport = Persistable.SERIALIZABLE;
-            for (int i = 0; i < fieldFlags.length; i++)
-            {
-                if (i < 22) // Was 21 if use strict JDO default persistent flags
-                {
-                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
-                }
-                else if ((i > 29) && (i < 35))
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
-                }
-                else
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
-                }
-                assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
-            }
         }
         catch (Throwable e)
         {
@@ -143,8 +109,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            assertEquals("field num is 55", 55, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -160,16 +124,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            String fieldNames[] = ev.getFieldNames();
-            for (int i = 0; i < fieldNames.length; i++)
-            {
-                String expectedValue = (i < 10) ? "field0" + i : "field" + i;
-                assertEquals(
-                    "check field name \"" + expectedValue + "\"",
-                    expectedValue,
-                    fieldNames[i]);
-            }
         }
         catch (Throwable e)
         {
@@ -185,26 +139,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            byte fieldFlags[] = ev.getFieldFlags();
-            int expectedValue;
-            int serializeSupport = Persistable.SERIALIZABLE;
-            for (int i = 0; i < fieldFlags.length; i++)
-            {
-                if (i < 22) // Was 21 if use strict JDO default persistent flags
-                {
-                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
-                }
-                else if ((i > 29) && (i < 35))
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
-                }
-                else
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
-                }
-                assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
-            }
         }
         catch (Throwable e)
         {
@@ -272,8 +206,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            assertEquals("field num is 55", 55, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -289,16 +221,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            String fieldNames[] = ev.getFieldNames();
-            for (int i = 0; i < fieldNames.length; i++)
-            {
-                String expectedValue = (i < 10) ? "field0" + i : "field" + i;
-                assertEquals(
-                    "check field name \"" + expectedValue + "\"",
-                    expectedValue,
-                    fieldNames[i]);
-            }
         }
         catch (Throwable e)
         {
@@ -314,26 +236,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            byte fieldFlags[] = ev.getFieldFlags();
-            int expectedValue;
-            int serializeSupport = Persistable.SERIALIZABLE;
-            for (int i = 0; i < fieldFlags.length; i++)
-            {
-                if (i < 22) // Was 21 if use strict JDO default persistent flags
-                {
-                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
-                }
-                else if ((i > 29) && (i < 35))
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
-                }
-                else
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
-                }
-                assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
-            }
         }
         catch (Throwable e)
         {
@@ -401,8 +303,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            assertEquals("field num is 55", 55, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -418,16 +318,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-            String fieldNames[] = ev.getFieldNames();
-            for (int i = 0; i < fieldNames.length; i++)
-            {
-                String expectedValue = (i < 10) ? "field0" + i : "field" + i;
-                assertEquals(
-                    "check field name \"" + expectedValue + "\"",
-                    expectedValue,
-                    fieldNames[i]);
-            }
         }
         catch (Throwable e)
         {
@@ -443,26 +333,6 @@ public class TestA18_4_4 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            byte fieldFlags[] = ev.getFieldFlags();
-            int expectedValue;
-            int serializeSupport = Persistable.SERIALIZABLE;
-            for (int i = 0; i < fieldFlags.length; i++)
-            {
-                if (i < 22) // Was 21 if use strict JDO default persistent flags
-                {
-                    expectedValue = (Persistable.CHECK_READ | Persistable.CHECK_WRITE | serializeSupport);
-                }
-                else if ((i > 29) && (i < 35))
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE);
-                }
-                else
-                {
-                    expectedValue = (Persistable.MEDIATE_READ | Persistable.MEDIATE_WRITE | serializeSupport);
-                }
-                assertEquals("field " + i + " test", expectedValue, fieldFlags[i]);
-            }
         }
         catch (Throwable e)
         {

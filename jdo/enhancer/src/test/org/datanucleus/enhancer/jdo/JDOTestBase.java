@@ -23,14 +23,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.NucleusContext;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
 import org.datanucleus.enhancer.ClassEnhancer;
 import org.datanucleus.enhancer.EnhancementHelper;
-import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
 import org.datanucleus.enhancer.EnhancementHelper.RegisterClassListener;
 import org.datanucleus.enhancer.EnhancementNucleusContextImpl;
 import org.datanucleus.enhancer.ClassEnhancerImpl;
@@ -48,7 +48,7 @@ import junit.framework.TestCase;
  */
 public abstract class JDOTestBase extends TestCase implements RegisterClassListener
 {
-	protected Hashtable<Class, RegisterClassEvent> pcClasses = new Hashtable<Class, RegisterClassEvent>();
+	protected Set<Class> pcClasses = new HashSet<>();
 
     /**
 	 * 
@@ -87,11 +87,11 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
 
 	/**
      * Method called by JDOImplHelper when an enhanced class is instantiated.
-     * @param event Event containing the registered class
+     * @param cls Class being registered
 	 */
-	public void registerClass(RegisterClassEvent event) 
+	public void registerClass(Class cls) 
     {
-		this.pcClasses.put(event.getRegisteredClass(), event);
+		this.pcClasses.add(cls);
 	}
 
     /**

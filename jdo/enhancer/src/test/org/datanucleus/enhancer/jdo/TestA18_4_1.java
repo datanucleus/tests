@@ -1,7 +1,5 @@
 package org.datanucleus.enhancer.jdo;
 
-import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
-
 /**
  */
 public class TestA18_4_1 extends JDOTestBase
@@ -13,8 +11,6 @@ public class TestA18_4_1 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedStaticClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -30,8 +26,6 @@ public class TestA18_4_1 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicStaticClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -47,8 +41,6 @@ public class TestA18_4_1 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateStaticClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -64,8 +56,6 @@ public class TestA18_4_1 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultStaticClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent) pcClasses.get(targetClass);
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {

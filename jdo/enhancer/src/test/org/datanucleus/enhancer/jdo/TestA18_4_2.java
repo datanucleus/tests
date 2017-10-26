@@ -2,8 +2,6 @@ package org.datanucleus.enhancer.jdo;
 
 import java.lang.reflect.Method;
 
-import org.datanucleus.enhancer.EnhancementHelper.RegisterClassEvent;
-
 /**
  * With these tests, only field34 should be given a get/set/is method.
  */
@@ -16,11 +14,6 @@ public class TestA18_4_2 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedTransientClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-
-            // Should be no persistent fields since they are all transient and
-            // none are overridden in the MetaData
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -92,11 +85,6 @@ public class TestA18_4_2 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicTransientClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-
-            // Should be no persistent fields since they are all transient and
-            // none are overridden in the MetaData
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -168,11 +156,6 @@ public class TestA18_4_2 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateTransientClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-
-            // Should be no persistent fields since they are all transient and
-            // none are overridden in the MetaData
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
@@ -245,11 +228,6 @@ public class TestA18_4_2 extends JDOTestBase
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultTransientClass");
             targetClass.newInstance();
-            RegisterClassEvent ev = (RegisterClassEvent)pcClasses.get(targetClass);
-
-            // Should be no persistent fields since they are all transient and
-            // none are overridden in the MetaData
-            assertEquals("jdo field num is 0", 0, ev.getFieldFlags().length);
         }
         catch (Throwable e)
         {
