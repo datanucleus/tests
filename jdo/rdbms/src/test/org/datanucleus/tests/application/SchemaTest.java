@@ -2359,16 +2359,19 @@ public class SchemaTest extends JDOPersistenceTestCase
 
             // Check table column names
 
+            columnNames.clear();
             columnNames.add("REGISTRATIONID");
             columnNames.add("MAKE");
             columnNames.add("MODEL");
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JDO_HIRECAR", columnNames);
 
+            columnNames.clear();
             columnNames.add("CUSTOMERID");
             columnNames.add("STARTDATE");
             columnNames.add("ENDDATE");
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JDO_CARRENTAL", columnNames);
 
+            columnNames.clear();
             columnNames.add("CUSTOMERID_OID");
             columnNames.add("REGISTRATIONID_ID");
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JDO_CARRENTAL_HIRE_JOIN", columnNames);

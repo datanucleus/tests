@@ -43,6 +43,8 @@ import org.datanucleus.samples.annotations.inheritance.InheritB2;
 import org.datanucleus.samples.annotations.inheritance.InheritC;
 import org.datanucleus.samples.annotations.inheritance.InheritC1;
 import org.datanucleus.samples.annotations.inheritance.InheritC2;
+import org.datanucleus.samples.annotations.many_one.unidir.CarRental;
+import org.datanucleus.samples.annotations.many_one.unidir.HireCar;
 import org.datanucleus.samples.annotations.one_many.collection.CollectionHolder1;
 import org.datanucleus.samples.annotations.one_many.collection.CollectionHolder1Element;
 import org.datanucleus.samples.annotations.one_many.map.MapHolder1;
@@ -731,6 +733,65 @@ public class SchemaTest extends JPAPersistenceTestCase
             columnNames.add("COLL4_OWNER_ID"); // FK to owner
             columnNames.add("COLL4_ELEMENT"); // Element FK
             RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_AN_COLLHOLDER1_COLL4", columnNames);
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown", e);
+            fail("Exception thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                mconn.close();
+            }
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for JPA collection using join table with entity elements.
+     */
+    public void testManyToOneUnidirJoin()
+    throws Exception
+    {
+        addClassesToSchema(new Class[] {CarRental.class, HireCar.class});
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null; ManagedConnection mconn = null;
+        try
+        {
+            tx.begin();
+
+            Set<String> columnNames = new HashSet<String>();
+
+            mconn = databaseMgr.getConnectionManager().getConnection(0); conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // Check table column names
+
+            columnNames.clear();
+            columnNames.add("REGISTRATIONID");
+            columnNames.add("MAKE");
+            columnNames.add("MODEL");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_HIRECAR", columnNames);
+
+            columnNames.clear();
+            columnNames.add("CUSTOMERID");
+            columnNames.add("STARTDATE");
+            columnNames.add("ENDDATE");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_CARRENTAL", columnNames);
+
+            columnNames.clear();
+            columnNames.add("CARRENTAL_CUSTOMERID");
+            columnNames.add("HIRECAR_REGISTRATIONID");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JPA_CARRENTAL_HIRE_JOIN", columnNames);
         }
         catch (Exception e)
         {

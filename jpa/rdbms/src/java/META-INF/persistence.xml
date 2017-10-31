@@ -27,5 +27,7 @@
         <class>org.datanucleus.samples.annotations.one_one.unidir.LoginAccount</class>
         <class>org.datanucleus.samples.annotations.types.basic.DateHolder</class>
         <class>org.datanucleus.samples.annotations.types.basic.TypeHolder</class>
+        <class>org.datanucleus.samples.annotations.many_one.unidir.CarRental</class>
+        <class>org.datanucleus.samples.annotations.many_one.unidir.HireCar</class>
     </persistence-unit>
 </persistence>
