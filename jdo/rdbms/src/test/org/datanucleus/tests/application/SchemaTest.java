@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOFatalInternalException;
@@ -66,6 +67,8 @@ import org.jpox.samples.interfaces.Diet;
 import org.jpox.samples.interfaces.ShapeHolder;
 import org.jpox.samples.many_many.PetroleumCustomer;
 import org.jpox.samples.many_many.PetroleumSupplier;
+import org.jpox.samples.many_one.unidir.CarRental;
+import org.jpox.samples.many_one.unidir.HireCar;
 import org.jpox.samples.models.company.Developer;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Manager;
@@ -2321,6 +2324,61 @@ public class SchemaTest extends JDOPersistenceTestCase
         {
             LOG.error(e);
             fail("Specification of table and column names has error in creation of schema for CollElement. Exception was thrown : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Samples creates 3 tables, with the N-1 relation using a join table.
+     */
+    public void testManyToOneUnidirJoin()
+    {
+        addClassesToSchema(new Class[] {CarRental.class, HireCar.class});
+
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+        Connection conn = null;
+        ManagedConnection mconn = null; 
+        try
+        {
+            tx.begin();
+
+            Set<String> columnNames = new HashSet<>();
+
+            mconn = databaseMgr.getConnectionManager().getConnection(0);
+            conn = (Connection) mconn.getConnection();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            // Check table column names
+
+            columnNames.add("REGISTRATIONID");
+            columnNames.add("MAKE");
+            columnNames.add("MODEL");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JDO_HIRECAR", columnNames);
+
+            columnNames.add("CUSTOMERID");
+            columnNames.add("STARTDATE");
+            columnNames.add("ENDDATE");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JDO_CARRENTAL", columnNames);
+
+            columnNames.add("CUSTOMERID_OID");
+            columnNames.add("REGISTRATIONID_ID");
+            RDBMSTestHelper.checkColumnsForTable(storeMgr, dmd, "JDO_CARRENTAL_HIRE_JOIN", columnNames);
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error(e);
+            fail("Specification of table and column names has error in creation of schema for Many-One UNIDIR via join. Exception was thrown : " + e.getMessage());
         }
         finally
         {
