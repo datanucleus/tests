@@ -137,7 +137,14 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         public void setDriverName(String s)
         {
             this.driverName = s;
-            this.setProperty("javax.jdo.option.ConnectionDriverName", s);
+            if (s == null)
+            {
+                this.remove("javax.jdo.option.ConnectionDriverName");
+            }
+            else
+            {
+                this.setProperty("javax.jdo.option.ConnectionDriverName", s);
+            }
         }
 
         public void setUserName(String s)
