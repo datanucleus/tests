@@ -29,5 +29,6 @@
         <class>org.datanucleus.samples.annotations.types.basic.TypeHolder</class>
         <class>org.datanucleus.samples.annotations.many_one.unidir.CarRental</class>
         <class>org.datanucleus.samples.annotations.many_one.unidir.HireCar</class>
+        <class>org.datanucleus.samples.annotations.query.QueryTypeHolder</class>
     </persistence-unit>
 </persistence>
