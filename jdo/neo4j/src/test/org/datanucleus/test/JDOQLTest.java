@@ -587,4 +587,52 @@ public class JDOQLTest extends JDOPersistenceTestCase
         {
         }
     }
+
+    public void testStringToUpperCase() throws Exception
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Employee e = new Employee();
+                e.setFirstName("Barney");
+                e.setLastName("Rubble");
+                e.setPersonNum(103);
+                e.setGlobalNum("103");
+                e.setSalary(124.50f);
+
+                pm.makePersistent(e);
+                pm.flush();
+
+                // Query using not equality operator
+                Query q1 = pm.newQuery("SELECT FROM " + Employee.class.getName() + " WHERE this.firstName.toUpperCase() == 'BARNEY'");
+                List<Employee> results1 = (List<Employee>)q1.execute();
+                assertEquals(1, results1.size());
+                Employee e1 = results1.iterator().next();
+                assertEquals("Wrong Employee", "Rubble", e1.getLastName());
+
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception during JDOQL equality operator test", e);
+                fail("Exception thrown when running test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+        }
+    }
 }
