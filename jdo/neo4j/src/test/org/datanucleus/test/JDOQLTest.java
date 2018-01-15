@@ -17,8 +17,10 @@
  ***********************************************************************/
 package org.datanucleus.test;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -571,7 +573,7 @@ public class JDOQLTest extends JDOPersistenceTestCase
             }
             catch (Exception e)
             {
-                LOG.error("Exception during JDOQL equality operator test", e);
+                LOG.error("Exception during JDOQL inequality operator test", e);
                 fail("Exception thrown when running test " + e.getMessage());
             }
             finally
@@ -608,12 +610,59 @@ public class JDOQLTest extends JDOPersistenceTestCase
                 pm.makePersistent(e);
                 pm.flush();
 
-                // Query using not equality operator
                 Query q1 = pm.newQuery("SELECT FROM " + Employee.class.getName() + " WHERE this.firstName.toUpperCase() == 'BARNEY'");
                 List<Employee> results1 = (List<Employee>)q1.execute();
                 assertEquals(1, results1.size());
                 Employee e1 = results1.iterator().next();
                 assertEquals("Wrong Employee", "Rubble", e1.getLastName());
+
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception during JDOQL String toUpperCase test", e);
+                fail("Exception thrown when running test " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+        }
+    }
+
+    public void testMathSin() throws Exception
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                Employee e = new Employee();
+                e.setFirstName("Barney");
+                e.setLastName("Rubble");
+                e.setPersonNum(103);
+                e.setGlobalNum("103");
+                e.setSalary(124.50f);
+
+                pm.makePersistent(e);
+                pm.flush();
+
+                Query q1 = pm.newQuery("SELECT FROM " + Employee.class.getName() + " WHERE Math.sin(:param) == this.salary");
+                Map<String, Object> params = new HashMap<>();
+                params.put("param", 0.0);
+                q1.setNamedParameters(params);
+                List<Employee> results1 = (List<Employee>)q1.executeList();
+                assertEquals(0, results1.size());
 
                 tx.rollback();
             }
