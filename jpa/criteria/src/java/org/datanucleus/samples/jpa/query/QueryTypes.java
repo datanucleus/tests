@@ -23,6 +23,8 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Sample entity with some uncommon field types as test for static metamodel generation
@@ -40,4 +42,8 @@ public class QueryTypes
     @Basic
     @Lob
     DummyQueryType<?> nonEntitySerialisable;
+
+    @NotNull
+    @Size(max=32)
+    private String validated;
 }
