@@ -1889,6 +1889,19 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
 
                 result = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.age IN (38)").getResultList();
                 assertEquals(1, result.size());
+
+                // Numbered parameter (non-Collection) as the IN
+                Query q = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE p.age IN (?1)");
+                q.setParameter(1, 38);
+                result = q.getResultList();
+                assertEquals(1, result.size());
+
+                // Numbered parameter as the item IN
+                q = em.createQuery("SELECT DISTINCT Object(p) FROM " + Person.class.getName() + " p WHERE ?1 IN (p.age)");
+                q.setParameter(1, 38);
+                result = q.getResultList();
+                assertEquals(1, result.size());
+
                 tx.rollback();
             }
             catch (Exception e)
