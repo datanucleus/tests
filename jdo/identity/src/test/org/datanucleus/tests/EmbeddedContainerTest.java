@@ -616,11 +616,7 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Processor proc = (Processor)pm.getObjectById(processorId);
-                
-                // Check "contains"
-                assertTrue("Processor says that it doesnt contain the Outlook job but it should", proc.containsJob(new Job("MS Outlook", 1)));
-                assertFalse("Processor says that it contains a Word job but doesnt", proc.containsJob(new Job("MS Word", 1)));
-                
+
                 // Check retrieval of jobs
                 List jobs = proc.getJobs();
                 assertTrue("No jobs retrieved from calling getJobs()!", jobs != null);
