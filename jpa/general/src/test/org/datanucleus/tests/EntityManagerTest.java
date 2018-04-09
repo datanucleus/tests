@@ -41,6 +41,7 @@ import org.datanucleus.samples.types.interfaces.Circle;
 import org.datanucleus.samples.types.interfaces.Rectangle;
 import org.datanucleus.samples.types.interfaces.Shape;
 import org.datanucleus.samples.types.interfaces.ShapeHolder;
+import org.datanucleus.store.NucleusConnection;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
@@ -856,6 +857,84 @@ public class EntityManagerTest extends JPAPersistenceTestCase
 
                 tx.commit();
                 assertEquals(2, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(VersionedPerson.class);
+        }
+    }
+
+    /**
+     * Test of access to the connection.
+     */
+    public void testUnwrapConnection()
+    {
+        try
+        {
+            // Persist an object
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            Object id = null;
+            NucleusConnection nconn = null;
+            try
+            {
+                tx.begin();
+
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                p.setGlobalNum("First");
+                em.persist(p);
+                id = p.getPK();
+
+                // Get the connection
+                nconn = em.unwrap(NucleusConnection.class);
+
+                // Should have called nconn.close before this
+                em.createQuery("SELECT p FROM Person p").getResultList();
+                fail("Handed out connection but user didnt close it to hand it back, yet executed query : should have got exception");
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                // Close the user connection so we can close the test out
+                nconn.close();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            emf.getCache().evictAll();
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                // Get the connection, and then hand it back
+                nconn = em.unwrap(NucleusConnection.class);
+                nconn.close();
+
+                em.find(Person.class, id);
+
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                fail("Handed out connection and closed it, but still got exception : " + e.getMessage());
             }
             finally
             {
