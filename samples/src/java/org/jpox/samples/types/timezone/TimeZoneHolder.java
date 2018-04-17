@@ -19,14 +19,11 @@ package org.jpox.samples.types.timezone;
 
 import java.util.TimeZone;
 
-import org.datanucleus.tests.TestObject;
-
 /**
  * Holder of TimeZone type to use as a test for persisting basic information.
  */
-public class TimeZoneHolder extends TestObject
+public class TimeZoneHolder
 {
-    private static int instanceNumber = 0;
     private TimeZone timeZoneField;
 
     public TimeZoneHolder()
@@ -45,35 +42,12 @@ public class TimeZoneHolder extends TestObject
     }
 
     /**
-     * Fills all of the object's fields with random data values. Any non-primitive fields (with the 
-     * exception of <code>id</code>) will also be assigned <code>null</code> on a random basis.
-     */
-    public void fillRandom()
-    {
-        // Not quite a random method, but we set different values depending on the instance number
-        if ((instanceNumber/3)*3 == instanceNumber)
-        {
-            timeZoneField = TimeZone.getTimeZone("Europe/London");
-        }
-        else if ((instanceNumber/2)*2 == instanceNumber)
-        {
-            timeZoneField = TimeZone.getTimeZone("CET");
-        }
-        else
-        {
-            timeZoneField = null;
-        }
-        instanceNumber++;
-    }
-
-    /**
      * Indicates whether some other object is "equal to" this one.  By comparing
      * against an original copy of the object, <code>compareTo()</code> can be
      * used to verify that the object has been written to a database and read back correctly.
      *
      * @param obj the reference object with which to compare
-     * @return <code>true</code> if this object is equal to the obj argument;
-     *         <code>false</code> otherwise.
+     * @return <code>true</code> if this object is equal to the obj argument; <code>false</code> otherwise.
      */
     public boolean compareTo(Object obj)
     {

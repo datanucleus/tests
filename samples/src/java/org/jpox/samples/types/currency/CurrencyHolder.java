@@ -19,14 +19,11 @@ package org.jpox.samples.types.currency;
 
 import java.util.Currency;
 
-import org.datanucleus.tests.TestObject;
-
 /**
- * Container class with Currency field.
+ * Holder of Currency field(s) for testing persistence of that type.
  */
-public class CurrencyHolder extends TestObject
+public class CurrencyHolder
 {
-    private static int instanceNumber = 0;
     private Currency currencyField;
 
     public CurrencyHolder()
@@ -49,7 +46,7 @@ public class CurrencyHolder extends TestObject
      * primitive fields (with the exception of <code>id</code>) will also be
      * assigned <code>null</code> on a random basis.
      */
-    public void fillRandom()
+    /*public void fillRandom()
     {
         // Not quite a random method, but we set different values depending on the instance number
         if ((instanceNumber/3)*3 == instanceNumber)
@@ -65,7 +62,7 @@ public class CurrencyHolder extends TestObject
             currencyField = null;
         }
         instanceNumber++;
-    }
+    }*/
 
     /**
      * Indicates whether some other object is "equal to" this one.  By comparing
