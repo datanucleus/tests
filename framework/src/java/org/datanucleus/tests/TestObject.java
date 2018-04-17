@@ -17,11 +17,7 @@ Contributors:
 *****************************************************************/
 package org.datanucleus.tests;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import javax.jdo.JDOHelper;
 
@@ -134,95 +130,5 @@ public abstract class TestObject implements Cloneable
         s.append('\n');
 
         return s.toString();
-    }
-
-    /**
-     * Compares two sets of TestObjects. Returns true if and only if the two
-     * sets contain the same number of objects and each element of the first set
-     * has a corresponding element in the second set whose fields compare equal
-     * according to the compareTo() method.
-     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt> otherwise.
-     */
-    public static boolean compareSet(Set s1, Set s2)
-    {
-        if (s1 == null)
-        {
-            return s2 == null;
-        }
-        else if (s2 == null)
-        {
-            return false;
-        }
-
-        if (s1.size() != s2.size())
-        {
-            return false;
-        }
-
-        s2 = new HashSet(s2);
-
-        Iterator i = s1.iterator();
-
-        while (i.hasNext())
-        {
-            TestObject obj = (TestObject) i.next();
-
-            boolean found = false;
-            Iterator j = s2.iterator();
-
-            while (j.hasNext())
-            {
-                if (obj.compareTo(j.next()))
-                {
-                    j.remove();
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Compares two lists of TestObjects. Returns true if and only if the two
-     * lists contain the same number of objects and each element of the first
-     * list has a corresponding element in the second list whose fields compare
-     * equal according to the compareTo() method.
-     * @return <tt>true</tt> if the lists compare equal, <tt>false</tt>
-     * otherwise.
-     */
-
-    public static boolean compareList(List l1, List l2)
-    {
-        if (l1 == null)
-        {
-            return l2 == null;
-        }
-        else if (l2 == null)
-        {
-            return false;
-        }
-
-        if (l1.size() != l2.size())
-        {
-            return false;
-        }
-
-        for (int i = 0; i < l1.size(); i++)
-        {
-            if (!((TestObject) l1.get(i)).compareTo(l2.get(i)))
-            {
-                return false;
-            }
-
-        }
-
-        return true;
     }
 }

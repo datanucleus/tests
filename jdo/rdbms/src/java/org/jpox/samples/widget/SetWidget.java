@@ -11,12 +11,12 @@ import javax.jdo.InstanceCallbacks;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 
+import org.datanucleus.tests.StorageTester;
 
 import junit.framework.Assert;
 
 
-public class SetWidget extends Widget
-    implements HasNormalSetField, HasInverseSetField, InstanceCallbacks
+public class SetWidget extends Widget implements HasNormalSetField, HasInverseSetField, InstanceCallbacks
 {
     private static final long serialVersionUID = 4379354517772293136L;
     private Set normalSet;
@@ -233,8 +233,7 @@ public class SetWidget extends Widget
 
         w.validate();
 
-        return compareSet(normalSet, w.normalSet) &&
-               compareSet(inverseSet, w.inverseSet);
+        return StorageTester.compareSet(normalSet, w.normalSet) && StorageTester.compareSet(inverseSet, w.inverseSet);
     }
 
 

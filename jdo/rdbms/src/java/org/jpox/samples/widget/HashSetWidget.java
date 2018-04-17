@@ -12,6 +12,7 @@ import javax.jdo.InstanceCallbacks;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 
+import org.datanucleus.tests.StorageTester;
 
 import junit.framework.Assert;
 
@@ -182,7 +183,7 @@ public class HashSetWidget extends Widget implements HasNormalSetField, Instance
 
         HashSetWidget w = (HashSetWidget)obj;
 
-        return compareSet(normalSet, w.normalSet);
+        return StorageTester.compareSet(normalSet, w.normalSet);
     }
 
 

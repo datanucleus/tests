@@ -444,7 +444,7 @@ public class ViewTest extends JDOPersistenceTestCase
                     HashSet actual = new HashSet(results);
 
                     assertEquals("Query returned duplicate rows", results.size(), actual.size());
-                    assertTrue("Query did not return expected results: expected " + expected + ", but was " + actual, TestObject.compareSet(expected, actual));
+                    assertTrue("Query did not return expected results: expected " + expected + ", but was " + actual, StorageTester.compareSet(expected, actual));
                 }
                 finally
                 {

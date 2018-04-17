@@ -26,6 +26,8 @@ import javax.jdo.InstanceCallbacks;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 
+import org.datanucleus.tests.StorageTester;
+
 import junit.framework.Assert;
 
 
@@ -244,8 +246,7 @@ public class SetWidget extends Widget implements HasNormalSetField, HasInverseSe
 
         w.validate();
 
-        return compareSet(normalSet, w.normalSet) &&
-               compareSet(inverseSet, w.inverseSet);
+        return StorageTester.compareSet(normalSet, w.normalSet) && StorageTester.compareSet(inverseSet, w.inverseSet);
     }
 
 
