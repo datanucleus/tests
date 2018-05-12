@@ -304,6 +304,9 @@
                 <element column="ELEMENT_ID_EID"/>
                 <order column="IDX"/>
             </field>
+            <fetch-group name="arr2">
+                <field name="array2"/>
+            </fetch-group>
         </class>
 
         <class name="ObjectArray" detachable="true" identity-type="datastore">
