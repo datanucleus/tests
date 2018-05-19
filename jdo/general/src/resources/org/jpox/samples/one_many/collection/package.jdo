@@ -129,6 +129,10 @@
             <field name="setPCEmbedded" column="SETPC_EMBEDDED">
                 <collection element-type="PCEmbedded" embedded-element="true"/>
             </field>
+
+            <fetch-group name="joinSetNonPC1">
+                <field name="joinSetNonPC1"/>
+            </fetch-group>
         </class>
 
         <!-- Class with all possible types of List fields -->

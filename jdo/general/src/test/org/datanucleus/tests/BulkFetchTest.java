@@ -20,6 +20,7 @@ package org.datanucleus.tests;
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -27,6 +28,7 @@ import javax.jdo.Transaction;
 
 import org.jpox.samples.array.ArrayElement;
 import org.jpox.samples.array.PersistableArray;
+import org.jpox.samples.one_many.collection.SetHolder;
 
 /**
  * Series of tests for RDBMS "bulk fetch" handling.
@@ -113,6 +115,98 @@ public class BulkFetchTest extends JDOPersistenceTestCase
             // Clean out our data
             clean(PersistableArray.class);
             clean(ArrayElement.class);
+        }
+    }
+
+    /**
+     * Test for bulk fetch of a field which is a collection of non-persistables (using a join table).
+     */
+    public void testCollectionNonPCJoin()
+    {
+        try
+        {
+            PersistenceManager pm = pmf.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                SetHolder sh1 = new SetHolder("First holder");
+                sh1.getJoinSetNonPC1().add("A");
+                sh1.getJoinSetNonPC1().add("B");
+                SetHolder sh2 = new SetHolder("Second holder");
+                sh2.getJoinSetNonPC1().add("C");
+                sh2.getJoinSetNonPC1().add("D");
+                pm.makePersistent(sh1);
+                pm.makePersistent(sh2);
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+            pmf.getDataStoreCache().evictAll();
+
+            pm = pmf.getPersistenceManager();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+
+                pm.getFetchPlan().addGroup("joinSetNonPC1");
+                Query q = pm.newQuery("SELECT FROM " + SetHolder.class.getName());
+                List<SetHolder> results = q.executeList();
+                assertEquals("Number of results is wrong", 2, results.size());
+                Iterator<SetHolder> resIter = results.iterator();
+                SetHolder rsh1 = resIter.next();
+                SetHolder rsh2 = resIter.next();
+                Set<String> setstring1 = rsh1.getJoinSetNonPC1();
+                Set<String> setstring2 = rsh2.getJoinSetNonPC1();
+                if (rsh1.getName().equals("First holder"))
+                {
+                    assertEquals(2, setstring1.size());
+                    assertTrue(setstring1.contains("A"));
+                    assertTrue(setstring1.contains("B"));
+                }
+                else if (rsh1.getName().equals("Second holder"))
+                {
+                    assertEquals(2, setstring1.size());
+                    assertTrue(setstring1.contains("C"));
+                    assertTrue(setstring1.contains("D"));
+                }
+                if (rsh2.getName().equals("First holder"))
+                {
+                    assertEquals(2, setstring2.size());
+                    assertTrue(setstring2.contains("A"));
+                    assertTrue(setstring2.contains("B"));
+                }
+                else if (rsh2.getName().equals("Second holder"))
+                {
+                    assertEquals(2, setstring2.size());
+                    assertTrue(setstring2.contains("C"));
+                    assertTrue(setstring2.contains("D"));
+                }
+
+                tx.commit();
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            // Clean out our data
+            clean(SetHolder.class);
         }
     }
 }
