@@ -172,7 +172,7 @@
             <field name="dateJdbcTimestampField" persistence-modifier="persistent" default-fetch-group="true">
                 <extension vendor-name="datanucleus" key="mapping-class" value="org.datanucleus.store.rdbms.mapping.java.SqlTimestampMapping"/>
                 <column>
-                    <extension vendor-name="datanucleus" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampRDBMSMapping"/>
+                    <extension vendor-name="datanucleus" key="datastore-mapping-class" value="org.datanucleus.store.rdbms.mapping.datastore.TimestampColumnMapping"/>
                 </column>
             </field>
         </class>
