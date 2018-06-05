@@ -26,6 +26,9 @@
         <class>org.datanucleus.samples.annotations.models.company.DepartmentPK</class>
         <class>org.datanucleus.samples.annotations.models.company.WebSite</class>
         <class>org.datanucleus.samples.annotations.models.company.MyListener</class>
+        <class>org.datanucleus.samples.jpa.criteria.AbstractEntity105</class>
+        <class>org.datanucleus.samples.jpa.criteria.ConcreteEntity105</class>
+        <class>org.datanucleus.samples.jpa.criteria.OtherEntity105</class>
     </persistence-unit>
 
 </persistence>

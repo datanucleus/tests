@@ -48,6 +48,9 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
+import org.datanucleus.samples.jpa.criteria.ConcreteEntity105;
+import org.datanucleus.samples.jpa.criteria.ConcreteEntity105_;
+import org.datanucleus.samples.jpa.criteria.OtherEntity105;
 import org.datanucleus.samples.jpa.criteria.embedded.A;
 import org.datanucleus.samples.jpa.criteria.embedded.A_;
 import org.datanucleus.samples.jpa.criteria.embedded.B;
@@ -1622,6 +1625,46 @@ public class CriteriaMetaModelTest extends JPAPersistenceTestCase
             List<Manager> managers4 = q4.getResultList();
             assertNotNull("Managers is null!", managers4);
             assertEquals("Number of managers is wrong", 2, managers4.size());
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
+
+    /**
+     * Test for api-jpa-105.
+     */
+    public void testApiJpa105()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            ConcreteEntity105 c1 = new ConcreteEntity105(1, "First CE", "Prop1");
+            OtherEntity105 u1 = new OtherEntity105(1, "First User");
+            c1.getOthers().add(u1);
+            em.persist(c1);
+            em.persist(u1);
+            em.flush();
+
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<ConcreteEntity105> criteria = cb.createQuery(ConcreteEntity105.class);
+            Root<ConcreteEntity105> concreteRoot = criteria.from(ConcreteEntity105.class);
+            criteria.select(concreteRoot);
+            OtherEntity105 user = u1;
+            criteria.where(cb.isNotMember(user, concreteRoot.get(ConcreteEntity105_.others)));
+            TypedQuery<ConcreteEntity105> query = em.createQuery(criteria);
+            List<ConcreteEntity105> result = query.getResultList();
+            assertEquals(0, result.size());
 
             tx.rollback();
         }
