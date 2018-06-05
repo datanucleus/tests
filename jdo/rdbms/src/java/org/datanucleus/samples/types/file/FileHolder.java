@@ -27,7 +27,7 @@ import java.nio.file.Paths;
 
 import javax.jdo.JDOHelper;
 
-import org.datanucleus.store.rdbms.mapping.datastore.StreamableSpooler;
+import org.datanucleus.store.rdbms.mapping.column.StreamableSpooler;
 
 /**
  * Class with a File member for persisting.
