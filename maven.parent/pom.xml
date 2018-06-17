@@ -109,7 +109,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[${api.jdo.min.version}, )</version>
+            <version>[${api.jdo.min.version}, 5.1.99)</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
