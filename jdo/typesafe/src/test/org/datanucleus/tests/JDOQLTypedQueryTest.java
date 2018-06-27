@@ -27,6 +27,7 @@ import javax.jdo.JDOQLTypedSubquery;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import javax.jdo.query.NumericExpression;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.query.JDOQLTypedQueryImpl;
@@ -673,6 +674,49 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             assertEquals("Number of managers is wrong", 1, managers.size());
             Manager mgr = managers.get(0);
             assertEquals("Mourinho", mgr.getLastName());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Test use of subquery.
+     */
+    public void testSubqueryReferringToOuter()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
+            QManager cand = QManager.jdoCandidate;
+
+            // "SELECT AVG(m.yearsExperience) FROM Manager m WHERE m.lastName = this.lastName"
+            JDOQLTypedSubquery subq = tq.subquery(Manager.class, "m");
+            QManager subCand = QManager.candidate("m");
+            subq.filter(subCand.lastName.eq(cand.lastName));
+            NumericExpression subqSelectExpr = subq.selectUnique(subCand.yearsExperience.avg());
+
+            tq.filter(cand.yearsExperience.gt(subqSelectExpr));
+
+            List<Manager> managers = tq.executeList();
+            assertNotNull("Result is null!", managers);
+            assertEquals("Number of managers is wrong", 0, managers.size());
 
             tx.commit();
         }
