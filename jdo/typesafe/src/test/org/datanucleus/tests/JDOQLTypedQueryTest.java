@@ -198,6 +198,40 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Test basic querying for a candidate, but specifying the result as the candidate
+     */
+    public void testCandidateQueryWithCandidateResult()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
+            tq.result(false, QTeam.candidate()); // Really this is redundant since the candidate is selected by default, but people are allowed to do it
+            List<Team> teams = tq.executeList();
+            assertNotNull("Teams is null!", teams);
+            assertEquals("Number of teams is wrong", 2, teams.size());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
      * Test basic querying for a candidate without its subclasses.
      */
     public void testCandidateQueryWithoutSubclasses()
