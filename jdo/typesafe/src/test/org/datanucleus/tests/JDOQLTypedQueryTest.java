@@ -442,6 +442,42 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Test basic querying with a filter that uses CollectionExpr.isEmpty
+     */
+    public void testFilterWithIsEmpty()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
+            QTeam cand = QTeam.jdoCandidate;
+            tq.filter(cand.players.isEmpty().not());
+
+            List<Team> teams = tq.executeList();
+            assertNotNull("Teams is null!", teams);
+            assertEquals("Number of teams is wrong", 0, teams.size());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
      * Test basic querying with a result.
      */
     public void testResult()
