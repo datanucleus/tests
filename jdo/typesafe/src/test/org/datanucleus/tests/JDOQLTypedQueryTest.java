@@ -37,6 +37,7 @@ import org.datanucleus.samples.jdo.query.Manager;
 import org.datanucleus.samples.jdo.query.Player;
 import org.datanucleus.samples.jdo.query.QAppointment;
 import org.datanucleus.samples.jdo.query.QManager;
+import org.datanucleus.samples.jdo.query.QPlayer;
 import org.datanucleus.samples.jdo.query.QTeam;
 import org.datanucleus.samples.jdo.query.Team;
 import org.datanucleus.tests.JDOPersistenceTestCase;
@@ -459,6 +460,44 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             List<Team> teams = tq.executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 0, teams.size());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Test basic querying using a variable in the filter
+     */
+    public void testVariable()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
+            QTeam cand = QTeam.jdoCandidate;
+            QPlayer varPlayer = QPlayer.variable("v");
+            tq.filter(cand.players.contains(varPlayer));
+            tq.result(false, varPlayer.firstName, varPlayer.lastName);
+
+            List players = tq.executeResultList();
+            assertNotNull("Players is null!", players);
+            assertEquals("Number of players is wrong", 0, players.size());
 
             tx.commit();
         }
