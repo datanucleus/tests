@@ -23,10 +23,16 @@
                     <dependency>
                         <groupId>org.datanucleus</groupId>
                         <artifactId>datanucleus-jdo-query</artifactId>
-                        <version>5.0.5</version>
+                        <version>5.0.6-SNAPSHOT</version>
                     </dependency>
                 </dependencies>
             </plugin>
+            <!--plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
+                </configuration>
+            </plugin-->
         </plugins>
     </build>
 
@@ -34,7 +40,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jdo-query</artifactId>
-            <version>[5.0.3, 5.9)</version>
+            <version>5.0.6-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
