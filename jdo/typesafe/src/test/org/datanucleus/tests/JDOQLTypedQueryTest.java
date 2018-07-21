@@ -41,6 +41,7 @@ import org.datanucleus.samples.jdo.query.QPlayer;
 import org.datanucleus.samples.jdo.query.QTeam;
 import org.datanucleus.samples.jdo.query.Team;
 import org.datanucleus.tests.JDOPersistenceTestCase;
+import org.datanucleus.util.NucleusLogger;
 
 /**
  * Tests for JDOQL typesafe operations.
@@ -489,11 +490,13 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
+            NucleusLogger.GENERAL.info(">> testVariable");
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
             QTeam cand = QTeam.jdoCandidate;
             QPlayer varPlayer = QPlayer.variable("v");
-            tq.filter(cand.players.contains(varPlayer));
+            tq.filter(cand.players.contains(varPlayer).and(varPlayer.firstName.eq("Fred")));
             tq.result(false, varPlayer.firstName, varPlayer.lastName);
+            assertEquals("SELECT v.firstName,v.lastName FROM org.datanucleus.samples.jdo.query.Team WHERE (this.players.contains(v) && (v.firstName == 'Fred'))", tq.toString());
 
             List<Object> players = tq.executeResultList();
             assertNotNull("Players is null!", players);
