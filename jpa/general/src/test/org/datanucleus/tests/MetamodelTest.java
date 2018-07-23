@@ -83,7 +83,7 @@ public class MetamodelTest extends JPAPersistenceTestCase
                 assertFalse(attr.isCollection());
                 assertFalse(attr.isAssociation());
                 assertTrue(attr instanceof SingularAttribute);
-                assertFalse(((SingularAttribute)attr).isOptional());
+                assertFalse(((SingularAttribute)attr).isOptional()); // PK is not optional
                 assertFalse(((SingularAttribute)attr).isVersion());
             }
             catch (IllegalArgumentException iae)
@@ -101,6 +101,8 @@ public class MetamodelTest extends JPAPersistenceTestCase
                 assertEquals(attr.getJavaMember().getName(), "farm");
                 assertFalse(attr.isCollection());
                 assertTrue(attr.isAssociation());
+                assertTrue(attr instanceof SingularAttribute);
+                assertTrue(((SingularAttribute)attr).isOptional());
             }
             catch (IllegalArgumentException iae)
             {
@@ -161,6 +163,50 @@ public class MetamodelTest extends JPAPersistenceTestCase
         catch (IllegalArgumentException iae)
         {
             fail("Didnt find EntityType for " + Farm.class.getName());
+        }
+
+        try
+        {
+            EntityType<?> personType = model.entity(Person.class);
+            assertNotNull(personType);
+            assertEquals("Number of Person attributes is wrong", 8, personType.getAttributes().size());
+
+            try
+            {
+                // String field
+                Attribute attr = personType.getAttribute("firstName");
+                assertNotNull(attr);
+                assertEquals(attr.getName(), "firstName");
+                assertEquals(attr.getJavaType(), String.class);
+                assertEquals(attr.getJavaMember().getName(), "firstName");
+                assertFalse(attr.isCollection());
+                assertFalse(attr.isAssociation());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"firstName\" field of " + Person.class.getName());
+            }
+            try
+            {
+                // int field
+                Attribute attr = personType.getAttribute("age");
+                assertNotNull(attr);
+                assertEquals(attr.getName(), "age");
+                assertEquals(attr.getJavaType(), int.class);
+                assertEquals(attr.getJavaMember().getName(), "age");
+                assertFalse(attr.isCollection());
+                assertFalse(attr.isAssociation());
+                assertTrue(attr instanceof SingularAttribute);
+                assertFalse(((SingularAttribute)attr).isOptional());
+            }
+            catch (IllegalArgumentException iae)
+            {
+                fail("Didnt find Attribute for \"age\" field of " + Person.class.getName());
+            }
+        }
+        catch (IllegalArgumentException iae)
+        {
+            fail("Didnt find EntityType for " + Person.class.getName());
         }
     }
 
