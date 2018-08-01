@@ -17,6 +17,7 @@ Contributors :
 ***********************************************************************/
 package org.datanucleus.test;
 
+import java.util.*;
 import org.junit.*;
 import javax.jdo.*;
 import java.util.ArrayList;
@@ -42,7 +43,9 @@ public class RelationTest
     throws Exception
     {
         // TODO Obtain PMF using standard test mechanism
-        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
+        Map extraProps = new HashMap();
+        extraProps.put("datanucleus.cache.level2.type", "none");
+        PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(extraProps, "MyTest");
 
         performPersist(pmf, 100000);
 
