@@ -775,7 +775,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                VersionedPerson p = new VersionedPerson(1, "First");
+                VersionedEmployee p = new VersionedEmployee(1, "First");
                 em.persist(p);
                 tx.commit();
                 assertEquals(1, p.getVersion());
@@ -796,7 +796,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                VersionedPerson p = new VersionedPerson(1, "First");
+                VersionedEmployee p = new VersionedEmployee(1, "First");
                 p = em.merge(p);
                 tx.commit();
                 assertEquals(2, p.getVersion());
@@ -813,7 +813,6 @@ public class EntityManagerTest extends JPAPersistenceTestCase
         finally
         {
             clean(VersionedEmployee.class);
-            clean(VersionedPerson.class);
         }
     }
 
@@ -829,7 +828,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                VersionedPerson p = new VersionedPerson(1, "First");
+                VersionedEmployee p = new VersionedEmployee(1, "First");
                 em.persist(p);
                 tx.commit();
                 assertEquals(1, p.getVersion());
@@ -850,7 +849,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                VersionedPerson p = em.find(VersionedPerson.class, 1);
+                VersionedEmployee p = em.find(VersionedEmployee.class, 1);
                 p.setName("First 2");
 
                 tx.commit();
@@ -871,7 +870,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                VersionedPerson p = em.find(VersionedPerson.class, 1);
+                VersionedEmployee p = em.find(VersionedEmployee.class, 1);
                 assertEquals(2, p.getVersion()); // Check the version
 
                 tx.commit();
@@ -888,7 +887,6 @@ public class EntityManagerTest extends JPAPersistenceTestCase
         finally
         {
             clean(VersionedEmployee.class);
-            clean(VersionedPerson.class);
         }
     }
 
@@ -905,7 +903,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                VersionedPerson p = new VersionedPerson(1, "First");
+                VersionedEmployee p = new VersionedEmployee(1, "First");
                 em.persist(p);
                 tx.commit();
                 assertEquals(1, p.getVersion());
@@ -927,7 +925,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                VersionedPerson p = em.find(VersionedPerson.class, 1);
+                VersionedEmployee p = em.find(VersionedEmployee.class, 1);
                 em.lock(p, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 
                 tx.commit();
@@ -944,7 +942,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
         }
         finally
         {
-            clean(VersionedPerson.class);
+            clean(VersionedEmployee.class);
         }
     }
 

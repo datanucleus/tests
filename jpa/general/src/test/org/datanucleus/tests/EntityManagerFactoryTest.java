@@ -30,7 +30,7 @@ import javax.persistence.TypedQuery;
 
 import org.datanucleus.api.jpa.JPAEntityManagerFactory;
 import org.datanucleus.samples.annotations.models.company.Person;
-import org.datanucleus.samples.annotations.versioned.VersionedPerson;
+import org.datanucleus.samples.annotations.versioned.VersionedEmployee;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
 
@@ -207,10 +207,10 @@ public class EntityManagerFactoryTest extends JPAPersistenceTestCase
                 em.persist(p);
                 assertTrue(util.getIdentifier(p) instanceof Person.PK);
 
-                VersionedPerson vp = new VersionedPerson(1, "First");
-                em.persist(vp);
-                Object vpId = util.getIdentifier(vp);
-                assertTrue(vpId instanceof Long && ((Long)vpId) == 1);
+                VersionedEmployee ve = new VersionedEmployee(1, "First");
+                em.persist(ve);
+                Object veId = util.getIdentifier(ve);
+                assertTrue(veId instanceof Long && ((Long)veId) == 1);
 
                 tx.rollback();
             }

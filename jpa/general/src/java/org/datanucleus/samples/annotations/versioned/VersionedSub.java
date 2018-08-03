@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (c) 2015 Andy Jefferson and others. All rights reserved.
+Copyright (c) 2018 Andy Jefferson and others. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -17,31 +17,16 @@ Contributors:
  **********************************************************************/
 package org.datanucleus.samples.annotations.versioned;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
 /**
- * Simple class with a version field.
+ * Abstract sub class of a versioned hierarchy.
  */
-@Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public class VersionedPerson extends VersionedSub
+@MappedSuperclass
+public abstract class VersionedSub extends VersionedBase
 {
-    String name;
-
-    public VersionedPerson(long id, String name)
+    public VersionedSub(long id)
     {
         super(id);
-        this.name = name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-    public String getName()
-    {
-        return name;
     }
 }
