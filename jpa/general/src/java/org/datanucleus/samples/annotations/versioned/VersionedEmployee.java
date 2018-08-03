@@ -27,9 +27,9 @@ public class VersionedEmployee extends VersionedPerson
 {
     double salary;
 
-    public VersionedEmployee(long id, long version)
+    public VersionedEmployee(long id, String name)
     {
-        super(id, version);
+        super(id, name);
     }
 
     public void setSalary(double sal)

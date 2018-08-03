@@ -36,15 +36,26 @@ public class VersionedPerson
     @Version
     long version;
 
-    public VersionedPerson(long id, long version)
+    String name;
+
+    public VersionedPerson(long id, String name)
     {
         this.id = id;
-        this.version = version;
+        this.name = name;
     }
 
     public long getId()
     {
         return id;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    public String getName()
+    {
+        return name;
     }
 
     public long getVersion()

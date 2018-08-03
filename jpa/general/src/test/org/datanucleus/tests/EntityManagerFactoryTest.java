@@ -207,7 +207,7 @@ public class EntityManagerFactoryTest extends JPAPersistenceTestCase
                 em.persist(p);
                 assertTrue(util.getIdentifier(p) instanceof Person.PK);
 
-                VersionedPerson vp = new VersionedPerson(1, 1);
+                VersionedPerson vp = new VersionedPerson(1, "First");
                 em.persist(vp);
                 Object vpId = util.getIdentifier(vp);
                 assertTrue(vpId instanceof Long && ((Long)vpId) == 1);

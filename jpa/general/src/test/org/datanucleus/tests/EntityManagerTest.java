@@ -775,7 +775,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                VersionedPerson p = new VersionedPerson(1, 1);
+                VersionedPerson p = new VersionedPerson(1, "First");
                 em.persist(p);
                 tx.commit();
                 assertEquals(1, p.getVersion());
@@ -796,10 +796,85 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                VersionedPerson p = new VersionedPerson(1, 1);
+                VersionedPerson p = new VersionedPerson(1, "First");
                 p = em.merge(p);
                 tx.commit();
                 assertEquals(2, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(VersionedEmployee.class);
+            clean(VersionedPerson.class);
+        }
+    }
+
+    /**
+     * Test of persistence/retrieval of object with version.
+     */
+    public void testVersionedObjectUpdate()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                VersionedPerson p = new VersionedPerson(1, "First");
+                em.persist(p);
+                tx.commit();
+                assertEquals(1, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            // Find the object, and update it, check the version
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                VersionedPerson p = em.find(VersionedPerson.class, 1);
+                p.setName("First 2");
+
+                tx.commit();
+                assertEquals(2, p.getVersion());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                VersionedPerson p = em.find(VersionedPerson.class, 1);
+                assertEquals(2, p.getVersion()); // Check the version
+
+                tx.commit();
             }
             finally
             {
@@ -830,7 +905,7 @@ public class EntityManagerTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                VersionedPerson p = new VersionedPerson(1, 1);
+                VersionedPerson p = new VersionedPerson(1, "First");
                 em.persist(p);
                 tx.commit();
                 assertEquals(1, p.getVersion());
