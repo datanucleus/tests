@@ -24,6 +24,8 @@ package org.datanucleus.tests;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -3898,15 +3900,13 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         JDOConnection jdoConn = null;
         if (vendorID == null)
         {
-            // This is not an SQL-based datastore so omit
+            // This is not an RDBMS-based datastore so omit
             return;
         }
 
         try
         {
-            //---------------------------------------------------
-            //test normal scenario
-            //---------------------------------------------------
+            // test normal transactional usage
             tx.begin();
             jdoConn = pm.getDataStoreConnection();
             Connection sqlConn = (Connection) jdoConn;
@@ -3925,9 +3925,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             }
             assertFalse("tx should not be active", tx.isActive());
 
-            //---------------------------------------------------
-            //test commit with datastore txn and no close
-            //---------------------------------------------------
+            // test commit with datastore txn and no close
             tx.begin();
             jdoConn = pm.getDataStoreConnection();
             try
@@ -3961,9 +3959,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             }
             tx.commit();
 
-            //---------------------------------------------------
-            //test commit with optimistic txn and no close
-            //---------------------------------------------------
+            // test commit with optimistic txn and no close
             tx.setOptimistic(true);
             tx.begin();
             jdoConn = pm.getDataStoreConnection();
@@ -3975,25 +3971,41 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             catch (JDOUserException e)
             {
                 //expected
+                jdoConn.close();
             }
             assertTrue("tx should be active", pm.currentTransaction().isActive());
+            tx.rollback();
+
+            // test non-transactional usage
+            for (int i=0;i<2;i++)
+            {
+                jdoConn = pm.getDataStoreConnection();
+                try
+                {
+                    Connection c = (Connection) jdoConn.getNativeConnection();
+                    try (PreparedStatement stmt = c.prepareStatement("select 1")) 
+                    {
+                        try (ResultSet rs = stmt.executeQuery()) 
+                        {
+                            if (rs.next()) 
+                            {
+                                LOG.debug("Query OK");
+                            }
+                        }
+                    }
+                }
+                catch (SQLException sqle)
+                {
+                    LOG.error(">> Exception thrown in test", sqle);
+                }
+                finally
+                {
+                    jdoConn.close();
+                }
+            }
         }
         finally
         {
-            if (tx.isActive())
-            {
-                try
-                {
-                    if (jdoConn != null)
-                    {
-                        jdoConn.close();
-                    }
-                }
-                catch (Exception e)
-                {
-                }
-                tx.rollback();
-            }
             pm.close();
         }
     }
