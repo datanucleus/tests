@@ -36,6 +36,7 @@ import org.datanucleus.samples.jdo.query.Coach;
 import org.datanucleus.samples.jdo.query.Manager;
 import org.datanucleus.samples.jdo.query.Player;
 import org.datanucleus.samples.jdo.query.QAppointment;
+import org.datanucleus.samples.jdo.query.QCoach;
 import org.datanucleus.samples.jdo.query.QManager;
 import org.datanucleus.samples.jdo.query.QPlayer;
 import org.datanucleus.samples.jdo.query.QTeam;
@@ -829,6 +830,44 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             List<Manager> managers = tq.executeList();
             assertNotNull("Result is null!", managers);
             assertEquals("Number of managers is wrong", 0, managers.size());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Test use of instanceof.
+     */
+    public void testInstanceof()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Coach> tq = pm.newJDOQLTypedQuery(Coach.class);
+            QCoach cand = QCoach.jdoCandidate;
+            tq.filter(cand.instanceOf(Manager.class));
+            
+            assertEquals("SELECT FROM " + Coach.class.getName() + " WHERE (this instanceof " + Manager.class.getName() + ")", tq.toString());
+
+            List<Coach> coaches = tq.executeList();
+            assertNotNull(coaches);
+            assertEquals(2, coaches.size());
 
             tx.commit();
         }
