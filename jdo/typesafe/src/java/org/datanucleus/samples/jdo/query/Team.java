@@ -46,6 +46,8 @@ public class Team
     @Persistent
     URL website;
 
+    League league;
+
     public Team(long id, String name)
     {
         this.id = id;
@@ -55,6 +57,15 @@ public class Team
     public String getName()
     {
         return name;
+    }
+
+    public League getLeague()
+    {
+        return league;
+    }
+    public void setLeague(League l)
+    {
+        this.league = l;
     }
 
     public void setManager(Manager mgr)
