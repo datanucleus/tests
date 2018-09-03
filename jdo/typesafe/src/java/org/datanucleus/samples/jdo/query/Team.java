@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -46,6 +47,7 @@ public class Team
     @Persistent
     URL website;
 
+    @Column(jdbcType="integer")
     League league;
 
     public Team(long id, String name)

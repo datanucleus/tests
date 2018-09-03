@@ -33,6 +33,7 @@ import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.query.JDOQLTypedQueryImpl;
 import org.datanucleus.samples.jdo.query.Appointment;
 import org.datanucleus.samples.jdo.query.Coach;
+import org.datanucleus.samples.jdo.query.League;
 import org.datanucleus.samples.jdo.query.Manager;
 import org.datanucleus.samples.jdo.query.Player;
 import org.datanucleus.samples.jdo.query.QAppointment;
@@ -89,12 +90,14 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
 
             Team team1 = new Team(1, "Real Madrid");
             team1.setWebsite(new URL("http://www.realmadrid.com"));
+            team1.setLeague(League.PREMIER);
             Manager mgr1 = new Manager(1, "Jose", "Mourinho", 8);
             mgr1.setTeam(team1);
             team1.setManager(mgr1);
             pm.makePersistent(team1);
 
             Team team2 = new Team(2, "Barcelona");
+            team2.setLeague(League.CHAMPIONSHIP);
             Manager mgr2 = new Manager(2, "Pep", "Guardiola", 3);
             mgr2.setTeam(team2);
             team2.setManager(mgr2);
@@ -426,6 +429,42 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             assertEquals("Number of teams is wrong", 1, teams.size());
             Team team = teams.get(0);
             assertEquals("Mourinho", team.getManager().getLastName());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Test basic querying using an enum function call.
+     */
+    public void testFilterEnumOrdinal()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
+            QTeam cand = QTeam.jdoCandidate;
+            List<Team> teams = tq.filter(cand.league.ordinal().eq(1)).executeList(); // Can only use ordinal when persisted as integer
+            assertNotNull("Teams is null!", teams);
+            assertEquals("Number of teams is wrong", 1, teams.size());
+            Team team = teams.get(0);
+            assertEquals("Barcelona", team.getName());
 
             tx.commit();
         }
