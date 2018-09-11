@@ -35,12 +35,23 @@ public class Coach
 
     int yearsExperience;
 
+    double salary;
+
     public Coach(long id, String first, String last, int yrs)
     {
         this.id = id;
         this.firstName = first;
         this.lastName = last;
         this.yearsExperience = yrs;
+    }
+
+    public double getSalary()
+    {
+        return salary;
+    }
+    public void setSalary(double sal)
+    {
+        this.salary = sal;
     }
 
     public String getFirstName()
