@@ -27,6 +27,7 @@ import javax.jdo.JDOQLTypedSubquery;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import javax.jdo.query.IfElseExpression;
 import javax.jdo.query.NumericExpression;
 
 import org.datanucleus.PropertyNames;
@@ -92,6 +93,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             team1.setWebsite(new URL("http://www.realmadrid.com"));
             team1.setLeague(League.PREMIER);
             Manager mgr1 = new Manager(1, "Jose", "Mourinho", 8);
+            mgr1.setSalary(12000.0);
             mgr1.setTeam(team1);
             team1.setManager(mgr1);
             pm.makePersistent(team1);
@@ -99,6 +101,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             Team team2 = new Team(2, "Barcelona");
             team2.setLeague(League.CHAMPIONSHIP);
             Manager mgr2 = new Manager(2, "Pep", "Guardiola", 3);
+            mgr2.setSalary(10000.0);
             mgr2.setTeam(team2);
             team2.setManager(mgr2);
             pm.makePersistent(team2);
@@ -1010,7 +1013,6 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
         }
     }
 
-
     /**
      * Test java 8 expressions.
      */
@@ -1027,6 +1029,51 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             List<Appointment> appts = tq.executeList();
             assertEquals("Number of appointments was wrong", 1, appts.size());
             tq.closeAll();
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Test for IF-THEN-ELSE expressions.
+     */
+    public void testIfThenElse()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Coach> tq = pm.newJDOQLTypedQuery(Coach.class);
+            QCoach cand = QCoach.jdoCandidate;
+
+            // Derive an age-based salary limit using number of years of experience
+            IfElseExpression<Double> ageBasedSalary = tq.ifElseExpression(Double.class);
+            ageBasedSalary.ifThen(cand.yearsExperience.lteq(2), 5000.0);
+            ageBasedSalary.ifThen(cand.yearsExperience.gt(2).and(cand.yearsExperience.lteq(5)), 9000.0);
+            ageBasedSalary.elseEnd(15000.0);
+
+            List<Coach> coaches = tq.filter(cand.salary.gt(ageBasedSalary)).executeList();
+
+            // Mourinho 8 yrs = 12000, Guardiola 3 yrs = 10000. So Guardiola is above the nominal max, whereas Mourinho is below it
+            assertEquals(1, coaches.size());
+            Coach theC = coaches.iterator().next();
+            assertEquals("Pep", theC.getFirstName());
+            assertEquals("Guardiola", theC.getLastName());
 
             tx.commit();
         }
