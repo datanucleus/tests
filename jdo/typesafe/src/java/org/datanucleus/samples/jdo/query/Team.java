@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -42,6 +43,7 @@ public class Team
     Set<Player> players = new HashSet<Player>();
 
     @Persistent
+    @Join
     String[] nicknames;
 
     @Persistent
