@@ -27,7 +27,7 @@ import javax.jdo.JDOQLTypedSubquery;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import javax.jdo.query.IfElseExpression;
+import javax.jdo.query.IfThenElseExpression;
 import javax.jdo.query.NumericExpression;
 
 import org.datanucleus.PropertyNames;
@@ -1062,10 +1062,10 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             QCoach cand = QCoach.jdoCandidate;
 
             // Derive an age-based salary limit using number of years of experience
-            IfElseExpression<Double> ageBasedSalary = tq.ifElseExpression(Double.class);
-            ageBasedSalary.ifThen(cand.yearsExperience.lteq(2), 5000.0);
-            ageBasedSalary.ifThen(cand.yearsExperience.gt(2).and(cand.yearsExperience.lteq(5)), 9000.0);
-            ageBasedSalary.elseEnd(15000.0);
+            IfThenElseExpression<Double> ageBasedSalary = tq.ifThenElse(Double.class);
+            ageBasedSalary.when(cand.yearsExperience.lteq(2), 5000.0);
+            ageBasedSalary.when(cand.yearsExperience.gt(2).and(cand.yearsExperience.lteq(5)), 9000.0);
+            ageBasedSalary.otherwise(15000.0);
 
             List<Coach> coaches = tq.filter(cand.salary.gt(ageBasedSalary)).executeList();
 
