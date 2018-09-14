@@ -773,6 +773,42 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Test basic querying for a candidate with an order and nulls.
+     */
+    public void testFilterWithOrderNullsLast()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
+            QManager cand = QManager.jdoCandidate;
+            tq.orderBy(cand.yearsExperience.asc().nullsLast());
+            assertEquals("SELECT FROM org.datanucleus.samples.jdo.query.Manager ORDER BY this.yearsExperience ASCENDING NULLS LAST", tq.toString());
+            List<Manager> managers = tq.executeList();
+            assertNotNull("Managers is null!", managers);
+            assertEquals("Number of managers is wrong", 2, managers.size());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
      * Test basic querying for a candidate with a filter and using a parameter.
      */
     public void testFilterParameter()
@@ -929,7 +965,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test bulk update.
+     * Test bulk update (DN extension).
      */
     public void testBulkUpdate()
     {
@@ -975,7 +1011,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test bulk update.
+     * Test bulk delete (DN extension).
      */
     public void testBulkDelete()
     {
@@ -1014,12 +1050,11 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Test java 8 expressions.
+     * Test java.time methods.
      */
     public void testLocalDateTime()
     {
         PersistenceManager pm = pmf.getPersistenceManager();
-        pm.setProperty(PropertyNames.PROPERTY_QUERY_JDOQL_ALLOWALL, "true");
         Transaction tx = pm.currentTransaction();
         try
         {
