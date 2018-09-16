@@ -528,7 +528,7 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "POINT(10 10)";
-            Query query = pm.newQuery(SamplePoint.class, "geom != null && Spatial.asText(Spatial.pointFromWKB(Spatial.asBinary(geom), Spatial.srid(geom))) == :wkt");
+            Query query = pm.newQuery(SamplePoint.class, "geom != null && Spatial.asText(Spatial.pointFromWKB(geom.toBinary(), geom.getSRID())) == :wkt");
             List list = (List) query.execute(wkt);
             assertEquals("Wrong number of geometries with a given wkt returned", 1, list.size());
             assertTrue("Point 1 should be in the list of geometries with a given wkt", list.contains(getSamplePoint(1)));
@@ -1377,14 +1377,14 @@ public class JtsGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Query query = pm.newQuery(SamplePolygon.class, "geom != null && Spatial.pointOnSurface(geom) != null");
+            Query query = pm.newQuery(SamplePolygon.class, "geom != null && geom.getPointOnSurface() != null");
             List list = (List) query.execute();
             assertEquals("Wrong number of geometries with a point on the surface returned", 2, list.size());
             assertTrue("Polygon 1 should be in the list of geometries with a point on the surface", list.contains(getSamplePolygon(1)));
             assertTrue("Polygon 2 should be in the list of geometries with a point on the surface", list.contains(getSamplePolygon(2)));
             
             query = pm.newQuery(SamplePolygon.class, "id == :id");
-            query.setResult("Spatial.pointOnSurface(geom)");
+            query.setResult("geom.getPointOnSurface()");
             query.setUnique(true);
             Geometry pointOnSurface = (Geometry) query.execute(new Long(getSamplePolygon(1).getId()));
             assertNotNull("Polygon 1 should have a point on the surface", pointOnSurface);
