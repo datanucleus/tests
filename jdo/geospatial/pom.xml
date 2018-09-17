@@ -41,18 +41,26 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <version>11.2.0</version>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>com.vividsolutions</groupId>
-            <artifactId>jts</artifactId>
-            <version>1.12</version>
+            <artifactId>jts-core</artifactId>
+            <version>1.14.0</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.vividsolutions</groupId>
-            <artifactId>jtsio</artifactId>
-            <version>1.12</version>
+            <artifactId>jts-io</artifactId>
+            <version>1.14.0</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jts-ora</artifactId>
+            <version>1.14.0</version>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>org.postgis</groupId>
             <artifactId>postgis-jdbc</artifactId>
