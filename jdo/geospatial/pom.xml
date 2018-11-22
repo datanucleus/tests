@@ -62,15 +62,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         </dependency>
 
         <dependency>
-            <groupId>org.postgis</groupId>
+            <groupId>net.postgis</groupId>
             <artifactId>postgis-jdbc</artifactId>
-            <version>2.1.0</version>
+            <version>2.2.1</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>postgis</groupId>
-            <artifactId>postgis-jdbc-jts</artifactId>
-            <version>1.1.5</version>
+            <groupId>net.postgis</groupId>
+            <artifactId>postgis-jdbc-jtsparser</artifactId>
+            <version>2.2.1</version>
             <optional>true</optional>
         </dependency>
     </dependencies>
