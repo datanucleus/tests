@@ -17,6 +17,8 @@ Contributors:
 ***********************************************************************/
 package org.datanucleus.samples.jdo.query;
 
+import java.util.Optional;
+
 import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.DiscriminatorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -36,6 +38,8 @@ public class Coach
     int yearsExperience;
 
     double salary;
+
+    Optional<String> qualification;
 
     public Coach(long id, String first, String last, int yrs)
     {
@@ -67,5 +71,14 @@ public class Coach
     public int getYearsExperience()
     {
         return yearsExperience;
+    }
+
+    public void setQualification(String qual)
+    {
+        this.qualification = Optional.of(qual);
+    }
+    public Optional<String> getQualification()
+    {
+        return qualification;
     }
 }
