@@ -153,7 +153,7 @@ public class SoftDeleteTest extends JDOPersistenceTestCase
 
                 // Check query extension that includes soft-deleted objects
                 Query q2 = pm.newQuery("SELECT FROM org.datanucleus.samples.softdelete.SDPerson WHERE this.name.startsWith('Geo') ");
-                q2.extension("include-soft-deletes", "true");
+                q2.extension("datanucleus.query.includeSoftDeletes", "true");
                 List results2 = q2.executeList();
                 assertNotNull(results2);
                 assertEquals(1, results2.size());
