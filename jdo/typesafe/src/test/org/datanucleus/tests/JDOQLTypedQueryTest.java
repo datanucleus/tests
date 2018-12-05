@@ -19,6 +19,7 @@ package org.datanucleus.tests;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import javax.jdo.JDOQLTypedSubquery;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import javax.jdo.query.Expression;
 import javax.jdo.query.IfThenElseExpression;
 import javax.jdo.query.NumericExpression;
 
@@ -504,6 +506,52 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             List<Team> teams = tq.executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 0, teams.size());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
+     * Test basic querying for a candidate with a filter that uses contains on a List parameter.
+     */
+    public void testFilterListContains()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Coach> tq = pm.newJDOQLTypedQuery(Coach.class);
+            QCoach cand = QCoach.jdoCandidate;
+
+            // TODO Would like to avoid the cast on the element expression, but needs change to javax.jdo API really to do that
+            tq.filter(tq.listParameter("experienceOptions").contains((Expression)cand.yearsExperience));
+
+            List<Integer> yearsExperienceOptions = new ArrayList<Integer>();
+            yearsExperienceOptions.add(1);
+            yearsExperienceOptions.add(2);
+            yearsExperienceOptions.add(3);
+            tq.setParameter("experienceOptions", yearsExperienceOptions);
+
+            List<Coach> coaches = tq.executeList();
+            assertNotNull(coaches);
+            assertEquals(1, coaches.size());
+            Coach coachResult = coaches.get(0);
+            assertEquals("Guardiola", coachResult.getLastName());
 
             tx.commit();
         }
