@@ -171,31 +171,31 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
             Configuration conf = getConfigurationForPMF(thePMF);
             if (conf.getStringProperty("datanucleus.mapping.Catalog") != null)
             {
-                props.put("DefaultCatalog", conf.getStringProperty("datanucleus.mapping.Catalog"));
+                props.put(IdentifierFactory.PROPERTY_DEFAULT_CATALOG, conf.getStringProperty("datanucleus.mapping.Catalog"));
             }
             if (conf.getStringProperty("datanucleus.mapping.Schema") != null)
             {
-                props.put("DefaultSchema", conf.getStringProperty("datanucleus.mapping.Schema"));
+                props.put(IdentifierFactory.PROPERTY_DEFAULT_SCHEMA, conf.getStringProperty("datanucleus.mapping.Schema"));
             }
             if (conf.getStringProperty("datanucleus.identifier.case") != null)
             {
-                props.put("RequiredCase", conf.getStringProperty("datanucleus.identifier.case"));
+                props.put(IdentifierFactory.PROPERTY_REQUIRED_CASE, conf.getStringProperty("datanucleus.identifier.case"));
             }
             else
             {
-                props.put("RequiredCase", srm.getDefaultIdentifierCase());
+                props.put(IdentifierFactory.PROPERTY_REQUIRED_CASE, srm.getDefaultIdentifierCase());
             }
             if (conf.getStringProperty("datanucleus.identifier.wordSeparator") != null)
             {
-                props.put("WordSeparator", conf.getStringProperty("datanucleus.identifier.wordSeparator"));
+                props.put(IdentifierFactory.PROPERTY_WORD_SEPARATOR, conf.getStringProperty("datanucleus.identifier.wordSeparator"));
             }
             if (conf.getStringProperty("datanucleus.identifier.tablePrefix") != null)
             {
-                props.put("TablePrefix", conf.getStringProperty("datanucleus.identifier.tablePrefix"));
+                props.put(IdentifierFactory.PROPERTY_TABLE_PREFIX, conf.getStringProperty("datanucleus.identifier.tablePrefix"));
             }
             if (conf.getStringProperty("datanucleus.identifier.tableSuffix") != null)
             {
-                props.put("TableSuffix", conf.getStringProperty("datanucleus.identifier.tableSuffix"));
+                props.put(IdentifierFactory.PROPERTY_TABLE_SUFFIX, conf.getStringProperty("datanucleus.identifier.tableSuffix"));
             }
 
             Class cls = Class.forName("org.datanucleus.store.rdbms.identifier.JPAIdentifierFactory");
