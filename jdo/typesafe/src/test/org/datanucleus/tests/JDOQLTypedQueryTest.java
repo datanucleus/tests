@@ -671,6 +671,40 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
     }
 
     /**
+     * Test basic querying with a result class.
+     */
+    public void testResultClass()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
+            List<Object[]> results = tq.executeResultList(Object[].class);
+
+            assertNotNull("Results is null!", results);
+            assertEquals("Number of results is wrong", 2, results.size());
+
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error in test", e);
+            fail("Error in test :" + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
+
+    /**
      * Test basic querying with a result using aggregates.
      */
     public void testResultWithAggregates()
