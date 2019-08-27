@@ -159,7 +159,7 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
         try
         {
             tx.begin();
-            List result = em.createQuery("SELECT Object(T) FROM " + cls.getName() + " T").getResultList();
+            List result = em.createQuery("SELECT T FROM " + cls.getName() + " T").getResultList();
             LOG.debug("Cleanup : Number of objects of type " + cls.getName() + " to delete is " + result.size());
             for (int i = 0; i < result.size(); i++)
             {
