@@ -25,10 +25,8 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.NucleusContext;
 import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.plugin.PluginManager;
-import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.util.Localiser;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.store.rdbms.adapter.DatabaseMetaData;
 
 /**
  * Tests for "org.datanucleus.store.rdbms.adapter.RDBMSAdapterFactory".
