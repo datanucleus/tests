@@ -16,6 +16,19 @@
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
+    <repositories>
+        <repository>
+            <id>DN_M2_Repo</id>
+            <url>http://www.datanucleus.org/downloads/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <!-- Software Dependencies -->
     <dependencies>
         <dependency>
@@ -45,7 +58,7 @@
         	<version>2.1.4</version>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
