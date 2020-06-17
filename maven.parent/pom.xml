@@ -41,7 +41,7 @@
     </properties>
 
     <repositories>
-        <repository>
+        <!-- repository>
             <id>DN_M2_Repo</id>
             <url>http://www.datanucleus.org/downloads/maven2/</url>
             <releases>
@@ -50,7 +50,7 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
+        </repository-->
         <repository>
             <id>DN_Nightly_M2_Repo</id>
             <url>http://www.datanucleus.org/downloads/maven2-nightly/</url>
