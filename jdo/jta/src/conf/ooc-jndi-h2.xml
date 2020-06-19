@@ -24,7 +24,7 @@
                 <className>javax.sql.DataSource</className>
                 <factoryClassName>org.omj.jta.datasource.JotmJtaDataSourceFactory</factoryClassName>
                 <refAddr name="driverClassName" value="org.h2.Driver"/>
-                <refAddr name="url" value="jdbc:h2:testDB"/>
+                <refAddr name="url" value="jdbc:h2:./testDB"/>
                 <refAddr name="username" value="sa"/>
                 <refAddr name="password" value=""/>
                 <refAddr name="useConnectionHandle" value="true"/>
@@ -34,7 +34,7 @@
                 <className>javax.sql.DataSource</className>
                 <factoryClassName>org.datanucleus.tests.jta.util.DataSourceDriverAdapterObjectFactory</factoryClassName>
                 <refAddr name="driverClassName" value="org.h2.Driver"/>
-                <refAddr name="url" value="jdbc:h2:testDB"/>
+                <refAddr name="url" value="jdbc:h2:./testDB"/>
                 <refAddr name="username" value="sa"/>
                 <refAddr name="password" value=""/>
             </reference>
