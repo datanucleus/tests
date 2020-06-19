@@ -850,7 +850,7 @@ public class AnnotationTest extends JPAPersistenceTestCase
         ClassLoaderResolver clr = new ClassLoaderResolverImpl();
         ClassMetaData cmd1 = (ClassMetaData)metaDataMgr.getMetaDataForClass(Account.class.getName(), clr);
         AbstractMemberMetaData mmd1 = cmd1.getMetaDataForMember("username");
-        assertEquals(255, mmd1.getColumnMetaData()[0].getLength().intValue());
+        assertNull(mmd1.getColumnMetaData()[0].getLength());
     }
 
     /**
