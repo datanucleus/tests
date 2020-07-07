@@ -26,7 +26,6 @@ import javax.persistence.EntityTransaction;
 
 import org.datanucleus.samples.annotations.models.company.Account;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Test case for use of JPA identity generators.

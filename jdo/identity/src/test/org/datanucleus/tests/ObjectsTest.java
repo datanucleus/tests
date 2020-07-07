@@ -22,7 +22,6 @@ import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.objects.ObjectHolder;
 import org.jpox.samples.objects.ObjectImpl1;
 import org.jpox.samples.models.referenceMapping.Customer;

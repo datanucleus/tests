@@ -55,7 +55,6 @@ import org.datanucleus.samples.models.nullability.NullabilityOwner;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.inheritance.ABase;
 import org.jpox.samples.inheritance.ASub1;

@@ -46,7 +46,6 @@ import org.datanucleus.samples.fetchplan.FP1Sub;
 import org.datanucleus.samples.fetchplan.FP2Base;
 import org.datanucleus.samples.fetchplan.FP2Sub;
 import org.datanucleus.samples.fetchplan.FP3Base;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Series of tests for the use of FetchPlans.

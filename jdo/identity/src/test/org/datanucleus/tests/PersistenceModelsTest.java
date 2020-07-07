@@ -33,7 +33,6 @@ import org.datanucleus.samples.models.nightlabs_inheritance.Base;
 import org.datanucleus.samples.models.nightlabs_inheritance.BaseID;
 import org.datanucleus.samples.models.nightlabs_inheritance.ConcreteSub1;
 import org.datanucleus.samples.models.nightlabs_inheritance.ConcreteSub2;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.models.leftright.LeftBase;
 import org.jpox.samples.models.leftright.LeftSub;
 import org.jpox.samples.models.leftright.RightBase;

@@ -26,7 +26,6 @@ import org.datanucleus.exceptions.NucleusUserException;
 import org.datanucleus.query.JDOQLSingleStringParser;
 import org.datanucleus.store.query.AbstractJDOQLQuery;
 import org.datanucleus.store.query.Query.SubqueryDefinition;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Tests for JDOQL single-string parsing process.

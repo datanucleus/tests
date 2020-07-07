@@ -26,7 +26,6 @@ import javax.persistence.Query;
 import org.datanucleus.api.jpa.NucleusJPAHelper;
 import org.datanucleus.samples.annotations.nondurableidentity.NonDurableIDHolder;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Series of tests for Datastore Identity.

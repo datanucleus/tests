@@ -39,7 +39,6 @@ import org.datanucleus.store.rdbms.identifier.DatastoreIdentifier;
 import org.datanucleus.store.rdbms.identifier.IdentifierFactory;
 import org.datanucleus.store.rdbms.identifier.IdentifierType;
 import org.datanucleus.store.rdbms.identifier.JPOXIdentifierFactory;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.ClassUtils;
 
 /**

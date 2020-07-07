@@ -42,7 +42,6 @@ import org.datanucleus.samples.types.interfaces.Rectangle;
 import org.datanucleus.samples.types.interfaces.Shape;
 import org.datanucleus.samples.types.interfaces.ShapeHolder;
 import org.datanucleus.store.NucleusConnection;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Testcases for EntityManagerImpl.

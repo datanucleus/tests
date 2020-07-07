@@ -33,7 +33,6 @@ import javax.transaction.Status;
 import javax.transaction.Synchronization;
 
 import org.datanucleus.samples.versioned.VersionEmptyDFG;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.versioned.Trade1;
 import org.jpox.samples.versioned.Trade1Holder;
 import org.jpox.samples.versioned.Trade3;

@@ -77,7 +77,6 @@ import org.datanucleus.samples.annotations.one_one.unidir.LoginAccount;
 import org.datanucleus.samples.annotations.types.basic.DateHolder;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.one_many.map_fk.MapFKHolder;
 import org.jpox.samples.one_many.map_fk.MapFKValue;

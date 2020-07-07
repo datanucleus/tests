@@ -31,7 +31,6 @@ import javax.jdo.ObjectState;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.models.company.Person;
 
 /**

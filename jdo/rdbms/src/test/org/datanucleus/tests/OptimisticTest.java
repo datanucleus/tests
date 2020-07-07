@@ -24,7 +24,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.versioned.Trade2;
 
 /**

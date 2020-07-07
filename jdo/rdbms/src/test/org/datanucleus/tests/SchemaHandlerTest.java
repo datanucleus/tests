@@ -37,7 +37,6 @@ import org.datanucleus.store.rdbms.schema.RDBMSTableInfo;
 import org.datanucleus.store.rdbms.schema.RDBMSTablePKInfo;
 import org.datanucleus.store.rdbms.table.DatastoreClass;
 import org.datanucleus.store.schema.StoreSchemaHandler;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.rdbms.schema.SchemaClass1;
 import org.jpox.samples.rdbms.schema.SchemaClass2;

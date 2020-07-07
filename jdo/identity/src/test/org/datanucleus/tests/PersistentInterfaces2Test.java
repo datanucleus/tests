@@ -21,7 +21,6 @@ package org.datanucleus.tests;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.persistentinterfaces.Country;
 import org.jpox.samples.persistentinterfaces.ICity;
 import org.jpox.samples.persistentinterfaces.ILocation;

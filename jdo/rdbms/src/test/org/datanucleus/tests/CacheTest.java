@@ -26,7 +26,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.store.connection.ManagedConnection;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.models.company.Person;
 
 /**

@@ -38,7 +38,6 @@ import org.datanucleus.samples.serialised.SerialisedHolder3;
 import org.datanucleus.samples.serialised.SerialisedObject;
 import org.datanucleus.samples.serialised.SerialisedObject3;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.interfaces.Circle;
 import org.jpox.samples.interfaces.ShapeHolder;
 import org.jpox.samples.models.company.Employee;

@@ -21,7 +21,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.enhancement.EnhancerFieldNames;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Test the enhancement contract features.

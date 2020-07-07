@@ -25,7 +25,6 @@ import javax.persistence.EntityTransaction;
 
 import org.datanucleus.samples.annotations.compoundidentity.CompoundHolder;
 import org.datanucleus.samples.annotations.compoundidentity.CompoundSingleTarget;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Series of tests for Compound Identity (identifying) relations.

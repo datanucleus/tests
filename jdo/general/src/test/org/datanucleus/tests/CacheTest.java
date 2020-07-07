@@ -44,7 +44,6 @@ import org.datanucleus.api.jdo.NucleusJDOHelper;
 import org.datanucleus.cache.CachedPC;
 import org.datanucleus.cache.Level2Cache;
 import org.datanucleus.samples.metadata.user.User1;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.models.company.Department;
 import org.jpox.samples.models.company.Employee;

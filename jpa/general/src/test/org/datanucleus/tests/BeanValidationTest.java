@@ -26,7 +26,6 @@ import org.datanucleus.samples.validation.ValidatedOwner;
 import org.datanucleus.samples.validation.ValidatedPerson;
 import org.datanucleus.samples.validation.ValidatedPerson2;
 import org.datanucleus.samples.validation.ValidatedPet;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for validation of JPA entities (javax.validation JSR303).

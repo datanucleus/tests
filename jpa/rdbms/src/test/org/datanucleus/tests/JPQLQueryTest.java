@@ -24,7 +24,6 @@ import javax.persistence.EntityTransaction;
 
 import org.datanucleus.samples.annotations.query.QueryTypeHolder;
 import org.datanucleus.samples.annotations.query.QueryTypeResult;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for JPQL queries via JPA that are specific to RDBMS.

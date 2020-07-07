@@ -30,7 +30,6 @@ import org.datanucleus.samples.annotations.generics.GenericOneOneRelated1;
 import org.datanucleus.samples.annotations.generics.GenericOneOneRelated2;
 import org.datanucleus.samples.annotations.generics.GenericOneOneSub1;
 import org.datanucleus.samples.annotations.generics.GenericOneOneSub2;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Testcases for use of generics, and in particular TypeVariable usage.

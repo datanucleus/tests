@@ -28,7 +28,6 @@ import org.datanucleus.samples.annotations.one_many.bidir_2.House;
 import org.datanucleus.samples.annotations.one_one.bidir.Boiler;
 import org.datanucleus.samples.annotations.one_one.bidir.Timer;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for JPQL DELETE queries.

@@ -37,7 +37,6 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.linkedlist.DoubleLink;
 import org.jpox.samples.linkedlist.ParentChildLink;
 import org.jpox.samples.linkedlist.SingleLink;

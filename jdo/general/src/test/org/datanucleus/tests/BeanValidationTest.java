@@ -28,7 +28,6 @@ import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.validation.ValidatedPerson;
 import org.datanucleus.samples.validation.ValidatedPerson2;
 import org.datanucleus.samples.validation.ValidatedPerson3;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Tests for javax.validation with JDO.

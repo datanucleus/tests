@@ -29,7 +29,6 @@ import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.samples.annotations.one_one.unidir.Login;
 import org.datanucleus.samples.annotations.one_one.unidir.LoginAccount;
 import org.datanucleus.samples.annotations.one_one.unidir.LoginAccountComplete;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for SQL queries via JPA.

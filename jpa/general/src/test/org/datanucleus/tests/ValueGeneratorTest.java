@@ -23,7 +23,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.datanucleus.samples.annotations.valuegenerator.CustomUUIDHolder;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for DN ValueGenerator extension

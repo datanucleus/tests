@@ -29,7 +29,6 @@ import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.softdelete.SDAddress;
 import org.datanucleus.samples.softdelete.SDCar;
 import org.datanucleus.samples.softdelete.SDPerson;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Tests for Soft-Delete.

@@ -24,7 +24,6 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.enhancement.Persistable;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.persistentabstracts.ACity;
 import org.jpox.samples.persistentabstracts.ALocation;
 import org.jpox.samples.persistentabstracts.Country;

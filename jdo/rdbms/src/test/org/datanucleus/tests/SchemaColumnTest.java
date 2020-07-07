@@ -25,7 +25,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.samples.schema.ClassWithDefaultCols;
 import org.datanucleus.store.rdbms.RDBMSPropertyNames;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Test for some features of column specification specific to RDBMS.

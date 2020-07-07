@@ -64,7 +64,6 @@ import org.datanucleus.samples.jpa.query.Player;
 import org.datanucleus.samples.jpa.query.Player_;
 import org.datanucleus.samples.jpa.query.Team;
 import org.datanucleus.samples.jpa.query.Team_;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for the Criteria API in JPA using generated criteria classes.

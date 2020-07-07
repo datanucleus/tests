@@ -28,7 +28,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.models.company.Office;
 
 /**

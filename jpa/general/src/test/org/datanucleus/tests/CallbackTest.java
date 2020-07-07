@@ -31,7 +31,6 @@ import org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub1;
 import org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub2;
 import org.datanucleus.samples.annotations.callbacks.CallbackSub1Sub2Listener;
 import org.datanucleus.samples.annotations.callbacks.CallbackSub2;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for JPA listeners and callbacks.

@@ -36,7 +36,6 @@ import javax.jdo.Transaction;
 import junit.framework.Assert;
 
 import org.datanucleus.store.rdbms.RDBMSPropertyNames;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.many_many.AccountCustomer;
 import org.jpox.samples.many_many.GasSupplier;
 import org.jpox.samples.many_many.OilSupplier;

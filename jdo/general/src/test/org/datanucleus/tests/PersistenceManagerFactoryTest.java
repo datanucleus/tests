@@ -39,7 +39,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.transaction.TransactionUtils;
 import org.jpox.samples.models.company.Person;
 

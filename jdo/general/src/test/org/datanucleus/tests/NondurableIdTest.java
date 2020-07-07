@@ -31,7 +31,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.samples.nondurable.LogEntry;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.NucleusLogger;
 
 /**

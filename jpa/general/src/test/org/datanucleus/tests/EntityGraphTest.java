@@ -37,7 +37,6 @@ import org.datanucleus.api.jpa.JPAQuery;
 import org.datanucleus.samples.annotations.entitygraph.GraphBase;
 import org.datanucleus.samples.annotations.entitygraph.GraphRelated;
 import org.datanucleus.samples.annotations.entitygraph.GraphRelatedNext;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 
 /**

@@ -23,8 +23,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 import javax.jdo.datastore.Sequence;
 
-import org.datanucleus.tests.JDOPersistenceTestCase;
-
 /**
  * Simple tests for the PM Sequence capability.
  */

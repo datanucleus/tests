@@ -22,7 +22,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.datanucleus.samples.annotations.simple.SimpleClass;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Series of tests for L2 Cache.

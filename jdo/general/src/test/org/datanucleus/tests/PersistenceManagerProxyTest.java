@@ -26,7 +26,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.samples.lifecyclelistener.BasicListener;
 import org.datanucleus.samples.lifecyclelistener.LifecycleListenerSpecification;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.NucleusLogger;
 import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Department;

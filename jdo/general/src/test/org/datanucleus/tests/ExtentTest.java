@@ -27,7 +27,6 @@ import javax.jdo.Transaction;
 import org.datanucleus.samples.store.Book;
 import org.datanucleus.samples.store.CompactDisc;
 import org.datanucleus.samples.store.Product;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.models.company.Developer;
 import org.jpox.samples.models.company.Employee;
 import org.jpox.samples.models.company.Manager;

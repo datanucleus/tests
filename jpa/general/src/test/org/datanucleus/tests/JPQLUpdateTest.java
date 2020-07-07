@@ -27,7 +27,6 @@ import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.samples.annotations.one_one.bidir.Boiler;
 import org.datanucleus.samples.annotations.one_one.bidir.Timer;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for JPQL "UPDATE" queries.

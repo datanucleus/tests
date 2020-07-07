@@ -32,7 +32,6 @@ import org.datanucleus.samples.generics.GenericsBaseSubSub;
 import org.datanucleus.samples.generics.GenericsContainer;
 import org.datanucleus.samples.generics.GenericsElement;
 import org.datanucleus.samples.generics.GenericsValue;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Test use of Java generics.

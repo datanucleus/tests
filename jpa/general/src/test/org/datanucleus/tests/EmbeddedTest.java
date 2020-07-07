@@ -33,7 +33,6 @@ import org.datanucleus.samples.annotations.models.company.Department;
 import org.datanucleus.samples.annotations.models.company.DepartmentPK;
 import org.datanucleus.samples.annotations.models.company.Project;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for embedded persistence in JPA.

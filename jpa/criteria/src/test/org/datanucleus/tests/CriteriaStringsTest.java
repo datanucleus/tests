@@ -58,7 +58,6 @@ import org.datanucleus.samples.attributeconverter.TypeHolder;
 import org.datanucleus.samples.jpa.criteria.embedded.A;
 import org.datanucleus.samples.jpa.criteria.embedded.B;
 import org.datanucleus.samples.jpa.criteria.embedded.C;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for the Criteria API in JPA.

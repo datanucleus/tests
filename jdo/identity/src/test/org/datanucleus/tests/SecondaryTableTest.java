@@ -25,7 +25,6 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.secondarytable.Printer;
 
 /**

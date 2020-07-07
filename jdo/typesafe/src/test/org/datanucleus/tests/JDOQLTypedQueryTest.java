@@ -45,7 +45,6 @@ import org.datanucleus.samples.jdo.query.QManager;
 import org.datanucleus.samples.jdo.query.QPlayer;
 import org.datanucleus.samples.jdo.query.QTeam;
 import org.datanucleus.samples.jdo.query.Team;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.NucleusLogger;
 
 /**

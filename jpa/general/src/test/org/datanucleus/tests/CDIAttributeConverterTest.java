@@ -25,7 +25,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.datanucleus.samples.annotations.cdi.MyCdiHolder;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 import org.datanucleus.util.NucleusLogger;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;

@@ -31,7 +31,6 @@ import javax.persistence.TypedQuery;
 import org.datanucleus.api.jpa.JPAEntityManagerFactory;
 import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.samples.annotations.versioned.VersionedEmployee;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for EntityManagerFactory (and PersistenceProvider).

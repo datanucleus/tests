@@ -35,7 +35,6 @@ import javax.jdo.Transaction;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.concurrency.Account;
 import org.datanucleus.samples.concurrency.Transfer;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.annotations.Datastore;
 
 /**

@@ -45,7 +45,6 @@ import org.datanucleus.samples.models.hashsetcollection.Detail;
 import org.datanucleus.samples.models.hashsetcollection.Master;
 import org.datanucleus.samples.models.hashsetcollection.OtherDetail;
 import org.datanucleus.samples.store.Product;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.annotations.Datastore;
 import org.datanucleus.tests.annotations.TransactionMode;
 import org.jpox.samples.models.company.Department;

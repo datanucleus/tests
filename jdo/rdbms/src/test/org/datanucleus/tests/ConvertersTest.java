@@ -27,7 +27,6 @@ import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.mapping.java.JavaTypeMapping;
 import org.datanucleus.store.rdbms.mapping.java.TypeConverterMapping;
 import org.datanucleus.store.rdbms.table.DatastoreClass;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Tests for use of AttributeConverters.

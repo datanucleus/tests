@@ -26,7 +26,6 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.jpox.samples.interfaces.ShapeHolder;
 import org.jpox.samples.interfaces.ShapeHolder2;
 import org.jpox.samples.interfaces.Square;

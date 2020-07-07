@@ -46,7 +46,6 @@ import org.datanucleus.samples.annotations.one_many.map_join.MapJoinValue;
 import org.datanucleus.samples.annotations.one_many.unidir_2.ModeratedUserGroup;
 import org.datanucleus.samples.annotations.versioned.VersionedEmployee;
 import org.datanucleus.samples.annotations.versioned.VersionedPerson;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for the Metamodel API in JPA.

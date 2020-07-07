@@ -23,7 +23,6 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.samples.persistenceaware.AccessPublicFields;
 import org.datanucleus.samples.persistenceaware.PublicFields;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Tests of persistence-aware capabilities.

@@ -33,7 +33,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.many_many.AccountCustomer;
 import org.jpox.samples.many_many.GasSupplier;

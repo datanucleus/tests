@@ -24,7 +24,6 @@ import org.datanucleus.samples.annotations.persistentproperties.BasePropertyType
 import org.datanucleus.samples.annotations.persistentproperties.RelatedPropertyType;
 import org.datanucleus.samples.annotations.persistentproperties.SubPropertyType;
 import org.datanucleus.samples.annotations.persistentproperties.SubRelatedPropertyType;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Placeholder for additional tests when using persistent properties.

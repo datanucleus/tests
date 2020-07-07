@@ -73,7 +73,6 @@ import org.datanucleus.samples.widget.InversePrimitive;
 import org.datanucleus.samples.widget.Primitive;
 import org.datanucleus.samples.widget.Widget;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Department;

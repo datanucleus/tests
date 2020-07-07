@@ -25,7 +25,6 @@ import javax.persistence.Query;
 import org.datanucleus.samples.annotations.models.company.Employee;
 import org.datanucleus.samples.annotations.models.company.Person;
 import org.datanucleus.store.StoreManager;
-import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
  * Tests for JPQL "INSERT" queries.
