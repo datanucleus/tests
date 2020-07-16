@@ -155,6 +155,16 @@ public class TestRunListener extends RunListener
                 connection.commit();
             }
         }
+        else if (url.contains("mariadb"))
+        {
+            // Flyway doesn't support MariaDB 10+, so just give up on it
+            try (Statement stmt = connection.createStatement())
+            {
+                stmt.execute("drop database nucleus;");
+                stmt.execute("create database nucleus;");
+                connection.commit();
+            }
+        }
         else
         {
             // Use Flyway to clean up RDBMS instances
