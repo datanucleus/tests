@@ -51,7 +51,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository-->
-        <repository>
+        <!-- repository>
             <id>DN_Nightly_M2_Repo</id>
             <url>http://www.datanucleus.org/downloads/maven2-nightly/</url>
             <releases>
@@ -60,7 +60,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
+        </repository-->
     </repositories>
 
     <modules>
