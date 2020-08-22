@@ -2885,9 +2885,9 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                     assertNotNull(holder.getPerson2());
                     assertNotNull(obj[0]);
                     assertEquals(obj[0],holder.getPerson1());
-                    assertEquals(0,((Long)obj[1]).intValue());
+                    assertEquals(0,((Integer)obj[1]).intValue());
                     assertNotNull(obj[3]);
-                    assertEquals(1,((Long)obj[3]).intValue());
+                    assertEquals(1,((Integer)obj[3]).intValue());
                     assertNull(obj[4]);
                 }
                 q.closeAll();

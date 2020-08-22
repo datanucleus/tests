@@ -51,7 +51,7 @@ public class PersonHolder
         this.person2 = p2;
     }
     
-    public PersonHolder(Person p1, Person p2, String name, String literalString, Long literalInt)
+    public PersonHolder(Person p1, Person p2, String name, String literalString, Integer literalInt)
     {
         this.person1 = p1;
         this.person2 = p2;
@@ -60,7 +60,7 @@ public class PersonHolder
         this.literalInt = literalInt.intValue();
     }
 
-    public PersonHolder(Person p1, Person p2, String name, String literalString, Long literalInt, Person ignoreThis)
+    public PersonHolder(Person p1, Person p2, String name, String literalString, Integer literalInt, Person ignoreThis)
     {
         this.person1 = p1;
         this.person2 = p2;

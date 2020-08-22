@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.math.BigDecimal;
 import java.util.HashMap;
 
 import org.datanucleus.PersistenceNucleusContext;
@@ -96,7 +95,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         VariableExpression left = (VariableExpression)dyExpr.getLeft();
         assertEquals("Variable expression name is wrong", left.getId(), "notaField");
         Literal right = (Literal)dyExpr.getRight();
-        assertEquals("Literal has wrong value", new Long(2), right.getLiteral());
+        assertEquals("Literal has wrong value", new Integer(2), right.getLiteral());
     }
 
     /**
@@ -194,8 +193,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr1.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "statusId", leftExpr1.getId());
         Literal rightExpr1 = (Literal)dyExpr.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 2, ((Long)rightExpr1.getLiteral()).longValue());
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 2, ((Number)rightExpr1.getLiteral()).intValue());
 
         try
         {
@@ -220,8 +219,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression 'id' is incorrect", "price", rightExpr2.getId());
         Literal leftExpr2 = (Literal)dyExpr.getLeft();
         // TODO Why BigDecimal and not Double??
-        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof BigDecimal);
-        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((BigDecimal)leftExpr2.getLiteral()).longValue(), 0.1);
+        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((Number)leftExpr2.getLiteral()).longValue(), 0.1);
     }
 
     /**
@@ -260,8 +259,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr1.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "statusId", leftExpr1.getId());
         Literal rightExpr1 = (Literal)dyExpr1.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 2, ((Long)rightExpr1.getLiteral()).longValue());
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 2, ((Number)rightExpr1.getLiteral()).intValue());
 
         assertTrue("Compiled right expression should be PrimaryExpression but isnt", dyExpr2.getRight() instanceof PrimaryExpression);
         assertTrue("Compiled left expression should be Literal but isnt", dyExpr2.getLeft() instanceof Literal);
@@ -271,8 +270,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression 'id' is incorrect", "price", rightExpr2.getId());
         Literal leftExpr2 = (Literal)dyExpr2.getLeft();
         // TODO Why BigDecimal and not Double??
-        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof BigDecimal);
-        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((BigDecimal)leftExpr2.getLiteral()).longValue(), 0.1);
+        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((Number)leftExpr2.getLiteral()).longValue(), 0.1);
     }
 
     /**
@@ -318,8 +317,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr1a.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "statusId", leftExpr1a.getId());
         Literal rightExpr1a = (Literal)dyExpr1a.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1a.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 2, ((Long)rightExpr1a.getLiteral()).longValue());
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1a.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 2, ((Number)rightExpr1a.getLiteral()).intValue());
 
         // 1b : 100.0 > price
         assertTrue("Compiled right expression should be PrimaryExpression but isnt", dyExpr1b.getRight() instanceof PrimaryExpression);
@@ -330,8 +329,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression 'id' is incorrect", "price", rightExpr1b.getId());
         Literal leftExpr1b = (Literal)dyExpr1b.getLeft();
         // TODO Why BigDecimal and not Double??
-        assertTrue("Compiled right expression literal is of incorrect type", leftExpr1b.getLiteral() instanceof BigDecimal);
-        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((BigDecimal)leftExpr1b.getLiteral()).longValue(), 0.1);
+        assertTrue("Compiled right expression literal is of incorrect type", leftExpr1b.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((Number)leftExpr1b.getLiteral()).longValue(), 0.1);
 
         assertTrue("Compiled right(left) expression should be DyadicExpression but isnt", dyExpr2.getLeft() instanceof DyadicExpression);
         assertTrue("Compiled right(right) expression should be DyadicExpression but isnt", dyExpr2.getRight() instanceof DyadicExpression);
@@ -346,9 +345,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr2a.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "price", leftExpr2a.getId());
         Literal rightExpr2a = (Literal)dyExpr2a.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type " + rightExpr2a.getLiteral().getClass().getName(), 
-            rightExpr2a.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 50.0, ((Long)rightExpr2a.getLiteral()).longValue(), 0.1);
+        assertTrue("Compiled right expression literal is of incorrect type " + rightExpr2a.getLiteral().getClass().getName(), rightExpr2a.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 50.0, ((Number)rightExpr2a.getLiteral()).longValue(), 0.1);
 
         // 2b : price >= 50
         assertTrue("Compiled left expression should be PrimaryExpression but isnt", dyExpr2b.getLeft() instanceof PrimaryExpression);
@@ -358,8 +356,8 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr2b.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "price", leftExpr2b.getId());
         Literal rightExpr2b = (Literal)dyExpr2b.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr2b.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 95.0, ((Long)rightExpr2b.getLiteral()).longValue(), 0.1);
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr2b.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 95.0, ((Number)rightExpr2b.getLiteral()).longValue(), 0.1);
     }
 
     /**
@@ -453,7 +451,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         Object param2 = invExpr.getArguments().get(1);
         assertTrue("Parameter2 to indexOf() is of wrong type", param2 instanceof Literal);
         Literal param2Lit = (Literal)param2;
-        assertEquals("Parameter2 to indexOf() has wrong value", new Long(3), param2Lit.getLiteral());
+        assertEquals("Parameter2 to indexOf() has wrong value", new Integer(3), param2Lit.getLiteral());
     }
 
     /**
@@ -511,14 +509,11 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Right expression (left) has incorrect number of tuples", 1, rightExprLeft.getTuples().size());
         assertEquals("Right expression (left) part2 is incorrect", "price", rightExprLeft.getTuples().get(0));
 
-        assertEquals("Right expression : Operator between left and right is incorrect", 
-            Expression.OP_LT, rightExpr.getOperator());
+        assertEquals("Right expression : Operator between left and right is incorrect", Expression.OP_LT, rightExpr.getOperator());
 
-        assertTrue("Right expression (right) should have been Literal but wasnt", 
-            rightExpr.getRight() instanceof Literal);
+        assertTrue("Right expression (right) should have been Literal but wasnt", rightExpr.getRight() instanceof Literal);
         Literal rightExprRight = (Literal)rightExpr.getRight();
-        assertEquals("Right expression (right) literal has incorrect value", 
-            200, ((Long)rightExprRight.getLiteral()).longValue());
+        assertEquals("Right expression (right) literal has incorrect value", 200, ((Number)rightExprRight.getLiteral()).intValue());
 
         // Check symbols
         SymbolTable symbols = compilation.getSymbolTable();
@@ -586,14 +581,11 @@ LOG.info(">> expr=" + dyExpr);
         assertEquals("Right expression (left) part2 is incorrect", "guarantee", rightExprLeft.getTuples().get(0));
         assertEquals("Right expression (left) part2 is incorrect", "numberOfYears", rightExprLeft.getTuples().get(1));
 
-        assertEquals("Right expression : Operator between left and right is incorrect", 
-            Expression.OP_LT, rightExpr.getOperator());
+        assertEquals("Right expression : Operator between left and right is incorrect", Expression.OP_LT, rightExpr.getOperator());
 
-        assertTrue("Right expression (right) should have been Literal but wasnt", 
-            rightExpr.getRight() instanceof Literal);
+        assertTrue("Right expression (right) should have been Literal but wasnt", rightExpr.getRight() instanceof Literal);
         Literal rightExprRight = (Literal)rightExpr.getRight();
-        assertEquals("Right expression (right) literal has incorrect value", 
-            3, ((Long)rightExprRight.getLiteral()).longValue());
+        assertEquals("Right expression (right) literal has incorrect value", 3, ((Number)rightExprRight.getLiteral()).intValue());
 
         // Check symbols
         SymbolTable symbols = compilation.getSymbolTable();
@@ -642,8 +634,8 @@ LOG.info(">> expr=" + dyExpr);
         assertEquals("Left (left) expression 'id' is incorrect", "price", primExpr.getId());
 
         Literal lit = (Literal)leftExpr.getRight();
-        assertTrue("Left (right) expression literal is of incorrect type", lit.getLiteral() instanceof Long);
-        assertEquals("Left (right) expression literal has incorrect value", 32, ((Long)lit.getLiteral()).longValue());
+        assertTrue("Left (right) expression literal is of incorrect type", lit.getLiteral() instanceof Number);
+        assertEquals("Left (right) expression literal has incorrect value", 32, ((Number)lit.getLiteral()).intValue());
     }
 
     /**

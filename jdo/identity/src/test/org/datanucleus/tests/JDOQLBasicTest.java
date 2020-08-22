@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -590,6 +591,51 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
         {
             // Clean out our data
             CompanyHelper.clearCompanyData(pmf);
+        }
+    }
+
+    /**
+     * Test returning a literal, checking the type
+     */
+    public void testQueryLiteralResult()
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1");
+            pm.makePersistent(woody);
+            pm.flush();
+
+            Query q = pm.newQuery("SELECT 1 FROM " + Employee.class.getName());
+            List c = q.executeResultList();
+            assertEquals(c.size(),1);
+            Object result = c.get(0);
+            assertEquals(Integer.class.getName(), result.getClass().getName());
+
+            q = pm.newQuery("SELECT 123456789012 FROM " + Employee.class.getName());
+            c = q.executeResultList();
+            assertEquals(c.size(),1);
+            result = c.get(0);
+            assertEquals(Long.class.getName(), result.getClass().getName());
+
+            q = pm.newQuery("SELECT 123456789012345678901234567890 FROM " + Employee.class.getName());
+            c = q.executeResultList();
+            assertEquals(c.size(),1);
+            result = c.get(0);
+            assertEquals(BigInteger.class.getName(), result.getClass().getName());
+
+            tx.rollback();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
         }
     }
 

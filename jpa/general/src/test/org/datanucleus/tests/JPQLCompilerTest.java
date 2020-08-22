@@ -17,7 +17,6 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -111,8 +110,8 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr1.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "budget", leftExpr1.getId());
         Literal rightExpr1 = (Literal)dyExpr.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 2, ((Long)rightExpr1.getLiteral()).longValue());
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 2, ((Number)rightExpr1.getLiteral()).intValue());
 
         try
         {
@@ -137,8 +136,8 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         assertEquals("Compiled left expression 'id' is incorrect", "budget", rightExpr2.getId());
         Literal leftExpr2 = (Literal)dyExpr.getLeft();
         // TODO Why BigDecimal and not Double??
-        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof BigDecimal);
-        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((BigDecimal)leftExpr2.getLiteral()).longValue(), 0.1);
+        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 100.0, ((Number)leftExpr2.getLiteral()).longValue(), 0.1);
     }
 
     /**
@@ -177,8 +176,8 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr1.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "budget", leftExpr1.getId());
         Literal rightExpr1 = (Literal)dyExpr1.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 2, ((Long)rightExpr1.getLiteral()).longValue());
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 2, ((Number)rightExpr1.getLiteral()).longValue());
 
         assertTrue("Compiled right expression should be PrimaryExpression but isnt", dyExpr2.getRight() instanceof PrimaryExpression);
         assertTrue("Compiled left expression should be Literal but isnt", dyExpr2.getLeft() instanceof Literal);
@@ -234,8 +233,8 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr1a.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "budget", leftExpr1a.getId());
         Literal rightExpr1a = (Literal)dyExpr1a.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1a.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 2, ((Long)rightExpr1a.getLiteral()).longValue());
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr1a.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 2, ((Number)rightExpr1a.getLiteral()).intValue());
 
         // 1b : "Sales" == name
         assertTrue("Compiled right expression should be PrimaryExpression but isnt", dyExpr1b.getRight() instanceof PrimaryExpression);
@@ -262,8 +261,8 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         assertEquals("Compiled left expression 'id' is incorrect", "budget", leftExpr2a.getId());
         Literal rightExpr2a = (Literal)dyExpr2a.getRight();
         assertTrue("Compiled right expression literal is of incorrect type " + rightExpr2a.getLiteral().getClass().getName(), 
-            rightExpr2a.getLiteral() instanceof Long);
-        assertEquals("Compiled right expression literal has incorrect value", 50, ((Long)rightExpr2a.getLiteral()).longValue());
+            rightExpr2a.getLiteral() instanceof Number);
+        assertEquals("Compiled right expression literal has incorrect value", 50, ((Number)rightExpr2a.getLiteral()).intValue());
 
         // 2b : name == "Marketing"
         assertTrue("Compiled left expression should be PrimaryExpression but isnt", dyExpr2b.getLeft() instanceof PrimaryExpression);
@@ -365,7 +364,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
 
         assertTrue("DyadicExpression left should have been Literal but wasnt", dyExpr.getRight() instanceof Literal);
         Literal rightExpr = (Literal)dyExpr.getRight();
-        assertEquals("Parameter2 to indexOf() has wrong value", new Long(5), rightExpr.getLiteral());
+        assertEquals("Parameter2 to indexOf() has wrong value", new Integer(5), rightExpr.getLiteral());
     }
 
     /**
@@ -405,8 +404,8 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
         assertEquals("Left (left) expression 'id' is incorrect", "budget", primExpr.getId());
 
         Literal lit = (Literal)leftExpr.getRight();
-        assertTrue("Left (right) expression literal is of incorrect type", lit.getLiteral() instanceof Long);
-        assertEquals("Left (right) expression literal has incorrect value", 32, ((Long)lit.getLiteral()).longValue());
+        assertTrue("Left (right) expression literal is of incorrect type", lit.getLiteral() instanceof Number);
+        assertEquals("Left (right) expression literal has incorrect value", 32, ((Number)lit.getLiteral()).intValue());
     }
 
     /**
