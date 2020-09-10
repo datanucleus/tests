@@ -611,21 +611,45 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             Query q = pm.newQuery("SELECT 1 FROM " + Employee.class.getName());
             List c = q.executeResultList();
-            assertEquals(c.size(),1);
+            assertEquals(1, c.size());
             Object result = c.get(0);
             assertEquals(Integer.class.getName(), result.getClass().getName());
+            assertEquals(1, result);
 
             q = pm.newQuery("SELECT 123456789012 FROM " + Employee.class.getName());
             c = q.executeResultList();
-            assertEquals(c.size(),1);
+            assertEquals(1, c.size());
             result = c.get(0);
             assertEquals(Long.class.getName(), result.getClass().getName());
+            assertEquals(123456789012l, result);
 
             q = pm.newQuery("SELECT 123456789012345678901234567890 FROM " + Employee.class.getName());
             c = q.executeResultList();
-            assertEquals(c.size(),1);
+            assertEquals(1, c.size());
             result = c.get(0);
             assertEquals(BigInteger.class.getName(), result.getClass().getName());
+
+            // Explicit long
+            q = pm.newQuery("SELECT 254l FROM " + Employee.class.getName());
+            c = q.executeResultList();
+            assertEquals(1, c.size());
+            result = c.get(0);
+            assertEquals(Long.class.getName(), result.getClass().getName());
+            assertEquals(new Long(254), result);
+
+            // Explicit float
+            q = pm.newQuery("SELECT 1.0f FROM " + Employee.class.getName());
+            c = q.executeResultList();
+            assertEquals(1, c.size());
+            result = c.get(0);
+            assertEquals(Float.class.getName(), result.getClass().getName());
+
+            // Explicit double
+            q = pm.newQuery("SELECT 123456789012.34d FROM " + Employee.class.getName());
+            c = q.executeResultList();
+            assertEquals(1, c.size());
+            result = c.get(0);
+            assertEquals(Double.class.getName(), result.getClass().getName());
 
             tx.rollback();
         }
