@@ -111,10 +111,11 @@
             <artifactId>datanucleus-api-jdo</artifactId>
             <version>[${api.jdo.min.version}, )</version>
         </dependency>
+        <!-- NOTE : Can't upgrade from this since the @Datastore handling of DataNucleusTestWatcher breaks on 4.11 -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>4.10</version>
         </dependency>
         <dependency>
           <groupId>org.assertj</groupId>
