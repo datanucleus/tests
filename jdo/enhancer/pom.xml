@@ -39,6 +39,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <optional>true</optional>
             <scope>test</scope>
         </dependency>
+        
+        <!-- TODO Update to Junit v4 at some point -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
