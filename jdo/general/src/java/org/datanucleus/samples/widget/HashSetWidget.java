@@ -28,7 +28,7 @@ import javax.jdo.PersistenceManager;
 
 import org.datanucleus.tests.StorageTester;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 
 public class HashSetWidget extends Widget implements HasNormalSetField, InstanceCallbacks

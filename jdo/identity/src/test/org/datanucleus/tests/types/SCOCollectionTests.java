@@ -32,7 +32,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.NucleusLogger;

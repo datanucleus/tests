@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Collection;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.tests.TestHelper;
 import org.jpox.samples.types.container.CollectionHolder;

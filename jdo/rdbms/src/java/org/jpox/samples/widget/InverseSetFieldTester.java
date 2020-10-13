@@ -27,7 +27,7 @@ import javax.jdo.InstanceCallbacks;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.tests.TestObject;
 

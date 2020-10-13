@@ -35,7 +35,7 @@ import javax.transaction.Synchronization;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.exceptions.NucleusDataStoreException;
 import org.datanucleus.tests.JDOPersistenceTestCase;

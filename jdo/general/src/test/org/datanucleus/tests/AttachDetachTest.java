@@ -88,7 +88,7 @@ import org.jpox.samples.one_many.map.MapValueItem;
 import org.jpox.samples.one_one.unidir.Login;
 import org.jpox.samples.one_one.unidir.LoginAccount;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Series of tests for Attach/Detach functionality.

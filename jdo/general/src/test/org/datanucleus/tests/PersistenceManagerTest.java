@@ -52,7 +52,7 @@ import javax.jdo.Transaction;
 import javax.jdo.datastore.JDOConnection;
 import javax.jdo.identity.LongIdentity;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.TransactionEventListener;
 import org.datanucleus.api.jdo.JDOPersistenceManager;

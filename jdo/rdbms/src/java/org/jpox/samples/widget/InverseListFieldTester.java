@@ -10,7 +10,7 @@ import java.util.ListIterator;
 import javax.jdo.InstanceCallbacks;
 import javax.jdo.JDOHelper;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.tests.TestObject;
 

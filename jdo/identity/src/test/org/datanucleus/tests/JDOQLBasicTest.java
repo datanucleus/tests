@@ -47,7 +47,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.models.nullability.NullabilityMandatoryMember;

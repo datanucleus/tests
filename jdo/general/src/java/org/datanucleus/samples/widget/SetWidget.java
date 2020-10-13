@@ -28,7 +28,7 @@ import javax.jdo.PersistenceManager;
 
 import org.datanucleus.tests.StorageTester;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 
 public class SetWidget extends Widget implements HasNormalSetField, HasInverseSetField, InstanceCallbacks

@@ -33,7 +33,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.jpox.samples.many_many.AccountCustomer;

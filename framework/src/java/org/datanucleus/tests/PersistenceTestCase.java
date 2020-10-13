@@ -17,7 +17,7 @@ Contributors:
  *****************************************************************/
 package org.datanucleus.tests;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.store.StoreManager;

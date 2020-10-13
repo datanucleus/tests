@@ -31,7 +31,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Utility class to test the persistence of objects.
