@@ -81,11 +81,20 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
 
             // Drop it first
             String dropStmt = "DROP PROCEDURE IF EXISTS " + procName;
+            LOG.debug("Executing : " + dropStmt);
             stmt.execute(dropStmt);
 
             // Create it
-            String createStmt = "CREATE PROCEDURE " + procName + "() BEGIN " +
-                "SELECT COUNT(*) FROM PERSON; END";
+            String createStmtMySQL = "CREATE PROCEDURE " + procName + "() " + 
+                    " BEGIN " + "SELECT COUNT(*) FROM PERSON; END";
+            /*
+             * String createStmtPostgreSQL = "CREATE PROCEDURE " + procName + "() " +
+             * "LANGUAGE plpgsql AS $$ " + "BEGIN SELECT COUNT(*) FROM PERSON; END;$$;";
+             */
+
+            String createStmt = createStmtMySQL;
+
+            LOG.debug("Executing : " + createStmt);
             stmt.execute(createStmt);
         }
         catch (SQLException sqle)
@@ -191,11 +200,19 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
 
             // Drop it first
             String dropStmt = "DROP PROCEDURE IF EXISTS " + procName;
+            LOG.debug("Executing : " + dropStmt);
             stmt.execute(dropStmt);
 
             // Create it
-            String createStmt = "CREATE PROCEDURE " + procName + "(OUT PARAM1 INT) BEGIN " +
-                "SELECT COUNT(*) INTO PARAM1 FROM PERSON; END";
+            String createStmtMySQL = "CREATE PROCEDURE " + procName + "(OUT PARAM1 INT) " + "BEGIN SELECT COUNT(*) INTO PARAM1 FROM PERSON; END";
+            /*
+             * String createStmtPostgreSQL = "CREATE PROCEDURE " + procName + "(OUT PARAM1 INT) " +
+             * " LANGUAGE plpgsql AS $$ " + "BEGIN SELECT COUNT(*) INTO PARAM1 FROM PERSON; END;$$;";
+             */
+
+            String createStmt = createStmtMySQL;
+
+            LOG.debug("Executing : " + createStmt);
             stmt.execute(createStmt);
         }
         catch (SQLException sqle)
@@ -299,11 +316,21 @@ public class StoredProcedureTest extends JDOPersistenceTestCase
 
             // Drop it first
             String dropStmt = "DROP PROCEDURE IF EXISTS " + procName;
+            LOG.debug("Executing : " + dropStmt);
             stmt.execute(dropStmt);
 
             // Create it
-            String createStmt = "CREATE PROCEDURE " + procName + "(IN PARAM1 VARCHAR(255), OUT PARAM2 INT) BEGIN " +
-                "SELECT COUNT(*) INTO PARAM2 FROM PERSON WHERE FIRSTNAME = PARAM1; END";
+            String createStmtMySQL = "CREATE PROCEDURE " + procName + "(IN PARAM1 VARCHAR(255), OUT PARAM2 INT) " +
+                "BEGIN SELECT COUNT(*) INTO PARAM2 FROM PERSON WHERE FIRSTNAME = PARAM1; END";
+            /*
+             * String createStmtPostgreSQL = "CREATE PROCEDURE " + procName +
+             * "(IN PARAM1 VARCHAR(255), OUT PARAM2 INT) " + " LANGUAGE plpgsql AS $$ " +
+             * "BEGIN SELECT COUNT(*) INTO PARAM2 FROM PERSON WHERE FIRSTNAME = PARAM1; END;$$;";
+             */
+
+            String createStmt = createStmtMySQL;
+
+            LOG.debug("Executing : " + createStmt);
             stmt.execute(createStmt);
         }
         catch (SQLException sqle)
