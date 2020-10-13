@@ -31,6 +31,7 @@ import org.datanucleus.tests.annotations.Datastore.DatastoreKey;
 import org.datanucleus.tests.annotations.TransactionMode;
 import org.datanucleus.tests.annotations.TransactionMode.Mode;
 import org.datanucleus.util.NucleusLogger;
+import org.datanucleus.util.StringUtils;
 import org.junit.Assume;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -76,6 +77,7 @@ public class DataNucleusTestWatcher extends TestWatcher
         Class<?> testClass = description.getTestClass();
         if (JDOPersistenceTestCase.class.isAssignableFrom(testClass))
         {
+            NucleusLogger.GENERAL.error(">> TestWatcher.starting " + testClass);
             filterDatastores(testClass);
             filterTransactionMode(testClass);
         }
@@ -106,6 +108,7 @@ public class DataNucleusTestWatcher extends TestWatcher
                 findAnnotationAtMethodOrClass(Datastore.class, description, testClass)
                         .map(annotation -> asList(annotation.value()))
                         .orElse(emptyList());
+        NucleusLogger.GENERAL.error(">> filterDatastores=" + StringUtils.collectionToString(filterDatastores));
 
         if (!filterDatastores.isEmpty())
         {
@@ -113,10 +116,13 @@ public class DataNucleusTestWatcher extends TestWatcher
             DatastoreKey currentDatastore = DatastoreKey.valueOf(datastoreKey.toUpperCase());
             DatastoreKey vendorIdDatastore = JDOPersistenceTestCase.vendorID == null ?
                     null : DatastoreKey.valueOf(JDOPersistenceTestCase.vendorID.toUpperCase());
+            NucleusLogger.GENERAL.error(">> " + testClass + " current=" + currentDatastore + " vendor=" + vendorIdDatastore);
 
-            Assume.assumeTrue(
-                    filterDatastores.stream()
-                            .anyMatch(filter -> filter.equals(currentDatastore) || filter.equals(vendorIdDatastore)));
+            boolean filtered = filterDatastores.stream()
+                    .anyMatch(filter -> filter.equals(currentDatastore) || filter.equals(vendorIdDatastore));
+            NucleusLogger.GENERAL.error(">> filtered=" + filtered);
+            // TODO With JUNIT 4.11+ this does NOT halt the test (unlike what the Javadoc says, and what it did in earlier versions)
+            Assume.assumeTrue(filtered);
         }
     }
 
