@@ -72,10 +72,6 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
 
     public void testJdoQLTimeout() 
     {
-        if (!vendorID.equals("postgresql"))
-        {
-            return;
-        }
         if (!pmf.supportedOptions().contains("javax.jdo.option.DatastoreTimeout"))
         {
             // Datastore doesn't support query timeouts
@@ -122,10 +118,6 @@ public class QueryTimeoutTest extends JDOPersistenceTestCase{
             NucleusLogger.QUERY.warn("Requested locking of query statement, but this RDBMS doesn't support a convenient mechanism");
         }
          */
-        if (!vendorID.equals("postgresql"))
-        {
-            return;
-        }
         if (!pmf.supportedOptions().contains("javax.jdo.option.DatastoreTimeout"))
         {
             // Datastore doesn't support query timeouts
