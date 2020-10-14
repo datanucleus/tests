@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
-<jdo>
-	<package name="org.datanucleus.enhancer.samples">
-		<class name="FullDefaultClass">
-            <field/>
-        </class>
-	</package>
-</jdo>
