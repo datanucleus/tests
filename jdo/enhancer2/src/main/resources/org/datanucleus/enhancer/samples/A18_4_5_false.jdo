@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+	<package name="org.datanucleus.enhancer.samples">
+		<class name="FullPublicClass">
+			<field name="field00" default-fetch-group="false" />
+			<field name="field01" default-fetch-group="false" />
+			<field name="field02" default-fetch-group="false" />
+			<field name="field03" default-fetch-group="false" />
+			<field name="field04" default-fetch-group="false" />
+			<field name="field05" default-fetch-group="false" />
+			<field name="field06" default-fetch-group="false" />
+			<field name="field07" default-fetch-group="false" />
+			<field name="field08" default-fetch-group="false" />
+			<field name="field09" default-fetch-group="false" />
+			<field name="field10" default-fetch-group="false" />
+			<field name="field11" default-fetch-group="false" />
+			<field name="field12" default-fetch-group="false" />
+			<field name="field13" default-fetch-group="false" />
+			<field name="field14" default-fetch-group="false" />
+			<field name="field15" default-fetch-group="false" />
+			<field name="field16" default-fetch-group="false" />
+			<field name="field17" default-fetch-group="false" />
+			<field name="field18" default-fetch-group="false" />
+			<field name="field19" default-fetch-group="false" />
+			<field name="field20" default-fetch-group="false" />
+			<field name="field21" default-fetch-group="false" />
+			<field name="field22" default-fetch-group="false" />
+			<field name="field23" default-fetch-group="false" />
+			<field name="field24" default-fetch-group="false" />
+			<field name="field25" default-fetch-group="false" />
+			<field name="field26" default-fetch-group="false" />
+			<field name="field27" default-fetch-group="false" />
+			<field name="field28" default-fetch-group="false" />
+			<field name="field29" default-fetch-group="false" />
+			<field name="field30" default-fetch-group="false" />
+			<field name="field31" default-fetch-group="false" />
+			<field name="field32" default-fetch-group="false" />
+			<field name="field33" default-fetch-group="false" />
+			<field name="field34" default-fetch-group="false" />
+			<field name="field35" default-fetch-group="false" />
+			<field name="field36" default-fetch-group="false" />
+			<field name="field37" default-fetch-group="false" />
+			<field name="field38" default-fetch-group="false" />
+			<field name="field39" default-fetch-group="false" />
+			<field name="field40" default-fetch-group="false" />
+			<field name="field41" default-fetch-group="false" />
+			<field name="field42" default-fetch-group="false" />
+			<field name="field43" default-fetch-group="false" />
+			<field name="field44" default-fetch-group="false" />
+			<field name="field45" default-fetch-group="false" />
+			<field name="field46" default-fetch-group="false" />
+			<field name="field47" default-fetch-group="false" />
+			<field name="field48" default-fetch-group="false" />
+			<field name="field49" default-fetch-group="false" />
+			<field name="field50" default-fetch-group="false" />
+			<field name="field51" default-fetch-group="false" />
+			<field name="field52" default-fetch-group="false" />
+			<field name="field53" default-fetch-group="false" />
+			<field name="field54" default-fetch-group="false" />
+
+		</class>
+	</package>
+</jdo>
