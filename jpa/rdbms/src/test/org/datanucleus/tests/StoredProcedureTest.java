@@ -22,12 +22,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
-import org.datanucleus.api.jpa.JPAEntityManager;
 import org.datanucleus.samples.annotations.models.company.Account;
 import org.datanucleus.samples.annotations.models.company.Employee;
 import org.datanucleus.samples.annotations.models.company.Person;
@@ -102,7 +102,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
         try
         {
-            JPAEntityManager em = (JPAEntityManager)getEM();
+            EntityManager em = getEM();
             EntityTransaction tx = em.getTransaction();
             try
             {
@@ -125,7 +125,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 em.close();
             }
 
-            em = (JPAEntityManager)getEM();
+            em = getEM();
             tx = em.getTransaction();
             try
             {
@@ -214,7 +214,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
         try
         {
-            JPAEntityManager em = (JPAEntityManager)getEM();
+            EntityManager em = getEM();
             EntityTransaction tx = em.getTransaction();
             try
             {
@@ -237,7 +237,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 em.close();
             }
 
-            em = (JPAEntityManager)getEM();
+            em = getEM();
             tx = em.getTransaction();
             try
             {
@@ -322,7 +322,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
         try
         {
-            JPAEntityManager em = (JPAEntityManager)getEM();
+            EntityManager em = getEM();
             EntityTransaction tx = em.getTransaction();
             try
             {
@@ -345,7 +345,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 em.close();
             }
 
-            em = (JPAEntityManager)getEM();
+            em = getEM();
             tx = em.getTransaction();
             try
             {
@@ -432,7 +432,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
         try
         {
-            JPAEntityManager em = (JPAEntityManager)getEM();
+            EntityManager em = getEM();
             EntityTransaction tx = em.getTransaction();
             try
             {
@@ -457,7 +457,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 em.close();
             }
 
-            em = (JPAEntityManager)getEM();
+            em = getEM();
             tx = em.getTransaction();
             try
             {
@@ -546,7 +546,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
         try
         {
-            JPAEntityManager em = (JPAEntityManager)getEM();
+            EntityManager em = getEM();
             EntityTransaction tx = em.getTransaction();
             try
             {
@@ -569,7 +569,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 em.close();
             }
 
-            em = (JPAEntityManager)getEM();
+            em = getEM();
             tx = em.getTransaction();
             try
             {
@@ -661,7 +661,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
         try
         {
-            JPAEntityManager em = (JPAEntityManager)getEM();
+            EntityManager em = getEM();
             EntityTransaction tx = em.getTransaction();
             try
             {
@@ -688,7 +688,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 em.close();
             }
 
-            em = (JPAEntityManager)getEM();
+            em = getEM();
             tx = em.getTransaction();
             try
             {
