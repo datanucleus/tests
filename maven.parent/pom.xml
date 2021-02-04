@@ -25,15 +25,15 @@
         <api.rest.min.version>5.0.2</api.rest.min.version>
 
         <rdbms.min.version>5.1.99</rdbms.min.version>
-        <cassandra.min.version>5.0.99</cassandra.min.version>
+        <cassandra.min.version>5.1.99</cassandra.min.version>
         <mongodb.min.version>5.1.99</mongodb.min.version>
-        <hbase.min.version>5.0.99</hbase.min.version>
-        <neo4j.min.version>5.0.99</neo4j.min.version>
+        <hbase.min.version>5.1.99</hbase.min.version>
+        <neo4j.min.version>5.1.99</neo4j.min.version>
         <excel.min.version>5.1.99</excel.min.version>
-        <odf.min.version>5.0.99</odf.min.version>
-        <json.min.version>5.0.99</json.min.version>
-        <ldap.min.version>5.0.1</ldap.min.version>
-        <xml.min.version>5.0.0-release</xml.min.version>
+        <odf.min.version>5.1.99</odf.min.version>
+        <json.min.version>5.1.99</json.min.version>
+        <ldap.min.version>5.0.99</ldap.min.version>
+        <xml.min.version>5.0.99</xml.min.version>
 
         <jodatime.min.version>5.1.99</jodatime.min.version>
         <geospatial.min.version>5.1.99</geospatial.min.version>
