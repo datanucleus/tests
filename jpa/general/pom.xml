@@ -50,6 +50,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <artifactId>bval-core</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <dependency> <!-- Needed when using Java 10+ since commons-lang has an NPE otherwise -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
 
         <!--  EMF test -->
         <dependency>
