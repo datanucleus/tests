@@ -30,7 +30,7 @@ public class SequenceTest extends JDOPersistenceTestCase
 {
     /**
      * Used by the JUnit framework to construct tests.
-     * @param name Name of the <tt>TestCase</tt>.
+     * @param name Name of the <i>TestCase</i>.
      */
     public SequenceTest(String name)
     {

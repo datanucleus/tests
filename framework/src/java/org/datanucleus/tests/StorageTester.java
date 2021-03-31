@@ -102,7 +102,7 @@ public class StorageTester
 
     /**
      * Asserts that the persistent fields of two test objects are equal using
-     * the <tt>compareTo()</tt> method. The <tt>equals()</tt> method cannot
+     * the <i>compareTo()</i> method. The <i>equals()</i> method cannot
      * be used for this purpose because, for most persistence-capable objects
      * (including all our test widgets), it only compares JDO identity.
      * @param expected An object having the expected field values.
@@ -579,7 +579,7 @@ public class StorageTester
      * sets contain the same number of objects and each element of the first set
      * has a corresponding element in the second set whose fields compare equal
      * according to the compareTo() method.
-     * @return <tt>true</tt> if the sets compare equal, <tt>false</tt> otherwise.
+     * @return <i>true</i> if the sets compare equal, <i>false</i> otherwise.
      */
     public static boolean compareSet(Set s1, Set s2)
     {
@@ -632,7 +632,7 @@ public class StorageTester
      * lists contain the same number of objects and each element of the first
      * list has a corresponding element in the second list whose fields compare
      * equal according to the compareTo() method.
-     * @return <tt>true</tt> if the lists compare equal, <tt>false</tt> otherwise.
+     * @return <i>true</i> if the lists compare equal, <i>false</i> otherwise.
      */
     public static boolean compareList(List<TestObject> l1, List l2)
     {

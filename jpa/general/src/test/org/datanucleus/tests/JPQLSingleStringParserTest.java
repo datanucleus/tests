@@ -34,7 +34,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
 {
     /**
      * Used by the JUnit framework to construct tests.
-     * @param name Name of the <tt>TestCase</tt>.
+     * @param name Name of the <i>TestCase</i>.
      */
     public JPQLSingleStringParserTest(String name)
     {

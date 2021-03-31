@@ -291,8 +291,8 @@ public class SCOHolderUtilities
      * set has a corresponding element in the second set whose fields compare
      * equal according to the compareTo() method.
      *
-     * @return  <tt>true</tt> if the sets compare equal,
-     *          <tt>false</tt> otherwise.
+     * @return  <i>true</i> if the sets compare equal,
+     *          <i>false</i> otherwise.
      */
 
     public static boolean compareSet(Collection s1, Collection s2)

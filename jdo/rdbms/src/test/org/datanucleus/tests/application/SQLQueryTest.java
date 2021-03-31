@@ -57,7 +57,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     /**
      * Used by the JUnit framework to construct tests. Normally, programmers
      * would never explicitly use this constructor.
-     * @param name Name of the <tt>TestCase</tt>.
+     * @param name Name of the <i>TestCase</i>.
      */
     public SQLQueryTest(String name)
     {

@@ -34,7 +34,7 @@ public class JDOQLSingleStringParserTest extends JDOPersistenceTestCase
 {
     /**
      * Used by the JUnit framework to construct tests.
-     * @param name Name of the <tt>TestCase</tt>.
+     * @param name Name of the <i>TestCase</i>.
      */
     public JDOQLSingleStringParserTest(String name)
     {
