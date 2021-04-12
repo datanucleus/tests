@@ -32,7 +32,6 @@ import org.datanucleus.samples.pggeometry.SampleMultiPoint;
 import org.datanucleus.samples.pggeometry.SampleMultiPolygon;
 import org.datanucleus.samples.pggeometry.SamplePoint;
 import org.datanucleus.samples.pggeometry.SamplePolygon;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.postgis.GeometryCollection;
 import org.postgis.LineString;
 import org.postgis.LinearRing;

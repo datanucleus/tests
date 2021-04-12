@@ -33,7 +33,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-geospatial</artifactId>
-            <version>[${geospatial.min.version}, )</version>
+            <version>[${geospatial.min.version}, ${geospatial.max.version})</version>
         </dependency>
 
         <dependency>

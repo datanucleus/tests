@@ -27,7 +27,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.applicationid.AppIdStringGeneratorItem;
 import org.jpox.samples.valuegeneration.AUIDGeneratorItem;
 import org.jpox.samples.valuegeneration.IdentityStringGeneratorItem;

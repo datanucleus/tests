@@ -26,7 +26,6 @@ import javax.jdo.Transaction;
 import org.datanucleus.samples.pggeometry.SampleBox;
 import org.datanucleus.samples.pggeometry.SampleGeometryCollection3D;
 import org.datanucleus.samples.pggeometry.SampleGeometryCollectionM;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.postgis.GeometryCollection;
 import org.postgis.PGbox2d;
 import org.postgis.PGbox3d;

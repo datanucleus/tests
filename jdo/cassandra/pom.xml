@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-cassandra</artifactId>
-            <version>[${cassandra.min.version}, )</version>
+            <version>[${cassandra.min.version}, ${cassandra.max.version})</version>
         </dependency>
     </dependencies>
    

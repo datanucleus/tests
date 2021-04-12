@@ -32,7 +32,6 @@ import org.datanucleus.samples.jtsgeometry.SampleMultiPoint;
 import org.datanucleus.samples.jtsgeometry.SampleMultiPolygon;
 import org.datanucleus.samples.jtsgeometry.SamplePoint;
 import org.datanucleus.samples.jtsgeometry.SamplePolygon;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;

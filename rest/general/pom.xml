@@ -20,7 +20,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-rest</artifactId>
-            <version>[${api.rest.min.version}, )</version>
+            <version>[${api.rest.min.version}, ${api.rest.max.version})</version>
             <scope>provided</scope>
         </dependency>
 
