@@ -20,13 +20,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jpa</artifactId>
-            <version>[${api.jpa.min.version}, )</version>
+            <version>[${api.jpa.min.version}, ${api.jpa.max.version})</version>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jodatime</artifactId>
-            <version>[${jodatime.min.version}, )</version>
+            <version>[${jodatime.min.version}, ${jodatime.max.version})</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
