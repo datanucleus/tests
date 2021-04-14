@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
-        <version>5.2</version>
+        <version>6.0</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
 

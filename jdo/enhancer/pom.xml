@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
     <artifactId>datanucleus-test-jdo-enhancer</artifactId>
-    <version>5.2</version>
+    <version>0</version>
     <name>org.datanucleus.test.jdo.enhancer</name>
     <description><![CDATA[
         DataNucleus Tests for JDO Enhancement.
@@ -20,12 +20,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>[5.2.0-release, 5.9)</version>
+            <version>[5.9, 6.1)</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[5.2.0-release, 5.9)</version>
+            <version>[5.2.0-release, 6.1)</version>
         </dependency>
 
         <dependency>
