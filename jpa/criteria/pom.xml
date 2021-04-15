@@ -15,6 +15,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
+    <properties>
+        <jpa.query.version>6.0.0-m1</jpa.query.version>
+    </properties>
+
     <!-- Software Dependencies -->
     <dependencies>
         <dependency>
@@ -25,7 +29,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jpa-query</artifactId>
-            <version>[5.0.3, 6.0.99)</version>
+            <version>${jpa.query.version}</version>
         </dependency>
 
         <!-- JAVAX.VALIDATION v2.0 -->
