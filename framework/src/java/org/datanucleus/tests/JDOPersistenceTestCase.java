@@ -146,6 +146,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
 
         // Set up the StoreManager
         storeMgr = ((JDOPersistenceManagerFactory) pmf).getNucleusContext().getStoreManager();
+
         ClassLoaderResolver clr = storeMgr.getNucleusContext().getClassLoaderResolver(null);
         try
         {
