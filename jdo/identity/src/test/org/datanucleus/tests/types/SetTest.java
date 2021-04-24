@@ -230,7 +230,7 @@ public class SetTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkQuery(pmf, Set1.class, ContainerItem.class, vendorID);
+            SCOCollectionTests.checkQuery(pmf, Set1.class, ContainerItem.class, rdbmsVendorID);
         }
         finally
         {
@@ -376,7 +376,7 @@ public class SetTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 Set2.class,
                 Set2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

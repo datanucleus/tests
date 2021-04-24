@@ -161,7 +161,7 @@ public class SchemaTest extends JDOPersistenceTestCase
     public void testColumnSpecifications()
     {
         // Postgresql doesnt support DECIMAL
-        if (vendorID.equals("postgresql"))
+        if (rdbmsVendorID.equals("postgresql"))
         {
             return;
         }
@@ -171,13 +171,14 @@ public class SchemaTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
-            DatabaseMetaData dmd = ((Connection)databaseMgr.getConnectionManager().getConnection(0).getConnection()).getMetaData();
             LOG.info("JDBC Types CHAR = " + Types.CHAR + ", VARCHAR=" + Types.VARCHAR + 
                 ", INTEGER=" + Types.INTEGER + ", DOUBLE=" + Types.DOUBLE + ", BINARY=" + Types.BINARY + ", LONGVARBINARY=" + Types.LONGVARBINARY +
                 ", NUMERIC=" + Types.NUMERIC + ", VARBINARY=" + Types.VARBINARY);
 
             String tableName = RDBMSTestHelper.getIdentifierInCaseOfAdapter(storeMgr, "EMPLOYEE", false);
+
+            RDBMSStoreManager databaseMgr = (RDBMSStoreManager)storeMgr;
+            DatabaseMetaData dmd = ((Connection)databaseMgr.getConnectionManager().getConnection(0).getConnection()).getMetaData();
             ResultSet rs = dmd.getColumns(null, null, tableName, null);
             while (rs.next())
             {

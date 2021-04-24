@@ -45,8 +45,8 @@ public abstract class PersistenceTestCase
     /** The StoreManager in use. */
     protected static StoreManager storeMgr;
 
-    /** The unique string identifying the datastore. */
-    protected static String vendorID;
+    /** The unique string identifying the datastore when RDBMS. */
+    protected static String rdbmsVendorID;
     
     public PersistenceTestCase()
     {

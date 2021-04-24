@@ -59,7 +59,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
     public void testExecuteWithoutParamsReturningResultSet()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             return;
         }
@@ -171,7 +171,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
     public void testGetResultListWithoutParamsReturningResultSet()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             return;
         }
@@ -279,7 +279,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
     public void testExecuteOutputParam()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             return;
         }
@@ -389,7 +389,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
     public void testExecuteInputParamAndOutputParam()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             return;
         }
@@ -503,7 +503,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
     public void testNamedProcWithParamReturningResultSet()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             return;
         }
@@ -616,7 +616,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
 
     public void testNamedProcWithMultipleResultSet()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             return;
         }

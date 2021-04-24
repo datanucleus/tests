@@ -114,8 +114,8 @@ public class DataNucleusTestWatcher extends TestWatcher
         {
             String datastoreKey = JDOPersistenceTestCase.storeMgr.getStoreManagerKey();
             DatastoreKey currentDatastore = DatastoreKey.valueOf(datastoreKey.toUpperCase());
-            DatastoreKey vendorIdDatastore = JDOPersistenceTestCase.vendorID == null ?
-                    null : DatastoreKey.valueOf(JDOPersistenceTestCase.vendorID.toUpperCase());
+            DatastoreKey vendorIdDatastore = JDOPersistenceTestCase.rdbmsVendorID == null ?
+                    null : DatastoreKey.valueOf(JDOPersistenceTestCase.rdbmsVendorID.toUpperCase());
             NucleusLogger.GENERAL.debug(">> " + testClass + " current=" + currentDatastore + " vendor=" + vendorIdDatastore);
 
             boolean filtered = filterDatastores.stream()

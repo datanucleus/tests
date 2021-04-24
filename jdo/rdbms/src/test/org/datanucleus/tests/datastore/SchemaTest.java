@@ -160,7 +160,7 @@ public class SchemaTest extends JDOPersistenceTestCase
     public void testColumnSpecifications()
     {
         // Postgresql doesnt support DECIMAL
-        if (vendorID.equals("postgresql"))
+        if (rdbmsVendorID.equals("postgresql"))
         {
             return;
         }
@@ -2581,7 +2581,7 @@ public class SchemaTest extends JDOPersistenceTestCase
                     // MySQL internally assigns defaults to columns even when
                     // the user hasn't, so if they insert a null, it assumes
                     // the MySQL default. Hence this check doesnt apply there.
-                    if (!vendorID.equals("mysql"))
+                    if (!rdbmsVendorID.equals("mysql"))
                     {
                         fail("completed an unexpected persistence of an object.");
                     }

@@ -236,7 +236,7 @@ public class TreeSetTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 TreeSet1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -395,7 +395,7 @@ public class TreeSetTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 TreeSet2.class,
                 TreeSet2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

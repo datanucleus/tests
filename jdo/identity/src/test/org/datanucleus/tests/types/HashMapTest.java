@@ -229,7 +229,7 @@ public class HashMapTest extends JDOPersistenceTestCase
             SCOMapTests.checkQuery(pmf,
                 HashMap1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -248,7 +248,7 @@ public class HashMapTest extends JDOPersistenceTestCase
         {
             SCOMapTests.checkQueryPrimitive(pmf,
                 HashMap3.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -426,7 +426,7 @@ public class HashMapTest extends JDOPersistenceTestCase
             SCOMapTests.checkQuery(pmf,
                 HashMap2.class,
                 HashMap2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

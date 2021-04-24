@@ -324,7 +324,7 @@ public class MapTest extends JDOPersistenceTestCase
             SCOMapTests.checkQuery(pmf,
                 Map1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -343,7 +343,7 @@ public class MapTest extends JDOPersistenceTestCase
         {
             SCOMapTests.checkQueryPrimitive(pmf,
                 Map5.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -580,7 +580,7 @@ public class MapTest extends JDOPersistenceTestCase
             SCOMapTests.checkQuery(pmf,
                 Map2.class,
                 Map2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

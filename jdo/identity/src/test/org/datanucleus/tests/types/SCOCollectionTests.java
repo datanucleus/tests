@@ -1375,12 +1375,12 @@ public class SCOCollectionTests
      * @param pmf The PersistenceManager factory
      * @param container_class The container class e.g HashSetNormal
      * @param item_class_parent The parent element class
-     * @param db_vendor_id Name of RDBMS. (TODO Remove this)
+     * @param rdbmsVendorId Name of RDBMS. (TODO Remove this)
      **/
     public static void checkQuery(PersistenceManagerFactory pmf,
                                   Class container_class,
                                   Class item_class_parent,
-                                  String db_vendor_id)
+                                  String rdbmsVendorId)
     throws Exception
     {
         int NO_OF_ITEMS=5;
@@ -1435,7 +1435,7 @@ public class SCOCollectionTests
 
             // Get all containers that are empty
             // TODO : Remove this restriction when MySQL supports subqueries 
-            if (db_vendor_id == null || !db_vendor_id.equals("mysql")) 
+            if (rdbmsVendorId == null || !rdbmsVendorId.equals("mysql")) 
             {
                 Extent e1=pm.getExtent(container_class,true);
                 Query  q1=pm.newQuery(e1,"items.isEmpty()");

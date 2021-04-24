@@ -3042,7 +3042,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
      */
     public void testFunction()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             // Only applies to RDBMS
             return;

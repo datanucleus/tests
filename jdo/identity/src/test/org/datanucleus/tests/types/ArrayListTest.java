@@ -73,8 +73,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkPersistCollectionByContainer(pmf,
-                ArrayList1.class, ContainerItem.class);
+            SCOCollectionTests.checkPersistCollectionByContainer(pmf, ArrayList1.class, ContainerItem.class);
         }
         finally
         {
@@ -91,8 +90,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkAddAt(pmf, 
-                ArrayList1.class, ContainerItem.class);
+            SCOCollectionTests.checkAddAt(pmf, ArrayList1.class, ContainerItem.class);
         }
         finally
         {
@@ -109,8 +107,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkPersistCollectionByContainer(pmf, 
-                ArrayList1Child.class, ContainerItem.class);
+            SCOCollectionTests.checkPersistCollectionByContainer(pmf, ArrayList1Child.class, ContainerItem.class);
         }
         finally
         {
@@ -127,8 +124,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveCollection(pmf, 
-                ArrayList1.class, java.util.ArrayList.class, ContainerItem.class);
+            SCOCollectionTests.checkRemoveCollection(pmf, ArrayList1.class, java.util.ArrayList.class, ContainerItem.class);
         }
         finally
         {
@@ -145,8 +141,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRetainCollection(pmf, 
-                ArrayList1.class, java.util.ArrayList.class, ContainerItem.class);
+            SCOCollectionTests.checkRetainCollection(pmf, ArrayList1.class, java.util.ArrayList.class, ContainerItem.class);
         }
         finally
         {
@@ -163,8 +158,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveCollection(pmf, 
-                ArrayList1Child.class, java.util.ArrayList.class, ContainerItem.class);
+            SCOCollectionTests.checkRemoveCollection(pmf, ArrayList1Child.class, java.util.ArrayList.class, ContainerItem.class);
         }
         finally
         {
@@ -181,8 +175,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveItem(pmf, 
-                ArrayList1.class, ContainerItem.class);
+            SCOCollectionTests.checkRemoveItem(pmf, ArrayList1.class, ContainerItem.class);
         }
         finally
         {
@@ -196,9 +189,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkEquals(pmf,
-                ArrayList1.class,
-                ContainerItem.class);
+            SCOCollectionTests.checkEquals(pmf, ArrayList1.class, ContainerItem.class);
         }
         finally
         {
@@ -216,8 +207,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveAt(pmf,
-                ArrayList1.class, ContainerItem.class);
+            SCOCollectionTests.checkRemoveAt(pmf, ArrayList1.class, ContainerItem.class);
         }
         finally
         {
@@ -234,8 +224,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkGetAt(pmf,
-                ArrayList1.class, ContainerItem.class);
+            SCOCollectionTests.checkGetAt(pmf, ArrayList1.class, ContainerItem.class);
         }
         finally
         {
@@ -252,8 +241,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkClearCollection(pmf,
-                ArrayList1.class, ContainerItem.class);
+            SCOCollectionTests.checkClearCollection(pmf, ArrayList1.class, ContainerItem.class);
         }
         finally
         {
@@ -270,9 +258,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkElementInheritance(pmf,
-                ArrayList1.class, java.util.ArrayList.class,
-                ContainerItem.class, ContainerItemChild.class);
+            SCOCollectionTests.checkElementInheritance(pmf, ArrayList1.class, java.util.ArrayList.class, ContainerItem.class, ContainerItemChild.class);
         }
         finally
         {
@@ -290,8 +276,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkQuery(pmf,
-                ArrayList1.class, ContainerItem.class, vendorID);
+            SCOCollectionTests.checkQuery(pmf, ArrayList1.class, ContainerItem.class, rdbmsVendorID);
         }
         finally
         {
@@ -308,8 +293,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkAttachDetach(pmf,
-                ArrayList1.class, ContainerItem.class, java.util.ArrayList.class);
+            SCOCollectionTests.checkAttachDetach(pmf, ArrayList1.class, ContainerItem.class, java.util.ArrayList.class);
         }
         finally
         {
@@ -328,8 +312,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkPersistCollectionByContainer(pmf,
-                ArrayList2.class, ArrayList2Item.class);
+            SCOCollectionTests.checkPersistCollectionByContainer(pmf, ArrayList2.class, ArrayList2Item.class);
         }
         finally
         {
@@ -346,8 +329,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveCollection(pmf,
-                ArrayList2.class, java.util.ArrayList.class, ArrayList2Item.class);
+            SCOCollectionTests.checkRemoveCollection(pmf, ArrayList2.class, java.util.ArrayList.class, ArrayList2Item.class);
         }
         finally
         {
@@ -364,8 +346,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRetainCollection(pmf,
-                ArrayList2.class, java.util.ArrayList.class, ArrayList2Item.class);
+            SCOCollectionTests.checkRetainCollection(pmf, ArrayList2.class, java.util.ArrayList.class, ArrayList2Item.class);
         }
         finally
         {
@@ -382,8 +363,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveItem(pmf,
-                ArrayList2.class, ArrayList2Item.class);
+            SCOCollectionTests.checkRemoveItem(pmf, ArrayList2.class, ArrayList2Item.class);
         }
         finally
         {
@@ -400,8 +380,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveAt(pmf,
-                ArrayList2.class, ArrayList2Item.class);
+            SCOCollectionTests.checkRemoveAt(pmf, ArrayList2.class, ArrayList2Item.class);
         }
         finally
         {
@@ -418,8 +397,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkGetAt(pmf,
-                ArrayList2.class, ArrayList2Item.class);
+            SCOCollectionTests.checkGetAt(pmf, ArrayList2.class, ArrayList2Item.class);
         }
         finally
         {
@@ -436,8 +414,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkClearCollection(pmf,
-                ArrayList2.class, ArrayList2Item.class);
+            SCOCollectionTests.checkClearCollection(pmf, ArrayList2.class, ArrayList2Item.class);
         }
         finally
         {
@@ -454,9 +431,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkElementInheritance(pmf,
-                ArrayList2.class, java.util.ArrayList.class, 
-                ArrayList2Item.class, ArrayList2ItemChild.class);
+            SCOCollectionTests.checkElementInheritance(pmf, ArrayList2.class, java.util.ArrayList.class, ArrayList2Item.class, ArrayList2ItemChild.class);
         }
         finally
         {
@@ -474,8 +449,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkQuery(pmf,
-                ArrayList2.class, ArrayList2Item.class, vendorID);
+            SCOCollectionTests.checkQuery(pmf, ArrayList2.class, ArrayList2Item.class, rdbmsVendorID);
         }
         finally
         {
@@ -492,8 +466,7 @@ public class ArrayListTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkAttachDetach(pmf,
-                ArrayList2.class, ArrayList2Item.class, java.util.ArrayList.class);
+            SCOCollectionTests.checkAttachDetach(pmf, ArrayList2.class, ArrayList2Item.class, java.util.ArrayList.class);
         }
         finally
         {

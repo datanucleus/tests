@@ -233,7 +233,7 @@ public class VectorTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 Vector1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -413,7 +413,7 @@ public class VectorTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 Vector2.class,
                 Vector2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

@@ -213,7 +213,7 @@ public class LinkedHashMapTest extends JDOPersistenceTestCase
             SCOMapTests.checkQuery(pmf,
                 LinkedHashMap1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -232,7 +232,7 @@ public class LinkedHashMapTest extends JDOPersistenceTestCase
         {
             SCOMapTests.checkQueryPrimitive(pmf,
                 LinkedHashMap3.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -408,7 +408,7 @@ public class LinkedHashMapTest extends JDOPersistenceTestCase
             SCOMapTests.checkQuery(pmf,
                 LinkedHashMap2.class,
                 LinkedHashMap2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

@@ -240,7 +240,7 @@ public class HashSetTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 HashSet1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -399,7 +399,7 @@ public class HashSetTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 HashSet2.class,
                 HashSet2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

@@ -235,7 +235,7 @@ public class LinkedHashSetTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 LinkedHashSet1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -394,7 +394,7 @@ public class LinkedHashSetTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 LinkedHashSet2.class,
                 LinkedHashSet2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

@@ -3133,7 +3133,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_DELETE, events[i++].intValue());
-                if (vendorID == null)
+                if (rdbmsVendorID == null)
                 {
                     // Not present for RDBMS
                     assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
@@ -3306,7 +3306,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_DIRTY, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_DIRTY, events[i++].intValue()); // Department 2
 
-                if (vendorID == null)
+                if (rdbmsVendorID == null)
                 {
                     // Not needed on RDBMS for some reason
                     assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue()); // Department 1
@@ -3335,7 +3335,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             {
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_STORE, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_STORE, events[i++].intValue()); // Department 2
-                if (vendorID != null)
+                if (rdbmsVendorID != null)
                 {
                     // RDBMS loads here
                     assertEquals(LifecycleListenerSpecification.EVENT_POST_LOAD, events[i++].intValue());
@@ -3347,7 +3347,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue()); // Manager
                 assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Department 2
                 assertEquals(LifecycleListenerSpecification.EVENT_POST_CLEAR, events[i++].intValue()); // Department 2
-                if (vendorID == null)
+                if (rdbmsVendorID == null)
                 {
                     // Clear the other 2 departments
                     assertEquals(LifecycleListenerSpecification.EVENT_PRE_CLEAR, events[i++].intValue()); // Department 1
@@ -3897,7 +3897,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         JDOConnection jdoConn = null;
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             // This is not an RDBMS-based datastore so omit
             return;

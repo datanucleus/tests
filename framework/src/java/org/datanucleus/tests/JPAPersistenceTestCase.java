@@ -97,7 +97,7 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
             if (storeMgr instanceof org.datanucleus.store.rdbms.RDBMSStoreManager)
             {
                 // RDBMS datastores have a vendor id
-                vendorID = ((org.datanucleus.store.rdbms.RDBMSStoreManager)storeMgr).getDatastoreAdapter().getVendorID();
+                rdbmsVendorID = ((org.datanucleus.store.rdbms.RDBMSStoreManager)storeMgr).getDatastoreAdapter().getVendorID();
             }
         }
         catch (ClassNotResolvedException cnre)

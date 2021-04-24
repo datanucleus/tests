@@ -1545,7 +1545,7 @@ public class CacheTest extends JDOPersistenceTestCase
     
     public void testCommitFailWith2ndLevelCache() throws Exception
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             // Not applicable if not RDBMS
             return;
