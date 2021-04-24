@@ -33,7 +33,7 @@ public class JtsGeometrySpatialHelperTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("mysql") || vendorID.equalsIgnoreCase("postgresql"));
+        return (rdbmsVendorID.equalsIgnoreCase("mysql") || rdbmsVendorID.equalsIgnoreCase("postgresql"));
     }
 
     protected void setUp() throws Exception

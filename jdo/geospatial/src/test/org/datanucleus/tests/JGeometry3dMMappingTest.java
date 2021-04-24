@@ -53,7 +53,7 @@ public class JGeometry3dMMappingTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("oracle"));
+        return (rdbmsVendorID.equalsIgnoreCase("oracle"));
     }
 
     public void testPointMMapping() throws SQLException

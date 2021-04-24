@@ -52,7 +52,7 @@ public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("postgresql"));
+        return (rdbmsVendorID.equalsIgnoreCase("postgresql"));
     }
 
     // TODO this test should be running successfully after using 

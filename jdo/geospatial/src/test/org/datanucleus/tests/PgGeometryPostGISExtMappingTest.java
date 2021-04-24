@@ -33,8 +33,6 @@ import org.postgis.Point;
 
 /**
  * Series of mapping tests for Postgis using Postgresql extensions.
- *
- * @version $Revision: 1.2 $
  */
 public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
 {
@@ -56,7 +54,7 @@ public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("postgresql"));
+        return (rdbmsVendorID.equalsIgnoreCase("postgresql"));
     }
 
     public void testBoxMapping() throws SQLException

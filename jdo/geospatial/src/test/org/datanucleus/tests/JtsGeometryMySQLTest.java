@@ -122,7 +122,7 @@ public class JtsGeometryMySQLTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("mysql"));
+        return (rdbmsVendorID.equalsIgnoreCase("mysql"));
     }
 
     public void testMbrEqual() throws SQLException, ParseException

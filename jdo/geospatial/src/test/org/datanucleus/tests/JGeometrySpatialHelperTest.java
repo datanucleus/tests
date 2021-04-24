@@ -34,7 +34,7 @@ public class JGeometrySpatialHelperTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("oracle"));
+        return (rdbmsVendorID.equalsIgnoreCase("oracle"));
     }
 
     protected void setUp() throws Exception
