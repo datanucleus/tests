@@ -144,6 +144,150 @@ public class AttributeConverterTest extends JPAPersistenceTestCase
         }
     }
 
+    public void testMapValueConversion()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                MapConverterHolder h = new MapConverterHolder(1);
+                h.getMap1().put("First", new MyType1("A", "P"));
+                h.getMap1().put("Second", new MyType1("B", "S"));
+                em.persist(h);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during persist when using type converter", e);
+                fail("Failure on persist with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                MapConverterHolder p1 = em.find(MapConverterHolder.class, 1);
+                assertNotNull(p1);
+                Map<String, MyType1> map = p1.getMap1();
+                assertNotNull(map);
+                assertEquals(2, map.size());
+                MyType1 val1 = map.get("First");
+                assertNotNull(val1);
+                assertEquals("A", val1.getName1());
+                assertEquals("P", val1.getName2());
+                MyType1 val2 = map.get("Second");
+                assertNotNull(val2);
+                assertEquals("B", val2.getName1());
+                assertEquals("S", val2.getName2());
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during retrieve when using type converter", e);
+                fail("Failure on retrieve with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(MapConverterHolder.class);
+        }
+    }
+
+    public void testMapKeyConversion()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                MapConverterHolder h = new MapConverterHolder(1);
+                h.getMap2().put(new MyType2("A", 1), "First");
+                h.getMap2().put(new MyType2("B", 2), "Second");
+                em.persist(h);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during persist when using type converter", e);
+                fail("Failure on persist with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                MapConverterHolder p1 = em.find(MapConverterHolder.class, 1);
+                assertNotNull(p1);
+                Map<MyType2, String> map = p1.getMap2();
+                assertNotNull(map);
+                assertEquals(2, map.size());
+                MyType2 key1 = new MyType2("A", 1);
+                String val1 = map.get(key1);
+                assertNotNull(val1);
+                assertEquals("First", val1);
+                MyType2 key2 = new MyType2("B", 2);
+                String val2 = map.get(key2);
+                assertNotNull(val2);
+                assertEquals("Second", val2);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during retrieve when using type converter", e);
+                fail("Failure on retrieve with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(MapConverterHolder.class);
+        }
+    }
+
     public void testCollectionElementConversion()
     {
         try
@@ -344,150 +488,6 @@ public class AttributeConverterTest extends JPAPersistenceTestCase
         finally
         {
             clean(CollectionConverterHolder.class);
-        }
-    }
-
-    public void testMapKeyConversion()
-    {
-        try
-        {
-            EntityManager em = getEM();
-            EntityTransaction tx = em.getTransaction();
-            try
-            {
-                tx.begin();
-                MapConverterHolder h = new MapConverterHolder(1);
-                h.getMap2().put(new MyType2("A", 1), "First");
-                h.getMap2().put(new MyType2("B", 2), "Second");
-                em.persist(h);
-                tx.commit();
-            }
-            catch (Exception e)
-            {
-                LOG.error(">> Exception thrown during persist when using type converter", e);
-                fail("Failure on persist with type converter : " + e.getMessage());
-            }
-            finally
-            {
-                if (tx.isActive())
-                {
-                    tx.rollback();
-                }
-                em.close();
-            }
-            if (emf.getCache() != null)
-            {
-                emf.getCache().evictAll();
-            }
-            em = getEM();
-            tx = em.getTransaction();
-            try
-            {
-                tx.begin();
-                MapConverterHolder p1 = em.find(MapConverterHolder.class, 1);
-                assertNotNull(p1);
-                Map<MyType2, String> map = p1.getMap2();
-                assertNotNull(map);
-                assertEquals(2, map.size());
-                MyType2 key1 = new MyType2("A", 1);
-                String val1 = map.get(key1);
-                assertNotNull(val1);
-                assertEquals("First", val1);
-                MyType2 key2 = new MyType2("B", 2);
-                String val2 = map.get(key2);
-                assertNotNull(val2);
-                assertEquals("Second", val2);
-                tx.commit();
-            }
-            catch (Exception e)
-            {
-                LOG.error(">> Exception thrown during retrieve when using type converter", e);
-                fail("Failure on retrieve with type converter : " + e.getMessage());
-            }
-            finally
-            {
-                if (tx.isActive())
-                {
-                    tx.rollback();
-                }
-                em.close();
-            }
-        }
-        finally
-        {
-            clean(MapConverterHolder.class);
-        }
-    }
-
-    public void testMapValueConversion()
-    {
-        try
-        {
-            EntityManager em = getEM();
-            EntityTransaction tx = em.getTransaction();
-            try
-            {
-                tx.begin();
-                MapConverterHolder h = new MapConverterHolder(1);
-                h.getMap1().put("First", new MyType1("A", "P"));
-                h.getMap1().put("Second", new MyType1("B", "S"));
-                em.persist(h);
-                tx.commit();
-            }
-            catch (Exception e)
-            {
-                LOG.error(">> Exception thrown during persist when using type converter", e);
-                fail("Failure on persist with type converter : " + e.getMessage());
-            }
-            finally
-            {
-                if (tx.isActive())
-                {
-                    tx.rollback();
-                }
-                em.close();
-            }
-            if (emf.getCache() != null)
-            {
-                emf.getCache().evictAll();
-            }
-            em = getEM();
-            tx = em.getTransaction();
-            try
-            {
-                tx.begin();
-                MapConverterHolder p1 = em.find(MapConverterHolder.class, 1);
-                assertNotNull(p1);
-                Map<String, MyType1> map = p1.getMap1();
-                assertNotNull(map);
-                assertEquals(2, map.size());
-                MyType1 val1 = map.get("First");
-                assertNotNull(val1);
-                assertEquals("A", val1.getName1());
-                assertEquals("P", val1.getName2());
-                MyType1 val2 = map.get("Second");
-                assertNotNull(val2);
-                assertEquals("B", val2.getName1());
-                assertEquals("S", val2.getName2());
-                tx.commit();
-            }
-            catch (Exception e)
-            {
-                LOG.error(">> Exception thrown during retrieve when using type converter", e);
-                fail("Failure on retrieve with type converter : " + e.getMessage());
-            }
-            finally
-            {
-                if (tx.isActive())
-                {
-                    tx.rollback();
-                }
-                em.close();
-            }
-        }
-        finally
-        {
-            clean(MapConverterHolder.class);
         }
     }
 }
