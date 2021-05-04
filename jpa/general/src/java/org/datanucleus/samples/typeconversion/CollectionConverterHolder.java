@@ -19,12 +19,7 @@ package org.datanucleus.samples.typeconversion;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Holder for collections of various types to test use of AttributeConverters for element.
@@ -38,6 +33,7 @@ public class CollectionConverterHolder
     @ElementCollection
     @CollectionTable
     @Convert(converter=MyType1StringConverter.class)
+            @Column(length=1024)
     Set<MyType1> set1 = new HashSet<MyType1>();
 
     @ElementCollection

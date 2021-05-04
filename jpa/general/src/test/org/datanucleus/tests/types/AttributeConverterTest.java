@@ -17,6 +17,7 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.types;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -392,6 +393,80 @@ public class AttributeConverterTest extends JPAPersistenceTestCase
                 }
                 em.close();
             }
+        }
+        finally
+        {
+            clean(CollectionConverterHolder.class);
+        }
+    }
+
+    public void testConverterLength()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CollectionConverterHolder h = new CollectionConverterHolder(1);
+                byte[] tmp=new byte[2048];//more than 1024
+                Arrays.fill(tmp, (byte) 48);
+                h.getSet1().add(new MyType1("TooLong",new String(tmp)));
+                em.persist(h);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during persist when using type converter", e);
+                assertTrue("Failure on persist with type converter",e.getMessage().indexOf("\"SET1_ELEMENT\" that has maximum length of 1024")>0);
+//                fail("Failure on persist with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+             em = getEM();
+             tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CollectionConverterHolder h = new CollectionConverterHolder(2);
+                byte[] tmp=new byte[255];
+                Arrays.fill(tmp, (byte) 48);
+                //more than 255 and less than 1024
+                h.getSet1().add(new MyType1("Long1",new String(tmp)));
+                h.getSet1().add(new MyType1("Long2",new String(tmp)));
+                em.persist(h);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during persist when using type converter", e);
+                fail("Failure on persist with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
+
+
         }
         finally
         {
