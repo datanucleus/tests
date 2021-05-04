@@ -17,7 +17,13 @@
  **********************************************************************/
 package org.datanucleus.tests.types;
 
-import org.datanucleus.samples.typeconversion.*;
+import org.datanucleus.samples.typeconversion.CollectionConverterHolder;
+import org.datanucleus.samples.typeconversion.ComplicatedType;
+import org.datanucleus.samples.typeconversion.ComplicatedType2;
+import org.datanucleus.samples.typeconversion.MapConverterHolder;
+import org.datanucleus.samples.typeconversion.MyType1;
+import org.datanucleus.samples.typeconversion.MyType2;
+import org.datanucleus.samples.typeconversion.TypeHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 import javax.persistence.EntityManager;
@@ -31,12 +37,15 @@ import java.util.Set;
 /**
  * Tests for JPA 2.1 type conversion.
  */
-public class AttributeConverterTest extends JPAPersistenceTestCase {
-    public AttributeConverterTest(String name) {
+public class AttributeConverterTest extends JPAPersistenceTestCase
+{
+    public AttributeConverterTest(String name)
+    {
         super(name);
     }
 
-    public void testBasicConversion() {
+    public void testBasicConversion()
+    {
         try
         {
             EntityManager em = getEM();
@@ -135,7 +144,8 @@ public class AttributeConverterTest extends JPAPersistenceTestCase {
         }
     }
 
-    public void testCollectionElementConversion() {
+    public void testCollectionElementConversion()
+    {
         try
         {
             EntityManager em = getEM();
@@ -233,7 +243,8 @@ public class AttributeConverterTest extends JPAPersistenceTestCase {
         }
     }
 
-    public void testConverterLength() {
+    public void testConverterLength()
+    {
         try
         {
             EntityManager em = getEM();
@@ -336,7 +347,8 @@ public class AttributeConverterTest extends JPAPersistenceTestCase {
         }
     }
 
-    public void testMapKeyConversion() {
+    public void testMapKeyConversion()
+    {
         try
         {
             EntityManager em = getEM();
@@ -407,7 +419,8 @@ public class AttributeConverterTest extends JPAPersistenceTestCase {
         }
     }
 
-    public void testMapValueConversion() {
+    public void testMapValueConversion()
+    {
         try
         {
             EntityManager em = getEM();
