@@ -434,6 +434,36 @@ public class AttributeConverterTest extends JPAPersistenceTestCase
             {
                 emf.getCache().evictAll();
             }
+            em = getEM();
+            tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+                CollectionConverterHolder h = new CollectionConverterHolder(1);
+                byte[] tmp=new byte[2048];//more than 1024
+                Arrays.fill(tmp, (byte) 48);
+                h.getSet2().add(new MyType1("TooLong",new String(tmp)));
+                em.persist(h);
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error(">> Exception thrown during persist when using type converter", e);
+                assertTrue("Failure on persist with type converter",e.getMessage().indexOf("\"SET1_ELEMENT\" that has maximum length of 1024")>0);
+//                fail("Failure on persist with type converter : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+            if (emf.getCache() != null)
+            {
+                emf.getCache().evictAll();
+            }
              em = getEM();
              tx = em.getTransaction();
             try
