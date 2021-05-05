@@ -38,6 +38,7 @@ public class CollectionConverterHolder
     @ElementCollection
     @CollectionTable
     @Convert(converter=MyType1StringConverter.class)
+    @javax.persistence.Column(length=1024)
     Set<MyType1> set1 = new HashSet<MyType1>();
 
     @ElementCollection
