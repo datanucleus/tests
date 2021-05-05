@@ -437,8 +437,8 @@ public class AttributeConverterTest extends JPAPersistenceTestCase
             catch (Exception e)
             {
                 LOG.error(">> Exception thrown during persist when using type converter", e);
-                assertTrue(e.getMessage(),
-                           e.getMessage().indexOf("\"SET1_ELEMENT\" that has maximum length of 1024") > 0);
+                assertFalse(e.getMessage(),
+                           e.getMessage().indexOf("\"SET2\" that has maximum length of 255") > 0);
                 //                fail("Failure on persist with type converter : " + e.getMessage());
             }
             finally
