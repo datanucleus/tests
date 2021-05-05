@@ -45,8 +45,8 @@ public abstract class PersistenceTestCase
     /** The StoreManager in use. */
     protected static StoreManager storeMgr;
 
-    /** The unique string identifying the datastore. */
-    protected static String vendorID;
+    /** The unique string identifying the datastore when RDBMS. */
+    protected static String rdbmsVendorID;
     
     public PersistenceTestCase()
     {
@@ -120,10 +120,6 @@ public abstract class PersistenceTestCase
     {
         storeMgr.unmanageAllClasses(new ClassLoaderResolverImpl());
     }
-
-    /***********************************************************
-     * Assertion methods for transition to JUnit4
-     ***********************************************************/
 
     /**
      * @deprecated Use {@link #fail(String)} and provide a description
@@ -209,14 +205,12 @@ public abstract class PersistenceTestCase
         Assert.assertSame(expected, actual);
     }
 
-    protected final void assertEquals(String message, double expected,
-            double actual, double delta)
+    protected final void assertEquals(String message, double expected, double actual, double delta)
     {
         Assert.assertEquals(message, expected, actual, delta);
     }
 
-    protected final void assertEquals(double expected,
-            double actual, double delta)
+    protected final void assertEquals(double expected, double actual, double delta)
     {
         Assert.assertEquals(expected, actual, delta);
     }

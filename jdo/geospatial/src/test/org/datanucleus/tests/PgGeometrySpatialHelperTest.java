@@ -21,7 +21,6 @@ import java.sql.SQLException;
 
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.store.types.geospatial.jdo.SpatialHelper;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 public class PgGeometrySpatialHelperTest extends JDOPersistenceTestCase
 {
@@ -34,7 +33,7 @@ public class PgGeometrySpatialHelperTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("postgresql") || vendorID.equalsIgnoreCase("mysql"));
+        return (rdbmsVendorID.equalsIgnoreCase("postgresql") || rdbmsVendorID.equalsIgnoreCase("mysql"));
     }
 
     protected void setUp() throws Exception

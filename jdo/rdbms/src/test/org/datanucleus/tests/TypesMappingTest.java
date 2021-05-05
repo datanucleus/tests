@@ -49,10 +49,10 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
      * CLOB is only supported on some databases
      */
     public void testCLOB() {
-        if (! ( vendorID.equals("oracle") 
-                || vendorID.equals("db2")
-                || vendorID.equals("sqlserver") 
-                || vendorID.equals("derby")) ) 
+        if (! ( rdbmsVendorID.equals("oracle") 
+                || rdbmsVendorID.equals("db2")
+                || rdbmsVendorID.equals("sqlserver") 
+                || rdbmsVendorID.equals("derby")) ) 
         {
             return;
         }
@@ -128,7 +128,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
      */
     public void testDB2DataLinkType()
     {
-        if (!vendorID.equals("db2"))
+        if (!rdbmsVendorID.equals("db2"))
         {
             return;
         }
@@ -201,7 +201,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
      */
     public void testMSSQLUniqueIdentifierType()
     {
-        if (!vendorID.equals("sqlserver"))
+        if (!rdbmsVendorID.equals("sqlserver"))
         {
             return;
         }
@@ -290,7 +290,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
      */
     public void testXMLType()
     {
-        if (!vendorID.equals("oracle"))
+        if (!rdbmsVendorID.equals("oracle"))
         {
             return;
         }

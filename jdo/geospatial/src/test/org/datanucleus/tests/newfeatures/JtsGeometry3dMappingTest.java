@@ -69,7 +69,7 @@ public class JtsGeometry3dMappingTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("mysql") || vendorID.equalsIgnoreCase("postgresql"));
+        return (rdbmsVendorID.equalsIgnoreCase("mysql") || rdbmsVendorID.equalsIgnoreCase("postgresql"));
     }
 
     public void testGeometryCollection3DMapping() throws SQLException, ParseException

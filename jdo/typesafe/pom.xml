@@ -10,9 +10,13 @@
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
-        <version>5.2</version>
+        <version>6.0</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
+
+    <properties>
+        <jdo.query.version>6.0.0-m1</jdo.query.version>
+    </properties>
 
     <build>
         <plugins>
@@ -23,7 +27,7 @@
                     <dependency>
                         <groupId>org.datanucleus</groupId>
                         <artifactId>datanucleus-jdo-query</artifactId>
-                        <version>5.0.9</version>
+                        <version>${jdo.query.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -40,7 +44,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jdo-query</artifactId>
-            <version>5.0.9</version>
+            <version>${jdo.query.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -11,7 +11,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
-        <version>5.2</version>
+        <version>6.0</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
@@ -20,7 +20,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jpa</artifactId>
-            <version>[${api.jpa.min.version}, )</version>
+            <version>[${api.jpa.min.version}, ${api.jpa.max.version})</version>
         </dependency>
     </dependencies>
 
@@ -41,6 +41,33 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         <phase>compile</phase>
                         <goals>
                             <goal>enhance</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <reuseForks>true</reuseForks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- Disable default execution -->
+                        <id>default-test</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>test-framework-maven</artifactId>
+                <version>6.0</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>run-tests</goal>
                         </goals>
                     </execution>
                 </executions>

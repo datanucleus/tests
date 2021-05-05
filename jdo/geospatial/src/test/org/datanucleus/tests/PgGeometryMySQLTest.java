@@ -32,7 +32,6 @@ import org.datanucleus.samples.pggeometry.SampleGeometryCollection;
 import org.datanucleus.samples.pggeometry.SampleLineString;
 import org.datanucleus.samples.pggeometry.SamplePoint;
 import org.datanucleus.samples.pggeometry.SamplePolygon;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
 import org.postgis.Point;
 import org.postgis.Polygon;
@@ -117,7 +116,7 @@ public class PgGeometryMySQLTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("mysql"));
+        return (rdbmsVendorID.equalsIgnoreCase("mysql"));
     }
 
     public void testMbrEqual() throws SQLException

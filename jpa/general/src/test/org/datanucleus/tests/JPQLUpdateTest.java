@@ -253,7 +253,7 @@ public class JPQLUpdateTest extends JPAPersistenceTestCase
             return;
         }
 
-        if (vendorID != null && vendorID.equalsIgnoreCase("mysql"))
+        if (rdbmsVendorID != null && rdbmsVendorID.equalsIgnoreCase("mysql"))
         {
             // MySQL has issues with using subqueries in UPDATE statements
             return;

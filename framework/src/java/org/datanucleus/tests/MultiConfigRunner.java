@@ -166,20 +166,19 @@ public class MultiConfigRunner extends Runner implements Filterable
     {
         final private String config;
 
-        private Class<?> klass;
+        private Class<?> cls;
 
-        public JUnit4ConfigRunner(Class<?> klass, String config) throws InitializationError
+        public JUnit4ConfigRunner(Class<?> cls, String config) throws InitializationError
         {
-            super(klass);
-            this.klass = klass;
+            super(cls);
+            this.cls = cls;
             this.config = config;
         }
 
         @Override
         protected Description describeChild(FrameworkMethod method)
         {
-            return Description.createTestDescription(getTestClass().getJavaClass(),
-                testName(method) + "[" + config + "]", method.getAnnotations());
+            return Description.createTestDescription(getTestClass().getJavaClass(), testName(method) + "[" + config + "]", method.getAnnotations());
         }
 
         @Override
@@ -219,12 +218,11 @@ public class MultiConfigRunner extends Runner implements Filterable
         {
             Set<FrameworkMethod> testMethods = new HashSet<>(super.computeTestMethods());
 
-            for (Class<?> eachClass : getSuperClasses(klass))
+            for (Class<?> eachClass : getSuperClasses(cls))
             {
                 for (Method eachMethod : eachClass.getDeclaredMethods())
                 {
-                    if (eachMethod.getName().startsWith("test")
-                            && Modifier.isPublic(eachMethod.getModifiers()))
+                    if (eachMethod.getName().startsWith("test") && Modifier.isPublic(eachMethod.getModifiers()))
                     {
                         testMethods.add(new FrameworkMethod(eachMethod));
                     }

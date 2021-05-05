@@ -310,7 +310,7 @@ public class ListTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 List1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -488,7 +488,7 @@ public class ListTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 List2.class,
                 List2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

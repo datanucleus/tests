@@ -64,7 +64,7 @@ public class ViewTest extends JDOPersistenceTestCase
     
     @BeforeClass
     public static void runTests() {
-        skipWhen(!supportsViews(),"Database [" + vendorID + "] does not support views, view tests not run");
+        skipWhen(!supportsViews(),"Database [" + rdbmsVendorID + "] does not support views, view tests not run");
     } 
 
     public ViewTest(String name)
@@ -91,7 +91,7 @@ public class ViewTest extends JDOPersistenceTestCase
 
             // Can't create this view on SQL Server because it doesn't allow you
             // to GROUP BY a bit column.
-            if (!"sqlserver".equals(vendorID))
+            if (!"sqlserver".equals(rdbmsVendorID))
             {
                 addClassesToSchema(new Class[] { MinMaxWidgetValues.class });
             }
@@ -211,7 +211,7 @@ public class ViewTest extends JDOPersistenceTestCase
     public void testViewOfWidgets() 
     throws Exception
     {
-        if ("sqlserver".equals(vendorID))
+        if ("sqlserver".equals(rdbmsVendorID))
         {
             // Can't run this test on SQL Server because it doesn't allow you to GROUP BY a bit column.
             return;
@@ -383,7 +383,7 @@ public class ViewTest extends JDOPersistenceTestCase
          * be 0 come up 1.  This is presumably due to a bug in Cloudscape
          * (last tried on both 3.6 and 4.0).
          */
-        if ("cloudscape".equals(vendorID))
+        if ("cloudscape".equals(rdbmsVendorID))
         {
             return;
         }

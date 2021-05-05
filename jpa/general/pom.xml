@@ -11,7 +11,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
-        <version>5.2</version>
+        <version>6.0</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
@@ -20,13 +20,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jpa</artifactId>
-            <version>[${api.jpa.min.version}, )</version>
+            <version>[${api.jpa.min.version}, ${api.jpa.max.version})</version>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jodatime</artifactId>
-            <version>[${jodatime.min.version}, )</version>
+            <version>[${jodatime.min.version}, ${jodatime.max.version})</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
@@ -38,7 +38,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
+            <version>2.0.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.apache.bval</groupId>

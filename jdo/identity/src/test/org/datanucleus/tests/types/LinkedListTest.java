@@ -247,7 +247,7 @@ public class LinkedListTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 LinkedList1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -425,7 +425,7 @@ public class LinkedListTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 LinkedList2.class,
                 LinkedList2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

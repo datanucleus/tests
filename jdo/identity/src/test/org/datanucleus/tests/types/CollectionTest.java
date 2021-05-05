@@ -137,10 +137,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRetainCollection(pmf,
-                Collection1.class,
-                java.util.Collection.class,
-                ContainerItem.class);
+            SCOCollectionTests.checkRetainCollection(pmf, Collection1.class, java.util.Collection.class,ContainerItem.class);
         }
         finally
         {
@@ -157,10 +154,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveCollection(pmf,
-                Collection1Child.class,
-                java.util.Collection.class,
-                ContainerItem.class);
+            SCOCollectionTests.checkRemoveCollection(pmf, Collection1Child.class, java.util.Collection.class, ContainerItem.class);
         }
         finally
         {
@@ -177,9 +171,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkRemoveItem(pmf,
-                Collection1.class,
-                ContainerItem.class);
+            SCOCollectionTests.checkRemoveItem(pmf, Collection1.class, ContainerItem.class);
         }
         finally
         {
@@ -196,9 +188,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkClearCollection(pmf,
-                Collection1.class,
-                ContainerItem.class);
+            SCOCollectionTests.checkClearCollection(pmf, Collection1.class, ContainerItem.class);
         }
         finally
         {
@@ -215,11 +205,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkElementInheritance(pmf,
-                Collection1.class,
-                java.util.Collection.class,
-                ContainerItem.class,
-                ContainerItemChild.class);
+            SCOCollectionTests.checkElementInheritance(pmf, Collection1.class, java.util.Collection.class, ContainerItem.class, ContainerItemChild.class);
         }
         finally
         {
@@ -237,10 +223,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkQuery(pmf,
-                Collection1.class,
-                ContainerItem.class,
-                vendorID);
+            SCOCollectionTests.checkQuery(pmf, Collection1.class, ContainerItem.class, rdbmsVendorID);
         }
         finally
         {
@@ -396,10 +379,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkQuery(pmf,
-                Collection2.class,
-                Collection2Item.class,
-                vendorID);
+            SCOCollectionTests.checkQuery(pmf, Collection2.class, Collection2Item.class, rdbmsVendorID);
         }
         finally
         {
@@ -416,10 +396,7 @@ public class CollectionTest extends JDOPersistenceTestCase
     {
         try
         {
-            SCOCollectionTests.checkAttachDetach(pmf,
-                Collection2.class,
-                Collection2Item.class,
-                java.util.Collection.class);
+            SCOCollectionTests.checkAttachDetach(pmf, Collection2.class, Collection2Item.class, java.util.Collection.class);
         }
         finally
         {

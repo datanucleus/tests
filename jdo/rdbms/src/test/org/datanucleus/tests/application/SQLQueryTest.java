@@ -1378,7 +1378,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         try
         {
             // run this test only on Oracle
-            if (vendorID != null && vendorID.equals("oracle"))
+            if (rdbmsVendorID != null && rdbmsVendorID.equals("oracle"))
             {
                 tx.begin();
                 Query timestampQuery = pm.newQuery(Query.SQL, "SELECT LOCALTIMESTAMP FROM DUAL");

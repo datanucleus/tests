@@ -1184,11 +1184,11 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
      */
     public void testStringTranslate()
     {
-        if (vendorID == null || 
-            (vendorID != null &&
-            !vendorID.equalsIgnoreCase("db2") &&
-            !vendorID.equalsIgnoreCase("oracle") &&
-            !vendorID.equalsIgnoreCase("postgresql")))
+        if (rdbmsVendorID == null || 
+            (rdbmsVendorID != null &&
+            !rdbmsVendorID.equalsIgnoreCase("db2") &&
+            !rdbmsVendorID.equalsIgnoreCase("oracle") &&
+            !rdbmsVendorID.equalsIgnoreCase("postgresql")))
         {
             return;
         }
@@ -1476,13 +1476,13 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 Assert.assertEquals(1,c.size());
                 Assert.assertEquals(ids[4],JDOHelper.getObjectId(c.iterator().next()));
 
-                if (vendorID.equalsIgnoreCase("oracle") || vendorID.equalsIgnoreCase("derby"))
+                if (rdbmsVendorID.equalsIgnoreCase("oracle") || rdbmsVendorID.equalsIgnoreCase("derby"))
                 {
                     q = pm.newQuery(Office.class,"\"spring_field\".matches(this.description)");
                     c = q.executeList();
                     Assert.assertEquals(1,c.size());
                 }
-                if (vendorID.equalsIgnoreCase("derby"))
+                if (rdbmsVendorID.equalsIgnoreCase("derby"))
                 {
                     //only tested in derby 10.1, which correctly performs the match.
                     //oracle 10 does not work, since it returns 7, ignoring the pattern
@@ -4905,7 +4905,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             Query q = pm.newQuery("SELECT FROM " + Person.class.getName() + " ORDER BY emailAddress ASC NULLS FIRST");
             Collection c = (Collection) q.execute();
             assertEquals(3,c.size());
-            if (vendorID != null)
+            if (storeMgr instanceof RDBMSStoreManager)
             {
                 if (((RDBMSStoreManager)storeMgr).getDatastoreAdapter().supportsOption(DatastoreAdapter.ORDERBY_NULLS_DIRECTIVES))
                 {

@@ -61,7 +61,7 @@ public class SoftDeleteTest extends JDOPersistenceTestCase
      */
     public void testBasic()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             // Ignore for non-RDBMS currently until we fix the cleanup
             return;

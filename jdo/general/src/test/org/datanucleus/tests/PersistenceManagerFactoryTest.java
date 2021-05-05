@@ -475,7 +475,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         /*
          * 2) Test that an invalid driver name throws an exception
          */
-        if (vendorID != null)
+        if (rdbmsVendorID != null)
         {
             props.setDriverName("my.test.driver.should.not.exist");
             try
@@ -490,7 +490,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         /*
          * 3) Test that setting an invalid transaction isolation throws an exception.
          */
-        if (vendorID != null)
+        if (rdbmsVendorID != null)
         {
             props.setDriverName(driverName);
             props.setTransactionIsolation(8738);
@@ -508,7 +508,7 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
          */
         try
         {
-            if (vendorID != null)
+            if (rdbmsVendorID != null)
             {
                 props.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             }

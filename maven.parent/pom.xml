@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
     <artifactId>datanucleus-test-maven-parent</artifactId>
-    <version>5.2</version>
+    <version>6.0</version>
     <name>DataNucleus AccessPlatform Integration Tests</name>
     <description>Build and run integration tests (profiles "h2" and "rdbms" are active by default)</description>
     <packaging>pom</packaging>
@@ -20,48 +20,42 @@
         <javax.persistence.max.version>2.2.99</javax.persistence.max.version>
 
         <core.min.version>5.1.99</core.min.version>
+        <core.max.version>6.0.99</core.max.version>
         <api.jdo.min.version>5.1.99</api.jdo.min.version>
+        <api.jdo.max.version>6.0.99</api.jdo.max.version>
         <api.jpa.min.version>5.1.99</api.jpa.min.version>
+        <api.jpa.max.version>6.0.99</api.jpa.max.version>
         <api.rest.min.version>5.0.2</api.rest.min.version>
+        <api.rest.max.version>6.0.99</api.rest.max.version>
 
         <rdbms.min.version>5.1.99</rdbms.min.version>
+        <rdbms.max.version>6.0.99</rdbms.max.version>
         <cassandra.min.version>5.1.99</cassandra.min.version>
+        <cassandra.max.version>6.0.99</cassandra.max.version>
         <mongodb.min.version>5.1.99</mongodb.min.version>
+        <mongodb.max.version>6.0.99</mongodb.max.version>
         <hbase.min.version>5.1.99</hbase.min.version>
+        <hbase.max.version>6.0.99</hbase.max.version>
         <neo4j.min.version>5.1.99</neo4j.min.version>
+        <neo4j.max.version>6.0.99</neo4j.max.version>
         <excel.min.version>5.1.99</excel.min.version>
+        <excel.max.version>6.0.99</excel.max.version>
         <odf.min.version>5.1.99</odf.min.version>
+        <odf.max.version>6.0.99</odf.max.version>
         <json.min.version>5.1.99</json.min.version>
+        <json.max.version>6.0.99</json.max.version>
         <ldap.min.version>5.0.99</ldap.min.version>
+        <ldap.max.version>6.0.99</ldap.max.version>
         <xml.min.version>5.0.99</xml.min.version>
+        <xml.max.version>6.0.99</xml.max.version>
 
         <jodatime.min.version>5.1.99</jodatime.min.version>
+        <jodatime.max.version>6.0.99</jodatime.max.version>
         <geospatial.min.version>5.1.99</geospatial.min.version>
+        <geospatial.max.version>6.0.99</geospatial.max.version>
         <guava.min.version>5.0.0-release</guava.min.version>
+        <guava.max.version>6.0.99</guava.max.version>
     </properties>
-
-    <repositories>
-        <!-- repository>
-            <id>DN_M2_Repo</id>
-            <url>http://www.datanucleus.org/downloads/maven2/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository-->
-        <!-- repository>
-            <id>DN_Nightly_M2_Repo</id>
-            <url>http://www.datanucleus.org/downloads/maven2-nightly/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository-->
-    </repositories>
 
     <modules>
         <module>../framework/</module>
@@ -94,22 +88,22 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-framework</artifactId>
-            <version>5.2</version>
+            <version>6.0</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-samples</artifactId>
-            <version>5.2</version>
+            <version>6.0</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>[${core.min.version}, )</version>
+            <version>[${core.min.version}, ${core.max.version})</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[${api.jdo.min.version}, )</version>
+            <version>[${api.jdo.min.version}, ${api.jdo.max.version})</version>
         </dependency>
         <!-- NOTE : Can't upgrade from this since the @Datastore handling of DataNucleusTestWatcher breaks on 4.11 -->
         <dependency>
@@ -261,7 +255,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <encoding>ISO-8859-1</encoding>
                     <source>1.8</source>
@@ -287,7 +281,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
+                <version>2.20</version>
                 <configuration>
                     <argLine>${argLine} -Xmx256m -Djava.util.logging.config.file=logging.properties</argLine>
 
@@ -442,7 +436,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>com.h2database</groupId>
@@ -459,7 +453,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>org.hsqldb</groupId>
@@ -489,7 +483,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -511,7 +505,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -531,7 +525,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -551,7 +545,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -571,7 +565,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -591,7 +585,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -614,7 +608,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -638,7 +632,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, )</version>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>
@@ -655,7 +649,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[${excel.min.version}, )</version>
+                    <version>[${excel.min.version}, ${excel.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -677,7 +671,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[${excel.min.version}, )</version>
+                    <version>[${excel.min.version}, ${excel.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -699,7 +693,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-excel</artifactId>
-                    <version>[${excel.min.version}, )</version>
+                    <version>[${excel.min.version}, ${excel.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.poi</groupId>
@@ -726,7 +720,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-odf</artifactId>
-                    <version>[${odf.min.version}, )</version>
+                    <version>[${odf.min.version}, ${odf.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>org.odftoolkit</groupId>
@@ -748,7 +742,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-hbase</artifactId>
-                    <version>[${hbase.min.version}, )</version>
+                    <version>[${hbase.min.version}, ${hbase.max.version})</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -771,7 +765,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-neo4j</artifactId>
-                    <version>[${neo4j.min.version}, )</version>
+                    <version>[${neo4j.min.version}, ${neo4j.max.version})</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -797,7 +791,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-mongodb</artifactId>
-                    <version>[${mongodb.min.version}, )</version>
+                    <version>[${mongodb.min.version}, ${mongodb.max.version})</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -820,7 +814,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-cassandra</artifactId>
-                    <version>[${cassandra.min.version}, )</version>
+                    <version>[${cassandra.min.version}, ${cassandra.max.version})</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
@@ -843,7 +837,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-json</artifactId>
-                    <version>[${json.min.version}, )</version>
+                    <version>[${json.min.version}, ${json.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>javax.ws.rs</groupId>
@@ -910,7 +904,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-xml</artifactId>
-                    <version>[${xml.min.version}, )</version>
+                    <version>[${xml.min.version}, ${xml.max.version})</version>
                 </dependency>
                 <dependency>
                     <groupId>javax.xml.bind</groupId>
@@ -942,7 +936,7 @@
                 <dependency>
                     <groupId>org.datanucleus</groupId>
                     <artifactId>datanucleus-ldap</artifactId>
-                    <version>[${ldap.min.version}, )</version>
+                    <version>[${ldap.min.version}, ${ldap.max.version})</version>
                 </dependency>
             </dependencies>
             <properties>

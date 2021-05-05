@@ -146,6 +146,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
 
         // Set up the StoreManager
         storeMgr = ((JDOPersistenceManagerFactory) pmf).getNucleusContext().getStoreManager();
+
         ClassLoaderResolver clr = storeMgr.getNucleusContext().getClassLoaderResolver(null);
         try
         {
@@ -153,7 +154,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
             if (storeMgr instanceof org.datanucleus.store.rdbms.RDBMSStoreManager)
             {
                 // RDBMS datastores have a vendor id
-                vendorID = ((org.datanucleus.store.rdbms.RDBMSStoreManager) storeMgr).getDatastoreAdapter().getVendorID();
+                rdbmsVendorID = ((org.datanucleus.store.rdbms.RDBMSStoreManager) storeMgr).getDatastoreAdapter().getVendorID();
             }
         }
         catch (ClassNotResolvedException cnre)
@@ -176,7 +177,7 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
     {
         pmf.close();
         storeMgr = null;
-        vendorID = null;
+        rdbmsVendorID = null;
         pmf = null;
     }
 

@@ -233,7 +233,7 @@ public class StackTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 Stack1.class,
                 ContainerItem.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {
@@ -411,7 +411,7 @@ public class StackTest extends JDOPersistenceTestCase
             SCOCollectionTests.checkQuery(pmf,
                 Stack2.class,
                 Stack2Item.class,
-                vendorID);
+                rdbmsVendorID);
         }
         finally
         {

@@ -28,7 +28,6 @@ import oracle.spatial.geometry.JGeometry;
 import org.datanucleus.samples.jgeometry.SampleGeometry;
 import org.datanucleus.samples.jgeometry.SampleGeometry3D;
 import org.datanucleus.samples.jgeometry.SampleGeometryM;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Series of 3D geometry tests for JGeometry.
@@ -54,7 +53,7 @@ public class JGeometry3dMMappingTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("oracle"));
+        return (rdbmsVendorID.equalsIgnoreCase("oracle"));
     }
 
     public void testPointMMapping() throws SQLException

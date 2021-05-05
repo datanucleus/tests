@@ -213,7 +213,7 @@ public class HashtableTest extends JDOPersistenceTestCase
         SCOMapTests.checkQuery(pmf,
                                Hashtable1.class,
                                ContainerItem.class,
-                               vendorID);
+                               rdbmsVendorID);
         }
         finally
         {
@@ -232,7 +232,7 @@ public class HashtableTest extends JDOPersistenceTestCase
         {
         SCOMapTests.checkQueryPrimitive(pmf,
                                         Hashtable3.class,
-                                        vendorID);
+                                        rdbmsVendorID);
         }
         finally
         {
@@ -410,7 +410,7 @@ public class HashtableTest extends JDOPersistenceTestCase
         SCOMapTests.checkQuery(pmf,
                                Hashtable2.class,
                                Hashtable2Item.class,
-                               vendorID);
+                               rdbmsVendorID);
         }
         finally
         {

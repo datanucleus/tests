@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.datanucleus</groupId>
         <artifactId>datanucleus-test-maven-parent</artifactId>
-        <version>5.2</version>
+        <version>6.0</version>
         <relativePath>../../maven.parent</relativePath>
     </parent>
 
@@ -21,17 +21,18 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-odf</artifactId>
-            <version>(3.9, )</version>
+            <version>[${odf.min.version}, ${odf.max.version})</version>
         </dependency>
         <dependency>
             <groupId>org.odftoolkit</groupId>
             <artifactId>odfdom-java</artifactId>
             <version>0.8.7</version>
         </dependency>
+
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-xml</artifactId>
-            <version>(3.9, )</version>
+            <version>[${xml.min.version}, ${xml.max.version})</version>
         </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -43,6 +44,7 @@
             <artifactId>jaxb-impl</artifactId>
             <version>2.1</version>
         </dependency>
+
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>

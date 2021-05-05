@@ -3,7 +3,7 @@
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.datanucleus</groupId>
-    <version>5.2</version>
+    <version>6.0</version>
     <artifactId>datanucleus-test-samples</artifactId>
     <name>DataNucleus TestSamples</name>
     <description><![CDATA[
@@ -14,7 +14,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-test-framework</artifactId>
-            <version>5.2</version>
+            <version>6.0</version>
         </dependency>
     </dependencies>
 
@@ -49,7 +49,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <encoding>ISO-8859-1</encoding>
                     <source>1.8</source>

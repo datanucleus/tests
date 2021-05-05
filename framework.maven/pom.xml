@@ -4,7 +4,7 @@
     <groupId>org.datanucleus</groupId>
     <artifactId>test-framework-maven</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>5.2</version>
+    <version>6.0</version>
     <description>Plugin that helps run the DataNucleus tests for different configurations</description>
     <dependencies>
         <dependency>
@@ -27,7 +27,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.8.0</version>
                 <configuration>
                     <encoding>ISO-8859-1</encoding>
                     <source>1.8</source>

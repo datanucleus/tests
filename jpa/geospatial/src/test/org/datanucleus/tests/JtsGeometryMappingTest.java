@@ -56,7 +56,7 @@ public class JtsGeometryMappingTest extends JPAPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("mysql") || vendorID.equalsIgnoreCase("postgresql"));
+        return (rdbmsVendorID.equalsIgnoreCase("mysql") || rdbmsVendorID.equalsIgnoreCase("postgresql"));
     }
 
     public void testNoUserDataMapping() throws ParseException

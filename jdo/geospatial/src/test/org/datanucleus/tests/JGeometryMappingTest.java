@@ -26,13 +26,10 @@ import javax.jdo.Transaction;
 import oracle.spatial.geometry.JGeometry;
 
 import org.datanucleus.samples.jgeometry.SampleGeometry;
-import org.datanucleus.tests.JDOPersistenceTestCase;
 
 /**
  * Series of mapping tests for JGeometry.
  * Run for Oracle only currently.
- *
- * @version $Revision: 1.2 $
  */
 public class JGeometryMappingTest extends JDOPersistenceTestCase
 {
@@ -52,7 +49,7 @@ public class JGeometryMappingTest extends JDOPersistenceTestCase
 
     boolean runTestsForDatastore()
     {
-        return (vendorID.equalsIgnoreCase("oracle"));
+        return (rdbmsVendorID.equalsIgnoreCase("oracle"));
     }
 
     public void testPointMapping() throws SQLException

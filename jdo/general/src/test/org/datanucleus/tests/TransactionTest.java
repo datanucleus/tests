@@ -110,7 +110,7 @@ public class TransactionTest extends JDOPersistenceTestCase
      */
     public void testSqlExceptionIsAccessible()
     {
-        if (vendorID == null)
+        if (rdbmsVendorID == null)
         {
             return; // Only applicable to RDBMS
         }

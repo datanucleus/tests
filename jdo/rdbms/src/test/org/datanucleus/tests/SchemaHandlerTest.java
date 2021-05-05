@@ -218,7 +218,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
 
         RDBMSTableIndexInfo indexInfo = (RDBMSTableIndexInfo)handler.getSchemaData(con, "indices", new Object[] {table1});
         int numIndices = 3;
-        if (vendorID.equals("hsql"))
+        if (rdbmsVendorID.equals("hsql"))
         {
             // HSQL will create an index for the FK without asking, and we can't replace it with our own so end up with two
             numIndices = 4;
