@@ -22,8 +22,8 @@ import javax.persistence.Query;
 
 import org.datanucleus.api.jpa.JPAQuery;
 import org.datanucleus.exceptions.NucleusUserException;
-import org.datanucleus.query.JPQLSingleStringParser;
 import org.datanucleus.store.query.AbstractJPQLQuery;
+import org.datanucleus.store.query.JPQLSingleStringParser;
 import org.datanucleus.store.query.Query.QueryType;
 import org.datanucleus.store.query.Query.SubqueryDefinition;
 

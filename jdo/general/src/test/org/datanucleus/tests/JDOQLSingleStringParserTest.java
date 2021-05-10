@@ -23,8 +23,8 @@ import javax.jdo.Query;
 
 import org.datanucleus.api.jdo.JDOQuery;
 import org.datanucleus.exceptions.NucleusUserException;
-import org.datanucleus.query.JDOQLSingleStringParser;
 import org.datanucleus.store.query.AbstractJDOQLQuery;
+import org.datanucleus.store.query.JDOQLSingleStringParser;
 import org.datanucleus.store.query.Query.SubqueryDefinition;
 
 /**
