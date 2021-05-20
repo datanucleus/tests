@@ -29,7 +29,7 @@
             <property name="datanucleus.detachAllOnCommit" value="false"/>
             <property name="datanucleus.flush.mode" value="manual"/>
             <property name="datanucleus.query.sql.allowAll" value="true"/>
-            <property name="datanucleus.generateSchema.database.mode" value="drop-and-create"/>
+            <property name="datanucleus.schema.generateDatabase.mode" value="drop-and-create"/>
         </properties>
     </persistence-unit>
 
