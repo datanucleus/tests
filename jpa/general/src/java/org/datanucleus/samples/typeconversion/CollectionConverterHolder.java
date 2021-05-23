@@ -20,7 +20,7 @@ package org.datanucleus.samples.typeconversion;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CollectionTable;
+import javax.persistence.*;
 import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -38,11 +38,13 @@ public class CollectionConverterHolder
     @ElementCollection
     @CollectionTable
     @Convert(converter=MyType1StringConverter.class)
+    @Column(length=1024)
     Set<MyType1> set1 = new HashSet<MyType1>();
 
     @ElementCollection
     @CollectionTable
     @Convert(converter=SetMyType1StringConverter.class)
+    @Column(length=1024)
     Set<MyType1> set2 = new HashSet<MyType1>();
 
     public CollectionConverterHolder(long id)
