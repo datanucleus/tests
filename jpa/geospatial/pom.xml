@@ -46,6 +46,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <version>[${geospatial.min.version}, ${geospatial.max.version})</version>
         </dependency>
 
+        <!-- This wasn't needed in Java8 with DN5 but Java11 seems to need it -->
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc6</artifactId>
