@@ -10,22 +10,24 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         DataNucleus Tests for JDO Enhancement.
         ]]></description>
 
+    <!-- TODO : Change parent to be test-maven-parent -->
+
     <!-- Software Dependencies -->
     <dependencies>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>javax.jdo</artifactId>
-            <version>[3.2.0-m1, )</version>
+            <version>[3.2.0-m1, 3.2.99)</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>[5.9, 6.1)</version>
+            <version>(5.9, 6.1)</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[5.2.0-release, 6.1)</version>
+            <version>(5.9, 6.1)</version>
         </dependency>
 
         <dependency>

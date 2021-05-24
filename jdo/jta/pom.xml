@@ -32,6 +32,16 @@
     <!-- Software Dependencies -->
     <dependencies>
         <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>javax.jdo</artifactId>
+            <version>[${javax.jdo.min.version}, ${javax.jdo.max.version})</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-api-jdo</artifactId>
+            <version>[${api.jdo.min.version}, ${api.jdo.max.version})</version>
+        </dependency>
+        <dependency>
             <groupId>javax.resource</groupId>
             <artifactId>connector-api</artifactId>
             <version>1.5</version>

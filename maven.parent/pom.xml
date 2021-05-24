@@ -14,46 +14,51 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skipCoverage>true</skipCoverage>
 
+        <!-- SET RANGES OF VERSIONS OF DN JARS WE ARE TESTING IN ALL TESTS -->
         <javax.jdo.min.version>3.2.0-m9</javax.jdo.min.version>
         <javax.jdo.max.version>3.2.99</javax.jdo.max.version>
         <javax.persistence.min.version>2.2.1</javax.persistence.min.version>
         <javax.persistence.max.version>2.2.99</javax.persistence.max.version>
+        <jakarta.persistence.min.version>2.9</jakarta.persistence.min.version>
+        <jakarta.persistence.max.version>3.9</jakarta.persistence.max.version>
 
-        <core.min.version>5.1.99</core.min.version>
+        <core.min.version>5.9</core.min.version>
         <core.max.version>6.0.99</core.max.version>
-        <api.jdo.min.version>5.1.99</api.jdo.min.version>
+        <api.jdo.min.version>5.9</api.jdo.min.version>
         <api.jdo.max.version>6.0.99</api.jdo.max.version>
-        <api.jpa.min.version>5.1.99</api.jpa.min.version>
+        <api.jpa.min.version>5.9</api.jpa.min.version>
         <api.jpa.max.version>6.0.99</api.jpa.max.version>
-        <api.rest.min.version>5.0.2</api.rest.min.version>
+        <api.jakarta.min.version>5.9</api.jakarta.min.version>
+        <api.jakarta.max.version>6.0.99</api.jakarta.max.version>
+        <api.rest.min.version>5.9</api.rest.min.version>
         <api.rest.max.version>6.0.99</api.rest.max.version>
 
-        <rdbms.min.version>5.1.99</rdbms.min.version>
+        <rdbms.min.version>5.9</rdbms.min.version>
         <rdbms.max.version>6.0.99</rdbms.max.version>
-        <cassandra.min.version>5.1.99</cassandra.min.version>
+        <cassandra.min.version>5.9</cassandra.min.version>
         <cassandra.max.version>6.0.99</cassandra.max.version>
-        <mongodb.min.version>5.1.99</mongodb.min.version>
+        <mongodb.min.version>5.9</mongodb.min.version>
         <mongodb.max.version>6.0.99</mongodb.max.version>
-        <hbase.min.version>5.1.99</hbase.min.version>
+        <hbase.min.version>5.9</hbase.min.version>
         <hbase.max.version>6.0.99</hbase.max.version>
-        <neo4j.min.version>5.1.99</neo4j.min.version>
+        <neo4j.min.version>5.9</neo4j.min.version>
         <neo4j.max.version>6.0.99</neo4j.max.version>
-        <excel.min.version>5.1.99</excel.min.version>
+        <excel.min.version>5.9</excel.min.version>
         <excel.max.version>6.0.99</excel.max.version>
-        <odf.min.version>5.1.99</odf.min.version>
+        <odf.min.version>5.9</odf.min.version>
         <odf.max.version>6.0.99</odf.max.version>
-        <json.min.version>5.1.99</json.min.version>
+        <json.min.version>5.9</json.min.version>
         <json.max.version>6.0.99</json.max.version>
-        <ldap.min.version>5.0.99</ldap.min.version>
+        <ldap.min.version>5.9</ldap.min.version>
         <ldap.max.version>6.0.99</ldap.max.version>
-        <xml.min.version>5.0.99</xml.min.version>
+        <xml.min.version>5.9</xml.min.version>
         <xml.max.version>6.0.99</xml.max.version>
 
-        <jodatime.min.version>5.1.99</jodatime.min.version>
+        <jodatime.min.version>5.9</jodatime.min.version>
         <jodatime.max.version>6.0.99</jodatime.max.version>
-        <geospatial.min.version>5.1.99</geospatial.min.version>
+        <geospatial.min.version>5.9</geospatial.min.version>
         <geospatial.max.version>6.0.99</geospatial.max.version>
-        <guava.min.version>5.0.0-release</guava.min.version>
+        <guava.min.version>5.9</guava.min.version>
         <guava.max.version>6.0.99</guava.max.version>
     </properties>
 
@@ -100,11 +105,7 @@
             <artifactId>datanucleus-core</artifactId>
             <version>[${core.min.version}, ${core.max.version})</version>
         </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[${api.jdo.min.version}, ${api.jdo.max.version})</version>
-        </dependency>
+
         <!-- NOTE : Can't upgrade from this since the @Datastore handling of DataNucleusTestWatcher breaks on 4.11 -->
         <dependency>
             <groupId>junit</groupId>
@@ -115,17 +116,6 @@
           <groupId>org.assertj</groupId>
           <artifactId>assertj-core</artifactId>
           <version>3.1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>javax.jdo</artifactId>
-            <version>[${javax.jdo.min.version}, ${javax.jdo.max.version})</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>javax.persistence</artifactId>
-            <version>[${javax.persistence.min.version}, ${javax.persistence.max.version})</version>
         </dependency>
 
         <dependency>
@@ -447,28 +437,6 @@
         </profile>
 
         <profile>
-            <!-- Use datastore "hsql" -->
-            <id>hsql</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-rdbms</artifactId>
-                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.hsqldb</groupId>
-                    <artifactId>hsqldb</artifactId>
-                    <version>2.3.3</version>
-                </dependency>
-            </dependencies>
-            <properties>
-                <maven.datanucleus.datastore>hsql</maven.datanucleus.datastore>
-                <!-- Running as embedded, no need to cleanup -->
-                <maven.datanucleus.test.skip.reset>true</maven.datanucleus.test.skip.reset>
-            </properties>
-        </profile>
-
-        <profile>
             <!-- Use datastore "h2" (DEFAULT) -->
             <id>h2</id>
             <activation>
@@ -488,6 +456,28 @@
             </dependencies>
             <properties>
                 <maven.datanucleus.datastore>h2</maven.datanucleus.datastore>
+                <!-- Running as embedded, no need to cleanup -->
+                <maven.datanucleus.test.skip.reset>true</maven.datanucleus.test.skip.reset>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- Use datastore "hsql" -->
+            <id>hsql</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-rdbms</artifactId>
+                    <version>[${rdbms.min.version}, ${rdbms.max.version})</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                    <version>2.3.3</version>
+                </dependency>
+            </dependencies>
+            <properties>
+                <maven.datanucleus.datastore>hsql</maven.datanucleus.datastore>
                 <!-- Running as embedded, no need to cleanup -->
                 <maven.datanucleus.test.skip.reset>true</maven.datanucleus.test.skip.reset>
             </properties>
