@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+    version="1.0">
+    <description>JPA MetaData for classes solely using MetaData</description>
+    <persistence-unit-metadata>
+        <xml-mapping-metadata-complete></xml-mapping-metadata-complete>
+    </persistence-unit-metadata>
+    <package>org.jpox.samples.abstractclasses</package>
+
+    <mapped-superclass class="org.jpox.samples.abstractclasses.AbstractSimpleBase">
+        <attributes>
+            <id name="id">
+                <column name="ID"/>
+            </id>
+            <basic name="baseField">
+                <column name="BASE_FIELD"/>
+            </basic>
+        </attributes>
+    </mapped-superclass>
+
+    <entity class="org.jpox.samples.abstractclasses.ConcreteSimpleSub1">
+        <table name="JPA_MD_CONCRETESIMP_SUB1"/>
+        <attribute-override name="baseField">
+            <column name="BASE_FIELD_OR"/>
+        </attribute-override>
+        <attributes>
+            <basic name="sub1Field">
+                <column name="SUB1_FIELD"/>
+            </basic>
+        </attributes>
+    </entity>
+
+    <entity class="org.jpox.samples.abstractclasses.ConcreteSimpleSub2">
+        <table name="JPA_MD_CONCRETESIMP_SUB2"/>
+        <attributes>
+            <basic name="sub2Field">
+                <column name="SUB2_FIELD"/>
+            </basic>
+        </attributes>
+    </entity>
+
+</entity-mappings>

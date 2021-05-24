@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+    version="2.1">
+    <package>org.datanucleus.samples.xml.one_many.map</package>
+    <entity class="org.datanucleus.samples.xml.one_many.map.MapHolder1Xml">
+        <table name="JPA_XML_MAPHOLDER1"/>
+        <attributes>
+            <id name="id">
+                <column name="JPA_XML_MAPHOLDER1_ID"/>
+            </id>
+            <element-collection name="properties">
+                <map-key-column name="PROP_NAME"/>
+                <column name="PROP_VALUE"/>
+                <collection-table name="JPA_XML_MAPHOLDER1_PROPS">
+                    <join-column name="MAPHOLDER1_ID"/>
+                </collection-table>
+            </element-collection>
+            <element-collection name="properties2">
+                <collection-table/>
+            </element-collection>
+        </attributes>
+    </entity>
+</entity-mappings>

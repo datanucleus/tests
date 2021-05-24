@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://www.datanucleus.org/xsd/jpa/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.datanucleus.org/xsd/jpa/orm http://www.datanucleus.org/xsd/jpa/orm_2_1.xsd"
+    version="2.1">
+
+    <package>org.datanucleus.samples.jtsgeometry</package>
+    <entity class="org.datanucleus.samples.jtsgeometry.SampleGeometry">
+        <table name="JPA_SAMPLE_GEOMETRY"/>
+        <attributes>
+            <id name="id"/>
+            <basic name="name"/>
+            <basic name="geom">
+				<extension vendor-name="datanucleus" key="mapping" value="no-userdata"/>
+            </basic>
+        </attributes>
+    </entity>
+
+    <entity class="org.datanucleus.samples.jtsgeometry.SamplePoint">
+        <table name="JPA_SAMPLE_POINT"/>
+        <attributes>
+            <id name="id"/>
+            <basic name="name"/>
+            <basic name="geom">
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

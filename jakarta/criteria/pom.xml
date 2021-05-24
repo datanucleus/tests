@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>datanucleus-test-jakarta-criteria</artifactId>
+    <name>org.datanucleus.test.jakarta.criteria</name>
+    <description><![CDATA[
+        DataNucleus Tests for Jakarta Criteria Queries
+        ]]></description>
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>6.0</version>
+        <relativePath>../../maven.parent</relativePath>
+    </parent>
+
+    <properties>
+        <jakarta.query.version>6.0.0-m1-SNAPSHOT</jakarta.query.version>
+    </properties>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>jakarta.persistence</artifactId>
+            <version>[${jakarta.persistence.min.version}, ${jakarta.persistence.max.version})</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-api-jakarta</artifactId>
+            <version>[${api.jakarta.min.version}, ${api.jakarta.max.version})</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-jakarta-query</artifactId>
+            <version>${jakarta.query.version}</version>
+        </dependency>
+
+        <!-- JAVAX.VALIDATION v2.0 -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-jsr</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.bval</groupId>
+            <artifactId>bval-core</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>datanucleus-maven-plugin</artifactId>
+                <configuration>
+                    <api>Jakarta</api>
+                    <persistenceUnitName>JakartaTest</persistenceUnitName>
+                    <fork>false</fork>
+                    <verbose>false</verbose>
+                    <targetDirectory>${project.build.outputDirectory}</targetDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
