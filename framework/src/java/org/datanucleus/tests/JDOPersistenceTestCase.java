@@ -45,6 +45,7 @@ import org.datanucleus.Configuration;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.enhancement.Persistable;
 import org.datanucleus.exceptions.ClassNotResolvedException;
+import org.datanucleus.util.NucleusLogger;
 import org.datanucleus.util.StringUtils;
 
 /**
@@ -91,7 +92,15 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
         if (pmf == null && initOnCreate)
         {
             // Get a new PMF
-            getPMF(userProps);
+            try
+            {
+                getPMF(userProps);
+            }
+            catch (Throwable thr)
+            {
+                NucleusLogger.GENERAL.error(">> Exception thrown creating PMF", thr);
+                throw thr;
+            }
         }
     }
 

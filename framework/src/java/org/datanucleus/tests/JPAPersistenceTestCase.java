@@ -31,6 +31,7 @@ import org.datanucleus.PropertyNames;
 import org.datanucleus.exceptions.ClassNotResolvedException;
 import org.datanucleus.metadata.MetaDataUtils;
 import org.datanucleus.metadata.PersistenceUnitMetaData;
+import org.datanucleus.util.NucleusLogger;
 
 /**
  * Abstract base class for all JPA unit tests needing access to an entity manager factory.
@@ -56,8 +57,16 @@ public abstract class JPAPersistenceTestCase extends PersistenceTestCase
     {
         if (emf == null && initOnCreate)
         {
-            // Get a new EMF
-            emf = getEMF(null);
+            try
+            {
+                // Get a new EMF
+                emf = getEMF(null);
+            }
+            catch (Throwable thr)
+            {
+                NucleusLogger.GENERAL.error("Exception creating EMF", thr);
+                throw thr;
+            }
         }
     }
 
