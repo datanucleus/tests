@@ -94,7 +94,7 @@ public class GroupMember
             //className
             token.nextToken ();
             //id
-            this.id = new Long(token.nextToken()).longValue();
+            this.id = Long.valueOf(token.nextToken()).longValue();
             //name
             this.name = token.nextToken();
         }

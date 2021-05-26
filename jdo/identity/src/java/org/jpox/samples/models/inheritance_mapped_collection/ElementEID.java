@@ -29,7 +29,7 @@ public class ElementEID implements Serializable
 
     public int hashCode()
     {
-        return hashCode(organisationID) ^ new Long(eeeID).hashCode();
+        return hashCode(organisationID) ^ Long.valueOf(eeeID).hashCode();
     }
 
     public boolean equals(Object obj)

@@ -95,7 +95,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         VariableExpression left = (VariableExpression)dyExpr.getLeft();
         assertEquals("Variable expression name is wrong", left.getId(), "notaField");
         Literal right = (Literal)dyExpr.getRight();
-        assertEquals("Literal has wrong value", new Integer(2), right.getLiteral());
+        assertEquals("Literal has wrong value", Integer.valueOf(2), right.getLiteral());
     }
 
     /**
@@ -451,7 +451,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         Object param2 = invExpr.getArguments().get(1);
         assertTrue("Parameter2 to indexOf() is of wrong type", param2 instanceof Literal);
         Literal param2Lit = (Literal)param2;
-        assertEquals("Parameter2 to indexOf() has wrong value", new Integer(3), param2Lit.getLiteral());
+        assertEquals("Parameter2 to indexOf() has wrong value", Integer.valueOf(3), param2Lit.getLiteral());
     }
 
     /**

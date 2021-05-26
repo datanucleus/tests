@@ -158,7 +158,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             pm.makePersistent(t1);
             tx.commit();
             assertNotNull("Object just persisted using makePersistent doesnt have a version!", JDOHelper.getVersion(t1));
-            assertEquals(new Long(1), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(1), JDOHelper.getVersion(t1));
 
             Object id = pm.getObjectId(t1);
             pmf.getDataStoreCache().evictAll();
@@ -169,7 +169,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             tx.begin();
             Trade1 t1a = (Trade1) pm.getObjectById(id);
             assertNotNull(JDOHelper.getVersion(t1a));
-            assertEquals(new Long(1), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(1), JDOHelper.getVersion(t1));
 
             tx.commit();
         }
@@ -215,7 +215,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             tx1.begin();
             t1 = (Trade3)pm1.getObjectById(id);
             assertEquals("Version of unversioned object is incorrect after persist", 
-                new Long(1), JDOHelper.getVersion(t1));
+                Long.valueOf(1), JDOHelper.getVersion(t1));
             tx1.commit();
 
             //check conflict between transactions
@@ -377,7 +377,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             tx.begin();
             Trade4 tradeB = (Trade4) pm.getObjectById(id);
             assertNotNull(JDOHelper.getVersion(tradeB));
-            assertEquals(new Long(1), JDOHelper.getVersion(tradeB));
+            assertEquals(Long.valueOf(1), JDOHelper.getVersion(tradeB));
             tx.commit();
         }
         catch (Exception ex)
@@ -500,7 +500,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(1), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(1), JDOHelper.getVersion(t1));
             tx.commit();
 
             //check update
@@ -511,7 +511,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(2), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(2), JDOHelper.getVersion(t1));
             tx.commit();
 
             //check update with rollback
@@ -520,13 +520,13 @@ public class OptimisticTest extends JDOPersistenceTestCase
             t1.setPerson("Mr Z");
             //this flushes the changes to the database; the column version is incremented
             pm.flush();
-            assertEquals(new Long(3), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(3), JDOHelper.getVersion(t1));
             //changes are rolled back; the column version keeps the old value
             tx.rollback();
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(2), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(2), JDOHelper.getVersion(t1));
             tx.commit();
 
             //---------------------
@@ -539,7 +539,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(3), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(3), JDOHelper.getVersion(t1));
             tx.commit();
 
             tx.begin();
@@ -549,7 +549,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(4), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(4), JDOHelper.getVersion(t1));
             tx.commit();
 
             //---------------------
@@ -562,7 +562,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(5), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(5), JDOHelper.getVersion(t1));
             tx.commit();
 
             tx.begin();
@@ -571,7 +571,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(6), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(6), JDOHelper.getVersion(t1));
             tx.commit();
         }
         finally
@@ -606,7 +606,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.begin();
             t1 = (Trade1)pm.getObjectById(id);
-            assertEquals(new Long(1), JDOHelper.getVersion(t1));
+            assertEquals(Long.valueOf(1), JDOHelper.getVersion(t1));
             tx.commit();
 
             // Delete - what the test is for
@@ -946,7 +946,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             query = pm.newQuery(Trade1.class);
             t1 = (Trade1)((Collection)query.execute()).iterator().next();
             Long latestVersion = (Long)JDOHelper.getVersion(t1);
-            assertEquals("Version of attached object has incorrect version", new Long(detachedVersion.longValue()+1), latestVersion);
+            assertEquals("Version of attached object has incorrect version", Long.valueOf(detachedVersion.longValue()+1), latestVersion);
             tx.commit();
         }
         finally
@@ -1581,7 +1581,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             }
 
             // Update the object
-            assertEquals("Detached object has incorrect version", new Long(1), JDOHelper.getVersion(trade));
+            assertEquals("Detached object has incorrect version", Long.valueOf(1), JDOHelper.getVersion(trade));
             trade.setPerson("Mr Y");
 
             // Attach the object
@@ -1596,7 +1596,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
                 pm.flush();
 
                 assertEquals("Object version has not been updated correctly on attach", 
-                    new Long(2), JDOHelper.getVersion(trade));
+                    Long.valueOf(2), JDOHelper.getVersion(trade));
                 tx.commit();
             }
             catch (Exception ex)
@@ -1614,7 +1614,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             }
 
             // Update the object
-            assertEquals("Detached object has incorrect version", new Long(2), JDOHelper.getVersion(trade));  
+            assertEquals("Detached object has incorrect version", Long.valueOf(2), JDOHelper.getVersion(trade));  
             trade.setPerson("Mr Z");
 
             // Attach the object
@@ -1629,7 +1629,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
                 pm.flush();
 
                 assertEquals("Object version has not been updated correctly on attach", 
-                    new Long(3), JDOHelper.getVersion(trade));
+                    Long.valueOf(3), JDOHelper.getVersion(trade));
                 tx.commit();
             }
             catch (Exception ex)
@@ -1696,7 +1696,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             }
 
             // Update the object
-            assertEquals("Detached object has incorrect version", new Long(1), JDOHelper.getVersion(trade));
+            assertEquals("Detached object has incorrect version", Long.valueOf(1), JDOHelper.getVersion(trade));
             trade.setPerson("Mr Y");
 
             // Attach the object
@@ -1711,7 +1711,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
                 // Make sure version is set after flushing
                 assertEquals("Object version has not been updated correctly on attach", 
-                    new Long(2), JDOHelper.getVersion(trade));
+                    Long.valueOf(2), JDOHelper.getVersion(trade));
 
                 // Detach a copy
                 trade = (Trade1)pm.detachCopy(trade);
@@ -1732,7 +1732,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
             }
 
             // Update the object
-            assertEquals("Detached object has incorrect version", new Long(2), JDOHelper.getVersion(trade));
+            assertEquals("Detached object has incorrect version", Long.valueOf(2), JDOHelper.getVersion(trade));
             trade.setPerson("Mr Z");
 
             // Attach the object
@@ -1747,7 +1747,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
                 // Make sure version is set after flushing
                 assertEquals("Object version has not been updated correctly on attach", 
-                    new Long(3), JDOHelper.getVersion(trade));
+                    Long.valueOf(3), JDOHelper.getVersion(trade));
 
                 tx.commit();
             }
@@ -1883,7 +1883,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
             tx.commit();
             Object id = pm.getObjectId(t1);
-            assertEquals("Version is incorrect", new Long(1), JDOHelper.getVersion(t1));
+            assertEquals("Version is incorrect", Long.valueOf(1), JDOHelper.getVersion(t1));
             pmf.getDataStoreCache().evictAll();
 
             // retrieve the object in PM1/txn1
@@ -1895,12 +1895,12 @@ public class OptimisticTest extends JDOPersistenceTestCase
             // Update the object and flush to the datastore
             t1a.setPerson("Mr Y");
             pm.flush();
-            assertEquals("Version is incorrect", new Long(2), JDOHelper.getVersion(t1a));
+            assertEquals("Version is incorrect", Long.valueOf(2), JDOHelper.getVersion(t1a));
 
             // rollback the transaction
             tx.rollback();
 
-            assertEquals("Version is incorrect", new Long(1), JDOHelper.getVersion(t1a));
+            assertEquals("Version is incorrect", Long.valueOf(1), JDOHelper.getVersion(t1a));
         }
         catch (Exception ex)
         {
@@ -1940,7 +1940,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
                 tx.commit();
                 id = pm.getObjectId(t1);
-                assertEquals("Version is incorrect", new Long(1), JDOHelper.getVersion(t1));
+                assertEquals("Version is incorrect", Long.valueOf(1), JDOHelper.getVersion(t1));
             }
             catch (Exception e)
             {
@@ -1969,7 +1969,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
                 while (iter.hasNext())
                 {
                     Trade1 t1 = iter.next();
-                    assertEquals("Version is incorrect", new Long(1), JDOHelper.getVersion(t1));
+                    assertEquals("Version is incorrect", Long.valueOf(1), JDOHelper.getVersion(t1));
                 }
                 tx.commit();
             }
@@ -1994,7 +1994,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
                 // retrieve using id (gets object from L2 cache)
                 tx.begin();
                 Trade1 t1 = (Trade1)pm.getObjectById(id);
-                assertEquals("Version is incorrect", new Long(1), JDOHelper.getVersion(t1));
+                assertEquals("Version is incorrect", Long.valueOf(1), JDOHelper.getVersion(t1));
                 tx.commit();
             }
             catch (Exception ex)
@@ -2045,7 +2045,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
                 // Retrieve the object and check the version
                 VersionEmptyDFG ve2 = (VersionEmptyDFG)pm.getObjectById(id, true);
-                assertEquals(new Long(1), JDOHelper.getVersion(ve2));
+                assertEquals(Long.valueOf(1), JDOHelper.getVersion(ve2));
 
                 // Update the object
                 ve2.setData(String.valueOf(System.currentTimeMillis()).getBytes());
@@ -2059,7 +2059,7 @@ public class OptimisticTest extends JDOPersistenceTestCase
 
                 // Retrieve the object and check the version was incremented on updating
                 VersionEmptyDFG ve3 = (VersionEmptyDFG)pm.getObjectById(id, true);
-                assertEquals(new Long(2), JDOHelper.getVersion(ve3));
+                assertEquals(Long.valueOf(2), JDOHelper.getVersion(ve3));
 
                 tx.commit();
             }

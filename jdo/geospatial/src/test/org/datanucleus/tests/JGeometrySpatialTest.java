@@ -121,7 +121,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "POINT(10 10)";
-            Short srid = new Short((short) 4326);
+            Short srid = Short.valueOf((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class, "geom != null && Spatial.equals(geom, Spatial.geomFromText(:wkt, :srid))");
             List list = (List) query.execute(wkt, srid);
             assertEquals("Wrong number of geometries with a given wkt returned", 1, list.size());
@@ -141,7 +141,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "POINT(75.0 75.0)";
-            Short srid = new Short((short) 4326);
+            Short srid = Short.valueOf((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 1000 && id < 2000 && Spatial.equals(geom, Spatial.pointFromText(:wkt, :srid))");
             List list = (List) query.execute(wkt, srid);
@@ -162,7 +162,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "LINESTRING(50.0 0.0, 50.0 100.0)";
-            Short srid = new Short((short) 4326);
+            Short srid = Short.valueOf((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 2000 && id < 3000 && Spatial.equals(geom, Spatial.lineFromText(:wkt, :srid))");
             List list = (List) query.execute(wkt, srid);
@@ -183,7 +183,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "POLYGON((75.0 75.0,100.0 75.0,100.0 100.0,75.0 75.0))";
-            Short srid = new Short((short) 4326);
+            Short srid = Short.valueOf((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 3000 && id < 4000 && Spatial.equals(geom, Spatial.polyFromText(:wkt, :srid))");
             List list = (List) query.execute(wkt, srid);
@@ -204,7 +204,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "MULTIPOINT((80.0 76.0),(90.0 77.0))"; // Oracle syntax
-            Short srid = new Short((short) 4326);
+            Short srid = Short.valueOf((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 3000 && id < 4000 && Spatial.contains(geom, Spatial.mPointFromText(:wkt, :srid))"); // Oracle's
                                                                                                           // geometryN
@@ -232,8 +232,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "MULTILINESTRING((0.0 50.0,100.0 50.0),(50.0 0.0,50.0 100.0),(100.0 25.0,120.0 25.0,110.0 10.0,110.0 45.0))";
-            Short srid = new Short((short) 4326);
-            Short n = new Short((short) 2);
+            Short srid = Short.valueOf((short) 4326);
+            Short n = Short.valueOf((short) 2);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 2000 && id < 3000 && Spatial.equals(geom, Spatial.geometryN(Spatial.mLineFromText(:wkt, :srid), :n))");
             List list = (List) query.execute(wkt, srid, n);
@@ -254,8 +254,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "MULTIPOLYGON(((25.0 25.0,75.0 25.0,75.0 75.0,25.0 75.0,25.0 25.0),(45.0 45.0,55.0 45.0,55.0 55.0,45.0 55.0,45.0 45.0)),((75.0 75.0,100.0 75.0,100.0 100.0,75.0 75.0)))";
-            Short srid = new Short((short) 4326);
-            Short n = new Short((short) 2);
+            Short srid = Short.valueOf((short) 4326);
+            Short n = Short.valueOf((short) 2);
             Query query = pm.newQuery(SampleGeometry.class,
                 "geom != null && Spatial.equals(geom, Spatial.geometryN(Spatial.mPolyFromText(:wkt, :srid), :n))");
             List list = (List) query.execute(wkt, srid, n);
@@ -276,7 +276,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             String wkt = "GEOMETRYCOLLECTION(POINT(10.0 10.0),LINESTRING(0.0 50.0, 100.0 50.0),POLYGON((25.0 25.0,75.0 25.0,75.0 75.0,25.0 75.0,25.0 25.0)))";
-            Short srid = new Short((short) 4326);
+            Short srid = Short.valueOf((short) 4326);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 7000 && id < 8000 && Spatial.equals(geom, Spatial.geomCollFromText(:wkt, :srid))");
             List list = (List) query.execute(wkt, srid);
@@ -399,7 +399,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             tx.begin();
             JGeometry geom = JGeometry.createLinearMultiLineString(new Object[]{new double[]{0.0, 50.0, 100.0, 50.0},
                     new double[]{50.0, 0.0, 50.0, 100.0}, new double[]{100.0, 25.0, 120.0, 25.0, 110.0, 10.0, 110.0, 45.0}}, 2, 4326);
-            Short n = new Short((short) 2);
+            Short n = Short.valueOf((short) 2);
             Query query = pm
                     .newQuery(SampleGeometry.class,
                         "geom != null && Spatial.equals(geom, Spatial.geometryN(Spatial.mLineFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)), :n))");
@@ -426,7 +426,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             double[] ordinates = {25.0, 25.0, 75.0, 25.0, 75.0, 75.0, 25.0, 75.0, 25.0, 25.0, 75.0, 75.0, 100.0, 75.0, 100.0, 100.0, 75.0,
                     75.0};
             JGeometry geom = new JGeometry(gtype, srid, elemInfo, ordinates);
-            Short n = new Short((short) 2);
+            Short n = Short.valueOf((short) 2);
             Query query = pm
                     .newQuery(SampleGeometry.class,
                         "id > 3000 && id < 4000 && Spatial.equals(geom, Spatial.geometryN(Spatial.mPolyFromWKB(Spatial.asBinary(:geom), Spatial.srid(:geom)), 2))");
@@ -471,7 +471,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Integer dim = new Integer(2);
+            Integer dim = Integer.valueOf(2);
             Query query = pm.newQuery(SampleGeometry.class, "id > 3000 && id < 4000 && Spatial.dimension(geom) == :dim");
             List list = (List) query.execute(dim);
             assertEquals("Wrong number of geometries with dimension " + dim + " returned", 2, list.size());
@@ -482,7 +482,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.dimension(geom)");
             query.setResultClass(Integer.class);
             query.setUnique(true);
-            Integer dim_read = (Integer) query.execute(new Long(getSamplePolygon(2).getId()));
+            Integer dim_read = (Integer) query.execute(Long.valueOf(getSamplePolygon(2).getId()));
             assertEquals("Dimension of Polygon 2 should be equal to a given dimension", dim, dim_read);
         }
         finally
@@ -509,7 +509,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.geometryType(geom)");
             query.setResultClass(String.class);
             query.setUnique(true);
-            String type_read = (String) query.execute(new Long(getSamplePoint(1).getId()));
+            String type_read = (String) query.execute(Long.valueOf(getSamplePoint(1).getId()));
             assertEquals("Geometry type of Point 1 should be equal to a given geometry type", type, type_read);
         }
         finally
@@ -525,7 +525,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Integer srid = new Integer(4326); // WGS84
+            Integer srid = Integer.valueOf(4326); // WGS84
             Query query = pm.newQuery(SampleGeometry.class, "id > 1000 && id < 2000 && Spatial.srid(geom) == :srid");
             List list = (List) query.execute(srid);
             assertEquals("Wrong number of geometries with srid " + srid + " returned", 2, list.size());
@@ -536,7 +536,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.srid(geom)");
             query.setResultClass(Integer.class);
             query.setUnique(true);
-            Integer srid_read = (Integer) query.execute(new Long(getSamplePoint(2).getId()));
+            Integer srid_read = (Integer) query.execute(Long.valueOf(getSamplePoint(2).getId()));
             assertEquals("SRID of Point 2 should be equal to a given SRID", srid, srid_read);
         }
         finally
@@ -565,7 +565,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.envelope(geom)");
             query.setUnique(true);
-            JGeometry envelope_read = (JGeometry) query.execute(new Long(getSampleLineString(3).getId()));
+            JGeometry envelope_read = (JGeometry) query.execute(Long.valueOf(getSampleLineString(3).getId()));
             assertEquals("Returned envelope should be equal to a given envelope", envelope, envelope_read);
         }
         finally
@@ -591,7 +591,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResultClass(String.class);
             query.setResult("Spatial.asText(geom)");
-            list = (List) query.execute(new Long(point1.getId()));
+            list = (List) query.execute(Long.valueOf(point1.getId()));
             assertEquals("Wrong number of geometries with a given id returned", 1, list.size());
             String wkt_read = (String) list.get(0);
             assertTrue("WKT of Point 1 should start with 'POINT'", wkt_read.startsWith("POINT"));
@@ -681,7 +681,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.boundary(geom)");
             query.setUnique(true);
-            JGeometry boundary_read = (JGeometry) query.execute(new Long(getSamplePolygon(2).getId()));
+            JGeometry boundary_read = (JGeometry) query.execute(Long.valueOf(getSamplePolygon(2).getId()));
             assertEquals("Boundary of Polygon 2 should be equal to a given boundary", boundary, boundary_read);
         }
         finally
@@ -891,7 +891,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.distance(geom, Spatial.geomFromText('POINT(10.0 10.0)', 4326))");
             query.setResultClass(Double.class);
             query.setUnique(true);
-            Double distance_read = (Double) query.execute(new Long(getSamplePoint(2).getId()));
+            Double distance_read = (Double) query.execute(Long.valueOf(getSamplePoint(2).getId()));
             assertTrue("Point 2 should be in a distance > 0.0 to the given point", distance_read.doubleValue() > 0.0);
         }
         finally
@@ -919,7 +919,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.buffer(geom, 1000.0)");
             query.setUnique(true);
-            JGeometry buffer = (JGeometry) query.execute(new Long(getSamplePoint(1).getId()));
+            JGeometry buffer = (JGeometry) query.execute(Long.valueOf(getSamplePoint(1).getId()));
             assertEquals("Returned buffer should be a polygon", 3, buffer.getType());
             assertEquals("Returned buffer should have the given srid", 4326, buffer.getSRID());
         }
@@ -944,7 +944,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.convexHull(geom)");
             query.setUnique(true);
-            JGeometry convexHull_read = (JGeometry) query.execute(new Long(getSampleLineString(3).getId()));
+            JGeometry convexHull_read = (JGeometry) query.execute(Long.valueOf(getSampleLineString(3).getId()));
             assertEquals("Returned convex hull should be of type polygon", JGeometry.GTYPE_POLYGON, convexHull_read.getType());
         }
         finally
@@ -970,7 +970,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.intersection(geom, Spatial.geomFromText('LINESTRING(25.0 25.0, 25.0 75.0)', 4326))");
             query.setUnique(true);
-            JGeometry intersection_read = (JGeometry) query.execute(new Long(getSampleLineString(1).getId()));
+            JGeometry intersection_read = (JGeometry) query.execute(Long.valueOf(getSampleLineString(1).getId()));
             assertTrue("Returned intersection should be equal to the given point", intersection_read.getType() == JGeometry.GTYPE_POINT);
         }
         finally
@@ -996,7 +996,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.union(geom, Spatial.geomFromText('POINT(50.0 50.0)', 4326))");
             query.setUnique(true);
-            JGeometry union_read = (JGeometry) query.execute(new Long(getSamplePoint(1).getId()));
+            JGeometry union_read = (JGeometry) query.execute(Long.valueOf(getSamplePoint(1).getId()));
             assertTrue("Returned union should be a multipoint", union_read.getType() == JGeometry.GTYPE_MULTIPOINT);
         }
         finally
@@ -1025,7 +1025,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.symDifference(geom, Spatial.geomFromText('POLYGON((20.0 20.0,30.0 20.0,30.0 30.0,20.0 30.0,20.0 20.0))', 4326))");
             query.setUnique(true);
-            JGeometry symDifference_read = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
+            JGeometry symDifference_read = (JGeometry) query.execute(Long.valueOf(getSamplePolygon(1).getId()));
             assertTrue("Returned symDifference should be a multipolygon", symDifference_read.getType() == JGeometry.GTYPE_MULTIPOLYGON);
         }
         finally
@@ -1054,7 +1054,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.difference(geom, Spatial.geomFromText('POLYGON((20.0 20.0,30.0 20.0,30.0 30.0,20.0 30.0,20.0 20.0))', 4326))");
             query.setUnique(true);
-            JGeometry difference_read = (JGeometry) query.execute(new Long(getSamplePolygon(2).getId()));
+            JGeometry difference_read = (JGeometry) query.execute(Long.valueOf(getSamplePolygon(2).getId()));
             assertTrue("Returned difference should be a polygon", difference_read.getType() == JGeometry.GTYPE_POLYGON);
         }
         finally
@@ -1070,7 +1070,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Double x = new Double(75.0);
+            Double x = Double.valueOf(75.0);
             Query query = pm.newQuery(SampleGeometry.class, "id > 1000 && id < 2000 && Spatial.x(geom) == :x");
             List list = (List) query.execute(x);
             assertEquals("Wrong number of geometries with a given x = " + x + " returned", 1, list.size());
@@ -1080,7 +1080,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.x(geom)");
             query.setResultClass(Double.class);
             query.setUnique(true);
-            Double x_read = (Double) query.execute(new Long(getSamplePoint(2).getId()));
+            Double x_read = (Double) query.execute(Long.valueOf(getSamplePoint(2).getId()));
             assertEquals("Returned x should be equal to the given value", x, x_read);
         }
         finally
@@ -1096,7 +1096,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Double y = new Double(10.0);
+            Double y = Double.valueOf(10.0);
             Query query = pm.newQuery(SampleGeometry.class, "id > 1000 && id < 2000 && Spatial.y(geom) == :y");
             List list = (List) query.execute(y);
             assertEquals("Wrong number of geometries with a given y = " + y + " returned", 1, list.size());
@@ -1106,7 +1106,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.y(geom)");
             query.setResultClass(Double.class);
             query.setUnique(true);
-            Double y_read = (Double) query.execute(new Long(getSamplePoint(1).getId()));
+            Double y_read = (Double) query.execute(Long.valueOf(getSamplePoint(1).getId()));
             assertEquals("Returned y should be equal to the given value", y, y_read);
         }
         finally
@@ -1131,7 +1131,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.startPoint(geom)");
             query.setUnique(true);
-            JGeometry point_read = (JGeometry) query.execute(new Long(getSampleLineString(2).getId()));
+            JGeometry point_read = (JGeometry) query.execute(Long.valueOf(getSampleLineString(2).getId()));
             assertEquals("Returned start point should be equal to the given point", point, point_read);
         }
         finally
@@ -1156,7 +1156,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.endPoint(geom)");
             query.setUnique(true);
-            JGeometry point_read = (JGeometry) query.execute(new Long(getSampleLineString(3).getId()));
+            JGeometry point_read = (JGeometry) query.execute(Long.valueOf(getSampleLineString(3).getId()));
             assertEquals("Returned end point should be equal to the given point", point, point_read);
         }
         finally
@@ -1217,7 +1217,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.length(geom)");
             query.setResultClass(Double.class);
             query.setUnique(true);
-            Double length_read = (Double) query.execute(new Long(getSampleLineString(1).getId()));
+            Double length_read = (Double) query.execute(Long.valueOf(getSampleLineString(1).getId()));
             assertTrue("Returned length should be > 0", length_read.doubleValue() > 0.0);
         }
         finally
@@ -1233,7 +1233,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Integer num = new Integer(2);
+            Integer num = Integer.valueOf(2);
             Query query = pm.newQuery(SampleGeometry.class, "id > 2000 && id < 3000 && Spatial.numPoints(geom) == :num");
             List list = (List) query.execute(num);
             assertEquals("Wrong number of geometries with " + num + " points returned", 2, list.size());
@@ -1244,7 +1244,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.numPoints(geom)");
             query.setResultClass(Integer.class);
             query.setUnique(true);
-            Integer num_read = (Integer) query.execute(new Long(getSampleLineString(1).getId()));
+            Integer num_read = (Integer) query.execute(Long.valueOf(getSampleLineString(1).getId()));
             assertEquals("Returned number of points should be equal to the given value", num, num_read);
         }
         finally
@@ -1261,7 +1261,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         {
             tx.begin();
             JGeometry point = new JGeometry(110.0, 10.0, 4326);
-            Short n = new Short((short) 3);
+            Short n = Short.valueOf((short) 3);
             Query query = pm.newQuery(SampleGeometry.class,
                 "id > 2000 && id < 3000 && Spatial.numPoints(geom) >= :n && Spatial.equals(Spatial.pointN(geom, :n), :point)");
             List list = (List) query.execute(n, point);
@@ -1272,7 +1272,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.pointN(geom, 3)");
             query.setUnique(true);
-            JGeometry point_read = (JGeometry) query.execute(new Long(getSampleLineString(3).getId()));
+            JGeometry point_read = (JGeometry) query.execute(Long.valueOf(getSampleLineString(3).getId()));
             assertEquals("Returned third point should be equal to the given point", point, point_read);
         }
         finally
@@ -1298,7 +1298,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.area(geom)");
             query.setResultClass(Double.class);
             query.setUnique(true);
-            Double area_read = (Double) query.execute(new Long(getSamplePolygon(1).getId()));
+            Double area_read = (Double) query.execute(Long.valueOf(getSamplePolygon(1).getId()));
             assertTrue("Returned area should be > 0", area_read.doubleValue() > 0.0);
         }
         finally
@@ -1323,7 +1323,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.centroid(geom)");
             query.setUnique(true);
-            JGeometry centroid_read = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
+            JGeometry centroid_read = (JGeometry) query.execute(Long.valueOf(getSamplePolygon(1).getId()));
             assertTrue("Centroid of Polygon 1 should be a point", centroid_read.getType() == JGeometry.GTYPE_POINT);
         }
         finally
@@ -1349,7 +1349,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.pointOnSurface(geom, 0.005)");
             query.setUnique(true);
-            JGeometry pointOnSurface = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
+            JGeometry pointOnSurface = (JGeometry) query.execute(Long.valueOf(getSamplePolygon(1).getId()));
             assertNotNull("Polygon 1 should have a point on the surface", pointOnSurface);
             assertTrue("Returned geometry should be a point", pointOnSurface.getType() == JGeometry.GTYPE_POINT);
         }
@@ -1375,7 +1375,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.exteriorRing(geom)");
             query.setUnique(true);
-            JGeometry exteriorRing_read = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
+            JGeometry exteriorRing_read = (JGeometry) query.execute(Long.valueOf(getSamplePolygon(1).getId()));
             assertTrue("Exterior ring of Polygon 1 should be a line or curve JGeometry.GTYPE_CURVE",
                 exteriorRing_read.getType() == JGeometry.GTYPE_CURVE);
         }
@@ -1401,8 +1401,8 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.numInteriorRing(geom)");
             query.setResultClass(Integer.class);
             query.setUnique(true);
-            Integer num_read = (Integer) query.execute(new Long(getSamplePolygon(1).getId()));
-            assertEquals("Polygon 1 should have one interior ring", new Integer(1), num_read);
+            Integer num_read = (Integer) query.execute(Long.valueOf(getSamplePolygon(1).getId()));
+            assertEquals("Polygon 1 should have one interior ring", Integer.valueOf(1), num_read);
         }
         finally
         {
@@ -1417,7 +1417,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Short n = new Short((short) 1);
+            Short n = Short.valueOf((short) 1);
             Query query = pm.newQuery(SampleGeometry.class, "id == 3001 && Spatial.interiorRingN(geom, 1) != null");
             List list = (List) query.execute(n);
             assertEquals("Wrong number of geometries which have interior ring(s) returned", 1, list.size());
@@ -1426,7 +1426,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.interiorRingN(geom, 1)");
             query.setUnique(true);
-            JGeometry interiorRing_read = (JGeometry) query.execute(new Long(getSamplePolygon(1).getId()));
+            JGeometry interiorRing_read = (JGeometry) query.execute(Long.valueOf(getSamplePolygon(1).getId()));
             assertTrue("First interior ring of Polygon 1 should be a polygon", interiorRing_read.getType() == JGeometry.GTYPE_POLYGON);
         }
         finally
@@ -1442,7 +1442,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
         try
         {
             tx.begin();
-            Integer num = new Integer(3);
+            Integer num = Integer.valueOf(3);
             Query query = pm.newQuery(SampleGeometry.class, "id > 7000 && id < 8000 && Spatial.numGeometries(geom) == :num");
             List list = (List) query.execute(num);
             assertEquals("Wrong number of collections with " + num + " geometries returned", 2, list.size());
@@ -1455,7 +1455,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query.setResult("Spatial.numGeometries(geom)");
             query.setResultClass(Integer.class);
             query.setUnique(true);
-            Integer num_read = (Integer) query.execute(new Long(getSampleGeometryCollection(1).getId()));
+            Integer num_read = (Integer) query.execute(Long.valueOf(getSampleGeometryCollection(1).getId()));
             assertEquals("Collection 1 should have three geometries", num, num_read);
         }
         finally
@@ -1483,7 +1483,7 @@ public class JGeometrySpatialTest extends JDOPersistenceTestCase
             query = pm.newQuery(SampleGeometry.class, "id == :id");
             query.setResult("Spatial.geometryN(geom, 1)");
             query.setUnique(true);
-            JGeometry point_read = (JGeometry) query.execute(new Long(getSampleGeometryCollection(2).getId()));
+            JGeometry point_read = (JGeometry) query.execute(Long.valueOf(getSampleGeometryCollection(2).getId()));
             assertTrue("First geometry of Collection 2 should be a point", point_read.getType() == JGeometry.GTYPE_POINT);
         }
         finally

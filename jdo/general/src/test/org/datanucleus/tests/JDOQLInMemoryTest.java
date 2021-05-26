@@ -683,7 +683,7 @@ public class JDOQLInMemoryTest extends JDOPersistenceTestCase
             Query q = pm.newQuery(getQueryLanguage(), "SELECT FROM " + Person.class.getName());
             q.addExtension("datanucleus.query.evaluateInMemory", "true");
             q.setFilter("personNum == :param1");
-            Collection c = (Collection)q.execute(new Integer(4));
+            Collection c = (Collection)q.execute(Integer.valueOf(4));
             assertEquals(1, c.size());
             tx.commit();
         }

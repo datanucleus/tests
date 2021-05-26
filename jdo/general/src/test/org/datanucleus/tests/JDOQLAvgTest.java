@@ -230,7 +230,7 @@ public class JDOQLAvgTest extends JDOPersistenceTestCase
     {
         FloatHolder floatHolder = new FloatHolder();
         floatHolder.setFloatField(value);
-        floatHolder.setFloatObjField(new Float(value));
+        floatHolder.setFloatObjField(Float.valueOf(value));
         floatHolder.setDoubleField(value);
         floatHolder.setDoubleObjField((double) value);
 

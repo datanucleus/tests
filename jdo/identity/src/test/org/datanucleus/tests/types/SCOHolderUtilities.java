@@ -67,13 +67,13 @@ public class SCOHolderUtilities
     {
         if( item_class == String.class )
         {
-            return new Double(value).toString();
+            return Double.valueOf(value).toString();
         }
         Object item=null;
         try
         {
             Class[] ctr_args_classes=new Class[] {String.class,double.class,int.class};
-            Object[] ctr_args=new Object[] {name,new Double(value),new Integer(status)};
+            Object[] ctr_args=new Object[] {name, Double.valueOf(value), Integer.valueOf(status)};
             Constructor ctr=item_class.getConstructor(ctr_args_classes);
             item = ctr.newInstance(ctr_args);
         }
@@ -92,13 +92,13 @@ public class SCOHolderUtilities
     {
         if( item_class == String.class )
         {
-            return new Double(value).toString();
+            return Double.valueOf(value).toString();
         }
         Object item=null;
         try
         {
             Class[] ctr_args_classes=new Class[] {String.class,double.class,int.class,String.class};
-            Object[] ctr_args=new Object[] {name,new Double(value),new Integer(status),code};
+            Object[] ctr_args=new Object[] {name, Double.valueOf(value), Integer.valueOf(status),code};
             Constructor ctr=item_class.getConstructor(ctr_args_classes);
             item = ctr.newInstance(ctr_args);
         }

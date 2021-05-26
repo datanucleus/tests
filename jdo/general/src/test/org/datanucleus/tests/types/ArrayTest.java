@@ -190,7 +190,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testBooleanObjectArray()
     {
-        Boolean[] elements = new Boolean[] {new Boolean(true), new Boolean(false), new Boolean(true), new Boolean(false)};
+        Boolean[] elements = new Boolean[] {Boolean.valueOf(true), Boolean.valueOf(false), Boolean.valueOf(true), Boolean.valueOf(false)};
         BooleanObjectArray holder = new BooleanObjectArray(elements, elements);
         performArrayTest(holder, Boolean[].class, elements, elements, 0.0);
 
@@ -203,7 +203,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testByteObjectArray()
     {
-        Byte[] elements = new Byte[] {new Byte("1"), new Byte("0"), new Byte("1"), new Byte("1")};
+        Byte[] elements = new Byte[] {Byte.parseByte("1"), Byte.parseByte("0"), Byte.parseByte("1"), Byte.parseByte("1")};
         ByteObjectArray holder = new ByteObjectArray(elements, elements);
         performArrayTest(holder, Byte[].class, elements, elements, 0.0);
 
@@ -216,7 +216,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testCharObjectArray()
     {
-        Character[] elements = new Character[] {new Character('A'), new Character('B'), new Character('C')};
+        Character[] elements = new Character[] { Character.valueOf('A'), Character.valueOf('B'), Character.valueOf('C')};
         CharObjectArray holder = new CharObjectArray(elements, elements);
         performArrayTest(holder, Character[].class, elements, elements, 0.0);
 
@@ -229,7 +229,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testDoubleObjectArray()
     {
-        Double[] elements = new Double[] {new Double(12.34567), new Double(23.45678), new Double(1.00), new Double(-299.89)};
+        Double[] elements = new Double[] {Double.valueOf(12.34567), Double.valueOf(23.45678), Double.valueOf(1.00), Double.valueOf(-299.89)};
         DoubleObjectArray holder = new DoubleObjectArray(elements, elements);
         performArrayTest(holder, Double[].class, elements, elements, 0.00001);
 
@@ -242,7 +242,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testFloatObjectArray()
     {
-        Float[] elements = new Float[] {new Float(12.34), new Float(34.5)};
+        Float[] elements = new Float[] {Float.valueOf((float) 12.34), Float.valueOf((float) 34.5)};
         FloatObjectArray holder = new FloatObjectArray(elements, elements);
         performArrayTest(holder, Float[].class, elements, elements, 0.00001);
 
@@ -255,7 +255,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testIntObjectArray()
     {
-        Integer[] elements = new Integer[] {new Integer(2001), new Integer(4001), new Integer(6004), new Integer(4000)};
+        Integer[] elements = new Integer[] {Integer.valueOf(2001), Integer.valueOf(4001), Integer.valueOf(6004), Integer.valueOf(4000)};
         IntObjectArray holder = new IntObjectArray(elements, elements);
         performArrayTest(holder, Integer[].class, elements, elements, 0.0);
 
@@ -268,7 +268,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testLongObjectArray()
     {
-        Long[] elements = new Long[] {new Long(123456789), new Long(432156789), new Long(1)};
+        Long[] elements = new Long[] {Long.valueOf(123456789), Long.valueOf(432156789), Long.valueOf(1)};
         LongObjectArray holder = new LongObjectArray(elements, elements);
         performArrayTest(holder, Long[].class, elements, elements, 0.0);
 
@@ -281,7 +281,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     public void testShortObjectArray()
     {
-        Short[] elements = new Short[] {new Short("123"), new Short("24"), new Short("1")};
+        Short[] elements = new Short[] {Short.valueOf("123"), Short.valueOf("24"), Short.valueOf("1")};
         ShortObjectArray holder = new ShortObjectArray(elements, elements);
         performArrayTest(holder, Short[].class, elements, elements, 0.0);
 
@@ -806,17 +806,17 @@ public class ArrayTest extends JDOPersistenceTestCase
 
                 Query  q = pm.newQuery(pm.getExtent(arrayHolder.getClass(), true));
                 q.setFilter("this.array2.size() == :p");
-                Collection c = (Collection) q.execute(new Integer(Array.getLength(expectedArray)));
+                Collection c = (Collection) q.execute(Integer.valueOf(Array.getLength(expectedArray)));
                 assertEquals("Number of " + arrayHolder.getClass().getName() + " objects retrieved was incorrect", 1, c.size());
 
                 q = pm.newQuery(pm.getExtent(arrayHolder.getClass(), true));
                 q.setFilter("this.array2.length == :p");
-                c = (Collection) q.execute(new Integer(Array.getLength(expectedArray)));
+                c = (Collection) q.execute(Integer.valueOf(Array.getLength(expectedArray)));
                 assertEquals("Number of " + arrayHolder.getClass().getName() + " objects retrieved was incorrect", 1, c.size());
 
                 q = pm.newQuery(pm.getExtent(arrayHolder.getClass(), true));
                 q.setFilter("this.array2.size() == :p");
-                c = (Collection) q.execute(new Integer(Array.getLength(expectedArray)));
+                c = (Collection) q.execute(Integer.valueOf(Array.getLength(expectedArray)));
                 assertEquals("Number of " + arrayHolder.getClass().getName() + " objects retrieved was incorrect", 1, c.size());
 
                 q = pm.newQuery(pm.getExtent(arrayHolder.getClass(), true));
@@ -826,7 +826,7 @@ public class ArrayTest extends JDOPersistenceTestCase
                 
                 q = pm.newQuery(pm.getExtent(arrayHolder.getClass(), true));
                 q.setFilter("this.array2.size() == :p");
-                c = (Collection) q.execute(new Integer(0));
+                c = (Collection) q.execute(Integer.valueOf(0));
                 assertEquals(c.size(), 0);
                 tx.commit();
             }

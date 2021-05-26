@@ -256,7 +256,7 @@ public class BasicListener implements CreateLifecycleListener, DeleteLifecycleLi
      */
     protected void addLifecycleEvent(int lifecycleEvent)
     {
-        registeredEvents.add(new Integer(lifecycleEvent));
+        registeredEvents.add(Integer.valueOf(lifecycleEvent));
     }
 
     private void assertEvent(int expected, int received)

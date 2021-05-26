@@ -184,7 +184,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 single = new HBase();
-                single.setId(new Integer(1));
+                single.setId(Integer.valueOf(1));
                 pm.makePersistent(single);
                 pm.flush();
                 JDOHelper.getObjectId(single);
@@ -1081,11 +1081,11 @@ public class InheritanceTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            Object obj = subClass.newInstance();
+            Object obj = subClass.getDeclaredConstructor().newInstance();
             Method setNameMethod = subClass.getMethod("setName", new Class[] {String.class});
             setNameMethod.invoke(obj, new Object[] {"My Example"});
             Method setValueMethod = subClass.getMethod("setValue", new Class[] {double.class});
-            setValueMethod.invoke(obj, new Object[] {new Double(1234.56)});
+            setValueMethod.invoke(obj, new Object[] {Double.valueOf(1234.56)});
 
             pm.makePersistent(obj);
             pm.flush();
@@ -1327,18 +1327,18 @@ public class InheritanceTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            Object baseobject = baseClass.newInstance();
+            Object baseobject = baseClass.getDeclaredConstructor().newInstance();
             Method setNameMethod = baseClass.getMethod("setName", new Class[] {String.class});
             setNameMethod.invoke(baseobject, new Object[] {"My Base Example"});
 
             pm.makePersistent(baseobject);
             pm.flush();
 
-            Object subobject = newTableSubSubClass.newInstance();
+            Object subobject = newTableSubSubClass.getDeclaredConstructor().newInstance();
             Method subSetNameMethod = newTableSubSubClass.getMethod("setName", new Class[] {String.class});
             subSetNameMethod.invoke(subobject, new Object[] {"My Sub Example"});
             Method subSetValueMethod = newTableSubSubClass.getMethod("setValue", new Class[] {double.class});
-            subSetValueMethod.invoke(subobject, new Object[] {new Double(1234.56)});
+            subSetValueMethod.invoke(subobject, new Object[] {Double.valueOf(1234.56)});
 
             pm.makePersistent(subobject);
             pm.flush();
@@ -1685,7 +1685,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create a base object
-            Object obj = baseClass.newInstance();
+            Object obj = baseClass.getDeclaredConstructor().newInstance();
             Method setNameMethod = baseClass.getMethod("setName", new Class[] {String.class});
             setNameMethod.invoke(obj, new Object[] {"Base Object"});
 
@@ -1718,11 +1718,11 @@ public class InheritanceTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create a sub object
-            Object obj1 = subClass1.newInstance();
+            Object obj1 = subClass1.getDeclaredConstructor().newInstance();
             Method setNameMethod = subClass1.getMethod("setName", new Class[] {String.class});
             setNameMethod.invoke(obj1, new Object[] {"Sub Object 1"});
             Method setValueMethod = subClass1.getMethod("setValue", new Class[] {double.class});
-            setValueMethod.invoke(obj1, new Object[] {new Double(1234.56)});
+            setValueMethod.invoke(obj1, new Object[] {Double.valueOf(1234.56)});
 
             pm.makePersistent(obj1);
 
@@ -1733,11 +1733,11 @@ public class InheritanceTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create a sub object
-            Object obj2 = subClass2.newInstance();
+            Object obj2 = subClass2.getDeclaredConstructor().newInstance();
             Method setNameMethod2 = subClass2.getMethod("setName", new Class[] {String.class});
             setNameMethod2.invoke(obj2, new Object[] {"Sub Object 2"});
             Method setValueMethod2 = subClass2.getMethod("setValue2", new Class[] {float.class});
-            setValueMethod2.invoke(obj2, new Object[] {new Float(2345.67)});
+            setValueMethod2.invoke(obj2, new Object[] {Float.valueOf((float) 2345.67)});
 
             pm.makePersistent(obj2);
 
@@ -1989,18 +1989,18 @@ public class InheritanceTest extends JDOPersistenceTestCase
             tx.begin();
 
             // Create a base object
-            Object baseobject = baseClass.newInstance();
+            Object baseobject = baseClass.getDeclaredConstructor().newInstance();
             Method baseSetNameMethod = baseClass.getMethod("setName", new Class[] {String.class});
             baseSetNameMethod.invoke(baseobject, new Object[] {"Base Object"});
 
             pm.makePersistent(baseobject);
 
             // Create a sub object
-            Object subobject = subClass.newInstance();
+            Object subobject = subClass.getDeclaredConstructor().newInstance();
             Method subSetNameMethod = subClass.getMethod("setName", new Class[] {String.class});
             subSetNameMethod.invoke(subobject, new Object[] {"Sub Object"});
             Method subSetValueMethod = subClass.getMethod("setValue", new Class[] {double.class});
-            subSetValueMethod.invoke(subobject, new Object[] {new Double(1234.56)});
+            subSetValueMethod.invoke(subobject, new Object[] {Double.valueOf(1234.56)});
 
             pm.makePersistent(subobject);
 

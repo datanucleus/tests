@@ -1020,12 +1020,12 @@ public class CompoundIdentityTest extends JDOPersistenceTestCase
                 tx.begin();
                 CompoundHolder holder2 = (CompoundHolder) pm.getObjectById(id, true);
                 assertEquals(6, holder2.getMap2().size());
-                assertEquals(new Double(1.0), holder2.getMap2().get(values[0]));
-                assertEquals(new Double(2.0), holder2.getMap2().get(values[1]));
-                assertEquals(new Double(3.0), holder2.getMap2().get(values[2]));
-                assertEquals(new Double(4.0), holder2.getMap2().get(values[3]));
-                assertEquals(new Double(5.0), holder2.getMap2().get(values[4]));
-                assertEquals(new Double(6.0), holder2.getMap2().get(values[5]));
+                assertEquals(Double.valueOf(1.0), holder2.getMap2().get(values[0]));
+                assertEquals(Double.valueOf(2.0), holder2.getMap2().get(values[1]));
+                assertEquals(Double.valueOf(3.0), holder2.getMap2().get(values[2]));
+                assertEquals(Double.valueOf(4.0), holder2.getMap2().get(values[3]));
+                assertEquals(Double.valueOf(5.0), holder2.getMap2().get(values[4]));
+                assertEquals(Double.valueOf(6.0), holder2.getMap2().get(values[5]));
                 tx.commit();
             }
             catch (Exception e)
@@ -1357,7 +1357,7 @@ public class CompoundIdentityTest extends JDOPersistenceTestCase
             source = new CompoundSource1();
             source.setAddress1Attr("8356 Green Street");
             source.setAddress2Attr("Unit 103");
-            source.setBillingFlagAttr(new Boolean(false));
+            source.setBillingFlagAttr(Boolean.valueOf(false));
             source.setCityAttr("Honolulu");
             source.setStateAttr("HI");
             source.setZipAttr("99091");
@@ -1430,7 +1430,7 @@ public class CompoundIdentityTest extends JDOPersistenceTestCase
             source = new CompoundSource1();
             source.setAddress1Attr("8356 Green Street");
             source.setAddress2Attr("Unit 105");
-            source.setBillingFlagAttr(new Boolean(false));
+            source.setBillingFlagAttr(Boolean.valueOf(false));
             source.setCityAttr("Honolulu");
             source.setStateAttr("HI");
             source.setZipAttr("99091");

@@ -279,7 +279,7 @@ public class LifeListener implements CreateLifecycleListener, DeleteLifecycleLis
      */
     public void setLifecycleEvent(int lifecycleEvent)
     {
-        registeredEvents.add(new Integer(lifecycleEvent));
+        registeredEvents.add(Integer.valueOf(lifecycleEvent));
     }
     
     /**

@@ -63,7 +63,7 @@ public class DataSourceDriverAdapterObjectFactory implements ObjectFactory
                 passwd = value;
             }
         }
-        Driver drv = (Driver) Class.forName(drivercls).newInstance();
+        Driver drv = (Driver) Class.forName(drivercls).getDeclaredConstructor().newInstance();
         DataSourceDriverAdapter dsda = new DataSourceDriverAdapter();
         dsda.setDriver(drv);
         dsda.setUrl(driverurl);

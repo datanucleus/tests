@@ -21,11 +21,8 @@ package org.datanucleus.samples.store;
 import javax.jdo.datastore.Sequence;
 
 /**
- * Simple implementation of a sequence that counts from 0 and increments
- * by 1 every time. Allocation is not necessary because it increments
- * a long value internally.
- *
- * @version $Revision: 1.1 $
+ * Simple implementation of a sequence that counts from 0 and increments by 1 every time. 
+ * Allocation is not necessary because it increments a long value internally.
  */
 public class SimpleSequence implements Sequence
 {
@@ -53,7 +50,7 @@ public class SimpleSequence implements Sequence
     public Object next()
     {
         current++;
-        return new Long(current);
+        return Long.valueOf(current);
     }
 
     /**
@@ -80,7 +77,7 @@ public class SimpleSequence implements Sequence
      */
     public Object current()
     {
-        return new Long(current);
+        return Long.valueOf(current);
     }
 
     /**

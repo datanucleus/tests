@@ -107,7 +107,7 @@ public class ComposedMixedIDBase extends TestObject implements InstanceCallbacks
     {
         code = r.nextInt(50000);
         composed = "LONG COMPOSED KEY random number: " + String.valueOf(r.nextInt() * 1000);
-        doubleObjField = new Double(r.nextInt(10000));
+        doubleObjField = Double.valueOf(r.nextInt(10000));
         fillUpdateRandom();
     }
 
@@ -170,7 +170,7 @@ public class ComposedMixedIDBase extends TestObject implements InstanceCallbacks
             str = toke.nextToken ();
             this.composed = str;
             str = toke.nextToken ();
-            this.doubleObjField = new Double(Double.parseDouble(str));
+            this.doubleObjField = Double.valueOf(Double.parseDouble(str));
         }
 
         public boolean equals (Object obj)

@@ -3076,15 +3076,15 @@ public class RelationshipTest extends JDOPersistenceTestCase
                 // Create a couple of nodes and store some attribute in them.
                 JdoNode n1 = g.createNode(gcA);
                 n1.putAttributeValue(attrName, "John");
-                n1.putAttributeValue(attrKey, new Integer(1));
+                n1.putAttributeValue(attrKey, Integer.valueOf(1));
                 
                 JdoNode n2 = g.createNode(gcA);
                 n2.putAttributeValue(attrName, "John");
-                n2.putAttributeValue(attrKey, new Integer(1));
+                n2.putAttributeValue(attrKey, Integer.valueOf(1));
                 
                 JdoNode n3 = g.createNode(gcA);
                 n3.putAttributeValue(attrName, "Smith ");
-                n3.putAttributeValue(attrKey, new Integer(1));
+                n3.putAttributeValue(attrKey, Integer.valueOf(1));
                 //attrName = (JdoAttribute)pm.detachCopy(attrName);
 
                 pm.flush();
@@ -3094,7 +3094,7 @@ public class RelationshipTest extends JDOPersistenceTestCase
                     "((JdoAttributeHolder)attributes.get(attr)).hashedValue == value");
                 q.declareImports("import org.jpox.samples.models.graph.JdoAttribute; import org.jpox.samples.models.graph.JdoAttributeHolder");
                 q.declareParameters("JdoAttribute attr, int value");
-                Collection possibleGEs = (Collection) q.execute(attrName, new Integer("John".hashCode()));
+                Collection possibleGEs = (Collection) q.execute(attrName, Integer.valueOf("John".hashCode()));
 
                 // Select only those graph entities whose attribute values are really equal.
                 Collection result = new HashSet();

@@ -364,7 +364,7 @@ public class JPQLCompilerTest extends JPAPersistenceTestCase
 
         assertTrue("DyadicExpression left should have been Literal but wasnt", dyExpr.getRight() instanceof Literal);
         Literal rightExpr = (Literal)dyExpr.getRight();
-        assertEquals("Parameter2 to indexOf() has wrong value", new Integer(5), rightExpr.getLiteral());
+        assertEquals("Parameter2 to indexOf() has wrong value", Integer.valueOf(5), rightExpr.getLiteral());
     }
 
     /**

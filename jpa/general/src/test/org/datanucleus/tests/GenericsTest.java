@@ -52,11 +52,11 @@ public class GenericsTest extends JPAPersistenceTestCase
                 tx.begin();
 
                 GenericOneOneRelated1 r1 = new GenericOneOneRelated1("First Related");
-                r1.setId(new Long(1));
+                r1.setId(Long.valueOf(1));
                 r1.setAge(33);
                 GenericOneOneSub1 s1 = new GenericOneOneSub1("First Object");
                 s1.setType(GenericEnumType.TYPE_1);
-                s1.setId(new Long(101));
+                s1.setId(Long.valueOf(101));
                 s1.setAge(10);
                 s1.setOwner(r1);
                 r1.getRelatedObjects().add(s1);
@@ -64,11 +64,11 @@ public class GenericsTest extends JPAPersistenceTestCase
                 em.persist(s1);
 
                 GenericOneOneRelated1 r2 = new GenericOneOneRelated1("Second Related");
-                r2.setId(new Long(2));
+                r2.setId(Long.valueOf(2));
                 r2.setAge(25);
                 GenericOneOneSub1 s2 = new GenericOneOneSub1("Second Object");
                 s2.setType(GenericEnumType.TYPE_2);
-                s2.setId(new Long(102));
+                s2.setId(Long.valueOf(102));
                 s2.setAge(28);
                 s2.setOwner(r2);
                 r2.getRelatedObjects().add(s2);
@@ -132,11 +132,11 @@ public class GenericsTest extends JPAPersistenceTestCase
                 tx.begin();
 
                 GenericOneOneRelated2 r1 = new GenericOneOneRelated2("First Related");
-                r1.setId(new Long(1));
+                r1.setId(Long.valueOf(1));
                 r1.setAge(33);
                 GenericOneOneSub2 s1 = new GenericOneOneSub2("First Object");
                 s1.setType(GenericEnumType.TYPE_1);
-                s1.setId(new Long(101));
+                s1.setId(Long.valueOf(101));
                 s1.setAge(10);
                 s1.setOwner(r1);
                 r1.getRelatedObjects().add(s1);
@@ -144,11 +144,11 @@ public class GenericsTest extends JPAPersistenceTestCase
                 em.persist(s1);
 
                 GenericOneOneRelated2 r2 = new GenericOneOneRelated2("Second Related");
-                r2.setId(new Long(2));
+                r2.setId(Long.valueOf(2));
                 r2.setAge(25);
                 GenericOneOneSub2 s2 = new GenericOneOneSub2("Second Object");
                 s2.setType(GenericEnumType.TYPE_2);
-                s2.setId(new Long(102));
+                s2.setId(Long.valueOf(102));
                 s2.setAge(28);
                 s2.setOwner(r2);
                 r2.getRelatedObjects().add(s2);

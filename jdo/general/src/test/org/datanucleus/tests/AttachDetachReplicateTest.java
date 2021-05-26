@@ -574,8 +574,8 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
                 tx1.begin();
 
                 Manager ds1_manager = new Manager(1L, "Lucifer", "Satan", "Lucifer.Satan@microsoft.hell", 33666.99f, "jsdkhf8z23");
-                Employee ds1_employee1 = new Employee(9593L, "McCreevy", "Charlie", "Charlie.McCreevy@microsoft.hell", 9948.57f, "8967bjjhg", new Integer(94));
-                Employee ds1_employee2 = new Employee(8723L, "Gates", "Bill", "Bill.Gates@microsoft.hell", 11835.17f, "3894lknsd", new Integer(42));
+                Employee ds1_employee1 = new Employee(9593L, "McCreevy", "Charlie", "Charlie.McCreevy@microsoft.hell", 9948.57f, "8967bjjhg", Integer.valueOf(94));
+                Employee ds1_employee2 = new Employee(8723L, "Gates", "Bill", "Bill.Gates@microsoft.hell", 11835.17f, "3894lknsd", Integer.valueOf(42));
 
                 Department ds1_department1 = new Department("Brainwashing");
                 ds1_department1.setManager(ds1_manager);

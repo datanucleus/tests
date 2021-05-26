@@ -95,7 +95,7 @@ public class SFAIDCharObjIdentity extends TestObject implements InstanceCallback
 
     public void fillRandom()
     {
-        this.code = new Character(getNextCharacter());
+        this.code = Character.valueOf(getNextCharacter());
         fillUpdateRandom();
     }
 

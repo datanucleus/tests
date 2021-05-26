@@ -76,7 +76,7 @@ public class SFAIDShortObjIdentity extends TestObject implements InstanceCallbac
 
     public void fillRandom()
     {
-        this.code = new Short((short)r.nextInt());
+        this.code = Short.valueOf((short)r.nextInt());
         fillUpdateRandom();
     }
 

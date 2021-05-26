@@ -201,16 +201,16 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 TableGeneratorItem item=null;
                 item = new TableGeneratorItem("First item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 item = new TableGeneratorItem("Second item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 item = new TableGeneratorItem("Third item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 item = new TableGeneratorItem("Fourth item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 tx.commit();
                 idClass = JDOHelper.getObjectId(item).getClass();
@@ -249,7 +249,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                     Object o=iter.next();
                     if (TableGeneratorItem.Oid.class.equals(idClass))
                     {
-                        idSetCopy.remove(new Integer(((TableGeneratorItem)o).getIdentifier()));
+                        idSetCopy.remove(Integer.valueOf(((TableGeneratorItem)o).getIdentifier()));
                     }
                 }
                 
@@ -729,22 +729,22 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 item = new MaxGeneratorItem("First item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 item = new MaxGeneratorItem("Second item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 item = new MaxGeneratorItem("Third item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 item = new MaxGeneratorItem("Fourth item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 idClass = JDOHelper.getObjectId(item).getClass();
                 
@@ -784,7 +784,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                     Object o=iter.next();
                     if (MaxGeneratorItem.Oid.class.equals(idClass))
                     {
-                        idSetCopy.remove(new Integer(((MaxGeneratorItem)o).getIdentifier()));
+                        idSetCopy.remove(Integer.valueOf(((MaxGeneratorItem)o).getIdentifier()));
                     }
                 }
                 
@@ -846,22 +846,22 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 item = new SequenceGeneratorItem("First item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 item = new SequenceGeneratorItem("Second item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 item = new SequenceGeneratorItem("Third item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 item = new SequenceGeneratorItem("Fourth item");
                 pm.makePersistent(item);
                 pm.flush();
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 
                 idClass = JDOHelper.getObjectId(item).getClass();
                 
@@ -902,7 +902,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                     Object o=iter.next();
                     if (SequenceGeneratorItem.Oid.class.equals(idClass))
                     {
-                        idSetCopy.remove(new Integer(((SequenceGeneratorItem)o).getIdentifier()));
+                        idSetCopy.remove(Integer.valueOf(((SequenceGeneratorItem)o).getIdentifier()));
                     }
                 }
                 
@@ -963,22 +963,22 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
             item = new IdentityGeneratorItem("First item");
             pm.makePersistent(item);
             pm.flush();
-            idSet.add(new Integer(item.getIdentifier()));
+            idSet.add(Integer.valueOf(item.getIdentifier()));
 
             item = new IdentityGeneratorItem("Second item");
             pm.makePersistent(item);
             pm.flush();
-            idSet.add(new Integer(item.getIdentifier()));
+            idSet.add(Integer.valueOf(item.getIdentifier()));
 
             item = new IdentityGeneratorItem("Third item");
             pm.makePersistent(item);
             pm.flush();
-            idSet.add(new Integer(item.getIdentifier()));
+            idSet.add(Integer.valueOf(item.getIdentifier()));
 
             item = new IdentityGeneratorItem("Fourth item");
             pm.makePersistent(item);
             pm.flush();
-            idSet.add(new Integer(item.getIdentifier()));
+            idSet.add(Integer.valueOf(item.getIdentifier()));
 
             idClass = JDOHelper.getObjectId(item).getClass();
 
@@ -1019,7 +1019,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 Object o=iter.next();
                 if (IdentityGeneratorItem.Oid.class.equals(idClass))
                 {
-                    idSetCopy.remove(new Integer(((IdentityGeneratorItem)o).getIdentifier()));
+                    idSetCopy.remove(Integer.valueOf(((IdentityGeneratorItem)o).getIdentifier()));
                 }
             }
 

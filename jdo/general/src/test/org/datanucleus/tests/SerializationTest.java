@@ -61,7 +61,7 @@ public class SerializationTest extends JDOPersistenceTestCase
      */
     public void testOIDSerialization()
     {
-        Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+        Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
         Object id = null;
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();

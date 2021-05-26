@@ -283,7 +283,7 @@ public class DynamicEnhanceSchemaToolTest extends TestCase
             {
                 tx.begin();
                 Class clazz = clr.classForName("test.Client");
-                Object o = clazz.newInstance();
+                Object o = clazz.getDeclaredConstructor().newInstance();
                 pm.makePersistent(o);
                 tx.commit();
                 id = pm.getObjectId(o);

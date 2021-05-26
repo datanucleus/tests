@@ -115,7 +115,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             {
                 Transaction tx = pm.currentTransaction();
                 tx.begin();
-                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
                 pm.makePersistent(woody);
                 woodyDetached = pm.detachCopy(woody);
 
@@ -236,7 +236,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     {
         try
         {
-            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",Integer.valueOf(10));
             Employee woodyDetached = null;
             Employee woody2;
             Employee woodyAttached = null;
@@ -502,7 +502,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     {
         try
         {
-            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
             Manager boss2 = new Manager(4,"Boss","WakesUp2","boss2@wakes.up",5,"serial 4");
@@ -692,7 +692,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     {
         try
         {
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
             woody.setManager(bart);
             Department deptB = new Department("DeptB");
@@ -1872,7 +1872,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     {
         try
         {
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
             Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
 
@@ -1915,7 +1915,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
                 detachedEmployee = (Employee) pm.detachCopy(c.iterator().next());
 
                 // test with Integer (Object) fields non DFG
-                detachedEmployee.setYearsInCompany(new Integer(33));
+                detachedEmployee.setYearsInCompany(Integer.valueOf(33));
 
                 id = JDOHelper.getObjectId(detachedEmployee);
 
@@ -2096,7 +2096,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
     {
         try
         {
-            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+            Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
             Manager boss = new Manager(3, "Boss", "WakesUp", "boss@wakes.up", 4, "serial 3");
             woody.setManager(bart);
@@ -2520,7 +2520,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
                 woody.setAccount(detachedAcct);
 
                 pm.makePersistent(woody);
@@ -2712,7 +2712,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+                Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
 
                 // This should persist it and then detach it
                 pm.detachCopy(woody);
@@ -4886,7 +4886,7 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+                Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",Integer.valueOf(10));
                 Account acct = new Account();
                 acct.setId(101);
                 acct.setEnabled(true);

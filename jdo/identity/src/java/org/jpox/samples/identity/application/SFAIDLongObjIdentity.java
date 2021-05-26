@@ -76,7 +76,7 @@ public class SFAIDLongObjIdentity extends TestObject implements InstanceCallback
 
     public void fillRandom()
     {
-        this.code = new Long(r.nextInt());
+        this.code = Long.valueOf(r.nextInt());
         fillUpdateRandom();
     }
 

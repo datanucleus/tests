@@ -240,7 +240,7 @@ public class JPQLSubqueryTest extends JPAPersistenceTestCase
                 query  = em.createQuery("SELECT Object(W) FROM " + WebSite.class.getName() + " W " +
                     "WHERE W.id IN (SELECT WW.id FROM " + WebSite.class.getName() + " WW WHERE WW.url = :url AND WW.id= :oid)");
                 query.setParameter("url", "nourl");
-                query.setParameter("oid", new Integer(3));
+                query.setParameter("oid", Integer.valueOf(3));
                 result = query.getResultList();
                 assertEquals(0, result.size());
 

@@ -55,14 +55,14 @@ public class CacheTest extends JPAPersistenceTestCase
                 // Should not be L2 cached yet, since only done at commit
                 Cache jpaCache = emf.getCache();
                 Object puutilId = emf.getPersistenceUnitUtil().getIdentifier(simple1);
-                assertFalse(jpaCache.contains(SimpleClass.class, new Long(1001)));
+                assertFalse(jpaCache.contains(SimpleClass.class, Long.valueOf(1001)));
                 assertFalse(jpaCache.contains(SimpleClass.class, puutilId));
 
                 tx.commit();
 
                 // Should be L2 cached now. Note that this assumes that they aren't GCed yet
                 puutilId = emf.getPersistenceUnitUtil().getIdentifier(simple1);
-                assertTrue(jpaCache.contains(SimpleClass.class, new Long(1001)));
+                assertTrue(jpaCache.contains(SimpleClass.class, Long.valueOf(1001)));
                 assertTrue(jpaCache.contains(SimpleClass.class, puutilId));
             }
             catch (Exception e)

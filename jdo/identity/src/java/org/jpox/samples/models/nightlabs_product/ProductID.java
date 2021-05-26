@@ -33,8 +33,8 @@ implements Serializable
 	protected static final String SEPARATORS_FOR_TOKENIZER = "/?=&";
 	protected static final String SEPARATOR_KEY_VALUE = "=";
 	protected static final String SEPARATOR_ENTRY = "&";	
-	protected static final Byte NULLBYTE = new Byte((byte)0);
-	protected static final Character NULLCHAR = new Character((char)0);
+	protected static final Byte NULLBYTE = Byte.valueOf((byte)0);
+	protected static final Character NULLCHAR = Character.valueOf((char)0);
 
 	/**
 	 * The radix that is used for encoding/decoding field values of numeric IDs (byte, short, int, long).
@@ -149,22 +149,22 @@ implements Serializable
 					val = valStr;
 				}
 				else if (boolean.class.isAssignableFrom(fieldType)) {
-					val = new Boolean(valStr);
+					val = Boolean.parseBoolean(valStr);
 				}
 				else if (char.class.isAssignableFrom(fieldType)) {
-					val = new Character(valStr.charAt(0));
+					val = Character.valueOf(valStr.charAt(0));
 				}
 				else if (byte.class.isAssignableFrom(fieldType)) {
-					val = new Byte(Byte.parseByte(valStr, RADIX));
+					val = Byte.valueOf(Byte.parseByte(valStr, RADIX));
 				}
 				else if (short.class.isAssignableFrom(fieldType)) {
-					val = new Short(Short.parseShort(valStr, RADIX));
+					val = Short.valueOf(Short.parseShort(valStr, RADIX));
 				}
 				else if (int.class.isAssignableFrom(fieldType)) {
-					val = new Integer(Integer.parseInt(valStr, RADIX));
+					val = Integer.valueOf(Integer.parseInt(valStr, RADIX));
 				}
 				else if (long.class.isAssignableFrom(fieldType)) {
-					val = new Long(Long.parseLong(valStr, RADIX));
+					val = Long.valueOf(Long.parseLong(valStr, RADIX));
 				}
 				else
 					throw new IllegalArgumentException("Type "+fieldType.getName()+" of member "+key+" is not unsupported!");

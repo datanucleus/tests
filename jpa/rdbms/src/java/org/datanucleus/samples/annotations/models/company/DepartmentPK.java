@@ -35,7 +35,7 @@ public class DepartmentPK implements java.io.Serializable
 
     public DepartmentPK(int intID, String strID)
     {
-        this.idInteger = new Integer(intID);
+        this.idInteger = Integer.valueOf(intID);
         this.idString = strID;
     }
 

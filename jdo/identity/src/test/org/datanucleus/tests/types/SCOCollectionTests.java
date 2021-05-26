@@ -182,7 +182,7 @@ public class SCOCollectionTests
             // Create a container and a few items
             try
             {
-                container = container_class.newInstance();
+                container = container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -1046,7 +1046,7 @@ public class SCOCollectionTests
 			CollectionHolder container) {
 		try
 		{
-		    container = (CollectionHolder) container_class.newInstance();
+		    container = (CollectionHolder) container_class.getDeclaredConstructor().newInstance();
 		}
 		catch (Exception e1)
 		{
@@ -1278,7 +1278,7 @@ public class SCOCollectionTests
             try
             {
                 // Create a container and a few items
-                CollectionHolder container = (CollectionHolder) container_class.newInstance();
+                CollectionHolder container = (CollectionHolder) container_class.getDeclaredConstructor().newInstance();
 
                 Object item=null;
 

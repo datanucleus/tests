@@ -72,7 +72,7 @@ public class Base
 
         public int hashCode()
         {
-            return new Integer(id).hashCode();
+            return Integer.valueOf(id).hashCode();
         }
 
         public String toString()

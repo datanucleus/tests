@@ -83,7 +83,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -182,7 +182,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -286,7 +286,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -414,7 +414,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -542,7 +542,7 @@ public class SCOMapTests
             try
             {
                 // Create a container and a few items
-                MapHolder container = (MapHolder) container_class.newInstance();
+                MapHolder container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
 
                 Object item=null;
 
@@ -657,7 +657,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -786,7 +786,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -916,7 +916,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -1042,7 +1042,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -1172,7 +1172,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -1290,7 +1290,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -1402,7 +1402,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {
@@ -1514,7 +1514,7 @@ public class SCOMapTests
             MapHolder container = null;
             try
             {
-                container = (MapHolder) container_class.newInstance();
+                container = (MapHolder) container_class.getDeclaredConstructor().newInstance();
             }
             catch (Exception e1)
             {

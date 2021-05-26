@@ -70,7 +70,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
             
             PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
-            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             woody.setManager(bart);
             pm.makePersistent(woody);
@@ -137,7 +137,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
             
             PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
-            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             woody.setManager(bart);
             pm.makePersistent(woody);
@@ -204,7 +204,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
             
             PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
-            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             final Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
             woody.setManager(bart);
@@ -273,7 +273,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
             
             final PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
-            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             final Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
             woody.setManager(bart);
@@ -355,7 +355,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
             
             PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
-            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            final Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             final Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
             woody.setManager(bart);
@@ -421,7 +421,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
             
             PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
-            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             woody.setManager(bart);
             pm.makePersistent(woody);
@@ -519,7 +519,7 @@ public class MultithreadPMTest extends JDOPersistenceTestCase
             
             PersistenceManager pm = myPMF.getPersistenceManager();
             pm.currentTransaction().begin();
-            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1", Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             woody.setManager(bart);
             pm.makePersistent(woody);

@@ -76,7 +76,7 @@ public class SFAIDIntegerObjIdentity extends TestObject implements InstanceCallb
 
     public void fillRandom()
     {
-        this.code = new Integer(r.nextInt());
+        this.code = Integer.valueOf(r.nextInt());
         fillUpdateRandom();
     }
 

@@ -134,7 +134,7 @@ public class AnnotationPlusXMLOverrideTest extends JDOPersistenceTestCase
         fmd = cmd.getMetaDataForMember("emailAddress");
         colmds = fmd.getColumnMetaData();
         assertEquals(prefix + "column identifier incorrect", "EMAIL_ADDRESS", colmds[0].getName());
-        assertEquals(prefix + "column length incorrect", new Integer(100), colmds[0].getLength());
+        assertEquals(prefix + "column length incorrect", Integer.valueOf(100), colmds[0].getLength());
         assertEquals(prefix + "column JDBC type incorrect", JdbcType.CHAR, colmds[0].getJdbcType());
     }
 

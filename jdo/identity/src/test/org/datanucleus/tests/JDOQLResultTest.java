@@ -1239,7 +1239,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                     basics[i].setLongField(i+1);
                     basics[i].setShortField((short) (i+11));
                     basics[i].setIntField(20040101);
-                    basics[i].setBooleanObjectField(new Boolean(i%2==0));
+                    basics[i].setBooleanObjectField(Boolean.valueOf(i%2==0));
                     basics[i].setCharField('0');
                 }
                 pm.makePersistentAll(basics);
@@ -1868,12 +1868,12 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 q.setFilter("this.longField == 1 || this.longField == 2");
                 q.setResult("l");
                 q.declareParameters("Long l");
-                c = (Collection) q.execute(new Long(10));
+                c = (Collection) q.execute(Long.valueOf(10));
                 Assert.assertEquals(2,c.size());
 
                 it = c.iterator();
-                assertEquals(new Long(10),it.next());
-                assertEquals(new Long(10),it.next());
+                assertEquals(Long.valueOf(10),it.next());
+                assertEquals(Long.valueOf(10),it.next());
 
                 //test return Primitive
                 q = pm.newQuery(BasicTypeHolder.class);
@@ -1930,7 +1930,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
 
                 it = c.iterator();
                 assertEquals(1, p.getLongField());
-                assertEquals(new Long(1), it.next());
+                assertEquals(Long.valueOf(1), it.next());
 
                 tx.commit();
             }

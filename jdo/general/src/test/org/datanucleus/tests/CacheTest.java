@@ -209,8 +209,8 @@ public class CacheTest extends JDOPersistenceTestCase
                 DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Employee.class); // All Employees/Managers get pinned
                 tx.begin();
-                final Employee woody = new Employee(1,"Woody",null,"woody@woodpecker.com",13,"serial 1",new Integer(10));
-                final Employee woodless = new Employee(2,"Woodless","Woodpecker","woodless@woodpecker.com",14,"serial 2",new Integer(11));
+                final Employee woody = new Employee(1,"Woody",null,"woody@woodpecker.com",13,"serial 1",Integer.valueOf(10));
+                final Employee woodless = new Employee(2,"Woodless","Woodpecker","woodless@woodpecker.com",14,"serial 2",Integer.valueOf(11));
                 Manager bart = new Manager(3,"Bart","Simpson","bart@simpson.com",3,"serial 3");
                 woody.setManager(bart);
                 pm.makePersistent(woody);
@@ -543,8 +543,8 @@ public class CacheTest extends JDOPersistenceTestCase
                 l2Cache.pinAll(true, Employee.class); // All Employees/Managers get pinned
 
                 tx.begin();
-                final Employee woody = new Employee(1,"Woody",null,"woody@woodpecker.com",13,"serial 1",new Integer(10));
-                final Employee woodless = new Employee(2,"Woodless","Woodpecker","woodless@woodpecker.com",14,"serial 2",new Integer(11));
+                final Employee woody = new Employee(1,"Woody",null,"woody@woodpecker.com",13,"serial 1",Integer.valueOf(10));
+                final Employee woodless = new Employee(2,"Woodless","Woodpecker","woodless@woodpecker.com",14,"serial 2",Integer.valueOf(11));
                 Manager bart = new Manager(3,"Bart","Simpson","bart@simpson.com",3,"serial 3");
                 woody.setManager(bart);
                 pm.makePersistent(woody);
@@ -910,7 +910,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Employee.class); // All Employees/Managers get pinned
                 tx.begin();
-                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
                 pm.makePersistent(woody);
                 woodyId = pm.getObjectId(woody);
 
@@ -1163,7 +1163,7 @@ public class CacheTest extends JDOPersistenceTestCase
                 DataStoreCache l2Cache = cachePMF.getDataStoreCache();
                 l2Cache.pinAll(true, Employee.class);
                 tx.begin();
-                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", new Integer(10));
+                final Employee woody = new Employee(1, "Woody", "Woodpecker", "woody@woodpecker.com", 13, "serial 1", Integer.valueOf(10));
                 Manager bart = new Manager(2, "Bart", "Simpson", "bart@simpson.com", 2, "serial 2");
                 woody.setManager(bart);
                 pm.makePersistent(woody);

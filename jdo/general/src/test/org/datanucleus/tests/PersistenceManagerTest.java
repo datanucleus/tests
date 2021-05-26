@@ -505,8 +505,8 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 // Update the data without a transaction
                 tx.setNontransactionalRead(true);
                 tx.setNontransactionalWrite(true);
-                p.setIntObject(new Integer(1));
-                p.setShortObject(new Short((short)2));
+                p.setIntObject(Integer.valueOf(1));
+                p.setShortObject(Short.valueOf((short)2));
                 p = null;
             }
             finally
@@ -582,15 +582,15 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 tx.commit();
 
                 // Make a nontransactional update
-                p.setIntObject(new Integer(1));
-                p.setShortObject(new Short((short)2));
+                p.setIntObject(Integer.valueOf(1));
+                p.setShortObject(Short.valueOf((short)2));
                 intValue = 1; // Necessary when using nontx.atomic for updates
                 shortValue = 2; // Necessary when using nontx.atomic for updates
 
                 // Make a change and roll it back
                 tx.setRestoreValues(true);
                 tx.begin();
-                p.setIntObject(new Integer(3));
+                p.setIntObject(Integer.valueOf(3));
                 tx.rollback();
                 assertEquals(1,p.getIntObject().intValue());
                 assertEquals(2,p.getShortObject().shortValue());
@@ -667,7 +667,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         // SingleField Identity
         try
         {
-            pm.newObjectIdInstance(SingleFieldLongID.class, new Long(124));
+            pm.newObjectIdInstance(SingleFieldLongID.class, Long.valueOf(124));
         }
         catch (Exception e)
         {
@@ -708,7 +708,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
 
                 Object id = pm.getObjectId(p);
                 Object id1 = pm.getObjectId(null);
-                Object id2 = pm.getObjectId(new Integer(1));
+                Object id2 = pm.getObjectId(Integer.valueOf(1));
                 Object id3 = pm.getObjectId(p1);
                 Object id4 = pm.getObjectId(new Primitive());
                 assertNotNull(id);
@@ -781,7 +781,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
                 // Check the throwing of an error with an invalid id
                 try
                 {
-                    pm.getObjectById(new Integer(1));
+                    pm.getObjectById(Integer.valueOf(1));
                 }
                 catch (JDOObjectNotFoundException ex)
                 {
@@ -4603,21 +4603,21 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             BigDecimal bd, BigInteger bi, java.util.Date dt1, java.sql.Date dt2, java.sql.Time dt3, java.sql.Timestamp tm)
     {
         p.setBoolean(b);
-        p.setBooleanObject(new Boolean(b));
+        p.setBooleanObject(Boolean.valueOf(b));
         p.setByte(y);
-        p.setByteObject(new Byte(y));
+        p.setByteObject(Byte.valueOf(y));
         p.setChar(c);
-        p.setCharObject(new Character(c));
+        p.setCharObject(Character.valueOf(c));
         p.setInt(i);
-        p.setIntObject(new Integer(i));
+        p.setIntObject(Integer.valueOf(i));
         p.setShort(s);
-        p.setShortObject(new Short(s));
+        p.setShortObject(Short.valueOf(s));
         p.setLong(l);
-        p.setLongObject(new Long(l));
+        p.setLongObject(Long.valueOf(l));
         p.setFloat(f);
-        p.setFloatObject(new Float(f));
+        p.setFloatObject(Float.valueOf(f));
         p.setDouble(d);
-        p.setDoubleObject(new Double(d));
+        p.setDoubleObject(Double.valueOf(d));
 
         p.setFixedLengthString(fstr);
         p.setNormalString(nstr);
@@ -4651,17 +4651,17 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
             String hstr, BigDecimal bd, BigInteger bi, java.util.Date dt1, java.sql.Date dt2, java.sql.Time dt3, java.sql.Timestamp tm)
     {
         assertEquals(b, p.getBoolean());
-        assertEquals(new Boolean(b), p.getBooleanObject());
+        assertEquals(Boolean.valueOf(b), p.getBooleanObject());
         assertEquals(y, p.getByte());
-        assertEquals(new Byte(y), p.getByteObject());
+        assertEquals(Byte.valueOf(y), p.getByteObject());
         assertEquals(c, p.getChar());
-        assertEquals(new Character(c), p.getCharObject());
+        assertEquals(Character.valueOf(c), p.getCharObject());
         assertEquals(i, p.getInt());
-        assertEquals(new Integer(i), p.getIntObject());
+        assertEquals(Integer.valueOf(i), p.getIntObject());
         assertEquals(s, p.getShort());
-        assertEquals(new Short(s), p.getShortObject());
+        assertEquals(Short.valueOf(s), p.getShortObject());
         assertEquals(l, p.getLong());
-        assertEquals(new Long(l), p.getLongObject());
+        assertEquals(Long.valueOf(l), p.getLongObject());
         assertEquals(f, p.getFloat(), 0.0F);
         assertEquals(f, p.getFloatObject().floatValue(), 0.0F);
         assertEquals(d, p.getDouble(), 0.0);

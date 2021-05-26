@@ -242,7 +242,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             // Create some inherited data to query
             tx = pm.currentTransaction();
             tx.begin();
-            Developer p3 = new Developer(10, "James", "Java", "james@java.com", (float)12.00, "1234567", new Integer(1), "jdo");
+            Developer p3 = new Developer(10, "James", "Java", "james@java.com", (float)12.00, "1234567", Integer.valueOf(1), "jdo");
             pm.makePersistent(p3);
             tx.commit();
 
@@ -265,7 +265,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             // Create some inherited data to query
             tx = pm.currentTransaction();
             tx.begin();
-            Developer p4 = new Developer(11, "Paul", "Perl", "paul@perl.com", (float)6.00, "1234568", new Integer(2), "perl");
+            Developer p4 = new Developer(11, "Paul", "Perl", "paul@perl.com", (float)6.00, "1234568", Integer.valueOf(2), "perl");
             p4.setGlobalNum("GUID-p4");
             pm.makePersistent(p4);
             tx.commit();
@@ -352,7 +352,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             // Create some inherited data to query and query using a ResultClass without constructor
             tx = pm.currentTransaction();
             tx.begin();
-            Developer p3 = new Developer(13, "James", "Java", "james@java.com", (float)15.00, "1234569", new Integer(3), "jdo");
+            Developer p3 = new Developer(13, "James", "Java", "james@java.com", (float)15.00, "1234569", Integer.valueOf(3), "jdo");
             pm.makePersistent(p3);
             tx.commit();
 
@@ -374,7 +374,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             // Create some inherited data to query and query using INNER JOIN and users class
             tx = pm.currentTransaction();
             tx.begin();
-            Developer p4 = new Developer(100, "Mike", "Microsoft", "mike@microsoft.com", 10, "1234570", new Integer(3), ".net");
+            Developer p4 = new Developer(100, "Mike", "Microsoft", "mike@microsoft.com", 10, "1234570", Integer.valueOf(3), ".net");
             p4.setGlobalNum("GUID-p4");
             pm.makePersistent(p4);
             tx.commit();
@@ -838,7 +838,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             String sqlText = "SELECT count(*) FROM PERSON WHERE EMAIL_ADDRESS = ?";
             Query query = pm.newQuery("javax.jdo.query.SQL", sqlText);
             Map params = new HashMap();
-            params.put(new Integer("1"), "nobody@jpox.org");
+            params.put(Integer.valueOf("1"), "nobody@jpox.org");
             List results = (List) query.executeWithMap(params);
             Iterator iter = results.iterator();
             while (iter.hasNext())
@@ -944,7 +944,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             // Create some inherited data to query and query using a ResultClass without constructor
             tx = pm.currentTransaction();
             tx.begin();
-            Developer p3 = new Developer(13, "James", "Java", "james@java.com", (float)15.00, "1234569", new Integer(3), "jdo");
+            Developer p3 = new Developer(13, "James", "Java", "james@java.com", (float)15.00, "1234569", Integer.valueOf(3), "jdo");
             pm.makePersistent(p3);
             tx.commit();
 
@@ -1035,7 +1035,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             // Create some inherited data to query and query using a ResultClass without constructor
             tx = pm.currentTransaction();
             tx.begin();
-            Developer p3 = new Developer(13, "James", "Java", "james@java.com", (float)15.00, "1234569", new Integer(3), "jdo");
+            Developer p3 = new Developer(13, "James", "Java", "james@java.com", (float)15.00, "1234569", Integer.valueOf(3), "jdo");
             pm.makePersistent(p3);
             tx.commit();
 
@@ -1165,8 +1165,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
 
             for (int i = 0; i < parameters.length; i++)
             {
-                List list = (List) query.execute(new Integer(parameters[i][0]),
-                    new Integer(parameters[i][1]));
+                List list = (List) query.execute(Integer.valueOf(parameters[i][0]), Integer.valueOf(parameters[i][1]));
                 Object obj = list.iterator().next();
                 if (obj instanceof Integer)
                 {

@@ -845,7 +845,7 @@ public class ReachabilityTest extends JDOPersistenceTestCase
                 // assert there is no "alpha" record in DB
                 tx.begin();
                 Query q = pm.newQuery(Square.class, "id == :val");
-                Collection c = (Collection)q.execute(new Integer(101));
+                Collection c = (Collection)q.execute(Integer.valueOf(101));
                 assertTrue("unexpectedly encountered Square that shouldnt have been persisted", c.size() == 0);
                 tx.commit();
             }
@@ -916,13 +916,13 @@ public class ReachabilityTest extends JDOPersistenceTestCase
                 // assert the DB contains the correct data
                 tx.begin();
                 Query q = pm.newQuery(Square.class, "id == :val");
-                Collection c = (Collection)q.execute(new Integer(101));
+                Collection c = (Collection)q.execute(Integer.valueOf(101));
                 assertTrue("Square1 wasnt persisted but should have been", c.size() == 1);
-                c = (Collection)q.execute(new Integer(102));
+                c = (Collection)q.execute(Integer.valueOf(102));
                 assertTrue("Square2 wasnt persisted but should have been", c.size() == 1);
-                c = (Collection)q.execute(new Integer(103));
+                c = (Collection)q.execute(Integer.valueOf(103));
                 assertTrue("Square3 wasnt persisted but should have been", c.size() == 1);
-                c = (Collection)q.execute(new Integer(104));
+                c = (Collection)q.execute(Integer.valueOf(104));
                 assertTrue("Square4 wasnt persisted but should have been", c.size() == 1);
                 tx.commit();
             }

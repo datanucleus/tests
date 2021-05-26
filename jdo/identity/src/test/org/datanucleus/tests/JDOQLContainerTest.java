@@ -2838,7 +2838,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             Gym gym1 = new Gym();
             gym1.setName("Cinema");
             gym1.setLocation("First floor");
-            gym1.getCodes().put(new Character('a'), new String("aaaaa"));
+            gym1.getCodes().put(Character.valueOf('a'), new String("aaaaa"));
             
             PersistenceManager pm = pmf.getPersistenceManager();
             Transaction tx = pm.currentTransaction();
@@ -5936,7 +5936,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             pm.flush();
 
             Collection<Integer> ages = new HashSet();
-            ages.add(new Integer(35));
+            ages.add(Integer.valueOf(35));
             Query q = pm.newQuery(Person.class,":param.contains(age)");
             Collection c = (Collection) q.execute(ages);
             assertEquals(1,c.size());

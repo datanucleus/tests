@@ -433,15 +433,15 @@ public class JDOQLSubqueryTest extends JDOPersistenceTestCase
                 Object[] o = results.get(0);                
                 Long num = (Long)o[0];
                 Long cnt = (Long)o[1];
-                assertEquals("Expected 1 as the first record because its count should be highest", new Long(1), num);
-                assertEquals("Expected 3 as the count for 1", new Long(3), cnt);
+                assertEquals("Expected 1 as the first record because its count should be highest", Long.valueOf(1), num);
+                assertEquals("Expected 3 as the count for 1", Long.valueOf(3), cnt);
 
                 //check last record
                 o = results.get(results.size()-1);
                 num = (Long)o[0];
                 cnt = (Long)o[1];
-                assertEquals("Expected 2 as the last record because its count should be lowest", new Long(2), num);
-                assertEquals("Expected 2 as the count for 2", new Long(2), cnt);
+                assertEquals("Expected 2 as the last record because its count should be lowest", Long.valueOf(2), num);
+                assertEquals("Expected 2 as the count for 2", Long.valueOf(2), cnt);
                  
                 tx.commit();
             }

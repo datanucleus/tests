@@ -42,8 +42,8 @@ public class ModeOfPaymentID implements Serializable
     protected static final String SEPARATORS_FOR_TOKENIZER = "/?=&";
     protected static final String SEPARATOR_KEY_VALUE = "=";
     protected static final String SEPARATOR_ENTRY = "&";
-    protected static final Byte NULLBYTE = new Byte((byte) 0);
-    protected static final Character NULLCHAR = new Character((char) 0);
+    protected static final Byte NULLBYTE = Byte.valueOf((byte) 0);
+    protected static final Character NULLCHAR = Character.valueOf((char) 0);
 
     public java.lang.String modeOfPaymentID;
     public java.lang.String organisationID;
@@ -151,23 +151,23 @@ public class ModeOfPaymentID implements Serializable
                 }
                 else if (boolean.class.isAssignableFrom(fieldType))
                 {
-                    val = new Boolean(valStr);
+                    val = Boolean.parseBoolean(valStr);
                 }
                 else if (char.class.isAssignableFrom(fieldType))
                 {
-                    val = new Character(valStr.charAt(0));
+                    val = Character.valueOf(valStr.charAt(0));
                 }
                 else if (byte.class.isAssignableFrom(fieldType))
                 {
-                    val = new Byte(valStr);
+                    val = Byte.parseByte(valStr);
                 }
                 else if (int.class.isAssignableFrom(fieldType))
                 {
-                    val = new Integer(valStr);
+                    val = Integer.valueOf(valStr);
                 }
                 else if (long.class.isAssignableFrom(fieldType))
                 {
-                    val = new Long(valStr);
+                    val = Long.valueOf(valStr);
                 }
                 else
                     throw new IllegalArgumentException("Type " + fieldType.getName() + " of member " + key + " is not unsupported!");

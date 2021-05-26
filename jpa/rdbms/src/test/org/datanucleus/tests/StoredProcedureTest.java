@@ -362,7 +362,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 assertFalse("Flag for result set returned true but should have been false", val);
 
                 Object paramVal = spq.getOutputParameterValue("PARAM1");
-                assertEquals("Output parameter is incorrect", new Integer(count.intValue()), paramVal);
+                assertEquals("Output parameter is incorrect", Integer.valueOf(count.intValue()), paramVal);
 
                 tx.commit();
             }
@@ -476,7 +476,7 @@ public class StoredProcedureTest extends JPAPersistenceTestCase
                 assertFalse("Flag for result set returned true but should have been false", val);
 
                 Object paramVal = spq.getOutputParameterValue("PARAM2");
-                assertEquals("Output parameter is incorrect", new Integer(count.intValue()), paramVal);
+                assertEquals("Output parameter is incorrect", Integer.valueOf(count.intValue()), paramVal);
 
                 tx.commit();
             }

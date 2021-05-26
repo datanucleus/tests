@@ -575,7 +575,7 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                LoginAccount acct = em.find(LoginAccount.class, new Long(1));
+                LoginAccount acct = em.find(LoginAccount.class, Long.valueOf(1));
                 assertEquals("LoginAccount has incorrect firstName", "Bill", acct.getFirstName());
                 assertEquals("LoginAccount has incorrect lastName", "Gates", acct.getLastName());
                 assertNotNull(acct.getLogin());
@@ -610,10 +610,10 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Login login = em.find(Login.class, new Long(1));
+                Login login = em.find(Login.class, Long.valueOf(1));
                 assertNull("Login should have been deleted but still exists", login);
 
-                LoginAccount acct = em.find(LoginAccount.class, new Long(1));
+                LoginAccount acct = em.find(LoginAccount.class, Long.valueOf(1));
                 assertEquals("LoginAccount has incorrect firstName", "Bill", acct.getFirstName());
                 assertEquals("LoginAccount has incorrect lastName", "Gates", acct.getLastName());
                 assertNull(acct.getLogin());
@@ -682,7 +682,7 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                LoginAccount acct = em.find(LoginAccount.class, new Long(1));
+                LoginAccount acct = em.find(LoginAccount.class, Long.valueOf(1));
                 assertEquals("LoginAccount has incorrect firstName", "Bill", acct.getFirstName());
                 assertEquals("LoginAccount has incorrect lastName", "Gates", acct.getLastName());
                 assertNotNull(acct.getLogin());
@@ -716,10 +716,10 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Login login = em.find(Login.class, new Long(1));
+                Login login = em.find(Login.class, Long.valueOf(1));
                 assertNull("Login should have been deleted but still exists", login);
 
-                LoginAccount acct = em.find(LoginAccount.class, new Long(1));
+                LoginAccount acct = em.find(LoginAccount.class, Long.valueOf(1));
                 assertNull("LoginAccount should have been deleted but still exists", acct);
 
                 tx.commit();
@@ -787,7 +787,7 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                ListHolder holder1 = em.find(ListHolder.class, new Long(1));
+                ListHolder holder1 = em.find(ListHolder.class, Long.valueOf(1));
                 assertEquals("Number of list elements is wrong", 3, holder1.getJoinListPC().size());
 
                 // Delete holder which should trigger the orphan removal on the elements
@@ -816,16 +816,16 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                ListHolder holder1 = em.find(ListHolder.class, new Long(1));
+                ListHolder holder1 = em.find(ListHolder.class, Long.valueOf(1));
                 assertNull("Holder should have been deleted but wasn't", holder1);
 
-                PCFKListElement el1 = em.find(PCFKListElement.class, new Long(1));
+                PCFKListElement el1 = em.find(PCFKListElement.class, Long.valueOf(1));
                 assertNull("Element1 should have been deleted but wasn't", el1);
 
-                PCFKListElement el2 = em.find(PCFKListElement.class, new Long(2));
+                PCFKListElement el2 = em.find(PCFKListElement.class, Long.valueOf(2));
                 assertNull("Element2 should have been deleted but wasn't", el2);
 
-                PCFKListElement el3 = em.find(PCFKListElement.class, new Long(3));
+                PCFKListElement el3 = em.find(PCFKListElement.class, Long.valueOf(3));
                 assertNull("Element3 should have been deleted but wasn't", el3);
 
                 tx.commit();
@@ -893,11 +893,11 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                ListHolder holder1 = em.find(ListHolder.class, new Long(1));
+                ListHolder holder1 = em.find(ListHolder.class, Long.valueOf(1));
                 assertEquals("Number of list elements is wrong", 3, holder1.getJoinListPC().size());
 
                 // Remove element from List should delete it
-                PCFKListElement el2 = em.find(PCFKListElement.class, new Long(2));
+                PCFKListElement el2 = em.find(PCFKListElement.class, Long.valueOf(2));
                 holder1.getJoinListPC().remove(el2);
 
                 tx.commit();
@@ -923,17 +923,17 @@ public class RelationshipsTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                ListHolder holder1 = em.find(ListHolder.class, new Long(1));
+                ListHolder holder1 = em.find(ListHolder.class, Long.valueOf(1));
                 assertNotNull("Holder shouldnt have been deleted but was", holder1);
                 assertEquals("Number of elements is wrong", 2, holder1.getJoinListPC().size());
 
-                PCFKListElement el1 = em.find(PCFKListElement.class, new Long(1));
+                PCFKListElement el1 = em.find(PCFKListElement.class, Long.valueOf(1));
                 assertNotNull("Element1 should have been deleted but wasn't", el1);
 
-                PCFKListElement el2 = em.find(PCFKListElement.class, new Long(2));
+                PCFKListElement el2 = em.find(PCFKListElement.class, Long.valueOf(2));
                 assertNull("Element2 should have been deleted but wasn't", el2);
 
-                PCFKListElement el3 = em.find(PCFKListElement.class, new Long(3));
+                PCFKListElement el3 = em.find(PCFKListElement.class, Long.valueOf(3));
                 assertNotNull("Element3 should have been deleted but wasn't", el3);
 
                 tx.commit();

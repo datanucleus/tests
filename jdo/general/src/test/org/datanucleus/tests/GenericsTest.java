@@ -170,7 +170,7 @@ public class GenericsTest extends JDOPersistenceTestCase
                 GenericsBaseSubSub sub = (GenericsBaseSubSub)base;
                 assertEquals("First Sub", sub.getName());
                 assertEquals(101l, sub.getLongValue());
-                assertEquals(new Long(1), sub.getId());
+                assertEquals(Long.valueOf(1), sub.getId());
                 GenericsBaseSubRelated rel = sub.getRelated();
                 assertNotNull(rel);
                 assertEquals(150, rel.getId());

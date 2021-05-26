@@ -97,7 +97,7 @@ public class BeanValidationTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                ValidatedPerson p1 = (ValidatedPerson)em.find(ValidatedPerson.class, new Long(1));
+                ValidatedPerson p1 = (ValidatedPerson)em.find(ValidatedPerson.class, Long.valueOf(1));
                 p1.setSurname(null);
                 tx.commit();
                 fail("Should have thrown a ConstraintViolationException on update");

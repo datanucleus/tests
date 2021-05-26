@@ -306,7 +306,7 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
         assertEquals(prefix + "column identifier incorrect",
                      "LASTNAME", colmds[0].getName());
         assertEquals(prefix + "column length incorrect",
-                     new Integer(64), colmds[0].getLength());
+                     Integer.valueOf(64), colmds[0].getLength());
         assertEquals(prefix + "column JDBC type incorrect", JdbcType.VARCHAR, colmds[0].getJdbcType());
 
         // "firstName"
@@ -315,7 +315,7 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
         assertEquals(prefix + "column identifier incorrect",
                      "FIRSTNAME", colmds[0].getName());
         assertEquals(prefix + "column length incorrect",
-                     new Integer(32), colmds[0].getLength());
+                     Integer.valueOf(32), colmds[0].getLength());
         assertEquals(prefix + "column JDBC type incorrect", JdbcType.VARCHAR, colmds[0].getJdbcType());
 
         // "emailAddress"
@@ -324,7 +324,7 @@ public class AnnotationPlusXMLTest extends JDOPersistenceTestCase
         assertEquals(prefix + "column identifier incorrect",
                      "EMAILADDRESS", colmds[0].getName());
         assertEquals(prefix + "column length incorrect",
-                     new Integer(128), colmds[0].getLength());
+                     Integer.valueOf(128), colmds[0].getLength());
         assertEquals(prefix + "column JDBC type incorrect", JdbcType.VARCHAR, colmds[0].getJdbcType());
 
         // "dateOfBirth"

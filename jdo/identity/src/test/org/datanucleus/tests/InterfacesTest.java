@@ -655,7 +655,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 //set filter to return all circles with radius greater than given value
                 query.setFilter("((Circle)shape1).radius >= radiusBound");
 
-                Collection results = (Collection)query.execute(new Double(10));
+                Collection results = (Collection)query.execute(Double.valueOf(10));
                 assertEquals("Expected number of large circles returned by the query", 5, results.size());
 
                 for (Iterator i = results.iterator(); i.hasNext(); )
@@ -841,7 +841,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 boolean success = false;
                 try
                 {
-                    q.execute(new Integer(100));
+                    q.execute(Integer.valueOf(100));
                 }
                 catch (JDOUserException ex)
                 {

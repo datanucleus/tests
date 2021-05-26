@@ -635,7 +635,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             assertEquals(1, c.size());
             result = c.get(0);
             assertEquals(Long.class.getName(), result.getClass().getName());
-            assertEquals(new Long(254), result);
+            assertEquals(Long.valueOf(254), result);
 
             // Explicit float
             q = pm.newQuery("SELECT 1.0f FROM " + Employee.class.getName());
@@ -1637,15 +1637,15 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             tx.begin();
             Query q = pm.newQuery(BasicTypeHolder.class,"p.length() == 3");
             q.declareParameters("Integer[] p");
-            Collection c = (Collection) q.execute(new Integer[] {new Integer(1),new Integer(3),new Integer(-11)});
+            Collection c = (Collection) q.execute(new Integer[] {Integer.valueOf(1),Integer.valueOf(3),Integer.valueOf(-11)});
             Assert.assertEquals(5,c.size());
             q = pm.newQuery(BasicTypeHolder.class,"3 == p.length()");
             q.declareParameters("Integer[] p");
-            c = (Collection) q.execute(new Integer[] {new Integer(1),new Integer(3),new Integer(-11)});
+            c = (Collection) q.execute(new Integer[] {Integer.valueOf(1),Integer.valueOf(3),Integer.valueOf(-11)});
             Assert.assertEquals(5,c.size());
             q = pm.newQuery(BasicTypeHolder.class,"p.contains(1)");
             q.declareParameters("Integer[] p");
-            c = (Collection) q.execute(new Integer[] {new Integer(1),new Integer(3),new Integer(-11)});
+            c = (Collection) q.execute(new Integer[] {Integer.valueOf(1),Integer.valueOf(3),Integer.valueOf(-11)});
             Assert.assertEquals(5,c.size());
             tx.commit();
         }
@@ -3389,24 +3389,24 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             q = pm.newQuery(BasicTypeHolder.class,"\"\" + this.longField + \"-\" + this.longField == str + \"-\" + str");
             q.declareParameters("java.lang.Integer str");
-            c = (Collection) q.execute(new Integer(1));
+            c = (Collection) q.execute(Integer.valueOf(1));
             Assert.assertEquals(1,c.size());
             Assert.assertEquals(ids[0],JDOHelper.getObjectId(c.iterator().next()));
             
             q = pm.newQuery(BasicTypeHolder.class,"\"\" + this.longField + \"-\" + this.longField == \"\" + str + \"-\" + str + \"-\"");
             q.declareParameters("java.lang.Integer str");
-            c = (Collection) q.execute(new Integer(1));
+            c = (Collection) q.execute(Integer.valueOf(1));
             Assert.assertEquals(0,c.size());
 
             q = pm.newQuery(BasicTypeHolder.class,"this.longField + \"-\" + this.longField == str + \"-\" + str");
             q.declareParameters("java.lang.Integer str");
-            c = (Collection) q.execute(new Integer(1));
+            c = (Collection) q.execute(Integer.valueOf(1));
             Assert.assertEquals(1,c.size());
             Assert.assertEquals(ids[0],JDOHelper.getObjectId(c.iterator().next()));
 
             q = pm.newQuery(BasicTypeHolder.class,"this.longField + \"-\" + this.longField == str + \"-\" + str + \"-\"");
             q.declareParameters("java.lang.Integer str");
-            c = (Collection) q.execute(new Integer(1));
+            c = (Collection) q.execute(Integer.valueOf(1));
             Assert.assertEquals(0,c.size());
 
             //todo null
@@ -3432,7 +3432,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             q = pm.newQuery(BasicTypeHolder.class,"this.longField + \"-\" + this.longField == str + \"-\" + str");
             q.declareParameters("java.lang.Integer str");
-            c = (Collection) q.execute(new Integer(1));
+            c = (Collection) q.execute(Integer.valueOf(1));
             c = (Collection) q.execute(null);
             Assert.assertEquals(0,c.size());
 
@@ -4031,7 +4031,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
     {
         try
         {
-            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",new Integer(10));
+            Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",Integer.valueOf(10));
             Manager bart = new Manager(2,"Bart","Simpson","bart@simpson.com",2,"serial 2");
             Manager boss = new Manager(3,"Boss","WakesUp","boss@wakes.up",4,"serial 3");
 
@@ -4256,7 +4256,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
 
                 Assert.assertEquals(1, c.size());
 
@@ -4283,7 +4283,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 success = false;
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
                 q.closeAll();
                 c.size();
                 tx.commit();
@@ -4305,7 +4305,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
                 Iterator iterator = c.iterator();
                 q.closeAll();
                 Assert.assertFalse("Query result has been closed and iterator should be closed", iterator.hasNext());
@@ -4324,7 +4324,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 success = false;
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
                 Iterator iterator = c.iterator();
                 q.closeAll();
                 iterator.next();
@@ -4347,7 +4347,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
                 Iterator iterator = c.iterator();
                 q.close(c);
                 Assert.assertFalse("Query result has been closed and iterator should be closed", iterator.hasNext());
@@ -4366,7 +4366,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 success = false;
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
                 Iterator iterator = c.iterator();
                 q.close(c);
                 iterator.next();
@@ -4389,7 +4389,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
                 Iterator iterator = c.iterator();
                 q.close(new HashSet());
                 Assert.assertTrue("Query result has not been closed and iterator should not be closed", iterator.hasNext());
@@ -4407,7 +4407,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.execute(new Long(1));
+                Collection c = (Collection) q.execute(Long.valueOf(1));
                 Iterator iterator = c.iterator();
                 q.close(new HashSet());
                 iterator.next();
@@ -4425,7 +4425,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.executeWithArray(new Object[] {new Long(1)});
+                Collection c = (Collection) q.executeWithArray(new Object[] {Long.valueOf(1)});
                 Iterator iterator = c.iterator();
                 q.close(c);
                 Assert.assertFalse("Query result has been closed and iterator should be closed", iterator.hasNext());
@@ -4444,7 +4444,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 success = false;
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
-                Collection c = (Collection) q.executeWithArray(new Object[] {new Long(1)});
+                Collection c = (Collection) q.executeWithArray(new Object[] {Long.valueOf(1)});
                 Iterator iterator = c.iterator();
                 q.close(c);
                 iterator.next();
@@ -4469,7 +4469,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)");
                 q.declareParameters("java.lang.Long longVar");
                 q.setCandidates(new HashSet());
-                Collection c = (Collection) q.executeWithArray(new Object[] {new Long(1)});
+                Collection c = (Collection) q.executeWithArray(new Object[] {Long.valueOf(1)});
                 Iterator iterator = c.iterator();
                 q.close(c);
                 Assert.assertFalse("Query result has been closed and iterator should be closed", iterator.hasNext());
@@ -4489,7 +4489,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 Query q = pm.newQuery(BasicTypeHolder.class, "(this.longField == longVar)").parameters("java.lang.Long longVar");
                 q.setCandidates(new HashSet());
-                Collection c = (Collection) q.executeWithArray(new Object[] {new Long(1)});
+                Collection c = (Collection) q.executeWithArray(new Object[] {Long.valueOf(1)});
                 Iterator iterator = c.iterator();
                 q.close(c);
                 iterator.next();
@@ -4863,7 +4863,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 Query q = pm.newQuery("UPDATE " + Person.class.getName() + " SET this.age = 28 WHERE personNum == 1");
                 Object result = q.execute();
-                assertEquals(new Long(1), result);
+                assertEquals(Long.valueOf(1), result);
 
                 tx.commit();
             }

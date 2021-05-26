@@ -60,8 +60,8 @@ public class PgGeometrySpatialHelperTest extends JDOPersistenceTestCase
             return;
         }
 
-        Integer dim2 = new Integer(2);
-        Integer dim3 = new Integer(3);
+        Integer dim2 = Integer.valueOf(2);
+        Integer dim3 = Integer.valueOf(3);
         assertEquals(dim2, helper.getDimensionFromJdoMetadata(org.datanucleus.samples.pggeometry.SampleGeometry.class, "geom"));
         assertEquals(dim3, helper.getDimensionFromJdoMetadata(org.datanucleus.samples.pggeometry.SampleGeometryCollection3D.class, "geom"));
     }
@@ -73,7 +73,7 @@ public class PgGeometrySpatialHelperTest extends JDOPersistenceTestCase
             return;
         }
 
-        Integer srid = new Integer(4326);
+        Integer srid = Integer.valueOf(4326);
         assertEquals(srid, helper.getSridFromJdoMetadata(org.datanucleus.samples.pggeometry.SampleGeometry.class, "geom"));
     }
 }

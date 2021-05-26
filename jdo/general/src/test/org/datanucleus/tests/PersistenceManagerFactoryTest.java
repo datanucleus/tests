@@ -93,43 +93,43 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         public void setOptimistic(boolean b)
         {
             this.optimistic = b;
-            this.setProperty("javax.jdo.option.Optimistic", new Boolean(b).toString());
+            this.setProperty("javax.jdo.option.Optimistic", Boolean.valueOf(b).toString());
         }
 
         public void setRetainValues(boolean b)
         {
             this.retainValues = b;
-            this.setProperty("javax.jdo.option.RetainValues", new Boolean(b).toString());
+            this.setProperty("javax.jdo.option.RetainValues", Boolean.valueOf(b).toString());
         }
 
         public void setRestoreValues(boolean b)
         {
             this.restoreValues = b;
-            this.setProperty("javax.jdo.option.RestoreValues", new Boolean(b).toString());
+            this.setProperty("javax.jdo.option.RestoreValues", Boolean.valueOf(b).toString());
         }
 
         public void setIgnoreCache(boolean b)
         {
             this.ignoreCache = b;
-            this.setProperty("javax.jdo.option.IgnoreCache", new Boolean(b).toString());
+            this.setProperty("javax.jdo.option.IgnoreCache", Boolean.valueOf(b).toString());
         }
 
         public void setNontransactionalRead(boolean b)
         {
             this.nontransactionalRead = b;
-            this.setProperty("javax.jdo.option.NontransactionalRead", new Boolean(b).toString());
+            this.setProperty("javax.jdo.option.NontransactionalRead", Boolean.valueOf(b).toString());
         }
 
         public void setNontransactionalWrite(boolean b)
         {
             this.nontransactionalWrite = b;
-            this.setProperty("javax.jdo.option.NontransactionalWrite", new Boolean(b).toString());
+            this.setProperty("javax.jdo.option.NontransactionalWrite", Boolean.valueOf(b).toString());
         }
 
         public void setMultithreaded(boolean b)
         {
             this.multithreaded = b;
-            this.setProperty("javax.jdo.option.Multithreaded", new Boolean(b).toString());
+            this.setProperty("javax.jdo.option.Multithreaded", Boolean.valueOf(b).toString());
         }
 
         public void setDriverName(String s)
@@ -177,25 +177,25 @@ public class PersistenceManagerFactoryTest extends JDOPersistenceTestCase
         public void setValidateTables(boolean b)
         {
             this.validateTables = b;
-            this.setProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_TABLES, new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_TABLES, Boolean.valueOf(b).toString());
         }
 
         public void setValidateConstraints(boolean b)
         {
             this.validateConstraints = b;
-            this.setProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_CONSTRAINTS, new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_VALIDATE_CONSTRAINTS, Boolean.valueOf(b).toString());
         }
 
         public void setAutoCreateTables(boolean b)
         {
             this.autoCreateTables = b;
-            this.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES, new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_TABLES, Boolean.valueOf(b).toString());
         }
 
         public void setAutoCreateConstraints(boolean b)
         {
             this.autoCreateConstraints = b;
-            this.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_CONSTRAINTS, new Boolean(b).toString());
+            this.setProperty(PropertyNames.PROPERTY_SCHEMA_AUTOCREATE_CONSTRAINTS, Boolean.valueOf(b).toString());
         }
 
         public void setTransactionIsolation(int i)

@@ -2406,15 +2406,15 @@ public class SchemaTest extends JDOPersistenceTestCase
                     pm.currentTransaction().begin();
                     Isnullable isnullable = new Isnullable();
 
-                    isnullable.setNullMetaDataDflt(new Integer("25"));
-                    isnullable.setNonnullMetaDataDflt(new Integer("26"));
-                    isnullable.setNullDfltMetaDataDflt(new Integer("27"));
-                    isnullable.setNonnullDfltMetaDataDflt(new Integer("28"));
+                    isnullable.setNullMetaDataDflt(Integer.valueOf("25"));
+                    isnullable.setNonnullMetaDataDflt(Integer.valueOf("26"));
+                    isnullable.setNullDfltMetaDataDflt(Integer.valueOf("27"));
+                    isnullable.setNonnullDfltMetaDataDflt(Integer.valueOf("28"));
 
-                    isnullable.setNullMetaDataExc(new Integer("29"));
-                    isnullable.setNonnullMetaDataExc(new Integer("30"));
-                    isnullable.setNullDfltMetaDataExc(new Integer("31"));
-                    isnullable.setNonnullDfltMetaDataExc(new Integer("32"));
+                    isnullable.setNullMetaDataExc(Integer.valueOf("29"));
+                    isnullable.setNonnullMetaDataExc(Integer.valueOf("30"));
+                    isnullable.setNullDfltMetaDataExc(Integer.valueOf("31"));
+                    isnullable.setNonnullDfltMetaDataExc(Integer.valueOf("32"));
                     pm.makePersistent(isnullable);
                     pm.currentTransaction().commit();   
                 }
@@ -2475,15 +2475,15 @@ public class SchemaTest extends JDOPersistenceTestCase
                 {               
                     pm.currentTransaction().begin();
                     Isnullable isnullable = new Isnullable();
-                    isnullable.setNullMetaDataNone(new Integer("21"));
-                    isnullable.setNonnullMetaDataNone(new Integer("22"));
-                    isnullable.setNullDfltMetaDataNone(new Integer("23"));
-                    isnullable.setNonnullDfltMetaDataNone(new Integer("24"));
+                    isnullable.setNullMetaDataNone(Integer.valueOf("21"));
+                    isnullable.setNonnullMetaDataNone(Integer.valueOf("22"));
+                    isnullable.setNullDfltMetaDataNone(Integer.valueOf("23"));
+                    isnullable.setNonnullDfltMetaDataNone(Integer.valueOf("24"));
 
-                    isnullable.setNullMetaDataDflt(new Integer("25"));
-                    isnullable.setNonnullMetaDataDflt(new Integer("26"));
-                    isnullable.setNullDfltMetaDataDflt(new Integer("27"));
-                    isnullable.setNonnullDfltMetaDataDflt(new Integer("28"));
+                    isnullable.setNullMetaDataDflt(Integer.valueOf("25"));
+                    isnullable.setNonnullMetaDataDflt(Integer.valueOf("26"));
+                    isnullable.setNullDfltMetaDataDflt(Integer.valueOf("27"));
+                    isnullable.setNonnullDfltMetaDataDflt(Integer.valueOf("28"));
 
                     pm.makePersistent(isnullable);
                     pm.currentTransaction().commit();   
@@ -2545,18 +2545,18 @@ public class SchemaTest extends JDOPersistenceTestCase
                 {               
                     pm.currentTransaction().begin();
                     Isnullable isnullable = new Isnullable();
-                    isnullable.setNullMetaDataNone(new Integer("21"));
-                    isnullable.setNonnullMetaDataNone(new Integer("22"));
-                    isnullable.setNullDfltMetaDataNone(new Integer("23"));
-                    isnullable.setNonnullDfltMetaDataNone(new Integer("24"));
+                    isnullable.setNullMetaDataNone(Integer.valueOf("21"));
+                    isnullable.setNonnullMetaDataNone(Integer.valueOf("22"));
+                    isnullable.setNullDfltMetaDataNone(Integer.valueOf("23"));
+                    isnullable.setNonnullDfltMetaDataNone(Integer.valueOf("24"));
 
-                    isnullable.setNullDfltMetaDataDflt(new Integer("27"));
-                    isnullable.setNonnullDfltMetaDataDflt(new Integer("28"));
+                    isnullable.setNullDfltMetaDataDflt(Integer.valueOf("27"));
+                    isnullable.setNonnullDfltMetaDataDflt(Integer.valueOf("28"));
 
-                    isnullable.setNullMetaDataExc(new Integer("29"));
-                    isnullable.setNonnullMetaDataExc(new Integer("30"));
-                    isnullable.setNullDfltMetaDataExc(new Integer("31"));
-                    isnullable.setNonnullDfltMetaDataExc(new Integer("32"));
+                    isnullable.setNullMetaDataExc(Integer.valueOf("29"));
+                    isnullable.setNonnullMetaDataExc(Integer.valueOf("30"));
+                    isnullable.setNullDfltMetaDataExc(Integer.valueOf("31"));
+                    isnullable.setNonnullDfltMetaDataExc(Integer.valueOf("32"));
                     
                     pm.makePersistent(isnullable);
                     pm.currentTransaction().commit();   
@@ -2619,18 +2619,18 @@ public class SchemaTest extends JDOPersistenceTestCase
                 success = false;
                 pm.currentTransaction().begin();
                 Isnullable isnullable = new Isnullable();
-                isnullable.setNullMetaDataNone(new Integer("21"));
-                isnullable.setNonnullMetaDataNone(new Integer("22"));
-                isnullable.setNullDfltMetaDataNone(new Integer("23"));
-                isnullable.setNonnullDfltMetaDataNone(new Integer("24"));
+                isnullable.setNullMetaDataNone(Integer.valueOf("21"));
+                isnullable.setNonnullMetaDataNone(Integer.valueOf("22"));
+                isnullable.setNullDfltMetaDataNone(Integer.valueOf("23"));
+                isnullable.setNonnullDfltMetaDataNone(Integer.valueOf("24"));
 
-                isnullable.setNullMetaDataDflt(new Integer("25"));
-                isnullable.setNonnullMetaDataDflt(new Integer("26"));
+                isnullable.setNullMetaDataDflt(Integer.valueOf("25"));
+                isnullable.setNonnullMetaDataDflt(Integer.valueOf("26"));
 
-                isnullable.setNullMetaDataExc(new Integer("29"));
-                isnullable.setNonnullMetaDataExc(new Integer("30"));
-                isnullable.setNullDfltMetaDataExc(new Integer("31"));
-                isnullable.setNonnullDfltMetaDataExc(new Integer("32"));
+                isnullable.setNullMetaDataExc(Integer.valueOf("29"));
+                isnullable.setNonnullMetaDataExc(Integer.valueOf("30"));
+                isnullable.setNullDfltMetaDataExc(Integer.valueOf("31"));
+                isnullable.setNonnullDfltMetaDataExc(Integer.valueOf("32"));
 
                 pm.makePersistent(isnullable);
                 pm.currentTransaction().commit();
@@ -2641,20 +2641,20 @@ public class SchemaTest extends JDOPersistenceTestCase
                 Isnullable toValidate = (Isnullable) pm.getObjectById(id,true);
                 pm.refresh(toValidate);
                 Isnullable expected = new Isnullable();
-                expected.setNullMetaDataNone(new Integer("21"));
-                expected.setNonnullMetaDataNone(new Integer("22"));
-                expected.setNullDfltMetaDataNone(new Integer("23"));
-                expected.setNonnullDfltMetaDataNone(new Integer("24"));
+                expected.setNullMetaDataNone(Integer.valueOf("21"));
+                expected.setNonnullMetaDataNone(Integer.valueOf("22"));
+                expected.setNullDfltMetaDataNone(Integer.valueOf("23"));
+                expected.setNonnullDfltMetaDataNone(Integer.valueOf("24"));
 
-                expected.setNullMetaDataDflt(new Integer("25"));
-                expected.setNonnullMetaDataDflt(new Integer("26"));
-                expected.setNullDfltMetaDataDflt(new Integer("7"));
-                expected.setNonnullDfltMetaDataDflt(new Integer("8"));       
+                expected.setNullMetaDataDflt(Integer.valueOf("25"));
+                expected.setNonnullMetaDataDflt(Integer.valueOf("26"));
+                expected.setNullDfltMetaDataDflt(Integer.valueOf("7"));
+                expected.setNonnullDfltMetaDataDflt(Integer.valueOf("8"));       
 
-                expected.setNullMetaDataExc(new Integer("29"));
-                expected.setNonnullMetaDataExc(new Integer("30"));
-                expected.setNullDfltMetaDataExc(new Integer("31"));
-                expected.setNonnullDfltMetaDataExc(new Integer("32"));             
+                expected.setNullMetaDataExc(Integer.valueOf("29"));
+                expected.setNonnullMetaDataExc(Integer.valueOf("30"));
+                expected.setNullDfltMetaDataExc(Integer.valueOf("31"));
+                expected.setNonnullDfltMetaDataExc(Integer.valueOf("32"));             
                 if (expected.compareTo(toValidate))
                 {
                     success = true;
@@ -2698,16 +2698,16 @@ public class SchemaTest extends JDOPersistenceTestCase
                 success = false;
                 pm.currentTransaction().begin();
                 isnullable = new Isnullable();
-                isnullable.setNonnullMetaDataNone(new Integer("22"));
-                isnullable.setNonnullDfltMetaDataNone(new Integer("24"));
+                isnullable.setNonnullMetaDataNone(Integer.valueOf("22"));
+                isnullable.setNonnullDfltMetaDataNone(Integer.valueOf("24"));
 
-                isnullable.setNullMetaDataDflt(new Integer("25"));
-                isnullable.setNonnullMetaDataDflt(new Integer("26"));
+                isnullable.setNullMetaDataDflt(Integer.valueOf("25"));
+                isnullable.setNonnullMetaDataDflt(Integer.valueOf("26"));
 
-                isnullable.setNullMetaDataExc(new Integer("29"));
-                isnullable.setNonnullMetaDataExc(new Integer("30"));
-                isnullable.setNullDfltMetaDataExc(new Integer("31"));
-                isnullable.setNonnullDfltMetaDataExc(new Integer("32"));
+                isnullable.setNullMetaDataExc(Integer.valueOf("29"));
+                isnullable.setNonnullMetaDataExc(Integer.valueOf("30"));
+                isnullable.setNullDfltMetaDataExc(Integer.valueOf("31"));
+                isnullable.setNonnullDfltMetaDataExc(Integer.valueOf("32"));
 
                 pm.makePersistent(isnullable);
                 pm.currentTransaction().commit();   
@@ -2718,19 +2718,19 @@ public class SchemaTest extends JDOPersistenceTestCase
                 toValidate = (Isnullable) pm.getObjectById(id,true);
                 pm.refresh(toValidate);
                 expected = new Isnullable();
-                expected.setNonnullMetaDataNone(new Integer("22"));
-                expected.setNullDfltMetaDataNone(new Integer("3"));
-                expected.setNonnullDfltMetaDataNone(new Integer("24"));
+                expected.setNonnullMetaDataNone(Integer.valueOf("22"));
+                expected.setNullDfltMetaDataNone(Integer.valueOf("3"));
+                expected.setNonnullDfltMetaDataNone(Integer.valueOf("24"));
 
-                expected.setNullMetaDataDflt(new Integer("25"));
-                expected.setNonnullMetaDataDflt(new Integer("26"));
-                expected.setNullDfltMetaDataDflt(new Integer("7"));
-                expected.setNonnullDfltMetaDataDflt(new Integer("8"));                
+                expected.setNullMetaDataDflt(Integer.valueOf("25"));
+                expected.setNonnullMetaDataDflt(Integer.valueOf("26"));
+                expected.setNullDfltMetaDataDflt(Integer.valueOf("7"));
+                expected.setNonnullDfltMetaDataDflt(Integer.valueOf("8"));                
 
-                expected.setNullMetaDataExc(new Integer("29"));
-                expected.setNonnullMetaDataExc(new Integer("30"));
-                expected.setNullDfltMetaDataExc(new Integer("31"));
-                expected.setNonnullDfltMetaDataExc(new Integer("32"));             
+                expected.setNullMetaDataExc(Integer.valueOf("29"));
+                expected.setNonnullMetaDataExc(Integer.valueOf("30"));
+                expected.setNullDfltMetaDataExc(Integer.valueOf("31"));
+                expected.setNonnullDfltMetaDataExc(Integer.valueOf("32"));             
                 if (expected.compareTo(toValidate))
                 {
                     success = true;
