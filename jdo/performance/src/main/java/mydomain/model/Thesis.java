@@ -24,7 +24,7 @@ import javax.jdo.annotations.Persistent;
 @PersistenceCapable
 public class Thesis
 {
-    @Persistent(primaryKey = "true", valueStrategy = IdGeneratorStrategy.IDENTITY)
+    @Persistent(column="ID", primaryKey = "true", valueStrategy = IdGeneratorStrategy.IDENTITY)
     private long key;
 
     private boolean complete;

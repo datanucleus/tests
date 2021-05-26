@@ -26,7 +26,7 @@ import javax.jdo.annotations.PrimaryKey;
 public class Credit
 {
     @PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    @Persistent(column="ID", valueStrategy = IdGeneratorStrategy.IDENTITY)
     private long key;
 
     private String department;

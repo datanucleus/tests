@@ -5,7 +5,6 @@
     version="1.0">
 
     <persistence-unit name="MyTest">
-        <!-- Add all of your model classes here -->
         <class>mydomain.model.Student</class>
         <class>mydomain.model.Credit</class>
         <class>mydomain.model.Thesis</class>
@@ -13,15 +12,14 @@
         <exclude-unlisted-classes/>
 
         <properties>
-            <!-- Update these datastore details if different -->
             <property name="javax.jdo.PersistenceManagerFactoryClass" value="org.datanucleus.api.jdo.JDOPersistenceManagerFactory"/>
+
             <!-- TODO Make use of test.framework so we can run with all datastores -->
             <property name="javax.jdo.option.ConnectionURL" value="jdbc:h2:mem:nucleus"/>
             <property name="javax.jdo.option.ConnectionDriverName" value="org.h2.Driver"/>
             <property name="javax.jdo.option.ConnectionUserName" value="sa"/>
             <property name="javax.jdo.option.ConnectionPassword" value=""/>
 
-            <property name="datanucleus.schema.autoCreateAll" value="true"/>
             <property name="datanucleus.findObject.validateWhenCached" value="false"/>
             <property name="datanucleus.persistenceByReachabilityAtCommit" value="false"/>
             <property name="datanucleus.manageRelationships" value="false"/>
@@ -29,6 +27,7 @@
             <property name="datanucleus.detachAllOnCommit" value="false"/>
             <property name="datanucleus.flush.mode" value="manual"/>
             <property name="datanucleus.query.sql.allowAll" value="true"/>
+
             <property name="datanucleus.schema.generateDatabase.mode" value="drop-and-create"/>
         </properties>
     </persistence-unit>
