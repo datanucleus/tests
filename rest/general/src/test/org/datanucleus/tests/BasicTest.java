@@ -1321,9 +1321,9 @@ public class BasicTest extends TestCase
             obj.put("id", 101);
             obj.put("name", "Name of Object1");
             Map<Integer, String> map = new HashMap<>();
-            map.put(new Integer(1), "First");
-            map.put(new Integer(2), "Second");
-            map.put(new Integer(3), "Third");
+            map.put(Integer.valueOf(1), "First");
+            map.put(Integer.valueOf(2), "Second");
+            map.put(Integer.valueOf(3), "Third");
             obj.put("map", new JSONObject(map));
             post.setRequestContent(new ByteArrayBuffer(obj.toString().getBytes()));
 
