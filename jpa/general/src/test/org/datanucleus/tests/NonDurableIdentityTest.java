@@ -23,7 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import org.datanucleus.api.jpa.NucleusJPAHelper;
+import org.datanucleus.api.jpa.DataNucleusHelperJPA;
 import org.datanucleus.samples.annotations.nondurableidentity.NonDurableIDHolder;
 import org.datanucleus.store.StoreManager;
 
@@ -58,7 +58,7 @@ public class NonDurableIdentityTest extends JPAPersistenceTestCase
                 NonDurableIDHolder holder = new NonDurableIDHolder("First Holder");
                 em.persist(holder);
                 em.flush();
-                id = NucleusJPAHelper.getObjectId(holder);
+                id = DataNucleusHelperJPA.getObjectId(holder);
                 assertNull(id);
                 tx.commit();
             }

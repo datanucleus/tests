@@ -40,7 +40,7 @@ import javax.jdo.datastore.JDOConnection;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDODataStoreCache;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
-import org.datanucleus.api.jdo.NucleusJDOHelper;
+import org.datanucleus.api.jdo.DataNucleusHelperJDO;
 import org.datanucleus.cache.CachedPC;
 import org.datanucleus.cache.Level2Cache;
 import org.datanucleus.samples.metadata.user.User1;
@@ -1526,7 +1526,7 @@ public class CacheTest extends JDOPersistenceTestCase
             try
             {
                 LoginAccount acct = (LoginAccount)pm.getObjectById(acctId);
-                String[] loadedFields = NucleusJDOHelper.getLoadedFields(acct, pm);
+                String[] loadedFields = DataNucleusHelperJDO.getLoadedFields(acct, pm);
                 LOG.info(">> loadedFields=" + StringUtils.objectArrayToString(loadedFields));
                 LOG.info(">> Accessing field login");
                 Login login = acct.getLogin();

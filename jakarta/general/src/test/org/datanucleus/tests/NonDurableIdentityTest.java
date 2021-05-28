@@ -23,7 +23,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
-import org.datanucleus.api.jakarta.NucleusJakartaHelper;
+import org.datanucleus.api.jakarta.DataNucleusHelperJakarta;
 import org.datanucleus.samples.annotations.nondurableidentity.NonDurableIDHolder;
 import org.datanucleus.store.StoreManager;
 
@@ -58,7 +58,7 @@ public class NonDurableIdentityTest extends JakartaPersistenceTestCase
                 NonDurableIDHolder holder = new NonDurableIDHolder("First Holder");
                 em.persist(holder);
                 em.flush();
-                id = NucleusJakartaHelper.getObjectId(holder);
+                id = DataNucleusHelperJakarta.getObjectId(holder);
                 assertNull(id);
                 tx.commit();
             }

@@ -20,7 +20,7 @@ package org.datanucleus.tests;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.datanucleus.api.jpa.NucleusJPAHelper;
+import org.datanucleus.api.jpa.DataNucleusHelperJPA;
 import org.datanucleus.identity.IdentityUtils;
 import org.datanucleus.samples.annotations.datastoreidentity.DSIDHolder;
 
@@ -50,7 +50,7 @@ public class DatastoreIdentityTest extends JPAPersistenceTestCase
                 DSIDHolder holder = new DSIDHolder("First Holder");
                 em.persist(holder);
                 em.flush();
-                id = NucleusJPAHelper.getObjectId(holder);
+                id = DataNucleusHelperJPA.getObjectId(holder);
                 tx.commit();
             }
             catch (Exception e)

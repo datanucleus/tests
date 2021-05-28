@@ -20,7 +20,7 @@ package org.datanucleus.tests;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-import org.datanucleus.api.jakarta.NucleusJakartaHelper;
+import org.datanucleus.api.jakarta.DataNucleusHelperJakarta;
 import org.datanucleus.identity.IdentityUtils;
 import org.datanucleus.samples.annotations.datastoreidentity.DSIDHolder;
 
@@ -50,7 +50,7 @@ public class DatastoreIdentityTest extends JakartaPersistenceTestCase
                 DSIDHolder holder = new DSIDHolder("First Holder");
                 em.persist(holder);
                 em.flush();
-                id = NucleusJakartaHelper.getObjectId(holder);
+                id = DataNucleusHelperJakarta.getObjectId(holder);
                 tx.commit();
             }
             catch (Exception e)
