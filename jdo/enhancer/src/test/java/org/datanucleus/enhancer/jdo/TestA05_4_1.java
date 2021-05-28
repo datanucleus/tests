@@ -13,7 +13,7 @@ public class TestA05_4_1 extends JDOTestBase
         {
             Class[] classes = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_1_app_ok.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			assertEquals(true, true);
 		}
         catch (Throwable e)
@@ -51,7 +51,7 @@ public class TestA05_4_1 extends JDOTestBase
         {
             Class[] classes = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_1_ds_ok.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			assertEquals(true, true);
 		}
         catch (Throwable e)

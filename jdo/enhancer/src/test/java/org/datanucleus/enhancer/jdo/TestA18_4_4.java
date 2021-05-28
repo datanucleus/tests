@@ -12,7 +12,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -27,7 +27,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -42,7 +42,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -57,7 +57,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();
@@ -108,7 +108,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -123,7 +123,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -138,7 +138,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -153,7 +153,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();
@@ -205,7 +205,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -220,7 +220,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -235,7 +235,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -250,7 +250,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();
@@ -302,7 +302,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -317,7 +317,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -332,7 +332,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -347,7 +347,7 @@ public class TestA18_4_4 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();

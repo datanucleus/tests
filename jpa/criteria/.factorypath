@@ -1,4 +1,4 @@
 <factorypath>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/datanucleus/javax.persistence/2.1.2/javax.persistence-2.1.2.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/datanucleus/datanucleus-jpa-query/5.0.4-SNAPSHOT/datanucleus-jpa-query-5.0.4-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/datanucleus/javax.persistence/2.2.3/javax.persistence-2.2.3.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/datanucleus/datanucleus-jpa-query/6.0.0-m1/datanucleus-jpa-query-6.0.0-m1.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

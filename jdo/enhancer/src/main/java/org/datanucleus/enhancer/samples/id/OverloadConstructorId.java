@@ -21,10 +21,8 @@ package org.datanucleus.enhancer.samples.id;
 
 import java.io.Serializable;
 
-
 /**
  * test overloaded constructor and id class in separate path
- * @version $Revision: 1.1 $
  */
 public class OverloadConstructorId implements Serializable
 {
@@ -40,7 +38,7 @@ public class OverloadConstructorId implements Serializable
     public OverloadConstructorId(java.lang.String str)
     {
         java.util.StringTokenizer token = new java.util.StringTokenizer(str, "::");
-        this.fieldA = new java.lang.Integer(token.nextToken()).intValue();
+        this.fieldA = Integer.valueOf(token.nextToken()).intValue();
     }
 
     public java.lang.String toString()

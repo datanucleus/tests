@@ -138,13 +138,13 @@ public class FieldAccess
     
     public int getFieldValueNav15(Id id)
     {
-        return new Integer(new Integer(id.id).toString()).intValue();
+        return Integer.valueOf(Integer.valueOf(id.id).toString()).intValue();
     }  
     
     public int getFieldValueNav16(Id id)
     {
         this.id = id.id;
-        return new Integer(new Integer(this.id).toString()).intValue();
+        return Integer.valueOf(Integer.valueOf(this.id).toString()).intValue();
     }    
     
 	public synchronized long getFieldValueNav17()
@@ -188,7 +188,7 @@ public class FieldAccess
         public Id(java.lang.String str)
         {
             java.util.StringTokenizer token = new java.util.StringTokenizer(str, "::");
-            this.id = new java.lang.Integer(token.nextToken()).intValue();
+            this.id = Integer.valueOf(token.nextToken()).intValue();
         }
 
         public java.lang.String toString()

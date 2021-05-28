@@ -13,7 +13,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -28,7 +28,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();
@@ -84,7 +84,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -99,7 +99,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();
@@ -155,7 +155,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -171,7 +171,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();
@@ -227,7 +227,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -242,7 +242,7 @@ public class TestA18_4_2 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultTransientClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultTransientClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
             boolean setter[] = new boolean[55];
             boolean getter[] = new boolean[55];
             Method methods[] = targetClass.getDeclaredMethods();

@@ -10,7 +10,7 @@ public class TestA18_4_1 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullProtectedStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedStaticClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -25,7 +25,7 @@ public class TestA18_4_1 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicStaticClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -40,7 +40,7 @@ public class TestA18_4_1 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateStaticClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
@@ -55,7 +55,7 @@ public class TestA18_4_1 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultStaticClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultStaticClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {

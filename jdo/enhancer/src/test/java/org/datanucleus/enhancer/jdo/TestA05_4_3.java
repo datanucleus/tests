@@ -13,7 +13,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_app_ok.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			assertEquals(true, true);
 		}
         catch (Throwable e) 
@@ -29,7 +29,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_app_ok.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			assertEquals(true, true);
 		}
         catch (Throwable e)
@@ -45,7 +45,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_app_no_public_constructor.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			fail();
 		}
         catch (NucleusUserException ue)
@@ -91,7 +91,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_ds_ok.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			assertEquals(true, true);
 		}
         catch (Throwable e)
@@ -107,7 +107,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_ds_ok.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 		}
         catch (Throwable e)
         {
@@ -122,7 +122,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_ds_no_public_constructor.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			fail();
 		}
         catch (NucleusUserException ue)
@@ -168,7 +168,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_ds_no_override_tostring.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			fail("must throw InvalidPrimaryKeyException with key 019006");
 		}
         catch (NucleusUserException ue)
@@ -192,7 +192,7 @@ public class TestA05_4_3 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_3_app_no_override_tostring.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			fail("must throw InvalidPrimaryKeyException with key 019006");
 		}
         catch (NucleusUserException ue)

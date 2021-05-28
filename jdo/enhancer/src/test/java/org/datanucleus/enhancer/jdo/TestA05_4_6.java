@@ -13,7 +13,7 @@ public class TestA05_4_6 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A5_4_6.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 			fail("must throw InvalidPrimaryKeyException with key 019012");
 		}
         catch (NucleusUserException ue)

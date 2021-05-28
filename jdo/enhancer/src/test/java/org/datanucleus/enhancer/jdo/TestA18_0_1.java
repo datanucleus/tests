@@ -10,7 +10,7 @@ public class TestA18_0_1 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullDefaultClass.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullDefaultClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 		}
         catch (Throwable e)
         {
@@ -22,7 +22,7 @@ public class TestA18_0_1 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 		}
         catch (Throwable e) 
         {
@@ -34,7 +34,7 @@ public class TestA18_0_1 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A18_0_1.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 		}
         catch (Throwable e)
         {
@@ -46,7 +46,7 @@ public class TestA18_0_1 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPrivateClass.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPrivateClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 		}
         catch (Throwable e)
         {
@@ -61,7 +61,7 @@ public class TestA18_0_1 extends JDOTestBase
         {
 			Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/A18_0_1.jdo");
 			Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullProtectedClass");
-			targetClass.newInstance();
+			targetClass.getDeclaredConstructor().newInstance();
 		}
         catch (Throwable e)
         {
@@ -76,7 +76,7 @@ public class TestA18_0_1 extends JDOTestBase
         {
             Class classes[] = getEnhancedClassesFromFile("org/datanucleus/enhancer/samples/FullPublicClass.jdo");
             Class targetClass = findClass(classes, "org.datanucleus.enhancer.samples.FullPublicClass");
-            targetClass.newInstance();
+            targetClass.getDeclaredConstructor().newInstance();
         }
         catch (Throwable e)
         {
