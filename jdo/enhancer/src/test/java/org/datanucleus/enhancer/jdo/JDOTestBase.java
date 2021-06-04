@@ -39,7 +39,7 @@ import org.datanucleus.metadata.ClassMetaData;
 import org.datanucleus.metadata.FileMetaData;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.metadata.PackageMetaData;
-import org.datanucleus.metadata.xml.MetaDataParser;
+import org.datanucleus.metadata.xml.XmlMetaDataParser;
 
 import junit.framework.TestCase;
 
@@ -165,11 +165,11 @@ public abstract class JDOTestBase extends TestCase implements RegisterClassListe
 
         NucleusContext context = new EnhancementNucleusContextImpl("JDO", null);
         MetaDataManager mgr = new JDOMetaDataManager(context);
-        MetaDataParser parser = new MetaDataParser(mgr, context.getPluginManager(), true, true);
+        XmlMetaDataParser parser = new XmlMetaDataParser(mgr, context.getPluginManager(), true, true);
         ClassLoaderResolverImpl clr = new ClassLoaderResolverImpl();
 
         // Parse the MetaData
-        FileMetaData filemd = (FileMetaData)parser.parseMetaDataStream(
+        FileMetaData filemd = (FileMetaData)parser.parseXmlMetaDataStream(
             new ByteArrayInputStream(jdoXmlContents.getBytes()), null, "JDO");
         if (filemd == null)
         {

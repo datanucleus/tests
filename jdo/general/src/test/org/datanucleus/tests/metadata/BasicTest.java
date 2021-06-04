@@ -32,7 +32,7 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
-import org.datanucleus.api.jdo.metadata.JDOMetaDataHelper;
+import org.datanucleus.api.jdo.metadata.JDOXmlMetaDataHelper;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
@@ -41,7 +41,7 @@ import org.datanucleus.metadata.ForeignKeyAction;
 import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.metadata.NullValue;
-import org.datanucleus.metadata.xml.MetaDataParser;
+import org.datanucleus.metadata.xml.XmlMetaDataParser;
 import org.datanucleus.samples.haunted.Phantom;
 import org.datanucleus.samples.haunted.Vampire;
 import org.datanucleus.samples.metadata.animal.Pet;
@@ -479,13 +479,13 @@ public class BasicTest extends JDOPersistenceTestCase
      */
     public void testMetaDataManagerI18N()
     {
-        JDOMetaDataHelper mdProc = new JDOMetaDataHelper();
+        JDOXmlMetaDataHelper mdProc = new JDOXmlMetaDataHelper();
 
         String filename = "/org/jpox/samples/i18n/UTF8.jdo";
         MetaDataManager mmgr1 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
-        MetaDataParser parser1 = new MetaDataParser(mmgr1, mmgr1.getNucleusContext().getPluginManager(), true, true);
+        XmlMetaDataParser parser1 = new XmlMetaDataParser(mmgr1, mmgr1.getNucleusContext().getPluginManager(), true, true);
         mmgr1.setValidate(false);
-        FileMetaData fmd = (FileMetaData)parser1.parseMetaDataStream(MetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
+        FileMetaData fmd = (FileMetaData)parser1.parseXmlMetaDataStream(XmlMetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
         fmd.getPackage("org.jpox.samples.i18n").getClass("UTF8");
         org.datanucleus.metadata.AbstractClassMetaData cmd1=fmd.getPackage("org.jpox.samples.i18n").getClass("UTF8");
         cmd1.populate(new ClassLoaderResolverImpl(), null, mmgr1);
@@ -501,9 +501,9 @@ public class BasicTest extends JDOPersistenceTestCase
 
         filename = "/org/jpox/samples/i18n/ISO8859_2.jdo";
         MetaDataManager mmgr3 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
-        MetaDataParser parser3 = new MetaDataParser(mmgr3, mmgr3.getNucleusContext().getPluginManager(), true, true);
+        XmlMetaDataParser parser3 = new XmlMetaDataParser(mmgr3, mmgr3.getNucleusContext().getPluginManager(), true, true);
         mmgr3.setValidate(false);
-        fmd = (FileMetaData)parser3.parseMetaDataStream(MetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
+        fmd = (FileMetaData)parser3.parseXmlMetaDataStream(XmlMetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
         fmd.getPackage("org.jpox.samples.i18n").getClass("ISO8859_2");
 
         MetaDataManager mmgr4 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
