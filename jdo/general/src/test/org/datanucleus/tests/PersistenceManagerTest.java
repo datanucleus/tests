@@ -53,8 +53,6 @@ import javax.jdo.datastore.JDOConnection;
 import javax.jdo.identity.LongIdentity;
 
 import org.junit.Assert;
-
-import org.datanucleus.TransactionEventListener;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.api.jdo.exceptions.TransactionNotActiveException;
 import org.datanucleus.api.jdo.exceptions.TransactionNotReadableException;
@@ -73,6 +71,7 @@ import org.datanucleus.samples.widget.InversePrimitive;
 import org.datanucleus.samples.widget.Primitive;
 import org.datanucleus.samples.widget.Widget;
 import org.datanucleus.store.StoreManager;
+import org.datanucleus.transaction.TransactionEventListener;
 import org.datanucleus.util.StringUtils;
 import org.jpox.samples.models.company.CompanyHelper;
 import org.jpox.samples.models.company.Department;
