@@ -3893,15 +3893,15 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
      */
     public void testJDOConnection()
     {
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        JDOConnection jdoConn = null;
         if (rdbmsVendorID == null)
         {
             // This is not an RDBMS-based datastore so omit
             return;
         }
 
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        JDOConnection jdoConn = null;
         try
         {
             // test normal transactional usage

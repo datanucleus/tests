@@ -63,7 +63,8 @@ public class ViewTest extends JDOPersistenceTestCase
     StorageTester tester = null;
     
     @BeforeClass
-    public static void runTests() {
+    public static void runTests() 
+    {
         skipWhen(!supportsViews(),"Database [" + rdbmsVendorID + "] does not support views, view tests not run");
     } 
 

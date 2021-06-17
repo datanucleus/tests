@@ -49,13 +49,12 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
      * CLOB is only supported on some databases
      */
     public void testCLOB() {
-        if (! ( rdbmsVendorID.equals("oracle") 
-                || rdbmsVendorID.equals("db2")
-                || rdbmsVendorID.equals("sqlserver") 
-                || rdbmsVendorID.equals("derby")) ) 
+        if (!(rdbmsVendorID.equals("oracle") || rdbmsVendorID.equals("db2") || rdbmsVendorID.equals("sqlserver") || rdbmsVendorID.equals("derby")))
         {
+            // TODO Use DatastoreAdapter to decide which to execute on
             return;
         }
+
         Object id = null;
         StringClobWidget clobWidget;
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -132,6 +131,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
         {
             return;
         }
+
         DB2Types types;
         Object id = null;
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -205,6 +205,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
         {
             return;
         }
+
         MSSQLTypes types;
         Object id = null;
         PersistenceManager pm = pmf.getPersistenceManager();
