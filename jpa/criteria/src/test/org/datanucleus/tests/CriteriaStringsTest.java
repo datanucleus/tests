@@ -1888,18 +1888,19 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
 
             CriteriaBuilder cb = emf.getCriteriaBuilder();
 
-            CriteriaQuery<Employee> crit = cb.createQuery(Employee.class);
-            Root<Employee> candidate = crit.from(Employee.class);
-            candidate.alias("e");
+            CriteriaQuery<Person> crit = cb.createQuery(Person.class);
+            Root<Person> candidate = crit.from(Person.class);
+            candidate.alias("p");
 
-            crit.multiselect(cb.avgDistinct(candidate.<Integer> get("salary")));
+            crit.multiselect(cb.avgDistinct(candidate.<Integer> get("age")));
 
             // DN extension
             assertEquals("Generated JPQL query is incorrect",
-                "SELECT AVG(DISTINCT e.salary) FROM org.datanucleus.samples.annotations.models.company.Employee e",
+                "SELECT AVG(DISTINCT p.age) FROM org.datanucleus.samples.annotations.models.company.Person p",
                 crit.toString());
 
-            /*Query q =*/ em.createQuery(crit);
+            Query q = em.createQuery(crit);
+            /* List<Object> results = */ q.getResultList();
             // TODO Check results
         }
         catch (Exception e)
