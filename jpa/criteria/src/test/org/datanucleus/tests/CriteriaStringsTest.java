@@ -1874,4 +1874,46 @@ public class CriteriaStringsTest extends JPAPersistenceTestCase
             em.close();
         }
     }
+
+    /**
+     * Test use of result with aggregates.
+     */
+    public void testResultWithAggregates()
+    {
+        EntityManager em = getEM();
+        EntityTransaction tx = em.getTransaction();
+        try
+        {
+            tx.begin();
+
+            CriteriaBuilder cb = emf.getCriteriaBuilder();
+
+            CriteriaQuery<Employee> crit = cb.createQuery(Employee.class);
+            Root<Employee> candidate = crit.from(Employee.class);
+            candidate.alias("e");
+
+            crit.multiselect(cb.avgDistinct(candidate.<Integer> get("salary")));
+
+            // DN extension
+            assertEquals("Generated JPQL query is incorrect",
+                "SELECT AVG(DISTINCT e.salary) FROM org.datanucleus.samples.annotations.models.company.Employee e",
+                crit.toString());
+
+            /*Query q =*/ em.createQuery(crit);
+            // TODO Check results
+        }
+        catch (Exception e)
+        {
+            LOG.error("Exception thrown during test", e);
+            fail("Exception caught during test : " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            em.close();
+        }
+    }
 }
