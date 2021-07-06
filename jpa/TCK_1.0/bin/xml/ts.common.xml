@@ -98,6 +98,7 @@
             <classpath>
                 <pathelement path="${ts.classpath}" />
             </classpath>    
+            <!-- Commented out when running Java9+ -->
             <compilerarg line="-Djava.endorsed.dirs=${endorsed.dirs}"/>
         </javac>
     </presetdef>
@@ -144,6 +145,7 @@
 		<sysproperty key="rmiiiop.http.server.port" 
                      value="${rmiiiop.http.server.port}" />
 		<sysproperty key="deliverable.class" value="${deliverable.class}" />
+        <!-- Commented out when running Java9+ -->
 		<sysproperty key="java.endorsed.dirs" 
                      value="${s1as.java.endorsed.dirs}" />
 		<sysproperty key="com.sun.enterprise.home" value="${javaee.home.ri}"/>
