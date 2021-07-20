@@ -24,14 +24,9 @@ public class DairyFarm extends Farm
 {
     long acreage;
 
-    /**
-     * Constructor
-     * @param name
-     */
     public DairyFarm(String name)
     {
         super(name);
-        // TODO Auto-generated constructor stub
     }
 
     public void setAcreage(long acre)

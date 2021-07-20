@@ -24,14 +24,9 @@ public class Cattle extends Animal
 {
     String breed;
 
-    /**
-     * Constructor
-     * @param name
-     */
     public Cattle(String name)
     {
         super(name);
-        // TODO Auto-generated constructor stub
     }
 
     public void setBreed(String brd)

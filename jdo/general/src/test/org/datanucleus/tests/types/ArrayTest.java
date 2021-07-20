@@ -599,7 +599,7 @@ public class ArrayTest extends JDOPersistenceTestCase
      * @param arrayType The type of the array
      * @param expectedArray1 The array elements that we expect for array 1.
      * @param expectedArray2 The array elements that we expect for array 2.
-     * @param rounding TODO
+     * @param rounding Rounding
      */
     public void performArrayTest(Object arrayHolder, Class arrayType, 
             Object expectedArray1, Object expectedArray2, double rounding)

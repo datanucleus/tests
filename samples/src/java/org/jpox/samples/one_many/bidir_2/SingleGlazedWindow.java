@@ -24,16 +24,9 @@ public class SingleGlazedWindow extends Window
 {
     int thickness;
 
-    /**
-     * Constructor.
-     * @param width
-     * @param height
-     * @param house
-     */
     public SingleGlazedWindow(long width, long height, House house)
     {
         super(width, height, house);
-        // TODO Auto-generated constructor stub
     }
 
     public void setThickness(int thick)

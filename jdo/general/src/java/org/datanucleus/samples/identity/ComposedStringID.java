@@ -89,8 +89,6 @@ public class ComposedStringID extends TestObject implements InstanceCallbacks
      */
     public void jdoPostLoad()
     {
-        // TODO Auto-generated method stub
-        
     }
 
     /* (non-Javadoc)
@@ -98,8 +96,6 @@ public class ComposedStringID extends TestObject implements InstanceCallbacks
      */
     public void jdoPreStore()
     {
-        // TODO Auto-generated method stub
-        
     }
 
     /* (non-Javadoc)
@@ -107,8 +103,6 @@ public class ComposedStringID extends TestObject implements InstanceCallbacks
      */
     public void jdoPreClear()
     {
-        // TODO Auto-generated method stub
-        
     }
 
     /* (non-Javadoc)
@@ -116,8 +110,6 @@ public class ComposedStringID extends TestObject implements InstanceCallbacks
      */
     public void jdoPreDelete()
     {
-        // TODO Auto-generated method stub
-        
     }
 
     /* (non-Javadoc)

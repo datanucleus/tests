@@ -33,7 +33,7 @@ public class JodaSample5
     @Id
     private long id;
 
-    @Basic // TODO Add column names
+    @Basic
     private Interval interval1;
 
     @Basic
