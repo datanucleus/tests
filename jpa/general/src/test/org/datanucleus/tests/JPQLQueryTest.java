@@ -117,7 +117,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
 
                 em.createQuery("SELECT T FROM " + Person.class.getName()).getResultList();
@@ -152,7 +152,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
 
                 List result = em.createQuery("SELECT T FROM " + Person.class.getName() + " T").getResultList();
@@ -184,9 +184,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
-                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 em.persist(p2);
                 em.flush();
 
@@ -267,7 +267,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -323,7 +323,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
                 em.flush();
 
@@ -357,9 +357,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
-                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 em.persist(p2);
 
                 List result = em.createQuery("SELECT T FROM " + Person.class.getName() + " T ORDER BY T.firstName DESC").getResultList();
@@ -397,7 +397,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -430,7 +430,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -464,7 +464,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -503,7 +503,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -542,7 +542,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -576,7 +576,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -613,9 +613,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
-                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 em.persist(p2);
 
                 em.createQuery(
@@ -654,7 +654,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -717,7 +717,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -769,7 +769,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -814,7 +814,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -859,7 +859,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -900,7 +900,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -937,7 +937,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1486,7 +1486,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1521,7 +1521,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1556,7 +1556,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1589,7 +1589,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1624,7 +1624,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1659,7 +1659,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1693,7 +1693,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1732,7 +1732,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
 
                 List result = em.createQuery("SELECT P.firstName FROM " + Person.class.getName() + " P WHERE false = True").getResultList();
@@ -1764,7 +1764,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -1827,9 +1827,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
-                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 em.persist(p2);
                 em.flush();
 
@@ -1869,13 +1869,13 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(50);
                 em.persist(p1);
-                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(40);
                 em.persist(p2);
-                Person p3 = new Person(103, "Pebbles", "Flintstone", "pebbles.flintstone@jpox.com");
+                Person p3 = new Person(103, "Pebbles", "Flintstone", "pebbles.flintstone@datanucleus.org");
                 p3.setAge(38);
                 em.persist(p3);
                 em.flush();
@@ -1935,13 +1935,13 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(30);
                 em.persist(p1);
-                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(35);
                 em.persist(p2);
-                Person p3 = new Person(103, "Pebbles", "Flintstone", "pebbles.flintstone@jpox.com");
+                Person p3 = new Person(103, "Pebbles", "Flintstone", "pebbles.flintstone@datanucleus.org");
                 p3.setAge(3);
                 em.persist(p3);
                 p1.setBestFriend(p2);
@@ -2044,9 +2044,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 30000f, "1234A");
-                Employee e2 = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 27000f, "1234B");
-                Employee e3 = new Employee(103, "George", "Cement", "george.cement@jpox.com", 20000f, "1235C");
+                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org", 30000f, "1234A");
+                Employee e2 = new Employee(102, "Barney", "Rubble", "barney.rubble@datanucleus.org", 27000f, "1234B");
+                Employee e3 = new Employee(103, "George", "Cement", "george.cement@datanucleus.org", 20000f, "1235C");
                 Manager mgr1 = new Manager(100, "Chief", "Rock", "chief.rock@warnerbros.com", 40000.0f, "12345A");
                 mgr1.setBestFriend(e1);
                 Manager mgr2 = new Manager(106, "Boss", "Blaster", "boss.blaster@warnerbros.com", 40005.0f, "12345B");
@@ -2147,9 +2147,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             try
             {
                 tx.begin();
-                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 30000f, "1234A");
-                Employee e2 = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 27000f, "1234B");
-                Employee e3 = new Employee(103, "George", "Cement", "george.cement@jpox.com", 20000f, "1235C");
+                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org", 30000f, "1234A");
+                Employee e2 = new Employee(102, "Barney", "Rubble", "barney.rubble@datanucleus.org", 27000f, "1234B");
+                Employee e3 = new Employee(103, "George", "Cement", "george.cement@datanucleus.org", 20000f, "1235C");
                 Manager mgr1 = new Manager(100, "Chief", "Rock", "chief.rock@warnerbros.com", 40000.0f, "12345A");
                 mgr1.setBestFriend(e1);
                 Manager mgr2 = new Manager(106, "Boss", "Blaster", "boss.blaster@warnerbros.com", 40005.0f, "12345B");
@@ -2377,7 +2377,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
                 em.flush();
 
@@ -2413,7 +2413,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred   ", "   Flintstone", "   fred.flintstone@jpox.com   ");
+                Person p = new Person(101, "Fred   ", "   Flintstone", "   fred.flintstone@datanucleus.org   ");
                 em.persist(p);
                 em.flush();
 
@@ -2426,11 +2426,11 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 assertEquals(1, result.size());
 
                 // Both
-                result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(p.emailAddress) = 'fred.flintstone@jpox.com'").getResultList();
+                result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(p.emailAddress) = 'fred.flintstone@datanucleus.org'").getResultList();
                 assertEquals(1, result.size());
 
                 // Both (using keyword)
-                result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(BOTH FROM p.emailAddress) = 'fred.flintstone@jpox.com'").getResultList();
+                result = em.createQuery("SELECT p FROM " + Person.class.getName() + " p WHERE TRIM(BOTH FROM p.emailAddress) = 'fred.flintstone@datanucleus.org'").getResultList();
                 assertEquals(1, result.size());
                 tx.rollback();
             }
@@ -2459,7 +2459,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -2499,7 +2499,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -2540,7 +2540,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -2581,7 +2581,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -2719,9 +2719,9 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
-                Employee e = new Employee(102, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
+                Employee e = new Employee(102, "Barney", "Rubble", "barney.rubble@datanucleus.org", 10000.0f, "12345");
                 em.persist(e);
                 em.flush();
 
@@ -2813,7 +2813,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 Person p = new Person(105, "Pebbles", "Flintstone", "pebbles.flintstone@datanucleus.org");
                 p.setAge(5);
                 em.persist(p);
-                Employee e = new Employee(106, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
+                Employee e = new Employee(106, "Barney", "Rubble", "barney.rubble@datanucleus.org", 10000.0f, "12345");
                 e.setAge(35);
                 em.persist(e);
                 em.flush();
@@ -2873,7 +2873,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 Person p = new Person(105, "Pebbles", "Flintstone", "pebbles.flintstone@datanucleus.org");
                 p.setAge(5);
                 em.persist(p);
-                Employee e = new Employee(106, "Barney", "Rubble", "barney.rubble@jpox.com", 10000.0f, "12345");
+                Employee e = new Employee(106, "Barney", "Rubble", "barney.rubble@datanucleus.org", 10000.0f, "12345");
                 e.setAge(35);
                 em.persist(e);
                 em.flush();
@@ -2973,7 +2973,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -3056,7 +3056,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
                 em.flush();
 
@@ -3267,7 +3267,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 em.flush();
 
@@ -3901,8 +3901,8 @@ LEFT OUTER JOIN JPA_AN_MAPJOINKEY K ON V_MAP.MAP4_KEY = K.ID
             {
                 tx.begin();
 
-                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 30000f, "1234A");
-                Employee e2 = new Employee(102, "George", "Cement", "george.cement@jpox.com", 20000f, "1235C");
+                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org", 30000f, "1234A");
+                Employee e2 = new Employee(102, "George", "Cement", "george.cement@datanucleus.org", 20000f, "1235C");
                 em.persist(e1);
                 em.persist(e2);
                 em.flush();

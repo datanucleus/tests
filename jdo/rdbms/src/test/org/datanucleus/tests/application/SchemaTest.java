@@ -729,8 +729,7 @@ public class SchemaTest extends JDOPersistenceTestCase
             }
 
             // Test conflicts in column naming in ConflictAssociation class.
-            // A column has been given the same name as the one JPOX will assign
-            // to a different column
+            // A column has been given the same name as the one DN will assign to a different column
             success = false;
             try
             {

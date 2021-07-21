@@ -68,7 +68,7 @@ public class TestA18_5 extends JDOTestBase
         catch (InvalidMetaDataException e) 
         {
             System.out.println(e);
-			fail("must not throw any InvalidMetaDataException when non-JPOX vendor and missing value on extension tag");
+			fail("must not throw any InvalidMetaDataException when non-DataNucleus vendor and missing value on extension tag");
 		}
         catch (NucleusException e)
         {

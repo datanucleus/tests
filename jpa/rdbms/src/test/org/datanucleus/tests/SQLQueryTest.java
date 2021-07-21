@@ -63,7 +63,7 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 tx.begin();
 
                 // Persist an object
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setAge(34);
                 em.persist(p);
                 em.flush();
@@ -110,7 +110,7 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 tx.begin();
 
                 // Persist an object
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setAge(34);
                 em.persist(p);
 
@@ -173,7 +173,7 @@ public class SQLQueryTest extends JPAPersistenceTestCase
                 tx.begin();
 
                 // Persist an object
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setAge(34);
                 em.persist(p);
                 em.flush();

@@ -20,7 +20,7 @@ Contributors:
 package org.datanucleus.enhancer.samples;
 
 /**
- * Sample class that defines a String array (which JPOX doesn't support).
+ * Sample class that defines a String array
  *
  * @version $Revision: 1.1 $
  */

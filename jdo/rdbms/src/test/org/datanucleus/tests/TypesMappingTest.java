@@ -140,7 +140,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
         {
             tx.begin();
             types = new DB2Types();
-            types.setDataLinkString("http://www.jpox.org");
+            types.setDataLinkString("http://www.datanucleus.org");
             types.setDataLinkString2("http://www.someurl.org/path");
             types.setSimpleString("some string");
             pm.makePersistent(types);
@@ -161,7 +161,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
         {
             tx.begin();
             types = (DB2Types) pm.getObjectById(id, true);
-            assertEquals("DataLinkString retrieved is wrong", "http://www.jpox.org".toUpperCase(), types.getDataLinkString().toUpperCase());
+            assertEquals("DataLinkString retrieved is wrong", "http://www.datanucleus.org".toUpperCase(), types.getDataLinkString().toUpperCase());
             assertEquals("DataLinkString2 retrieved is wrong", "/path".toUpperCase(), types.getDataLinkString2().toUpperCase());
             assertEquals("Simple String retrieved is wrong", "some string", types.getSimpleString());
             tx.commit();
@@ -180,7 +180,7 @@ public class TypesMappingTest  extends JDOPersistenceTestCase
         {
             tx.begin();
             types = (DB2Types) ((Collection) pm.newQuery(DB2Types.class).execute()).iterator().next();
-            assertEquals("DataLinkString retrieved from Query is wrong", "http://www.jpox.org".toUpperCase(), types.getDataLinkString().toUpperCase());
+            assertEquals("DataLinkString retrieved from Query is wrong", "http://www.datanucleus.org".toUpperCase(), types.getDataLinkString().toUpperCase());
             assertEquals("DataLinkString2 retrieved from Query is wrong", "/path".toUpperCase(), types.getDataLinkString2().toUpperCase());
             assertEquals("Simple String retrieved from Query is wrong", "some string", types.getSimpleString());
             tx.commit();

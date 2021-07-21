@@ -215,10 +215,10 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // Create some basic data to query
             tx.begin();
-            Person p1 = new Person(1, "First", "Person", "first.person@jpox.org");
+            Person p1 = new Person(1, "First", "Person", "first.person@datanucleus.org");
             pm.makePersistent(p1);
 
-            Person p2 = new Person(2, "Second", "Person", "second.person@jpox.org");
+            Person p2 = new Person(2, "Second", "Person", "second.person@datanucleus.org");
             pm.makePersistent(p2);
             tx.commit();
 
@@ -226,7 +226,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             tx = pm.currentTransaction();
             tx.begin();
             Query query = pm.newNamedQuery(Person.class, "PeopleWithEmail");
-            List results = (List) query.execute("second.person@jpox.org");
+            List results = (List) query.execute("second.person@datanucleus.org");
             Iterator iter = results.iterator();
             while (iter.hasNext())
             {
@@ -533,9 +533,9 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert a new element for table Person
             tx.begin();
-            Person p1 = new Person(1, "First", "Person", "first.person@jpox.org");
+            Person p1 = new Person(1, "First", "Person", "first.person@datanucleus.org");
             pm.makePersistent(p1);
-            Person p2 = new Person(2, "Second", "Person", "second.person@jpox.org");
+            Person p2 = new Person(2, "Second", "Person", "second.person@datanucleus.org");
             pm.makePersistent(p2);
             tx.commit();
 
@@ -740,14 +740,14 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert a new element for table person
             tx.begin();
-            Person p = new Person(1, "Nobody", "Nobody", "nobody@jpox.org");
+            Person p = new Person(1, "Nobody", "Nobody", "nobody@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
             tx.begin();
             String sqlText = "SELECT count(*) FROM PERSON WHERE EMAIL_ADDRESS = ?";
             Query query = pm.newQuery("javax.jdo.query.SQL", sqlText);
-            List results = (List) query.execute("nobody@jpox.org");
+            List results = (List) query.execute("nobody@datanucleus.org");
             Iterator iter = results.iterator();
             assertEquals(1, results.size());
             while (iter.hasNext())
@@ -765,7 +765,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             //test more than one parameter
             sqlText = "SELECT count(*) FROM PERSON WHERE EMAIL_ADDRESS = ? AND FIRSTNAME = ?";
             query = pm.newQuery("javax.jdo.query.SQL", sqlText);
-            results = (List) query.execute("nobody@jpox.org","Nobody");
+            results = (List) query.execute("nobody@datanucleus.org","Nobody");
             iter = results.iterator();
             assertEquals(1, results.size());
             while (iter.hasNext())
@@ -783,19 +783,19 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             //test more than one parameter
             sqlText = "SELECT count(*) FROM PERSON WHERE EMAIL_ADDRESS = ? AND FIRSTNAME = ?";
             query = pm.newQuery("javax.jdo.query.SQL", sqlText);
-            results = (List) query.execute("nobody@jpox.org","Noboda");
+            results = (List) query.execute("nobody@datanucleus.org","Noboda");
             assertEquals(1, results.size());
 
             //test more than one parameter
             sqlText = "SELECT * FROM PERSON WHERE EMAIL_ADDRESS = ? AND FIRSTNAME = ?";
             query = pm.newQuery("javax.jdo.query.SQL", sqlText);
-            results = (List) query.execute("nobody@jpox.org","Nobody");
+            results = (List) query.execute("nobody@datanucleus.org","Nobody");
             assertEquals(1, results.size());
             
             //test more than one parameter
             sqlText = "SELECT * FROM PERSON WHERE EMAIL_ADDRESS = ? AND FIRSTNAME = ?";
             query = pm.newQuery("javax.jdo.query.SQL", sqlText);
-            results = (List) query.execute("nobody@jpox.org","Noboda");
+            results = (List) query.execute("nobody@datanucleus.org","Noboda");
             assertEquals(0, results.size());
 
             tx.commit();
@@ -830,7 +830,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert a new element for table person
             tx.begin();
-            Person p = new Person(1, "Nobody", "Nobody", "nobody@jpox.org");
+            Person p = new Person(1, "Nobody", "Nobody", "nobody@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
@@ -838,7 +838,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             String sqlText = "SELECT count(*) FROM PERSON WHERE EMAIL_ADDRESS = ?";
             Query query = pm.newQuery("javax.jdo.query.SQL", sqlText);
             Map params = new HashMap();
-            params.put(Integer.valueOf("1"), "nobody@jpox.org");
+            params.put(Integer.valueOf("1"), "nobody@datanucleus.org");
             List results = (List) query.executeWithMap(params);
             Iterator iter = results.iterator();
             while (iter.hasNext())
@@ -884,7 +884,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert a new element for table person
             tx.begin();
-            Person p = new Person(1, "Fred", "Jones", "fred.jones@jpox.org");
+            Person p = new Person(1, "Fred", "Jones", "fred.jones@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
@@ -900,7 +900,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
 
             // insert a new element for table person
             tx.begin();
-            p = new Person(1, "Alan", "Smith", "alan.smith@jpox.org");
+            p = new Person(1, "Alan", "Smith", "alan.smith@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
@@ -1142,17 +1142,17 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert new elements for table person
             tx.begin();
-            Person p = new Person(1, "a", "A", "a@jpox.org");
+            Person p = new Person(1, "a", "A", "a@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(2, "b", "B", "b@jpox.org");
+            p = new Person(2, "b", "B", "b@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(3, "c", "C", "c@jpox.org");
+            p = new Person(3, "c", "C", "c@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(4, "d", "D", "d@jpox.org");
+            p = new Person(4, "d", "D", "d@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(5, "e", "E", "e@jpox.org");
+            p = new Person(5, "e", "E", "e@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(6, "f", "F", "f@jpox.org");
+            p = new Person(6, "f", "F", "f@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
@@ -1222,17 +1222,17 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert new elements for table person
             tx.begin();
-            Person p = new Person(1, "John", "Smith", "a@jpox.org");
+            Person p = new Person(1, "John", "Smith", "a@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(2, "Paul", "Smith", "b@jpox.org");
+            p = new Person(2, "Paul", "Smith", "b@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(3, "Paul", "Green", "c@jpox.org");
+            p = new Person(3, "Paul", "Green", "c@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(4, "John", "Brown", "d@jpox.org");
+            p = new Person(4, "John", "Brown", "d@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(5, "Jason", "White", "e@jpox.org");
+            p = new Person(5, "Jason", "White", "e@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(6, "John", "White", "f@jpox.org");
+            p = new Person(6, "John", "White", "f@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
@@ -1299,17 +1299,17 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert new elements for table person
             tx.begin();
-            Person p = new Person(1, "John", "Smith", "a@jpox.org");
+            Person p = new Person(1, "John", "Smith", "a@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(2, "Paul", "Smith", "b@jpox.org");
+            p = new Person(2, "Paul", "Smith", "b@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(3, "Paul", "Green", "c@jpox.org");
+            p = new Person(3, "Paul", "Green", "c@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(4, "John", "Brown", "d@jpox.org");
+            p = new Person(4, "John", "Brown", "d@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(5, "Jason", "White", "e@jpox.org");
+            p = new Person(5, "Jason", "White", "e@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(6, "John", "White", "f@jpox.org");
+            p = new Person(6, "John", "White", "f@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
@@ -1411,17 +1411,17 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // insert new elements for table person
             tx.begin();
-            Person p = new Person(1, "a", "A", "a@jpox.org");
+            Person p = new Person(1, "a", "A", "a@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(2, "b", "B", "b@jpox.org");
+            p = new Person(2, "b", "B", "b@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(3, "c", "C", "c@jpox.org");
+            p = new Person(3, "c", "C", "c@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(4, "d", "D", "d@jpox.org");
+            p = new Person(4, "d", "D", "d@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(5, "e", "E", "e@jpox.org");
+            p = new Person(5, "e", "E", "e@datanucleus.org");
             pm.makePersistent(p);
-            p = new Person(6, "f", "F", "f@jpox.org");
+            p = new Person(6, "f", "F", "f@datanucleus.org");
             pm.makePersistent(p);
             tx.commit();
 
@@ -1479,10 +1479,10 @@ public class SQLQueryTest extends JDOPersistenceTestCase
         {
             // Create some basic data to query
             tx.begin();
-            Person p1 = new Person(1, "First", "Person", "first.person@jpox.org");
+            Person p1 = new Person(1, "First", "Person", "first.person@datanucleus.org");
             pm.makePersistent(p1);
 
-            Person p2 = new Person(2, "Second", "Person", "second.person@jpox.org");
+            Person p2 = new Person(2, "Second", "Person", "second.person@datanucleus.org");
             pm.makePersistent(p2);
             tx.commit();
 

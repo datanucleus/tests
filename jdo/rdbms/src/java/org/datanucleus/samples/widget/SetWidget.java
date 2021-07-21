@@ -1,6 +1,3 @@
-/*
- * The terms of the JPOX License are distributed with the software documentation
- */
 package org.datanucleus.samples.widget;
 
 import java.util.HashSet;
@@ -274,7 +271,7 @@ public class SetWidget extends Widget implements HasNormalSetField, HasInverseSe
 
         myPM.deletePersistentAll(elements);
 
-        // With cached collections in JPOX this won't work
+        // With cached collections in DN this won't work
 //      if (!inverseSet.isEmpty())
 //      {
 //          throw new RuntimeException("Elements still left in inverseSet");

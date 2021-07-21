@@ -82,7 +82,7 @@ import org.datanucleus.samples.annotations.types.enums.EnumHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
 
 /**
- * Tests for the use of JPA annotations and the generation of internal JPOX metadata.
+ * Tests for the use of JPA annotations and the generation of internal DN metadata.
  */
 public class AnnotationTest extends JPAPersistenceTestCase
 {

@@ -101,7 +101,7 @@ public class EntityManagerFactoryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setGlobalNum("First");
                 em.persist(p);
 
@@ -162,7 +162,7 @@ public class EntityManagerFactoryTest extends JPAPersistenceTestCase
                 Person p = results.get(0);
                 assertEquals("Fred", p.getFirstName());
                 assertEquals("Flintstone", p.getLastName());
-                assertEquals("fred.flintstone@jpox.com", p.getEmailAddress());
+                assertEquals("fred.flintstone@datanucleus.org", p.getEmailAddress());
 
                 tx.commit();
             }
@@ -200,7 +200,7 @@ public class EntityManagerFactoryTest extends JPAPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setGlobalNum("First");
                 em.persist(p);
                 assertTrue(util.getIdentifier(p) instanceof Person.PK);
