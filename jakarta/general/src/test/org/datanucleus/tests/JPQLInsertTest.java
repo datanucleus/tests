@@ -63,7 +63,7 @@ public class JPQLInsertTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
                 em.flush();
 

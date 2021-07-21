@@ -114,7 +114,7 @@ public class JPQLUpdateTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
                 em.flush();
 
@@ -166,7 +166,7 @@ public class JPQLUpdateTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
                 em.flush();
                 pk = p.getPK();
@@ -266,10 +266,10 @@ public class JPQLUpdateTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 10000f, "12001");
+                Employee e1 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org", 10000f, "12001");
                 e1.setAge(35);
                 em.persist(e1);
-                Employee e2 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@jpox.com", 20000f, "12000");
+                Employee e2 = new Employee(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org", 20000f, "12000");
                 e2.setAge(45);
                 em.persist(e2);
                 em.flush();
@@ -322,7 +322,7 @@ public class JPQLUpdateTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p);
                 em.flush();
 

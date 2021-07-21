@@ -130,7 +130,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
             try
             {
                 tx.begin();
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setGlobalNum("First");
                 em.persist(p);
                 tx.commit();
@@ -138,7 +138,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
                 try
                 {
                     tx.begin();
-                    Person p2 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                    Person p2 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                     p2.setGlobalNum("First");
                     em.persist(p2);
                     tx.commit();
@@ -163,7 +163,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
                 try
                 {
                     tx.begin();
-                    Person p2 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                    Person p2 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                     p2.setGlobalNum("First");
                     em.persist(p2);
                     tx.commit();
@@ -281,7 +281,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
             {
                 // Persist an object
                 tx.begin();
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 tx.commit();
 
@@ -292,7 +292,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
 
                 // Merge a new object
                 tx.begin();
-                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 em.merge(p2);
                 tx.commit();
             }
@@ -329,7 +329,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
             {
                 // Persist an object
                 tx.begin();
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
 
                 // Refresh the object (though not yet in the datastore). Should just return
@@ -341,7 +341,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
                 {
                     // Refresh a new object
                     tx.begin();
-                    Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@jpox.com");
+                    Person p2 = new Person(102, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                     em.refresh(p2);
                     tx.commit();
                     fail("Refresh on non-managed object succeeded!");
@@ -391,7 +391,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
                 Account acct1 = new Account();
                 acct1.setUsername("fredf");
@@ -445,7 +445,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
                 Person.PK pk = null;
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 em.persist(p1);
 
                 tx.commit();
@@ -539,7 +539,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
             try
             {
                 tx.begin();
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setGlobalNum("First");
                 em.persist(p);
                 em.detach(p);
@@ -961,7 +961,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p.setGlobalNum("First");
                 em.persist(p);
                 id = p.getPK();

@@ -64,9 +64,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 em.persist(p1);
                 em.persist(p2);
@@ -105,9 +105,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 em.persist(p1);
                 em.persist(p2);
@@ -147,9 +147,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 em.persist(p1);
                 em.persist(p2);
@@ -274,9 +274,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 em.persist(p1);
                 em.persist(p2);
@@ -319,9 +319,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 p1.setBestFriend(p2);
                 em.persist(p1);
@@ -362,9 +362,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 p1.setBestFriend(p2);
                 em.persist(p1);
@@ -465,9 +465,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 em.persist(p1);
                 em.persist(p2);
@@ -506,9 +506,9 @@ public class JPQLSubqueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
 
-                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@jpox.com");
+                Person p1 = new Person(101, "Fred", "Flintstone", "fred.flintstone@datanucleus.org");
                 p1.setAge(35);
-                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@jpox.com");
+                Person p2 = new Person(101, "Barney", "Rubble", "barney.rubble@datanucleus.org");
                 p2.setAge(45);
                 em.persist(p1);
                 em.persist(p2);

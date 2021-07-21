@@ -66,9 +66,6 @@ public class PetroleumCustomer
         this.name = name;
     }
 
-    /**
-     * http://www.jpox.org/servlet/jira/browse/NUCJPA-40
-     */
     @Element
     public String getBugNUCJPA40()
     {
