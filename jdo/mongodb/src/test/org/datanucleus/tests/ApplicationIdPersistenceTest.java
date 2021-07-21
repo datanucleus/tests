@@ -34,16 +34,16 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.datastore.JDOConnection;
 
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Organisation;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.PhoneNumber;
+import org.datanucleus.samples.models.company.Project;
+import org.datanucleus.samples.models.company.Qualification;
+import org.datanucleus.samples.types.enums.Colour;
+import org.datanucleus.samples.types.enums.Palette;
 import org.datanucleus.tests.applicationid.ClassWithUniqueField;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Organisation;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.PhoneNumber;
-import org.jpox.samples.models.company.Project;
-import org.jpox.samples.models.company.Qualification;
-import org.jpox.samples.types.enums.Colour;
-import org.jpox.samples.types.enums.Palette;
 
 import com.mongodb.DB;
 

@@ -35,43 +35,43 @@ import javax.jdo.Transaction;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
-import org.jpox.samples.inheritance.ABase;
-import org.jpox.samples.inheritance.ASub1;
-import org.jpox.samples.inheritance.ASub2;
-import org.jpox.samples.inheritance.BBase;
-import org.jpox.samples.inheritance.BSub;
-import org.jpox.samples.inheritance.BSubSub;
-import org.jpox.samples.inheritance.CBase;
-import org.jpox.samples.inheritance.CSub1;
-import org.jpox.samples.inheritance.CSub2;
-import org.jpox.samples.inheritance.DBase;
-import org.jpox.samples.inheritance.DElemBase;
-import org.jpox.samples.inheritance.DElemSub;
-import org.jpox.samples.inheritance.DSub;
-import org.jpox.samples.inheritance.EBase;
-import org.jpox.samples.inheritance.EElemBase;
-import org.jpox.samples.inheritance.EElemSub;
-import org.jpox.samples.inheritance.ESub;
-import org.jpox.samples.inheritance.FBase;
-import org.jpox.samples.inheritance.FSub1;
-import org.jpox.samples.inheritance.FSub1Sub;
-import org.jpox.samples.inheritance.FSub2;
-import org.jpox.samples.inheritance.GBase;
-import org.jpox.samples.inheritance.GSub1;
-import org.jpox.samples.inheritance.GSub2;
-import org.jpox.samples.inheritance.HBase;
-import org.jpox.samples.inheritance.JBase;
-import org.jpox.samples.inheritance.JBowl;
-import org.jpox.samples.inheritance.JMarble;
-import org.jpox.samples.inheritance.JSpottedMarble;
-import org.jpox.samples.inheritance.JTransparentMarble;
-import org.jpox.samples.inheritance.KSub1;
-import org.jpox.samples.inheritance.LBase;
-import org.jpox.samples.inheritance.LSub;
-import org.jpox.samples.inheritance.MBase;
-import org.jpox.samples.inheritance.MSub1;
-import org.jpox.samples.inheritance.QASub;
-import org.jpox.samples.inheritance.QBSub;
+import org.datanucleus.samples.inheritance.ABase;
+import org.datanucleus.samples.inheritance.ASub1;
+import org.datanucleus.samples.inheritance.ASub2;
+import org.datanucleus.samples.inheritance.BBase;
+import org.datanucleus.samples.inheritance.BSub;
+import org.datanucleus.samples.inheritance.BSubSub;
+import org.datanucleus.samples.inheritance.CBase;
+import org.datanucleus.samples.inheritance.CSub1;
+import org.datanucleus.samples.inheritance.CSub2;
+import org.datanucleus.samples.inheritance.DBase;
+import org.datanucleus.samples.inheritance.DElemBase;
+import org.datanucleus.samples.inheritance.DElemSub;
+import org.datanucleus.samples.inheritance.DSub;
+import org.datanucleus.samples.inheritance.EBase;
+import org.datanucleus.samples.inheritance.EElemBase;
+import org.datanucleus.samples.inheritance.EElemSub;
+import org.datanucleus.samples.inheritance.ESub;
+import org.datanucleus.samples.inheritance.FBase;
+import org.datanucleus.samples.inheritance.FSub1;
+import org.datanucleus.samples.inheritance.FSub1Sub;
+import org.datanucleus.samples.inheritance.FSub2;
+import org.datanucleus.samples.inheritance.GBase;
+import org.datanucleus.samples.inheritance.GSub1;
+import org.datanucleus.samples.inheritance.GSub2;
+import org.datanucleus.samples.inheritance.HBase;
+import org.datanucleus.samples.inheritance.JBase;
+import org.datanucleus.samples.inheritance.JBowl;
+import org.datanucleus.samples.inheritance.JMarble;
+import org.datanucleus.samples.inheritance.JSpottedMarble;
+import org.datanucleus.samples.inheritance.JTransparentMarble;
+import org.datanucleus.samples.inheritance.KSub1;
+import org.datanucleus.samples.inheritance.LBase;
+import org.datanucleus.samples.inheritance.LSub;
+import org.datanucleus.samples.inheritance.MBase;
+import org.datanucleus.samples.inheritance.MSub1;
+import org.datanucleus.samples.inheritance.QASub;
+import org.datanucleus.samples.inheritance.QBSub;
 
 /**
  * Test the handling of inheritance strategies.
@@ -757,7 +757,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
                 Iterator   iter=null;
                 
                 // All Product's with price < 150 ORDER BY Price (ascending)
-                e = pm.getExtent(org.jpox.samples.store.Product.class,true);
+                e = pm.getExtent(org.datanucleus.samples.store.Product.class,true);
                 q = pm.newQuery(e,"price < 150.00");
                 q.setOrdering("price ascending");
                 c = (Collection)q.execute();
@@ -772,12 +772,12 @@ public class InheritanceTest extends JDOPersistenceTestCase
                 {
                     // Check on the ordering and types
                     Object o=iter.next();
-                    if ((i == 0 && !(o instanceof org.jpox.samples.store.Book)) ||
-                            (i == 1 && !(o instanceof org.jpox.samples.store.Book)) ||
-                            (i == 2 && !(o instanceof org.jpox.samples.store.MyCompactDisc)) ||
-                            (i == 3 && !(o instanceof org.jpox.samples.store.CompactDisc)) ||
-                            (i == 4 && !(o instanceof org.jpox.samples.store.YourCompactDisc)) ||
-                            (i == 5 && !(o instanceof org.jpox.samples.store.Product)))
+                    if ((i == 0 && !(o instanceof org.datanucleus.samples.store.Book)) ||
+                            (i == 1 && !(o instanceof org.datanucleus.samples.store.Book)) ||
+                            (i == 2 && !(o instanceof org.datanucleus.samples.store.MyCompactDisc)) ||
+                            (i == 3 && !(o instanceof org.datanucleus.samples.store.CompactDisc)) ||
+                            (i == 4 && !(o instanceof org.datanucleus.samples.store.YourCompactDisc)) ||
+                            (i == 5 && !(o instanceof org.datanucleus.samples.store.Product)))
                     {
                         assertTrue("Inheritance-NewTable : Item " + i + " is of incorrect type - " + o,false);
                     }
@@ -790,7 +790,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
                 }
                 
                 // All Books
-                e = pm.getExtent(org.jpox.samples.store.Book.class,true);
+                e = pm.getExtent(org.datanucleus.samples.store.Book.class,true);
                 q = pm.newQuery(e);
                 c = (Collection)q.execute();
                 LOG.debug("Inheritance-NewTable : Query for all Book's - no of items=" + c.size());
@@ -806,7 +806,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
                 }
                 
                 // All CompactDiscs
-                e = pm.getExtent(org.jpox.samples.store.CompactDisc.class,true);
+                e = pm.getExtent(org.datanucleus.samples.store.CompactDisc.class,true);
                 q = pm.newQuery(e);
                 c = (Collection)q.execute();
                 LOG.debug("Inheritance-NewTable : Query for all CompactDisc's - no of items=" + c.size());
@@ -822,7 +822,7 @@ public class InheritanceTest extends JDOPersistenceTestCase
                 }
                 
                 // All Products
-                e = pm.getExtent(org.jpox.samples.store.Product.class,true);
+                e = pm.getExtent(org.datanucleus.samples.store.Product.class,true);
                 q = pm.newQuery(e);
                 c = (Collection)q.execute();
                 iter = c.iterator();

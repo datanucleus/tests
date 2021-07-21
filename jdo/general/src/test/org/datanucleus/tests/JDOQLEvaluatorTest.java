@@ -28,18 +28,18 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.api.jdo.JDOQuery;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.one_many.collection.SetHolder;
+import org.datanucleus.samples.one_many.map.MapHolder;
+import org.datanucleus.samples.one_many.unidir_2.GroupMember;
+import org.datanucleus.samples.one_many.unidir_2.UserGroup;
 import org.datanucleus.store.query.Query;
 import org.datanucleus.store.query.compiler.JDOQLCompiler;
 import org.datanucleus.store.query.compiler.JavaQueryCompiler;
 import org.datanucleus.store.query.compiler.QueryCompilation;
 import org.datanucleus.store.query.inmemory.JDOQLInMemoryEvaluator;
 import org.datanucleus.store.query.inmemory.JavaQueryInMemoryEvaluator;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.one_many.collection.SetHolder;
-import org.jpox.samples.one_many.map.MapHolder;
-import org.jpox.samples.one_many.unidir_2.GroupMember;
-import org.jpox.samples.one_many.unidir_2.UserGroup;
 
 /**
  * Tests for generic JDOQL in-memory evaluator.

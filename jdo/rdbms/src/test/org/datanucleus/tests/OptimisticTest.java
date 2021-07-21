@@ -23,8 +23,8 @@ import javax.jdo.JDOOptimisticVerificationException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.versioned.Trade2;
 import org.datanucleus.store.StoreManager;
-import org.jpox.samples.versioned.Trade2;
 
 /**
  * Test optimistic transactions specific to RDBMS.

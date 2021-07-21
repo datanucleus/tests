@@ -18,13 +18,13 @@ Contributions
 ***********************************************************************/
 package org.datanucleus.tests.types;
 
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.container.ContainerItemChild;
+import org.datanucleus.samples.types.linkedlist.LinkedList1;
+import org.datanucleus.samples.types.linkedlist.LinkedList2;
+import org.datanucleus.samples.types.linkedlist.LinkedList2Item;
+import org.datanucleus.samples.types.linkedlist.LinkedList2ItemChild;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.container.ContainerItemChild;
-import org.jpox.samples.types.linkedlist.LinkedList1;
-import org.jpox.samples.types.linkedlist.LinkedList2;
-import org.jpox.samples.types.linkedlist.LinkedList2Item;
-import org.jpox.samples.types.linkedlist.LinkedList2ItemChild;
  
 /**
  * Test case to test LinkedList SCO.

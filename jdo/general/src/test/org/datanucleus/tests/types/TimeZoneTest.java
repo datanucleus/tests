@@ -25,8 +25,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.timezone.TimeZoneHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.timezone.TimeZoneHolder;
 
 /**
  * Tests for SCO mutable type java.util.TimeZone.

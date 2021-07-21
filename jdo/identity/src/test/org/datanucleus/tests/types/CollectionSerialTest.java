@@ -18,12 +18,12 @@ Contributions
 ***********************************************************************/
 package org.datanucleus.tests.types;
 
+import org.datanucleus.samples.types.collection.Collection3;
+import org.datanucleus.samples.types.collection.Collection4;
+import org.datanucleus.samples.types.collection.Collection4Item;
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.container.ContainerItemChild;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.collection.Collection3;
-import org.jpox.samples.types.collection.Collection4;
-import org.jpox.samples.types.collection.Collection4Item;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.container.ContainerItemChild;
 
 /**
  * Tests for Collection field which is serialised.

@@ -26,9 +26,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.array.ArrayElement;
-import org.jpox.samples.array.PersistableArray;
-import org.jpox.samples.one_many.collection.SetHolder;
+import org.datanucleus.samples.array.ArrayElement;
+import org.datanucleus.samples.array.PersistableArray;
+import org.datanucleus.samples.one_many.collection.SetHolder;
 
 /**
  * Series of tests for RDBMS "bulk fetch" handling.

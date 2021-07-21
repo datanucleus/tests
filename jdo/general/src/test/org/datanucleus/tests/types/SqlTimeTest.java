@@ -28,7 +28,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.jpox.samples.types.sqltime.SqlTimeHolder;
+import org.datanucleus.samples.types.sqltime.SqlTimeHolder;
 
 /**
  * Tests for SCO mutable type java.sql.Time.

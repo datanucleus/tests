@@ -75,12 +75,12 @@ import org.datanucleus.samples.annotations.one_one.bidir.Timer;
 import org.datanucleus.samples.annotations.one_one.unidir.Login;
 import org.datanucleus.samples.annotations.one_one.unidir.LoginAccount;
 import org.datanucleus.samples.annotations.types.basic.DateHolder;
+import org.datanucleus.samples.one_many.map_fk.MapFKHolder;
+import org.datanucleus.samples.one_many.map_fk.MapFKValue;
+import org.datanucleus.samples.one_many.map_fk.MapFKValueBase;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.types.wrappers.GregorianCalendar;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.one_many.map_fk.MapFKHolder;
-import org.jpox.samples.one_many.map_fk.MapFKValue;
-import org.jpox.samples.one_many.map_fk.MapFKValueBase;
 
 /**
  * Tests for JPQL "SELECT" queries.
@@ -216,7 +216,7 @@ public class JPQLQueryTest extends JakartaPersistenceTestCase
         try
         {
             em.getTransaction().begin();
-            List result = em.createQuery("SELECT C FROM org.jpox.samples.jpa.company.BrandMarketing C").getResultList();
+            List result = em.createQuery("SELECT C FROM org.datanucleus.samples.jpa.company.BrandMarketing C").getResultList();
             assertEquals(0, result.size());
             BrandMarketing c1 = new BrandMarketing();
             c1.setId("1");
@@ -235,11 +235,11 @@ public class JPQLQueryTest extends JakartaPersistenceTestCase
             em.persist(c3);
             em.persist(c4);
             em.flush();
-            result = em.createQuery("SELECT C FROM org.jpox.samples.jpa.company.BrandMarketing C").getResultList();
+            result = em.createQuery("SELECT C FROM org.datanucleus.samples.jpa.company.BrandMarketing C").getResultList();
             assertEquals(2, result.size());
             assertTrue(result.get(0) instanceof BrandMarketing);
             assertTrue(result.get(1) instanceof BrandMarketing);
-            result = em.createQuery("SELECT C FROM org.jpox.samples.jpa.company.Marketing C").getResultList();
+            result = em.createQuery("SELECT C FROM org.datanucleus.samples.jpa.company.Marketing C").getResultList();
             assertEquals(4, result.size());
             assertTrue(result.get(0) instanceof BrandMarketing);
             assertTrue(result.get(1) instanceof BrandMarketing);
@@ -3499,10 +3499,10 @@ QueryCompilation:
     JoinExpression{JOIN_LEFT_OUTER PrimaryExpression{h.map} alias=m})]
   [filter:DyadicExpression{PrimaryExpression{m#KEY}  =  Literal{Key1}}]
   [symbols: 
-    m#VALUE type=org.jpox.samples.one_many.map_fk.MapFKValue, 
-    h type=org.jpox.samples.one_many.map_fk.MapFKHolder, 
+    m#VALUE type=org.datanucleus.samples.one_many.map_fk.MapFKValue, 
+    h type=org.datanucleus.samples.one_many.map_fk.MapFKHolder, 
     m#KEY type=java.lang.String, 
-    m type=org.jpox.samples.one_many.map_fk.MapFKValue]
+    m type=org.datanucleus.samples.one_many.map_fk.MapFKValue]
 
 SELECT H."NAME",M."NAME" 
 FROM JPA_MAP_FK_HOLDER H 

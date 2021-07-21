@@ -38,12 +38,12 @@ import javax.transaction.UserTransaction;
 import org.junit.Assert;
 
 import org.datanucleus.exceptions.NucleusDataStoreException;
+import org.datanucleus.samples.models.company.Account;
+import org.datanucleus.samples.one_one.unidir.Login;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.TestHelper;
 import org.datanucleus.tests.jta.util.PersistenceManagerDisposer;
-import org.jpox.samples.models.company.Account;
-import org.jpox.samples.one_one.unidir.Login;
-import org.jpox.samples.one_one.unidir.LoginAccount;
 
 /**
  * Series of general tests for JTA.

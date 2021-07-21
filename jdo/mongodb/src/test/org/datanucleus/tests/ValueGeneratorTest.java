@@ -27,13 +27,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.valuegeneration.AUIDGeneratorItem;
+import org.datanucleus.samples.valuegeneration.IdentityStringGeneratorItem;
+import org.datanucleus.samples.valuegeneration.TableGeneratorItem;
+import org.datanucleus.samples.valuegeneration.UUIDGeneratorItem;
+import org.datanucleus.samples.valuegeneration.UUIDHexGeneratorItem;
+import org.datanucleus.samples.valuegeneration.UUIDStringGeneratorItem;
 import org.datanucleus.tests.applicationid.AppIdStringGeneratorItem;
-import org.jpox.samples.valuegeneration.AUIDGeneratorItem;
-import org.jpox.samples.valuegeneration.IdentityStringGeneratorItem;
-import org.jpox.samples.valuegeneration.TableGeneratorItem;
-import org.jpox.samples.valuegeneration.UUIDGeneratorItem;
-import org.jpox.samples.valuegeneration.UUIDHexGeneratorItem;
-import org.jpox.samples.valuegeneration.UUIDStringGeneratorItem;
 
 /**
  * Test the use of all forms of Id generators.

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.rdbms.types">
+        <class name="DB2Types">
+            <field name="dataLinkString"/>
+            <field name="dataLinkString2"/>
+            <field name="simpleString"/>
+        </class>
+
+        <class name="MSSQLTypes">
+            <field name="uuid" primary-key="true" value-strategy="uuid-hex"/>
+            <field name="simpleString"/>
+            <field name="anotherString" value-strategy="datastore-uuid-hex"/>
+            <field name="anotherString2"/>
+        </class>
+    </package>
+</jdo>

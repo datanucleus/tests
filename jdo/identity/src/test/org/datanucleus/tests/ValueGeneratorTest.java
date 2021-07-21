@@ -30,20 +30,20 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.valuegeneration.AUIDGeneratorItem;
-import org.jpox.samples.valuegeneration.IdentityGeneratorItem;
-import org.jpox.samples.valuegeneration.IdentityGeneratorItemContainer;
-import org.jpox.samples.valuegeneration.IdentityGeneratorItemNoField;
-import org.jpox.samples.valuegeneration.IdentityGeneratorItemSub1;
-import org.jpox.samples.valuegeneration.IdentityGeneratorItemSub2;
-import org.jpox.samples.valuegeneration.MaxGeneratorItem;
-import org.jpox.samples.valuegeneration.MixedGeneratorItem;
-import org.jpox.samples.valuegeneration.MixedGeneratorItemSub;
-import org.jpox.samples.valuegeneration.SequenceGeneratorItem;
-import org.jpox.samples.valuegeneration.TableGeneratorItem;
-import org.jpox.samples.valuegeneration.UUIDGeneratorItem;
-import org.jpox.samples.valuegeneration.UUIDHexGeneratorItem;
-import org.jpox.samples.valuegeneration.UUIDStringGeneratorItem;
+import org.datanucleus.samples.valuegeneration.AUIDGeneratorItem;
+import org.datanucleus.samples.valuegeneration.IdentityGeneratorItem;
+import org.datanucleus.samples.valuegeneration.IdentityGeneratorItemContainer;
+import org.datanucleus.samples.valuegeneration.IdentityGeneratorItemNoField;
+import org.datanucleus.samples.valuegeneration.IdentityGeneratorItemSub1;
+import org.datanucleus.samples.valuegeneration.IdentityGeneratorItemSub2;
+import org.datanucleus.samples.valuegeneration.MaxGeneratorItem;
+import org.datanucleus.samples.valuegeneration.MixedGeneratorItem;
+import org.datanucleus.samples.valuegeneration.MixedGeneratorItemSub;
+import org.datanucleus.samples.valuegeneration.SequenceGeneratorItem;
+import org.datanucleus.samples.valuegeneration.TableGeneratorItem;
+import org.datanucleus.samples.valuegeneration.UUIDGeneratorItem;
+import org.datanucleus.samples.valuegeneration.UUIDHexGeneratorItem;
+import org.datanucleus.samples.valuegeneration.UUIDStringGeneratorItem;
 
 /**
  * Test the use of all forms of Id generators.

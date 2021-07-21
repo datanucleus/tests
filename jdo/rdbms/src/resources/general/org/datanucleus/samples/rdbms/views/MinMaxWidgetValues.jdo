@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.rdbms.views">
+        <class name="MinMaxWidgetValues" identity-type="nondurable">
+            <extension vendor-name="datanucleus" key="view-imports" 
+             value="import org.datanucleus.samples.widget.Widget;"/>
+
+            <extension vendor-name="datanucleus" key="view-definition" value="
+CREATE VIEW {this}
+(
+  {this.booleanValue},
+  {this.minByteValue},
+  {this.minShortValue},
+  {this.maxIntValue},
+  {this.maxLongValue}
+) AS SELECT {Widget.booleanField},
+	    MIN({Widget.byteField}),
+	    MIN({Widget.shortField}),
+	    MAX({Widget.intField}),
+	    MAX({Widget.longField})
+     FROM {Widget}
+     GROUP BY {Widget.booleanField}"/>
+        </class>
+    </package>
+</jdo>

@@ -42,7 +42,7 @@ import javax.jdo.annotations.Query;
 @Discriminator
 @FetchGroup(name="names", members={@Persistent(name="firstName"), @Persistent(name="lastName")})
 @Query(name="PeopleCalledSmith",language="JDOQL",
-    value="SELECT FROM org.jpox.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")
+    value="SELECT FROM org.datanucleus.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")
 public class Person implements Cloneable, Serializable
 {
     private static final long serialVersionUID = -2460156619235484548L;

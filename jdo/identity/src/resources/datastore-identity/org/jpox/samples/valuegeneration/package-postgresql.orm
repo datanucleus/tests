@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
-<orm>
-    <package name="org.jpox.samples.valuegeneration">
-        <class name="IdentityGeneratorItemNoField">
-            <datastore-identity column="id"/>
-        </class>
-    </package>
-</orm>

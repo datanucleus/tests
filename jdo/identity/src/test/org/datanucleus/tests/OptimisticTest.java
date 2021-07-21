@@ -32,19 +32,19 @@ import javax.jdo.Transaction;
 import javax.transaction.Status;
 import javax.transaction.Synchronization;
 
+import org.datanucleus.samples.versioned.Trade1;
+import org.datanucleus.samples.versioned.Trade1Holder;
+import org.datanucleus.samples.versioned.Trade3;
+import org.datanucleus.samples.versioned.Trade4;
+import org.datanucleus.samples.versioned.Trade4Sub;
+import org.datanucleus.samples.versioned.Trade5Base;
+import org.datanucleus.samples.versioned.Trade5Sub;
+import org.datanucleus.samples.versioned.Trade5SubSub;
+import org.datanucleus.samples.versioned.Trade6;
+import org.datanucleus.samples.versioned.Trade6Holder;
+import org.datanucleus.samples.versioned.Trade7Base;
+import org.datanucleus.samples.versioned.Trade7Sub;
 import org.datanucleus.samples.versioned.VersionEmptyDFG;
-import org.jpox.samples.versioned.Trade1;
-import org.jpox.samples.versioned.Trade1Holder;
-import org.jpox.samples.versioned.Trade3;
-import org.jpox.samples.versioned.Trade4;
-import org.jpox.samples.versioned.Trade4Sub;
-import org.jpox.samples.versioned.Trade5Base;
-import org.jpox.samples.versioned.Trade5Sub;
-import org.jpox.samples.versioned.Trade5SubSub;
-import org.jpox.samples.versioned.Trade6;
-import org.jpox.samples.versioned.Trade6Holder;
-import org.jpox.samples.versioned.Trade7Base;
-import org.jpox.samples.versioned.Trade7Sub;
 
 /**
  * Test optimistic transactions.

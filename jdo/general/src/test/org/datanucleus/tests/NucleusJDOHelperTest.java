@@ -23,7 +23,7 @@ import javax.jdo.ObjectState;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Employee;
 
 /**
  * Series of tests for NucleusJDOHelper.

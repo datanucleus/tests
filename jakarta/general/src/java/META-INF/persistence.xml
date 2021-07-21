@@ -5,9 +5,9 @@
 
     <!-- TEST "unit" -->
     <persistence-unit name="TEST">
-        <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/types/calendar/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/one_many/map_fk/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/versioned/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/types/calendar/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/one_many/map_fk/orm.xml</mapping-file>
         <class>org.datanucleus.samples.typeconversion.ComplicatedType2</class>
     </persistence-unit>
 
@@ -28,16 +28,16 @@
 
     <!-- Test "unit", containing all classes so we can enhance the lot -->
     <persistence-unit name="JakartaTest">
-        <mapping-file>org/jpox/samples/abstractclasses/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/compoundidentity/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/many_many/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/one_many/unidir_2/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/one_many/map_fk/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/one_one/unidir/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/one_one/bidir/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/models/company/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/versioned/orm.xml</mapping-file>
-        <mapping-file>org/jpox/samples/types/calendar/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/abstractclasses/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/compoundidentity/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/many_many/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/one_many/unidir_2/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/one_many/map_fk/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/one_one/unidir/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/one_one/bidir/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/models/company/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/versioned/orm.xml</mapping-file>
+        <mapping-file>org/datanucleus/samples/types/calendar/orm.xml</mapping-file>
 
         <mapping-file>org/datanucleus/samples/ann_xml/many_many/orm.xml</mapping-file>
         <mapping-file>org/datanucleus/samples/ann_xml/one_one/unidir/orm.xml</mapping-file>

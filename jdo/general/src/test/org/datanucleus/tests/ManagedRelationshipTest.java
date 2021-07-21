@@ -28,19 +28,19 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.many_many.AccountCustomer;
+import org.datanucleus.samples.many_many.GasSupplier;
+import org.datanucleus.samples.many_many.OilSupplier;
+import org.datanucleus.samples.many_many.OneOffCustomer;
+import org.datanucleus.samples.many_many.PetroleumCustomer;
+import org.datanucleus.samples.many_many.PetroleumSupplier;
+import org.datanucleus.samples.one_many.bidir.Animal;
+import org.datanucleus.samples.one_many.bidir.Farm;
+import org.datanucleus.samples.one_many.bidir_2.House;
+import org.datanucleus.samples.one_many.bidir_2.Window;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
 import org.datanucleus.tests.annotations.TransactionMode;
-import org.jpox.samples.many_many.AccountCustomer;
-import org.jpox.samples.many_many.GasSupplier;
-import org.jpox.samples.many_many.OilSupplier;
-import org.jpox.samples.many_many.OneOffCustomer;
-import org.jpox.samples.many_many.PetroleumCustomer;
-import org.jpox.samples.many_many.PetroleumSupplier;
-import org.jpox.samples.one_many.bidir.Animal;
-import org.jpox.samples.one_many.bidir.Farm;
-import org.jpox.samples.one_many.bidir_2.House;
-import org.jpox.samples.one_many.bidir_2.Window;
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
 
 /**
  * Tests for managed relationships.

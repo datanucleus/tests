@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.rdbms.views">
+        <class name="SetWidgetCounts" identity-type="nondurable">
+            <extension vendor-name="datanucleus" key="view-imports" value="
+                import org.datanucleus.samples.widget.SetWidget;
+                import org.datanucleus.samples.widget.ElementWidget;" />
+
+            <!-- This is the "generic" SQL92 version of the view. -->
+            <extension vendor-name="datanucleus" key="view-definition" value="
+CREATE VIEW {this}
+(
+    {this.sw},
+    {this.normalSetSize},
+    {this.inverseSetSize}
+) AS SELECT SW.{SetWidget.this},
+    (SELECT COUNT(NSET.{SetWidget.normalSet.owner})
+     FROM {SetWidget} SW1
+     LEFT OUTER JOIN {SetWidget.normalSet} NSET ON SW1.{SetWidget.this} = NSET.{SetWidget.normalSet.owner}
+     WHERE SW.{SetWidget.this} = SW1.{SetWidget.this}),
+    (SELECT COUNT(ISET.{ElementWidget.owner})
+     FROM {SetWidget} SW1
+     LEFT OUTER JOIN {ElementWidget} ISET ON SW1.{SetWidget.this} = ISET.{ElementWidget.owner}
+     WHERE SW.{SetWidget.this} = SW1.{SetWidget.this})
+     FROM {SetWidget} SW"/>
+
+     <!-- Custom view definition for Oracle8 because of their non-standard outer join syntax. -->
+            <extension vendor-name="datanucleus" key="view-definition-oracle" value="
+CREATE VIEW {this}
+(
+    {this.sw},
+    {this.normalSetSize},
+    {this.inverseSetSize}
+) AS SELECT SW.{SetWidget.this}, NSS.ELEMENT_COUNT, ISS.ELEMENT_COUNT
+     FROM {SetWidget} SW,
+    (SELECT SW.{SetWidget.this}, COUNT(NSET.{SetWidget.normalSet.element}) ELEMENT_COUNT
+     FROM {SetWidget} SW, {SetWidget.normalSet} NSET
+     WHERE SW.{SetWidget.this} = NSET.{SetWidget.normalSet.owner}(+)
+     GROUP BY SW.{SetWidget.this}) NSS,
+    (SELECT SW.{SetWidget.this}, COUNT(ISET.{ElementWidget.this}) ELEMENT_COUNT
+     FROM {SetWidget} SW, {ElementWidget} ISET
+     WHERE SW.{SetWidget.this} = ISET.{ElementWidget.owner}(+)
+     GROUP BY SW.{SetWidget.this}) ISS
+    WHERE SW.{SetWidget.this} = NSS.{SetWidget.this}
+    AND SW.{SetWidget.this} = ISS.{SetWidget.this}
+    WITH READ ONLY" />
+
+            <!--
+                For some reason SAP DB won't parse the generic case, but it will
+                handle equivalent code that uses sub-views.
+            -->
+            <extension vendor-name="datanucleus" key="view-definition-sapdb" value="
+CREATE VIEW {this}_1
+(
+    {this.sw},
+    CNT
+) AS SELECT SW.{SetWidget.this}, COUNT(NSET.{SetWidget.normalSet.element})
+     FROM {SetWidget} SW
+     LEFT OUTER JOIN {SetWidget.normalSet} NSET ON SW.{SetWidget.this} = NSET.{SetWidget.normalSet.owner}
+     GROUP BY SW.{SetWidget.this};
+
+CREATE VIEW {this}_2
+(
+    {this.sw},
+    CNT
+) AS SELECT SW.{SetWidget.this}, COUNT(ISET.{ElementWidget.this})
+     FROM {SetWidget} SW
+     LEFT OUTER JOIN {ElementWidget} ISET ON SW.{SetWidget.this} = ISET.{ElementWidget.owner}
+     GROUP BY SW.{SetWidget.this};
+
+CREATE VIEW {this}
+(
+    {this.sw},
+    {this.normalSetSize},
+    {this.inverseSetSize}
+) AS SELECT SW.{SetWidget.this}, V1.CNT, V2.CNT
+     FROM {SetWidget} SW
+     LEFT OUTER JOIN {this}_1 V1 ON SW.{SetWidget.this} = V1.{this.sw}
+     LEFT OUTER JOIN {this}_2 V2 ON SW.{SetWidget.this} = V2.{this.sw}"/>
+
+            <!--
+                DB2 is done the same as SAP DB, mainly to reduce the number of
+                SQL warnings:
+
+		    [IBM][CLI Driver][DB2/NT] SQLSTATE 01003: Null values were
+		    eliminated from the argument of a column function.
+
+		Note that "ant drop-tables" will not drop the sub-views, they
+		just become "inoperative".
+            -->
+            <extension vendor-name="datanucleus" key="view-definition-db2" value="
+CREATE VIEW {this}_1
+(
+    {this.sw},
+    CNT
+) AS SELECT SW.{SetWidget.this}, COUNT(NSET.{SetWidget.normalSet.element})
+     FROM {SetWidget} SW
+     LEFT OUTER JOIN {SetWidget.normalSet} NSET ON SW.{SetWidget.this} = NSET.{SetWidget.normalSet.owner}
+     GROUP BY SW.{SetWidget.this};
+
+CREATE VIEW {this}_2
+(
+    {this.sw},
+    CNT
+) AS SELECT SW.{SetWidget.this}, COUNT(ISET.{ElementWidget.this})
+     FROM {SetWidget} SW
+     LEFT OUTER JOIN {ElementWidget} ISET ON SW.{SetWidget.this} = ISET.{ElementWidget.owner}
+     GROUP BY SW.{SetWidget.this};
+
+CREATE VIEW {this}
+(
+    {this.sw},
+    {this.normalSetSize},
+    {this.inverseSetSize}
+) AS SELECT SW.{SetWidget.this}, V1.CNT, V2.CNT
+     FROM {SetWidget} SW
+     LEFT OUTER JOIN {this}_1 V1 ON SW.{SetWidget.this} = V1.{this.sw}
+     LEFT OUTER JOIN {this}_2 V2 ON SW.{SetWidget.this} = V2.{this.sw}"/>
+        </class>
+    </package>
+</jdo>

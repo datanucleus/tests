@@ -1,10 +1,10 @@
 eclipse.preferences.version=1
 encoding//src/resources=UTF-8
-encoding//src/resources/org/jpox/samples/compoundidentity/package.jdo=UTF-8
-encoding//src/resources/org/jpox/samples/inheritance/package.jdo=UTF-8
-encoding//src/resources/org/jpox/samples/one_many/unidir/package.jdo=UTF-8
-encoding//src/resources/org/jpox/samples/types/basic/package-hsql.orm=UTF-8
-encoding//src/resources/org/jpox/samples/types/basic/package-postgresql.orm=UTF-8
-encoding//src/resources/org/jpox/samples/types/basic/package.jdo=UTF-8
+encoding//src/resources/org/datanucleus/samples/compoundidentity/package.jdo=UTF-8
+encoding//src/resources/org/datanucleus/samples/inheritance/package.jdo=UTF-8
+encoding//src/resources/org/datanucleus/samples/one_many/unidir/package.jdo=UTF-8
+encoding//src/resources/org/datanucleus/samples/types/basic/package-hsql.orm=UTF-8
+encoding//src/resources/org/datanucleus/samples/types/basic/package-postgresql.orm=UTF-8
+encoding//src/resources/org/datanucleus/samples/types/basic/package.jdo=UTF-8
 encoding//src/test=UTF-8
 encoding/<project>=UTF-8

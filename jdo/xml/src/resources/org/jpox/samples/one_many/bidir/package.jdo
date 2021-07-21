@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
 <jdo>
-  	<package name="org.jpox.samples.one_many.bidir">
+  	<package name="org.datanucleus.samples.one_many.bidir">
         <class name="Animal" detachable="true" schema="/root/test/elements/animals" table="theanimal">
             <field name="name" primary-key="true"/>
             <field name="farm"/>

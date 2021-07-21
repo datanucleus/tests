@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.embedded">
+        <class name="DigitalCamera" identity-type="application" table="DIGITAL_CAMERA" detachable="true">
+            <field name="id" primary-key="true" column="DIGITAL_CAMERA_ID"/>
+            <field name="make">
+                <column name="MAKE" length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="model">
+                <column name="MODEL" length="60" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="memory" persistence-modifier="persistent" default-fetch-group="true">
+                <extension vendor-name="datanucleus" key="nested" value="true"/>
+                <embedded null-indicator-column="MEMORY_SIZE" null-indicator-value="0">
+                    <field name="chip">
+                        <embedded null-indicator-column="MEMORY_CHIP_THICKNESS" null-indicator-value="0">
+                            <field name="thickness">
+                                <column name="MEMORY_CHIP_THICKNESS" allows-null="true"/>
+                            </field>
+                        </embedded>
+                    </field>
+                    <field name="size">
+                        <column name="MEMORY_SIZE" default-value="0"/>
+                    </field>
+                    <field name="type">
+                        <column name="MEMORY_TYPE" allows-null="true"/>
+                    </field>
+                    <field name="voltage">
+                        <column name="MEMORY_VOLTS" allows-null="true"/>
+                    </field>
+                </embedded>
+            </field>
+        </class>
+
+        <class name="Memory" embedded-only="true" detachable="true">
+            <field name="type"/>
+            <field name="size"/>
+            <field name="voltage"/>
+            <field name="chip" persistence-modifier="persistent">
+                <extension vendor-name="datanucleus" key="nested" value="true"/>
+            </field>
+        </class>
+
+        <class name="Chip" embedded-only="true" detachable="true">
+            <field name="thickness"/>
+        </class>
+    </package>
+</jdo>

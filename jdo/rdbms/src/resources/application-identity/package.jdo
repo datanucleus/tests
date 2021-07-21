@@ -5,7 +5,7 @@
 
 <jdo>
     <query name="DeveloperWithSkillForResultDescoped" language="javax.jdo.query.SQL" 
-        result-class="org.jpox.samples.models.company.DeveloperRC">
+        result-class="org.datanucleus.samples.models.company.DeveloperRC">
         <![CDATA[
         SELECT PERSONNUM as id, GLOBALNUM, SKILL FROM DEVELOPER WHERE SKILL = ?
         ]]>

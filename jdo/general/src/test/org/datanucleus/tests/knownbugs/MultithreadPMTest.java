@@ -25,11 +25,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Developer;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Developer;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
 
 /**
  * Tests for multithreading capabilities.

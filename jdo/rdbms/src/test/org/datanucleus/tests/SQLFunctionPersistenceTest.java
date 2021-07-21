@@ -24,7 +24,7 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.rdbms.sqlfunction.SQLFunction;
+import org.datanucleus.samples.rdbms.sqlfunction.SQLFunction;
 
 /**
  * Tests that use SQL functions during the persistence process.

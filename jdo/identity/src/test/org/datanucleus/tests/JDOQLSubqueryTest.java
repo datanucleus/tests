@@ -28,14 +28,14 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
+import org.datanucleus.samples.models.company.Developer;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
+import org.datanucleus.samples.types.basic.BasicTypeHolder;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.jpox.samples.models.company.Developer;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
-import org.jpox.samples.types.basic.BasicTypeHolder;
 
 /**
  * Tests for JDOQL subquery operations.

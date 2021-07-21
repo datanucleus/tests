@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
 <jdo>
-    <package name="org.jpox.samples.embedded">
+    <package name="org.datanucleus.samples.embedded">
         <class name="DigitalCamera" identity-type="application" table="DIGITAL_CAMERA" detachable="true">
             <field name="id" primary-key="true" column="DIGITAL_CAMERA_ID" value-strategy="increment"/>
             <field name="make">

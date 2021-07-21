@@ -31,9 +31,9 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.jpox.samples.types.date.DateHolderC;
-import org.jpox.samples.types.date.DateHolderA;
-import org.jpox.samples.types.date.DateHolderB;
+import org.datanucleus.samples.types.date.DateHolderA;
+import org.datanucleus.samples.types.date.DateHolderB;
+import org.datanucleus.samples.types.date.DateHolderC;
 
 /**
  * Tests for SCO mutable type java.util.Date.

@@ -29,16 +29,16 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.embedded.Chip;
+import org.datanucleus.samples.embedded.Device;
+import org.datanucleus.samples.embedded.DigitalCamera;
+import org.datanucleus.samples.embedded.Film;
+import org.datanucleus.samples.embedded.FilmLibrary;
+import org.datanucleus.samples.embedded.Memory;
+import org.datanucleus.samples.embedded.Network;
 import org.datanucleus.tests.embedded.LibraryUser;
 import org.datanucleus.tests.embedded.Video;
 import org.datanucleus.tests.embedded.ViewedVideo;
-import org.jpox.samples.embedded.Chip;
-import org.jpox.samples.embedded.Device;
-import org.jpox.samples.embedded.DigitalCamera;
-import org.jpox.samples.embedded.Film;
-import org.jpox.samples.embedded.FilmLibrary;
-import org.jpox.samples.embedded.Memory;
-import org.jpox.samples.embedded.Network;
 
 /**
  * Simple tests for embedded fields.
@@ -333,7 +333,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 LOG.info(">> query of nested object value");
-                Query query = pm.newQuery("SELECT FROM org.jpox.samples.embedded.DigitalCamera WHERE memory.chip.thickness == 6");
+                Query query = pm.newQuery("SELECT FROM org.datanucleus.samples.embedded.DigitalCamera WHERE memory.chip.thickness == 6");
                 List results = (List) query.execute();
                 assertEquals("Number of cameras retrieved by query of nested embedded is incorrect", results.size(), 1);
                 DigitalCamera camera = (DigitalCamera) results.iterator().next();
@@ -998,7 +998,7 @@ public class EmbeddedTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Query q = pm.newQuery(Network.class, "devices.contains(elem) && elem.name == \"Audio Server\"");
-                q.declareVariables("org.jpox.samples.embedded.Device elem");
+                q.declareVariables("org.datanucleus.samples.embedded.Device elem");
                 List results = (List)q.execute();
                 
                 assertTrue("No networks retrieved from query of Networks containing audio server!", results != null);

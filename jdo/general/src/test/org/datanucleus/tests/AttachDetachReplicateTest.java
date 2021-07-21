@@ -41,20 +41,20 @@ import org.datanucleus.samples.detach.fetchdepth.B;
 import org.datanucleus.samples.detach.fetchdepth.C;
 import org.datanucleus.samples.jfire.organisation.JFireOrganisation;
 import org.datanucleus.samples.jfire.organisation.JFireOrganisationID;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Developer;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
 import org.datanucleus.samples.models.hashsetcollection.Detail;
 import org.datanucleus.samples.models.hashsetcollection.Master;
 import org.datanucleus.samples.models.hashsetcollection.OtherDetail;
+import org.datanucleus.samples.one_many.unidir_2.ExpertGroupMember;
+import org.datanucleus.samples.one_many.unidir_2.GroupMember;
+import org.datanucleus.samples.one_many.unidir_2.ModeratedUserGroup;
+import org.datanucleus.samples.one_many.unidir_2.UserGroup;
 import org.datanucleus.samples.store.Product;
 import org.datanucleus.tests.annotations.Datastore;
 import org.datanucleus.tests.annotations.TransactionMode;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Developer;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.one_many.unidir_2.ExpertGroupMember;
-import org.jpox.samples.one_many.unidir_2.GroupMember;
-import org.jpox.samples.one_many.unidir_2.ModeratedUserGroup;
-import org.jpox.samples.one_many.unidir_2.UserGroup;
 
 /**
  * Series of tests for Attach/Detach replication functionality.
@@ -551,7 +551,7 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
     }
 
     /**
-     * This is a complex testcase using the classes from org.jpox.samples.models.company.
+     * This is a complex testcase using the classes from org.datanucleus.samples.models.company.
      * It stores a Manager into datastore 1. This Manager has a mapped-by-Set of
      * his employees and a join-Set of his departments. Hence, this test checks for
      * the behaviour of Sets when copied from one 
@@ -1227,8 +1227,8 @@ public class AttachDetachReplicateTest extends JDOPersistenceTestCase
             props.setProperty(PropertyNames.PROPERTY_ATTACH_SAME_DATASTORE, "false");
             props.setProperty(PropertyNames.PROPERTY_AUTOSTART_MECHANISM,"Classes");
             props.setProperty(PropertyNames.PROPERTY_AUTOSTART_CLASSNAMES,
-                "org.jpox.samples.one_many.unidir_2.GroupMember,org.jpox.samples.one_many.unidir_2.ExpertGroupMember," +
-                "org.jpox.samples.one_many.unidir_2.UserGroup,org.jpox.samples.one_many.unidir_2.ModeratedUserGroup");
+                "org.datanucleus.samples.one_many.unidir_2.GroupMember,org.datanucleus.samples.one_many.unidir_2.ExpertGroupMember," +
+                "org.datanucleus.samples.one_many.unidir_2.UserGroup,org.datanucleus.samples.one_many.unidir_2.ModeratedUserGroup");
             pmf1 = getPMF(1, props);
 
             // Persist data to "datastore1"

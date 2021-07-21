@@ -47,12 +47,12 @@
 
             <!-- for testing mutable collection elements -->
             <field name="personSet">
-                <collection element-type="org.jpox.samples.models.company.Person"/>
+                <collection element-type="org.datanucleus.samples.models.company.Person"/>
                 <join/>
             </field>
 
             <field name="personCollection">
-                <collection element-type="org.jpox.samples.models.company.Person"/>
+                <collection element-type="org.datanucleus.samples.models.company.Person"/>
                 <join/>
             </field>
 

@@ -25,12 +25,11 @@ import java.util.Set;
 import java.util.Collection;
 
 import org.junit.Assert;
-
+import org.datanucleus.samples.types.container.CollectionHolder;
+import org.datanucleus.samples.types.container.ContainerHolder;
+import org.datanucleus.samples.types.container.ListHolder;
+import org.datanucleus.samples.types.container.MapHolder;
 import org.datanucleus.tests.TestHelper;
-import org.jpox.samples.types.container.CollectionHolder;
-import org.jpox.samples.types.container.ContainerHolder;
-import org.jpox.samples.types.container.ListHolder;
-import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Series of Reflection based utilities for testing SCO collections.

@@ -25,9 +25,9 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.dependentfield.DependentHolder2;
+import org.datanucleus.samples.dependentfield.SimpleDependentElement;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.dependentfield.DependentHolder2;
-import org.jpox.samples.dependentfield.SimpleDependentElement;
 
 /**
  * Tests for the metadata dependent

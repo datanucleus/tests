@@ -18,14 +18,14 @@ Contributions
 ***********************************************************************/
 package org.datanucleus.tests.types;
 
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.container.ContainerItemChild;
+import org.datanucleus.samples.types.list.List1;
+import org.datanucleus.samples.types.list.List1Child;
+import org.datanucleus.samples.types.list.List2;
+import org.datanucleus.samples.types.list.List2Item;
+import org.datanucleus.samples.types.list.List2ItemChild;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.container.ContainerItemChild;
-import org.jpox.samples.types.list.List1;
-import org.jpox.samples.types.list.List1Child;
-import org.jpox.samples.types.list.List2;
-import org.jpox.samples.types.list.List2Item;
-import org.jpox.samples.types.list.List2ItemChild;
 
 /**
  * Test case to test List SCO.

@@ -28,10 +28,10 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 import javax.transaction.Synchronization;
 
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.one_one.unidir.Login;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
 import org.datanucleus.store.StoreManager;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.one_one.unidir.Login;
-import org.jpox.samples.one_one.unidir.LoginAccount;
 
 /**
  * Series of tests for Transaction behaviour.

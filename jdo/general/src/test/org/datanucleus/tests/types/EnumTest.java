@@ -26,11 +26,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.enums.AlternativeColour;
+import org.datanucleus.samples.types.enums.AlternativePalette;
+import org.datanucleus.samples.types.enums.Colour;
+import org.datanucleus.samples.types.enums.Palette;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.enums.AlternativeColour;
-import org.jpox.samples.types.enums.AlternativePalette;
-import org.jpox.samples.types.enums.Colour;
-import org.jpox.samples.types.enums.Palette;
 
 /**
  * Tests for mapping enums with JDO.
@@ -671,7 +671,7 @@ public class EnumTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query<AlternativePalette> q = pm.newQuery(AlternativePalette.class, "this.colour == org.jpox.samples.types.enums.AlternativeColour.GREEN");
+                Query<AlternativePalette> q = pm.newQuery(AlternativePalette.class, "this.colour == org.datanucleus.samples.types.enums.AlternativeColour.GREEN");
                 List<AlternativePalette> result = q.executeList();
                 assertEquals(1, result.size());
                 p = result.get(0);

@@ -26,9 +26,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.company.Office;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
-import org.jpox.samples.models.company.Office;
 
 /**
  * Tests for JDOQL basic operations specific for RDBMS.

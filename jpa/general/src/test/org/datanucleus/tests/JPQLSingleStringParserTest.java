@@ -47,7 +47,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     public void testWhereWithMultipleSpaces()
     {
         EntityManager em = emf.createEntityManager();
-        String str = "SELECT T FROM org.jpox.samples.MyClass T WHERE T.field1 = 'The     value to compare against'";
+        String str = "SELECT T FROM org.datanucleus.samples.MyClass T WHERE T.field1 = 'The     value to compare against'";
         Query q = em.createQuery(str);
         AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
         JPQLSingleStringParser parser = new JPQLSingleStringParser(query, str);
@@ -70,7 +70,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     public void testLiteralWithKeyword()
     {
         EntityManager em = emf.createEntityManager();
-        String str = "SELECT T FROM org.jpox.samples.MyClass T WHERE T.field1 = 'The book from which I took inspiration'";
+        String str = "SELECT T FROM org.datanucleus.samples.MyClass T WHERE T.field1 = 'The book from which I took inspiration'";
         Query q = em.createQuery(str);
         AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
         JPQLSingleStringParser parser = new JPQLSingleStringParser(query, str);
@@ -91,7 +91,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     public void testSubquery()
     {
         EntityManager em = emf.createEntityManager();
-        String str = "SELECT T FROM org.jpox.samples.MyClass T WHERE T.field1 < (SELECT AVG(S.price) FROM org.jpox.samples.MyClass S)";
+        String str = "SELECT T FROM org.datanucleus.samples.MyClass T WHERE T.field1 < (SELECT AVG(S.price) FROM org.datanucleus.samples.MyClass S)";
         Query q = em.createQuery(str);
         AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
         JPQLSingleStringParser parser = new JPQLSingleStringParser(query, str);
@@ -117,8 +117,8 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     public void testSubqueryAnd()
     {
         EntityManager em = emf.createEntityManager();
-        String str = "SELECT T FROM org.jpox.samples.MyClass T WHERE " +
-            "T.field1 < (SELECT AVG(S.price) FROM org.jpox.samples.MyClass S)" +
+        String str = "SELECT T FROM org.datanucleus.samples.MyClass T WHERE " +
+            "T.field1 < (SELECT AVG(S.price) FROM org.datanucleus.samples.MyClass S)" +
             " AND T.field2 == 'Some String'";
         Query q = em.createQuery(str);
         AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
@@ -145,7 +145,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     public void testSubqueryIn()
     {
         EntityManager em = emf.createEntityManager();
-        String str = "SELECT T FROM org.jpox.samples.MyClass T WHERE T.field1 IN (SELECT S FROM org.jpox.samples.OtherClass S)";
+        String str = "SELECT T FROM org.datanucleus.samples.MyClass T WHERE T.field1 IN (SELECT S FROM org.datanucleus.samples.OtherClass S)";
         Query q = em.createQuery(str);
         AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
         JPQLSingleStringParser parser = new JPQLSingleStringParser(query, str);
@@ -170,9 +170,9 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     public void testSubqueryIn2()
     {
         EntityManager em = emf.createEntityManager();
-        String str = "SELECT T FROM org.jpox.samples.MyClass T WHERE "+
-            "T.field1 IN (SELECT S FROM org.jpox.samples.OtherClass S) AND "+
-            "T.field2 IN (SELECT R FROM org.jpox.samples.ExtraClass R)";
+        String str = "SELECT T FROM org.datanucleus.samples.MyClass T WHERE "+
+            "T.field1 IN (SELECT S FROM org.datanucleus.samples.OtherClass S) AND "+
+            "T.field2 IN (SELECT R FROM org.datanucleus.samples.ExtraClass R)";
         Query q = em.createQuery(str);
         AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
         JPQLSingleStringParser parser = new JPQLSingleStringParser(query, str);
@@ -201,7 +201,7 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
     public void testInsert()
     {
         EntityManager em = emf.createEntityManager();
-        String str = "INSERT INTO org.jpox.samples.MyClass (id, name, otherField) SELECT p.id, p.name, p.description FROM org.jpox.samples.Person p WHERE p.id > 3";
+        String str = "INSERT INTO org.datanucleus.samples.MyClass (id, name, otherField) SELECT p.id, p.name, p.description FROM org.datanucleus.samples.Person p WHERE p.id > 3";
         Query q = em.createQuery(str);
         AbstractJPQLQuery query = (AbstractJPQLQuery) ((JPAQuery)q).getInternalQuery();
         JPQLSingleStringParser parser = new JPQLSingleStringParser(query, str);
@@ -209,9 +209,9 @@ public class JPQLSingleStringParserTest extends JPAPersistenceTestCase
         {
             parser.parse();
             assertEquals("Type is wrong", QueryType.BULK_INSERT, query.getType());
-            assertEquals("Candidate is wrong", "org.jpox.samples.MyClass", query.getFrom());
+            assertEquals("Candidate is wrong", "org.datanucleus.samples.MyClass", query.getFrom());
             assertEquals("INSERT fields are wrong", "id, name, otherField", query.getInsertFields());
-            assertEquals("INSERT select query is wrong", "SELECT p.id, p.name, p.description FROM org.jpox.samples.Person p WHERE p.id > 3", query.getInsertSelectQuery());
+            assertEquals("INSERT select query is wrong", "SELECT p.id, p.name, p.description FROM org.datanucleus.samples.Person p WHERE p.id > 3", query.getInsertSelectQuery());
         }
         catch (NucleusUserException nue)
         {

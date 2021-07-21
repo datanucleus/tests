@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
-import org.jpox.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Person;
 
 public class BasicTest extends JDOPersistenceTestCase
 {

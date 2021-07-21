@@ -24,10 +24,10 @@ import java.util.Map;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.one_many.map_fk.MapFKHolder;
+import org.datanucleus.samples.one_many.map_fk.MapFKValue;
+import org.datanucleus.samples.one_many.map_fk.MapFKValueBase;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.one_many.map_fk.MapFKHolder;
-import org.jpox.samples.one_many.map_fk.MapFKValue;
-import org.jpox.samples.one_many.map_fk.MapFKValueBase;
 
 /**
  * Tests for maps in Neo4j. Same as test.jdo.application RelationshipTest "test1toNBidirFKMapWithInheritedValue".

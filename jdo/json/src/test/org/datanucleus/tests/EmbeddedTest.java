@@ -23,9 +23,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.embedded.Chip;
-import org.jpox.samples.embedded.DigitalCamera;
-import org.jpox.samples.embedded.Memory;
+import org.datanucleus.samples.embedded.Chip;
+import org.datanucleus.samples.embedded.DigitalCamera;
+import org.datanucleus.samples.embedded.Memory;
 
 /**
  * Simple tests for embedded fields.
@@ -314,7 +314,7 @@ public class EmbeddedTest extends JSONTestCase
             {
                 tx.begin();
                 LOG.info(">> query of nested object value");
-                Query query = pm.newQuery("SELECT FROM org.jpox.samples.embedded.DigitalCamera WHERE memory.chip.thickness == 6");
+                Query query = pm.newQuery("SELECT FROM org.datanucleus.samples.embedded.DigitalCamera WHERE memory.chip.thickness == 6");
                 List results = (List) query.execute();
                 assertEquals("Number of cameras retrieved by query of nested embedded is incorrect", results.size(), 1);
                 DigitalCamera camera = (DigitalCamera) results.iterator().next();

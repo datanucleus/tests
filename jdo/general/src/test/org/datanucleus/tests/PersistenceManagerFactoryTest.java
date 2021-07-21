@@ -39,8 +39,8 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
+import org.datanucleus.samples.models.company.Person;
 import org.datanucleus.transaction.TransactionUtils;
-import org.jpox.samples.models.company.Person;
 
 /**
  * Tests the basic functionality of creating PersistenceManagerFactorys and setting properties on them.

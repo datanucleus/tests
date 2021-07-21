@@ -35,32 +35,32 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.interfaces.Cereal;
-import org.jpox.samples.interfaces.Circle;
-import org.jpox.samples.interfaces.Circle3;
-import org.jpox.samples.interfaces.Circle3b;
-import org.jpox.samples.interfaces.Diet;
-import org.jpox.samples.interfaces.Food;
-import org.jpox.samples.interfaces.Rectangle;
-import org.jpox.samples.interfaces.Rectangle3;
-import org.jpox.samples.interfaces.Rectangle3b;
-import org.jpox.samples.interfaces.Salad;
-import org.jpox.samples.interfaces.Shape;
-import org.jpox.samples.interfaces.Shape5;
-import org.jpox.samples.interfaces.Shape5Circle;
-import org.jpox.samples.interfaces.Shape5Holder;
-import org.jpox.samples.interfaces.Shape5Rectangle;
-import org.jpox.samples.interfaces.Shape5Square;
-import org.jpox.samples.interfaces.ShapeHolder;
-import org.jpox.samples.interfaces.ShapeHolder2;
-import org.jpox.samples.interfaces.ShapeHolder3;
-import org.jpox.samples.interfaces.ShapeHolder3b;
-import org.jpox.samples.interfaces.ShapeHolder4;
-import org.jpox.samples.interfaces.Square;
-import org.jpox.samples.interfaces.Square3;
-import org.jpox.samples.interfaces.Square3b;
-import org.jpox.samples.interfaces.Steak;
-import org.jpox.samples.interfaces.Triangle;
+import org.datanucleus.samples.interfaces.Cereal;
+import org.datanucleus.samples.interfaces.Circle;
+import org.datanucleus.samples.interfaces.Circle3;
+import org.datanucleus.samples.interfaces.Circle3b;
+import org.datanucleus.samples.interfaces.Diet;
+import org.datanucleus.samples.interfaces.Food;
+import org.datanucleus.samples.interfaces.Rectangle;
+import org.datanucleus.samples.interfaces.Rectangle3;
+import org.datanucleus.samples.interfaces.Rectangle3b;
+import org.datanucleus.samples.interfaces.Salad;
+import org.datanucleus.samples.interfaces.Shape;
+import org.datanucleus.samples.interfaces.Shape5;
+import org.datanucleus.samples.interfaces.Shape5Circle;
+import org.datanucleus.samples.interfaces.Shape5Holder;
+import org.datanucleus.samples.interfaces.Shape5Rectangle;
+import org.datanucleus.samples.interfaces.Shape5Square;
+import org.datanucleus.samples.interfaces.ShapeHolder;
+import org.datanucleus.samples.interfaces.ShapeHolder2;
+import org.datanucleus.samples.interfaces.ShapeHolder3;
+import org.datanucleus.samples.interfaces.ShapeHolder3b;
+import org.datanucleus.samples.interfaces.ShapeHolder4;
+import org.datanucleus.samples.interfaces.Square;
+import org.datanucleus.samples.interfaces.Square3;
+import org.datanucleus.samples.interfaces.Square3b;
+import org.datanucleus.samples.interfaces.Steak;
+import org.datanucleus.samples.interfaces.Triangle;
 
 /**
  * Series of tests for the use of interfaces.
@@ -650,7 +650,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 Query query = pm.newQuery(pm.getExtent(ShapeHolder.class, true));
-                query.declareImports("import org.jpox.samples.interfaces.Circle");
+                query.declareImports("import org.datanucleus.samples.interfaces.Circle");
                 query.declareParameters("double radiusBound");
                 //set filter to return all circles with radius greater than given value
                 query.setFilter("((Circle)shape1).radius >= radiusBound");
@@ -711,7 +711,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query query = pm.newQuery(pm.getExtent(ShapeHolder.class, true));
-                query.declareImports("import org.jpox.samples.interfaces.Circle; import org.jpox.samples.interfaces.Rectangle");
+                query.declareImports("import org.datanucleus.samples.interfaces.Circle; import org.datanucleus.samples.interfaces.Rectangle");
 
                 // set filter to return large squares and circles
                 query.setFilter("((Circle)shape1).radius >= 10 || ((Rectangle)shape1).length >= 10");
@@ -776,7 +776,7 @@ public class InterfacesTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 Query query = pm.newQuery(pm.getExtent(ShapeHolder.class, true));
-                query.declareImports("import org.jpox.samples.interfaces.Circle; import org.jpox.samples.interfaces.Rectangle");
+                query.declareImports("import org.datanucleus.samples.interfaces.Circle; import org.datanucleus.samples.interfaces.Rectangle");
 
                 // set filter to return large squares and circles
                 query.setFilter("((InvalidCircle)shape1).radius >= 10");

@@ -24,7 +24,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.persistentinterfaces.ILocation;
+import org.datanucleus.samples.persistentinterfaces.ILocation;
 
 /**
  * Series of tests for persistent interfaces.

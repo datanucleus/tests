@@ -22,8 +22,8 @@ import javax.jdo.JDODataStoreException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 import org.datanucleus.PropertyNames;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Office;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Office;
 
 public class ReadUncommittedIsolationLevelTest extends JDOPersistenceTestCase
 {

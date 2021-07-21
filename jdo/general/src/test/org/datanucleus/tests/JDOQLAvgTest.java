@@ -35,9 +35,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.types.basic.BasicTypeHolder;
-import org.jpox.samples.types.basic.DecimalHolder;
-import org.jpox.samples.types.basic.FloatHolder;
+import org.datanucleus.samples.types.basic.BasicTypeHolder;
+import org.datanucleus.samples.types.basic.DecimalHolder;
+import org.datanucleus.samples.types.basic.FloatHolder;
 import org.junit.Test;
 
 public class JDOQLAvgTest extends JDOPersistenceTestCase
@@ -130,7 +130,7 @@ public class JDOQLAvgTest extends JDOPersistenceTestCase
             for (String field : extractNumericFields(holder1))
             {
                 Query query = pm.newQuery(
-                        "SELECT charField FROM org.jpox.samples.types.basic.BasicTypeHolder WHERE avg("
+                        "SELECT charField FROM org.datanucleus.samples.types.basic.BasicTypeHolder WHERE avg("
                                 + field
                                 + ") == 7.5 GROUP BY charField ");
 

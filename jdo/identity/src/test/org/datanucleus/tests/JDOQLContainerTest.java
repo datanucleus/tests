@@ -33,38 +33,38 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.many_many.AccountCustomer;
+import org.datanucleus.samples.many_many.GasSupplier;
+import org.datanucleus.samples.many_many.OilSupplier;
+import org.datanucleus.samples.many_many.OneOffCustomer;
+import org.datanucleus.samples.many_many.PetroleumCustomer;
+import org.datanucleus.samples.many_many.PetroleumSupplier;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.InsuranceDepartment;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Office;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Project;
+import org.datanucleus.samples.models.fitness.Cloth;
+import org.datanucleus.samples.models.fitness.FitnessHelper;
+import org.datanucleus.samples.models.fitness.Gym;
+import org.datanucleus.samples.models.fitness.GymEquipment;
+import org.datanucleus.samples.models.fitness.Wardrobe;
+import org.datanucleus.samples.one_many.bidir.Animal;
+import org.datanucleus.samples.one_many.bidir.Cattle;
+import org.datanucleus.samples.one_many.bidir.DairyFarm;
+import org.datanucleus.samples.one_many.bidir.Farm;
+import org.datanucleus.samples.one_many.bidir.Poultry;
+import org.datanucleus.samples.one_many.bidir_2.Bungalow;
+import org.datanucleus.samples.one_many.bidir_2.DoubleGlazedWindow;
+import org.datanucleus.samples.one_many.bidir_2.House;
+import org.datanucleus.samples.one_many.bidir_2.SingleGlazedWindow;
+import org.datanucleus.samples.one_many.bidir_2.TerracedHouse;
+import org.datanucleus.samples.one_many.bidir_2.Window;
+import org.datanucleus.samples.one_many.map.MapHolder;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.many_many.AccountCustomer;
-import org.jpox.samples.many_many.GasSupplier;
-import org.jpox.samples.many_many.OilSupplier;
-import org.jpox.samples.many_many.OneOffCustomer;
-import org.jpox.samples.many_many.PetroleumCustomer;
-import org.jpox.samples.many_many.PetroleumSupplier;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.InsuranceDepartment;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Office;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Project;
-import org.jpox.samples.models.fitness.Cloth;
-import org.jpox.samples.models.fitness.FitnessHelper;
-import org.jpox.samples.models.fitness.Gym;
-import org.jpox.samples.models.fitness.GymEquipment;
-import org.jpox.samples.models.fitness.Wardrobe;
-import org.jpox.samples.one_many.bidir.Animal;
-import org.jpox.samples.one_many.bidir.Cattle;
-import org.jpox.samples.one_many.bidir.DairyFarm;
-import org.jpox.samples.one_many.bidir.Farm;
-import org.jpox.samples.one_many.bidir.Poultry;
-import org.jpox.samples.one_many.bidir_2.Bungalow;
-import org.jpox.samples.one_many.bidir_2.DoubleGlazedWindow;
-import org.jpox.samples.one_many.bidir_2.House;
-import org.jpox.samples.one_many.bidir_2.SingleGlazedWindow;
-import org.jpox.samples.one_many.bidir_2.TerracedHouse;
-import org.jpox.samples.one_many.bidir_2.Window;
-import org.jpox.samples.one_many.map.MapHolder;
 
 /**
  * Tests for JDOQL queries of collections and maps.
@@ -502,23 +502,23 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 pm.flush();
 
                 // Query the data
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes.containsValue(wrd) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes.containsValue(wrd) && !this.wardrobes.containsValue(wrd2) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2");
                 results = (List) q.execute(wardrobe3,wardrobe2);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains and one contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes.containsValue(wrd) && !this.wardrobes.containsValue(wrd2) && this.wardrobes.containsValue(wrd1) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2,org.jpox.samples.models.fitness.Wardrobe wrd1");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2,org.datanucleus.samples.models.fitness.Wardrobe wrd1");
                 results = (List) q.execute(wardrobe3,wardrobe2,wardrobe1);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
@@ -587,23 +587,23 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 pm.flush();
 
                 // Query the data
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse.containsValue(wrd) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse.containsValue(wrd) && !this.wardrobesInverse.containsValue(wrd2) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2");
                 results = (List) q.execute(wardrobe3,wardrobe2);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains and one contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse.containsValue(wrd) && !this.wardrobesInverse.containsValue(wrd2) && this.wardrobesInverse.containsValue(wrd1) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2,org.jpox.samples.models.fitness.Wardrobe wrd1");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2,org.datanucleus.samples.models.fitness.Wardrobe wrd1");
                 results = (List) q.execute(wardrobe3,wardrobe2,wardrobe1);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
@@ -673,23 +673,23 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
                 // Query the data
                 tx.begin();
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes2.containsKey(wrd) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes2.containsKey(wrd) && !this.wardrobes2.containsKey(wrd2) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2");
                 results = (List) q.execute(wardrobe3,wardrobe2);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains and one contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes2.containsKey(wrd) && !this.wardrobes2.containsKey(wrd2) && this.wardrobes2.containsKey(wrd1) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2,org.jpox.samples.models.fitness.Wardrobe wrd1");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2,org.datanucleus.samples.models.fitness.Wardrobe wrd1");
                 results = (List) q.execute(wardrobe3,wardrobe2,wardrobe1);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
@@ -759,23 +759,23 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
                 // Query the data
                 tx.begin();
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse2.containsKey(wrd) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse2.containsKey(wrd) && !this.wardrobesInverse2.containsKey(wrd2) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2");
                 results = (List) q.execute(wardrobe3,wardrobe2);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains and one contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse2.containsKey(wrd) && !this.wardrobesInverse2.containsKey(wrd2) && this.wardrobesInverse2.containsKey(wrd1) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2,org.jpox.samples.models.fitness.Wardrobe wrd1");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2,org.datanucleus.samples.models.fitness.Wardrobe wrd1");
                 results = (List) q.execute(wardrobe3,wardrobe2,wardrobe1);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
@@ -845,23 +845,23 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
                 // Query the data
                 tx.begin();
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes.containsEntry(wrd.model,wrd) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes.containsEntry(wrd.model,wrd) && !this.wardrobes.containsEntry(wrd2.model,wrd2) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2");
                 results = (List) q.execute(wardrobe3,wardrobe2);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains and one contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobes.containsEntry(wrd.model,wrd) && !this.wardrobes.containsEntry(wrd2.model,wrd2) && this.wardrobes.containsEntry(wrd1.model,wrd1) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2,org.jpox.samples.models.fitness.Wardrobe wrd1");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2,org.datanucleus.samples.models.fitness.Wardrobe wrd1");
                 results = (List) q.execute(wardrobe3,wardrobe2,wardrobe1);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
@@ -931,23 +931,23 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
                 // Query the data
                 tx.begin();
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse.containsEntry(wrd.model,wrd) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse.containsEntry(wrd.model,wrd) && !this.wardrobesInverse.containsEntry(wrd2.model,wrd2) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2");
                 results = (List) q.execute(wardrobe3,wardrobe2);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
                 //two !contains and one contains
-                q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE !this.wardrobesInverse.containsEntry(wrd.model,wrd) && !this.wardrobesInverse.containsEntry(wrd2.model,wrd2) && this.wardrobesInverse.containsEntry(wrd1.model,wrd1) " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd,org.jpox.samples.models.fitness.Wardrobe wrd2,org.jpox.samples.models.fitness.Wardrobe wrd1");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd,org.datanucleus.samples.models.fitness.Wardrobe wrd2,org.datanucleus.samples.models.fitness.Wardrobe wrd1");
                 results = (List) q.execute(wardrobe3,wardrobe2,wardrobe1);
                 assertEquals(1, results.size());
                 assertEquals("village",((Gym)results.get(0)).getLocation());
@@ -1017,9 +1017,9 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
                 // Query the data
                 tx.begin();
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
                     "WHERE this.wardrobes.get(wrd.model) == wrd " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(1, results.size());
                 assertEquals("downtown",((Gym)results.get(0)).getLocation());
@@ -1082,7 +1082,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 Query q = pm.newQuery(Office.class);
                 q.setFilter("!(departments.contains(dept) && dept.name.equals(\"Sales\"))");
                 q.declareVariables("Department dept");
-                q.declareImports("import org.jpox.samples.models.company.Department");
+                q.declareImports("import org.datanucleus.samples.models.company.Department");
                 Collection c = (Collection) q.execute();
                 assertEquals(1,c.size()); // Only Office 2 doesnt have "Sales"
                 tx.commit();
@@ -1136,7 +1136,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             idCloth = JDOHelper.getObjectId(blackShirt);
             tx.begin();
             Query q = pm.newQuery(Wardrobe.class,"this.clothes.contains(c)");
-            q.declareParameters("org.jpox.samples.models.fitness.Cloth c");
+            q.declareParameters("org.datanucleus.samples.models.fitness.Cloth c");
             Collection c = (Collection) q.execute(skirt);
             assertEquals(1,c.size());
             assertEquals(id,JDOHelper.getObjectId(c.iterator().next()));
@@ -1145,7 +1145,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
             tx.begin();
             Query q1 = pm.newQuery(Cloth.class,"wardrobe.clothes.contains(this) && wardrobe.model ==\"2 doors\"");
-            q1.declareVariables("org.jpox.samples.models.fitness.Wardrobe wardrobe");
+            q1.declareVariables("org.datanucleus.samples.models.fitness.Wardrobe wardrobe");
             Collection c1 = (Collection) q1.execute();
             assertEquals(1,c1.size());
             assertEquals(idCloth,JDOHelper.getObjectId(c1.iterator().next()));
@@ -1153,7 +1153,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
             tx.begin();
             Query q2 = pm.newQuery(Cloth.class,"wardrobe.clothes.contains(this)");
-            q2.declareParameters("org.jpox.samples.models.fitness.Wardrobe wardrobe");
+            q2.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe wardrobe");
             Collection c2 = (Collection) q2.execute(wardrobe2);
             assertEquals(1,c2.size());
             assertEquals(idCloth,JDOHelper.getObjectId(c2.iterator().next()));
@@ -1263,7 +1263,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
             tx.begin();
             Query q = pm.newQuery(Gym.class,"this.wardrobes.containsValue(w)");
-            q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+            q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
             Collection c = (Collection) q.execute(wardrobe3);
             assertEquals(1,c.size());
             assertEquals(idGym,JDOHelper.getObjectId(c.iterator().next()));
@@ -1272,7 +1272,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
             tx.begin();
             Query q1 = pm.newQuery(Wardrobe.class,"gym.wardrobes.containsValue(this) && gym.location ==\"downtown\"");
-            q1.declareVariables("org.jpox.samples.models.fitness.Gym gym");
+            q1.declareVariables("org.datanucleus.samples.models.fitness.Gym gym");
             Collection c1 = (Collection) q1.execute();
             assertEquals(2,c1.size());
             assertTrue(c1.contains(wardrobe3));
@@ -1281,7 +1281,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
             tx.begin();
             Query q2 = pm.newQuery(Wardrobe.class,"gym.wardrobes.containsValue(this)");
-            q2.declareParameters("org.jpox.samples.models.fitness.Gym gym");
+            q2.declareParameters("org.datanucleus.samples.models.fitness.Gym gym");
             Collection c2 = (Collection) q2.execute(gym);
             assertEquals(2,c2.size());
             assertTrue(c2.contains(wardrobe3));
@@ -1364,8 +1364,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 //q = pm.newQuery(Manager.class);
                 //q.setFilter("mgr0.departments.contains(dept) && (dept.manager != this)");
                 //q.setFilter("(dept.manager != this) && mgr0.departments.contains(dept)");
-                //q.declareVariables("org.jpox.samples.models.company.Department dept");
-                //q.declareParameters("org.jpox.samples.models.company.Manager mgr0");
+                //q.declareVariables("org.datanucleus.samples.models.company.Department dept");
+                //q.declareParameters("org.datanucleus.samples.models.company.Manager mgr0");
                 //c = (Collection) q.execute(boss2);
                 //assertEquals(1,c.size());                
                 //tx.commit();
@@ -1373,7 +1373,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 //q = pm.newQuery(Department.class);
                 //q.setFilter("emps.contains(mgr0) && (mgr0.lastName == 'WakesUp2' || mgr0.lastName == 'WakesUp4') && !emps.departments.contains(this)");
                 //q.declareParameters("java.util.Collection emps");
-                //q.declareVariables("org.jpox.samples.models.company.Manager mgr0");
+                //q.declareVariables("org.datanucleus.samples.models.company.Manager mgr0");
                 //c = (Collection) q.execute(emps);               
                 //tx.commit();
 
@@ -1440,7 +1440,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 // Get all Departments that are present in our array
                 Query q = pm.newQuery(Department.class);
                 q.setFilter("dept.contains(this)");
-                q.declareParameters("org.jpox.samples.models.company.Department[] dept");
+                q.declareParameters("org.datanucleus.samples.models.company.Department[] dept");
                 q.setOrdering("this.name ascending");
                 Collection c = (Collection) q.execute(depts);
                 assertEquals(2, c.size());
@@ -1452,8 +1452,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 q = pm.newQuery(Manager.class);
                 q.setResult("distinct this");
                 q.setFilter("dept0.manager == this && dept.contains(dept0)");
-                q.declareParameters("org.jpox.samples.models.company.Department[] dept");
-                q.declareVariables("org.jpox.samples.models.company.Department dept0");
+                q.declareParameters("org.datanucleus.samples.models.company.Department[] dept");
+                q.declareVariables("org.datanucleus.samples.models.company.Department dept0");
                 q.setOrdering("this.firstName ascending");
                 c = (Collection) q.execute(depts);
                 assertEquals(1, c.size()); // boss2
@@ -1463,8 +1463,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 q = pm.newQuery(Manager.class);
                 q.setResult("distinct this");
                 q.setFilter("dept0.manager != this && dept.contains(dept0)");
-                q.declareParameters("org.jpox.samples.models.company.Department[] dept");
-                q.declareVariables("org.jpox.samples.models.company.Department dept0");
+                q.declareParameters("org.datanucleus.samples.models.company.Department[] dept");
+                q.declareVariables("org.datanucleus.samples.models.company.Department dept0");
                 q.setOrdering("this.firstName ascending");
                 c = (Collection) q.execute(depts);
                 assertEquals(4, c.size()); // not boss2
@@ -1534,8 +1534,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 Query q = pm.newQuery(Manager.class);
                 q.setResult("distinct this");
                 q.setFilter("dept.contains(dept0) && dept0.manager == this");
-                q.declareParameters("org.jpox.samples.models.company.Department[] dept");
-                q.declareVariables("org.jpox.samples.models.company.Department dept0");
+                q.declareParameters("org.datanucleus.samples.models.company.Department[] dept");
+                q.declareVariables("org.datanucleus.samples.models.company.Department dept0");
                 q.setOrdering("this.firstName ascending");
                 Collection c = (Collection) q.execute(depts);
                 assertEquals(1, c.size()); // boss2
@@ -2034,39 +2034,39 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
                 //check map.get -> object expression == object literal
                 Query q = pm.newQuery(Gym.class,"this.wardrobes.get(\"2 doors\") == w");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 Collection c = (Collection) q.execute(wardrobe2);
                 assertEquals(1,c.size());
                 assertEquals(idGym,JDOHelper.getObjectId(c.iterator().next()));
                 q = pm.newQuery(Gym.class,"this.wardrobes.get(\"4 doors\") == w");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 c = (Collection) q.execute(wardrobe4);
                 assertEquals(2,c.size());
                 q = pm.newQuery(Gym.class,"this.wardrobes.get(\"2 doors\") == w");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 c = (Collection) q.execute(wardrobe3);
                 assertEquals(0,c.size());
                 q = pm.newQuery(Gym.class,"this.wardrobes.get(\"5 doors\") == w");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 c = (Collection) q.execute(wardrobe4);
                 assertEquals(0,c.size());
 
                 //check object literal == map.get -> object expression
                 q = pm.newQuery(Gym.class,"w == this.wardrobes.get(\"2 doors\")");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 c = (Collection) q.execute(wardrobe2);
                 assertEquals(1,c.size());
                 assertEquals(idGym,JDOHelper.getObjectId(c.iterator().next()));
                 q = pm.newQuery(Gym.class,"w == this.wardrobes.get(\"4 doors\")");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 c = (Collection) q.execute(wardrobe4);
                 assertEquals(2,c.size());
                 q = pm.newQuery(Gym.class,"w == this.wardrobes.get(\"2 doors\")");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 c = (Collection) q.execute(wardrobe3);
                 assertEquals(0,c.size());
                 q = pm.newQuery(Gym.class,"w == this.wardrobes.get(\"5 doors\")");
-                q.declareParameters("org.jpox.samples.models.fitness.Wardrobe w");
+                q.declareParameters("org.datanucleus.samples.models.fitness.Wardrobe w");
                 c = (Collection) q.execute(wardrobe4);
                 assertEquals(0,c.size());
                 
@@ -2399,21 +2399,21 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             Query q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && emp1.lastName == \"WakesUp\"");
             q.declareVariables("Employee emp1");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             Collection c = (Collection) q.execute();
             assertEquals(1, c.size());
             
             q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && (emp1.lastName == \"WakesUp\" || emp1.lastName == \"WakesUp2\")");
             q.declareVariables("Employee emp1");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             c = (Collection) q.execute();
             assertEquals(1, c.size());
 
             q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && (emp1.lastName == \"WakesUp\" || emp1.lastName == \"WakesUp4\")");
             q.declareVariables("Employee emp1");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             c = (Collection) q.execute();
             assertEquals(2, c.size());
 
@@ -2482,7 +2482,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             q.setFilter("m1.departments.contains(this) && m1.firstName == \"Bart\" && m1.lastName == \"Simpson\"");
             q.setResult("distinct this");
             q.declareVariables("Manager m1");
-            q.declareImports("import org.jpox.samples.models.company.Manager");
+            q.declareImports("import org.datanucleus.samples.models.company.Manager");
             Collection c = (Collection) q.execute();
             assertEquals(1, c.size());
             
@@ -4299,14 +4299,14 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             Query q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && subordinates.contains(emp1) && (emp1.lastName == \"WakesUp\" || emp1.lastName == \"WakesUp2\")");
             q.declareVariables("Employee emp1");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             Collection c = (Collection) q.execute();
             assertEquals(1, c.size());
 
             q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && subordinates.contains(emp1) && (emp1.lastName == \"WakesUp\" || emp1.lastName == \"WakesUp4\")");
             q.declareVariables("Employee emp1");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             c = (Collection) q.execute();
             assertEquals(2, c.size());
            
@@ -4858,14 +4858,14 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 	        Query q = pm.newQuery(Manager.class);
 	        q.setFilter("subordinates.contains(emp1) && subordinates.contains(emp2) && emp1.lastName == \"WakesUp\" || emp2.lastName == \"WakesUp2\"");
 	        q.declareVariables("Employee emp1; Employee emp2");
-	        q.declareImports("import org.jpox.samples.models.company.Employee");
+	        q.declareImports("import org.datanucleus.samples.models.company.Employee");
 	        Collection c = (Collection) q.execute();
 	        assertEquals(1,c.size());
             
             q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && subordinates.contains(emp1) && (emp1.lastName == \"WakesUp\" || emp1.lastName == \"WakesUp4\")");
             q.declareVariables("Employee emp1");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             c = (Collection) q.execute();
             assertEquals(2, c.size());            
 	        
@@ -5098,7 +5098,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             Query q = pm.newQuery(Manager.class);
             q.setFilter("(subordinates.contains(emp1) && emp1.lastName == \"WakesUp\") && (subordinates.contains(emp2) && emp2.lastName == \"WakesUp2\")");
             q.declareVariables("Employee emp1; Employee emp2");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             Collection c = (Collection) q.execute();
             assertEquals(1, c.size());
 
@@ -5108,7 +5108,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             q = pm.newQuery(Manager.class);
             q.setFilter("(subordinates.contains(emp1) && (emp1.lastName == \"WakesUp\" || emp1.lastName == \"WakesUp4\")) && (subordinates.contains(emp2) && emp2.lastName == \"WakesUp2\")");
             q.declareVariables("Employee emp1; Employee emp2");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             c = (Collection) q.execute();
             assertEquals(1, c.size());
 
@@ -5118,7 +5118,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             q = pm.newQuery(Manager.class);
             q.setFilter("(subordinates.contains(emp1) && (emp1.lastName == \"WakesUp\" || emp1.lastName == \"WakesUp4\")) || (subordinates.contains(emp2) && emp2.lastName == \"WakesUp2\")");
             q.declareVariables("Employee emp1; Employee emp2");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             c = (Collection) q.execute();
             assertEquals(3, c.size());
 
@@ -5763,14 +5763,14 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             Query q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && emp1.lastName == \"WakesUp\" && subordinates.contains(emp2) && emp2.lastName == \"WakesUp2\"");
             q.declareVariables("Employee emp1; Employee emp2");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             Collection c = (Collection) q.execute();
             assertEquals(1, c.size());
 
             q = pm.newQuery(Manager.class);
             q.setFilter("subordinates.contains(emp1) && subordinates.contains(emp2) && emp1.lastName == \"WakesUp\" && emp2.lastName == \"WakesUp2\"");
             q.declareVariables("Employee emp1; Employee emp2");
-            q.declareImports("import org.jpox.samples.models.company.Employee");
+            q.declareImports("import org.datanucleus.samples.models.company.Employee");
             c = (Collection) q.execute();
             assertEquals(1, c.size());
 
@@ -5824,7 +5824,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
             tx.begin();
 
             Query q3 = pm.newQuery(Wardrobe.class,"clothes.isEmpty() || (clothes.contains(cloth) && cloth.name==\"white shirt\" )");
-            q3.declareVariables("org.jpox.samples.models.fitness.Cloth cloth");
+            q3.declareVariables("org.datanucleus.samples.models.fitness.Cloth cloth");
             q3.setOrdering("model ascending");
             Collection c3 = (Collection) q3.execute();
             assertEquals(2,c3.size());

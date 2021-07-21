@@ -20,8 +20,8 @@ package org.datanucleus.tests;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
 
 /**
  * Datastore identity persistence tests for MongoDB datastores.

@@ -18,8 +18,8 @@ Contributors:
 package org.datanucleus.tests;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.models.company.Office;
 import org.datanucleus.tests.annotations.Datastore;
-import org.jpox.samples.models.company.Office;
 
 import javax.jdo.*;
 import java.util.List;

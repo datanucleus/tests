@@ -26,33 +26,33 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.identity.application.Car;
+import org.datanucleus.samples.identity.application.ComposedIntIDBase;
+import org.datanucleus.samples.identity.application.ComposedIntIDSub;
+import org.datanucleus.samples.identity.application.ComposedMixedIDBase;
+import org.datanucleus.samples.identity.application.ComposedMixedIDSub;
+import org.datanucleus.samples.identity.application.ComposedStringIDBase;
+import org.datanucleus.samples.identity.application.ComposedStringIDSub;
+import org.datanucleus.samples.identity.application.FourByFour;
+import org.datanucleus.samples.identity.application.SFAIDCharIdentity;
+import org.datanucleus.samples.identity.application.SFAIDCharObjIdentity;
+import org.datanucleus.samples.identity.application.SFAIDIntegerIdentity;
+import org.datanucleus.samples.identity.application.SFAIDIntegerObjIdentity;
+import org.datanucleus.samples.identity.application.SFAIDLongIdentity;
+import org.datanucleus.samples.identity.application.SFAIDLongObjIdentity;
+import org.datanucleus.samples.identity.application.SFAIDShortIdentity;
+import org.datanucleus.samples.identity.application.SFAIDShortObjIdentity;
+import org.datanucleus.samples.identity.application.SFAIDStringIdentity;
+import org.datanucleus.samples.identity.application.SimpleIntIDBase;
+import org.datanucleus.samples.identity.application.SimpleIntIDSub;
+import org.datanucleus.samples.identity.application.SimpleStringIDBase;
+import org.datanucleus.samples.identity.application.SimpleStringIDSub;
+import org.datanucleus.samples.identity.application.UnorderedPrimaryKeyFields;
+import org.datanucleus.samples.interfaces.Triangle;
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.set.Set1;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.StorageTester;
-import org.jpox.samples.identity.application.Car;
-import org.jpox.samples.identity.application.ComposedIntIDBase;
-import org.jpox.samples.identity.application.ComposedIntIDSub;
-import org.jpox.samples.identity.application.ComposedMixedIDBase;
-import org.jpox.samples.identity.application.ComposedMixedIDSub;
-import org.jpox.samples.identity.application.ComposedStringIDBase;
-import org.jpox.samples.identity.application.ComposedStringIDSub;
-import org.jpox.samples.identity.application.FourByFour;
-import org.jpox.samples.identity.application.SFAIDCharIdentity;
-import org.jpox.samples.identity.application.SFAIDCharObjIdentity;
-import org.jpox.samples.identity.application.SFAIDIntegerIdentity;
-import org.jpox.samples.identity.application.SFAIDIntegerObjIdentity;
-import org.jpox.samples.identity.application.SFAIDLongIdentity;
-import org.jpox.samples.identity.application.SFAIDLongObjIdentity;
-import org.jpox.samples.identity.application.SFAIDShortIdentity;
-import org.jpox.samples.identity.application.SFAIDShortObjIdentity;
-import org.jpox.samples.identity.application.SFAIDStringIdentity;
-import org.jpox.samples.identity.application.SimpleIntIDBase;
-import org.jpox.samples.identity.application.SimpleIntIDSub;
-import org.jpox.samples.identity.application.SimpleStringIDBase;
-import org.jpox.samples.identity.application.SimpleStringIDSub;
-import org.jpox.samples.identity.application.UnorderedPrimaryKeyFields;
-import org.jpox.samples.interfaces.Triangle;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.set.Set1;
 
 /**
  * Test the storage using application identity.
@@ -462,7 +462,7 @@ public class ApplicationIdentityTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 Query query = pm.newQuery(pm.getExtent(Set1.class, true));
-                query.declareImports("import org.jpox.samples.types.container.ContainerItem");
+                query.declareImports("import org.datanucleus.samples.types.container.ContainerItem");
                 query.declareParameters("ContainerItem item");
                 query.setFilter("items.contains(item)");
                 Collection c = (Collection) query.execute(normal2Item1);

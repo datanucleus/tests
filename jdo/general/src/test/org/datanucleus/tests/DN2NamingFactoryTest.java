@@ -31,16 +31,16 @@ import org.datanucleus.samples.annotations.embedded.EmbCls1;
 import org.datanucleus.samples.annotations.embedded.EmbCls2;
 import org.datanucleus.samples.annotations.embedded.EmbCls3;
 import org.datanucleus.samples.annotations.embedded.Network;
+import org.datanucleus.samples.array.BooleanArray;
+import org.datanucleus.samples.embedded.Computer;
+import org.datanucleus.samples.embedded.ComputerCard;
+import org.datanucleus.samples.models.fitness.Gym;
+import org.datanucleus.samples.one_many.unidir_2.UserGroup;
+import org.datanucleus.samples.versioned.Trade1;
 import org.datanucleus.store.schema.naming.ColumnType;
 import org.datanucleus.store.schema.naming.DN2NamingFactory;
 import org.datanucleus.store.schema.naming.NamingCase;
 import org.datanucleus.store.schema.naming.SchemaComponent;
-import org.jpox.samples.array.BooleanArray;
-import org.jpox.samples.embedded.Computer;
-import org.jpox.samples.embedded.ComputerCard;
-import org.jpox.samples.models.fitness.Gym;
-import org.jpox.samples.one_many.unidir_2.UserGroup;
-import org.jpox.samples.versioned.Trade1;
 
 /**
  * Test for the "datanucleus2" naming factory.

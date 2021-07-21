@@ -24,9 +24,9 @@ import java.util.Set;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.one_many.bidir_2.House;
+import org.datanucleus.samples.one_many.bidir_2.Window;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.one_many.bidir_2.House;
-import org.jpox.samples.one_many.bidir_2.Window;
 
 /**
  * Tests for managed relationships.

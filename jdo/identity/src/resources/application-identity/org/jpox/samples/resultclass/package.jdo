@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
-<jdo>
-    <package name="org.jpox.samples.resultclass">
-        <class name="TableSize" identity-type="nondurable" requires-extent="false">
-            <field name="thesize" default-fetch-group="false" persistence-modifier="transactional"/>
-        </class>
-    </package>
-</jdo>

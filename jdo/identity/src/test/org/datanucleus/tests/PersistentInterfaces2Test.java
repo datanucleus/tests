@@ -21,9 +21,9 @@ package org.datanucleus.tests;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.persistentinterfaces.Country;
-import org.jpox.samples.persistentinterfaces.ICity;
-import org.jpox.samples.persistentinterfaces.ILocation;
+import org.datanucleus.samples.persistentinterfaces.Country;
+import org.datanucleus.samples.persistentinterfaces.ICity;
+import org.datanucleus.samples.persistentinterfaces.ILocation;
 
 /**
  * Test for persistent interfaces.

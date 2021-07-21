@@ -25,7 +25,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.types.basic.DateHolder;
+import org.datanucleus.samples.types.basic.DateHolder;
 
 /**
  * Tests for query tests using particular types.

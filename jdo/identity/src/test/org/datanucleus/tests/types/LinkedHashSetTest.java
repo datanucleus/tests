@@ -18,14 +18,14 @@ Contributions
 ***********************************************************************/
 package org.datanucleus.tests.types;
 
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.container.ContainerItemChild;
+import org.datanucleus.samples.types.linkedhashset.LinkedHashSet1;
+import org.datanucleus.samples.types.linkedhashset.LinkedHashSet1Child;
+import org.datanucleus.samples.types.linkedhashset.LinkedHashSet2;
+import org.datanucleus.samples.types.linkedhashset.LinkedHashSet2Item;
+import org.datanucleus.samples.types.linkedhashset.LinkedHashSet2ItemChild;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.container.ContainerItemChild;
-import org.jpox.samples.types.linkedhashset.LinkedHashSet1;
-import org.jpox.samples.types.linkedhashset.LinkedHashSet1Child;
-import org.jpox.samples.types.linkedhashset.LinkedHashSet2;
-import org.jpox.samples.types.linkedhashset.LinkedHashSet2Item;
-import org.jpox.samples.types.linkedhashset.LinkedHashSet2ItemChild;
  
 /**
  * Test case to test LinkedHashSet SCO.

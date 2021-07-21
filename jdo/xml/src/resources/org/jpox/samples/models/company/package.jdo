@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
 <jdo>
-    <package name="org.jpox.samples.models.company">
+    <package name="org.datanucleus.samples.models.company">
 
         <class name="Person" detachable="true" schema="/root/test/elements/people">
         	<!--extension vendor-name="datanucleus" key="namespace" value="mynamespace"/-->
@@ -65,10 +65,10 @@
         <class name="Manager" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="departments" mapped-by="manager">
-                <collection element-type="org.jpox.samples.models.company.Department"/>
+                <collection element-type="org.datanucleus.samples.models.company.Department"/>
             </field>
             <field name="subordinates">
-                <collection element-type="org.jpox.samples.models.company.Employee"/>
+                <collection element-type="org.datanucleus.samples.models.company.Employee"/>
                 <join/>
             </field>
             <fetch-group name="groupSubordinates">

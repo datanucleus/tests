@@ -29,8 +29,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Person;
 
 public class JDOQLQueryTest extends JDOPersistenceTestCase
 {

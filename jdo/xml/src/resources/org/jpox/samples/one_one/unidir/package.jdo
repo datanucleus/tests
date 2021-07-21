@@ -2,7 +2,7 @@
 <!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
 
 <jdo>
-    <package name="org.jpox.samples.one_one.unidir">
+    <package name="org.datanucleus.samples.one_one.unidir">
         <class name="Login" detachable="true" schema="/root/test/elements/logins">
             <field name="id"/>
             <field name="userName" primary-key="true"/>

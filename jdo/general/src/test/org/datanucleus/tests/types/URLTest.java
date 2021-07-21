@@ -25,7 +25,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.types.url.URLHolder;
+import org.datanucleus.samples.types.url.URLHolder;
 
 /**
  * Tests for SCO type java.net.URL.

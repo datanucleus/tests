@@ -34,26 +34,26 @@ grant {
 	permission java.util.PropertyPermission "user.timezone", "read,write";
 	permission java.util.PropertyPermission "java.home", "read";
 	
-	//JPOX needs to get classloader of classes
+	//DataNucleus needs to get classloader of classes
 	permission java.lang.RuntimePermission "getClassLoader";
 	
-	//JPOX needs to detect the java and os version
+	//DataNucleus needs to detect the java and os version
 	permission java.util.PropertyPermission "java.version", "read";
 	permission java.util.PropertyPermission "os.name", "read";
 
-	//JPOX reads these system properties
-	permission java.util.PropertyPermission "org.jpox.*", "read";	
+	//DataNucleus reads these system properties
+	permission java.util.PropertyPermission "org.datanucleus.*", "read";	
 	permission java.util.PropertyPermission "javax.jdo.*", "read";	
 	
-	//JPOX runtime enhancement (needs read access to all jars/classes in classpath, so use <<ALL FILES>> to facilitate config)
+	//DataNucleus runtime enhancement (needs read access to all jars/classes in classpath, so use <<ALL FILES>> to facilitate config)
 	permission java.lang.RuntimePermission "createClassLoader";
 	permission java.io.FilePermission "<<ALL FILES>>", "read";
 	
-	//JPOX needs to read manifest files (read permission to location of MANIFEST.MF files) 
+	//DataNucleus needs to read manifest files (read permission to location of MANIFEST.MF files) 
 	permission java.io.FilePermission "${user.dir}${/}-", "read";
 	permission java.io.FilePermission "<<ALL FILES>>", "read";
 	
-	//JPOX uses reflection!!!
+	//DataNucleus uses reflection!!!
 	permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
 	permission java.lang.RuntimePermission "accessDeclaredMembers";
 
@@ -89,7 +89,7 @@ grant {
 	permission java.util.PropertyPermission "org.apache.commons.*", "read";	
 
 //--------------------
-//JPOX log4j is configured with access to:
+//DataNucleus log4j is configured with access to:
 //--------------------
 	permission java.util.PropertyPermission "line.separator", "read";
 	permission java.io.FilePermission "${user.dir}${/}jpox.log", "read,write";
@@ -120,8 +120,8 @@ grant {
 //--------------------
 //test framework permissions
 //--------------------
-	permission java.util.PropertyPermission "org.jpox.test.properties.1", "read";
-	permission java.util.PropertyPermission "org.jpox.test.properties.classpath.1", "read";
+	permission java.util.PropertyPermission "org.datanucleus.test.properties.1", "read";
+	permission java.util.PropertyPermission "org.datanucleus.test.properties.classpath.1", "read";
 	permission java.util.PropertyPermission "user.home", "read";
 	permission java.io.FilePermission "${user.home}${/}.jdo${/}PMFProperties.properties", "read";
 	

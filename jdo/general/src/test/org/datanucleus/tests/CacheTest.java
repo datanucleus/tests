@@ -44,17 +44,17 @@ import org.datanucleus.api.jdo.DataNucleusHelperJDO;
 import org.datanucleus.cache.CachedPC;
 import org.datanucleus.cache.Level2Cache;
 import org.datanucleus.samples.metadata.user.User1;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Organisation;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Qualification;
+import org.datanucleus.samples.models.voting.Vote;
+import org.datanucleus.samples.one_one.unidir.Login;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
+import org.datanucleus.samples.versioned.Trade1;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Organisation;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Qualification;
-import org.jpox.samples.models.voting.Vote;
-import org.jpox.samples.one_one.unidir.Login;
-import org.jpox.samples.one_one.unidir.LoginAccount;
-import org.jpox.samples.versioned.Trade1;
 
 /**
  * Tests for the L1, L2 caches.

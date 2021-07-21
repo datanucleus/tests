@@ -2,7 +2,7 @@
 <!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
 
 <jdo>
-    <package name="org.jpox.samples.one_many.map_fk">
+    <package name="org.datanucleus.samples.one_many.map_fk">
         <!-- Holder of all types of Map fields -->
         <class name="MapFKHolder" table="MAPFKHOLDER" identity-type="application" detachable="true">
             <field name="id" primary-key="true" column="MAPHOLDER_ID"/>

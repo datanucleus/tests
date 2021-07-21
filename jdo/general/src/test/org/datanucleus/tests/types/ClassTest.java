@@ -21,8 +21,8 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.cls.ClassHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.cls.ClassHolder;
 
 /**
  * Tests for Class field types.

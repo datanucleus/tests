@@ -25,7 +25,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.types.uri.URIHolder;
+import org.datanucleus.samples.types.uri.URIHolder;
 
 /**
  * Tests for SCO mutable type java.net.URI.

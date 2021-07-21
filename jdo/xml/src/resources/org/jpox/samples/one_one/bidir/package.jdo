@@ -4,7 +4,7 @@
 "http://java.sun.com/dtd/jdo_2_0.dtd">
 
 <jdo>
-    <package name="org.jpox.samples.one_one.bidir">
+    <package name="org.datanucleus.samples.one_one.bidir">
         <class name="Equipment" detachable="true" identity-type="application">
         	<extension vendor-name="datanucleus" key="xpath" value="/root/test/elements/equipments"/>
             <field name="id"/>

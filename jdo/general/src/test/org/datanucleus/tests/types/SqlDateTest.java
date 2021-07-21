@@ -28,7 +28,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.jpox.samples.types.sqldate.SqlDateHolder;
+import org.datanucleus.samples.types.sqldate.SqlDateHolder;
 
 /**
  * Tests for SCO mutable type java.sql.Date.

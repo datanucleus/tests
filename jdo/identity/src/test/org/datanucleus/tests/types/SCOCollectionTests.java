@@ -33,11 +33,10 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.junit.Assert;
-
+import org.datanucleus.samples.types.container.CollectionHolder;
+import org.datanucleus.samples.types.container.ListHolder;
 import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.NucleusLogger;
-import org.jpox.samples.types.container.CollectionHolder;
-import org.jpox.samples.types.container.ListHolder;
 
 /**
  * Series of Reflection based utilities for testing SCO collections.

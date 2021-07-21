@@ -18,13 +18,13 @@ Contributions
 ***********************************************************************/
 package org.datanucleus.tests.types;
 
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.container.ContainerItemChild;
+import org.datanucleus.samples.types.vector.Vector1;
+import org.datanucleus.samples.types.vector.Vector2;
+import org.datanucleus.samples.types.vector.Vector2Item;
+import org.datanucleus.samples.types.vector.Vector2ItemChild;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.container.ContainerItemChild;
-import org.jpox.samples.types.vector.Vector1;
-import org.jpox.samples.types.vector.Vector2;
-import org.jpox.samples.types.vector.Vector2Item;
-import org.jpox.samples.types.vector.Vector2ItemChild;
 
 /**
  * Test case to test Vector SCO.

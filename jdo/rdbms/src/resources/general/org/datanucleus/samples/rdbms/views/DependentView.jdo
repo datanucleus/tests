@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+    <package name="org.datanucleus.samples.rdbms.views">
+        <class name="DependentView" identity-type="nondurable">
+            <field name="inverseInverseInt" />
+            <field name="inverseInverseIntObj" />
+            <extension vendor-name="datanucleus" key="view-imports" value="
+                import org.datanucleus.samples.rdbms.views.ReliedOnView;" />
+
+            <!-- This is the "generic" SQL92 version of the view. -->
+            <extension vendor-name="datanucleus" key="view-definition" value="
+                CREATE VIEW {this}
+                (
+                  {this.inverseInverseInt},
+                  {this.inverseInverseIntObj}
+                ) AS SELECT 0 - {ReliedOnView}.{ReliedOnView.inverseInt},
+                            0 - {ReliedOnView}.{ReliedOnView.inverseIntObj}
+                       FROM {ReliedOnView}"/>
+        </class>
+    </package>
+</jdo>

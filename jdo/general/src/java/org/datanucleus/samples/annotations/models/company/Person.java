@@ -45,7 +45,7 @@ import javax.jdo.annotations.Unique;
 @Discriminator
 @Unique(name="PERSON_NAME_EMAIL_UNIQUENESS", members={"firstName", "lastName", "emailAddress"})
 @FetchGroup(name="names", members={@Persistent(name="firstName"), @Persistent(name="lastName")})
-@Query(name="PeopleCalledSmith",language="JDOQL", value="SELECT FROM org.jpox.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")
+@Query(name="PeopleCalledSmith",language="JDOQL", value="SELECT FROM org.datanucleus.samples.annotations.models.company.Person WHERE lastName == \"Smith\"")
 public class Person implements Cloneable, Serializable
 {
     private static final long serialVersionUID = 2849934518360227025L;

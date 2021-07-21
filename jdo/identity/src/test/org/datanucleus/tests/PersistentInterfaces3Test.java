@@ -21,9 +21,9 @@ package org.datanucleus.tests;
 import javax.jdo.PersistenceManager;
 
 import org.datanucleus.enhancement.Persistable;
-import org.jpox.samples.persistentinterfaces.Country;
-import org.jpox.samples.persistentinterfaces.ICity;
-import org.jpox.samples.persistentinterfaces.ILocation;
+import org.datanucleus.samples.persistentinterfaces.Country;
+import org.datanucleus.samples.persistentinterfaces.ICity;
+import org.datanucleus.samples.persistentinterfaces.ILocation;
 
 /**
  * Series of tests for persistent interfaces.

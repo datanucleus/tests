@@ -18,10 +18,10 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.annotations.array;
 
+import org.datanucleus.samples.array.ArrayHolderInterface;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
-import org.jpox.samples.array.ArrayHolderInterface;
 
 /**
  * Container of a byte array, using Jakarta annotations.

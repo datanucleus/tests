@@ -20,8 +20,8 @@ package org.datanucleus.samples.invalid.interfaces.shape;
 import java.io.Serializable;
 import java.util.Random;
 
-import org.jpox.samples.interfaces.Circle;
-import org.jpox.samples.interfaces.Shape;
+import org.datanucleus.samples.interfaces.Circle;
+import org.datanucleus.samples.interfaces.Shape;
 
 /**
  * Container of Interface field, with its metadata declaration for the interface

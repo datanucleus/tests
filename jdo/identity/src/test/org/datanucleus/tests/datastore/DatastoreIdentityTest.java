@@ -18,9 +18,9 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests.datastore;
 
+import org.datanucleus.samples.types.basic.BasicTypeHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.StorageTester;
-import org.jpox.samples.types.basic.BasicTypeHolder;
 
 /**
  * Test the storage using Datastore Identity.

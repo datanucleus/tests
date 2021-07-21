@@ -21,9 +21,9 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.queue.Queue1;
+import org.datanucleus.samples.types.queue.Queue1Item;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.queue.Queue1;
-import org.jpox.samples.types.queue.Queue1Item;
 
 /**
  * Tests for mapping java.util.Queue fields.

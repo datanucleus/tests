@@ -32,22 +32,22 @@ import javax.jdo.Transaction;
 import javax.jdo.identity.StringIdentity;
 
 import org.datanucleus.samples.map.MapHolderXML;
-import org.jpox.samples.models.company.Account;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Project;
-import org.jpox.samples.one_many.bidir.Animal;
-import org.jpox.samples.one_many.bidir.Cattle;
-import org.jpox.samples.one_many.bidir.DairyFarm;
-import org.jpox.samples.one_many.bidir.Farm;
-import org.jpox.samples.one_many.bidir.Poultry;
-import org.jpox.samples.one_many.unidir.Computer;
-import org.jpox.samples.one_many.unidir.DesktopComputer;
-import org.jpox.samples.one_many.unidir.LaptopComputer;
-import org.jpox.samples.one_many.unidir.Office;
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
-import org.jpox.samples.one_one.unidir.Login;
-import org.jpox.samples.one_one.unidir.LoginAccount;
+import org.datanucleus.samples.models.company.Account;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Project;
+import org.datanucleus.samples.one_many.bidir.Animal;
+import org.datanucleus.samples.one_many.bidir.Cattle;
+import org.datanucleus.samples.one_many.bidir.DairyFarm;
+import org.datanucleus.samples.one_many.bidir.Farm;
+import org.datanucleus.samples.one_many.bidir.Poultry;
+import org.datanucleus.samples.one_many.unidir.Computer;
+import org.datanucleus.samples.one_many.unidir.DesktopComputer;
+import org.datanucleus.samples.one_many.unidir.LaptopComputer;
+import org.datanucleus.samples.one_many.unidir.Office;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
+import org.datanucleus.samples.one_one.unidir.Login;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
 
 /**
  * Application identity persistence tests for XML datastores.

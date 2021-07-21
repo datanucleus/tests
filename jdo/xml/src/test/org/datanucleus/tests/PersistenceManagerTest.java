@@ -27,15 +27,14 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import org.datanucleus.api.jdo.JDOPersistenceManager;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Project;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Project;
 
 /**
- * This class is a JUnit test class for unit testing "org.jpox.PersistenceManagerImpl".
+ * This class is a JUnit test class for unit testing the PersistenceManager.
  *
- * This tests the persistence of all of the basic FCO types as well as
- * collection handling of various types of fields.
+ * This tests the persistence of all of the basic FCO types as well as collection handling of various types of fields.
  */
 public class PersistenceManagerTest extends JDOPersistenceTestCase
 {

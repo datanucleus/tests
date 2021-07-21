@@ -25,8 +25,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.locale.LocaleHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.locale.LocaleHolder;
 
 /**
  * Tests for SCO mutable type java.util.Locale.

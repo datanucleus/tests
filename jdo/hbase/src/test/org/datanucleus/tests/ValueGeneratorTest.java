@@ -27,7 +27,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.valuegeneration.TableGeneratorItem;
+import org.datanucleus.samples.valuegeneration.TableGeneratorItem;
 
 /**
  * Test the use of all forms of Id generators.

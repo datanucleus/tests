@@ -32,21 +32,21 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.dependentfield.DepInterfaceImpl1;
+import org.datanucleus.samples.dependentfield.DepInterfaceImpl2;
+import org.datanucleus.samples.dependentfield.DependentElement;
+import org.datanucleus.samples.dependentfield.DependentElement1;
+import org.datanucleus.samples.dependentfield.DependentElement10;
+import org.datanucleus.samples.dependentfield.DependentElement2;
+import org.datanucleus.samples.dependentfield.DependentElement3;
+import org.datanucleus.samples.dependentfield.DependentElement4;
+import org.datanucleus.samples.dependentfield.DependentElement5;
+import org.datanucleus.samples.dependentfield.DependentElement6;
+import org.datanucleus.samples.dependentfield.DependentElement7;
+import org.datanucleus.samples.dependentfield.DependentElement8;
+import org.datanucleus.samples.dependentfield.DependentElement9;
+import org.datanucleus.samples.dependentfield.DependentHolder;
 import org.datanucleus.store.StoreManager;
-import org.jpox.samples.dependentfield.DepInterfaceImpl1;
-import org.jpox.samples.dependentfield.DepInterfaceImpl2;
-import org.jpox.samples.dependentfield.DependentElement;
-import org.jpox.samples.dependentfield.DependentElement1;
-import org.jpox.samples.dependentfield.DependentElement10;
-import org.jpox.samples.dependentfield.DependentElement2;
-import org.jpox.samples.dependentfield.DependentElement3;
-import org.jpox.samples.dependentfield.DependentElement4;
-import org.jpox.samples.dependentfield.DependentElement5;
-import org.jpox.samples.dependentfield.DependentElement6;
-import org.jpox.samples.dependentfield.DependentElement7;
-import org.jpox.samples.dependentfield.DependentElement8;
-import org.jpox.samples.dependentfield.DependentElement9;
-import org.jpox.samples.dependentfield.DependentHolder;
 
 /**
  * Tests for the metadata dependent

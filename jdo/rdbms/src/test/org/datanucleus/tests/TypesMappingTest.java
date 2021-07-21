@@ -25,9 +25,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import org.datanucleus.samples.dbspecific.OracleTypes;
-import org.jpox.samples.rdbms.types.DB2Types;
-import org.jpox.samples.rdbms.types.MSSQLTypes;
-import org.jpox.samples.widget.StringClobWidget;
+import org.datanucleus.samples.rdbms.types.DB2Types;
+import org.datanucleus.samples.rdbms.types.MSSQLTypes;
+import org.datanucleus.samples.widget.StringClobWidget;
 
 /**
  * Tests for mapping java types to datastore-specific types that may only be present on one

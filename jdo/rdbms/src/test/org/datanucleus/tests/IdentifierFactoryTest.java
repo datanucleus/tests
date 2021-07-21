@@ -74,7 +74,7 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
             "MY_TABLE_NAME".equalsIgnoreCase(id.getName()));
 
         // c). name specified via ClassMetaData
-        AbstractClassMetaData managerCMD = storeMgr.getNucleusContext().getMetaDataManager().getMetaDataForClass("org.jpox.samples.models.company.Manager", clr);
+        AbstractClassMetaData managerCMD = storeMgr.getNucleusContext().getMetaDataManager().getMetaDataForClass("org.datanucleus.samples.models.company.Manager", clr);
         id = idFactory.newTableIdentifier(managerCMD);
         assertTrue("newDatastoreContainerIdentifier(clr, ClassMetaData) has returned an incorrect generated name " + id.getName(), 
             "MANAGER".equalsIgnoreCase(id.getName()));
@@ -223,7 +223,7 @@ public class IdentifierFactoryTest extends JDOPersistenceTestCase
             "MY_TABLE_NAME".equalsIgnoreCase(id.getName()));
 
         // c). name specified via ClassMetaData
-        AbstractClassMetaData managerCMD = storeMgr.getNucleusContext().getMetaDataManager().getMetaDataForClass("org.jpox.samples.models.company.Manager", clr);
+        AbstractClassMetaData managerCMD = storeMgr.getNucleusContext().getMetaDataManager().getMetaDataForClass("org.datanucleus.samples.models.company.Manager", clr);
         id = idFactory.newTableIdentifier(managerCMD);
         assertTrue("newDatastoreContainerIdentifier(clr, ClassMetaData) has returned an incorrect generated name " + id.getName(), 
             "MANAGER".equalsIgnoreCase(id.getName()));

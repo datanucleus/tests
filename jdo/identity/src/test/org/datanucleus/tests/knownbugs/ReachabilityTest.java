@@ -25,13 +25,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.company.Organisation;
+import org.datanucleus.samples.models.company.Qualification;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
+import org.datanucleus.samples.reachability.ReachableHolder;
+import org.datanucleus.samples.reachability.ReachableItem;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.models.company.Organisation;
-import org.jpox.samples.models.company.Qualification;
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
-import org.jpox.samples.reachability.ReachableHolder;
-import org.jpox.samples.reachability.ReachableItem;
 
 /**
  * Series of tests for "persistence-by-reachability" that are known bugs and expected to fail.

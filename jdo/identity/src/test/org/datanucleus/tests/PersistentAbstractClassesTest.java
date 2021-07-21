@@ -24,9 +24,9 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.enhancement.Persistable;
-import org.jpox.samples.persistentabstracts.ACity;
-import org.jpox.samples.persistentabstracts.ALocation;
-import org.jpox.samples.persistentabstracts.Country;
+import org.datanucleus.samples.persistentabstracts.ACity;
+import org.datanucleus.samples.persistentabstracts.ALocation;
+import org.datanucleus.samples.persistentabstracts.Country;
 
 /**
  * Series of tests for persistent abstract classes.

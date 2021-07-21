@@ -24,18 +24,18 @@ import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.company.Developer;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.one_one.unidir.Login;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
+import org.datanucleus.samples.one_one.unidir_2.Magazine;
+import org.datanucleus.samples.one_one.unidir_2.MediaWork;
+import org.datanucleus.samples.one_one.unidir_2.Newspaper;
 import org.datanucleus.samples.store.Book;
 import org.datanucleus.samples.store.CompactDisc;
 import org.datanucleus.samples.store.Product;
-import org.jpox.samples.models.company.Developer;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.one_one.unidir.Login;
-import org.jpox.samples.one_one.unidir.LoginAccount;
-import org.jpox.samples.one_one.unidir_2.Magazine;
-import org.jpox.samples.one_one.unidir_2.MediaWork;
-import org.jpox.samples.one_one.unidir_2.Newspaper;
 
 /**
  * Test the use of Extent.

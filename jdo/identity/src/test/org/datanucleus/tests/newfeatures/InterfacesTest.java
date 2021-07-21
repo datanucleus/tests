@@ -26,10 +26,10 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.interfaces.Diet;
+import org.datanucleus.samples.interfaces.Food;
+import org.datanucleus.samples.interfaces.Steak;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.interfaces.Diet;
-import org.jpox.samples.interfaces.Food;
-import org.jpox.samples.interfaces.Steak;
 
 /**
  * Interface tests that are feature requests to current functionality and so likely fail.

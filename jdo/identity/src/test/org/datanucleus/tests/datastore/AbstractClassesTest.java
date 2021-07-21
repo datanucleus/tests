@@ -23,9 +23,9 @@ import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.abstractclasses.self.ComplexAssembly;
+import org.datanucleus.samples.abstractclasses.self.Module;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.abstractclasses.self.ComplexAssembly;
-import org.jpox.samples.abstractclasses.self.Module;
 
 /**
  * Series of tests for the persistence of Abstract classes.

@@ -25,7 +25,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.jpox.samples.one_one.unidir.LoginAccount;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
 
 public class ManagedConnectionTest extends JDOPersistenceTestCase
 {

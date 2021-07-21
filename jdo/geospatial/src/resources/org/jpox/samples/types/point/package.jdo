@@ -3,7 +3,7 @@
     "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN"
     "http://java.sun.com/dtd/jdo_2_0.dtd">
 <jdo>
-    <package name="org.jpox.samples.types.point">
+    <package name="org.datanucleus.samples.types.point">
         <class name="PointHolder" detachable="true">
             <field name="point" persistence-modifier="persistent">
                <column name="X"/>

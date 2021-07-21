@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.datanucleus.samples.embedded">
+        <class name="DigitalCamera" identity-type="application" table="DIGITAL_CAMERA" detachable="true">
+            <field name="id" primary-key="true" column="DIGITAL_CAMERA_ID"/>
+            <field name="make">
+                <column name="MAKE" length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="model">
+                <column name="MODEL" length="60" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="memory" persistence-modifier="persistent" default-fetch-group="true">
+                <embedded null-indicator-column="MEMORY_SIZE" null-indicator-value="0">
+                    <field name="chip">
+                        <embedded null-indicator-column="MEMORY_CHIP_THICKNESS" null-indicator-value="0">
+                            <field name="thickness">
+                                <column name="MEMORY_CHIP_THICKNESS" allows-null="true"/>
+                            </field>
+                        </embedded>
+                    </field>
+                    <field name="size">
+                        <column name="MEMORY_SIZE" default-value="0"/>
+                    </field>
+                    <field name="type">
+                        <column name="MEMORY_TYPE" allows-null="true"/>
+                    </field>
+                    <field name="voltage">
+                        <column name="MEMORY_VOLTS" allows-null="true"/>
+                    </field>
+                </embedded>
+            </field>
+        </class>
+
+        <class name="Memory" embedded-only="true" detachable="true">
+            <field name="type"/>
+            <field name="size"/>
+            <field name="voltage"/>
+            <field name="chip" persistence-modifier="persistent"/>
+        </class>
+
+        <class name="Chip" embedded-only="true" detachable="true">
+            <field name="thickness"/>
+        </class>
+
+        <class name="Network" identity-type="application" table="NETWORK" detachable="true">
+            <field name="id" primary-key="true" column="NETWORK_ID" value-strategy="increment"/>
+            <field name="name">
+                <column name="NAME" length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="devices" persistence-modifier="persistent" table="NETWORK_DEVICES" mapped-by="network">
+                <collection element-type="org.datanucleus.samples.embedded.Device"/>
+                <join>
+                    <column name="NETWORK_ID"/>
+                </join>
+                <element>
+                    <embedded owner-field="network">
+                        <field name="name">
+                            <column name="DEVICE_NAME" allows-null="true"/>
+                        </field>
+                        <field name="ipAddr">
+                            <column name="DEVICE_IP_ADDR" allows-null="true"/>
+                        </field>
+                    </embedded>
+                </element>
+            </field>
+        </class>
+
+        <class name="Device" embedded-only="true" detachable="true">
+            <field name="name"/>
+            <field name="ipAddr"/>
+            <field name="description" default-fetch-group="false"/>
+        </class>
+
+        <class name="FilmLibrary" detachable="true" identity-type="application" table="FILM_LIBRARY">
+            <field name="id" primary-key="true" column="FILM_LIBRARY_ID" value-strategy="increment"/>
+            <field name="owner">
+                <column name="OWNER" length="40" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="films" persistence-modifier="persistent" table="FILM_LIBRARY_FILMS">
+                <map key-type="java.lang.String" value-type="org.datanucleus.samples.embedded.Film"/>
+                <join>
+                    <column name="FILM_LIBRARY_ID"/>
+                </join>
+                <key>
+                    <column name="FILM_ALIAS"/>
+                </key>
+                <value>
+                    <embedded null-indicator-column="FILM_NAME">
+                        <field name="name">
+                            <column name="FILM_NAME"/>
+                        </field>
+                        <field name="director">
+                            <column name="FILM_DIRECTOR" allows-null="true"/>
+                        </field>
+                    </embedded>
+                </value>
+            </field>
+            <fetch-group name="film_all">
+                <field name="owner"/>
+                <field name="films"/>
+            </fetch-group>
+        </class>
+
+        <class name="Film" detachable="true" embedded-only="true">
+            <field name="name"/>
+            <field name="director"/>
+            <field name="description" default-fetch-group="false"/>
+            
+            <fetch-group name="film_all">
+                <field name="name"/>
+                <field name="director"/>
+                <field name="description"/>
+            </fetch-group>
+        </class>
+    </package>
+</jdo>

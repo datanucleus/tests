@@ -18,8 +18,8 @@ Contributions
 ***********************************************************************/
 package org.datanucleus.tests.types;
 
+import org.datanucleus.samples.types.properties.Properties1;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.properties.Properties1;
 
 /**
  * Test case to test Properties SCO.

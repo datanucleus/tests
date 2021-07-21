@@ -26,14 +26,14 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.nightlabs_payments.ModeOfPayment;
+import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour;
+import org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor;
+import org.datanucleus.samples.models.nightlabs_product.Product;
+import org.datanucleus.samples.models.nightlabs_product.ProductTransfer;
+import org.datanucleus.samples.models.nightlabs_product.ProductType;
+import org.datanucleus.samples.models.nightlabs_product.Transfer;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.models.nightlabs_payments.ModeOfPayment;
-import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour;
-import org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor;
-import org.jpox.samples.models.nightlabs_product.Product;
-import org.jpox.samples.models.nightlabs_product.ProductTransfer;
-import org.jpox.samples.models.nightlabs_product.ProductType;
-import org.jpox.samples.models.nightlabs_product.Transfer;
 
 /**
  * Tests for JDOQL queries of collections and maps.
@@ -108,7 +108,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Query q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -117,8 +117,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPayment"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPayment"
                     );
                 Collection c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -132,7 +132,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
                 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -140,7 +140,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -154,7 +154,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -163,7 +163,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -259,7 +259,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Query q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -268,8 +268,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPayment"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPayment"
                     );
                 Collection c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -283,7 +283,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
                 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -291,7 +291,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -305,7 +305,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -314,7 +314,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -410,7 +410,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Query q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -419,8 +419,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPayment"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPayment"
                     );
                 Collection c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -434,7 +434,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
                 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -442,7 +442,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -456,7 +456,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -465,7 +465,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -561,7 +561,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Query q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -570,8 +570,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPayment"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPayment"
                     );
                 Collection c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -585,7 +585,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
                 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -593,7 +593,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -607,7 +607,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -616,7 +616,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -711,7 +711,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Query q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -720,8 +720,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPayment"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour;\n" +
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPayment"
                     );
                 Collection c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -735,7 +735,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
                 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -743,7 +743,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());
@@ -757,7 +757,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                 assertEquals("DebitNotePayment",((ServerPaymentProcessor)c.iterator().next()).getServerPaymentProcessorID());
 
                 q = pm.newQuery(
-                    "SELECT FROM org.jpox.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
+                    "SELECT FROM org.datanucleus.samples.models.nightlabs_payments.ServerPaymentProcessor\n" +
                     "WHERE\n" +
                     "  modeOfPaymentFlavour.organisationID == paramOrganisationID &&\n" +
                     "  modeOfPaymentFlavour.modeOfPaymentFlavourID == paramModeOfPaymentFlavourID &&\n" +
@@ -766,7 +766,7 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
                     "VARIABLES ModeOfPaymentFlavour modeOfPaymentFlavour; ModeOfPayment modeOfPayment\n" +
                     "PARAMETERS String paramOrganisationID, String paramModeOfPaymentFlavourID\n" +
                     "import java.lang.String;\n" +
-                    "import org.jpox.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
+                    "import org.datanucleus.samples.models.nightlabs_payments.ModeOfPaymentFlavour"
                     );
                 c = (Collection) q.execute(organisationID, "Dollar");
                 assertEquals(1,c.size());

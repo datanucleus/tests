@@ -28,6 +28,7 @@ import org.datanucleus.PersistenceNucleusContext;
 import org.datanucleus.exceptions.NucleusException;
 import org.datanucleus.exceptions.NucleusUserException;
 import org.datanucleus.metadata.MetaDataManager;
+import org.datanucleus.samples.models.company.Person;
 import org.datanucleus.samples.store.Inventory;
 import org.datanucleus.samples.store.Product;
 import org.datanucleus.store.query.NullOrderingType;
@@ -46,7 +47,6 @@ import org.datanucleus.store.query.expression.PrimaryExpression;
 import org.datanucleus.store.query.expression.VariableExpression;
 import org.datanucleus.util.NucleusLogger;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.models.company.Person;
 
 /**
  * Tests for generic JDOQL query compiler.

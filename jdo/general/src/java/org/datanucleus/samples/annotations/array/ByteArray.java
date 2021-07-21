@@ -20,7 +20,7 @@ package org.datanucleus.samples.annotations.array;
 
 import javax.jdo.annotations.PersistenceCapable;
 
-import org.jpox.samples.array.ArrayHolderInterface;
+import org.datanucleus.samples.array.ArrayHolderInterface;
 
 /**
  * Container of a byte array.

@@ -19,18 +19,18 @@ Contributions
 package org.datanucleus.tests.types;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.container.ContainerItemChild;
+import org.datanucleus.samples.types.map.Map1;
+import org.datanucleus.samples.types.map.Map2;
+import org.datanucleus.samples.types.map.Map2Item;
+import org.datanucleus.samples.types.map.Map2ItemChild;
+import org.datanucleus.samples.types.map.Map3;
+import org.datanucleus.samples.types.map.Map3Item;
+import org.datanucleus.samples.types.map.Map4;
+import org.datanucleus.samples.types.map.Map5;
+import org.datanucleus.samples.types.map.Map5Child;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.container.ContainerItemChild;
-import org.jpox.samples.types.map.Map1;
-import org.jpox.samples.types.map.Map2;
-import org.jpox.samples.types.map.Map2Item;
-import org.jpox.samples.types.map.Map2ItemChild;
-import org.jpox.samples.types.map.Map3;
-import org.jpox.samples.types.map.Map3Item;
-import org.jpox.samples.types.map.Map4;
-import org.jpox.samples.types.map.Map5;
-import org.jpox.samples.types.map.Map5Child;
 
 /**
  * Test case to test Map SCO.

@@ -24,8 +24,8 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.uuid.UUIDHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.uuid.UUIDHolder;
 
 /**
  * Test for mapping a UUID field to the datastore

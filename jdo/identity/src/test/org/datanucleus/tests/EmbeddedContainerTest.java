@@ -26,13 +26,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.embedded.Device;
+import org.datanucleus.samples.embedded.Film;
+import org.datanucleus.samples.embedded.FilmLibrary;
+import org.datanucleus.samples.embedded.Job;
+import org.datanucleus.samples.embedded.Network;
+import org.datanucleus.samples.embedded.Processor;
 import org.datanucleus.store.StoreManager;
-import org.jpox.samples.embedded.Device;
-import org.jpox.samples.embedded.Film;
-import org.jpox.samples.embedded.FilmLibrary;
-import org.jpox.samples.embedded.Job;
-import org.jpox.samples.embedded.Network;
-import org.jpox.samples.embedded.Processor;
 
 /**
  * Tests for persistence of embedded collection/map fields.
@@ -526,7 +526,7 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
                 tx.begin();
                 
                 Query q = pm.newQuery(Network.class, "devices.contains(elem) && elem.name == \"Audio Server\"");
-                q.declareVariables("org.jpox.samples.embedded.Device elem");
+                q.declareVariables("org.datanucleus.samples.embedded.Device elem");
                 List results = (List)q.execute();
                 
                 assertTrue("No networks retrieved from query of Networks containing audio server!", results != null);

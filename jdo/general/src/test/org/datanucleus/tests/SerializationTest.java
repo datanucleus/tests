@@ -32,19 +32,19 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.interfaces.Circle;
+import org.datanucleus.samples.interfaces.ShapeHolder;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.one_many.collection.PCJoinElement;
+import org.datanucleus.samples.one_many.collection.SetHolder;
+import org.datanucleus.samples.one_many.map.MapHolder;
+import org.datanucleus.samples.one_many.map.MapValueItem;
 import org.datanucleus.samples.serialised.SerialisedHolder;
 import org.datanucleus.samples.serialised.SerialisedHolder2;
 import org.datanucleus.samples.serialised.SerialisedHolder3;
 import org.datanucleus.samples.serialised.SerialisedObject;
 import org.datanucleus.samples.serialised.SerialisedObject3;
 import org.datanucleus.store.StoreManager;
-import org.jpox.samples.interfaces.Circle;
-import org.jpox.samples.interfaces.ShapeHolder;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.one_many.collection.PCJoinElement;
-import org.jpox.samples.one_many.collection.SetHolder;
-import org.jpox.samples.one_many.map.MapHolder;
-import org.jpox.samples.one_many.map.MapValueItem;
 
 /**
  * Tests for Serialisation of persistable objects.

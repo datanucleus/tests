@@ -159,26 +159,26 @@ public class CompoundIdentityTest extends JPAPersistenceTestCase
         EntityManagerFactory emf = getEMF(1, "JPATest", null); // Swap to "JPATest" EMF
         try
         {
-            org.jpox.samples.compoundidentity.CompoundSingleTarget targets[] = 
-                new org.jpox.samples.compoundidentity.CompoundSingleTarget[6];
+            org.datanucleus.samples.compoundidentity.CompoundSingleTarget targets[] = 
+                new org.datanucleus.samples.compoundidentity.CompoundSingleTarget[6];
 
             EntityManager em = emf.createEntityManager();
             EntityTransaction tx = em.getTransaction();
             try
             {      
                 tx.begin();
-                org.jpox.samples.compoundidentity.CompoundHolder holder1 = 
-                    new org.jpox.samples.compoundidentity.CompoundHolder("First Holder");
-                org.jpox.samples.compoundidentity.CompoundHolder holder2 = 
-                    new org.jpox.samples.compoundidentity.CompoundHolder("Second Holder");
-                org.jpox.samples.compoundidentity.CompoundHolder holder3 = 
-                    new org.jpox.samples.compoundidentity.CompoundHolder("Third Holder");
-                targets[0] = new org.jpox.samples.compoundidentity.CompoundSingleTarget(holder3, 1.0);
-                targets[1] = new org.jpox.samples.compoundidentity.CompoundSingleTarget(holder3, 2.0);
-                targets[2] = new org.jpox.samples.compoundidentity.CompoundSingleTarget(holder2, 3.0);
-                targets[3] = new org.jpox.samples.compoundidentity.CompoundSingleTarget(holder2, 4.0);
-                targets[4] = new org.jpox.samples.compoundidentity.CompoundSingleTarget(holder1, 5.0);
-                targets[5] = new org.jpox.samples.compoundidentity.CompoundSingleTarget(holder1, 6.0);
+                org.datanucleus.samples.compoundidentity.CompoundHolder holder1 = 
+                    new org.datanucleus.samples.compoundidentity.CompoundHolder("First Holder");
+                org.datanucleus.samples.compoundidentity.CompoundHolder holder2 = 
+                    new org.datanucleus.samples.compoundidentity.CompoundHolder("Second Holder");
+                org.datanucleus.samples.compoundidentity.CompoundHolder holder3 = 
+                    new org.datanucleus.samples.compoundidentity.CompoundHolder("Third Holder");
+                targets[0] = new org.datanucleus.samples.compoundidentity.CompoundSingleTarget(holder3, 1.0);
+                targets[1] = new org.datanucleus.samples.compoundidentity.CompoundSingleTarget(holder3, 2.0);
+                targets[2] = new org.datanucleus.samples.compoundidentity.CompoundSingleTarget(holder2, 3.0);
+                targets[3] = new org.datanucleus.samples.compoundidentity.CompoundSingleTarget(holder2, 4.0);
+                targets[4] = new org.datanucleus.samples.compoundidentity.CompoundSingleTarget(holder1, 5.0);
+                targets[5] = new org.datanucleus.samples.compoundidentity.CompoundSingleTarget(holder1, 6.0);
                 for (int i=0;i<6;i++)
                 {
                     em.persist(targets[i]);
@@ -205,20 +205,20 @@ public class CompoundIdentityTest extends JPAPersistenceTestCase
             {
                 tx.begin();
                 List result = em.createQuery(
-                    "SELECT Object(T) FROM " + org.jpox.samples.compoundidentity.CompoundHolder.class.getName() + 
+                    "SELECT Object(T) FROM " + org.datanucleus.samples.compoundidentity.CompoundHolder.class.getName() + 
                     " T WHERE T.name = 'First Holder'").getResultList();
-                org.jpox.samples.compoundidentity.CompoundHolder holder1 = 
-                    (org.jpox.samples.compoundidentity.CompoundHolder)result.get(0);
+                org.datanucleus.samples.compoundidentity.CompoundHolder holder1 = 
+                    (org.datanucleus.samples.compoundidentity.CompoundHolder)result.get(0);
                 result = em.createQuery(
-                    "SELECT Object(T) FROM " + org.jpox.samples.compoundidentity.CompoundHolder.class.getName() + 
+                    "SELECT Object(T) FROM " + org.datanucleus.samples.compoundidentity.CompoundHolder.class.getName() + 
                     " T WHERE T.name = 'Second Holder'").getResultList();
-                org.jpox.samples.compoundidentity.CompoundHolder holder2 = 
-                    (org.jpox.samples.compoundidentity.CompoundHolder)result.get(0);
+                org.datanucleus.samples.compoundidentity.CompoundHolder holder2 = 
+                    (org.datanucleus.samples.compoundidentity.CompoundHolder)result.get(0);
                 result = em.createQuery(
-                    "SELECT Object(T) FROM " + org.jpox.samples.compoundidentity.CompoundHolder.class.getName() + 
+                    "SELECT Object(T) FROM " + org.datanucleus.samples.compoundidentity.CompoundHolder.class.getName() + 
                     " T WHERE T.name = 'Third Holder'").getResultList();
-                org.jpox.samples.compoundidentity.CompoundHolder holder3 =
-                    (org.jpox.samples.compoundidentity.CompoundHolder)result.get(0);
+                org.datanucleus.samples.compoundidentity.CompoundHolder holder3 =
+                    (org.datanucleus.samples.compoundidentity.CompoundHolder)result.get(0);
                 assertEquals("Name of holder was incorrect", "First Holder", holder1.getName());
                 assertEquals("Name of holder was incorrect", "Second Holder", holder2.getName());
                 assertEquals("Name of holder was incorrect", "Third Holder", holder3.getName());
@@ -226,10 +226,10 @@ public class CompoundIdentityTest extends JPAPersistenceTestCase
                 for (int i = 0; i < targets.length; i++)
                 {
                     result = em.createQuery(
-                        "SELECT Object(T) FROM " + org.jpox.samples.compoundidentity.CompoundSingleTarget.class.getName() + 
+                        "SELECT Object(T) FROM " + org.datanucleus.samples.compoundidentity.CompoundSingleTarget.class.getName() + 
                         " T WHERE T.value = " + (float)((i+1)*1.0)).getResultList();
-                    org.jpox.samples.compoundidentity.CompoundSingleTarget target = 
-                        (org.jpox.samples.compoundidentity.CompoundSingleTarget)result.get(0);
+                    org.datanucleus.samples.compoundidentity.CompoundSingleTarget target = 
+                        (org.datanucleus.samples.compoundidentity.CompoundSingleTarget)result.get(0);
                     assertEquals(i + 1, target.getValue(), 0);
                     if (i == 0 || i == 1)
                     {
@@ -266,8 +266,8 @@ public class CompoundIdentityTest extends JPAPersistenceTestCase
         }
         finally
         {
-            clean(emf, org.jpox.samples.compoundidentity.CompoundSingleTarget.class);
-            clean(emf, org.jpox.samples.compoundidentity.CompoundHolder.class);
+            clean(emf, org.datanucleus.samples.compoundidentity.CompoundSingleTarget.class);
+            clean(emf, org.datanucleus.samples.compoundidentity.CompoundHolder.class);
             emf.close();
         }
     }

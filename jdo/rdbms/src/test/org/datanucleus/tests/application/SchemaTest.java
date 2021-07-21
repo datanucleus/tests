@@ -44,50 +44,50 @@ import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.tests.RDBMSTestHelper;
-import org.jpox.samples.array.ArrayElement;
-import org.jpox.samples.array.IntArray;
-import org.jpox.samples.array.PersistableArray;
-import org.jpox.samples.embedded.Computer;
-import org.jpox.samples.embedded.FilmLibrary;
-import org.jpox.samples.embedded.FittedKitchen;
-import org.jpox.samples.embedded.MultifunctionOven;
-import org.jpox.samples.embedded.Network;
-import org.jpox.samples.embedded.Oven;
-import org.jpox.samples.embedded.Processor;
 import org.datanucleus.samples.rdbms.application.EmbeddedA;
-import org.jpox.samples.inheritance.LBase;
-import org.jpox.samples.inheritance.LSub;
-import org.jpox.samples.inheritance.MBase;
-import org.jpox.samples.inheritance.MRelated;
-import org.jpox.samples.inheritance.MSub1;
-import org.jpox.samples.inheritance.MSub2;
-import org.jpox.samples.inheritance.NBase;
-import org.jpox.samples.inheritance.NSub;
-import org.jpox.samples.interfaces.Diet;
-import org.jpox.samples.interfaces.ShapeHolder;
-import org.jpox.samples.many_many.PetroleumCustomer;
-import org.jpox.samples.many_many.PetroleumSupplier;
-import org.jpox.samples.many_one.unidir.CarRental;
-import org.jpox.samples.many_one.unidir.HireCar;
-import org.jpox.samples.models.company.Developer;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.objects.ObjectHolder;
-import org.jpox.samples.one_many.collection.ListHolder;
-import org.jpox.samples.one_many.collection.SetHolder;
-import org.jpox.samples.one_many.map.MapHolder;
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
-import org.jpox.samples.one_one.unidir.Login;
-import org.jpox.samples.one_one.unidir.LoginAccount;
+import org.datanucleus.samples.secondarytable.Printer;
+import org.datanucleus.samples.array.ArrayElement;
+import org.datanucleus.samples.array.IntArray;
+import org.datanucleus.samples.array.PersistableArray;
+import org.datanucleus.samples.embedded.Computer;
+import org.datanucleus.samples.embedded.FilmLibrary;
+import org.datanucleus.samples.embedded.FittedKitchen;
+import org.datanucleus.samples.embedded.MultifunctionOven;
+import org.datanucleus.samples.embedded.Network;
+import org.datanucleus.samples.embedded.Oven;
+import org.datanucleus.samples.embedded.Processor;
+import org.datanucleus.samples.inheritance.LBase;
+import org.datanucleus.samples.inheritance.LSub;
+import org.datanucleus.samples.inheritance.MBase;
+import org.datanucleus.samples.inheritance.MRelated;
+import org.datanucleus.samples.inheritance.MSub1;
+import org.datanucleus.samples.inheritance.MSub2;
+import org.datanucleus.samples.inheritance.NBase;
+import org.datanucleus.samples.inheritance.NSub;
+import org.datanucleus.samples.interfaces.Diet;
+import org.datanucleus.samples.interfaces.ShapeHolder;
+import org.datanucleus.samples.many_many.PetroleumCustomer;
+import org.datanucleus.samples.many_many.PetroleumSupplier;
+import org.datanucleus.samples.many_one.unidir.CarRental;
+import org.datanucleus.samples.many_one.unidir.HireCar;
+import org.datanucleus.samples.models.company.Developer;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.objects.ObjectHolder;
+import org.datanucleus.samples.one_many.collection.ListHolder;
+import org.datanucleus.samples.one_many.collection.SetHolder;
+import org.datanucleus.samples.one_many.map.MapHolder;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
+import org.datanucleus.samples.one_one.unidir.Login;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
 import org.datanucleus.samples.rdbms.application.CollElement;
 import org.datanucleus.samples.rdbms.application.CollElementOwner1;
 import org.datanucleus.samples.rdbms.application.CollElementOwner2;
 import org.datanucleus.samples.rdbms.application.ConflictAssociation;
 import org.datanucleus.samples.rdbms.application.ConflictRole;
 import org.datanucleus.samples.rdbms.application.ConflictUser;
-import org.jpox.samples.secondarytable.Printer;
 
 /**
  * Tests for schema creation, schema validation and existing schemas.
@@ -316,7 +316,7 @@ public class SchemaTest extends JDOPersistenceTestCase
 
     /**
      * Test of the column width specification.
-     * Test the PMF property "org.jpox.rdbms.stringLengthExceededAction".
+     * Test the PMF property "datanucleus.rdbms.stringLengthExceededAction".
      */
     public void testColumnWidth()
     {

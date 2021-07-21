@@ -27,25 +27,25 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.embedded.Bath;
+import org.datanucleus.samples.embedded.Battery;
+import org.datanucleus.samples.embedded.Chip;
+import org.datanucleus.samples.embedded.Computer;
+import org.datanucleus.samples.embedded.ComputerCard;
+import org.datanucleus.samples.embedded.DigitalCamera;
+import org.datanucleus.samples.embedded.EmbeddedObject;
+import org.datanucleus.samples.embedded.EmbeddedObject2;
+import org.datanucleus.samples.embedded.EmbeddedOwner1;
+import org.datanucleus.samples.embedded.EmbeddedOwner2;
+import org.datanucleus.samples.embedded.FittedBathroom;
+import org.datanucleus.samples.embedded.FittedKitchen;
+import org.datanucleus.samples.embedded.Manufacturer;
+import org.datanucleus.samples.embedded.Memory;
+import org.datanucleus.samples.embedded.MultifunctionOven;
+import org.datanucleus.samples.embedded.MusicPlayer;
+import org.datanucleus.samples.embedded.Oven;
+import org.datanucleus.samples.embedded.ShowerBath;
 import org.datanucleus.store.StoreManager;
-import org.jpox.samples.embedded.Bath;
-import org.jpox.samples.embedded.Battery;
-import org.jpox.samples.embedded.Chip;
-import org.jpox.samples.embedded.Computer;
-import org.jpox.samples.embedded.ComputerCard;
-import org.jpox.samples.embedded.DigitalCamera;
-import org.jpox.samples.embedded.EmbeddedObject;
-import org.jpox.samples.embedded.EmbeddedObject2;
-import org.jpox.samples.embedded.EmbeddedOwner1;
-import org.jpox.samples.embedded.EmbeddedOwner2;
-import org.jpox.samples.embedded.FittedBathroom;
-import org.jpox.samples.embedded.FittedKitchen;
-import org.jpox.samples.embedded.Manufacturer;
-import org.jpox.samples.embedded.Memory;
-import org.jpox.samples.embedded.MultifunctionOven;
-import org.jpox.samples.embedded.MusicPlayer;
-import org.jpox.samples.embedded.Oven;
-import org.jpox.samples.embedded.ShowerBath;
 
 /**
  * Tests for persistence of embedded PC fields.
@@ -1514,7 +1514,7 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
             {
                 tx.begin();
 
-                Query query = pm.newQuery("SELECT FROM org.jpox.samples.embedded.DigitalCamera WHERE memory.chip.thickness == 6");
+                Query query = pm.newQuery("SELECT FROM org.datanucleus.samples.embedded.DigitalCamera WHERE memory.chip.thickness == 6");
                 List results = (List) query.execute();
                 assertEquals("Number of cameras retrieved by query of nested embedded is incorrect", results.size(), 1);
                 DigitalCamera camera = (DigitalCamera) results.iterator().next();
@@ -1604,7 +1604,7 @@ public class EmbeddedPCTest extends JDOPersistenceTestCase
             {
                 tx.begin();
                 
-                Query query = pm.newQuery("SELECT FROM org.jpox.samples.embedded.MusicPlayer " +
+                Query query = pm.newQuery("SELECT FROM org.datanucleus.samples.embedded.MusicPlayer " +
                 "WHERE battery.make == param_make PARAMETERS java.lang.String param_make");
                 List results = (List) query.execute("Duracell");
                 MusicPlayer player = (MusicPlayer) results.iterator().next();

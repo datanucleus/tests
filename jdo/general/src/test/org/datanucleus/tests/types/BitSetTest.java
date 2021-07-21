@@ -23,8 +23,8 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.bitset.BitSetHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.bitset.BitSetHolder;
 
 /**
  * Tests for SCO mutable type java.util.BitSet.

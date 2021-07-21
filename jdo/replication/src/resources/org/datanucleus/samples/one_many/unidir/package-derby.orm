@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.datanucleus.samples.one_many.unidir">
+        <class name="Computer">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="LaptopComputer">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="DesktopComputer">
+            <inheritance strategy="new-table"/>
+        </class>
+
+        <class name="Office">
+            <inheritance strategy="new-table"/>
+        </class>
+    </package>
+</orm>

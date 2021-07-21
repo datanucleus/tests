@@ -35,17 +35,17 @@ import javax.jdo.Transaction;
 import javax.jdo.annotations.IdentityType;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Developer;
+import org.datanucleus.samples.models.company.DeveloperRC;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.InsuranceDepartment;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.PersonalDetails;
+import org.datanucleus.samples.resultclass.TableSize;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Developer;
-import org.jpox.samples.models.company.DeveloperRC;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.InsuranceDepartment;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.PersonalDetails;
-import org.jpox.samples.resultclass.TableSize;
 
 /**
  * Tests the use of SQL queries as specified in JDO2.0 spec section 14.
@@ -999,7 +999,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             // TODO Change this to a query that will take a LONG time and check for it
             String sqlText = "SELECT count(*) FROM PERSON";
             Query query = pm.newQuery("javax.jdo.query.SQL", sqlText);
-            query.addExtension("org.jpox.query.timeout", "1");
+            query.addExtension("datanucleus.query.timeout", "1"); // TODO Check this extension exists
             query.execute();
 
             tx.commit();

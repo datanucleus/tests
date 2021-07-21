@@ -28,13 +28,12 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.fitness.Cloth;
+import org.datanucleus.samples.models.fitness.FitnessHelper;
+import org.datanucleus.samples.models.fitness.Gym;
+import org.datanucleus.samples.models.fitness.GymEquipment;
+import org.datanucleus.samples.models.fitness.Wardrobe;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-
-import org.jpox.samples.models.fitness.Cloth;
-import org.jpox.samples.models.fitness.FitnessHelper;
-import org.jpox.samples.models.fitness.Gym;
-import org.jpox.samples.models.fitness.GymEquipment;
-import org.jpox.samples.models.fitness.Wardrobe;
 
 /**
  * Tests for JDOQL queries of collections and maps.
@@ -102,8 +101,8 @@ public class JDOQLContainerTest extends JDOPersistenceTestCase
 
                 // Query the data
                 tx.begin();
-                Query q = pm.newQuery("SELECT FROM org.jpox.samples.models.fitness.Gym " +
-                    "PARAMETERS org.jpox.samples.models.fitness.Wardrobe wrd");
+                Query q = pm.newQuery("SELECT FROM org.datanucleus.samples.models.fitness.Gym " +
+                    "PARAMETERS org.datanucleus.samples.models.fitness.Wardrobe wrd");
                 q.setOrdering("this.wardrobes.get(wrd.model).model ascending");
                 List results = (List) q.execute(wardrobe3);
                 assertEquals(2, results.size());

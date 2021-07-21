@@ -20,8 +20,8 @@ package org.datanucleus.tests;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.fitness.Cloth;
-import org.jpox.samples.models.fitness.Wardrobe;
+import org.datanucleus.samples.models.fitness.Cloth;
+import org.datanucleus.samples.models.fitness.Wardrobe;
 
 /**
  * Tests for memory utilisation aspects of DataNucleus.

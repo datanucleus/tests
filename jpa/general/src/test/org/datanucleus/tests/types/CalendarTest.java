@@ -23,8 +23,8 @@ import java.util.GregorianCalendar;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.datanucleus.samples.types.calendar.CalendarHolder;
 import org.datanucleus.tests.JPAPersistenceTestCase;
-import org.jpox.samples.types.calendar.CalendarHolder;
 
 /**
  * Tests for persisting Calendar types under JPA.

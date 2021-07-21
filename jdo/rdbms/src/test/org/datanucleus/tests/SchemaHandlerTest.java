@@ -26,6 +26,8 @@ import javax.jdo.PersistenceManager;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
+import org.datanucleus.samples.rdbms.schema.SchemaClass1;
+import org.datanucleus.samples.rdbms.schema.SchemaClass2;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.schema.ForeignKeyInfo;
 import org.datanucleus.store.rdbms.schema.IndexInfo;
@@ -38,8 +40,6 @@ import org.datanucleus.store.rdbms.schema.RDBMSTablePKInfo;
 import org.datanucleus.store.rdbms.table.DatastoreClass;
 import org.datanucleus.store.schema.StoreSchemaHandler;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.rdbms.schema.SchemaClass1;
-import org.jpox.samples.rdbms.schema.SchemaClass2;
 
 /**
  * Tests for the SchemaHandler for RDBMS datastores.

@@ -27,9 +27,9 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.one_many.map.MapFKKeyItem;
-import org.jpox.samples.one_many.map.MapFKValueItem;
-import org.jpox.samples.one_many.map.MapHolder;
+import org.datanucleus.samples.one_many.map.MapFKKeyItem;
+import org.datanucleus.samples.one_many.map.MapFKValueItem;
+import org.datanucleus.samples.one_many.map.MapHolder;
 
 /**
  * Series of tests for Maps using ForeignKey relations.

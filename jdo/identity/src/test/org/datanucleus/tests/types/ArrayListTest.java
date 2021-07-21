@@ -18,14 +18,14 @@ Contributions
 ***********************************************************************/
 package org.datanucleus.tests.types;
 
+import org.datanucleus.samples.types.arraylist.ArrayList1;
+import org.datanucleus.samples.types.arraylist.ArrayList1Child;
+import org.datanucleus.samples.types.arraylist.ArrayList2;
+import org.datanucleus.samples.types.arraylist.ArrayList2Item;
+import org.datanucleus.samples.types.arraylist.ArrayList2ItemChild;
+import org.datanucleus.samples.types.container.ContainerItem;
+import org.datanucleus.samples.types.container.ContainerItemChild;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.arraylist.ArrayList1;
-import org.jpox.samples.types.arraylist.ArrayList1Child;
-import org.jpox.samples.types.arraylist.ArrayList2;
-import org.jpox.samples.types.arraylist.ArrayList2Item;
-import org.jpox.samples.types.arraylist.ArrayList2ItemChild;
-import org.jpox.samples.types.container.ContainerItem;
-import org.jpox.samples.types.container.ContainerItemChild;
 
 /**
  * Test case to test ArrayList SCO.

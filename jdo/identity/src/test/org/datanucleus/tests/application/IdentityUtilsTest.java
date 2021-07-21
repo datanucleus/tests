@@ -22,10 +22,10 @@ import org.datanucleus.identity.IdentityUtils;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.MetaDataManager;
+import org.datanucleus.samples.identity.application.ComposedIntIDBase;
+import org.datanucleus.samples.identity.application.ComposedMixedIDBase;
+import org.datanucleus.samples.identity.application.ComposedStringIDBase;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.identity.application.ComposedIntIDBase;
-import org.jpox.samples.identity.application.ComposedMixedIDBase;
-import org.jpox.samples.identity.application.ComposedStringIDBase;
 
 /**
  * Test convenience functions in IdentityUtils.
@@ -58,8 +58,8 @@ public class IdentityUtilsTest extends JDOPersistenceTestCase
 
         // a). composed of two ints
         {
-            org.jpox.samples.identity.application.ComposedIntIDBase.Key key = 
-                new org.jpox.samples.identity.application.ComposedIntIDBase.Key();
+            org.datanucleus.samples.identity.application.ComposedIntIDBase.Key key = 
+                new org.datanucleus.samples.identity.application.ComposedIntIDBase.Key();
             key.code = 123;
             key.composed = 4567;
 
@@ -81,8 +81,8 @@ public class IdentityUtilsTest extends JDOPersistenceTestCase
 
         // b). composed of two Strings
         {
-            org.jpox.samples.identity.application.ComposedStringIDBase.Key key =
-                new org.jpox.samples.identity.application.ComposedStringIDBase.Key();
+            org.datanucleus.samples.identity.application.ComposedStringIDBase.Key key =
+                new org.datanucleus.samples.identity.application.ComposedStringIDBase.Key();
             key.code = "123";
             key.composed = "4567";
 
@@ -104,8 +104,8 @@ public class IdentityUtilsTest extends JDOPersistenceTestCase
 
         // b). composed of int+String+Double
         {
-            org.jpox.samples.identity.application.ComposedMixedIDBase.Key key =
-                new org.jpox.samples.identity.application.ComposedMixedIDBase.Key();
+            org.datanucleus.samples.identity.application.ComposedMixedIDBase.Key key =
+                new org.datanucleus.samples.identity.application.ComposedMixedIDBase.Key();
             key.code = 123;
             key.composed = "4567";
             key.doubleObjField = 5.0;

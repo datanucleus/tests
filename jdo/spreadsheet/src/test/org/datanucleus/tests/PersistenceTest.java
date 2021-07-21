@@ -29,13 +29,13 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Organisation;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Project;
-import org.jpox.samples.models.company.Qualification;
-import org.jpox.samples.one_many.bidir.Animal;
-import org.jpox.samples.one_many.bidir.Farm;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Organisation;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Project;
+import org.datanucleus.samples.models.company.Qualification;
+import org.datanucleus.samples.one_many.bidir.Animal;
+import org.datanucleus.samples.one_many.bidir.Farm;
 
 /**
  * Series of basic persistence tests for spreadsheets (Excel, OOXML, ODF).

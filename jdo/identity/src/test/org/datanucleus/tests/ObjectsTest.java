@@ -22,10 +22,10 @@ import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.objects.ObjectHolder;
-import org.jpox.samples.objects.ObjectImpl1;
-import org.jpox.samples.models.referenceMapping.Customer;
-import org.jpox.samples.models.referenceMapping.Folder;
+import org.datanucleus.samples.models.referenceMapping.Customer;
+import org.datanucleus.samples.models.referenceMapping.Folder;
+import org.datanucleus.samples.objects.ObjectHolder;
+import org.datanucleus.samples.objects.ObjectImpl1;
 
 /**
  * Series of tests for the use of java.lang.Object.
@@ -87,7 +87,7 @@ public class ObjectsTest extends JDOPersistenceTestCase
                 assertTrue("Holder was not retrieved correctly", holder != null);
                 assertTrue("Holder nonserialised object is null!", holder.getObject3() != null);
                 assertEquals("Holder nonserialised object was of incorrect type", 
-                    holder.getObject3().getClass().getName(), "org.jpox.samples.objects.ObjectImpl1");
+                    holder.getObject3().getClass().getName(), "org.datanucleus.samples.objects.ObjectImpl1");
                 assertEquals("Holder nonserialised object has incorrect name!", 
                     ((ObjectImpl1)holder.getObject3()).getName(),"First implementation");
 
@@ -144,7 +144,7 @@ public class ObjectsTest extends JDOPersistenceTestCase
                 assertTrue("Holder was not retrieved correctly", holder != null);
                 assertTrue("Holder nonserialised object is null!", holder.getObject3() != null);
                 assertEquals("Holder nonserialised object was of incorrect type", 
-                    holder.getObject3().getClass().getName(), "org.jpox.samples.objects.ObjectImpl1");
+                    holder.getObject3().getClass().getName(), "org.datanucleus.samples.objects.ObjectImpl1");
                 assertEquals("Holder nonserialised object has incorrect name!", 
                     ((ObjectImpl1)holder.getObject3()).getName(),"Second implementation");
 
@@ -221,7 +221,7 @@ public class ObjectsTest extends JDOPersistenceTestCase
                 assertEquals("Holder has incorrect number of objects", holder.getSet1().size(), 1);
                 Object obj = holder.getSet1().iterator().next();
                 assertEquals("Object contained in container is of incorrect type", 
-                    obj.getClass(), org.jpox.samples.objects.ObjectImpl1.class);
+                    obj.getClass(), org.datanucleus.samples.objects.ObjectImpl1.class);
                 ObjectImpl1 obj1 = (ObjectImpl1)obj;
                 assertEquals("Object container in container has incorrect name", 
                     obj1.getName(), "Second implementation");

@@ -85,37 +85,22 @@ public class ComposedIntID extends TestObject implements InstanceCallbacks
         this.name = name;
     }
 
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPostLoad()
-     */
     public void jdoPostLoad()
     {
     }
 
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreStore()
-     */
     public void jdoPreStore()
     {
     }
 
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreClear()
-     */
     public void jdoPreClear()
     {
     }
 
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreDelete()
-     */
     public void jdoPreDelete()
     {
     }
 
-    /* (non-Javadoc)
-     * @see org.jpox.samples.utils.TestObject#fillRandom()
-     */
     public void fillRandom()
     {
     	code = r.nextInt();
@@ -123,20 +108,14 @@ public class ComposedIntID extends TestObject implements InstanceCallbacks
 		fillUpdateRandom();        
     }
 
-	/* (non-Javadoc)
-	 * @see org.jpox.samples.utils.TestObject#fillRandom()
-	 */
 	public void fillUpdateRandom()
 	{
 		name = String.valueOf(r.nextDouble()*1000);
 		description = "Description " + this.getClass().toString() + " random: " + String.valueOf(r.nextDouble()*1000);
         
 	}
-	
-    /* (non-Javadoc)
-     * @see org.jpox.samples.utils.TestObject#compareTo(java.lang.Object)
-     */
-    public boolean compareTo(Object obj)
+
+	public boolean compareTo(Object obj)
     {
 		if (obj == this)
 			return true;
@@ -152,9 +131,6 @@ public class ComposedIntID extends TestObject implements InstanceCallbacks
 			&& description.equals(other.description);
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     public String toString()
     {
 		StringBuffer s = new StringBuffer(super.toString());

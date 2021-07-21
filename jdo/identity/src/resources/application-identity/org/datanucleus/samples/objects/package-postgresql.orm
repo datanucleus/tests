@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.datanucleus.samples.objects">
+        <class name="ObjectHolder" table="OBJECT_HOLDER">
+            <field name="id" column="ID"/>
+            <field name="name" column="NAME"/>
+            <field name="object1" column="EMBEDDEDOBJECT"/>
+            <field name="object2" column="SERIALISEDOBJECT"/>
+            <field name="object3">
+                <column name="NONSERIALISED_IMPL1_ID"/>
+                <column name="NONSERIALISED_IMPL2_ID"/>
+            </field>
+            <field name="set1" table="OBJECT_SET1_OBJECTS">
+                <collection element-type="java.lang.Object"/>
+                <join column="HOLDER_ID"/>
+                <element column="OBJECT_IMPL_1_ID"/>
+                <extension vendor-name="datanucleus" key="implementation-classes" value="org.datanucleus.samples.objects.ObjectImpl1"/>
+            </field>
+        </class>
+
+        <class name="ObjectImpl1" table="OBJECT_IMPL_1">
+            <field name="id" column="OBJECT_IMPL_1_ID"/>
+            <field name="name" column="NAME"/>
+        </class>
+
+        <class name="ObjectImpl2" table="OBJECT_IMPL_2">
+            <field name="id" column="OBJECT_IMPL_1_ID"/>
+            <field name="value" column="VALUE"/>
+        </class>
+    </package>
+</orm>

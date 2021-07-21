@@ -83,38 +83,22 @@ public class ComposedStringID extends TestObject implements InstanceCallbacks
 		name = string;
 	}
 
-
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPostLoad()
-     */
     public void jdoPostLoad()
     {
     }
 
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreStore()
-     */
     public void jdoPreStore()
     {
     }
 
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreClear()
-     */
     public void jdoPreClear()
     {
     }
 
-    /* (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreDelete()
-     */
     public void jdoPreDelete()
     {
     }
 
-    /* (non-Javadoc)
-     * @see org.jpox.samples.utils.TestObject#fillRandom()
-     */
     public void fillRandom()
     {
     	code = "CODE "+String.valueOf(r.nextInt()*1000);
@@ -123,9 +107,6 @@ public class ComposedStringID extends TestObject implements InstanceCallbacks
         
     }
 
-	/* (non-Javadoc)
-	 * @see org.jpox.samples.utils.TestObject#fillRandom()
-	 */
 	public void fillUpdateRandom()
 	{
 		name = String.valueOf(r.nextDouble()*1000);
@@ -133,9 +114,6 @@ public class ComposedStringID extends TestObject implements InstanceCallbacks
         
 	}
 	
-    /* (non-Javadoc)
-     * @see org.jpox.samples.utils.TestObject#compareTo(java.lang.Object)
-     */
     public boolean compareTo(Object obj)
     {
 		if (obj == this)

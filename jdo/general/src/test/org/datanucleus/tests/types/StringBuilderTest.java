@@ -22,8 +22,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.stringbuilder.StringBuilderHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.stringbuilder.StringBuilderHolder;
 
 /**
  * Tests for SCO mutable type java.util.StringBuilder.

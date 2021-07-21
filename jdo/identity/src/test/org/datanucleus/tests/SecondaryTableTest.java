@@ -24,8 +24,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.secondarytable.Printer;
 import org.datanucleus.store.StoreManager;
-import org.jpox.samples.secondarytable.Printer;
 
 /**
  * Simple tests for secondary table handling.

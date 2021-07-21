@@ -291,7 +291,7 @@ public class AnnotationTest extends JDOPersistenceTestCase
         assertFalse(prefix + "query unmodifiable incorrect", qmds[0].isUnmodifiable());
         assertFalse(prefix + "query unique incorrect", qmds[0].isUnique());
         assertEquals(prefix + "query string incorrect",
-            "SELECT FROM org.jpox.samples.annotations.models.company.Person WHERE lastName == \"Smith\"",
+            "SELECT FROM org.datanucleus.samples.annotations.models.company.Person WHERE lastName == \"Smith\"",
             qmds[0].getQuery());
     }
 

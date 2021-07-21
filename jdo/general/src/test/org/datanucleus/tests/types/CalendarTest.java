@@ -27,9 +27,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.types.calendar.CalendarHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.types.calendar.CalendarHolder;
 
 /**
  * Tests for SCO mutable type java.util.Calendar.
@@ -45,7 +45,7 @@ public class CalendarTest  extends JDOPersistenceTestCase
         {
             addClassesToSchema(new Class[]
                 {
-                    org.jpox.samples.types.calendar.CalendarHolder.class
+                    org.datanucleus.samples.types.calendar.CalendarHolder.class
                 }
             );
             initialised = true;

@@ -31,10 +31,9 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.junit.Assert;
-
+import org.datanucleus.samples.types.container.MapHolder;
 import org.datanucleus.tests.TestHelper;
 import org.datanucleus.util.NucleusLogger;
-import org.jpox.samples.types.container.MapHolder;
 
 /**
  * Series of Reflection based utilities for testing SCO map collections.

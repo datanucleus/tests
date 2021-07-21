@@ -30,12 +30,12 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.api.jdo.JDOQuery;
 import org.datanucleus.metadata.StoredProcQueryParameterMode;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Person;
 import org.datanucleus.store.connection.ManagedConnection;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.query.StoredProcedureQuery;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Person;
 
 /**
  * Series of tests for stored procedures.

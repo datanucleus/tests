@@ -29,9 +29,9 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.types.sqltimestamp.SqlTimestampHolder;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.sqltimestamp.SqlTimestampHolder;
 
 /**
  * Tests for SCO mutable type java.sql.Timestamp.

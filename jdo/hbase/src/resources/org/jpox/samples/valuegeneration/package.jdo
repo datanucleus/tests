@@ -2,7 +2,7 @@
 <!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
 
 <jdo>
-    <package name="org.jpox.samples.valuegeneration">
+    <package name="org.datanucleus.samples.valuegeneration">
         <class name="TableGeneratorItem" identity-type="application" objectid-class="TableGeneratorItem$Oid">
             <field name="identifier" persistence-modifier="persistent" primary-key="true" value-strategy="increment">
                 <extension vendor-name="datanucleus" key="key-cache-size" value="10"/>

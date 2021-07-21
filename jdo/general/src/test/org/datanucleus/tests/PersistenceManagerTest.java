@@ -66,6 +66,16 @@ import org.datanucleus.samples.instancecallback.InstanceCallbackTester;
 import org.datanucleus.samples.lifecyclelistener.BasicListener;
 import org.datanucleus.samples.lifecyclelistener.LifecycleListenerSpecification;
 import org.datanucleus.samples.metadata.animal.Dog;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Project;
+import org.datanucleus.samples.models.voting.Vote;
+import org.datanucleus.samples.one_many.bidir.Animal;
+import org.datanucleus.samples.one_many.bidir.Farm;
+import org.datanucleus.samples.persistentinterfaces.Country;
 import org.datanucleus.samples.widget.CollectionFieldTester;
 import org.datanucleus.samples.widget.InversePrimitive;
 import org.datanucleus.samples.widget.Primitive;
@@ -73,16 +83,6 @@ import org.datanucleus.samples.widget.Widget;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.transaction.TransactionEventListener;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Project;
-import org.jpox.samples.models.voting.Vote;
-import org.jpox.samples.one_many.bidir.Animal;
-import org.jpox.samples.one_many.bidir.Farm;
-import org.jpox.samples.persistentinterfaces.Country;
 
 /**
  * Series of tests for basic capabilities of a JDO PersistenceManager.
@@ -644,7 +644,7 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
         // Datastore Identity
         try
         {
-            pm.newObjectIdInstance(SimpleDatastoreID.class, "1[OID]4[OID]org.jpox.samples.identity.IdentityBoxDatastore");
+            pm.newObjectIdInstance(SimpleDatastoreID.class, "1[OID]4[OID]org.datanucleus.samples.identity.IdentityBoxDatastore");
         }
         catch (Exception e)
         {

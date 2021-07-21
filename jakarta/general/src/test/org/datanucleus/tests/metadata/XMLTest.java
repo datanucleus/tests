@@ -44,22 +44,22 @@ import org.datanucleus.metadata.RelationType;
 import org.datanucleus.metadata.SequenceMetaData;
 import org.datanucleus.metadata.TableGeneratorMetaData;
 import org.datanucleus.metadata.QueryResultMetaData.PersistentTypeMapping;
+import org.datanucleus.samples.abstractclasses.AbstractSimpleBase;
+import org.datanucleus.samples.abstractclasses.ConcreteSimpleSub1;
+import org.datanucleus.samples.abstractclasses.ConcreteSimpleSub2;
+import org.datanucleus.samples.many_many.PetroleumCustomer;
+import org.datanucleus.samples.many_many.PetroleumSupplier;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.MyListener;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.WebSite;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
+import org.datanucleus.samples.one_one.unidir.Login;
+import org.datanucleus.samples.one_one.unidir.LoginAccount;
 import org.datanucleus.tests.JakartaPersistenceTestCase;
-import org.jpox.samples.abstractclasses.AbstractSimpleBase;
-import org.jpox.samples.abstractclasses.ConcreteSimpleSub1;
-import org.jpox.samples.abstractclasses.ConcreteSimpleSub2;
-import org.jpox.samples.many_many.PetroleumCustomer;
-import org.jpox.samples.many_many.PetroleumSupplier;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.MyListener;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.WebSite;
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
-import org.jpox.samples.one_one.unidir.Login;
-import org.jpox.samples.one_one.unidir.LoginAccount;
 
 /**
  * Tests for the use of JPA XML MetaData.

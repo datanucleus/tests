@@ -73,61 +73,33 @@ public class SingleFieldLongID extends TestObject implements InstanceCallbacks
         this.code = code;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPostLoad()
-     */
     public void jdoPostLoad()
     {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreStore()
-     */
     public void jdoPreStore()
     {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreClear()
-     */
     public void jdoPreClear()
     {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.jdo.InstanceCallbacks#jdoPreDelete()
-     */
     public void jdoPreDelete()
     {
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.jpox.samples.utils.TestObject#fillRandom()
-     */
     public void fillRandom()
     {
         this.code = r.nextInt();
         fillUpdateRandom();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.jpox.samples.utils.TestObject#fillRandom()
-     */
     public void fillUpdateRandom()
     {
         description = "Description " + this.getClass().toString() + " random: " + String.valueOf(r.nextDouble() * 1000);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.jpox.samples.utils.TestObject#compareTo(java.lang.Object)
-     */
     public boolean compareTo(Object obj)
     {
         if (this == obj)
@@ -140,10 +112,6 @@ public class SingleFieldLongID extends TestObject implements InstanceCallbacks
         return this.code == other.code && this.description.equals(other.description);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     public String toString()
     {
         StringBuffer s = new StringBuffer(super.toString());

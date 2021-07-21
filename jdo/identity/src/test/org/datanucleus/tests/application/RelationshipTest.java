@@ -29,22 +29,22 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.cyclic_nonnullable.CompoundType;
+import org.datanucleus.samples.models.cyclic_nonnullable.NullInverseEntity;
+import org.datanucleus.samples.models.cyclic_nonnullable.NullInverseEntity2;
+import org.datanucleus.samples.models.cyclic_nonnullable.NullInverseEntity3;
+import org.datanucleus.samples.models.inheritance_mapped_collection.ContainerInheritanceRoot;
+import org.datanucleus.samples.models.inheritance_mapped_collection.ContainerInheritanceSub;
+import org.datanucleus.samples.models.inheritance_mapped_collection.ElementE;
+import org.datanucleus.samples.models.nightlabs_prices.FormulaCell;
+import org.datanucleus.samples.models.nightlabs_prices.FormulaPriceConfig;
+import org.datanucleus.samples.models.nightlabs_prices.PriceConfig;
+import org.datanucleus.samples.models.nightlabs_prices.PriceConfigName;
+import org.datanucleus.samples.models.nightlabs_prices.StablePriceConfig;
+import org.datanucleus.samples.models.nightlabs_prices.TariffPriceConfig;
 import org.datanucleus.samples.one_many.unidir_notnullable.ChildOneManyUni3;
 import org.datanucleus.samples.one_many.unidir_notnullable.OwnerOneManyUni3;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.models.cyclic_nonnullable.CompoundType;
-import org.jpox.samples.models.cyclic_nonnullable.NullInverseEntity;
-import org.jpox.samples.models.cyclic_nonnullable.NullInverseEntity2;
-import org.jpox.samples.models.cyclic_nonnullable.NullInverseEntity3;
-import org.jpox.samples.models.inheritance_mapped_collection.ContainerInheritanceRoot;
-import org.jpox.samples.models.inheritance_mapped_collection.ContainerInheritanceSub;
-import org.jpox.samples.models.inheritance_mapped_collection.ElementE;
-import org.jpox.samples.models.nightlabs_prices.FormulaCell;
-import org.jpox.samples.models.nightlabs_prices.FormulaPriceConfig;
-import org.jpox.samples.models.nightlabs_prices.PriceConfig;
-import org.jpox.samples.models.nightlabs_prices.PriceConfigName;
-import org.jpox.samples.models.nightlabs_prices.StablePriceConfig;
-import org.jpox.samples.models.nightlabs_prices.TariffPriceConfig;
 
 /**
  * Test case to test use of Relationships.

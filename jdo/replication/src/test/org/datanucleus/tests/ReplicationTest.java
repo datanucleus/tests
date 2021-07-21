@@ -18,12 +18,12 @@
  **********************************************************************/
 package org.datanucleus.tests;
 
-import org.jpox.samples.one_many.unidir.Computer;
-import org.jpox.samples.one_many.unidir.DesktopComputer;
-import org.jpox.samples.one_many.unidir.LaptopComputer;
-import org.jpox.samples.one_many.unidir.Office;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOReplicationManager;
+import org.datanucleus.samples.one_many.unidir.Computer;
+import org.datanucleus.samples.one_many.unidir.DesktopComputer;
+import org.datanucleus.samples.one_many.unidir.LaptopComputer;
+import org.datanucleus.samples.one_many.unidir.Office;
 
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.JDOHelper;

@@ -29,10 +29,10 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.abstractclasses.AbstractSimpleClassHolder;
-import org.jpox.samples.abstractclasses.AbstractSimpleBase;
-import org.jpox.samples.abstractclasses.ConcreteSimpleSub1;
-import org.jpox.samples.abstractclasses.ConcreteSimpleSub2;
+import org.datanucleus.samples.abstractclasses.AbstractSimpleBase;
+import org.datanucleus.samples.abstractclasses.AbstractSimpleClassHolder;
+import org.datanucleus.samples.abstractclasses.ConcreteSimpleSub1;
+import org.datanucleus.samples.abstractclasses.ConcreteSimpleSub2;
 
 /**
  * Series of tests for the persistence of Abstract classes.

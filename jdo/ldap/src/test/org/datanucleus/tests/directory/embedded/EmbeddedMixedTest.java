@@ -25,10 +25,10 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 import javax.jdo.datastore.DataStoreCache;
 
+import org.datanucleus.samples.embedded.Chip;
+import org.datanucleus.samples.embedded.DigitalCamera;
+import org.datanucleus.samples.embedded.Memory;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.embedded.Chip;
-import org.jpox.samples.embedded.DigitalCamera;
-import org.jpox.samples.embedded.Memory;
 
 public class EmbeddedMixedTest extends JDOPersistenceTestCase
 {

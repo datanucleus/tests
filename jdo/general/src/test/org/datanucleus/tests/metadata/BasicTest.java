@@ -32,16 +32,13 @@ import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ClassLoaderResolverImpl;
 import org.datanucleus.PersistenceNucleusContextImpl;
 import org.datanucleus.api.jdo.metadata.JDOMetaDataManager;
-import org.datanucleus.api.jdo.metadata.JDOXmlMetaDataHelper;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.AbstractMemberMetaData;
 import org.datanucleus.metadata.FieldPersistenceModifier;
-import org.datanucleus.metadata.FileMetaData;
 import org.datanucleus.metadata.ForeignKeyAction;
 import org.datanucleus.metadata.IdentityType;
 import org.datanucleus.metadata.MetaDataManager;
 import org.datanucleus.metadata.NullValue;
-import org.datanucleus.metadata.xml.XmlMetaDataParser;
 import org.datanucleus.samples.haunted.Phantom;
 import org.datanucleus.samples.haunted.Vampire;
 import org.datanucleus.samples.metadata.animal.Pet;
@@ -65,6 +62,7 @@ import org.datanucleus.samples.metadata.user.UserGroup3;
 import org.datanucleus.samples.metadata.user.UserId1;
 import org.datanucleus.samples.metadata.user.UserId2;
 import org.datanucleus.samples.metadata.user.UserId3;
+import org.datanucleus.samples.models.company.Manager;
 import org.datanucleus.samples.store.Book;
 import org.datanucleus.samples.store.Inventory;
 import org.datanucleus.samples.widget.DateWidget;
@@ -73,9 +71,6 @@ import org.datanucleus.samples.widget.LevelAboveWidget;
 import org.datanucleus.samples.widget.PackageClassWidget;
 import org.datanucleus.samples.widget.Widget;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.i18n.ISO8859_2;
-import org.jpox.samples.i18n.UTF8;
-import org.jpox.samples.models.company.Manager;
 
 /**
  * Tests for metadata
@@ -240,13 +235,13 @@ public class BasicTest extends JDOPersistenceTestCase
         org.datanucleus.metadata.AbstractClassMetaData cmd=mgr.getMetaDataForClass(Inventory.class, new ClassLoaderResolverImpl());
         if (cmd == null)
         {
-            fail("Failed to load MetaData for org.jpox.samples.store.Inventory class");
+            fail("Failed to load MetaData for org.datanucleus.samples.store.Inventory class");
         }
 
         org.datanucleus.metadata.AbstractClassMetaData cmd2=mgr.getMetaDataForClass(Book.class, new ClassLoaderResolverImpl());
         if (cmd2 == null)
         {
-            fail("Failed to load MetaData for org.jpox.samples.store.Book class");
+            fail("Failed to load MetaData for org.datanucleus.samples.store.Book class");
         }
     }
     
@@ -326,7 +321,7 @@ public class BasicTest extends JDOPersistenceTestCase
         org.datanucleus.metadata.AbstractClassMetaData cmd2=mgr.getMetaDataForClass(Book.class, new ClassLoaderResolverImpl());
         if (cmd2 == null)
         {
-            fail("Failed to load MetaData for org.jpox.samples.store.Book class");
+            fail("Failed to load MetaData for org.datanucleus.samples.store.Book class");
         }
     }
 
@@ -471,51 +466,6 @@ public class BasicTest extends JDOPersistenceTestCase
             assertEquals(s + " default fetch group", true, fmd.isDefaultFetchGroup());
             assertNull(s + " collection metadata", fmd.getContainer());
             assertNull(s + " map metadata", fmd.getContainer());
-        }
-    }
-
-    /**
-     * Test for the MetaDataManager.
-     */
-    public void testMetaDataManagerI18N()
-    {
-        JDOXmlMetaDataHelper mdProc = new JDOXmlMetaDataHelper();
-
-        String filename = "/org/jpox/samples/i18n/UTF8.jdo";
-        MetaDataManager mmgr1 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
-        XmlMetaDataParser parser1 = new XmlMetaDataParser(mmgr1, mmgr1.getNucleusContext().getPluginManager(), true, true);
-        mmgr1.setValidate(false);
-        FileMetaData fmd = (FileMetaData)parser1.parseXmlMetaDataStream(XmlMetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
-        fmd.getPackage("org.jpox.samples.i18n").getClass("UTF8");
-        org.datanucleus.metadata.AbstractClassMetaData cmd1=fmd.getPackage("org.jpox.samples.i18n").getClass("UTF8");
-        cmd1.populate(new ClassLoaderResolverImpl(), null, mmgr1);
-        cmd1.initialise(new ClassLoaderResolverImpl());
-
-        MetaDataManager mmgr2 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
-        mmgr2.setValidate(false);
-        org.datanucleus.metadata.AbstractClassMetaData cmd = mmgr2.getMetaDataForClass(UTF8.class, new ClassLoaderResolverImpl());
-        if (!mdProc.getXMLForMetaData(cmd, "", "").equals(mdProc.getXMLForMetaData(cmd1, "", "")))
-        {
-            fail("i18n UTF-8 issues in parser");
-        }
-
-        filename = "/org/jpox/samples/i18n/ISO8859_2.jdo";
-        MetaDataManager mmgr3 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
-        XmlMetaDataParser parser3 = new XmlMetaDataParser(mmgr3, mmgr3.getNucleusContext().getPluginManager(), true, true);
-        mmgr3.setValidate(false);
-        fmd = (FileMetaData)parser3.parseXmlMetaDataStream(XmlMetaDataParser.class.getResourceAsStream(filename), filename, "jdo");
-        fmd.getPackage("org.jpox.samples.i18n").getClass("ISO8859_2");
-
-        MetaDataManager mmgr4 = new JDOMetaDataManager(new PersistenceNucleusContextImpl("JDO", null));
-        mmgr4.setValidate(false);
-        
-        cmd1=fmd.getPackage("org.jpox.samples.i18n").getClass("ISO8859_2");
-        cmd1.populate(new ClassLoaderResolverImpl(), null, mmgr4);
-        cmd1.initialise(null);
-        cmd = mmgr4.getMetaDataForClass(ISO8859_2.class, new ClassLoaderResolverImpl());
-        if (!mdProc.getXMLForMetaData(cmd, "", "").equals(mdProc.getXMLForMetaData(cmd1, "", "")))
-        {
-            fail("i18n ISO8859_2 issues in parser");
         }
     }
 

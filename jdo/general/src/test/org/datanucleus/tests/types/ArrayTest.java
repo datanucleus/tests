@@ -35,35 +35,35 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.enhancement.Persistable;
+import org.datanucleus.samples.array.ArrayElement;
+import org.datanucleus.samples.array.ArrayHolderInterface;
+import org.datanucleus.samples.array.BigDecimalArray;
+import org.datanucleus.samples.array.BigIntegerArray;
+import org.datanucleus.samples.array.BooleanArray;
+import org.datanucleus.samples.array.BooleanObjectArray;
+import org.datanucleus.samples.array.ByteArray;
+import org.datanucleus.samples.array.ByteObjectArray;
+import org.datanucleus.samples.array.CharArray;
+import org.datanucleus.samples.array.CharObjectArray;
+import org.datanucleus.samples.array.DateArray;
+import org.datanucleus.samples.array.DoubleArray;
+import org.datanucleus.samples.array.DoubleObjectArray;
+import org.datanucleus.samples.array.FloatArray;
+import org.datanucleus.samples.array.FloatObjectArray;
+import org.datanucleus.samples.array.IntArray;
+import org.datanucleus.samples.array.IntObjectArray;
+import org.datanucleus.samples.array.InterfaceArray;
+import org.datanucleus.samples.array.LocaleArray;
+import org.datanucleus.samples.array.LongArray;
+import org.datanucleus.samples.array.LongObjectArray;
+import org.datanucleus.samples.array.ObjectArray;
+import org.datanucleus.samples.array.PersistableArray;
+import org.datanucleus.samples.array.ShortArray;
+import org.datanucleus.samples.array.ShortObjectArray;
+import org.datanucleus.samples.array.StringArray;
+import org.datanucleus.samples.interfaces.Rectangle;
+import org.datanucleus.samples.interfaces.Shape;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.array.ArrayElement;
-import org.jpox.samples.array.ArrayHolderInterface;
-import org.jpox.samples.array.BigDecimalArray;
-import org.jpox.samples.array.BigIntegerArray;
-import org.jpox.samples.array.BooleanArray;
-import org.jpox.samples.array.BooleanObjectArray;
-import org.jpox.samples.array.ByteArray;
-import org.jpox.samples.array.ByteObjectArray;
-import org.jpox.samples.array.CharArray;
-import org.jpox.samples.array.CharObjectArray;
-import org.jpox.samples.array.DateArray;
-import org.jpox.samples.array.DoubleArray;
-import org.jpox.samples.array.DoubleObjectArray;
-import org.jpox.samples.array.FloatArray;
-import org.jpox.samples.array.FloatObjectArray;
-import org.jpox.samples.array.IntArray;
-import org.jpox.samples.array.IntObjectArray;
-import org.jpox.samples.array.InterfaceArray;
-import org.jpox.samples.array.LocaleArray;
-import org.jpox.samples.array.LongArray;
-import org.jpox.samples.array.LongObjectArray;
-import org.jpox.samples.array.ObjectArray;
-import org.jpox.samples.array.PersistableArray;
-import org.jpox.samples.array.ShortArray;
-import org.jpox.samples.array.ShortObjectArray;
-import org.jpox.samples.array.StringArray;
-import org.jpox.samples.interfaces.Rectangle;
-import org.jpox.samples.interfaces.Shape;
 
 /**
  * Test case to test use of Arrays.
@@ -488,20 +488,20 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     /*public void testForeignKeyPCArray()
     {
-        org.jpox.samples.array.foreignkey.Product[] products = new org.jpox.samples.array.foreignkey.Product[3];
-        products[0] = new org.jpox.samples.array.foreignkey.Product("100", "Toaster", "New toaster", "http://www.jpox.org", "GBP", 17.5, 17.5, 17.5, 0.0, 1);
-        products[1] = new org.jpox.samples.array.foreignkey.Product("101", "Kettle", "Kettle", "http://www.jpox.org", "GBP", 10.0, 10.0, 10.0, 0.0, 1);
-        products[2] = new org.jpox.samples.array.foreignkey.Product("102", "Microwave", "Microwave oven", "http://www.jpox.org", "GBP", 65.0, 65.0, 65.0, 0.0, 1);
+        org.datanucleus.samples.array.foreignkey.Product[] products = new org.datanucleus.samples.array.foreignkey.Product[3];
+        products[0] = new org.datanucleus.samples.array.foreignkey.Product("100", "Toaster", "New toaster", "http://www.jpox.org", "GBP", 17.5, 17.5, 17.5, 0.0, 1);
+        products[1] = new org.datanucleus.samples.array.foreignkey.Product("101", "Kettle", "Kettle", "http://www.jpox.org", "GBP", 10.0, 10.0, 10.0, 0.0, 1);
+        products[2] = new org.datanucleus.samples.array.foreignkey.Product("102", "Microwave", "Microwave oven", "http://www.jpox.org", "GBP", 65.0, 65.0, 65.0, 0.0, 1);
         MyPCArrayFK holder = new MyPCArrayFK(products);
-        org.jpox.samples.array.foreignkey.Product[] expectedProducts = new org.jpox.samples.array.foreignkey.Product[3];
-        expectedProducts[0] = (org.jpox.samples.array.foreignkey.Product)products[0].clone();
-        expectedProducts[1] = (org.jpox.samples.array.foreignkey.Product)products[1].clone();
-        expectedProducts[2] = (org.jpox.samples.array.foreignkey.Product)products[2].clone();
+        org.datanucleus.samples.array.foreignkey.Product[] expectedProducts = new org.datanucleus.samples.array.foreignkey.Product[3];
+        expectedProducts[0] = (org.datanucleus.samples.array.foreignkey.Product)products[0].clone();
+        expectedProducts[1] = (org.datanucleus.samples.array.foreignkey.Product)products[1].clone();
+        expectedProducts[2] = (org.datanucleus.samples.array.foreignkey.Product)products[2].clone();
 
-        performArrayTest(holder, org.jpox.samples.array.foreignkey.Product[].class, expectedProducts);
+        performArrayTest(holder, org.datanucleus.samples.array.foreignkey.Product[].class, expectedProducts);
 
         holder = new MyPCArrayFK(null);
-        performArrayTest(holder, org.jpox.samples.array.foreignkey.Product[].class, null);
+        performArrayTest(holder, org.datanucleus.samples.array.foreignkey.Product[].class, null);
     }*/
 
     // ---------------------------- Array querying tests --------------------------------------
@@ -575,20 +575,20 @@ public class ArrayTest extends JDOPersistenceTestCase
      */
     /*public void testForeignKeyPCQueryArray()
     {
-        org.jpox.samples.array.foreignkey.Product[] products = new org.jpox.samples.array.foreignkey.Product[3];
-        products[0] = new org.jpox.samples.array.foreignkey.Product("100", "Toaster", "New toaster", "http://www.jpox.org", "GBP", 17.5, 17.5, 17.5, 0.0, 1);
-        products[1] = new org.jpox.samples.array.foreignkey.Product("101", "Kettle", "Kettle", "http://www.jpox.org", "GBP", 10.0, 10.0, 10.0, 0.0, 1);
-        products[2] = new org.jpox.samples.array.foreignkey.Product("102", "Microwave", "Microwave oven", "http://www.jpox.org", "GBP", 65.0, 65.0, 65.0, 0.0, 1);
+        org.datanucleus.samples.array.foreignkey.Product[] products = new org.datanucleus.samples.array.foreignkey.Product[3];
+        products[0] = new org.datanucleus.samples.array.foreignkey.Product("100", "Toaster", "New toaster", "http://www.jpox.org", "GBP", 17.5, 17.5, 17.5, 0.0, 1);
+        products[1] = new org.datanucleus.samples.array.foreignkey.Product("101", "Kettle", "Kettle", "http://www.jpox.org", "GBP", 10.0, 10.0, 10.0, 0.0, 1);
+        products[2] = new org.datanucleus.samples.array.foreignkey.Product("102", "Microwave", "Microwave oven", "http://www.jpox.org", "GBP", 65.0, 65.0, 65.0, 0.0, 1);
         MyPCArrayFK holder = new MyPCArrayFK(products);
-        org.jpox.samples.array.foreignkey.Product[] expectedProducts = new org.jpox.samples.array.foreignkey.Product[3];
-        expectedProducts[0] = (org.jpox.samples.array.foreignkey.Product)products[0].clone();
-        expectedProducts[1] = (org.jpox.samples.array.foreignkey.Product)products[1].clone();
-        expectedProducts[2] = (org.jpox.samples.array.foreignkey.Product)products[2].clone();
+        org.datanucleus.samples.array.foreignkey.Product[] expectedProducts = new org.datanucleus.samples.array.foreignkey.Product[3];
+        expectedProducts[0] = (org.datanucleus.samples.array.foreignkey.Product)products[0].clone();
+        expectedProducts[1] = (org.datanucleus.samples.array.foreignkey.Product)products[1].clone();
+        expectedProducts[2] = (org.datanucleus.samples.array.foreignkey.Product)products[2].clone();
 
-        performArrayQueryTest(holder, org.jpox.samples.array.foreignkey.Product[].class, expectedProducts);
+        performArrayQueryTest(holder, org.datanucleus.samples.array.foreignkey.Product[].class, expectedProducts);
 
         holder = new MyPCArrayFK(null);
-        performArrayTest(holder, org.jpox.samples.array.foreignkey.Product[].class, null);
+        performArrayTest(holder, org.datanucleus.samples.array.foreignkey.Product[].class, null);
     }*/
 
     // -------------------------------- Utilities ------------------------------------------

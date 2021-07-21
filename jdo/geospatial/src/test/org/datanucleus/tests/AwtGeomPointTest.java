@@ -25,7 +25,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.types.point.PointHolder;
+import org.datanucleus.samples.types.point.PointHolder;
 
 /**
  * Tests for SCO mutable type java.awt.Point.

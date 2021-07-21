@@ -97,12 +97,12 @@
 
             <query name="SalaryBelow12" language="javax.jdo.query.JDOQL">
             <![CDATA[
-            SELECT FROM org.jpox.samples.models.company.Employee WHERE salary < 12 ORDER BY salary ASCENDING
+            SELECT FROM org.datanucleus.samples.models.company.Employee WHERE salary < 12 ORDER BY salary ASCENDING
             ]]>
             </query>
             <query name="SerialNoStartsWith" language="javax.jdo.query.JDOQL">
             <![CDATA[
-            SELECT FROM org.jpox.samples.models.company.Employee WHERE serialNo.startsWith(value) PARAMETERS String value
+            SELECT FROM org.datanucleus.samples.models.company.Employee WHERE serialNo.startsWith(value) PARAMETERS String value
             ]]>
             </query>
 

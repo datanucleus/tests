@@ -34,34 +34,33 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.junit.Assert;
-
+import org.datanucleus.samples.many_many.AccountCustomer;
+import org.datanucleus.samples.many_many.GasSupplier;
+import org.datanucleus.samples.many_many.OilSupplier;
+import org.datanucleus.samples.many_many.OneOffCustomer;
+import org.datanucleus.samples.many_many.PetroleumCustomer;
+import org.datanucleus.samples.many_many.PetroleumSupplier;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Identity1;
+import org.datanucleus.samples.models.company.Identity2;
+import org.datanucleus.samples.models.company.Identity3;
+import org.datanucleus.samples.models.company.Identity4;
+import org.datanucleus.samples.models.company.Identity5;
+import org.datanucleus.samples.models.company.InsuranceDepartment;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Office;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.PersonHolder;
+import org.datanucleus.samples.one_many.bidir.Animal;
+import org.datanucleus.samples.one_many.bidir.Cattle;
+import org.datanucleus.samples.one_many.bidir.DairyFarm;
+import org.datanucleus.samples.one_many.bidir.Farm;
+import org.datanucleus.samples.one_many.bidir.Poultry;
+import org.datanucleus.samples.types.basic.BasicTypeHolder;
+import org.datanucleus.samples.types.basic.StringHolder;
 import org.datanucleus.store.rdbms.RDBMSPropertyNames;
-import org.jpox.samples.many_many.AccountCustomer;
-import org.jpox.samples.many_many.GasSupplier;
-import org.jpox.samples.many_many.OilSupplier;
-import org.jpox.samples.many_many.OneOffCustomer;
-import org.jpox.samples.many_many.PetroleumCustomer;
-import org.jpox.samples.many_many.PetroleumSupplier;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Identity1;
-import org.jpox.samples.models.company.Identity2;
-import org.jpox.samples.models.company.Identity3;
-import org.jpox.samples.models.company.Identity4;
-import org.jpox.samples.models.company.Identity5;
-import org.jpox.samples.models.company.InsuranceDepartment;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Office;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.PersonHolder;
-import org.jpox.samples.one_many.bidir.Animal;
-import org.jpox.samples.one_many.bidir.Cattle;
-import org.jpox.samples.one_many.bidir.DairyFarm;
-import org.jpox.samples.one_many.bidir.Farm;
-import org.jpox.samples.one_many.bidir.Poultry;
-import org.jpox.samples.types.basic.BasicTypeHolder;
-import org.jpox.samples.types.basic.StringHolder;
 
 /**
  * Test of the various ways of constraining the result of a JDOQL query.
@@ -130,7 +129,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
             tx.begin();
             try
             {
-                Query q=pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q=pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setFilter("firstName == \"Bugs\"");
                 q.setUnique(true);
                 Object results=q.execute();
@@ -145,7 +144,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
             boolean success = false;
             try
             {
-                Query q=pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q=pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setUnique(true);
                 q.execute();
                 q.closeAll();
@@ -158,7 +157,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q=pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q=pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setRange(1,3);
                 Collection results=(Collection)q.execute();
                 assertTrue("setRange() test returned an incorrect number of results : should have been 2 but was " + results.size(),results.size() == 2);
@@ -205,7 +204,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
             tx.begin();
             try
             {
-                Query q=pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q=pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setResult("max(salary)");
                 Object results=q.execute();
                 assertTrue("test returned an object of an incorrect type : type is "+results.getClass(),results instanceof Float);
@@ -218,7 +217,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q=pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q=pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setResult("max (salary)");
                 Object results=q.execute();
                 assertTrue("test returned an object of an incorrect type : type is "+results.getClass(),results instanceof Float);
@@ -2562,7 +2561,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 tx.begin();
                 try
                 {
-                    Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     List results = (List)q.execute();
                     assertEquals("Number of objects retrieved using insensitive ResultSet is incorrect", 4, results.size());
                     Object[] objects = new Object[results.size()];
@@ -2757,7 +2756,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 //check with default constructor
                 Query q = pm.newQuery(pm.getExtent(Person.class, false));
                 q.setFilter("age > 35");
-                q.setResult("new org.jpox.samples.models.company.PersonHolder()");
+                q.setResult("new org.datanucleus.samples.models.company.PersonHolder()");
                 List results = (List)q.execute();
                 assertEquals(1, results.size());
                 Iterator resultsIter = results.iterator();
@@ -2774,7 +2773,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 //check with simple argument
                 q = pm.newQuery(pm.getExtent(Person.class, false));
                 q.setFilter("age > 35");
-                q.setResult("new org.jpox.samples.models.company.PersonHolder(this)");
+                q.setResult("new org.datanucleus.samples.models.company.PersonHolder(this)");
                 results = (List)q.execute();
                 assertEquals(1, results.size());
                 resultsIter = results.iterator();
@@ -2792,7 +2791,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 //check multiple args and with a literal null
                 q = pm.newQuery(pm.getExtent(Person.class, false));
                 q.setFilter("age > 35");
-                q.setResult("new org.jpox.samples.models.company.PersonHolder(this,null,this.firstName)");
+                q.setResult("new org.datanucleus.samples.models.company.PersonHolder(this,null,this.firstName)");
                 results = (List)q.execute();
                 assertEquals(1, results.size());
                 resultsIter = results.iterator();
@@ -2811,7 +2810,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 //add more literals
                 q = pm.newQuery(pm.getExtent(Person.class, false));
                 q.setFilter("age > 35");
-                q.setResult("new org.jpox.samples.models.company.PersonHolder(this,null,this.firstName,'string',1)");
+                q.setResult("new org.datanucleus.samples.models.company.PersonHolder(this,null,this.firstName,'string',1)");
                 results = (List)q.execute();
                 assertEquals(1, results.size());
                 resultsIter = results.iterator();
@@ -2832,7 +2831,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 //make sure if objects after literal, they work
                 q = pm.newQuery(pm.getExtent(Person.class, false));
                 q.setFilter("age > 35");
-                q.setResult("new org.jpox.samples.models.company.PersonHolder(this,null,this.firstName,'string',1,this)");
+                q.setResult("new org.datanucleus.samples.models.company.PersonHolder(this,null,this.firstName,'string',1,this)");
                 results = (List)q.execute();
                 assertEquals(1, results.size());
                 resultsIter = results.iterator();
@@ -2853,7 +2852,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 //test new Object(new Object())
                 q = pm.newQuery(pm.getExtent(Person.class, false));
                 q.setFilter("age > 35");
-                q.setResult("new org.jpox.samples.models.company.PersonHolder(new org.jpox.samples.models.company.PersonHolder(new org.jpox.samples.models.company.PersonHolder(this),this),this)");
+                q.setResult("new org.datanucleus.samples.models.company.PersonHolder(new org.datanucleus.samples.models.company.PersonHolder(new org.datanucleus.samples.models.company.PersonHolder(this),this),this)");
                 results = (List)q.execute();
                 assertEquals(1, results.size());
                 resultsIter = results.iterator();
@@ -2871,7 +2870,7 @@ public class JDOQLResultTest extends JDOPersistenceTestCase
                 //test new Object(new Object())
                 q = pm.newQuery(pm.getExtent(Person.class, false));
                 q.setFilter("age > 35");
-                q.setResult("this, 0, new org.jpox.samples.models.company.PersonHolder(new org.jpox.samples.models.company.PersonHolder(new org.jpox.samples.models.company.PersonHolder(this),this),this), 1, null");
+                q.setResult("this, 0, new org.datanucleus.samples.models.company.PersonHolder(new org.datanucleus.samples.models.company.PersonHolder(new org.datanucleus.samples.models.company.PersonHolder(this),this),this), 1, null");
                 results = (List)q.execute();
                 assertEquals(1, results.size());
                 resultsIter = results.iterator();

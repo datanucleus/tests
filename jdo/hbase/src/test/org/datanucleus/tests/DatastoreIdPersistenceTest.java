@@ -20,7 +20,7 @@ package org.datanucleus.tests;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.voting.Meeting;
+import org.datanucleus.samples.models.voting.Meeting;
 
 /**
  * Datastore identity persistence tests for HBase.

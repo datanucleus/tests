@@ -25,7 +25,7 @@ import java.util.Iterator;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.one_many.collection.SetHolder;
+import org.datanucleus.samples.one_many.collection.SetHolder;
 
 /**
  * Tests persistence of Collections of NonPC objects.

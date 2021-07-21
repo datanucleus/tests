@@ -26,12 +26,12 @@ import javax.jdo.Transaction;
 
 import org.datanucleus.samples.lifecyclelistener.BasicListener;
 import org.datanucleus.samples.lifecyclelistener.LifecycleListenerSpecification;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Developer;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Person;
 import org.datanucleus.util.NucleusLogger;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Developer;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Person;
 
 /**
  * Tests for JDO2.1 PM "proxy" functionality.

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+  	<package name="org.datanucleus.samples.one_many.bidir">
+	    <class name="Animal" detachable="true">
+            <version strategy="version-number" column="jdoversion"/> 
+            <field name="name" primary-key="true"/>
+            <field name="farm"/>
+
+            <fetch-group name="all">
+                <field name="name"/>
+                <field name="farm"/>
+            </fetch-group>
+		</class>
+
+		<class name="Farm" detachable="true">
+            <version strategy="version-number" column="jdoversion"/> 
+            <field name="name" primary-key="true"/>
+            <field name="animals" mapped-by="farm">
+        		<collection element-type="Animal" dependent-element="true"/>
+            </field>
+            <field name="pet" persistence-modifier="none"/>
+
+    		<fetch-group name="all">
+    			<field name="name"/>
+    			<field name="animals"/>
+    		</fetch-group>
+		</class>
+	</package>
+</jdo>

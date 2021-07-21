@@ -28,21 +28,21 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.leftright.LeftBase;
+import org.datanucleus.samples.models.leftright.LeftSub;
+import org.datanucleus.samples.models.leftright.RightBase;
+import org.datanucleus.samples.models.leftright.RightSub;
 import org.datanucleus.samples.models.nightlabs_inheritance.AbstractSub1;
 import org.datanucleus.samples.models.nightlabs_inheritance.Base;
 import org.datanucleus.samples.models.nightlabs_inheritance.BaseID;
 import org.datanucleus.samples.models.nightlabs_inheritance.ConcreteSub1;
 import org.datanucleus.samples.models.nightlabs_inheritance.ConcreteSub2;
-import org.jpox.samples.models.leftright.LeftBase;
-import org.jpox.samples.models.leftright.LeftSub;
-import org.jpox.samples.models.leftright.RightBase;
-import org.jpox.samples.models.leftright.RightSub;
-import org.jpox.samples.models.voting.Category;
-import org.jpox.samples.models.voting.Meeting;
-import org.jpox.samples.models.voting.Topic;
-import org.jpox.samples.models.voting.Vote;
-import org.jpox.samples.one_many.collection.ListHolder;
-import org.jpox.samples.valuegeneration.IdentityGeneratorItemNoField;
+import org.datanucleus.samples.models.voting.Category;
+import org.datanucleus.samples.models.voting.Meeting;
+import org.datanucleus.samples.models.voting.Topic;
+import org.datanucleus.samples.models.voting.Vote;
+import org.datanucleus.samples.one_many.collection.ListHolder;
+import org.datanucleus.samples.valuegeneration.IdentityGeneratorItemNoField;
 
 /**
  * Series of tests for persistence of "complicated" object models.

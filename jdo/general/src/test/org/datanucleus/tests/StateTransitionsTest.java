@@ -31,7 +31,7 @@ import javax.jdo.ObjectState;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Person;
 
 /**
  * Test for basic state transitions.

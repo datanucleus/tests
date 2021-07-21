@@ -24,9 +24,9 @@ import java.sql.PreparedStatement;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
+import org.datanucleus.samples.models.company.Person;
 import org.datanucleus.store.connection.ManagedConnection;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
-import org.jpox.samples.models.company.Person;
 
 /**
  * Tests for the L1, L2 caches.

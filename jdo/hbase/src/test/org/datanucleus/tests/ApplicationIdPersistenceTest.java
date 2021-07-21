@@ -29,11 +29,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.samples.models.company.Organisation;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.types.basic.BasicTypeHolder;
-import org.jpox.samples.types.enums.Colour;
-import org.jpox.samples.types.enums.Palette;
+import org.datanucleus.samples.models.company.Organisation;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.types.basic.BasicTypeHolder;
+import org.datanucleus.samples.types.enums.Colour;
+import org.datanucleus.samples.types.enums.Palette;
 
 /**
  * Application identity persistence tests for HBase datastores.

@@ -41,8 +41,8 @@ import org.datanucleus.samples.annotations.one_many.map_keyclass.MapHolderWithKe
 import org.datanucleus.samples.annotations.one_many.map_keyclass.MapKeyClassTarget;
 import org.datanucleus.samples.annotations.one_one.unidir.Login;
 import org.datanucleus.samples.annotations.one_one.unidir.LoginAccount;
-import org.jpox.samples.one_many.unidir_2.GroupMember;
-import org.jpox.samples.one_many.unidir_2.UserGroup;
+import org.datanucleus.samples.one_many.unidir_2.GroupMember;
+import org.datanucleus.samples.one_many.unidir_2.UserGroup;
 
 /**
  * Test case for use of JPA relationships in persistence situations.

@@ -25,8 +25,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.jdo.JDOHelper;
 
+import org.datanucleus.samples.types.bufferedimage.BufferedImageHolder;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.jpox.samples.types.bufferedimage.BufferedImageHolder;
 
 public class BufferedImageTest extends JDOPersistenceTestCase
 {
@@ -46,7 +46,7 @@ public class BufferedImageTest extends JDOPersistenceTestCase
     {
         try
         {
-            URL imageURL = getClass().getClassLoader().getResource("org/jpox/samples/types/bufferedimage/DataNucleus_80.jpg");
+            URL imageURL = getClass().getClassLoader().getResource("org/datanucleus/samples/types/bufferedimage/DataNucleus_80.jpg");
             BufferedImage refImage = ImageIO.read(imageURL);
             ByteArrayOutputStream baos = new ByteArrayOutputStream(8192);
             ImageIO.write(refImage, "jpg", baos);

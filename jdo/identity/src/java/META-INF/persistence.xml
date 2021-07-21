@@ -6,14 +6,14 @@
     <!-- Company "unit" -->
     <persistence-unit name="Company">
         <mapping-file>company-mappings.xml</mapping-file>
-        <class>org.jpox.samples.company.Person</class>
-        <class>org.jpox.samples.company.Employee</class>
-        <class>org.jpox.samples.company.Manager</class>
-        <class>org.jpox.samples.company.Department</class>
-        <class>org.jpox.samples.company.Developer</class>
-        <class>org.jpox.samples.company.Account</class>
-        <class>org.jpox.samples.company.Organisation</class>
-        <class>org.jpox.samples.company.Qualification</class>
+        <class>org.datanucleus.samples.company.Person</class>
+        <class>org.datanucleus.samples.company.Employee</class>
+        <class>org.datanucleus.samples.company.Manager</class>
+        <class>org.datanucleus.samples.company.Department</class>
+        <class>org.datanucleus.samples.company.Developer</class>
+        <class>org.datanucleus.samples.company.Account</class>
+        <class>org.datanucleus.samples.company.Organisation</class>
+        <class>org.datanucleus.samples.company.Qualification</class>
         <exclude-unlisted-classes/>
     </persistence-unit>
 </persistence>

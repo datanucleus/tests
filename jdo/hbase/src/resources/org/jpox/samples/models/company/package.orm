@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
 <orm>
-    <package name="org.jpox.samples.models.company">
+    <package name="org.datanucleus.samples.models.company">
         <class name="Person">
             <field name="personNum" column="p:PERSONNUM"/>
             <field name="globalNum" column="g:GLOBALNUM"/>
@@ -17,7 +17,7 @@
             <field name="age" column="AGE"/>
 
             <query name="NumberOfPeople" language="javax.jdo.query.SQL" unique="true" 
-                result-class="org.jpox.samples.resultclass.TableSize">
+                result-class="org.datanucleus.samples.resultclass.TableSize">
                 <![CDATA[
                 SELECT count(*) AS THESIZE FROM PERSON
                 ]]>
@@ -33,7 +33,7 @@
                 ]]>
             </query>
             <query name="PersonDetails" language="javax.jdo.query.SQL" 
-                result-class="org.jpox.samples.models.company.PersonalDetails">
+                result-class="org.datanucleus.samples.models.company.PersonalDetails">
                 <![CDATA[
                 SELECT FIRSTNAME, LASTNAME, AGE FROM PERSON
                 ]]>
@@ -69,12 +69,12 @@
 
             <query name="SalaryBelow12" language="javax.jdo.query.JDOQL">
                 <![CDATA[
-                SELECT FROM org.jpox.samples.models.company.Employee WHERE salary < 12 ORDER BY salary ASCENDING
+                SELECT FROM org.datanucleus.samples.models.company.Employee WHERE salary < 12 ORDER BY salary ASCENDING
                 ]]>
             </query>
             <query name="SerialNoStartsWith" language="javax.jdo.query.JDOQL">
                 <![CDATA[
-                SELECT FROM org.jpox.samples.models.company.Employee WHERE serialNo.startsWith(value) PARAMETERS String value
+                SELECT FROM org.datanucleus.samples.models.company.Employee WHERE serialNo.startsWith(value) PARAMETERS String value
                 ]]>
             </query>
         </class>
@@ -99,13 +99,13 @@
                 ]]>
             </query>
             <query name="DeveloperWithSkillForResult" language="javax.jdo.query.SQL" 
-                result-class="org.jpox.samples.models.company.DeveloperRC">
+                result-class="org.datanucleus.samples.models.company.DeveloperRC">
                 <![CDATA[
                 SELECT PERSONNUM as id, GLOBALNUM, SKILL FROM DEVELOPER WHERE SKILL = ?
                 ]]>
             </query>
             <query name="DeveloperWithSkillUsingJoinForResult" language="javax.jdo.query.SQL" 
-                result-class="org.jpox.samples.models.company.DeveloperRC">
+                result-class="org.datanucleus.samples.models.company.DeveloperRC">
                 <![CDATA[
                 SELECT PERSON.PERSONNUM as id, SKILL, PERSON.PERSONNUM AS PERSONNUM, PERSON.GLOBALNUM AS GLOBALNUM, salary
                 FROM DEVELOPER

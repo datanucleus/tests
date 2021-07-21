@@ -50,42 +50,42 @@ import javax.jdo.Transaction;
 import org.junit.Assert;
 
 import org.datanucleus.PropertyNames;
+import org.datanucleus.samples.inheritance.ABase;
+import org.datanucleus.samples.inheritance.ASub1;
+import org.datanucleus.samples.inheritance.ASub2;
+import org.datanucleus.samples.inheritance.PBase;
+import org.datanucleus.samples.inheritance.PSub1;
+import org.datanucleus.samples.inheritance.PSub2;
+import org.datanucleus.samples.linkedlist.DoubleLink;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Department;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.InsuranceDepartment;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Office;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Qualification;
 import org.datanucleus.samples.models.nullability.NullabilityMandatoryMember;
 import org.datanucleus.samples.models.nullability.NullabilityOptionalMember;
 import org.datanucleus.samples.models.nullability.NullabilityOwner;
+import org.datanucleus.samples.one_many.map.MapHolder;
+import org.datanucleus.samples.one_many.map.MapValueItem;
+import org.datanucleus.samples.one_many.unidir_2.ExpertGroupMember;
+import org.datanucleus.samples.one_many.unidir_2.ModeratedUserGroup;
+import org.datanucleus.samples.one_many.unidir_2.UserGroup;
+import org.datanucleus.samples.one_one.bidir_3.AbstractJournal;
+import org.datanucleus.samples.one_one.bidir_3.ElectronicJournal;
+import org.datanucleus.samples.one_one.bidir_3.PrintJournal;
+import org.datanucleus.samples.persistentinterfaces.ComputerPeripheral;
+import org.datanucleus.samples.persistentinterfaces.Keyboard;
+import org.datanucleus.samples.persistentinterfaces.Mouse;
+import org.datanucleus.samples.reachability.ReachableItem;
+import org.datanucleus.samples.types.basic.BasicTypeHolder;
+import org.datanucleus.samples.types.basic.DateHolder;
 import org.datanucleus.store.StoreManager;
 import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.rdbms.adapter.DatastoreAdapter;
 import org.datanucleus.util.StringUtils;
-import org.jpox.samples.inheritance.ABase;
-import org.jpox.samples.inheritance.ASub1;
-import org.jpox.samples.inheritance.ASub2;
-import org.jpox.samples.inheritance.PBase;
-import org.jpox.samples.inheritance.PSub1;
-import org.jpox.samples.inheritance.PSub2;
-import org.jpox.samples.linkedlist.DoubleLink;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Department;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.InsuranceDepartment;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Office;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Qualification;
-import org.jpox.samples.one_many.map.MapHolder;
-import org.jpox.samples.one_many.map.MapValueItem;
-import org.jpox.samples.one_many.unidir_2.ExpertGroupMember;
-import org.jpox.samples.one_many.unidir_2.ModeratedUserGroup;
-import org.jpox.samples.one_many.unidir_2.UserGroup;
-import org.jpox.samples.one_one.bidir_3.AbstractJournal;
-import org.jpox.samples.one_one.bidir_3.ElectronicJournal;
-import org.jpox.samples.one_one.bidir_3.PrintJournal;
-import org.jpox.samples.persistentinterfaces.ComputerPeripheral;
-import org.jpox.samples.persistentinterfaces.Keyboard;
-import org.jpox.samples.persistentinterfaces.Mouse;
-import org.jpox.samples.reachability.ReachableItem;
-import org.jpox.samples.types.basic.BasicTypeHolder;
-import org.jpox.samples.types.basic.DateHolder;
 
 /**
  * Tests for JDOQL basic operations.
@@ -135,7 +135,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
         // Test checking for an "=" operator which isnt supported in JDOQL (should be "==")
         try
         {
-            Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false),"serialNo = value");
+            Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false),"serialNo = value");
             q.declareParameters("String value");
             q.compile();
             q.closeAll();
@@ -170,7 +170,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             // import, but shouldn't throw an Exception. 
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false),"serialNo.startsWith(value)");
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false),"serialNo.startsWith(value)");
                 q.declareParameters("String value");
                 q.compile();
                 q.closeAll();
@@ -184,8 +184,8 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             // Test of use of wildcard syntax for imports
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Manager.class, false),"((Employee)this).salary > 0");
-                q.declareImports("import org.jpox.samples.*; import org.jpox.samples.models.company.*");
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Manager.class, false),"((Employee)this).salary > 0");
+                q.declareImports("import org.datanucleus.samples.*; import org.datanucleus.samples.models.company.*");
                 q.closeAll();
             }
             catch (Exception e)
@@ -196,9 +196,9 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             // Test of use of imports for parameter types
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
-                q.imports("import org.jpox.samples.*; import org.jpox.samples.models.company.*;")
-                    .parameters("org.jpox.samples.models.company.Employee m")
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
+                q.imports("import org.datanucleus.samples.*; import org.datanucleus.samples.models.company.*;")
+                    .parameters("org.datanucleus.samples.models.company.Employee m")
                     .filter("this.salary > m.salary")
                     .execute(new Employee(1,"","","",0,""));
                 q.closeAll();
@@ -212,8 +212,8 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             // Test for use of ??
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
-                q.imports("import org.jpox.samples.models.company.*;")
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
+                q.imports("import org.datanucleus.samples.models.company.*;")
                     .filter("this.salary > 0")
                     .compile();
                 q.closeAll();
@@ -341,7 +341,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             tx.begin();
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 HashSet results = new HashSet((Collection) q.execute());
                 Collection resultIds = new HashSet();
                 Iterator iter = results.iterator();
@@ -363,7 +363,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 Collection candidates = new HashSet();
                 candidates.addAll(pm.getObjectsById(warnerEmployeeIds));
 
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class, candidates);
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class, candidates);
                 HashSet results = new HashSet((Collection) q.execute());
                 Collection resultIds = new HashSet();
                 Iterator iter = results.iterator();
@@ -382,7 +382,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class, (Collection) null);
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class, (Collection) null);
                 HashSet results = new HashSet((Collection) q.execute());
                 Collection resultIds = new HashSet();
                 Iterator iter = results.iterator();
@@ -401,7 +401,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class);
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class);
                 q.setCandidates((Collection) null);
                 HashSet results = new HashSet((Collection) q.execute());
                 Collection resultIds = new HashSet();
@@ -421,7 +421,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class, new HashSet());
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class, new HashSet());
                 HashSet results = new HashSet((Collection) q.execute());
                 assertEquals("Number of elements is wrong", 0, results.size());
                 q.closeAll();
@@ -433,7 +433,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class);
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class);
                 q.setCandidates(new HashSet());
                 HashSet results = new HashSet((Collection) q.execute());
                 assertEquals("Number of elements is wrong", 0, results.size());
@@ -446,7 +446,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class);
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class);
                 q.setCandidates(new HashSet());
                 q.setCandidates((Collection) null); // Replaces collection with null, so all candidates
                 HashSet results = new HashSet((Collection) q.execute());
@@ -467,7 +467,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class);
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class);
                 q.setCandidates((Extent) null);
                 HashSet results = new HashSet((Collection) q.execute());
                 Collection resultIds = new HashSet();
@@ -490,7 +490,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 Collection candidates = new HashSet();
                 candidates.addAll(pm.getObjectsById(warnerEmployeeIds));
 
-                Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class, candidates, "salary > 10");
+                Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class, candidates, "salary > 10");
                 HashSet results = new HashSet((Collection) q.execute());
                 Collection resultIds = new HashSet();
                 Iterator iter = results.iterator();
@@ -696,11 +696,11 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 Query q =
-                  pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, true), "serialNo.trim() == \"serial 1\"");
+                  pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, true), "serialNo.trim() == \"serial 1\"");
                 HashSet results = new HashSet((Collection) q.execute());
                 resultA = results.iterator().next();
                 q.closeAll();
-                q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, true), "serialNo.trim() == \"serial 1\"");
+                q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, true), "serialNo.trim() == \"serial 1\"");
                 results = new HashSet((Collection) q.execute());
                 resultB = results.iterator().next();
                 q.closeAll();
@@ -838,7 +838,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             tx.begin();
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setFilter("emailAddress.indexOf(\"@\") >= 0");
                 HashSet results = new HashSet((Collection) q.execute());
                 assertEquals("received: " + results, 7, results.size());
@@ -851,7 +851,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setFilter("emailAddress.indexOf(\"woodpecker\") == 6");
                 HashSet results = new HashSet((Collection)q.execute());
                 assertEquals("received: " + results, 1, results.size());
@@ -864,7 +864,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
             try
             {
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setFilter("emailAddress.indexOf(\"wood\",7) >= 0");
                 HashSet results = new HashSet((Collection) q.execute());
                 assertEquals("received: " + results, 0, results.size());
@@ -922,35 +922,35 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 try
                 {
-                    Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
-                    q.setFilter("firstName == org.jpox.samples.models.company.Employee.FIRSTNAME");
+                    Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
+                    q.setFilter("firstName == org.datanucleus.samples.models.company.Employee.FIRSTNAME");
                     HashSet results = new HashSet((Collection) q.execute());
                     assertEquals("received: " + results, 1, results.size());
-                    assertEquals(org.jpox.samples.models.company.Employee.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
+                    assertEquals(org.datanucleus.samples.models.company.Employee.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
                     q.closeAll();
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
-                    q.setFilter("firstName == org.jpox.samples.models.company.Person.FIRSTNAME");
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
+                    q.setFilter("firstName == org.datanucleus.samples.models.company.Person.FIRSTNAME");
                     results = new HashSet((Collection) q.execute());
                     assertEquals("received: " + results, 1, results.size());
-                    assertEquals(org.jpox.samples.models.company.Person.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
+                    assertEquals(org.datanucleus.samples.models.company.Person.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
                     q.closeAll();
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("firstName == Person.FIRSTNAME");
                     results = new HashSet((Collection) q.execute());
                     assertEquals("received: " + results, 1, results.size());
-                    assertEquals(org.jpox.samples.models.company.Person.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
+                    assertEquals(org.datanucleus.samples.models.company.Person.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
                     q.closeAll();
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("firstName == Employee.FIRSTNAME");
                     results = new HashSet((Collection) q.execute());
                     assertEquals("received: " + results, 1, results.size());
-                    assertEquals(org.jpox.samples.models.company.Employee.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
+                    assertEquals(org.datanucleus.samples.models.company.Employee.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
                     q.closeAll();
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("firstName == FIRSTNAME");
                     results = new HashSet((Collection) q.execute());
                     assertEquals("received: " + results, 1, results.size());
-                    assertEquals(org.jpox.samples.models.company.Employee.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
+                    assertEquals(org.datanucleus.samples.models.company.Employee.FIRSTNAME,((Person)results.iterator().next()).getFirstName());
                     q.closeAll();
                 }
                 catch (JDOUserException e)
@@ -1005,28 +1005,28 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             try
             {
                 //test 1
-                Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setFilter("emailAddress.startsWith(\"Road\")");
                 HashSet results = new HashSet((Collection) q.execute());
                 assertTrue("received: "+results,results.size()==1);
                 q.closeAll();
                     
                 //test 2
-                q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setFilter("emailAddress.startsWith(firstName)");
                 results = new HashSet((Collection) q.execute());
                 assertTrue("received: "+results,results.size()==6);
                 q.closeAll();
 
                 //test 3
-                q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.setFilter("\"Road Runner\".startsWith(firstName)");
                 results = new HashSet((Collection) q.execute());
                 assertTrue("received: "+results,results.size()==1);
                 q.closeAll();               
 
                 //test 4
-                q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                 q.declareParameters("java.lang.String var1");
                 q.setFilter("var1.startsWith(firstName)");
                 results = new HashSet((Collection) q.execute("Road Runner"));
@@ -1077,7 +1077,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 try
                 {
                     //test 1
-                    Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("lastName.endsWith(\"pecker\")");
                     HashSet results = new HashSet((Collection) q.execute());
                     assertEquals("Received incorrect number of results to String.endsWith()", results.size(), 1);
@@ -1087,14 +1087,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                     q.closeAll();
 
                     //test 2
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("\"Woody Woodpecker\".endsWith(lastName)");
                     results = new HashSet((Collection) q.execute());
                     assertTrue("received: "+results,results.size()==1);
                     q.closeAll();
 
                     //test 3
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.declareParameters("java.lang.String var1");
                     q.setFilter("var1.endsWith(lastName)");
                     results = new HashSet((Collection) q.execute("Woody Woodpecker"));
@@ -1147,7 +1147,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 try
                 {
                     // test 1
-                    Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("firstName.substring(2) == \"ody\"");
                     HashSet results = new HashSet((Collection) q.execute());
                     assertEquals("Received incorrect number of results to String.substring()", results.size(), 1);
@@ -1211,7 +1211,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 try
                 {
                     // test 1
-                    Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("'Bert'.translate('e','a') == firstName");
                     HashSet results = new HashSet((Collection) q.execute());
                     assertEquals("Received incorrect number of results to String.translate()", results.size(), 1);
@@ -1263,7 +1263,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 try
                 {
                     //test 1
-                    Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("lastName.toLowerCase() == \"woodpecker\"");
                     HashSet results = new HashSet((Collection) q.execute());
                     assertEquals("Received incorrect number of results to String.toUpperCase()", results.size(), 1);
@@ -1273,14 +1273,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                     q.closeAll();
 
                     //test 2
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("\"woody\" == firstName.toLowerCase()");
                     results = new HashSet((Collection) q.execute());
                     assertTrue("received: "+results,results.size()==1);
                     q.closeAll();
 
                     //test 3
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.declareParameters("java.lang.String var1");
                     q.setFilter("var1.toLowerCase() == lastName.toLowerCase()");
                     results = new HashSet((Collection) q.execute("WoOdPeCkEr"));
@@ -1333,7 +1333,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 try
                 {
                     //test 1
-                    Query q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    Query q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("lastName.toUpperCase() == \"WOODPECKER\"");
                     HashSet results = new HashSet((Collection) q.execute());
                     assertEquals("Received incorrect number of results to String.toUpperCase()", results.size(), 1);
@@ -1343,14 +1343,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                     q.closeAll();
 
                     //test 2
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.setFilter("\"WOODY\" == firstName.toUpperCase()");
                     results = new HashSet((Collection) q.execute());
                     assertTrue("received: "+results,results.size()==1);
                     q.closeAll();
 
                     //test 3
-                    q = pm.newQuery(pm.getExtent(org.jpox.samples.models.company.Employee.class, false));
+                    q = pm.newQuery(pm.getExtent(org.datanucleus.samples.models.company.Employee.class, false));
                     q.declareParameters("java.lang.String var1");
                     q.setFilter("var1.toUpperCase() == lastName.toUpperCase()");
                     results = new HashSet((Collection) q.execute("WoOdPeCkEr"));
@@ -2468,7 +2468,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 // Simple named query with all in the query tag
                 try
                 {
-                    Query q = pm.newNamedQuery(org.jpox.samples.models.company.Employee.class,"SalaryBelow12");
+                    Query q = pm.newNamedQuery(org.datanucleus.samples.models.company.Employee.class,"SalaryBelow12");
                     Collection results=(Collection)q.execute();
                     assertTrue("Named Query \"SalaryBelow12\" returned an incorrect number of Employees : expected 2 but returned " + results.size(),results.size() == 2);
                     q.closeAll();
@@ -2481,7 +2481,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 // Named query with filter and declare tags
                 try
                 {
-                    Query q = pm.newNamedQuery(org.jpox.samples.models.company.Employee.class,"SerialNoStartsWith");
+                    Query q = pm.newNamedQuery(org.datanucleus.samples.models.company.Employee.class,"SerialNoStartsWith");
                     Collection results=(Collection)q.execute("serial");
                     assertTrue("Named Query \"SerialNoStartsWith\" returned an incorrect number of Employees : expected 4 but returned " + results.size(),results.size() == 4);
                     q.closeAll();
@@ -2533,7 +2533,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 try
                 {
-                    Query q = pm.newQuery(org.jpox.samples.models.company.Employee.class);
+                    Query q = pm.newQuery(org.datanucleus.samples.models.company.Employee.class);
                     q.declareImports("import java.lang.String");
                     q.declareParameters("java.lang.String $theFirstName, java.lang.String $theLastName");
                     q.setFilter("firstName == $theFirstName && lastName == $theLastName");
@@ -3087,14 +3087,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 Query q = pm.newQuery(Office.class);
                 q.setFilter("dept.name.equals(\"Finance\") && departments.contains(dept)");
                 q.declareVariables("Department dept");
-                q.declareImports("import org.jpox.samples.models.company.Department");
+                q.declareImports("import org.datanucleus.samples.models.company.Department");
                 List l = new ArrayList((Collection) q.execute());
                 assertEquals(1,l.size());
 
                 q = pm.newQuery(Office.class);
                 q.setFilter("dept.name.equals(\"Sales\") && departments.contains(dept)");
                 q.declareVariables("Department dept");
-                q.declareImports("import org.jpox.samples.models.company.Department");
+                q.declareImports("import org.datanucleus.samples.models.company.Department");
                 q.setOrdering("roomName ascending");
                 l = new ArrayList((Collection) q.execute());
                 assertEquals(2,l.size());
@@ -3148,7 +3148,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 Query q = pm.newQuery(Manager.class);
                 Collection c = q.filter("emp.lastName == \"WakesUp2\" && this.subordinates.contains(emp)")
-                        .variables("Employee emp").imports("import org.jpox.samples.models.company.Employee")
+                        .variables("Employee emp").imports("import org.datanucleus.samples.models.company.Employee")
                         .executeList();
                 assertEquals(1, c.size());
                 assertEquals(((Manager)c.iterator().next()).getFirstName(),"Bart");
@@ -3199,7 +3199,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 Query q = pm.newQuery(pm.getExtent(UserGroup.class, true));
                 Collection c = q.filter("this.members.contains(mem) && mem.name == \"Craig Russell\"")
-                     .variables("ExpertGroupMember mem").imports("import org.jpox.samples.one_many.unidir_2.ExpertGroupMember")
+                     .variables("ExpertGroupMember mem").imports("import org.datanucleus.samples.one_many.unidir_2.ExpertGroupMember")
                      .executeList();
                 assertEquals(1, c.size());
                 assertEquals(((UserGroup)c.iterator().next()).getName(), "JDO Expert Group");
@@ -3251,7 +3251,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 Query q = pm.newQuery(Manager.class);
                 Collection c = q.filter("this.subordinates.contains(emp) && emp.lastName == \"WakesUp2\" ")
-                        .variables("Employee emp").imports("import org.jpox.samples.models.company.Employee")
+                        .variables("Employee emp").imports("import org.datanucleus.samples.models.company.Employee")
                         .executeList();
                 assertEquals(1, c.size());
                 assertEquals(((Manager)c.iterator().next()).getFirstName(),"Bart");
@@ -3302,7 +3302,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 tx.begin();
                 Query q = pm.newQuery(pm.getExtent(UserGroup.class,true));
                 Collection c = q.filter("(mem.name == \"Craig Russell\") && this.members.contains(mem)")
-                        .variables("ExpertGroupMember mem").imports("import org.jpox.samples.one_many.unidir_2.ExpertGroupMember")
+                        .variables("ExpertGroupMember mem").imports("import org.datanucleus.samples.one_many.unidir_2.ExpertGroupMember")
                         .executeList();
                 assertEquals(1, c.size());
                 assertEquals(((UserGroup)c.iterator().next()).getName(), "JDO Expert Group");
@@ -3701,12 +3701,12 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
 
                 tx.begin();
                 Query q = pm.newQuery(Qualification.class);
-                Collection c = q.filter("((Employee)person).serialNo == \"serial 3\"").imports("import org.jpox.samples.models.company.Employee").executeList();
+                Collection c = q.filter("((Employee)person).serialNo == \"serial 3\"").imports("import org.datanucleus.samples.models.company.Employee").executeList();
                 assertEquals(1, c.size());
                 assertEquals("q1", ((Qualification) c.iterator().next()).getName());
 
                 q = pm.newQuery(Qualification.class);
-                c = q.filter("((Manager)person).serialNo == \"serial 4\"").imports("import org.jpox.samples.models.company.Employee").executeList();
+                c = q.filter("((Manager)person).serialNo == \"serial 4\"").imports("import org.datanucleus.samples.models.company.Employee").executeList();
                 assertEquals(1, c.size());
                 assertEquals("q2", ((Qualification) c.iterator().next()).getName());
 
@@ -4985,14 +4985,14 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 Query q = pm.newQuery(Office.class);
                 q.setFilter("dept.name.equals(\"Finance\") && departments.contains(dept)");
                 q.declareVariables("Department dept");
-                q.declareImports("import org.jpox.samples.models.company.Department");
+                q.declareImports("import org.datanucleus.samples.models.company.Department");
                 List l = new ArrayList((Collection) q.execute());
                 assertEquals(1,l.size());
 
                 q = pm.newQuery(Office.class);
                 q.setFilter("dept.name.equals(\"Sales\") && departments.contains(dept)");
                 q.declareVariables("Department dept");
-                q.declareImports("import org.jpox.samples.models.company.Department");
+                q.declareImports("import org.datanucleus.samples.models.company.Department");
                 q.setOrdering("roomName.substring(0,10) ascending, description ascending");
                 l = new ArrayList((Collection) q.execute());
                 assertEquals(2,l.size());
@@ -5319,38 +5319,38 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
                 MapValueItem value3 = (MapValueItem)pm.getObjectById(idValue3);
 
                 //check map.get -> object expression == object literal
-                Query q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 1\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value1);
+                Query q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 1\") == w").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value1);
                 Collection c = q.executeList();
                 Assert.assertEquals(1, c.size());
                 
                 Assert.assertEquals(idHolder1, JDOHelper.getObjectId(c.iterator().next()));
-                q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 3\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                q = pm.newQuery(MapHolder.class,"this.joinMapNonPC.get(\"Item 3\") == w").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value3);
                 c = q.executeList();
                 Assert.assertEquals(2, c.size());
                 
-                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 1\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value2);
+                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 1\") == w").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value2);
                 c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
-                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 4\") == w").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                q = pm.newQuery(MapHolder.class, "this.joinMapNonPC.get(\"Item 4\") == w").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value3);
                 c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
                 //check object literal == map.get -> object expression
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value1);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value1);
                 c = q.executeList();
                 Assert.assertEquals(1, c.size());
                 Assert.assertEquals(idHolder1, JDOHelper.getObjectId(c.iterator().next()));
 
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 3\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 3\")").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value3);
                 c = q.executeList();
                 Assert.assertEquals(2, c.size());
 
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value2);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 1\")").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value2);
                 c = q.executeList();
                 Assert.assertEquals(0, c.size());
 
-                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 4\")").parameters("org.jpox.samples.one_many.map.MapValueItem w").setParameters(value3);
+                q = pm.newQuery(MapHolder.class, "w == this.joinMapNonPC.get(\"Item 4\")").parameters("org.datanucleus.samples.one_many.map.MapValueItem w").setParameters(value3);
                 c = q.executeList();
                 Assert.assertEquals(0, c.size());
 

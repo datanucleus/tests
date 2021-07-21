@@ -26,19 +26,19 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.datanucleus.PropertyNames;
-import org.jpox.samples.interfaces.ShapeHolder;
-import org.jpox.samples.interfaces.ShapeHolder2;
-import org.jpox.samples.interfaces.Square;
-import org.jpox.samples.models.company.CompanyHelper;
-import org.jpox.samples.models.company.Employee;
-import org.jpox.samples.models.company.Manager;
-import org.jpox.samples.models.company.Organisation;
-import org.jpox.samples.models.company.Person;
-import org.jpox.samples.models.company.Qualification;
-import org.jpox.samples.one_one.bidir.Boiler;
-import org.jpox.samples.one_one.bidir.Timer;
-import org.jpox.samples.reachability.ReachableHolder;
-import org.jpox.samples.reachability.ReachableItem;
+import org.datanucleus.samples.interfaces.ShapeHolder;
+import org.datanucleus.samples.interfaces.ShapeHolder2;
+import org.datanucleus.samples.interfaces.Square;
+import org.datanucleus.samples.models.company.CompanyHelper;
+import org.datanucleus.samples.models.company.Employee;
+import org.datanucleus.samples.models.company.Manager;
+import org.datanucleus.samples.models.company.Organisation;
+import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.company.Qualification;
+import org.datanucleus.samples.one_one.bidir.Boiler;
+import org.datanucleus.samples.one_one.bidir.Timer;
+import org.datanucleus.samples.reachability.ReachableHolder;
+import org.datanucleus.samples.reachability.ReachableItem;
 
 /**
  * Series of tests for "persistence-by-reachability".
