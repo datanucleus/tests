@@ -170,8 +170,7 @@ public class SequenceTest extends JDOPersistenceTestCase
         {
             long id1 = seq.nextValue();
             long id2 = seq.nextValue();
-            assertTrue("The ids obtained from a factory sequence were not different!",
-                id1 != id2);
+            assertTrue("The ids obtained from a factory sequence were not different!", id1 != id2);
         }
         catch (Exception e)
         {
@@ -180,30 +179,4 @@ public class SequenceTest extends JDOPersistenceTestCase
 
         pm.close();
     }
-
-    /**
-     * Test using the simple sequence factory included in the JDO2 API jar.
-     * TODO Enable this if the JDO2 API jar ever includes the proposed sequence.
-     * @throws Exception
-     */
-    /*public void testJDO2SimpleSequenceFactory() 
-    throws Exception
-    {
-        PersistenceManager pm = pmf.getPersistenceManager();
-
-        Sequence seq = pm.getSequence("org.datanucleus.samples.store.JDO2SimpleSequenceFactory");
-        try
-        {
-            long id1 = seq.nextValue();
-            long id2 = seq.nextValue();
-            assertTrue("The ids obtained from a factory sequence were not different!",
-                id1 != id2);
-        }
-        catch (Exception e)
-        {
-            fail("Attempt to retrieve the ids of a factory sequence failed : " + e.getMessage());
-        }
-
-        pm.close();
-    }*/
 }

@@ -82,7 +82,6 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         }
         catch (NucleusUserException ne)
         {
-            // TODO Debatable if this should throw a JDOUserException since the "notaField" is not bound, nor typed
             NucleusLogger.QUERY.error("Exception thrown during compilation", ne);
             fail("compilation of filter with valid field threw exception : " + ne.getMessage());
         }
@@ -115,7 +114,6 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         }
         catch (NucleusUserException ne)
         {
-            // TODO Debatable if this should throw a JDOUserException since the "notaField" is not bound, nor typed
             NucleusLogger.QUERY.error("Exception thrown during compilation", ne);
             fail("compilation of filter with valid field threw exception : " + ne.getMessage());
         }
@@ -148,7 +146,6 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         }
         catch (NucleusUserException ne)
         {
-            // TODO Debatable if this should throw a JDOUserException since the "notaField" is not bound, nor typed
             NucleusLogger.QUERY.error("Exception thrown during compilation", ne);
             fail("compilation of filter with valid field threw exception : " + ne.getMessage());
         }
@@ -218,8 +215,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, rightExpr2.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "price", rightExpr2.getId());
         Literal leftExpr2 = (Literal)dyExpr.getLeft();
-        // TODO Why BigDecimal and not Double??
-        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof Number);
+        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof Float);
         assertEquals("Compiled right expression literal has incorrect value", 100.0, ((Number)leftExpr2.getLiteral()).longValue(), 0.1);
     }
 
@@ -269,8 +265,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, rightExpr2.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "price", rightExpr2.getId());
         Literal leftExpr2 = (Literal)dyExpr2.getLeft();
-        // TODO Why BigDecimal and not Double??
-        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof Number);
+        assertTrue("Compiled right expression literal is of incorrect type", leftExpr2.getLiteral() instanceof Float);
         assertEquals("Compiled right expression literal has incorrect value", 100.0, ((Number)leftExpr2.getLiteral()).longValue(), 0.1);
     }
 
@@ -328,8 +323,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, rightExpr1b.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "price", rightExpr1b.getId());
         Literal leftExpr1b = (Literal)dyExpr1b.getLeft();
-        // TODO Why BigDecimal and not Double??
-        assertTrue("Compiled right expression literal is of incorrect type", leftExpr1b.getLiteral() instanceof Number);
+        assertTrue("Compiled right expression literal is of incorrect type", leftExpr1b.getLiteral() instanceof Float);
         assertEquals("Compiled right expression literal has incorrect value", 100.0, ((Number)leftExpr1b.getLiteral()).longValue(), 0.1);
 
         assertTrue("Compiled right(left) expression should be DyadicExpression but isnt", dyExpr2.getLeft() instanceof DyadicExpression);
@@ -356,7 +350,7 @@ public class JDOQLCompilerTest extends JDOPersistenceTestCase
         assertEquals("Compiled left expression has incorrect number of tuples", 1, leftExpr2b.getTuples().size());
         assertEquals("Compiled left expression 'id' is incorrect", "price", leftExpr2b.getId());
         Literal rightExpr2b = (Literal)dyExpr2b.getRight();
-        assertTrue("Compiled right expression literal is of incorrect type", rightExpr2b.getLiteral() instanceof Number);
+        assertTrue("Compiled right expression literal is of incorrect type", rightExpr2b.getLiteral() instanceof Integer);
         assertEquals("Compiled right expression literal has incorrect value", 95.0, ((Number)rightExpr2b.getLiteral()).longValue(), 0.1);
     }
 
@@ -835,7 +829,6 @@ LOG.info(">> expr=" + dyExpr);
         }
         catch (NucleusUserException ne)
         {
-            // TODO Debatable if this should throw a JDOUserException since the "notaField" is not bound, nor typed
             NucleusLogger.QUERY.error("Exception thrown during compilation", ne);
             fail("compilation of filter with valid field threw exception : " + ne.getMessage());
         }
@@ -923,7 +916,6 @@ LOG.info(">> expr=" + dyExpr);
         }
         catch (NucleusUserException ne)
         {
-            // TODO Debatable if this should throw a JDOUserException since the "notaField" is not bound, nor typed
             NucleusLogger.QUERY.error("Exception thrown during compilation", ne);
             fail("compilation of filter with valid field threw exception : " + ne.getMessage());
         }

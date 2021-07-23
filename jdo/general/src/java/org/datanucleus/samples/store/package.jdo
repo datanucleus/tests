@@ -102,6 +102,5 @@
         <sequence name="ProductSequence" datastore-sequence="PRODUCT_SEQ" strategy="contiguous"/>
         <sequence name="ProductSequenceNontrans" datastore-sequence="PRODUCT_SEQ_NONTRANS" strategy="nontransactional"/>
         <sequence name="ProductSequenceFactory" strategy="nontransactional" factory-class="org.datanucleus.samples.store.SimpleSequenceFactory"/>
-        <sequence name="JDO2SimpleSequenceFactory" strategy="nontransactional" factory-class="javax.jdo.datastore.SimpleSequenceFactory"/>
     </package>
 </jdo>

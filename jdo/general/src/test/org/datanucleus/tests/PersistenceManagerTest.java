@@ -23,10 +23,6 @@ package org.datanucleus.tests;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -49,7 +45,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import javax.jdo.datastore.JDOConnection;
 import javax.jdo.identity.LongIdentity;
 
 import org.junit.Assert;
@@ -3889,124 +3884,12 @@ public class PersistenceManagerTest extends JDOPersistenceTestCase
 
     /**
      * Test for access to the JDO connection using its JDO interface acccessor.
-     * TODO parts of this are RDBMS-specific currently
+     * This is now part of jdo.rdbms tests since is RDBMS specific.
      */
-    public void testJDOConnection()
-    {
-        if (rdbmsVendorID == null)
-        {
-            // This is not an RDBMS-based datastore so omit
-            return;
-        }
-
-        PersistenceManager pm = pmf.getPersistenceManager();
-        Transaction tx = pm.currentTransaction();
-        JDOConnection jdoConn = null;
-        try
-        {
-            // test normal transactional usage
-            tx.begin();
-            jdoConn = pm.getDataStoreConnection();
-            Connection sqlConn = (Connection) jdoConn;
-            try
-            {
-                sqlConn.close();
-                tx.commit();
-            }
-            catch (JDOUserException e)
-            {
-                fail("not expected JDOUserException");
-            }
-            catch (SQLException e)
-            {
-                fail("not expected SQLException");
-            }
-            assertFalse("tx should not be active", tx.isActive());
-
-            // test commit with datastore txn and no close
-            tx.begin();
-            jdoConn = pm.getDataStoreConnection();
-            try
-            {
-                tx.commit();
-                fail("expected JDOUserException");
-            }
-            catch (JDOUserException e)
-            {
-            }
-            assertTrue("tx should be active", tx.isActive());
-
-            try
-            {
-                tx.rollback();
-                fail("expected JDOUserException");
-            }
-            catch(JDOUserException e)
-            {
-            }
-            assertTrue("tx should be active", tx.isActive());
-
-            sqlConn = (Connection) jdoConn;
-            try
-            {
-                sqlConn.close();
-            }
-            catch (SQLException e)
-            {
-                LOG.error(">> Exception thrown in test", e);
-            }
-            tx.commit();
-
-            // test commit with optimistic txn and no close
-            tx.setOptimistic(true);
-            tx.begin();
-            jdoConn = pm.getDataStoreConnection();
-            try
-            {
-                tx.commit();
-                fail("expected JDOUserException");
-            }
-            catch (JDOUserException e)
-            {
-                //expected
-                jdoConn.close();
-            }
-            assertTrue("tx should be active", pm.currentTransaction().isActive());
-            tx.rollback();
-
-            // test non-transactional usage
-            for (int i=0;i<2;i++)
-            {
-                jdoConn = pm.getDataStoreConnection();
-                try
-                {
-                    Connection c = (Connection) jdoConn.getNativeConnection();
-                    try (PreparedStatement stmt = c.prepareStatement("select 1")) 
-                    {
-                        try (ResultSet rs = stmt.executeQuery()) 
-                        {
-                            if (rs.next()) 
-                            {
-                                LOG.debug("Query OK");
-                            }
-                        }
-                    }
-                }
-                catch (SQLException sqle)
-                {
-                    LOG.error(">> Exception thrown in test", sqle);
-                }
-                finally
-                {
-                    jdoConn.close();
-                }
-            }
-        }
-        finally
-        {
-            pm.close();
-        }
-    }
+//    public void testJDOConnection()
+//    {
+//        
+//    }
 
     /**
      * Tests that objects can be added to a Collection owned by a persistent object made transient.
