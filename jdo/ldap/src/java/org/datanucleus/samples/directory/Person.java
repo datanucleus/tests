@@ -21,14 +21,11 @@ package org.datanucleus.samples.directory;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringTokenizer;
-
-import javax.jdo.JDOHelper;
 
 /**
  * Person in a company.
- *
- * @version $Revision: 1.4 $
  */
 public class Person implements Cloneable, Serializable
 {
@@ -155,32 +152,31 @@ public class Person implements Cloneable, Serializable
 
 	public boolean compareTo(Object obj)
 	{
-        // TODO Use globalNum here too ?
-		Person p = (Person)obj;
-		return bestFriend == p.bestFriend &&
-            firstName.equals(p.firstName) &&
-            lastName.equals(p.lastName) && 
-            emailAddress.equals(p.emailAddress) && 
-            personNum == p.personNum;
+        return this.equals(obj);
 	}
 
 	public int hashCode()
     {
-	    // TODO Remove this nonsense. You cannot depend on a persistent process for your hashcode
-	    Object id = JDOHelper.getObjectId(this);
-        return id == null ? super.hashCode() : id.hashCode();
+        return Objects.hash(getPersonNum());
     }
 
     public boolean equals(Object o)
     {
-        if (o == this)
+        if (this == o)
         {
             return true;
         }
+        if (o == null)
+        {
+            return false;
+        }
+        if (getClass() != o.getClass())
+        {
+            return false;
+        }
+        Person other = (Person)o;
 
-        // TODO Remove this nonsense. You cannot depend on a persistent process for your hashcode
-        Object id = JDOHelper.getObjectId(this);
-        return id == null ? super.equals(o) : id.equals(JDOHelper.getObjectId(o));
+        return Objects.equals(getPersonNum(), other.getPersonNum());
     }
 
     public String toString()

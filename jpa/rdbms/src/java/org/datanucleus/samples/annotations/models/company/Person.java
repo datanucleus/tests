@@ -182,13 +182,7 @@ public class Person implements Cloneable, Serializable
 
 	public boolean compareTo(Object obj)
 	{
-        // TODO Use globalNum here too ?
-		Person p = (Person)obj;
-		return bestFriend == p.bestFriend &&
-            firstName.equals(p.firstName) &&
-            lastName.equals(p.lastName) && 
-            emailAddress.equals(p.emailAddress) && 
-            personNum == p.personNum;
+        return this.equals(obj);
 	}
 
     public String toString()
