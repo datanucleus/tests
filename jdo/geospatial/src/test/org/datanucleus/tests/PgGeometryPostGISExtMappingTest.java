@@ -159,4 +159,55 @@ public class PgGeometryPostGISExtMappingTest extends JDOPersistenceTestCase
         }
     }
 
+    public void testGeometryCollectionMMapping() throws SQLException
+    {
+        if (!runTestsForDatastore())
+        {
+            return;
+        }
+
+        SampleGeometryCollectionM sampleGeometryCollection;
+        SampleGeometryCollectionM sampleGeometryCollection_read;
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        Object id = null;
+        try
+        {
+            tx.begin();
+            sampleGeometryCollection = new SampleGeometryCollectionM(
+                    7201,
+                    "Collection of geometries with measure",
+                    new GeometryCollection(
+                            "SRID=-1;GEOMETRYCOLLECTIONM(POINTM(10 10 100),LINESTRINGM(0 50 100, 100 50 100),POLYGONM((25 25 100,75 25 100,75 75 100,25 75 100,25 25 100),(45 45 100,55 45 100,55 55 100,45 55 100,45 45 100)))"));
+            pm.makePersistent(sampleGeometryCollection);
+            id = JDOHelper.getObjectId(sampleGeometryCollection);
+            sampleGeometryCollection = (SampleGeometryCollectionM) pm.detachCopy(sampleGeometryCollection);
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            sampleGeometryCollection_read = (SampleGeometryCollectionM) pm.getObjectById(id, true);
+            assertEquals(sampleGeometryCollection, sampleGeometryCollection_read);
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+    }
 }

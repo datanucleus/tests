@@ -40,9 +40,7 @@ import org.datanucleus.tests.annotations.Datastore;
 import org.datanucleus.util.StringUtils;
 
 /**
- * Series of tests for JGeometry spatial functions. Run for Oracle only
- * currently.
- * @version $Revision: 1.2 $
+ * Series of tests for JGeometry spatial functions. Run for Oracle only currently.
  */
 @Datastore(ORACLE)
 public class JGeometrySpatialTest extends JDOPersistenceTestCase
