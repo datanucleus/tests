@@ -15,7 +15,7 @@
         <skipCoverage>true</skipCoverage>
 
         <!-- SET RANGES OF VERSIONS OF DN JARS WE ARE TESTING IN ALL TESTS -->
-        <javax.jdo.min.version>3.2.0-m9</javax.jdo.min.version>
+        <javax.jdo.min.version>3.2.0-release</javax.jdo.min.version>
         <javax.jdo.max.version>3.2.99</javax.jdo.max.version>
         <javax.persistence.min.version>2.2.1</javax.persistence.min.version>
         <javax.persistence.max.version>2.2.99</javax.persistence.max.version>
