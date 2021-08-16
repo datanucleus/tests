@@ -94,6 +94,7 @@ public class MultitenancyTest extends JDOPersistenceTestCase
                 }
                 pm1.close();
             }
+            pmfTenant1.getDataStoreCache().evictAll();
 
             // Persist object for second tenant
             PersistenceManager pm2 = pmfTenant2.getPersistenceManager();
@@ -122,6 +123,7 @@ public class MultitenancyTest extends JDOPersistenceTestCase
                 }
                 pm2.close();
             }
+            pmfTenant2.getDataStoreCache().evictAll();
 
             // Retrieve all objects for first tenant
             pm1 = pmfTenant1.getPersistenceManager();
@@ -205,10 +207,15 @@ public class MultitenancyTest extends JDOPersistenceTestCase
     // TODO
 
     /**
-     * Test tenantReadIds specification via persistence property
+     * Test tenantReadIds specification via persistence property for those datastores that support it.
      */
     public void testTenantIdWithReadIds()
     {
+        if (rdbmsVendorID == null)
+        {
+            return; // Only applicable to RDBMS since no other datastore supports tenantReadIds
+        }
+
         Properties userProps = new Properties();
         userProps.setProperty(PropertyNames.PROPERTY_MAPPING_TENANT_ID, "MyID");
         userProps.setProperty(PropertyNames.PROPERTY_MAPPING_TENANT_READ_IDS, "MyID,MyID2");
