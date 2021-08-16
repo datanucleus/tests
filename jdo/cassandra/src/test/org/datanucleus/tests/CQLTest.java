@@ -122,7 +122,8 @@ public class CQLTest extends JDOPersistenceTestCase
         }
         catch (Exception e)
         {
-            fail("Failed to retrieve Song from Cassandra Store");
+            LOG.error(">> Exception thrown from CQL query", e);
+            fail("Failed to retrieve Song from Cassandra Store : " + e.getMessage());
         }
         finally
         {
@@ -156,7 +157,8 @@ public class CQLTest extends JDOPersistenceTestCase
         }
         catch (Exception e)
         {
-            fail("Failed to retrieve Song from Cassandra Store");
+            LOG.error(">> Exception thrown from CQL query", e);
+            fail("Failed to retrieve Song from Cassandra Store : " + e.getMessage());
         }
         finally
         {
@@ -190,7 +192,8 @@ public class CQLTest extends JDOPersistenceTestCase
         }
         catch (Exception e)
         {
-            fail("Failed to retrieve Song from Cassandra Store");
+            LOG.error(">> Exception thrown from CQL query", e);
+            fail("Failed to retrieve Song from Cassandra Store : " + e.getMessage());
         }
         finally
         {
