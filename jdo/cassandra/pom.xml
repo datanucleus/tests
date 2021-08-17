@@ -16,7 +16,7 @@
         ]]></description>
    
     <properties>
-        <cassandra.version>3.0.2</cassandra.version>
+        <datastax.driver.version>4.13.0</datastax.driver.version>
     </properties>
 
     <!-- Software Dependencies -->
@@ -37,9 +37,9 @@
             <version>[${cassandra.min.version}, ${cassandra.max.version})</version>
         </dependency>
         <dependency>
-            <groupId>com.datastax.cassandra</groupId>
-            <artifactId>cassandra-driver-core</artifactId>
-            <version>${cassandra.version}</version>
+            <groupId>com.datastax.oss</groupId>
+            <artifactId>java-driver-core</artifactId>
+            <version>${datastax.driver.version}</version>
         </dependency>
     </dependencies>
    
