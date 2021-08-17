@@ -44,6 +44,11 @@ public class BulkFetchTest extends JDOPersistenceTestCase
      */
     public void testArrayJoin()
     {
+        if (rdbmsVendorID == null)
+        {
+            return; // Only applicable to RDBMS since no other datastore supports tenantReadIds
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
@@ -123,6 +128,11 @@ public class BulkFetchTest extends JDOPersistenceTestCase
      */
     public void testCollectionNonPCJoin()
     {
+        if (rdbmsVendorID == null)
+        {
+            return; // Only applicable to RDBMS since no other datastore supports tenantReadIds
+        }
+
         try
         {
             PersistenceManager pm = pmf.getPersistenceManager();
