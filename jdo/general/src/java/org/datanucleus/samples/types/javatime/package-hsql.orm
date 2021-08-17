@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+<orm>
+    <package name="org.datanucleus.samples.types.javatime">
+        <class name="JavaTimeSample1">
+            <field name="dateTime2">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="JavaTimeSample2">
+            <field name="localDate2">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="JavaTimeSample3">
+            <inheritance strategy="new-table"/>
+            <field name="localTime2">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="JavaTimeSample4">
+            <field name="instant2">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="JavaTimeSample5">
+            <field name="monthDay1">
+                <column jdbc-type="DATE"/>
+            </field>
+            <field name="monthDay2">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="JavaTimeSample6">
+            <field name="yearMonth1">
+                <column jdbc-type="DATE"/>
+            </field>
+            <field name="yearMonth2">
+                <column jdbc-type="VARCHAR"/>
+            </field>
+        </class>
+        <class name="JavaTimeSample7"/>
+    </package>
+</orm>

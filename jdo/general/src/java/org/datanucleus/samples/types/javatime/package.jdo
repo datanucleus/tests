@@ -7,53 +7,37 @@
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
             <field name="dateTime1" persistence-modifier="persistent"/>
-            <field name="dateTime2" persistence-modifier="persistent">
-                <column jdbc-type="VARCHAR"/>
-            </field>
+            <field name="dateTime2" persistence-modifier="persistent"/>
         </class>
         <class name="JavaTimeSample2" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
             <field name="localDate1" persistence-modifier="persistent"/>
-            <field name="localDate2" persistence-modifier="persistent">
-                <column jdbc-type="VARCHAR"/>
-            </field>
+            <field name="localDate2" persistence-modifier="persistent"/>
         </class>
         <class name="JavaTimeSample3" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
             <field name="localTime1" persistence-modifier="persistent"/>
-            <field name="localTime2" persistence-modifier="persistent">
-                <column jdbc-type="VARCHAR"/>
-            </field>
+            <field name="localTime2" persistence-modifier="persistent"/>
         </class>
         <class name="JavaTimeSample4" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
             <field name="instant1" persistence-modifier="persistent"/>
-            <field name="instant2" persistence-modifier="persistent">
-                <column jdbc-type="VARCHAR"/>
-            </field>
+            <field name="instant2" persistence-modifier="persistent"/>
         </class>
         <class name="JavaTimeSample5" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
-            <field name="monthDay1" persistence-modifier="persistent">
-                <column jdbc-type="DATE"/>
-            </field>
-            <field name="monthDay2" persistence-modifier="persistent">
-                <column jdbc-type="VARCHAR"/>
-            </field>
+            <field name="monthDay1" persistence-modifier="persistent"/>
+            <field name="monthDay2" persistence-modifier="persistent"/>
         </class>
         <class name="JavaTimeSample6" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
             <field name="id" primary-key="true" persistence-modifier="persistent"/>
-            <field name="yearMonth1" persistence-modifier="persistent">
-                <column jdbc-type="DATE"/>
-            </field>
-            <field name="yearMonth2" persistence-modifier="persistent">
-                <column jdbc-type="VARCHAR"/>
-            </field>
+            <field name="yearMonth1" persistence-modifier="persistent"/>
+            <field name="yearMonth2" persistence-modifier="persistent"/>
         </class>
         <class name="JavaTimeSample7" identity-type="application" detachable="true">
             <inheritance strategy="new-table"/>
