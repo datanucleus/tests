@@ -786,8 +786,8 @@
                 </dependency>
                 <dependency>
                     <groupId>org.mongodb</groupId>
-                    <artifactId>mongo-java-driver</artifactId>
-                    <version>3.8.0</version>
+                    <artifactId>mongodb-driver-legacy</artifactId>
+                    <version>4.3.1</version>
                 </dependency>
             </dependencies>
             <properties>
