@@ -19,7 +19,7 @@ package org.datanucleus.tests;
 
 import java.sql.SQLException;
 
-import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
+import org.datanucleus.store.rdbms.RDBMSStoreManager;
 import org.datanucleus.store.types.geospatial.jdo.SpatialHelper;
 
 public class PgGeometrySpatialHelperTest extends JDOPersistenceTestCase
@@ -38,7 +38,10 @@ public class PgGeometrySpatialHelperTest extends JDOPersistenceTestCase
 
     protected void setUp() throws Exception
     {
-        helper = new SpatialHelper((JDOPersistenceManagerFactory)pmf);
+        if (storeMgr instanceof RDBMSStoreManager)
+        {
+            helper = new SpatialHelper((RDBMSStoreManager)storeMgr);
+        }
         super.setUp();
     }
 

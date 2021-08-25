@@ -18,6 +18,8 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.tests;
 
+import static org.datanucleus.tests.annotations.Datastore.DatastoreKey.RDBMS;
+
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -29,10 +31,12 @@ import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.softdelete.SDAddress;
 import org.datanucleus.samples.softdelete.SDCar;
 import org.datanucleus.samples.softdelete.SDPerson;
+import org.datanucleus.tests.annotations.Datastore;
 
 /**
  * Tests for Soft-Delete.
  */
+@Datastore(RDBMS) // TODO Remove this when we fix the cleanup
 public class SoftDeleteTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
@@ -61,12 +65,6 @@ public class SoftDeleteTest extends JDOPersistenceTestCase
      */
     public void testBasic()
     {
-        if (rdbmsVendorID == null)
-        {
-            // Ignore for non-RDBMS currently until we fix the cleanup
-            return;
-        }
-
         try
         {
             // Create some sample data including relations
@@ -126,6 +124,7 @@ public class SoftDeleteTest extends JDOPersistenceTestCase
                 }
                 pm.close();
             }
+            pmf.getDataStoreCache().evictAll();
 
             // Check getObjectById and query
             pm = pmf.getPersistenceManager();
