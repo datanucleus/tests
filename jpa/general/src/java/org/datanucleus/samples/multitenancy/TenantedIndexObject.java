@@ -1,6 +1,7 @@
 package org.datanucleus.samples.multitenancy;
 
-import org.datanucleus.api.jdo.annotations.MultiTenant;
+
+import org.datanucleus.api.jpa.annotations.MultiTenant;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

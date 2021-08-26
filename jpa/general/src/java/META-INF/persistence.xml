@@ -44,7 +44,7 @@
         <mapping-file>org/datanucleus/samples/ann_xml/one_one/bidir/orm.xml</mapping-file>
         <mapping-file>org/datanucleus/samples/ann_xml/models/company/orm.xml</mapping-file>
 
-<!--        <class>org.datanucleus.samples.multitenancy.TenantedObject</class>-->
+        <class>org.datanucleus.samples.multitenancy.TenantedObject</class>
         <class>org.datanucleus.samples.annotations.embedded.EmbeddedOwner2</class>
         <class>org.datanucleus.samples.annotations.embedded.EmbeddedObject2</class>
         <class>org.datanucleus.samples.annotations.one_many.map_join.MapJoinHolder</class>
