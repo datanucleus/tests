@@ -20,6 +20,7 @@ package org.datanucleus.samples.softdelete;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
 
@@ -29,7 +30,7 @@ import org.datanucleus.api.jdo.annotations.SoftDelete;
  * Person class that supports soft-delete.
  */
 @PersistenceCapable
-@SoftDelete
+@SoftDelete(indexed = "true", columns=@Column(name = "DELETED_RECORD"))
 public class SDPerson
 {
     @PrimaryKey
