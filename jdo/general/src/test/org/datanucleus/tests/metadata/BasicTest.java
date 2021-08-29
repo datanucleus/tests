@@ -480,13 +480,13 @@ public class BasicTest extends JDOPersistenceTestCase
         AbstractClassMetaData cmdD1 = mgr.getMetaDataForClass(D1.class, new ClassLoaderResolverImpl());
         AbstractClassMetaData cmdD2 = mgr.getMetaDataForClass(D2.class, new ClassLoaderResolverImpl());
 
-        assertEquals("identity",cmdD0.getIdentityMetaData().getValueStrategy().toString());
-        assertEquals(cmdD0.getIdentityMetaData().getValueStrategy(),cmdD1.getIdentityMetaData().getValueStrategy());
-        assertEquals(cmdD0.getIdentityMetaData().getValueStrategy(),cmdD2.getIdentityMetaData().getValueStrategy());
+        assertEquals("identity",cmdD0.getDatastoreIdentityMetaData().getValueStrategy().toString());
+        assertEquals(cmdD0.getDatastoreIdentityMetaData().getValueStrategy(),cmdD1.getDatastoreIdentityMetaData().getValueStrategy());
+        assertEquals(cmdD0.getDatastoreIdentityMetaData().getValueStrategy(),cmdD2.getDatastoreIdentityMetaData().getValueStrategy());
 
-        assertEquals("D_ID",cmdD0.getIdentityMetaData().getColumnMetaData().getName());
-        assertEquals(cmdD0.getIdentityMetaData().getColumnMetaData().getName(),cmdD1.getIdentityMetaData().getColumnMetaData().getName());
-        assertEquals(cmdD0.getIdentityMetaData().getColumnMetaData().getName(),cmdD2.getIdentityMetaData().getColumnMetaData().getName());
+        assertEquals("D_ID",cmdD0.getDatastoreIdentityMetaData().getColumnMetaData().getName());
+        assertEquals(cmdD0.getDatastoreIdentityMetaData().getColumnMetaData().getName(),cmdD1.getDatastoreIdentityMetaData().getColumnMetaData().getName());
+        assertEquals(cmdD0.getDatastoreIdentityMetaData().getColumnMetaData().getName(),cmdD2.getDatastoreIdentityMetaData().getColumnMetaData().getName());
     }
     
     /**
