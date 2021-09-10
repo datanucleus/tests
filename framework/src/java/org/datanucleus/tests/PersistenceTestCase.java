@@ -121,15 +121,6 @@ public abstract class PersistenceTestCase
         storeMgr.unmanageAllClasses(new ClassLoaderResolverImpl());
     }
 
-    /**
-     * @deprecated Use {@link #fail(String)} and provide a description
-     */
-    @Deprecated
-    protected final void fail()
-    {
-        Assert.fail();
-    }
-
     protected final void fail(String message)
     {
         Assert.fail(message);
