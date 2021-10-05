@@ -35,7 +35,7 @@ import javax.jdo.metadata.MemberMetadata;
 import javax.jdo.metadata.PackageMetadata;
 import javax.jdo.metadata.TypeMetadata;
 
-import org.datanucleus.api.jdo.metadata.JDOMetadataImpl;
+import org.datanucleus.api.jdo.metadata.api.JDOMetadataImpl;
 import org.datanucleus.metadata.FileMetaData;
 import org.datanucleus.samples.annotations.embedded.Computer;
 import org.datanucleus.samples.annotations.embedded.ComputerCard;
