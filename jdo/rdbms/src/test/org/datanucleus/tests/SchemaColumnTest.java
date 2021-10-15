@@ -122,7 +122,7 @@ public class SchemaColumnTest extends JDOPersistenceTestCase
     {
         Properties props = new Properties();
         props.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_COLUMN_DEFAULT_WHEN_NULL, "false");
-        PersistenceManagerFactory myPMF = getConfigurablePMF(1, props);
+        PersistenceManagerFactory myPMF = getPMF(1, props);
 
         try
         {

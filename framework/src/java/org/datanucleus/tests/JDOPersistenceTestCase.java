@@ -105,17 +105,6 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
     }
 
     /**
-     * Method to return a PMF for the specified datastore number, adding on the user-provided properties. The returned factory can be further configured.
-     * @param number Number of the datastore (equates to a property file in the CLASSPATH)
-     * @param userProps The user properties (null if not required)
-     * @return The PMF
-     */
-    public static PersistenceManagerFactory getConfigurablePMF(int number, Properties userProps)
-    {
-        return new JDOPersistenceManagerFactory(TestHelper.getFactoryProperties(number, userProps));
-    }
-
-    /**
      * Method to return a PMF for the specified datastore number, adding on the user-provided properties
      * @param number Number of the datastore (equates to a property file in the CLASSPATH)
      * @param userProps The user properties (null if not required)
