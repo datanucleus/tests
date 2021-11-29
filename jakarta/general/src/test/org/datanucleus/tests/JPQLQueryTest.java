@@ -679,10 +679,10 @@ public class JPQLQueryTest extends JakartaPersistenceTestCase
                 q.setParameter(2, "Fred");
 
                 Parameter param1 = q.getParameter(1);
-                assertEquals(new Integer(1), param1.getPosition());
+                assertEquals(Integer.valueOf(1), param1.getPosition());
                 assertNull(param1.getName());
                 Parameter param2 = q.getParameter(2);
-                assertEquals(new Integer(2), param2.getPosition());
+                assertEquals(Integer.valueOf(2), param2.getPosition());
                 assertNull(param2.getName());
 
                 List result = q.getResultList();
@@ -866,7 +866,7 @@ public class JPQLQueryTest extends JakartaPersistenceTestCase
                 Query q = em.createQuery("SELECT Object(T) FROM " + Person.class.getName() + " T where T.firstName = :theName");
                 try
                 {
-                    q.setParameter("theName", new Integer(1));
+                    q.setParameter("theName", Integer.valueOf(1));
                 }
                 catch (IllegalArgumentException iae)
                 {
@@ -2003,8 +2003,8 @@ public class JPQLQueryTest extends JakartaPersistenceTestCase
 
                 Query q5 = em.createQuery("SELECT DISTINCT p FROM " + Person.class.getName() + " p WHERE p.personNum IN (:param1)");
                 List<Long> inList = new ArrayList<Long>();
-                inList.add(new Long(101));
-                inList.add(new Long(102));
+                inList.add(Long.valueOf(101));
+                inList.add(Long.valueOf(102));
                 q5.setParameter("param1", inList);
                 result = q5.getResultList();
                 assertEquals(2, result.size());
@@ -3664,7 +3664,7 @@ FROM JPA_AN_MAPJOINHOLDER H
 LEFT OUTER JOIN JPA_AN_MAPJOINHOLDER_MAP2 M2 ON H.ID = M2.MAPJOINHOLDER_ID AND M2.MAP2_KEY = <1>
  */
                 Query q = em.createQuery("SELECT VALUE(m2) FROM MapJoinHolder h LEFT JOIN h.map2 m2 ON KEY(m2) = :key");
-                q.setParameter("key", new Integer(1));
+                q.setParameter("key", Integer.valueOf(1));
                 List results = q.getResultList();
                 assertNotNull(results);
                 assertEquals(1, results.size());
@@ -4204,7 +4204,7 @@ SELECT P."NAME",P.BUDGET FROM JPA_AN_PROJECT P INNER JOIN JPA_AN_ACCOUNT A ON P.
                 {
                     assertEquals(2, row.length);
                     assertEquals("DataNucleus", row[0]);
-                    assertEquals(new Long(1000000), row[1]);
+                    assertEquals(Long.valueOf(1000000), row[1]);
                 }
                 // TODO Add some asserts, or choose a good example for this
 

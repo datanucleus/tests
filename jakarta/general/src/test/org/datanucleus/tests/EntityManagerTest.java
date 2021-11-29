@@ -500,7 +500,7 @@ public class EntityManagerTest extends JakartaPersistenceTestCase
 
                 try
                 {
-                    em.find(Account.class, new Long(123));
+                    em.find(Account.class, Long.valueOf(123));
                 }
                 catch (EntityNotFoundException enfe)
                 {
