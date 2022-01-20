@@ -22,43 +22,43 @@
         <jakarta.persistence.min.version>2.9</jakarta.persistence.min.version>
         <jakarta.persistence.max.version>3.9</jakarta.persistence.max.version>
 
-        <core.min.version>5.9</core.min.version>
+        <core.min.version>6.0.0-m1</core.min.version>
         <core.max.version>6.0.99</core.max.version>
-        <api.jdo.min.version>5.9</api.jdo.min.version>
+        <api.jdo.min.version>6.0.0-m1</api.jdo.min.version>
         <api.jdo.max.version>6.0.99</api.jdo.max.version>
-        <api.jpa.min.version>5.9</api.jpa.min.version>
+        <api.jpa.min.version>6.0.0-m1</api.jpa.min.version>
         <api.jpa.max.version>6.0.99</api.jpa.max.version>
-        <api.jakarta.min.version>5.9</api.jakarta.min.version>
+        <api.jakarta.min.version>6.0.0-m1</api.jakarta.min.version>
         <api.jakarta.max.version>6.0.99</api.jakarta.max.version>
-        <api.rest.min.version>5.9</api.rest.min.version>
+        <api.rest.min.version>6.0.0-m1</api.rest.min.version>
         <api.rest.max.version>6.0.99</api.rest.max.version>
 
-        <rdbms.min.version>5.9</rdbms.min.version>
+        <rdbms.min.version>6.0.0-m1</rdbms.min.version>
         <rdbms.max.version>6.0.99</rdbms.max.version>
-        <cassandra.min.version>5.9</cassandra.min.version>
+        <cassandra.min.version>6.0.0-m1</cassandra.min.version>
         <cassandra.max.version>6.0.99</cassandra.max.version>
-        <mongodb.min.version>5.9</mongodb.min.version>
+        <mongodb.min.version>6.0.0-m1</mongodb.min.version>
         <mongodb.max.version>6.0.99</mongodb.max.version>
-        <hbase.min.version>5.9</hbase.min.version>
+        <hbase.min.version>6.0.0-m1</hbase.min.version>
         <hbase.max.version>6.0.99</hbase.max.version>
-        <neo4j.min.version>5.9</neo4j.min.version>
+        <neo4j.min.version>6.0.0-m1</neo4j.min.version>
         <neo4j.max.version>6.0.99</neo4j.max.version>
-        <excel.min.version>5.9</excel.min.version>
+        <excel.min.version>6.0.0-m1</excel.min.version>
         <excel.max.version>6.0.99</excel.max.version>
-        <odf.min.version>5.9</odf.min.version>
+        <odf.min.version>6.0.0-m1</odf.min.version>
         <odf.max.version>6.0.99</odf.max.version>
-        <json.min.version>5.9</json.min.version>
+        <json.min.version>6.0.0-m1</json.min.version>
         <json.max.version>6.0.99</json.max.version>
-        <ldap.min.version>5.9</ldap.min.version>
+        <ldap.min.version>6.0.0-m1</ldap.min.version>
         <ldap.max.version>6.0.99</ldap.max.version>
-        <xml.min.version>5.9</xml.min.version>
+        <xml.min.version>6.0.0-m1</xml.min.version>
         <xml.max.version>6.0.99</xml.max.version>
 
-        <jodatime.min.version>5.9</jodatime.min.version>
+        <jodatime.min.version>6.0.0-m1</jodatime.min.version>
         <jodatime.max.version>6.0.99</jodatime.max.version>
-        <geospatial.min.version>5.9</geospatial.min.version>
+        <geospatial.min.version>6.0.0-m1</geospatial.min.version>
         <geospatial.max.version>6.0.99</geospatial.max.version>
-        <guava.min.version>5.9</guava.min.version>
+        <guava.min.version>6.0.0-m1</guava.min.version>
         <guava.max.version>6.0.99</guava.max.version>
     </properties>
 
