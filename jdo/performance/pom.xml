@@ -15,18 +15,18 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>javax.jdo</artifactId>
-            <version>[3.2.0-m5, 3.2.99)</version>
+            <version>[3.2.0-release, 3.2.99)</version>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>(5.9, 6.0.99)</version>
+            <version>[6.0.0-m1, 6.0.99)</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>(5.9, 6.0.99)</version>
+            <version>[6.0.0-m1, 6.0.99)</version>
         </dependency>
 
         <dependency>
@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
-            <version>(5.9, 6.0.99)</version>
+            <version>[6.0.0-m1, 6.0.99)</version>
         </dependency>
 
         <!-- Change to the datastore driver required for your datastore -->
