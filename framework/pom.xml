@@ -25,23 +25,23 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>jakarta.persistence</artifactId>
-            <version>(2.9, 3.9)</version>
+            <version>[3.0.0, 3.9)</version>
         </dependency>
 
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>[5.9, 6.0.99)</version>
+            <version>[6.0.0-m1, 6.0.99)</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
-            <version>[5.2.0-release, 6.0.99)</version>
+            <version>[6.0.0-m1, 6.0.99)</version>
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[5.2.0-release, 6.0.99)</version>
+            <version>[6.0.0-m1, 6.0.99)</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
