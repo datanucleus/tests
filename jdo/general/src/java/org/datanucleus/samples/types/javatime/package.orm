@@ -42,4 +42,4 @@
         </class>
         <class name="JavaTimeSample7"/>
     </package>
-</jdo>
+</orm>
