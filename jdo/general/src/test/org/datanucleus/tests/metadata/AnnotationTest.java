@@ -372,7 +372,7 @@ public class AnnotationTest extends JDOPersistenceTestCase
 
         VersionMetaData vermd = cmd1.getVersionMetaData();
         assertNotNull(prefix + "has no VersionMetaData", vermd);
-        assertEquals(prefix + "has incorrect version strategy", "version-number", vermd.getVersionStrategy().toString());
+        assertEquals(prefix + "has incorrect version strategy", "version-number", vermd.getStrategy().toString());
         assertNotNull(prefix + "has incorrect version column info", vermd.getColumnMetaData());
         assertEquals(prefix + "has incorrect version column name", "TRADE_VERSION", vermd.getColumnMetaData().getName());
     }
