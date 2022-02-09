@@ -89,8 +89,11 @@ public class SchemaColumnTest extends JDOPersistenceTestCase
 
                 ClassWithDefaultCols c1 = pm.getObjectById(ClassWithDefaultCols.class, 1);
                 assertNull(c1.getDefaultedNameNull());
-                assertEquals("Name 1", c1.getDefaultedName());
-                assertEquals(Long.valueOf(3), c1.getDefaultedLong());
+                if(!rdbmsVendorID.equals("cloudspanner")) {
+                    // spanner does not allow defaults other than null
+                    assertEquals("Name 1", c1.getDefaultedName());
+                    assertEquals(Long.valueOf(3), c1.getDefaultedLong());
+                }
 
                 tx.commit();
             }

@@ -18,6 +18,7 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -55,7 +56,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
     /**
      * Test of the retrieval of columns.
      */
-    public void testColumnRetrieval()
+    public void testColumnRetrieval() throws SQLException
     {
         addClassesToSchema(new Class[] {SchemaClass1.class, SchemaClass2.class});
 
@@ -64,6 +65,10 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         ClassLoaderResolver clr = storeMgr.getNucleusContext().getClassLoaderResolver(null);
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        if (rdbmsVendorID.equals("cloudspanner")) {
+            // Spanner allows information schema calls only in read-only mode
+            con.setReadOnly(true);
+        }
 
         // Retrieve and check the table for SchemaClass1
         DatastoreClass table1 = databaseMgr.getDatastoreClass(SchemaClass1.class.getName(), clr);
@@ -131,7 +136,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
     /**
      * Test of the retrieval of FKs.
      */
-    public void testForeignKeyRetrieval()
+    public void testForeignKeyRetrieval() throws SQLException
     {
         addClassesToSchema(new Class[] {SchemaClass1.class, SchemaClass2.class});
 
@@ -145,6 +150,10 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        if (rdbmsVendorID.equals("cloudspanner")) {
+            // Spanner allows information schema calls only in read-only mode
+            con.setReadOnly(true);
+        }
         RDBMSTableFKInfo fkInfo = (RDBMSTableFKInfo)handler.getSchemaData(con, "foreign-keys", new Object[] {table1});
 
         // Expecting single FK between SchemaClass1.other and SchemaClass2
@@ -162,7 +171,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
     /**
      * Test of the retrieval of PKs.
      */
-    public void testPrimaryKeyRetrieval()
+    public void testPrimaryKeyRetrieval() throws SQLException
     {
         addClassesToSchema(new Class[] {SchemaClass1.class, SchemaClass2.class});
 
@@ -177,6 +186,10 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        if (rdbmsVendorID.equals("cloudspanner")) {
+            // Spanner allows information schema calls only in read-only mode
+            con.setReadOnly(true);
+        }
         RDBMSTablePKInfo pkInfo1 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", new Object[] {table1});
         RDBMSTablePKInfo pkInfo2 = (RDBMSTablePKInfo)handler.getSchemaData(con, "primary-keys", new Object[] {table2});
 
@@ -200,7 +213,7 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
     /**
      * Test of the retrieval of indices.
      */
-    public void testIndexRetrieval()
+    public void testIndexRetrieval() throws SQLException
     {
         addClassesToSchema(new Class[] {SchemaClass1.class, SchemaClass2.class});
 
@@ -215,10 +228,14 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the indices using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
+        if (rdbmsVendorID.equals("cloudspanner")) {
+            // Spanner allows information schema calls only in read-only mode
+            con.setReadOnly(true);
+        }
 
         RDBMSTableIndexInfo indexInfo = (RDBMSTableIndexInfo)handler.getSchemaData(con, "indices", new Object[] {table1});
         int numIndices = 3;
-        if (rdbmsVendorID.equals("hsql"))
+        if (rdbmsVendorID.equals("hsql") || rdbmsVendorID.equals("cloudspanner"))
         {
             // HSQL will create an index for the FK without asking, and we can't replace it with our own so end up with two
             numIndices = 4;

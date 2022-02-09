@@ -17,16 +17,22 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.models.company;
 
+import java.io.Serializable;
+
 /**
  * Details of a person.
  * Represents a subset of the information available from Person, and so can be used as a 
  * ResultClass for SQL/JDOQL queries.
  */
-public class PersonalDetails
+public class PersonalDetails implements Serializable
 {
     private String firstName;
     private String lastName;
     private int age;
+
+    public PersonalDetails()
+    {
+    }
 
     public PersonalDetails(String first, String last, int age)
     {

@@ -44,6 +44,7 @@ public @interface Datastore
         DERBY,
         SQLSERVER,
         SQLITE,
+        CLOUDSPANNER,
         // Others
         CASSANDRA,
         EXCEL,

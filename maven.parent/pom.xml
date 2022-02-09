@@ -933,6 +933,40 @@
                 <maven.datanucleus.datastore>ldap</maven.datanucleus.datastore>
             </properties>
         </profile>
+
+        <profile>
+            <!-- Use datastore "spanner" -->
+            <id>spanner</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.google.cloud</groupId>
+                    <artifactId>google-cloud-spanner-jdbc</artifactId>
+                    <version>2.4.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-rdbms</artifactId>
+                    <version>${rdbms.min.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.perfmark</groupId>
+                    <artifactId>perfmark-api</artifactId>
+                    <version>0.24.0</version>
+                    <!--            <scope>runtime</scope>-->
+                </dependency>
+                <dependency>
+                    <groupId>io.perfmark</groupId>
+                    <artifactId>perfmark-traceviewer</artifactId>
+                    <version>0.24.0</version>
+                    <!--            <scope>runtime</scope>-->
+                </dependency>
+            </dependencies>
+            <properties>
+                <maven.datanucleus.datastore>cloudspanner</maven.datanucleus.datastore>
+                <!-- To speed up tests  -->
+                <maven.datanucleus.test.skip.reset>false</maven.datanucleus.test.skip.reset>
+            </properties>
+        </profile>
         
     </profiles>
 </project>
