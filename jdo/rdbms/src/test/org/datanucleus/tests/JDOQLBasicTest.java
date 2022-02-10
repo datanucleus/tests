@@ -52,12 +52,12 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
     }
 
     /**
-     * Tests the Analsys.rollup() expression
+     * Tests the SQL_rollup() expression.
      */
-    public void testAnalysisRollup()
+    public void testSqlRollup()
     {
         RDBMSStoreManager srm = (RDBMSStoreManager)storeMgr;
-        if (!srm.getDatastoreAdapter().supportsOption(DatastoreAdapter.ANALYSIS_METHODS))
+        if (srm.getDatastoreAdapter().getSQLMethodClass(null, "SQL_rollup", null) == null)
         {
             // Not supported so it passed :-)
             return;
@@ -94,10 +94,10 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             // TODO This throws an exception about "JDOQL query has result clause PrimaryExpression{roomName} but this is invalid (see JDO spec 14.6.10). When specified with grouping should be aggregate, or grouping expression"
             tx.begin();
             Query q = pm.newQuery(Office.class);
-            q.setGrouping("Analysis.rollup({roomName})");
+            q.setGrouping("SQL_rollup({roomName})");
             q.setOrdering("roomName ascending");
             q.setResult("roomName,count(floor)");
-            
+
             Collection c = (Collection) q.execute();
             assertEquals(4, c.size());
             Iterator it = c.iterator();
@@ -116,7 +116,7 @@ public class JDOQLBasicTest extends JDOPersistenceTestCase
             assertEquals(3, ((Long)obj[1]).longValue());
 
             q = pm.newQuery(Office.class);
-            q.setGrouping("Analysis.rollup({date})");
+            q.setGrouping("SQL_rollup({date})");
             q.setOrdering("date ascending");
             q.setResult("date,count(floor)");
             
