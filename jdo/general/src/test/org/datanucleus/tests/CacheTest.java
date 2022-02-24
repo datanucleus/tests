@@ -1519,7 +1519,7 @@ public class CacheTest extends JDOPersistenceTestCase
             LOG.info(">> CacheTest fetching LoginAccount(non-tx)");
             CachedPC cpc = ((JDOPersistenceManagerFactory)pmf).getNucleusContext().getLevel2Cache().get(acctId);
             assertTrue("LoginAccount is not cached", cpc != null);
-            assertTrue("LoginAccount \"login\" is not cached", cpc.getFieldValue(2) != null);
+            assertTrue("LoginAccount \"login\" is not cached", cpc.getLoadedFields()[2]); // Abs field number of login in LoginAccount
 
             // Retrieve the record and check the data
             pm = pmf.getPersistenceManager();
