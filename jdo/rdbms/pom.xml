@@ -94,6 +94,24 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                         </configuration>
                     </execution>
                 </executions>
+                <!-- The below google collections dependency conflicts with
+                guava that Spanner JDBC uses so exclude when using with Spanner -->
+<!--                <dependencies>
+                   <dependency>
+                       <groupId>org.codehaus.plexus</groupId>
+                       <artifactId>plexus-container-default</artifactId>
+                       <version>1.5.5</version>
+                       <scope>compile</scope>
+
+                       <exclusions>
+                           <exclusion>
+                               <groupId>com.google.collections</groupId>
+                               <artifactId>google-collections</artifactId>
+                           </exclusion>
+                       </exclusions>
+                    </dependency>
+                </dependencies>
+-->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

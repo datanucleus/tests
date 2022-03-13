@@ -18,6 +18,13 @@
                 ) AS SELECT 0 - {ReliedOnView}.{ReliedOnView.inverseInt},
                             0 - {ReliedOnView}.{ReliedOnView.inverseIntObj}
                        FROM {ReliedOnView}"/>
+            <!-- This is the cloud spanner version of the view. -->
+            <extension vendor-name="datanucleus" key="view-definition-cloudspanner" value="
+                CREATE VIEW {this}
+                SQL SECURITY INVOKER
+                AS SELECT 0 - {ReliedOnView}.{ReliedOnView.inverseInt} as {this.inverseInverseInt},
+                            0 - {ReliedOnView}.{ReliedOnView.inverseIntObj} as {this.inverseInverseIntObj}
+                       FROM {ReliedOnView}"/>
         </class>
     </package>
 </jdo>

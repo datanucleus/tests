@@ -731,7 +731,7 @@ public class SQLQueryTest extends JDOPersistenceTestCase
     /**
      * Basic test of SQL without a candidate class but with parameters.
      */
-    public void testWithoutCandidatesClassWithParameters() 
+    public void testWithoutCandidatesClassWithParameters()
     throws Exception
     {
         PersistenceManager pm = pmf.getPersistenceManager();

@@ -20,6 +20,14 @@ CREATE VIEW {this}
      FROM {Widget}
      INNER JOIN {CircularReferenceView3}
      ON {Widget}.{Widget.this} = {CircularReferenceView3}.{CircularReferenceView3.widget}"/>
-        </class>
+            <!-- This is the cloud spanner version of the view. -->
+            <extension vendor-name="datanucleus" key="view-definition-cloudspanner" value="
+CREATE VIEW {this}
+SQL SECURITY INVOKER
+AS SELECT {Widget}.{Widget.this} as {this.widget}, {CircularReferenceView3}.{CircularReferenceView3.myInt} as {this.myInt}
+     FROM {Widget}
+     INNER JOIN {CircularReferenceView3}
+     ON {Widget}.{Widget.this} = {CircularReferenceView3}.{CircularReferenceView3.widget}"/>
+    </class>
     </package>
 </jdo>

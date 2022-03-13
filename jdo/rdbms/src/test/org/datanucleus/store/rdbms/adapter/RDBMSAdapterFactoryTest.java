@@ -90,6 +90,8 @@ public class RDBMSAdapterFactoryTest extends TestCase
         
         assertEquals("org.datanucleus.store.rdbms.adapter.SAPDBAdapter", factory.getAdapterClass(pluginMgr, null, "SAP DB", clr).getName());
         assertEquals("org.datanucleus.store.rdbms.adapter.SAPDBAdapter", factory.getAdapterClass(pluginMgr, null, "SAPDB", clr).getName());
+
+        assertEquals("org.datanucleus.store.rdbms.adapter.CloudSpannerAdapter", factory.getAdapterClass(pluginMgr, null, "Google Cloud Spanner", clr).getName());
     }
     
     /**

@@ -22,6 +22,16 @@ CREATE VIEW {this}
 	    MAX({Widget.longField})
      FROM {Widget}
      GROUP BY {Widget.booleanField}"/>
+            <extension vendor-name="datanucleus" key="view-definition-cloudspanner" value="
+CREATE OR REPLACE VIEW {this}
+SQL SECURITY INVOKER
+AS SELECT w.{Widget.booleanField} as {this.booleanValue},
+	    MIN(w.{Widget.byteField}) as {this.minByteValue},
+	    MIN(w.{Widget.shortField}) as {this.minShortValue},
+	    MAX(w.{Widget.intField}) as {this.maxIntValue},
+	    MAX(w.{Widget.longField}) as {this.maxLongValue}
+     FROM {Widget} as w
+     GROUP BY w.{Widget.booleanField}"/>
         </class>
     </package>
 </jdo>

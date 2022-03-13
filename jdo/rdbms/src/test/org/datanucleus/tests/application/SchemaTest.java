@@ -212,8 +212,13 @@ public class SchemaTest extends JDOPersistenceTestCase
                 }
                 else if (colName.equalsIgnoreCase("GLOBALNUM")) // Unlimited String field
                 {
-                    assertEquals("Type of field (GLOBALNUM) was wrong", Types.VARCHAR, colType);
-                    assertEquals("Length of field (GLOBALNUM) was wrong", 255, colLength);
+                    if(rdbmsVendorID.equals("cloudspanner")){
+                        //default string column maps to nvarchar in spanner
+                        assertEquals("Type of field (GLOBALNUM) was wrong", Types.NVARCHAR, colType);
+                    } else {
+                        assertEquals("Type of field (GLOBALNUM) was wrong", Types.VARCHAR, colType);
+                        assertEquals("Length of field (GLOBALNUM) was wrong", 255, colLength);
+                    }
                 }
             }
 
@@ -232,8 +237,13 @@ public class SchemaTest extends JDOPersistenceTestCase
                 }
                 else if (colName.equalsIgnoreCase("GLOBALNUM")) // Unlimited String field
                 {
-                    assertEquals("Type of field (GLOBALNUM) was wrong", Types.VARCHAR, colType);
-                    assertEquals("Length of field (GLOBALNUM) was wrong", 255, colLength);
+                    if(rdbmsVendorID.equals("cloudspanner")){
+                        //default string column maps to nvarchar in spanner
+                        assertEquals("Type of field (GLOBALNUM) was wrong", Types.NVARCHAR, colType);
+                    } else {
+                        assertEquals("Type of field (GLOBALNUM) was wrong", Types.VARCHAR, colType);
+                        assertEquals("Length of field (GLOBALNUM) was wrong", 255, colLength);
+                    }
                 }
             }
 

@@ -25,6 +25,20 @@ CREATE VIEW {this}
      LEFT OUTER JOIN {ElementWidget} ISET ON SW1.{SetWidget.this} = ISET.{ElementWidget.owner}
      WHERE SW.{SetWidget.this} = SW1.{SetWidget.this})
      FROM {SetWidget} SW"/>
+            <!-- Custom view definition for Cloud Spanner. -->
+            <extension vendor-name="datanucleus" key="view-definition-cloudspanner" value="
+CREATE OR REPLACE VIEW {this}
+SQL SECURITY INVOKER
+AS SELECT SW.{SetWidget.this} as {this.sw},
+    (SELECT COUNT(NSET.{SetWidget.normalSet.owner})
+     FROM {SetWidget} SW1
+     LEFT OUTER JOIN {SetWidget.normalSet} NSET ON SW1.{SetWidget.this} = NSET.{SetWidget.normalSet.owner}
+     WHERE SW.{SetWidget.this} = SW1.{SetWidget.this}) as {this.normalSetSize},
+    (SELECT COUNT(ISET.{ElementWidget.owner})
+     FROM {SetWidget} SW1
+     LEFT OUTER JOIN {ElementWidget} ISET ON SW1.{SetWidget.this} = ISET.{ElementWidget.owner}
+     WHERE SW.{SetWidget.this} = SW1.{SetWidget.this}) as {this.inverseSetSize}
+     FROM {SetWidget} SW"/>
 
      <!-- Custom view definition for Oracle8 because of their non-standard outer join syntax. -->
             <extension vendor-name="datanucleus" key="view-definition-oracle" value="

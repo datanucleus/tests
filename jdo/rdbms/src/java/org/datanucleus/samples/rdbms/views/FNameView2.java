@@ -25,6 +25,9 @@ import javax.jdo.annotations.PrimaryKey;
 @Extension(vendorName="datanucleus", key="view-definition", 
 value="CREATE VIEW {this} ({this.id},{this.name}) AS "+
     "SELECT {NameObject}.{NameObject.id}, {NameObject}.{NameObject.name} FROM {NameObject} WHERE {NameObject}.{NameObject.name} LIKE 'F%'")
+@Extension(vendorName="datanucleus", key="view-definition-cloudspanner",
+    value="CREATE VIEW {this} SQL SECURITY INVOKER AS "+
+        "SELECT {NameObject}.{NameObject.id} as {this.id}, {NameObject}.{NameObject.name} as {this.name} FROM {NameObject} WHERE {NameObject}.{NameObject.name} LIKE 'F%'")
 @Extension(vendorName="datanucleus", key="view-imports", value="import org.datanucleus.samples.rdbms.views.NameObject;")
 public class FNameView2 
 {

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE orm SYSTEM "file:/javax/jdo/orm.dtd">
+
+<orm>
+    <package name="org.datanucleus.samples.store">
+        <class name="Payment" table="PAYMENTS">
+            <inheritance strategy="new-table"/>
+            <field name="reference">
+            	<!-- do not allow null because this column is unique -->
+                <column name="REFN" length="20" jdbc-type="CHAR" allows-null="false"/>
+                <!-- constraint name should be <= 18 chars -->
+                <index name="UNIQUE_REF_CONSTR" unique="true"/>
+            </field>
+            <field name="amount">
+                <column name="AMOUNT" jdbc-type="DECIMAL"/>
+            </field>
+            <field name="taxAmount" column="taxAmount"/>
+            <field name="currency">
+                <column name="CURRENCY" length="4" jdbc-type="VARCHAR" default-value="GBP"/>
+            </field>
+            <field name="description">
+                <column name="DESCR" length="255" jdbc-type="VARCHAR"/>
+            </field>
+            <field name="status">
+                <column name="STATUS" jdbc-type="INTEGER" default-value="0"/>
+            </field>
+            <field name="comments" column="TXN_COMMENTS"/>
+        </class>
+    </package>
+</orm>

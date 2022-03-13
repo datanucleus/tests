@@ -18,6 +18,13 @@ CREATE VIEW {this}
 ) AS SELECT 0 - {Widget}.{Widget.intField},
             0 - {Widget}.{Widget.intObjField}
      FROM {Widget}"/>
+            <!-- This is the cloud spanner version of the view. -->
+            <extension vendor-name="datanucleus" key="view-definition-cloudspanner" value="
+CREATE VIEW {this}
+SQL SECURITY INVOKER
+AS SELECT 0 - {Widget}.{Widget.intField} as {this.inverseInt},
+            0 - {Widget}.{Widget.intObjField} as {this.inverseIntObj}
+     FROM {Widget}"/>
         </class>
     </package>
 </jdo>
