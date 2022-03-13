@@ -21,11 +21,12 @@ import java.io.Serializable;
 
 /**
  * Details of a person.
- * Represents a subset of the information available from Person, and so can be used as a 
- * ResultClass for SQL/JDOQL queries.
+ * Represents a subset of the information available from Person, and so can be used as a ResultClass for SQL/JDOQL queries.
  */
 public class PersonalDetails implements Serializable
 {
+    private static final long serialVersionUID = -4809023545350833619L;
+
     private String firstName;
     private String lastName;
     private int age;

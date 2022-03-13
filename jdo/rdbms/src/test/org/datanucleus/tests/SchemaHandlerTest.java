@@ -65,7 +65,8 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         ClassLoaderResolver clr = storeMgr.getNucleusContext().getClassLoaderResolver(null);
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
-        if (rdbmsVendorID.equals("cloudspanner")) {
+        if (rdbmsVendorID.equals("cloudspanner"))
+        {
             // Spanner allows information schema calls only in read-only mode
             con.setReadOnly(true);
         }
@@ -150,7 +151,8 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
-        if (rdbmsVendorID.equals("cloudspanner")) {
+        if (rdbmsVendorID.equals("cloudspanner"))
+        {
             // Spanner allows information schema calls only in read-only mode
             con.setReadOnly(true);
         }
@@ -186,7 +188,8 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the FK using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
-        if (rdbmsVendorID.equals("cloudspanner")) {
+        if (rdbmsVendorID.equals("cloudspanner"))
+        {
             // Spanner allows information schema calls only in read-only mode
             con.setReadOnly(true);
         }
@@ -228,7 +231,8 @@ public class SchemaHandlerTest extends JDOPersistenceTestCase
         // Check for the indices using the schema handler
         StoreSchemaHandler handler = databaseMgr.getSchemaHandler();
         Connection con = (Connection) databaseMgr.getConnectionManager().getConnection(((JDOPersistenceManager)pm).getExecutionContext()).getConnection();
-        if (rdbmsVendorID.equals("cloudspanner")) {
+        if (rdbmsVendorID.equals("cloudspanner"))
+        {
             // Spanner allows information schema calls only in read-only mode
             con.setReadOnly(true);
         }
