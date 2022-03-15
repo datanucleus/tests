@@ -72,7 +72,7 @@ import jakarta.persistence.Table;
     @SqlResultSetMapping(name="AN_LOGIN_PLUS_ACCOUNT_CONSTRUCTOR",
         classes={
                @ConstructorResult(targetClass=LoginAccountComplete.class,
-                   columns={@ColumnResult(name="FN"), @ColumnResult(name="LN"), @ColumnResult(name="USER"), @ColumnResult(name="PWD")}),
+                   columns={@ColumnResult(name="FN"), @ColumnResult(name="LN"), @ColumnResult(name="USR"), @ColumnResult(name="PWD")}),
             })
     })
 public class LoginAccount

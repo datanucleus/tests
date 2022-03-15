@@ -477,7 +477,7 @@ public class SQLQueryTest extends JakartaPersistenceTestCase
             {
                 tx.begin();
                 List result = em.createNativeQuery(
-                    "SELECT P.FIRSTNAME AS FN, P.LASTNAME AS LN, L.USERNAME AS USER, L.PASSWORD AS PWD FROM " +
+                    "SELECT P.FIRSTNAME AS FN, P.LASTNAME AS LN, L.USERNAME AS USR, L.PASSWORD AS PWD FROM " +
                     "JPA_AN_LOGINACCOUNT P, JPA_AN_LOGIN L","AN_LOGIN_PLUS_ACCOUNT_CONSTRUCTOR").getResultList();
                 assertEquals(1, result.size());
 
