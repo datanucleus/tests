@@ -24,9 +24,10 @@ import java.util.Properties;
 
 import jakarta.persistence.SharedCacheMode;
 import jakarta.persistence.ValidationMode;
-import jakarta.persistence.spi.ClassTransformer;
 import jakarta.persistence.spi.PersistenceUnitInfo;
 import jakarta.persistence.spi.PersistenceUnitTransactionType;
+import jakarta.persistence.spi.Transformer;
+
 import javax.sql.DataSource;
 
 /**
@@ -241,7 +242,7 @@ public class PersistenceUnitInfoImpl implements PersistenceUnitInfo
      * @see jakarta.persistence.spi.PersistenceUnitInfo#addTransformer(jakarta.persistence.spi.ClassTransformer)
      */
     @Override
-    public void addTransformer(ClassTransformer transformer)
+    public void addTransformer(Transformer transformer)
     {
         // TODO Auto-generated method stub
     }
