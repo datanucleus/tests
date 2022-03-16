@@ -2267,13 +2267,132 @@ public class JPQLQueryTest extends JakartaPersistenceTestCase
                 em.persist(d1);
                 DateHolder d2 = new DateHolder();
                 Calendar cal2 = Calendar.getInstance();
-                cal2.set(2022, 11, 01);
+                cal2.set(2052, 11, 01);
                 d2.setDateField(cal2.getTime());
                 em.persist(d2);
                 em.flush();
 
                 List result = em.createQuery("SELECT D FROM " + DateHolder.class.getName() + " D WHERE D.dateField < CURRENT_DATE").getResultList();
                 assertEquals(1, result.size());
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(DateHolder.class);
+        }
+    }
+
+    /**
+     * Test for use of LOCAL_DATE.
+     */
+    public void testLocalDate()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                DateHolder d1 = new DateHolder();
+                Calendar cal = Calendar.getInstance();
+                cal.set(2006, 11, 01);
+                d1.setDateField(cal.getTime());
+                em.persist(d1);
+                DateHolder d2 = new DateHolder();
+                Calendar cal2 = Calendar.getInstance();
+                cal2.set(2052, 11, 01);
+                d2.setDateField(cal2.getTime());
+                em.persist(d2);
+                em.flush();
+
+                // Use in WHERE clause
+                List result = em.createQuery("SELECT D FROM " + DateHolder.class.getName() + " D WHERE D.dateField < LOCAL_DATE").getResultList();
+                assertEquals(1, result.size());
+
+                // Use in RESULT clause
+                result = em.createQuery("SELECT LOCAL_DATE FROM " + DateHolder.class.getName() + " D").getResultList();
+                assertEquals(2, result.size());
+                for (Object row : result)
+                {
+                    assertTrue("Result is of incorrect type. LOCAL_DATE result should return java.time.LocalDate", row instanceof java.time.LocalDate);
+                    // TODO Add assert for current date
+                }
+                tx.rollback();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception in test : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                em.close();
+            }
+        }
+        finally
+        {
+            clean(DateHolder.class);
+        }
+    }
+
+    /**
+     * Test for use of LOCAL_DATETIME.
+     */
+    public void testLocalDateTime()
+    {
+        try
+        {
+            EntityManager em = getEM();
+            EntityTransaction tx = em.getTransaction();
+            try
+            {
+                tx.begin();
+
+                DateHolder d1 = new DateHolder();
+                Calendar cal = Calendar.getInstance();
+                cal.set(2006, 11, 01, 02, 00, 00);
+                d1.setDateField(cal.getTime());
+                em.persist(d1);
+                DateHolder d2 = new DateHolder();
+                Calendar cal2 = Calendar.getInstance();
+                cal2.set(2052, 11, 01, 10, 00, 00);
+                d2.setDateField(cal2.getTime());
+                em.persist(d2);
+                em.flush();
+
+                // Use in WHERE clause
+                List result = em.createQuery("SELECT D FROM " + DateHolder.class.getName() + " D WHERE D.dateField < LOCAL_DATETIME").getResultList();
+                assertEquals(1, result.size());
+
+                // Use in RESULT clause
+                result = em.createQuery("SELECT LOCAL_DATETIME FROM " + DateHolder.class.getName() + " D").getResultList();
+                assertEquals(2, result.size());
+                for (Object row : result)
+                {
+                    assertTrue("Result is of incorrect type. LOCAL_DATETIME result should return java.time.LocalDate", row instanceof java.time.LocalDateTime);
+                    LOG.info(">> row=" + row);
+                    // TODO Add assert for current date
+                }
                 tx.rollback();
             }
             catch (Exception e)
