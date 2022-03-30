@@ -94,6 +94,11 @@ listed.
  
 ### To build the tck (and enhance the classes)
 
+This needs building with Java 8 (since that is what JPA 1 had), so edit ~/.bashrc to have JAVA_HOME set to the Java 8 JRE.
+Also set the datanucleus jars to be v5.2.0-release (built with Java 8) to fool it into building.
+
+    setenv ANT_HOME $TS_HOME/tools/ant
+
     cd $TS_HOME/src
     tsant clean
     tsant build
