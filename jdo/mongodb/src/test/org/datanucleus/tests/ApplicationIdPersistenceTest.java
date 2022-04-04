@@ -671,7 +671,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
 
                 tx.commit();
                 id = JDOHelper.getObjectId(org1);
-                assertEquals("Incorrect version after persist", new Long(1), JDOHelper.getVersion(org1));
+                assertEquals("Incorrect version after persist", Long.valueOf(1), JDOHelper.getVersion(org1));
             }
             catch (Exception e)
             {
@@ -695,7 +695,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 Organisation org1 = (Organisation)pm.getObjectById(id);
-                assertEquals("Incorrect version after getObjectById", new Long(1), JDOHelper.getVersion(org1));
+                assertEquals("Incorrect version after getObjectById", Long.valueOf(1), JDOHelper.getVersion(org1));
 
                 tx.commit();
             }
@@ -725,13 +725,13 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
                 assertNotNull("No results from query!", results);
                 assertEquals("Incorrect number of Organisation objects!", 1, results.size());
                 Organisation org1 = results.iterator().next();
-                assertEquals("Incorrect version after query", new Long(1), JDOHelper.getVersion(org1));
+                assertEquals("Incorrect version after query", Long.valueOf(1), JDOHelper.getVersion(org1));
 
                 // Provoke an update
                 org1.setDescription("New Description");
 
                 tx.commit();
-                assertEquals("Incorrect version after update", new Long(2), JDOHelper.getVersion(org1));
+                assertEquals("Incorrect version after update", Long.valueOf(2), JDOHelper.getVersion(org1));
             }
             catch (Exception e)
             {
@@ -755,7 +755,7 @@ public class ApplicationIdPersistenceTest extends JDOPersistenceTestCase
                 tx.begin();
 
                 Organisation org1 = (Organisation)pm.getObjectById(id);
-                assertEquals("Incorrect version after getObjectById", new Long(2), JDOHelper.getVersion(org1));
+                assertEquals("Incorrect version after getObjectById", Long.valueOf(2), JDOHelper.getVersion(org1));
 
                 tx.commit();
             }

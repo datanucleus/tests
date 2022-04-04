@@ -327,23 +327,23 @@ public class SetHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(sh2.getTheCharacters());
             assertEquals(1, sh2.getTheCharacters().size());
-            assertEquals(new Character('u'), sh2.getTheCharacters().iterator().next());
+            assertEquals(Character.valueOf('u'), sh2.getTheCharacters().iterator().next());
 
             assertNotNull(sh2.getTheBytes());
             assertEquals(1, sh2.getTheBytes().size());
-            assertEquals(new Byte((byte) 0x45), sh2.getTheBytes().iterator().next());
+            assertEquals(Byte.valueOf((byte) 0x45), sh2.getTheBytes().iterator().next());
 
             assertNotNull(sh2.getTheShorts());
             assertEquals(1, sh2.getTheShorts().size());
-            assertEquals(new Short((short) 7), sh2.getTheShorts().iterator().next());
+            assertEquals(Short.valueOf((short) 7), sh2.getTheShorts().iterator().next());
 
             assertNotNull(sh2.getTheIntegers());
             assertEquals(1, sh2.getTheIntegers().size());
-            assertEquals(new Integer(-3399), sh2.getTheIntegers().iterator().next());
+            assertEquals(Integer.valueOf(-3399), sh2.getTheIntegers().iterator().next());
 
             assertNotNull(sh2.getTheLongs());
             assertEquals(1, sh2.getTheLongs().size());
-            assertEquals(new Long(-1L), sh2.getTheLongs().iterator().next());
+            assertEquals(Long.valueOf(-1L), sh2.getTheLongs().iterator().next());
 
             assertNotNull(sh2.getTheBigIntegers());
             assertEquals(1, sh2.getTheBigIntegers().size());
@@ -470,23 +470,23 @@ public class SetHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(detachedSh2.getTheCharacters());
             assertEquals(1, detachedSh2.getTheCharacters().size());
-            assertEquals(new Character('u'), detachedSh2.getTheCharacters().iterator().next());
+            assertEquals(Character.valueOf('u'), detachedSh2.getTheCharacters().iterator().next());
 
             assertNotNull(detachedSh2.getTheBytes());
             assertEquals(1, detachedSh2.getTheBytes().size());
-            assertEquals(new Byte((byte) 0x45), detachedSh2.getTheBytes().iterator().next());
+            assertEquals(Byte.valueOf((byte) 0x45), detachedSh2.getTheBytes().iterator().next());
 
             assertNotNull(detachedSh2.getTheShorts());
             assertEquals(1, detachedSh2.getTheShorts().size());
-            assertEquals(new Short((short) 7), detachedSh2.getTheShorts().iterator().next());
+            assertEquals(Short.valueOf((short) 7), detachedSh2.getTheShorts().iterator().next());
 
             assertNotNull(detachedSh2.getTheIntegers());
             assertEquals(1, detachedSh2.getTheIntegers().size());
-            assertEquals(new Integer(-3399), detachedSh2.getTheIntegers().iterator().next());
+            assertEquals(Integer.valueOf(-3399), detachedSh2.getTheIntegers().iterator().next());
 
             assertNotNull(detachedSh2.getTheLongs());
             assertEquals(1, detachedSh2.getTheLongs().size());
-            assertEquals(new Long(-1L), detachedSh2.getTheLongs().iterator().next());
+            assertEquals(Long.valueOf(-1L), detachedSh2.getTheLongs().iterator().next());
 
             assertNotNull(detachedSh2.getTheBigIntegers());
             assertEquals(1, detachedSh2.getTheBigIntegers().size());

@@ -326,23 +326,23 @@ public class ListHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(lh2.getTheCharacters());
             assertEquals(1, lh2.getTheCharacters().size());
-            assertEquals(new Character('u'), lh2.getTheCharacters().iterator().next());
+            assertEquals(Character.valueOf('u'), lh2.getTheCharacters().iterator().next());
 
             assertNotNull(lh2.getTheBytes());
             assertEquals(1, lh2.getTheBytes().size());
-            assertEquals(new Byte((byte) 0x45), lh2.getTheBytes().iterator().next());
+            assertEquals(Byte.valueOf((byte) 0x45), lh2.getTheBytes().iterator().next());
 
             assertNotNull(lh2.getTheShorts());
             assertEquals(1, lh2.getTheShorts().size());
-            assertEquals(new Short((short) 7), lh2.getTheShorts().iterator().next());
+            assertEquals(Short.valueOf((short) 7), lh2.getTheShorts().iterator().next());
 
             assertNotNull(lh2.getTheIntegers());
             assertEquals(1, lh2.getTheIntegers().size());
-            assertEquals(new Integer(-3399), lh2.getTheIntegers().iterator().next());
+            assertEquals(Integer.valueOf(-3399), lh2.getTheIntegers().iterator().next());
 
             assertNotNull(lh2.getTheLongs());
             assertEquals(1, lh2.getTheLongs().size());
-            assertEquals(new Long(-1L), lh2.getTheLongs().iterator().next());
+            assertEquals(Long.valueOf(-1L), lh2.getTheLongs().iterator().next());
 
             assertNotNull(lh2.getTheBigIntegers());
             assertEquals(1, lh2.getTheBigIntegers().size());

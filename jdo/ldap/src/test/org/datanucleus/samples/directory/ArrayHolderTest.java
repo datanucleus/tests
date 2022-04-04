@@ -78,23 +78,23 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
             ao.setTheStringArray("AAA", "BBB", "CCC");
             ao.setAnotherStringArray("secret1", "secret2");
             ao.setTheFloatArray(1.2F, -2345678.479F);
-            ao.setTheFloatObjArray(new Float(2.3F), new Float(-23.78));
+            ao.setTheFloatObjArray(Float.valueOf(2.3F), Float.valueOf((float) -23.78));
             ao.setTheDoubleArray(1234567.890, -0.001);
-            ao.setTheDoubleObjArray(new Double(2345678.901), new Double(-0.99999));
+            ao.setTheDoubleObjArray(Double.valueOf(2345678.901), Double.valueOf(-0.99999));
             ao.setTheBooleanArray(true, false);
             ao.setTheBooleanObjArray(Boolean.FALSE, Boolean.TRUE);
             ao.setTheStreamedBooleanObjArray(Boolean.FALSE, Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
             ao.setTheCharArray('Z', '\n', '\u1567');
-            ao.setTheCharObjArray(new Character('Y'), new Character('\u1382'));
+            ao.setTheCharObjArray(Character.valueOf('Y'), Character.valueOf('\u1382'));
             ao.setTheByteArray((byte) 0x41, (byte) 0x00, (byte) 0xFF, (byte) 0x7F, (byte) 0x80);
             ao.setTheStreamedByteArray((byte) 0x42, (byte) 0x00, (byte) 0xFF, (byte) 0x7F, (byte) 0x80);
-            ao.setTheByteObjArray(new Byte((byte) 0x42), new Byte((byte) 0x43));
+            ao.setTheByteObjArray(Byte.valueOf((byte) 0x42), Byte.valueOf((byte) 0x43));
             ao.setTheShortArray((short) 1, (short) -88);
-            ao.setTheShortObjArray(new Short((short) 11), new Short((short) -987));
+            ao.setTheShortObjArray(Short.valueOf((short) 11), Short.valueOf((short) -987));
             ao.setTheIntArray(-12345, -3, 0, 1, 987654);
-            ao.setTheIntObjArray(new Integer(22), new Integer(-43242));
+            ao.setTheIntObjArray(Integer.valueOf(22), Integer.valueOf(-43242));
             ao.setTheLongArray(-3L, 1234567890L);
-            ao.setTheLongObjArray(new Long(33L), new Long(-132143214321L));
+            ao.setTheLongObjArray(Long.valueOf(33L), Long.valueOf(-132143214321L));
             ao.setTheBigIntegerArray(new BigInteger("1234567890"), new BigInteger("2345678901"));
             ao.setTheBigDecimalArray(new BigDecimal("12345.67890"), new BigDecimal("23456.78901"));
             ao.setTheCurrencyArray(Currency.getInstance(Locale.US), Currency.getInstance(Locale.UK));
@@ -155,7 +155,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao.getTheFloatObjArray());
             assertEquals(2, ao.getTheFloatObjArray().length);
-            assertTrue(Arrays.equals(new Float[]{new Float(2.3F), new Float(-23.78)}, ao.getTheFloatObjArray()));
+            assertTrue(Arrays.equals(new Float[]{Float.valueOf(2.3F), Float.valueOf((float) -23.78)}, ao.getTheFloatObjArray()));
 
             assertNotNull(ao.getTheDoubleArray());
             assertEquals(2, ao.getTheDoubleArray().length);
@@ -163,7 +163,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao.getTheDoubleObjArray());
             assertEquals(2, ao.getTheDoubleObjArray().length);
-            assertTrue(Arrays.equals(new Double[]{new Double(2345678.901), new Double(-0.99999)}, ao.getTheDoubleObjArray()));
+            assertTrue(Arrays.equals(new Double[]{Double.valueOf(2345678.901), Double.valueOf(-0.99999)}, ao.getTheDoubleObjArray()));
 
             assertNotNull(ao.getTheBooleanArray());
             assertEquals(2, ao.getTheBooleanArray().length);
@@ -184,7 +184,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao.getTheCharObjArray());
             assertEquals(2, ao.getTheCharObjArray().length);
-            assertTrue(Arrays.equals(new Character[]{new Character('Y'), new Character('\u1382')}, ao.getTheCharObjArray()));
+            assertTrue(Arrays.equals(new Character[]{Character.valueOf('Y'), Character.valueOf('\u1382')}, ao.getTheCharObjArray()));
 
             assertNotNull(ao.getTheByteArray());
             assertEquals(5, ao.getTheByteArray().length);
@@ -197,7 +197,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao.getTheByteObjArray());
             assertEquals(2, ao.getTheByteObjArray().length);
-            assertTrue(Arrays.equals(new Byte[]{new Byte((byte) 0x42), new Byte((byte) 0x43)}, ao.getTheByteObjArray()));
+            assertTrue(Arrays.equals(new Byte[]{Byte.valueOf((byte) 0x42), Byte.valueOf((byte) 0x43)}, ao.getTheByteObjArray()));
 
             assertNotNull(ao.getTheShortArray());
             assertEquals(2, ao.getTheShortArray().length);
@@ -205,7 +205,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao.getTheShortObjArray());
             assertEquals(2, ao.getTheShortObjArray().length);
-            assertTrue(Arrays.equals(new Short[]{new Short((short) 11), new Short((short) -987)}, ao.getTheShortObjArray()));
+            assertTrue(Arrays.equals(new Short[]{Short.valueOf((short) 11), Short.valueOf((short) -987)}, ao.getTheShortObjArray()));
 
             assertNotNull(ao.getTheIntArray());
             assertEquals(5, ao.getTheIntArray().length);
@@ -213,7 +213,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao.getTheIntObjArray());
             assertEquals(2, ao.getTheIntObjArray().length);
-            assertTrue(Arrays.equals(new Integer[]{new Integer(22), new Integer(-43242)}, ao.getTheIntObjArray()));
+            assertTrue(Arrays.equals(new Integer[]{Integer.valueOf(22), Integer.valueOf(-43242)}, ao.getTheIntObjArray()));
 
             assertNotNull(ao.getTheLongArray());
             assertEquals(2, ao.getTheLongArray().length);
@@ -221,7 +221,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao.getTheLongObjArray());
             assertEquals(2, ao.getTheLongObjArray().length);
-            assertTrue(Arrays.equals(new Long[]{new Long(33L), new Long(-132143214321L)}, ao.getTheLongObjArray()));
+            assertTrue(Arrays.equals(new Long[]{Long.valueOf(33L), Long.valueOf(-132143214321L)}, ao.getTheLongObjArray()));
 
             assertNotNull(ao.getTheBigIntegerArray());
             assertEquals(2, ao.getTheBigIntegerArray().length);
@@ -374,7 +374,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheCharObjArray());
             assertEquals(2, ao2.getTheCharObjArray().length);
-            assertTrue(Arrays.equals(new Character[]{new Character(' '), new Character('Z')}, ao2.getTheCharObjArray()));
+            assertTrue(Arrays.equals(new Character[]{Character.valueOf(' '), Character.valueOf('Z')}, ao2.getTheCharObjArray()));
 
             assertNotNull(ao2.getTheByteArray());
             assertEquals(2, ao2.getTheByteArray().length);
@@ -386,8 +386,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheByteObjArray());
             assertEquals(3, ao2.getTheByteObjArray().length);
-            assertTrue(Arrays.equals(new Byte[]{new Byte((byte) 0x46), new Byte((byte) 0x80), new Byte((byte) 0xFF)}, ao2
-                    .getTheByteObjArray()));
+            assertTrue(Arrays.equals(new Byte[]{Byte.valueOf((byte) 0x46), Byte.valueOf((byte) 0x80), Byte.valueOf((byte) 0xFF)}, ao2.getTheByteObjArray()));
 
             assertNotNull(ao2.getTheShortArray());
             assertEquals(5, ao2.getTheShortArray().length);
@@ -396,8 +395,8 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheShortObjArray());
             assertEquals(5, ao2.getTheShortObjArray().length);
-            assertTrue(Arrays.equals(new Short[]{new Short(Short.MIN_VALUE), new Short((short) -1), new Short((short) 0),
-                    new Short((short) 1), new Short(Short.MAX_VALUE)}, ao2.getTheShortObjArray()));
+            assertTrue(Arrays.equals(new Short[]{Short.valueOf(Short.MIN_VALUE), Short.valueOf((short) -1), Short.valueOf((short) 0),
+                    Short.valueOf((short) 1), Short.valueOf(Short.MAX_VALUE)}, ao2.getTheShortObjArray()));
 
             assertNotNull(ao2.getTheIntArray());
             assertEquals(5, ao2.getTheIntArray().length);
@@ -405,8 +404,8 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheIntObjArray());
             assertEquals(5, ao2.getTheIntObjArray().length);
-            assertTrue(Arrays.equals(new Integer[]{new Integer(Integer.MIN_VALUE), new Integer(-1), new Integer(0), new Integer(1),
-                    new Integer(Integer.MAX_VALUE)}, ao2.getTheIntObjArray()));
+            assertTrue(Arrays.equals(new Integer[]{Integer.valueOf(Integer.MIN_VALUE), Integer.valueOf(-1), Integer.valueOf(0), Integer.valueOf(1),
+                    Integer.valueOf(Integer.MAX_VALUE)}, ao2.getTheIntObjArray()));
 
             assertNotNull(ao2.getTheLongArray());
             assertEquals(5, ao2.getTheLongArray().length);
@@ -414,8 +413,8 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheLongObjArray());
             assertEquals(5, ao2.getTheLongObjArray().length);
-            assertTrue(Arrays.equals(new Long[]{new Long(Long.MIN_VALUE), new Long(-1L), new Long(0L), new Long(1L),
-                    new Long(Long.MAX_VALUE)}, ao2.getTheLongObjArray()));
+            assertTrue(Arrays.equals(new Long[]{Long.valueOf(Long.MIN_VALUE), Long.valueOf(-1L), Long.valueOf(0L), Long.valueOf(1L),
+                    Long.valueOf(Long.MAX_VALUE)}, ao2.getTheLongObjArray()));
 
             assertNotNull(ao2.getTheBigIntegerArray());
             assertEquals(3, ao2.getTheBigIntegerArray().length);
@@ -565,7 +564,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(detachedAo2.getTheCharObjArray());
             assertEquals(2, detachedAo2.getTheCharObjArray().length);
-            assertTrue(Arrays.equals(new Character[]{new Character(' '), new Character('Z')}, detachedAo2.getTheCharObjArray()));
+            assertTrue(Arrays.equals(new Character[]{Character.valueOf(' '), Character.valueOf('Z')}, detachedAo2.getTheCharObjArray()));
 
             assertNotNull(detachedAo2.getTheByteArray());
             assertEquals(2, detachedAo2.getTheByteArray().length);
@@ -577,7 +576,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(detachedAo2.getTheByteObjArray());
             assertEquals(3, detachedAo2.getTheByteObjArray().length);
-            assertTrue(Arrays.equals(new Byte[]{new Byte((byte) 0x46), new Byte((byte) 0x80), new Byte((byte) 0xFF)}, detachedAo2
+            assertTrue(Arrays.equals(new Byte[]{Byte.valueOf((byte) 0x46), Byte.valueOf((byte) 0x80), Byte.valueOf((byte) 0xFF)}, detachedAo2
                     .getTheByteObjArray()));
 
             assertNotNull(detachedAo2.getTheShortArray());
@@ -587,8 +586,8 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(detachedAo2.getTheShortObjArray());
             assertEquals(5, detachedAo2.getTheShortObjArray().length);
-            assertTrue(Arrays.equals(new Short[]{new Short(Short.MIN_VALUE), new Short((short) -1), new Short((short) 0),
-                    new Short((short) 1), new Short(Short.MAX_VALUE)}, detachedAo2.getTheShortObjArray()));
+            assertTrue(Arrays.equals(new Short[]{Short.valueOf(Short.MIN_VALUE), Short.valueOf((short) -1), Short.valueOf((short) 0),
+                    Short.valueOf((short) 1), Short.valueOf(Short.MAX_VALUE)}, detachedAo2.getTheShortObjArray()));
 
             assertNotNull(detachedAo2.getTheIntArray());
             assertEquals(5, detachedAo2.getTheIntArray().length);
@@ -596,8 +595,8 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(detachedAo2.getTheIntObjArray());
             assertEquals(5, detachedAo2.getTheIntObjArray().length);
-            assertTrue(Arrays.equals(new Integer[]{new Integer(Integer.MIN_VALUE), new Integer(-1), new Integer(0), new Integer(1),
-                    new Integer(Integer.MAX_VALUE)}, detachedAo2.getTheIntObjArray()));
+            assertTrue(Arrays.equals(new Integer[]{Integer.valueOf(Integer.MIN_VALUE), Integer.valueOf(-1), Integer.valueOf(0), Integer.valueOf(1),
+                    Integer.valueOf(Integer.MAX_VALUE)}, detachedAo2.getTheIntObjArray()));
 
             assertNotNull(detachedAo2.getTheLongArray());
             assertEquals(5, detachedAo2.getTheLongArray().length);
@@ -605,8 +604,8 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(detachedAo2.getTheLongObjArray());
             assertEquals(5, detachedAo2.getTheLongObjArray().length);
-            assertTrue(Arrays.equals(new Long[]{new Long(Long.MIN_VALUE), new Long(-1L), new Long(0L), new Long(1L),
-                    new Long(Long.MAX_VALUE)}, detachedAo2.getTheLongObjArray()));
+            assertTrue(Arrays.equals(new Long[]{Long.valueOf(Long.MIN_VALUE), Long.valueOf(-1L), Long.valueOf(0L), Long.valueOf(1L),
+                    Long.valueOf(Long.MAX_VALUE)}, detachedAo2.getTheLongObjArray()));
 
             assertNotNull(detachedAo2.getTheBigIntegerArray());
             assertEquals(3, detachedAo2.getTheBigIntegerArray().length);
@@ -737,7 +736,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheCharObjArray());
             assertEquals(1, ao2.getTheCharObjArray().length);
-            assertEquals(new Character('\u52F5'), ao2.getTheCharObjArray()[0]);
+            assertEquals(Character.valueOf('\u52F5'), ao2.getTheCharObjArray()[0]);
 
             assertNotNull(ao2.getTheByteArray());
             assertEquals(1, ao2.getTheByteArray().length);
@@ -749,7 +748,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheByteObjArray());
             assertEquals(1, ao2.getTheByteObjArray().length);
-            assertEquals(new Byte((byte) 0x46), ao2.getTheByteObjArray()[0]);
+            assertEquals(Byte.valueOf((byte) 0x46), ao2.getTheByteObjArray()[0]);
 
             assertNotNull(ao2.getTheShortArray());
             assertEquals(1, ao2.getTheShortArray().length);
@@ -757,7 +756,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheShortObjArray());
             assertEquals(1, ao2.getTheShortObjArray().length);
-            assertEquals(new Short((short) -33), ao2.getTheShortObjArray()[0]);
+            assertEquals(Short.valueOf((short) -33), ao2.getTheShortObjArray()[0]);
 
             assertNotNull(ao2.getTheIntArray());
             assertEquals(1, ao2.getTheIntArray().length);
@@ -765,7 +764,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheIntObjArray());
             assertEquals(1, ao2.getTheIntObjArray().length);
-            assertEquals(new Integer(4763), ao2.getTheIntObjArray()[0]);
+            assertEquals(Integer.valueOf(4763), ao2.getTheIntObjArray()[0]);
 
             assertNotNull(ao2.getTheLongArray());
             assertEquals(1, ao2.getTheLongArray().length);
@@ -773,7 +772,7 @@ public class ArrayHolderTest extends JDOPersistenceTestCase
 
             assertNotNull(ao2.getTheLongObjArray());
             assertEquals(1, ao2.getTheLongObjArray().length);
-            assertEquals(new Long(1L), ao2.getTheLongObjArray()[0]);
+            assertEquals(Long.valueOf(1L), ao2.getTheLongObjArray()[0]);
 
             assertNotNull(ao2.getTheBigIntegerArray());
             assertEquals(1, ao2.getTheBigIntegerArray().length);

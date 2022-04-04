@@ -76,17 +76,17 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             dto.setTheString("ABCxyz");
             dto.setAnotherString("secret");
             dto.setTheFloat(1.2F);
-            dto.setTheFloatObj(new Float(2.3F));
+            dto.setTheFloatObj(Float.valueOf(2.3F));
             dto.setTheDouble(1234567.890D);
-            dto.setTheDoubleObj(new Double(2345678.901D));
+            dto.setTheDoubleObj(Double.valueOf(2345678.901D));
             dto.setTheBoolean(true);
             dto.setTheBooleanObj(Boolean.FALSE);
             dto.setTheChar('Z');
-            dto.setTheCharObj(new Character('Y'));
+            dto.setTheCharObj(Character.valueOf('Y'));
             dto.setTheByte((byte) 0x41);
-            dto.setTheByteObj(new Byte((byte) 0x42));
+            dto.setTheByteObj(Byte.valueOf((byte) 0x42));
             dto.setTheShort((short) 1);
-            dto.setTheShortObj(new Short((short) 11));
+            dto.setTheShortObj(Short.valueOf((short) 11));
             dto.setTheInt((int) 2);
             dto.setTheIntObj((int) 22);
             dto.setTheLong((long) 3);
@@ -136,21 +136,21 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             assertEquals("ABCxyz", dto.getTheString());
             assertEquals("secret", dto.getAnotherString());
             assertEquals(1.2F, dto.getTheFloat(), 0.1F);
-            assertEquals(new Float(2.3F), dto.getTheFloatObj(), 0.1F);
+            assertEquals(Float.valueOf(2.3F), dto.getTheFloatObj(), 0.1F);
             assertEquals(1234567.890D, dto.getTheDouble(), 0.1D);
-            assertEquals(new Double(2345678.901D), dto.getTheDoubleObj(), 0.1D);
+            assertEquals(Double.valueOf(2345678.901D), dto.getTheDoubleObj(), 0.1D);
             assertEquals(true, dto.isTheBoolean());
             assertEquals(Boolean.FALSE, dto.getTheBooleanObj());
             assertEquals('Z', dto.getTheChar());
-            assertEquals(new Character('Y'), dto.getTheCharObj());
+            assertEquals(Character.valueOf('Y'), dto.getTheCharObj());
             assertEquals((byte) 0x41, dto.getTheByte());
-            assertEquals(new Byte((byte) 0x42), dto.getTheByteObj());
+            assertEquals(Byte.valueOf((byte) 0x42), dto.getTheByteObj());
             assertEquals((short) 1, dto.getTheShort());
-            assertEquals(new Short((short) 11), dto.getTheShortObj());
+            assertEquals(Short.valueOf((short) 11), dto.getTheShortObj());
             assertEquals((int) 2, dto.getTheInt());
-            assertEquals(new Integer((int) 22), dto.getTheIntObj());
+            assertEquals(Integer.valueOf((int) 22), dto.getTheIntObj());
             assertEquals((long) 3, dto.getTheLong());
-            assertEquals(new Long((long) 33), dto.getTheLongObj());
+            assertEquals(Long.valueOf((long) 33), dto.getTheLongObj());
             assertEquals(new BigInteger("1234567890"), dto.getTheBigInteger());
             assertEquals(new BigDecimal("12345.67890"), dto.getTheBigDecimal());
             assertEquals(Currency.getInstance(Locale.US), dto.getTheCurrency());
@@ -273,11 +273,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto1 = (TypeHolder) pm.getObjectById(id);
             assertEquals(1234567.890, dto1.getTheDouble(), 0.01);
-            assertEquals(new Double(2345678.901D), dto1.getTheDoubleObj(), 0.1D);
+            assertEquals(Double.valueOf(2345678.901D), dto1.getTheDoubleObj(), 0.1D);
 
             // set to max value
             dto1.setTheDouble(Double.MAX_VALUE);
-            dto1.setTheDoubleObj(new Double(Double.MAX_VALUE));
+            dto1.setTheDoubleObj(Double.valueOf(Double.MAX_VALUE));
             tx.commit();
 
             // assert new value max
@@ -286,11 +286,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto2 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Double.MAX_VALUE, dto2.getTheDouble(), 0.01);
-            assertEquals(new Double(Double.MAX_VALUE), dto2.getTheDoubleObj(), 0.01);
+            assertEquals(Double.valueOf(Double.MAX_VALUE), dto2.getTheDoubleObj(), 0.01);
 
             // set to 0
             dto2.setTheDouble(0.0D);
-            dto2.setTheDoubleObj(new Double(0.0D));
+            dto2.setTheDoubleObj(Double.valueOf(0.0D));
             tx.commit();
 
             // assert new value 0
@@ -299,7 +299,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto3 = (TypeHolder) pm.getObjectById(id);
             assertEquals(0.0F, dto3.getTheDouble(), 0.01);
-            assertEquals(new Double(0.0F), dto3.getTheDoubleObj(), 0.01);
+            assertEquals(Double.valueOf(0.0F), dto3.getTheDoubleObj(), 0.01);
 
             // set to null
             dto3.setTheDoubleObj(null);
@@ -314,7 +314,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
 
             // set to min value
             dto4.setTheDouble(Double.MIN_VALUE);
-            dto4.setTheDoubleObj(new Double(Double.MIN_VALUE));
+            dto4.setTheDoubleObj(Double.valueOf(Double.MIN_VALUE));
             tx.commit();
 
             // assert new value min
@@ -323,7 +323,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto5 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Double.MIN_VALUE, dto5.getTheDouble(), 0.01);
-            assertEquals(new Double(Double.MIN_VALUE), dto5.getTheDoubleObj(), 0.01);
+            assertEquals(Double.valueOf(Double.MIN_VALUE), dto5.getTheDoubleObj(), 0.01);
             tx.commit();
 
         }
@@ -358,11 +358,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto1 = (TypeHolder) pm.getObjectById(id);
             assertEquals(1.2F, dto1.getTheFloat(), 0.01F);
-            assertEquals(new Float(2.3F), dto1.getTheFloatObj(), 0.01F);
+            assertEquals(Float.valueOf(2.3F), dto1.getTheFloatObj(), 0.01F);
 
             // set to max value
             dto1.setTheFloat(Float.MAX_VALUE);
-            dto1.setTheFloatObj(new Float(Float.MAX_VALUE));
+            dto1.setTheFloatObj(Float.valueOf(Float.MAX_VALUE));
             tx.commit();
 
             // assert new value max
@@ -371,11 +371,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto2 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Float.MAX_VALUE, dto2.getTheFloat(), 0.01F);
-            assertEquals(new Float(Float.MAX_VALUE), dto2.getTheFloatObj(), 0.01F);
+            assertEquals(Float.valueOf(Float.MAX_VALUE), dto2.getTheFloatObj(), 0.01F);
 
             // set to 0
             dto2.setTheFloat(0.0F);
-            dto2.setTheFloatObj(new Float(0.0F));
+            dto2.setTheFloatObj(Float.valueOf(0.0F));
             tx.commit();
 
             // assert new value 0
@@ -384,7 +384,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto3 = (TypeHolder) pm.getObjectById(id);
             assertEquals(0.0F, dto3.getTheFloat(), 0.01F);
-            assertEquals(new Float(0.0F), dto3.getTheFloatObj(), 0.01F);
+            assertEquals(Float.valueOf(0.0F), dto3.getTheFloatObj(), 0.01F);
 
             // set to null
             dto3.setTheFloatObj(null);
@@ -399,7 +399,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
 
             // set to min value
             dto4.setTheFloat(Float.MIN_VALUE);
-            dto4.setTheFloatObj(new Float(Float.MIN_VALUE));
+            dto4.setTheFloatObj(Float.valueOf(Float.MIN_VALUE));
             tx.commit();
 
             // assert new value min
@@ -408,7 +408,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto5 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Float.MIN_VALUE, dto5.getTheFloat(), 0.01F);
-            assertEquals(new Float(Float.MIN_VALUE), dto5.getTheFloatObj(), 0.01F);
+            assertEquals(Float.valueOf(Float.MIN_VALUE), dto5.getTheFloatObj(), 0.01F);
             tx.commit();
         }
         finally
@@ -441,11 +441,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto1 = (TypeHolder) pm.getObjectById(id);
             assertEquals('Z', dto1.getTheChar());
-            assertEquals(new Character('Y'), dto1.getTheCharObj());
+            assertEquals(Character.valueOf('Y'), dto1.getTheCharObj());
 
             // set to blank
             dto1.setTheChar(' ');
-            dto1.setTheCharObj(new Character(' '));
+            dto1.setTheCharObj(Character.valueOf(' '));
             tx.commit();
 
             // assert new value blank
@@ -454,7 +454,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto2 = (TypeHolder) pm.getObjectById(id);
             assertEquals(' ', dto2.getTheChar());
-            assertEquals(new Character(' '), dto2.getTheCharObj());
+            assertEquals(Character.valueOf(' '), dto2.getTheCharObj());
 
             // set to null
             dto2.setTheCharObj(null);
@@ -469,7 +469,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
 
             // set to an multi-byte unicode character
             dto3.setTheChar('\u9577');
-            dto3.setTheCharObj(new Character('\u9577'));
+            dto3.setTheCharObj(Character.valueOf('\u9577'));
             tx.commit();
 
             // assert new value
@@ -478,7 +478,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto4 = (TypeHolder) pm.getObjectById(id);
             assertEquals('\u9577', dto4.getTheChar());
-            assertEquals(new Character('\u9577'), dto4.getTheCharObj());
+            assertEquals(Character.valueOf('\u9577'), dto4.getTheCharObj());
             tx.commit();
         }
         finally
@@ -579,11 +579,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto1 = (TypeHolder) pm.getObjectById(id);
             assertEquals(0x41, dto1.getTheByte());
-            assertEquals(new Byte((byte) 0x42), dto1.getTheByteObj());
+            assertEquals(Byte.valueOf((byte) 0x42), dto1.getTheByteObj());
 
             // set to max value
             dto1.setTheByte(Byte.MAX_VALUE);
-            dto1.setTheByteObj(new Byte(Byte.MAX_VALUE));
+            dto1.setTheByteObj(Byte.valueOf(Byte.MAX_VALUE));
             tx.commit();
 
             // assert new value max
@@ -592,11 +592,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto2 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Byte.MAX_VALUE, dto2.getTheByte());
-            assertEquals(new Byte(Byte.MAX_VALUE), dto2.getTheByteObj());
+            assertEquals(Byte.valueOf(Byte.MAX_VALUE), dto2.getTheByteObj());
 
             // set to 0
             dto2.setTheByte((byte) 0x00);
-            dto2.setTheByteObj(new Byte((byte) 0x00));
+            dto2.setTheByteObj(Byte.valueOf((byte) 0x00));
             tx.commit();
 
             // assert new value 0
@@ -605,7 +605,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto3 = (TypeHolder) pm.getObjectById(id);
             assertEquals(0, dto3.getTheByte());
-            assertEquals(new Byte((byte) 0x00), dto3.getTheByteObj());
+            assertEquals(Byte.valueOf((byte) 0x00), dto3.getTheByteObj());
 
             // set to null
             dto3.setTheByteObj(null);
@@ -620,7 +620,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
 
             // set to min value
             dto4.setTheByte(Byte.MIN_VALUE);
-            dto4.setTheByteObj(new Byte(Byte.MIN_VALUE));
+            dto4.setTheByteObj(Byte.valueOf(Byte.MIN_VALUE));
             tx.commit();
 
             // assert new value min
@@ -629,7 +629,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto5 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Byte.MIN_VALUE, dto5.getTheByte());
-            assertEquals(new Byte(Byte.MIN_VALUE), dto5.getTheByteObj());
+            assertEquals(Byte.valueOf(Byte.MIN_VALUE), dto5.getTheByteObj());
             tx.commit();
         }
         finally
@@ -663,11 +663,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto1 = (TypeHolder) pm.getObjectById(id);
             assertEquals((short) 1, dto1.getTheShort());
-            assertEquals(new Short((short) 11), dto1.getTheShortObj());
+            assertEquals(Short.valueOf((short) 11), dto1.getTheShortObj());
 
             // set to max value
             dto1.setTheShort(Short.MAX_VALUE);
-            dto1.setTheShortObj(new Short(Short.MAX_VALUE));
+            dto1.setTheShortObj(Short.valueOf(Short.MAX_VALUE));
             tx.commit();
 
             // assert new value max
@@ -676,11 +676,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto2 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Short.MAX_VALUE, dto2.getTheShort());
-            assertEquals(new Short(Short.MAX_VALUE), dto2.getTheShortObj());
+            assertEquals(Short.valueOf(Short.MAX_VALUE), dto2.getTheShortObj());
 
             // set to 0
             dto2.setTheShort((short) 0);
-            dto2.setTheShortObj(new Short((short) 0));
+            dto2.setTheShortObj(Short.valueOf((short) 0));
             tx.commit();
 
             // assert new value 0
@@ -689,7 +689,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto3 = (TypeHolder) pm.getObjectById(id);
             assertEquals((short) 0, dto3.getTheShort());
-            assertEquals(new Short((short) 0), dto3.getTheShortObj());
+            assertEquals(Short.valueOf((short) 0), dto3.getTheShortObj());
 
             // set to null
             dto3.setTheShortObj(null);
@@ -704,7 +704,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
 
             // set to min value
             dto4.setTheShort(Short.MIN_VALUE);
-            dto4.setTheShortObj(new Short(Short.MIN_VALUE));
+            dto4.setTheShortObj(Short.valueOf(Short.MIN_VALUE));
             tx.commit();
 
             // assert new value min
@@ -713,7 +713,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto5 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Short.MIN_VALUE, dto5.getTheShort());
-            assertEquals(new Short(Short.MIN_VALUE), dto5.getTheShortObj());
+            assertEquals(Short.valueOf(Short.MIN_VALUE), dto5.getTheShortObj());
             tx.commit();
         }
         finally
@@ -747,11 +747,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto1 = (TypeHolder) pm.getObjectById(id);
             assertEquals(2, dto1.getTheInt());
-            assertEquals(new Integer(22), dto1.getTheIntObj());
+            assertEquals(Integer.valueOf(22), dto1.getTheIntObj());
 
             // set to max value
             dto1.setTheInt(Integer.MAX_VALUE);
-            dto1.setTheIntObj(new Integer(Integer.MAX_VALUE));
+            dto1.setTheIntObj(Integer.valueOf(Integer.MAX_VALUE));
             tx.commit();
 
             // assert new value max
@@ -760,11 +760,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto2 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Integer.MAX_VALUE, dto2.getTheInt());
-            assertEquals(new Integer(Integer.MAX_VALUE), dto2.getTheIntObj());
+            assertEquals(Integer.valueOf(Integer.MAX_VALUE), dto2.getTheIntObj());
 
             // set to 0
             dto2.setTheInt(0);
-            dto2.setTheIntObj(new Integer(0));
+            dto2.setTheIntObj(Integer.valueOf(0));
             tx.commit();
 
             // assert new value 0
@@ -773,7 +773,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto3 = (TypeHolder) pm.getObjectById(id);
             assertEquals(0, dto3.getTheInt());
-            assertEquals(new Integer(0), dto3.getTheIntObj());
+            assertEquals(Integer.valueOf(0), dto3.getTheIntObj());
 
             // set to null
             dto3.setTheIntObj(null);
@@ -788,7 +788,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
 
             // set to min value
             dto4.setTheInt(Integer.MIN_VALUE);
-            dto4.setTheIntObj(new Integer(Integer.MIN_VALUE));
+            dto4.setTheIntObj(Integer.valueOf(Integer.MIN_VALUE));
             tx.commit();
 
             // assert new value min
@@ -797,7 +797,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto5 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Integer.MIN_VALUE, dto5.getTheInt());
-            assertEquals(new Integer(Integer.MIN_VALUE), dto5.getTheIntObj());
+            assertEquals(Integer.valueOf(Integer.MIN_VALUE), dto5.getTheIntObj());
             tx.commit();
         }
         finally
@@ -831,11 +831,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto1 = (TypeHolder) pm.getObjectById(id);
             assertEquals(3L, dto1.getTheLong());
-            assertEquals(new Long(33L), dto1.getTheLongObj());
+            assertEquals(Long.valueOf(33L), dto1.getTheLongObj());
 
             // set to max value
             dto1.setTheLong(Long.MAX_VALUE);
-            dto1.setTheLongObj(new Long(Long.MAX_VALUE));
+            dto1.setTheLongObj(Long.valueOf(Long.MAX_VALUE));
             tx.commit();
 
             // assert new value max
@@ -844,11 +844,11 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto2 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Long.MAX_VALUE, dto2.getTheLong());
-            assertEquals(new Long(Long.MAX_VALUE), dto2.getTheLongObj());
+            assertEquals(Long.valueOf(Long.MAX_VALUE), dto2.getTheLongObj());
 
             // set to 0
             dto2.setTheLong(0L);
-            dto2.setTheLongObj(new Long(0L));
+            dto2.setTheLongObj(Long.valueOf(0L));
             tx.commit();
 
             // assert new value 0
@@ -857,7 +857,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto3 = (TypeHolder) pm.getObjectById(id);
             assertEquals(0L, dto3.getTheLong());
-            assertEquals(new Long(0L), dto3.getTheLongObj());
+            assertEquals(Long.valueOf(0L), dto3.getTheLongObj());
 
             // set to null
             dto3.setTheLongObj(null);
@@ -872,7 +872,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
 
             // set to min value
             dto4.setTheLong(Long.MIN_VALUE);
-            dto4.setTheLongObj(new Long(Long.MIN_VALUE));
+            dto4.setTheLongObj(Long.valueOf(Long.MIN_VALUE));
             tx.commit();
 
             // assert new value min
@@ -881,7 +881,7 @@ public class TypeHolderTest extends JDOPersistenceTestCase
             tx.begin();
             TypeHolder dto5 = (TypeHolder) pm.getObjectById(id);
             assertEquals(Long.MIN_VALUE, dto5.getTheLong());
-            assertEquals(new Long(Long.MIN_VALUE), dto5.getTheLongObj());
+            assertEquals(Long.valueOf(Long.MIN_VALUE), dto5.getTheLongObj());
             tx.commit();
         }
         finally

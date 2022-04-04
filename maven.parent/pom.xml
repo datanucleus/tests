@@ -123,6 +123,7 @@
             <artifactId>javax.transaction-api</artifactId> 
             <version>1.3</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -139,12 +140,7 @@
             <version>1.5.6</version>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.5.6</version>
-            <optional>true</optional>
-        </dependency>
+
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
@@ -184,7 +180,7 @@
                     <include>**/*.xsd</include>
                     <include>**/*.jdoquery*</include>
                     <include>**/*.MF</include>
-                    <include>log4j.properties</include>
+                    <include>log4j2.xml</include>
                     <include>**/*.jpg</include>
                     <include>**/*.gif</include>
                 </includes>
@@ -237,7 +233,7 @@
                     <include>**/*.xsd</include>
                     <include>**/*.jdoquery*</include>
                     <include>**/*.MF</include>
-                    <include>log4j.properties</include>
+                    <include>log4j2.xml</include>
                 </includes>
             </testResource>
         </testResources>

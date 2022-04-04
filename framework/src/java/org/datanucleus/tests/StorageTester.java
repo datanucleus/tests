@@ -148,7 +148,7 @@ public class StorageTester
                 tx.setRetainValues(true);
                 tx.begin();
 
-                TestObject obj = (TestObject) c.newInstance();
+                TestObject obj = (TestObject) c.getDeclaredConstructor().newInstance();
                 obj.fillRandom();
 
                 objs[i] = (TestObject) obj.clone();
@@ -537,7 +537,7 @@ public class StorageTester
 
             for (int i = 0; i < TEST_OBJECT_COUNT; ++i)
             {
-                objs[i] = (TestObject) c.newInstance();
+                objs[i] = (TestObject) c.getDeclaredConstructor().newInstance();
                 objs[i].fillRandom();
 
                 pobjs[i] = (TestObject) objs[i].clone();

@@ -611,16 +611,16 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                 TableGeneratorItem item=null;
                 item = new TableGeneratorItem("First item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 item = new TableGeneratorItem("Second item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 item = new TableGeneratorItem("Third item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 item = new TableGeneratorItem("Fourth item");
                 pm.makePersistent(item);
-                idSet.add(new Integer(item.getIdentifier()));
+                idSet.add(Integer.valueOf(item.getIdentifier()));
                 idClass = JDOHelper.getObjectId(item).getClass();
                 
                 tx.commit();
@@ -659,7 +659,7 @@ public class ValueGeneratorTest extends JDOPersistenceTestCase
                     Object o=iter.next();
                     if (TableGeneratorItem.Oid.class.equals(idClass))
                     {
-                        idSetCopy.remove(new Integer(((TableGeneratorItem)o).getIdentifier()));
+                        idSetCopy.remove(Integer.valueOf(((TableGeneratorItem)o).getIdentifier()));
                     }
                 }
                 
