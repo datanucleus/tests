@@ -30,22 +30,22 @@ public class TableSize
 
     public TableSize(int thesize)
     {
-        this.thesize = new Integer(thesize);
+        this.thesize = Integer.valueOf(thesize);
     }
 
     public TableSize(long thesize)
     {
-        this.thesize = new Integer((int)thesize);
+        this.thesize = Integer.valueOf((int)thesize);
     }
 
     public TableSize(BigDecimal thesize)
     {
-        this.thesize = new Integer(thesize.intValue());
+        this.thesize = Integer.valueOf(thesize.intValue());
     }
 
     public TableSize(BigInteger thesize)
     {
-        this.thesize = new Integer(thesize.intValue());
+        this.thesize = Integer.valueOf(thesize.intValue());
     }
 
 	public Integer getTheSize()
@@ -60,16 +60,16 @@ public class TableSize
 
     public void setTheSize(Long thesize)
     {
-        this.thesize = new Integer(thesize.intValue());
+        this.thesize = Integer.valueOf(thesize.intValue());
     }
 
     public void setTheSize(BigDecimal thesize)
     {
-        this.thesize = new Integer(thesize.intValue());
+        this.thesize = Integer.valueOf(thesize.intValue());
     }
 
     public void setTheSize(BigInteger thesize)
     {
-        this.thesize = new Integer(thesize.intValue());
+        this.thesize = Integer.valueOf(thesize.intValue());
     }
 }

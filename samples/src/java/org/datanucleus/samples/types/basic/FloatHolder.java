@@ -143,9 +143,9 @@ public class FloatHolder extends TestObject
     public void fillRandom()
     {
         floatField = nextFloat();
-        floatObjField = nextNull() ? null : new Float(nextFloat());
+        floatObjField = nextNull() ? null : Float.valueOf(nextFloat());
         doubleField = nextDouble();
-        doubleObjField = nextNull() ? null : new Double(nextDouble());
+        doubleObjField = nextNull() ? null : Double.valueOf(nextDouble());
     }
 
     /**

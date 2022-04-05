@@ -23,7 +23,6 @@ import java.util.Set;
 
 /**
  * Object in 4 link chain of compound identities.
- * @version $Revision$
  */
 public class CompoundX1
 {
@@ -97,7 +96,7 @@ public class CompoundX1
 
         public int hashCode()
         {
-            return this.x1Name.hashCode() ^ new Long(this.x1Version).intValue();
+            return this.x1Name.hashCode() ^ Long.valueOf(this.x1Version).intValue();
         }
 
         public boolean equals(Object o)

@@ -167,17 +167,17 @@ public class BasicTypeHolder extends TestObject implements Serializable
     public void fillRandom()
     {
         booleanField = r.nextBoolean();
-        booleanObjField = nextNull() ? null : new Boolean(r.nextBoolean());
+        booleanObjField = nextNull() ? null : Boolean.valueOf(r.nextBoolean());
         byteField = nextByte();
-        byteObjField = nextNull() ? null : new Byte(nextByte());
+        byteObjField = nextNull() ? null : Byte.valueOf(nextByte());
         charField = nextCharacter();
-        charObjField = nextNull() ? null : new Character(nextCharacter());
+        charObjField = nextNull() ? null : Character.valueOf(nextCharacter());
         shortField = (short) (r.nextInt(Short.MAX_VALUE * 2) - Short.MAX_VALUE);
-        shortObjField = nextNull() ? null : new Short((short) (r.nextInt(Short.MAX_VALUE * 2) - Short.MAX_VALUE));
+        shortObjField = nextNull() ? null : Short.valueOf((short) (r.nextInt(Short.MAX_VALUE * 2) - Short.MAX_VALUE));
         intField = r.nextInt();
-        intObjField = nextNull() ? null : new Integer(r.nextInt());
+        intObjField = nextNull() ? null : Integer.valueOf(r.nextInt());
         longField = r.nextLong();
-        longObjField = nextNull() ? null : new Long(r.nextLong());
+        longObjField = nextNull() ? null : Long.valueOf(r.nextLong());
     }
 
     /**

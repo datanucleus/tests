@@ -36,7 +36,7 @@ public class CompoundMapTarget2
         super();
         this.name = name;
         this.holder = source;
-        this.value = new Double(value);
+        this.value = Double.valueOf(value);
     }
 
     public final String getName()
@@ -66,7 +66,7 @@ public class CompoundMapTarget2
 
     public final void setValue(double value)
     {
-        this.value = new Double(value);
+        this.value = Double.valueOf(value);
     }
 
     public static class Id implements Serializable

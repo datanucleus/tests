@@ -22,7 +22,6 @@ package org.datanucleus.samples.inheritance;
 /**
  * Sub class for inheritance tests - sample "J".
  * This sample has 2 subclasses - one a Container, and one an Element. The Element has 2 subclasses.
- * @version $Revision: 1.1 $
  */
 public class JMarble extends JBase
 {
@@ -41,7 +40,7 @@ public class JMarble extends JBase
 
     public JMarble(int id,final String color)
     {
-        setId(new Integer(id));
+        setId(Integer.valueOf(id));
         this.color = color;
     }
     

@@ -48,7 +48,7 @@ public class JBowl extends JBase
 
     public JBowl(int id,final String name)
     {
-        setId(new Integer(id));
+        setId(Integer.valueOf(id));
         setName(name);
         spottedMarbles = new HashSet<>();
         transparentMarbles = new HashSet<>();

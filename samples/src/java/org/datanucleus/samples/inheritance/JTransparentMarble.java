@@ -20,7 +20,6 @@ package org.datanucleus.samples.inheritance;
 /**
  * Sub-Sub class for inheritance tests - sample "J".
  * This sample has 2 subclasses - one a Container, and one an Element. The Element has 2 subclasses.
- * @version $Revision: 1.1 $
  */
 public class JTransparentMarble extends JMarble
 {
@@ -41,7 +40,7 @@ public class JTransparentMarble extends JMarble
     {
         super(id,color);
 
-        this.opacity = new Integer(opacity);
+        this.opacity = Integer.valueOf(opacity);
     }    
 
     public Integer getOpacity()
