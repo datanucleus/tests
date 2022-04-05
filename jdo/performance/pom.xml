@@ -35,9 +35,14 @@
             <version>4.13.1</version>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.8</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.17.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.17.1</version>
         </dependency>
 
         <!-- Change to the datanucleus-{datastore} plugin required -->
@@ -98,7 +103,6 @@
                     <persistenceUnitName>MyTest</persistenceUnitName>
                     <fork>false</fork>
                     <verbose>false</verbose>
-                    <log4jConfiguration>${basedir}/src/main/resources/log4j.properties</log4jConfiguration>
                 </configuration>
                 <executions>
                     <execution>
