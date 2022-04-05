@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" strict="true" name="datanucleus">
+
+    <Properties>
+        <Property name="dnFilename">datanucleus.log</Property>
+    </Properties>
+
+    <Appenders>
+        <Appender type="File" name="DataNucleus" fileName="${dnFilename}">
+            <Layout type="PatternLayout" pattern="%d{HH:mm:ss,SSS} (%t) %-5p [%c] - %m%n"/>
+        </Appender>
+    </Appenders>
+  
+    <Loggers>
+        <!-- DataNucleus Loggers -->
+        <Logger name="DataNucleus" level="warn" additivity="false">
+            <AppenderRef ref="DataNucleus"/>
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="DataNucleus"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
