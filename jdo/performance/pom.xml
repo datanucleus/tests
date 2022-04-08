@@ -11,7 +11,7 @@
 
     <properties>
         <!-- This enables Java(11) Flight Recorder profiler. -->
-        <!--argLine>-XX:+FlightRecorder -XX:StartFlightRecording=duration=1000s,filename=performance_tests.jfr</argLine-->
+        <!--argLine>-XX:+FlightRecorder -XX:StartFlightRecording=duration=6000s,filename=performance_tests.jfr,settings=profile.jfc</argLine-->
     </properties>
 
     <!-- TODO Change parent to test-maven-parent -->
@@ -75,6 +75,7 @@
                         <fileset>
                             <directory>${basedir}</directory>
                             <includes>
+                                <include>performance_tests.jfr</include>
                                 <include>*.log</include>
                                 <include>test.xls</include>
                                 <include>test.ods</include>
