@@ -9,6 +9,11 @@
     <name>DataNucleus Performance Tests for JDO</name>
     <description>DataNucleus Performance Tests for JDO</description>
 
+    <properties>
+        <!-- This enables Java(11) Flight Recorder profiler. -->
+        <!--argLine>-XX:+FlightRecorder -XX:StartFlightRecording=duration=1000s,filename=performance_tests.jfr</argLine-->
+    </properties>
+
     <!-- TODO Change parent to test-maven-parent -->
 
     <dependencies>
