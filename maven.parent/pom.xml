@@ -19,7 +19,7 @@
         <javax.jdo.max.version>3.2.99</javax.jdo.max.version>
         <javax.persistence.min.version>2.2.1</javax.persistence.min.version>
         <javax.persistence.max.version>2.2.99</javax.persistence.max.version>
-        <jakarta.persistence.min.version>3.0.0</jakarta.persistence.min.version>
+        <jakarta.persistence.min.version>3.1.0</jakarta.persistence.min.version>
         <jakarta.persistence.max.version>3.9</jakarta.persistence.max.version>
 
         <core.min.version>6.0.0-m1</core.min.version>
