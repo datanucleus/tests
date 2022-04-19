@@ -13,7 +13,7 @@
   
     <Loggers>
         <!-- DataNucleus Loggers -->
-        <Logger name="DataNucleus" level="warn" additivity="false">
+        <Logger name="DataNucleus" level="OFF" additivity="false">
             <AppenderRef ref="DataNucleus"/>
         </Logger>
 
