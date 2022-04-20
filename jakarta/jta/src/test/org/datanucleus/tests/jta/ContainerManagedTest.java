@@ -32,6 +32,7 @@ import javax.sql.DataSource;
 import javax.sql.XADataSource;
 import javax.transaction.UserTransaction;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jakarta.JakartaEntityManagerFactory;
 import org.datanucleus.api.jakarta.PersistenceUnitInfoImpl;
 import org.datanucleus.exceptions.ConnectionFactoryNotFoundException;
@@ -79,9 +80,8 @@ public class ContainerManagedTest extends JakartaPersistenceTestCase
             PersistenceUnitInfoImpl unitInfo = new PersistenceUnitInfoImpl("org.datanucleus.api.jakarta.PersistenceProviderImpl", "TEST_JTA", 
                 PersistenceUnitTransactionType.JTA, rootURL);
             unitInfo.setJtaDataSource(jtaDataSource);
-            unitInfo.getProperties().setProperty("datanucleus.transaction.jta.transactionManagerLocator", "custom_jndi");
-            unitInfo.getProperties().setProperty("datanucleus.transaction.jta.transactionManagerJNDI", "java:comp/TransactionManager");
-            unitInfo.getProperties().setProperty("datanucleus.storeManagerType", "rdbms");
+            unitInfo.getProperties().setProperty(PropertyNames.PROPERTY_TRANSACTION_JTA_LOCATOR, "custom_jndi");
+            unitInfo.getProperties().setProperty(PropertyNames.PROPERTY_TRANSACTION_JTA_JNDI_LOCATION, "java:comp/TransactionManager");
             unitInfo.getProperties().setProperty("jakarta.persistence.schema-generation.database.action", "drop-and-create");
             unitInfo.addManagedClassName("org.datanucleus.samples.annotations.Person");
             unitInfo.setExcludeUnlistedClasses(true);

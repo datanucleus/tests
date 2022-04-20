@@ -32,6 +32,7 @@ import javax.sql.DataSource;
 import javax.sql.XADataSource;
 import javax.transaction.UserTransaction;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jpa.JPAEntityManagerFactory;
 import org.datanucleus.api.jpa.PersistenceUnitInfoImpl;
 import org.datanucleus.exceptions.ConnectionFactoryNotFoundException;
@@ -75,13 +76,12 @@ public class ContainerManagedTest extends JPAPersistenceTestCase
             catch (MalformedURLException mue)
             {
             }
-            
+
             PersistenceUnitInfoImpl unitInfo = new PersistenceUnitInfoImpl("org.datanucleus.api.jpa.PersistenceProviderImpl", "TEST_JTA", 
                 PersistenceUnitTransactionType.JTA, rootURL);
             unitInfo.setJtaDataSource(jtaDataSource);
-            unitInfo.getProperties().setProperty("datanucleus.transaction.jta.transactionManagerLocator", "custom_jndi");
-            unitInfo.getProperties().setProperty("datanucleus.transaction.jta.transactionManagerJNDI", "java:comp/TransactionManager");
-            unitInfo.getProperties().setProperty("datanucleus.storeManagerType", "rdbms");
+            unitInfo.getProperties().setProperty(PropertyNames.PROPERTY_TRANSACTION_JTA_LOCATOR, "custom_jndi");
+            unitInfo.getProperties().setProperty(PropertyNames.PROPERTY_TRANSACTION_JTA_JNDI_LOCATION, "java:comp/TransactionManager");
             unitInfo.getProperties().setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
             unitInfo.addManagedClassName("org.datanucleus.samples.annotations.Person");
             unitInfo.setExcludeUnlistedClasses(true);
