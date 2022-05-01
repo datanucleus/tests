@@ -2801,11 +2801,9 @@ public class AttachDetachTest extends JDOPersistenceTestCase
             SimpleDateFormat fmt2 = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat fmt3 = new SimpleDateFormat("HH:mm:ss");
 
-            java.sql.Date sqlDateTmp = new java.sql.Date(0);
-            sqlDateTmp.setTime(javaSqlDateMillis);
+            java.sql.Date sqlDateTmp = new java.sql.Date(javaSqlDateMillis);
             String sqlDateString = fmt2.format(sqlDateTmp);
-            java.sql.Time sqlTimeTmp = new java.sql.Time(0);
-            sqlTimeTmp.setTime(javaSqlTimeMillis);
+            java.sql.Time sqlTimeTmp = new java.sql.Time(javaSqlTimeMillis);
             String sqlTimeString = fmt3.format(sqlTimeTmp);
 
             // Perform an update to the contents of some of the dates
