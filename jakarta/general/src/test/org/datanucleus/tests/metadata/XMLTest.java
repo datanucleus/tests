@@ -506,19 +506,19 @@ public class XMLTest extends JakartaPersistenceTestCase
 
         QueryMetaData jpqlQuery = null;
         QueryMetaData sqlQuery = null;
-        if (qmds[0].getLanguage().equals(QueryLanguage.JPQL.toString()))
+        if (qmds[0].getLanguage().equals(QueryLanguage.JPQL.name()))
         {
             jpqlQuery = qmds[0];
         }
-        else if (qmds[1].getLanguage().equals(QueryLanguage.JPQL.toString()))
+        else if (qmds[1].getLanguage().equals(QueryLanguage.JPQL.name()))
         {
             jpqlQuery = qmds[1];
         }
-        if (qmds[0].getLanguage().equals(QueryLanguage.SQL.toString()))
+        if (qmds[0].getLanguage().equals(QueryLanguage.SQL.name()))
         {
             sqlQuery = qmds[0];
         }
-        else if (qmds[1].getLanguage().equals(QueryLanguage.SQL.toString()))
+        else if (qmds[1].getLanguage().equals(QueryLanguage.SQL.name()))
         {
             sqlQuery = qmds[1];
         }
