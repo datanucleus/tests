@@ -45,7 +45,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty</artifactId>
-            <version>6.1.21</version>
+            <version>6.1.23</version>
         </dependency>
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
