@@ -1,4 +1,4 @@
 <factorypath>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/datanucleus/jakarta.persistence/3.0.0/jakarta.persistence-3.0.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/datanucleus/datanucleus-jakarta-query/6.0.0-m1/datanucleus-jakarta-query-6.0.0-m1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/datanucleus/datanucleus-jakarta-query/6.0.0-release/datanucleus-jakarta-query-6.0.0-release.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>
