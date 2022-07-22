@@ -31,12 +31,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <compilerArgument>-Xlint:unchecked</compilerArgument>
-                </configuration>
-            </plugin-->
         </plugins>
     </build>
 
