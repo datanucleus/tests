@@ -720,7 +720,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             Object[] results = (Object[]) tq.executeResultUnique();
 
             assertNotNull("Results is null!", results);
-            Object[] resultComps = (Object[])results;
+            Object[] resultComps = results;
             assertEquals("Number of results is wrong", 3, resultComps.length);
             assertEquals("Min is incorrect", 3, resultComps[0]);
             assertEquals("Max is incorrect", 8, resultComps[1]);
