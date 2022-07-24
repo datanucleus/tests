@@ -28,6 +28,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
+import javax.validation.constraints.NotNull;
 
 @PersistenceCapable
 @Version(strategy=VersionStrategy.VERSION_NUMBER)
@@ -36,6 +37,7 @@ public class Team
     @PrimaryKey
     long id;
 
+    @NotNull // This creates different TypeMirror instance, so used as test that we cater for it
     String name;
 
     Manager manager;
