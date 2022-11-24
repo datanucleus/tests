@@ -2381,6 +2381,7 @@ public class JPQLQueryTest extends JakartaPersistenceTestCase
                 em.flush();
 
                 // Use in WHERE clause
+                // TODO Exception with HSQLDB "org.hsqldb.HsqlException: General error"
                 List result = em.createQuery("SELECT D FROM " + DateHolder.class.getName() + " D WHERE D.dateField < LOCAL_DATETIME").getResultList();
                 assertEquals(1, result.size());
 
