@@ -2267,7 +2267,7 @@ public class JPQLQueryTest extends JPAPersistenceTestCase
                 em.persist(d1);
                 DateHolder d2 = new DateHolder();
                 Calendar cal2 = Calendar.getInstance();
-                cal2.set(2022, 11, 01);
+                cal2.set(2030, 11, 01);
                 d2.setDateField(cal2.getTime());
                 em.persist(d2);
                 em.flush();
