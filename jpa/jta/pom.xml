@@ -19,7 +19,7 @@
     <repositories>
         <repository>
             <id>DN_M2_Repo</id>
-            <url>http://www.datanucleus.org/downloads/maven2/</url>
+            <url>https://www.datanucleus.org/downloads/maven2/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
