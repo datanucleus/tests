@@ -183,7 +183,7 @@ public class TransportationTest extends JDOPersistenceTestCase
 
     private String getTransporationName(Transportation transportation)
     {
-        if (transportation!=null)
+        if (transportation != null)
         {
             return transportation.getName();
         }

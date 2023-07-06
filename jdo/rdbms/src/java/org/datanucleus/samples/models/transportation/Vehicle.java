@@ -1,7 +1,5 @@
 package org.datanucleus.samples.models.transportation;
 
-import org.datanucleus.api.jdo.annotations.ReadOnly;
-
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.PersistenceCapable;
@@ -38,11 +36,13 @@ public class Vehicle extends Transportation
         this.owner = owner;
     }
 
-    public Transportation getPreviousOwner() {
+    public Transportation getPreviousOwner()
+    {
         return previousOwner;
     }
 
-    public void setPreviousOwner(VehicleOwner previousOwner) {
+    public void setPreviousOwner(VehicleOwner previousOwner)
+    {
         this.previousOwner = previousOwner;
     }
 }

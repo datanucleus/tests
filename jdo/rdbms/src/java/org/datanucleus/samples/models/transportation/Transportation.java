@@ -1,12 +1,18 @@
 package org.datanucleus.samples.models.transportation;
 
-import javax.jdo.annotations.*;
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Discriminator;
+import javax.jdo.annotations.DiscriminatorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 import java.io.Serializable;
 import java.util.Objects;
 
 @PersistenceCapable(table = "transportation", objectIdClass = Transportation.ID.class)
 @Discriminator(strategy = DiscriminatorStrategy.VALUE_MAP, column = "objectType")
-public abstract class Transportation {
+public abstract class Transportation
+{
     @PrimaryKey
     private long id;
     @PrimaryKey
@@ -17,45 +23,55 @@ public abstract class Transportation {
     private String name;
 
 
-    public Transportation() {
+    public Transportation()
+    {
     }
 
-    public Transportation(long id, String objectType) {
+    public Transportation(long id, String objectType)
+    {
         this.id = id;
         this.objectType = objectType;
     }
 
 
-    public long getId() {
+    public long getId()
+    {
         return id;
     }
 
-    public String getObjectType() {
+    public String getObjectType()
+    {
         return objectType;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public static class ID implements Serializable {
+    public static class ID implements Serializable
+    {
         public long id;
         public String objectType;
 
-        public ID() {
+        public ID()
+        {
         }
 
-        public ID(long id, String objectType) {
+        public ID(long id, String objectType)
+        {
             this.id = id;
             this.objectType = objectType;
         }
 
         @Override
-        public String toString() {
+        public String toString()
+        {
             return "ID{" +
                     "id=" + id +
                     ", objectType='" + objectType + '\'' +
@@ -63,7 +79,8 @@ public abstract class Transportation {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(Object o)
+        {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ID id1 = (ID) o;
@@ -71,7 +88,8 @@ public abstract class Transportation {
         }
 
         @Override
-        public int hashCode() {
+        public int hashCode()
+        {
             return Objects.hash(id, objectType);
         }
     }

@@ -1,11 +1,14 @@
 package org.datanucleus.samples.models.transportation;
 
-import javax.jdo.annotations.*;
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
 import java.io.Serializable;
 import java.util.Objects;
 
 @PersistenceCapable(table = "ownerphone", objectIdClass = OwnerPhone.ID.class)
-public class OwnerPhone {
+public class OwnerPhone
+{
     @Column(name = "ownerId")
     @Column(name = "ownerType")
     private VehicleOwner owner;
@@ -17,34 +20,41 @@ public class OwnerPhone {
     @Column(name = "ownerId")
     private long ownerId;
 
-    public OwnerPhone(VehicleOwner owner, String phoneNumber) {
+    public OwnerPhone(VehicleOwner owner, String phoneNumber)
+    {
         this.owner = owner;
         this.ownerId = owner.getId();
         this.phoneNumber = phoneNumber;
     }
 
-    public VehicleOwner getOwner() {
+    public VehicleOwner getOwner()
+    {
         return owner;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public static class ID implements Serializable {
+    public static class ID implements Serializable
+    {
         public String phoneNumber;
         public long ownerId;
 
-        public ID() {
+        public ID()
+        {
         }
 
-        public ID(String phoneNumber, long ownerId) {
+        public ID(String phoneNumber, long ownerId)
+        {
             this.phoneNumber = phoneNumber;
             this.ownerId = ownerId;
         }
 
         @Override
-        public String toString() {
+        public String toString()
+        {
             return "ID{" +
                     "phoneNumber='" + phoneNumber + '\'' +
                     ", ownerId=" + ownerId +
@@ -52,7 +62,8 @@ public class OwnerPhone {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(Object o)
+        {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ID id = (ID) o;
@@ -60,7 +71,8 @@ public class OwnerPhone {
         }
 
         @Override
-        public int hashCode() {
+        public int hashCode()
+        {
             return Objects.hash(phoneNumber, ownerId);
         }
     }
