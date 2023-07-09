@@ -56,6 +56,7 @@ public abstract class Transportation
 
     public static class ID implements Serializable
     {
+        private static final long serialVersionUID = -404742716646861172L;
         public long id;
         public String objectType;
 

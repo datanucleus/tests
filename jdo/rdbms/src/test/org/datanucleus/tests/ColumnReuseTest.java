@@ -15,11 +15,11 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TransportationTest extends JDOPersistenceTestCase
+public class ColumnReuseTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
 
-    public TransportationTest(String name)
+    public ColumnReuseTest(String name)
     {
         super(name);
 

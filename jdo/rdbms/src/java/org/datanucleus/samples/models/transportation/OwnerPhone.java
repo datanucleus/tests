@@ -39,6 +39,7 @@ public class OwnerPhone
 
     public static class ID implements Serializable
     {
+        private static final long serialVersionUID = -6021823858064136932L;
         public String phoneNumber;
         public long ownerId;
 
