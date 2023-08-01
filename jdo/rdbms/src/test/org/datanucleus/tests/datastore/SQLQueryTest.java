@@ -1529,4 +1529,60 @@ public class SQLQueryTest extends JDOPersistenceTestCase
             clean(Person.class);
         }
     }
+
+    /**
+     * Test running many SQL queries - provoked previous query leak resulting in out-of-memory.
+     * @throws Exception Thrown if an error occurs
+     */
+    public void testManySqlQueries()
+            throws Exception
+    {
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            // Create some basic data to query
+            tx.begin();
+            Person p1 = new Person(1, "First", "Person", "first.person@datanucleus.org");
+            pm.makePersistent(p1);
+            tx.commit();
+
+            // Make a lot of queries
+            tx = pm.currentTransaction();
+            tx.begin();
+
+            String queryStr = "SELECT COUNT(*) FROM PERSON";
+
+            for (int i = 0; i < 1_000_000; i++)
+            {
+                try (Query query = pm.newQuery("javax.jdo.query.SQL", queryStr))
+                {
+                    List results = (List) query.execute();
+                    assertNotNull(results);
+                    Iterator iter = results.iterator();
+                    assertTrue("Result should have value", iter.hasNext());
+                    final Object next = iter.next();
+                    assertTrue("Result of wrong type: " + next.getClass().getName(), next instanceof Number);
+                    assertEquals("Number of results incorrect", 1, ((Number) next).intValue());
+                }
+            }
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            LOG.error(e);
+            fail("Exception thrown while performing SQL query: " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+
+            clean(Person.class);
+        }
+    }
 }
