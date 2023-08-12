@@ -1,6 +1,7 @@
 package org.datanucleus.tests;
 
 import org.datanucleus.samples.models.transportation.OwnerPhone;
+import org.datanucleus.samples.models.transportation.PersonVehicleOwner;
 import org.datanucleus.samples.models.transportation.Transportation;
 import org.datanucleus.samples.models.transportation.Vehicle;
 import org.datanucleus.samples.models.transportation.VehicleOwner;
@@ -31,6 +32,8 @@ public class ColumnReuseTest extends JDOPersistenceTestCase
 //                            OwnerPhone.class,
 //                            Vehicle.class,
 //                            VehicleOwner.class,
+//                            PersonVehicleOwner.class,
+//                            CompanyVehicleOwner.class,
                     });
             initialised = true;
         }
@@ -69,10 +72,10 @@ public class ColumnReuseTest extends JDOPersistenceTestCase
             pm.makePersistentAll(car1, car2, car3, rocket);
 
             // create owners
-            VehicleOwner owner1 = new VehicleOwner(++idseq);
+            VehicleOwner owner1 = new PersonVehicleOwner(++idseq);
             owner1.setName("Jens Ole");
 
-            VehicleOwner owner2 = new VehicleOwner(++idseq);
+            VehicleOwner owner2 = new PersonVehicleOwner(++idseq);
             owner2.setName("Harry Potter");
             car2.setOwner(owner1);
             car3.setOwner(owner2);
@@ -164,7 +167,7 @@ public class ColumnReuseTest extends JDOPersistenceTestCase
 
             clean(pmfWithColumnReuse, OwnerPhone.class);
             clean(pmfWithColumnReuse, Vehicle.class);
-            clean(pmfWithColumnReuse, VehicleOwner.class);
+            clean(pmfWithColumnReuse, PersonVehicleOwner.class);
         }
     }
 

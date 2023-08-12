@@ -1,17 +1,15 @@
 package org.datanucleus.samples.models.transportation;
 
 import javax.jdo.annotations.Discriminator;
+import javax.jdo.annotations.PersistenceAware;
 import javax.jdo.annotations.PersistenceCapable;
 
 @PersistenceCapable
-@Discriminator(value = VehicleOwner.DISCRIMINATOR_VALUE)
-public class VehicleOwner extends Transportation
+public abstract class VehicleOwner extends Transportation
 {
-    static final String DISCRIMINATOR_VALUE = "owner";
-
-    public VehicleOwner(long id)
+    protected VehicleOwner(long id, String objectType)
     {
-        super(id, DISCRIMINATOR_VALUE);
+        super(id, objectType);
     }
 
 }

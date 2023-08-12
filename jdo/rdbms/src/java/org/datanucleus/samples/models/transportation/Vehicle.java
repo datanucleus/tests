@@ -11,12 +11,12 @@ public class Vehicle extends Transportation
 {
     static final String DISCRIMINATOR_VALUE = "vehicle";
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent(defaultFetchGroup = "true", recursionDepth = 0)
     @Column(name = "ownerId")
     @Column(name = "ownerType")
     private VehicleOwner owner;
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent(defaultFetchGroup = "true", recursionDepth = 0)
     @Column(name = "previousOwnerId")
     @Column(name = "ownerType") // alternatives has to be of same type - thus reusing type column
     private VehicleOwner previousOwner;
