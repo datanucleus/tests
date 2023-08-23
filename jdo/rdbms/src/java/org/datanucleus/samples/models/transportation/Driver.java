@@ -9,28 +9,38 @@ import javax.jdo.annotations.PrimaryKey;
 import java.io.Serializable;
 import java.util.Objects;
 
-@PersistenceCapable(table = "transportation", objectIdClass = Transportation.ID.class)
+@PersistenceCapable(table = "driver", objectIdClass = Driver.ID.class)
 @Discriminator(strategy = DiscriminatorStrategy.VALUE_MAP, column = "objectType")
-public abstract class Transportation
+public abstract class Driver
 {
     @PrimaryKey
     private long id;
     @PrimaryKey
     private String objectType;
 
+    public enum SUBTYPE
+    {
+        ROBOT_DRIVER,
+        FEMALE_DRIVER,
+        MALE_DRIVER
+    }
+
     @Persistent(defaultFetchGroup = "true")
-    @Column(name = "thename")
+    private long subType;
+
+    @Persistent(defaultFetchGroup = "true")
     private String name;
 
 
-    protected Transportation()
+    protected Driver()
     {
     }
 
-    protected Transportation(long id, String objectType)
+    protected Driver(long id, String objectType, SUBTYPE subType)
     {
         this.id = id;
         this.objectType = objectType;
+        this.subType = subType.ordinal();
     }
 
 
@@ -54,9 +64,19 @@ public abstract class Transportation
         this.name = name;
     }
 
+    public long getSubType()
+    {
+        return subType;
+    }
+
+    public void setSubType(long subType)
+    {
+        this.subType = subType;
+    }
+
     public static class ID implements Serializable
     {
-        private static final long serialVersionUID = -404742716646861172L;
+        private static final long serialVersionUID = -7058389520350991124L;
         public long id;
         public String objectType;
 
@@ -73,7 +93,7 @@ public abstract class Transportation
         @Override
         public String toString()
         {
-            return "Transportation-ID{" +
+            return "Driver-ID{" +
                     "id=" + id +
                     ", objectType='" + objectType + '\'' +
                     '}';
