@@ -1,4 +1,4 @@
-package org.datanucleus.tests.transportation;
+package org.datanucleus.tests.customdiscriminator;
 
 import org.datanucleus.ClassLoaderResolver;
 import org.datanucleus.ExecutionContext;
@@ -27,6 +27,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Example of subclassing RDBMSStoreManager for doing custom persistent class
+ * discrimination using two columns in DB.
+ * The discrimination can take any complexity - but this test just tests the basics
+ * of discriminating on two columns.
+ */
 public class CustomDiscriminatorRDBMSStoreManager extends RDBMSStoreManager
 {
     public static final String DN_CONNECTIONURL = "datanucleus.ConnectionURL";

@@ -19,6 +19,6 @@ limitations under the License.
 
     <!-- STORE MANAGER -->
     <extension point="org.datanucleus.store_manager">
-        <store-manager class-name="org.datanucleus.tests.transportation.CustomDiscriminatorRDBMSStoreManager" url-key="subrdbmsjdbc" key="subrdbms" priority="1"/>
+        <store-manager class-name="org.datanucleus.tests.customdiscriminator.CustomDiscriminatorRDBMSStoreManager" url-key="subrdbmsjdbc" key="subrdbms" priority="1"/>
     </extension>
 </plugin>
