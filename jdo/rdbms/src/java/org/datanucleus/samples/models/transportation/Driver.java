@@ -1,8 +1,11 @@
 package org.datanucleus.samples.models.transportation;
 
-import javax.jdo.annotations.Column;
+import org.datanucleus.metadata.MetaData;
+import org.datanucleus.store.rdbms.discriminatordefiner.DiscriminatorDefiner;
+
 import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.DiscriminatorStrategy;
+import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -11,6 +14,8 @@ import java.util.Objects;
 
 @PersistenceCapable(table = "driver", objectIdClass = Driver.ID.class)
 @Discriminator(strategy = DiscriminatorStrategy.VALUE_MAP, column = "objectType")
+@Extension(vendorName = MetaData.VENDOR_NAME, key = DiscriminatorDefiner.METADATA_EXTENSION_DISCRIMINATOR_DEFINER,
+        value = "org.datanucleus.tests.customdiscriminator.CustomDiscriminatorForDriver")
 public abstract class Driver
 {
     @PrimaryKey

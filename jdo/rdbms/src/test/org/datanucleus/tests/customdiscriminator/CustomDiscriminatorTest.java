@@ -11,9 +11,8 @@ import org.datanucleus.samples.models.transportation.Transportation;
 import org.datanucleus.samples.models.transportation.Vehicle;
 import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
-import org.datanucleus.tests.TestHelper;
-import org.junit.Assume;
 
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
@@ -52,22 +51,10 @@ public class CustomDiscriminatorTest extends JDOPersistenceTestCase
     public void testCustomDiscriminatorInRDBMSStoreManager()
     {
         Properties userProps = new Properties();
-        final int testNumber = 1;
-        final Properties factoryProperties = TestHelper.getFactoryProperties(testNumber, userProps);
-        String dnConnectionurl = CustomDiscriminatorRDBMSStoreManager.DN_CONNECTIONURL;
-        Object url = factoryProperties.get(dnConnectionurl);
-        if (url == null)
-        {
-            dnConnectionurl = dnConnectionurl.toLowerCase();
-            factoryProperties.get(dnConnectionurl);
-        }
-        Assume.assumeTrue(url instanceof String && ((String)url).startsWith("jdbc"));
         userProps.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_ALLOW_COLUMN_REUSE, "true");
-        userProps.setProperty(dnConnectionurl,
-                CustomDiscriminatorRDBMSStoreManager.SUB_STOREMANAGER_PREFIX+url);
-        PersistenceManagerFactory pmfWithCustomRDBMSStoreManager = getPMF(testNumber, userProps);
+        PersistenceManagerFactory pmfWithColumnReuse = getPMF(1, userProps);
 
-        PersistenceManager pm = pmfWithCustomRDBMSStoreManager.getPersistenceManager();
+        PersistenceManager pm = pmfWithColumnReuse.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         try
         {
@@ -104,6 +91,9 @@ public class CustomDiscriminatorTest extends JDOPersistenceTestCase
             String female2String = getDriverString(female2);
             String male1String = getDriverString(male1);
             String male2String = getDriverString(male2);
+
+            final Object male1Oid = JDOHelper.getObjectId(male1);
+            final Object female1Oid = JDOHelper.getObjectId(female1);
 
             // Query for a basic object, including the PK field(s) and a comment
             tx = pm.currentTransaction();
@@ -202,6 +192,18 @@ public class CustomDiscriminatorTest extends JDOPersistenceTestCase
                         Set.of(robot1String, robot2String, female1String, female2String, male1String, male2String),
                         foundDrivers);
             }
+
+            { // test ID lookup
+                clearCaches(pm);
+                final Object objectById = pm.getObjectById(male1Oid);
+                assertEquals("Looked up wrong male driver", male1String, getDriverString((Driver) objectById));
+            }
+
+            { // test ID lookup
+                clearCaches(pm);
+                final Object objectById = pm.getObjectById(female1Oid);
+                assertEquals("Looked up wrong female driver", female1String, getDriverString((Driver) objectById));
+            }
         }
         catch (Exception e)
         {
@@ -217,7 +219,7 @@ public class CustomDiscriminatorTest extends JDOPersistenceTestCase
             }
             pm.close();
 
-            clean(pmfWithCustomRDBMSStoreManager, Driver.class);
+            clean(pmfWithColumnReuse, Driver.class);
         }
     }
 
