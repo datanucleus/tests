@@ -82,7 +82,7 @@ public class ColumnReuseTest extends JDOPersistenceTestCase
             car3.setPreviousOwner(owner1);
             pm.makePersistentAll(owner1, owner2);
 
-            // create phomes
+            // create phones
             final OwnerPhone phone1 = new OwnerPhone(owner1, "123456");
             final OwnerPhone phone2 = new OwnerPhone(owner1, "987654");
             final OwnerPhone phone3 = new OwnerPhone(owner2, "+12345");
@@ -176,15 +176,15 @@ public class ColumnReuseTest extends JDOPersistenceTestCase
         return transportation.getClass().getSimpleName() + "{" +
                 "; name=" + transportation.getName() +
                 (transportation instanceof Vehicle ?
-                        "; owner=" + (getTransporationName(((Vehicle) transportation).getOwner())) +
-                                "; prevOwner=" + (getTransporationName(((Vehicle) transportation).getPreviousOwner()))
+                        "; owner=" + (getTransportationName(((Vehicle) transportation).getOwner())) +
+                                "; prevOwner=" + (getTransportationName(((Vehicle) transportation).getPreviousOwner()))
                         :
                         ""
                 ) +
                 "}";
     }
 
-    private String getTransporationName(Transportation transportation)
+    private String getTransportationName(Transportation transportation)
     {
         if (transportation != null)
         {

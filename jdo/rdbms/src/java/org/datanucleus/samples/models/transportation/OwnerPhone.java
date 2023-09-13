@@ -56,7 +56,7 @@ public class OwnerPhone
         @Override
         public String toString()
         {
-            return "ID{" +
+            return "OwnerPhone-ID{" +
                     "phoneNumber='" + phoneNumber + '\'' +
                     ", ownerId=" + ownerId +
                     '}';
