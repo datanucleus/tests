@@ -1,7 +1,7 @@
 package org.datanucleus.samples.models.transportation;
 
 import org.datanucleus.metadata.MetaData;
-import org.datanucleus.store.rdbms.discriminatordefiner.DiscriminatorDefiner;
+import org.datanucleus.store.rdbms.discriminator.DiscriminatorDefiner;
 
 import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.DiscriminatorStrategy;

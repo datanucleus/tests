@@ -8,8 +8,8 @@ import org.datanucleus.metadata.DiscriminatorMetaData;
 import org.datanucleus.samples.models.transportation.Driver;
 import org.datanucleus.samples.models.transportation.FemaleDriver;
 import org.datanucleus.samples.models.transportation.MaleDriver;
-import org.datanucleus.store.rdbms.discriminatordefiner.CustomClassNameResolver;
-import org.datanucleus.store.rdbms.discriminatordefiner.DiscriminatorDefiner;
+import org.datanucleus.store.rdbms.discriminator.DiscriminatorClassNameResolver;
+import org.datanucleus.store.rdbms.discriminator.DiscriminatorDefiner;
 import org.datanucleus.store.rdbms.mapping.column.ColumnMapping;
 import org.datanucleus.store.rdbms.mapping.java.JavaTypeMapping;
 import org.datanucleus.store.rdbms.query.StatementClassMapping;
@@ -34,9 +34,9 @@ import java.sql.SQLException;
 public class CustomDiscriminatorForDriver implements DiscriminatorDefiner
 {
     @Override
-    public CustomClassNameResolver getCustomClassNameResolver(ExecutionContext ec, StatementClassMapping resultMapping)
+    public DiscriminatorClassNameResolver getDiscriminatorClassNameResolver(ExecutionContext ec, StatementClassMapping resultMapping)
     {
-        return new CustomClassNameResolver()
+        return new DiscriminatorClassNameResolver()
         {
             private final Integer subTypeIndex = getSubTypeIndex();
             private Integer getSubTypeIndex() {
@@ -58,7 +58,7 @@ public class CustomDiscriminatorForDriver implements DiscriminatorDefiner
                 throw new RuntimeException("SUBTYPE not found in select statement - please add");
             }
             @Override
-            public String getCustomClassName(ResultSet rs)
+            public String getClassName(ResultSet rs)
             {
                 try
                 {
@@ -68,7 +68,8 @@ public class CustomDiscriminatorForDriver implements DiscriminatorDefiner
                     if (subtype == Driver.SUBTYPE.FEMALE_DRIVER.ordinal())
                     {
                         return FemaleDriver.class.getName();
-                    } else if (subtype == Driver.SUBTYPE.MALE_DRIVER.ordinal())
+                    }
+                    else if (subtype == Driver.SUBTYPE.MALE_DRIVER.ordinal())
                     {
                         return MaleDriver.class.getName();
                     }
@@ -83,7 +84,7 @@ public class CustomDiscriminatorForDriver implements DiscriminatorDefiner
     }
 
     @Override
-    public BooleanExpression getCustomExpressionForDiscriminatorForClass(SQLStatement stmt, String className, DiscriminatorMetaData dismd, JavaTypeMapping discriminatorMapping, SQLTable discrimSqlTbl, ClassLoaderResolver clr)
+    public BooleanExpression getExpressionForDiscriminatorForClass(SQLStatement stmt, String className, DiscriminatorMetaData dismd, JavaTypeMapping discriminatorMapping, SQLTable discrimSqlTbl, ClassLoaderResolver clr)
     {
         final Table table = discriminatorMapping.getTable();
         final Integer subType;
@@ -95,11 +96,12 @@ public class CustomDiscriminatorForDriver implements DiscriminatorDefiner
         {
             subType = Driver.SUBTYPE.MALE_DRIVER.ordinal();
         }
-        else {
+        else
+        {
             subType = null;
         }
 
-        if (subType==null)
+        if (subType == null)
         {
             return null; // no special handling - leave it to normal handling of discriminator
         }
