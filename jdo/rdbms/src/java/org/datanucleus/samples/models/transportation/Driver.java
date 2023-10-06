@@ -3,9 +3,12 @@ package org.datanucleus.samples.models.transportation;
 import org.datanucleus.metadata.MetaData;
 import org.datanucleus.store.rdbms.discriminator.DiscriminatorDefiner;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Columns;
 import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.DiscriminatorStrategy;
 import javax.jdo.annotations.Extension;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -36,6 +39,15 @@ public abstract class Driver
     @Persistent(defaultFetchGroup = "true")
     private String name;
 
+
+    @Persistent(defaultFetchGroup = "false", table = "driver_homeaddress")
+    @Join
+    private Address homeAddress;
+
+    @Persistent(defaultFetchGroup = "false", table = "driver_awayaddress")
+    @Columns(value = {@Column(name = "address_id")})
+    @Join(columns = {@Column(name = "driver_id"), @Column(name = "driver_objecttype")})
+    private Address awayAddress;
 
     protected Driver()
     {
@@ -77,6 +89,24 @@ public abstract class Driver
     public void setSubType(long subType)
     {
         this.subType = subType;
+    }
+
+    public Address getHomeAddress()
+    {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress)
+    {
+        this.homeAddress = homeAddress;
+    }
+
+    public Address getAwayAddress() {
+        return awayAddress;
+    }
+
+    public void setAwayAddress(Address awayAddress) {
+        this.awayAddress = awayAddress;
     }
 
     public static class ID implements Serializable
