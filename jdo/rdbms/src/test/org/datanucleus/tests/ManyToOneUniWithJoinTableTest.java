@@ -1,7 +1,6 @@
 package org.datanucleus.tests;
 
 import org.datanucleus.api.jdo.JDOPersistenceManager;
-import org.datanucleus.cache.Level2Cache;
 import org.datanucleus.samples.models.transportation.Address;
 import org.datanucleus.samples.models.transportation.Driver;
 import org.datanucleus.samples.models.transportation.RobotDriver;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 
 public class ManyToOneUniWithJoinTableTest extends JDOPersistenceTestCase
 {
-
     private static boolean initialised = false;
 
     public ManyToOneUniWithJoinTableTest(String name)
@@ -81,7 +79,6 @@ public class ManyToOneUniWithJoinTableTest extends JDOPersistenceTestCase
             tx.commit();
 
             String robot1String = getDriverString(robot1);
-            String robot2String = getDriverString(robot2);
             String address1String = getAddressString(address1);
             String address2String = getAddressString(address2);
 
@@ -172,13 +169,12 @@ public class ManyToOneUniWithJoinTableTest extends JDOPersistenceTestCase
         }
     }
 
-    private void clearCaches(PersistenceManager pm) {
+    private void clearCaches(PersistenceManager pm)
+    {
         pm.evictAll();
-        final Level2Cache level2Cache = ((JDOPersistenceManager) pm).getExecutionContext().getNucleusContext().getLevel2Cache();
-        if (level2Cache!=null) {
-            level2Cache.evictAll();
-        }
+        pmf.getDataStoreCache().evictAll();
     }
+
     private String getDriverString(Driver driver)
     {
         return driver.getClass().getSimpleName() + "{" +
