@@ -1,7 +1,6 @@
 package org.datanucleus.tests.customdiscriminator;
 
 import org.datanucleus.api.jdo.JDOPersistenceManager;
-import org.datanucleus.cache.Level2Cache;
 import org.datanucleus.samples.models.transportation.Driver;
 import org.datanucleus.samples.models.transportation.FemaleDriver;
 import org.datanucleus.samples.models.transportation.HumanDriver;
@@ -226,10 +225,7 @@ public class CustomDiscriminatorTest extends JDOPersistenceTestCase
     private void clearCaches(PersistenceManager pm)
     {
         pm.evictAll();
-        final Level2Cache level2Cache = ((JDOPersistenceManager) pm).getExecutionContext().getNucleusContext().getLevel2Cache();
-        if (level2Cache!=null) {
-            level2Cache.evictAll();
-        }
+        pmf.getDataStoreCache().evictAll();
     }
 
     private String getDriverString(Driver driver)
