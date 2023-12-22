@@ -21,7 +21,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-public class NullablePKTest extends JDOPersistenceTestCase {
+/**
+ * Simple test for the case of application identity field(s) being nullable. 
+ * This is to simulate an existing schema table without a PK, and one of the fields that is effectively part of the "PK" is nullable.
+ */
+public class NullablePKTest extends JDOPersistenceTestCase 
+{
     private static boolean initialised = false;
 
     public NullablePKTest(String name)
@@ -68,16 +73,11 @@ public class NullablePKTest extends JDOPersistenceTestCase {
         Transaction tx = pm.currentTransaction();
         try
         {
-            // With normal auto-schema creation it is not possible to end up with
-            // nullable PK fields.
-            // However, it can easily be the case when mapping to
-            // old legacy DB schema and schema-creation has been disabled.
-            // In these cases the DB schema typically have a unique index including the
-            // nullable fields that uniquely identifies an object (instead of the DB PK directly).
-            // In this test case we do not bother to create the unique-index as we are only testing
-            // this for a very small number of rows.
-            // BUT, we do need to drop schema created from auto-schema-creation in DN and re-create
-            // DB table without PK.
+            // With normal auto-schema creation it is not possible to end up with nullable PK columns (since not in the SQL standard).
+            // However, it can easily be the case when mapping to old legacy DB schema and schema-creation has been disabled.
+            // In these cases the DB schema typically have a unique index including the nullable fields that uniquely identifies an object (instead of the DB PK directly).
+            // In this test case we do not bother to create the unique-index as we are only testing this for a very small number of rows.
+            // BUT, we do need to drop schema created from auto-schema-creation in DN and re-create DB table without PK.
 
             runStmt("DROP TABLE NULLABLEPK", false);
             String createStmt = "CREATE TABLE NULLABLEPK\n(\n"+
