@@ -5,6 +5,7 @@ import org.datanucleus.store.types.converters.TypeConverter;
 
 public class NullablePrimitiveTypeConverter implements TypeConverter<Long,Long>
 {
+    private static final long serialVersionUID = -6482445306816424567L;
 
     public NullablePrimitiveTypeConverter()
     {
