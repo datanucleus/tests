@@ -171,7 +171,7 @@ public class CustomBatchingTest extends JDOPersistenceTestCase
             ((DNStateManager)((Persistable)driver3).dnGetStateManager()).loadUnloadedRelationFields();
             tx.commit(); // all writes deferred to commit as we are using optimistic-lock-checking
 
-            // We only expect ONE batch update in driver table + ONE batch update in address table
+            // We only expect ONE batch delete in driver table + ONE batch delete in address table
             final int countAfterDelete = statistics.getNumberOfDatastoreWrites();
             assertEquals("Batching not properly kicked in for delete ", countAfterUpdate+2, countAfterDelete);
 
