@@ -225,7 +225,7 @@ public class CustomDiscriminatorTest extends JDOPersistenceTestCase
     private void clearCaches(PersistenceManager pm)
     {
         pm.evictAll();
-        pmf.getDataStoreCache().evictAll();
+        pm.getPersistenceManagerFactory().getDataStoreCache().evictAll();
     }
 
     private String getDriverString(Driver driver)
