@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<plugin id="org.datanucleus.jdo-general-tests" name="DataNucleus JDO General Tests" provider-name="DataNucleus">
+    <extension point="org.datanucleus.lockmanager">
+        <lockmanager name="testlockmanager" class-name="org.datanucleus.tests.lockmanager.TestLockManagerImpl"/>
+        <lockmanager name="notfoundlockmanager" class-name="org.datanucleus.tests.lockmanager.NotFoundTestLockManagerImpl"/>
+    </extension>
+</plugin>

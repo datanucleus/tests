@@ -18,13 +18,24 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.annotations.models.company;
 
+import org.datanucleus.metadata.MetaData;
+
+import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.Version;
+import javax.jdo.annotations.VersionStrategy;
 
 /**
  * Project in a company.
  */
 @PersistenceCapable(table="JDO_AN_PROJECT")
+@Version(strategy= VersionStrategy.VERSION_NUMBER, column="versionno",
+        extensions = {
+                @Extension(vendorName = MetaData.VENDOR_NAME, key = MetaData.EXTENSION_VERSION_NUMBER_INITIAL_VALUE, value = "0"),
+                @Extension(vendorName = MetaData.VENDOR_NAME, key = MetaData.EXTENSION_VERSION_NUMBER_MAX_VALUE, value = "9999")
+        }
+)
 public class Project
 {
     @PrimaryKey
