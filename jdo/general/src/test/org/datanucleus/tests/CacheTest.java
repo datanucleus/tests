@@ -25,6 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOHelper;
@@ -37,8 +38,11 @@ import javax.jdo.Transaction;
 import javax.jdo.datastore.DataStoreCache;
 import javax.jdo.datastore.JDOConnection;
 
+import org.datanucleus.ExecutionContext;
+import org.datanucleus.ExecutionContextImpl;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDODataStoreCache;
+import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.api.jdo.JDOPersistenceManagerFactory;
 import org.datanucleus.api.jdo.DataNucleusHelperJDO;
 import org.datanucleus.cache.CachedPC;
@@ -54,6 +58,7 @@ import org.datanucleus.samples.models.voting.Vote;
 import org.datanucleus.samples.one_one.unidir.Login;
 import org.datanucleus.samples.one_one.unidir.LoginAccount;
 import org.datanucleus.samples.versioned.Trade1;
+import org.datanucleus.state.DNStateManager;
 import org.datanucleus.util.StringUtils;
 
 /**
@@ -1642,6 +1647,99 @@ public class CacheTest extends JDOPersistenceTestCase
             {
             }
             clean(User1.class);
+        }
+    }
+
+    public void testL2CachePopulationAtCommitOnly()
+    {
+        checkL2CachePopulation("commit-only");
+    }
+    public void testL2CachePopulationAtDatastoreReadOnly()
+    {
+        checkL2CachePopulation("datastore-read-only");
+    }
+    public void testL2CachePopulationAtCommitAndDatastoreRead()
+    {
+        checkL2CachePopulation("commit-and-datastore-read");
+    }
+    public void testL2CachePopulationDefault()
+    {
+        checkL2CachePopulation(null);
+    }
+    private void checkL2CachePopulation(String l2UpdateMode)
+    {
+        Properties userProps = new Properties();
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L1_TYPE, "weak");
+        userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_TYPE, "weak");
+        if (l2UpdateMode!=null)
+        {
+            userProps.setProperty(PropertyNames.PROPERTY_CACHE_L2_UPDATE_MODE, l2UpdateMode);
+        }
+        final boolean cacheOnCommit = l2UpdateMode==null || l2UpdateMode.contains("commit");
+        final boolean cacheOnDatastoreRead = l2UpdateMode==null || l2UpdateMode.contains("datastore-read");
+        PersistenceManagerFactory cachePMF = getPMF(1, userProps);
+        try
+        {
+            // Create some data we can use for access
+            PersistenceManager pm = cachePMF.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+            try
+            {
+                DataStoreCache dsCache = cachePMF.getDataStoreCache();
+                dsCache.pinAll(true, Employee.class); // All Employees/Managers get pinned
+                tx.begin();
+                Employee woody = new Employee(1,"Woody","Woodpecker","woody@woodpecker.com",13,"serial 1",Integer.valueOf(10));
+                pm.makePersistent(woody);
+
+                Object woodyId = pm.getObjectId(woody);
+
+                tx.commit();
+
+                Level2Cache l2Cache = ((JDODataStoreCache)cachePMF.getDataStoreCache()).getLevel2Cache();
+                if (cacheOnCommit)
+                    assertNotNull("Should be cached at commit", l2Cache.get(woodyId));
+                else
+                    assertNull("Should not be cached at commit", l2Cache.get(woodyId));
+
+                // Clear the cache and check if the objects are released
+                final ExecutionContext ec = ((JDOPersistenceManager) pm).getExecutionContext();
+                ec.getLevel1Cache().clear();
+                l2Cache.evictAll();
+
+                woody = (Employee)pm.getObjectById(woodyId, false);
+                woody.getLastName(); // trigger read
+                if (cacheOnDatastoreRead)
+                    assertNotNull("Should be cached at datastore-read", l2Cache.get(woodyId));
+                else
+                    assertNull("Should not be cached at datastore-read", l2Cache.get(woodyId));
+
+                // Test manually caching objects in JDO
+                ec.getLevel1Cache().clear();
+                l2Cache.evictAll();
+                assertNull("Cache should be cleared", l2Cache.get(woodyId));
+
+                final DNStateManager sm = ec.findStateManager(woody);
+                ((ExecutionContextImpl) ec).putObjectsIntoLevel2Cache(Set.of(sm));
+                assertNotNull("Should be inserted into cache manually", l2Cache.get(woodyId));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fail("Error persisting basic data necessary to run cache test");
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clearEmployeeData(cachePMF);
+            cachePMF.close();
         }
     }
 }
