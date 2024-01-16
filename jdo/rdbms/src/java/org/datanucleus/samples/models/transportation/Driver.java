@@ -49,6 +49,9 @@ public abstract class Driver
     @Join(columns = {@Column(name = "driver_id"), @Column(name = "driver_objecttype")})
     private Address awayAddress;
 
+    @Persistent(defaultFetchGroup = "false")
+    private Address simpleAddress;
+
     protected Driver()
     {
     }
@@ -107,6 +110,14 @@ public abstract class Driver
 
     public void setAwayAddress(Address awayAddress) {
         this.awayAddress = awayAddress;
+    }
+
+    public Address getSimpleAddress() {
+        return simpleAddress;
+    }
+
+    public void setSimpleAddress(Address simpleAddress) {
+        this.simpleAddress = simpleAddress;
     }
 
     public static class ID implements Serializable
