@@ -2,6 +2,7 @@ package org.datanucleus.tests.costumbatching;
 
 import org.datanucleus.ExecutionContext;
 import org.datanucleus.exceptions.NucleusOptimisticException;
+import org.datanucleus.flush.ControlOperationQueueForBackingStoreFlushProcess;
 import org.datanucleus.flush.FlushOrdered;
 import org.datanucleus.flush.OperationQueue;
 import org.datanucleus.metadata.AbstractClassMetaData;
@@ -25,9 +26,15 @@ import java.util.TreeSet;
  * Really simple flush process to prove batching in tests.
  * Only handles the minimum required sorting of SMs to complete the tests.
  */
-public class CustomBatchingFlushProcess implements BatchingFlushProcess
+public class CustomBatchingFlushProcess implements BatchingFlushProcess, ControlOperationQueueForBackingStoreFlushProcess
 {
     private FlushOrdered delegate = new FlushOrdered();
+
+    @Override
+    public boolean flushOperationQueueForBackingStore()
+    {
+        return false;
+    }
 
     @Override
     public boolean batchInInsertRequest(boolean hasIdentityColumn, StatementMappingIndex[] externalFKStmtMappings, AbstractClassMetaData cmd, ExecutionContext ec)

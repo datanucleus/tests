@@ -19,16 +19,27 @@ Contributors:
 package org.datanucleus.tests;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.function.Function;
 
+import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOException;
 import javax.jdo.JDOFatalDataStoreException;
 import javax.jdo.JDOHelper;
 import javax.jdo.JDOUserException;
 import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 import javax.transaction.Synchronization;
 
+import org.datanucleus.PropertyNames;
 import org.datanucleus.samples.models.company.Person;
+import org.datanucleus.samples.models.voting.Topic;
+import org.datanucleus.samples.models.voting.Vote;
 import org.datanucleus.samples.one_one.unidir.Login;
 import org.datanucleus.samples.one_one.unidir.LoginAccount;
 import org.datanucleus.store.StoreManager;
@@ -300,5 +311,101 @@ public class TransactionTest extends JDOPersistenceTestCase
         pm.evict(pers);
         pers = (Person) pm.getObjectById(id);
         assertEquals(emailValueBeforeCompletion, pers.getEmailAddress());
+    }
+
+    /**
+     *
+     */
+    public void testMarkRollbackOnlyOnFailedFlush()
+    {
+        Properties userProps = new Properties();
+        userProps.put(PropertyNames.PROPERTY_MARK_ROLLBACKONLY_ON_ERROR_IN_FLUSH, "true");
+        userProps.put("javax.jdo.option.Optimistic", "true");
+        PersistenceManagerFactory myPMF = getPMF(1, userProps);
+        clean(myPMF, Vote.class);
+        clean(myPMF, Topic.class);
+        try
+        {
+            PersistenceManager pm = myPMF.getPersistenceManager();
+            Transaction tx = pm.currentTransaction();
+
+            try
+            {
+                assertEquals("No votes to begin with", Collections.emptyList(),
+                        getIdList(pm.getExtent(Vote.class, false).iterator(), Vote::getId));
+                assertEquals("No topics to begin with", Collections.emptyList(),
+                        getIdList(pm.getExtent(Topic.class, false).iterator(), Topic::getId));
+                tx.begin();
+                Vote o1 = new Vote();
+                Topic o2 = new Topic();
+                Topic o3 = new Topic();
+                o1.setId(1);
+                o2.setId(2);
+                o3.setId(2);
+                pm.makePersistent(o1);
+                pm.makePersistent(o2);
+                pm.makePersistent(o3);
+                try
+                {
+                    pm.flush();
+                    fail("Flush should fail with unique constraint error on same id");
+                }
+                catch (JDODataStoreException e)
+                {
+                    // expected - o2 and o3 with same Id
+                }
+                o1.setId(11);
+                o2.setId(12);
+                o3.setId(13);
+                assertTrue("Transaction should be marked as rollback-only", tx.getRollbackOnly());
+
+                // NOTE: IF commit below would go through (which it would without setting
+                // PROPERTY_MARK_ROLLBACKONLY_ON_ERROR_IN_FLUSH) then we would
+                // in DB have o1 with ID 1, o2 with ID 2 and o3 with ID 13, whereas
+                // in java objects o1 would have ID 11, o2 have ID 12 and o3 have ID 13!!
+                // So to avoid this problem you can set PROPERTY_MARK_ROLLBACKONLY_ON_ERROR_IN_FLUSH to "true".
+                try
+                {
+                    tx.commit();
+                    fail("Commit should fail on rollback-only transaction");
+                }
+                catch (JDOFatalDataStoreException e)
+                {
+                    // expected
+                    tx.rollback();
+                }
+                pm.evictAll();
+                pm.getPersistenceManagerFactory().getDataStoreCache().evictAll();
+                final List<Integer> voteIds = getIdList(pm.getExtent(Vote.class, false).iterator(), Vote::getId);
+                final List<Integer> topicIds = getIdList(pm.getExtent(Topic.class, false).iterator(), Topic::getId);
+                assertEquals("Vote ids wrong after flush, voteIds="+voteIds+", topicIds="+topicIds,
+                        Collections.emptyList(), voteIds);
+                assertEquals("Topic ids wrong after flush, voteIds="+voteIds+", topicIds="+topicIds,
+                        Collections.emptyList(), topicIds);
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+        }
+        finally
+        {
+            clean(myPMF, Vote.class);
+            clean(myPMF, Topic.class);
+        }
+    }
+
+    private <T> List<Integer> getIdList(Iterator<T> iterator, Function<T, Integer> idSupplier)
+    {
+        final ArrayList<Integer> result = new ArrayList<>();
+        while (iterator.hasNext()) {
+            final T next = iterator.next();
+            result.add(idSupplier.apply(next));
+        }
+        return result;
     }
 }
