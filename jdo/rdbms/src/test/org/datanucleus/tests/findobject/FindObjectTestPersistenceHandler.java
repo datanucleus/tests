@@ -25,7 +25,8 @@ public class FindObjectTestPersistenceHandler extends RDBMSPersistenceHandler im
     public Object findObject(ExecutionContext ec, Object id)
     {
         callCount++;
-        if (nextFindObjectAddressLine != null) {
+        if (nextFindObjectAddressLine != null) 
+        {
             final DNStateManager<Address> sm = storeMgr.getNucleusContext().getStateManagerFactory().newForHollow(ec, Address.class, id);
             final int addressLineFieldNo = sm.getClassMetaData().getAbsolutePositionOfMember("addressLine");
             sm.replaceField(addressLineFieldNo, nextFindObjectAddressLine);
