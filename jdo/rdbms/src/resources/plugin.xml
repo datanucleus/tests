@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<plugin id="org.datanucleus.jdo-rdbms-tests" name="DataNucleus JDO RDBMS Tests" provider-name="DataNucleus">
+    <extension point="org.datanucleus.store_manager">
+        <store-manager class-name="org.datanucleus.tests.findobject.FindObjectTestStoreManager" url-key="findobject_rdbmsjdbc" key="findobject_rdbms" priority="1"/>
+    </extension>
+</plugin>
