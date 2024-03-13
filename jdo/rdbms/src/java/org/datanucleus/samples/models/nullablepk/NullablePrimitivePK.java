@@ -13,6 +13,10 @@ import java.util.Objects;
 public class NullablePrimitivePK implements NullablePK
 {
     public static final long NULL_VALUE = -33L;
+
+    @Column(name = "dummy")
+    String dummyNonPKFirst;
+
     @PrimaryKey
     @Column(name = "mypktypedb")
     long mypktype;
@@ -56,6 +60,16 @@ public class NullablePrimitivePK implements NullablePK
             this.mypk1 = NULL_VALUE;
             this.mypk2 = mypk;
         }
+    }
+
+    public String getDummyNonPKFirst()
+    {
+        return dummyNonPKFirst;
+    }
+
+    public void setDummyNonPKFirst(String dummyNonPKFirst)
+    {
+        this.dummyNonPKFirst = dummyNonPKFirst;
     }
 
     public long getMypktype()

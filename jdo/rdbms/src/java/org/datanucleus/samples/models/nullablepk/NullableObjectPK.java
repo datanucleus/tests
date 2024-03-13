@@ -9,6 +9,9 @@ import java.util.Objects;
 @PersistenceCapable(table = "nullablepk", objectIdClass = NullableObjectPK.ID.class)
 public class NullableObjectPK implements NullablePK
 {
+    @Column(name = "dummy")
+    String dummyNonPKFirst;
+
     @PrimaryKey
     @Column(name = "mypktypedb")
     long mypktype;
@@ -40,6 +43,16 @@ public class NullableObjectPK implements NullablePK
             this.mypk1 = null;
             this.mypk2 = mypk;
         }
+    }
+
+    public String getDummyNonPKFirst()
+    {
+        return dummyNonPKFirst;
+    }
+
+    public void setDummyNonPKFirst(String dummyNonPKFirst)
+    {
+        this.dummyNonPKFirst = dummyNonPKFirst;
     }
 
     public long getMypktype()

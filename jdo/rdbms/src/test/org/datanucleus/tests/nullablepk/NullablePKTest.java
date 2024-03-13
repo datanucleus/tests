@@ -25,7 +25,7 @@ import java.util.Set;
  * Simple test for the case of application identity field(s) being nullable. 
  * This is to simulate an existing schema table without a PK, and one of the fields that is effectively part of the "PK" is nullable.
  */
-public class NullablePKTest extends JDOPersistenceTestCase 
+public class NullablePKTest extends JDOPersistenceTestCase
 {
     private static boolean initialised = false;
 
@@ -81,6 +81,7 @@ public class NullablePKTest extends JDOPersistenceTestCase
 
             runStmt("DROP TABLE NULLABLEPK", false);
             String createStmt = "CREATE TABLE NULLABLEPK\n(\n"+
+                    "DUMMY CHARACTER VARYING(255) NULL,\n"+
                     "MYPK1DB NUMERIC NULL,\n" +
                     "MYPK2DB NUMERIC NULL,\n" +
                     "MYPKTYPEDB NUMERIC NOT NULL,\n" +
