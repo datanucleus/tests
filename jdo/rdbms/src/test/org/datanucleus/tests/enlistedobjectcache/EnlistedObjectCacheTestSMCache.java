@@ -7,6 +7,7 @@ import java.util.Collection;
 
 public class EnlistedObjectCacheTestSMCache extends ConcurrentReferenceHashMap<Object, DNStateManager>
 {
+    private static final long serialVersionUID = -1182501231359038018L;
     static int getValuesCount = 0;
     public EnlistedObjectCacheTestSMCache()
     {

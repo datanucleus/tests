@@ -47,7 +47,6 @@ public class EnlistedObjectCacheTest extends JDOPersistenceTestCase
                 final Address pc = new Address(no++);
                 pc.setAddressLine("1313 Webfoot Walk");
                 pm.makePersistent(pc);
-                final Object oid = ((Persistable)pc).dnGetObjectId();
 
                 final DNStateManager stateManager = ec.findStateManager(pc);
                 // try contains using same enlisted SM cache object as retrieved above - to prove it is backed
