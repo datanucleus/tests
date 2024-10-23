@@ -1,5 +1,6 @@
 package org.datanucleus.tests.costumbatching;
 
+import org.datanucleus.ExecutionContext;
 import org.datanucleus.PropertyNames;
 import org.datanucleus.api.jdo.JDOPersistenceManager;
 import org.datanucleus.enhancement.Persistable;
@@ -10,6 +11,8 @@ import org.datanucleus.samples.models.transportation.FemaleDriver;
 import org.datanucleus.samples.models.transportation.MaleDriver;
 import org.datanucleus.samples.models.transportation.RobotDriver;
 import org.datanucleus.state.DNStateManager;
+import org.datanucleus.store.connection.ManagedConnection;
+import org.datanucleus.store.connection.ManagedConnectionWithListenerAccess;
 import org.datanucleus.store.rdbms.RDBMSPropertyNames;
 import org.datanucleus.tests.JDOPersistenceTestCase;
 
@@ -17,9 +20,12 @@ import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOOptimisticVerificationException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -471,6 +477,88 @@ public class CustomBatchingTest extends JDOPersistenceTestCase
                 pm.currentTransaction().rollback();
             }
             pm.close();
+        }
+    }
+
+
+    /**
+     * Test running many Batchable SQL updates - previous this provoked just as many listeners added to connection
+     * which lead slow commit when processing all the listeners (and extra memory usage).
+     * @throws Exception Thrown if an error occurs
+     */
+    public void testManyBatchableUpdateStatements()
+    {
+        Properties userProps = new Properties();
+        userProps.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_ALLOW_COLUMN_REUSE, "true");
+        userProps.setProperty(RDBMSPropertyNames.PROPERTY_RDBMS_FLUSH_PROCESS_CLASS, CustomBatchingFlushProcess.class.getName());
+        userProps.put("javax.jdo.option.Optimistic", "true");
+
+        userProps.setProperty(PropertyNames.PROPERTY_ENABLE_STATISTICS, "true");
+        PersistenceManagerFactory pmfForTest = getPMF(1, userProps);
+
+        PersistenceManager pm = pmfForTest.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        try
+        {
+            // Create some basic data to query
+            tx.begin();
+            long idseq = 0;
+
+            // ----------Test batch in INSERT
+            // create objects
+            final ArrayList<Address> addresses = new ArrayList<>();
+            final int COUNT = 100;
+            for (int i = 0; i < COUNT; i++)
+            {
+                final Address address = new Address(++idseq);
+                address.setAddressLine("new address "+i);
+                addresses.add(address);
+                pm.makePersistent(address);
+            }
+
+            tx.commit();
+
+            // ready for next operations
+            tx = pm.currentTransaction();
+            tx.begin();
+
+            final ExecutionContext ec = ((JDOPersistenceManager) pm).getExecutionContext();
+            for (int i = 0; i < COUNT; i++)
+            {
+                final Address address = addresses.get(i);
+                address.setAddressLine(address.getAddressLine()+"new");
+                final DNStateManager addressSM = ec.findStateManager(address);
+                final int addressLineNO = addressSM.getClassMetaData().getAbsolutePositionOfMember("addressLine");
+                // Simulate an update that would normally take place during commit.
+                // We do it like this in order to assert number of listeners do not grow
+                // (it would be hard to test the listener count inside a commit call).
+                ec.getStoreManager().getPersistenceHandler().updateObject(addressSM, new int[]{addressLineNO});
+                // trigger some other SQL to clear last batched statement in SQLController
+                try (Query<?> query = pm.newQuery("javax.jdo.query.SQL", "SELECT COUNT(*) FROM PERSON"))
+                {
+                    ((List<?>) query.execute()).forEach(o->{});
+                }
+            }
+            final ManagedConnection managedConnection = ec.getStoreManager().getConnectionManager().getConnection(ec);
+            final int managedConnectionListenerSize = ((ManagedConnectionWithListenerAccess) managedConnection).getListeners().size();
+            assertTrue("Too many listeners registered on connection: "+managedConnectionListenerSize, managedConnectionListenerSize < 10);
+            tx.commit();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            LOG.error(e);
+            fail("Exception thrown while performing SQL query: " + e.getMessage());
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+
+            clean(Address.class);
         }
     }
 }
