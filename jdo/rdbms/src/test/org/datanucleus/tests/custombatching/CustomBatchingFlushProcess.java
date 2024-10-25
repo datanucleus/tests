@@ -1,4 +1,4 @@
-package org.datanucleus.tests.costumbatching;
+package org.datanucleus.tests.custombatching;
 
 import org.datanucleus.ExecutionContext;
 import org.datanucleus.exceptions.NucleusOptimisticException;
