@@ -750,7 +750,7 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
                 pm.close();
             }
             
-            // Retrieve the Library and the films
+            // Retrieve the Library and the 2 films (with L2 cache)
             pm = pmf.getPersistenceManager();
             tx = pm.currentTransaction();
             try
@@ -812,6 +812,46 @@ public class EmbeddedContainerTest extends JDOPersistenceTestCase
                 
                 Film film1 = library.getFilm("ET");
                 assertTrue("ET was returned by getFilm!", film1 == null);
+                Film film2 = library.getFilm("Motorcycle Diaries");
+                assertTrue("Motorcycle Diaries was not returned by getFilm!", film2 != null);
+                assertEquals("Motorcycle Diaries has wrong name", "Los diarios del motociclista", film2.getName());
+                assertEquals("Motorcycle Diaries has wrong director", "Walter Salles", film2.getDirector());
+                
+                tx.commit();
+            }
+            catch (Exception e)
+            {
+                LOG.error("Exception in test", e);
+                fail("Exception thrown while retrieving objects with embedded container : " + e.getMessage());
+            }
+            finally
+            {
+                if (tx.isActive())
+                {
+                    tx.rollback();
+                }
+                pm.close();
+            }
+
+            // Retrieve the Library and the 1 films (without L2 cache)
+            pm = pmf.getPersistenceManager();
+            pmf.getDataStoreCache().evictAll();
+            tx = pm.currentTransaction();
+            try
+            {
+                tx.begin();
+                
+                FilmLibrary library = (FilmLibrary)pm.getObjectById(libraryId);
+                
+                // Check "contains"
+                assertTrue("Library says that it doesnt contain the Motorcycle Diaries but it should", library.containsFilm("Motorcycle Diaries"));
+                assertFalse("Library says that it contains Independence Day but doesnt", library.containsFilm("Independence Day"));
+                
+                // Check retrieval of films
+                Collection films = library.getFilms();
+                assertTrue("No films retrieved from calling getFilms()!", films != null);
+                assertEquals("Number of films retrieved from calling getFilms() is incorrect", 1, films.size());
+
                 Film film2 = library.getFilm("Motorcycle Diaries");
                 assertTrue("Motorcycle Diaries was not returned by getFilm!", film2 != null);
                 assertEquals("Motorcycle Diaries has wrong name", "Los diarios del motociclista", film2.getName());
