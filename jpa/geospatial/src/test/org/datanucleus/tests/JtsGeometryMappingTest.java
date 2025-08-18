@@ -100,7 +100,7 @@ public class JtsGeometryMappingTest extends JPAPersistenceTestCase
         try
         {
             tx.begin();
-            sampleGeometry_read = (SampleGeometry) em.find(SampleGeometry.class, new Long(10001));
+            sampleGeometry_read = (SampleGeometry) em.find(SampleGeometry.class, Long.valueOf(10001));
             assertEquals(sampleGeometry, sampleGeometry_read);
             assertNull(sampleGeometry_read.getGeom().getUserData());
             tx.commit();
@@ -186,7 +186,7 @@ public class JtsGeometryMappingTest extends JPAPersistenceTestCase
         try
         {
             tx.begin();
-            samplePoint_read = (SamplePoint) em.find(SamplePoint.class, new Long(12001));
+            samplePoint_read = (SamplePoint) em.find(SamplePoint.class, Long.valueOf(12001));
             assertEquals(samplePoint, samplePoint_read);
             assertNotNull(samplePoint_read.getGeom().getUserData());
             assertEquals(String.class, samplePoint_read.getGeom().getUserData().getClass());
@@ -235,7 +235,7 @@ public class JtsGeometryMappingTest extends JPAPersistenceTestCase
         try
         {
             tx.begin();
-            sampleGeometry_read = (SampleGeometry) em.find(SampleGeometry.class, new Long(1001));
+            sampleGeometry_read = (SampleGeometry) em.find(SampleGeometry.class, Long.valueOf(1001));
             assertEquals(sampleGeometry, sampleGeometry_read);
             tx.commit();
         }
@@ -282,7 +282,7 @@ public class JtsGeometryMappingTest extends JPAPersistenceTestCase
         try
         {
             tx.begin();
-            samplePoint_read = (SamplePoint) em.find(SamplePoint.class, new Long(1001));
+            samplePoint_read = (SamplePoint) em.find(SamplePoint.class, Long.valueOf(1001));
             assertEquals(samplePoint, samplePoint_read);
             tx.commit();
         }
