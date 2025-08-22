@@ -23,7 +23,7 @@
         <jakarta.persistence.max.version>3.9</jakarta.persistence.max.version>
 
         <core.min.version>6.0.0-m1</core.min.version>
-        <core.max.version>6.0.99</core.max.version>
+        <core.max.version>6.1.99</core.max.version>
         <api.jdo.min.version>6.0.0-m1</api.jdo.min.version>
         <api.jdo.max.version>6.0.99</api.jdo.max.version>
         <api.jpa.min.version>6.0.0-m1</api.jpa.min.version>
