@@ -35,7 +35,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-core</artifactId>
-            <version>1.0.3</version>
+            <version>1.13</version>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
