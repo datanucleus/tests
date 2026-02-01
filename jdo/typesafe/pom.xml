@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <jdo.query.version>6.0.0-release</jdo.query.version>
+        <jdo.query.version>6.0.2</jdo.query.version>
     </properties>
 
     <build>
