@@ -31,4 +31,26 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general</name>
+			<type>2</type>
+			<location>//usr/local/software/datanucleus/tests/jdo/general/</location>
+		</link>
+		<link>
+			<name>.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general_src_java</name>
+			<type>2</type>
+			<location>//usr/local/software/datanucleus/tests/jdo/general/src/java/</location>
+		</link>
+		<link>
+			<name>.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general_src_resources</name>
+			<type>2</type>
+			<location>//usr/local/software/datanucleus/tests/jdo/general/src/resources/</location>
+		</link>
+		<link>
+			<name>.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general_src_test</name>
+			<type>2</type>
+			<location>//usr/local/software/datanucleus/tests/jdo/general/src/test/</location>
+		</link>
+	</linkedResources>
 </projectDescription>

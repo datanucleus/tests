@@ -1,5 +1,9 @@
 eclipse.preferences.version=1
-encoding//src/java=UTF-8
+encoding/.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general=UTF-8
+encoding/.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general_src_java=UTF-8
+encoding/.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general_src_resources=UTF-8
+encoding/.._.._.._.._.._.._.._usr_local_software_datanucleus_tests_jdo_general_src_test=UTF-8
+encoding//src/java=ISO-8859-1
 encoding//src/java/org/datanucleus/samples/ann_xml/models/company/package-hsql.orm=UTF-8
 encoding//src/java/org/datanucleus/samples/ann_xml/models/company/package.jdo=UTF-8
 encoding//src/java/org/datanucleus/samples/ann_xml/models/company/package.orm=UTF-8
@@ -20,5 +24,5 @@ encoding//src/resources/org/datanucleus/samples/types/basic/package-hsql.orm=UTF
 encoding//src/resources/org/datanucleus/samples/types/basic/package.jdo=UTF-8
 encoding//src/resources/org/datanucleus/samples/types/basic/package.orm=UTF-8
 encoding//src/resources/org/datanucleus/samples/versioned/package.jdo=UTF-8
-encoding//src/test=UTF-8
+encoding//src/test=ISO-8859-1
 encoding/<project>=UTF-8
