@@ -20,4 +20,16 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>.._.._.._.._.._.._usr_local_software_datanucleus_tests_samples</name>
+			<type>2</type>
+			<location>//usr/local/software/datanucleus/tests/samples/</location>
+		</link>
+		<link>
+			<name>.._.._.._.._.._.._usr_local_software_datanucleus_tests_samples_src_java</name>
+			<type>2</type>
+			<location>//usr/local/software/datanucleus/tests/samples/src/java/</location>
+		</link>
+	</linkedResources>
 </projectDescription>
