@@ -287,7 +287,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             List<Team> teams = tq.filter(cand.name.eq("Barcelona")).executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 1, teams.size());
@@ -323,7 +323,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             List<Team> teams = tq.filter(cand.name.eq((String)null)).executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 0, teams.size());
@@ -357,7 +357,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             List<Manager> managers = tq.filter(cand.yearsExperience.eq(8)).executeList();
             assertNotNull("Managers is null!", managers);
             assertEquals("Number of managers is wrong", 1, managers.size());
@@ -393,7 +393,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             List<Team> teams = tq.filter(cand.website.eq((URL)null)).executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 1, teams.size());
@@ -427,7 +427,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             List<Team> teams = tq.filter(cand.manager.firstName.eq("Jose")).executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 1, teams.size());
@@ -463,7 +463,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             List<Team> teams = tq.filter(cand.league.ordinal().eq(1)).executeList(); // Can only use ordinal when persisted as integer
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 1, teams.size());
@@ -499,7 +499,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             tq.filter(cand.players.isEmpty().not());
 
             List<Team> teams = tq.executeList();
@@ -535,7 +535,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Coach> tq = pm.newJDOQLTypedQuery(Coach.class);
-            QCoach cand = QCoach.jdoCandidate;
+            QCoach cand = QCoach.candidate();
 
             // TODO Would like to avoid the cast on the element expression, but needs change to javax.jdo API really to do that
             tq.filter(tq.listParameter("experienceOptions").contains((Expression)cand.yearsExperience));
@@ -582,7 +582,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
 
             NucleusLogger.GENERAL.info(">> testVariable");
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             QPlayer varPlayer = QPlayer.variable("v");
             tq.filter(cand.players.contains(varPlayer).and(varPlayer.firstName.eq("Fred")));
             tq.result(false, varPlayer.firstName, varPlayer.lastName);
@@ -621,7 +621,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             tq.result(false, cand.firstName, cand.lastName);
             List<Object> results = tq.executeResultList();
 
@@ -715,7 +715,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             tq.result(false, cand.yearsExperience.min(), cand.yearsExperience.max(), cand.yearsExperience.avg());
             Object[] results = (Object[]) tq.executeResultUnique();
 
@@ -755,7 +755,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             tq.result(false, cand.count());
             Object results = tq.executeResultUnique();
             assertEquals("Count is incorrect", 2l, results);
@@ -789,7 +789,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             tq.result(false, cand.countDistinct());
             Object results = tq.executeResultUnique();
             assertEquals("Count is incorrect", 2l, results);
@@ -823,7 +823,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             List<Manager> managers = tq.orderBy(cand.yearsExperience.asc()).executeList();
             assertNotNull("Managers is null!", managers);
             assertEquals("Number of managers is wrong", 2, managers.size());
@@ -865,7 +865,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             tq.orderBy(cand.yearsExperience.asc().nullsLast());
             assertEquals("SELECT FROM org.datanucleus.samples.jdo.query.Manager ORDER BY this.yearsExperience ASCENDING NULLS LAST", tq.toString());
             List<Manager> managers = tq.executeList();
@@ -901,7 +901,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             List<Team> teams = tq.filter(cand.name.eq(tq.stringParameter("TeamName"))).setParameter("TeamName", "Barcelona").executeList();
             assertNotNull("Teams is null!", teams);
             assertEquals("Number of teams is wrong", 1, teams.size());
@@ -937,7 +937,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
             JDOQLTypedSubquery<Manager> subq = tq.subquery(Manager.class, "m");
             QManager subCand = QManager.candidate("m");
             tq.filter(cand.yearsExperience.gt(subq.selectUnique(subCand.yearsExperience.avg())));
@@ -976,7 +976,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Manager> tq = pm.newJDOQLTypedQuery(Manager.class);
-            QManager cand = QManager.jdoCandidate;
+            QManager cand = QManager.candidate();
 
             // "SELECT AVG(m.yearsExperience) FROM Manager m WHERE m.lastName = this.lastName"
             JDOQLTypedSubquery<Manager> subq = tq.subquery(Manager.class, "m");
@@ -1019,7 +1019,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Coach> tq = pm.newJDOQLTypedQuery(Coach.class);
-            QCoach cand = QCoach.jdoCandidate;
+            QCoach cand = QCoach.candidate();
             tq.filter(cand.instanceOf(Manager.class));
             
             assertEquals("SELECT FROM " + Coach.class.getName() + " WHERE (this instanceof " + Manager.class.getName() + ")", tq.toString());
@@ -1058,7 +1058,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class);
-            QTeam cand = QTeam.jdoCandidate;
+            QTeam cand = QTeam.candidate();
             tq.filter(cand.name.eq("Barcelona"));
             JDOQLTypedQueryImpl<Team> dntq = (JDOQLTypedQueryImpl<Team>)tq;
             dntq.set(cand.name, "Barcelona FC");
@@ -1103,7 +1103,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class).filter(QTeam.jdoCandidate.name.eq("Barcelona"));
+            JDOQLTypedQuery<Team> tq = pm.newJDOQLTypedQuery(Team.class).filter(QTeam.candidate().name.eq("Barcelona"));
             long number = ((JDOQLTypedQueryImpl<Team>)tq).delete();
             assertEquals("Number of records deleted was wrong", 1, number);
             tq.closeAll();
@@ -1141,7 +1141,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
         {
             tx.begin();
 
-            JDOQLTypedQuery<Appointment> tq = pm.newJDOQLTypedQuery(Appointment.class).filter(QAppointment.jdoCandidate.date.getHour().eq(10));
+            JDOQLTypedQuery<Appointment> tq = pm.newJDOQLTypedQuery(Appointment.class).filter(QAppointment.candidate().date.getHour().eq(10));
             List<Appointment> appts = tq.executeList();
             assertEquals("Number of appointments was wrong", 1, appts.size());
             tq.closeAll();
@@ -1175,7 +1175,7 @@ public class JDOQLTypedQueryTest extends JDOPersistenceTestCase
             tx.begin();
 
             JDOQLTypedQuery<Coach> tq = pm.newJDOQLTypedQuery(Coach.class);
-            QCoach cand = QCoach.jdoCandidate;
+            QCoach cand = QCoach.candidate();
 
             // Derive an age-based salary limit using number of years of experience
             IfThenElseExpression<Double> ageBasedSalary = tq.ifThen(cand.yearsExperience.lteq(2), 5000.0)
