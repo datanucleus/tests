@@ -27,13 +27,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <version>[${api.jdo.min.version}, ${api.jdo.max.version})</version>
         </dependency>
 
-        <!-- Oracle XMLTYPE dependencies -->
-        <dependency>
-            <groupId>oracle</groupId>
-            <artifactId>xdb</artifactId>
-            <version>1.0</version>
-            <optional>true</optional>
-        </dependency>
         <!-- Causes an issue with Log4j v2 so commented out. Enable when resolved -->
         <!-- dependency>
             <groupId>oracle</groupId>
@@ -176,4 +169,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
         </plugins>
     </build>
+    <profiles>
+    	<profile>
+    		<id>oracle</id>
+    		<dependencies>
+		        <!-- Oracle XMLTYPE dependencies -->
+        		<dependency>
+            		<groupId>oracle</groupId>
+            		<artifactId>xdb</artifactId>
+            		<version>1.0</version>
+            		<optional>true</optional>
+        		</dependency>
+    		</dependencies>
+    	</profile>
+    </profiles>
 </project>
