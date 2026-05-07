@@ -21,15 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.DatastoreIdentity;
+import javax.jdo.annotations.FetchGroup;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 /**
  * Owner class with a join-table List of elements, for testing bulk shift ordering.
  */
 @PersistenceCapable
 @DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY)
+@FetchGroup(name = "items", members = { @Persistent(name = "items") })
 public class ListHolder
 {
     String name;
