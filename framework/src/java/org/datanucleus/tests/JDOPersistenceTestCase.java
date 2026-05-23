@@ -80,6 +80,13 @@ public abstract class JDOPersistenceTestCase extends PersistenceTestCase
         this(name, null);
         init(null);
     }
+    
+    public JDOPersistenceTestCase(String name, boolean init)
+    {
+        super(name);
+        if(init)
+            init(null);
+    }
 
     public JDOPersistenceTestCase(String name, Properties userProps)
     {

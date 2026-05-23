@@ -50,6 +50,14 @@ public abstract class JakartaPersistenceTestCase extends PersistenceTestCase
         init();
     }
 
+    public JakartaPersistenceTestCase(String name, boolean init)
+    {
+        super(name);
+        if (init)
+        {
+            init();            
+        }
+    }
     /**
      * Initialisation method, called on construction.
      */

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>datanucleus-test-jakarta-tck</artifactId>
+    <name>org.datanucleus.test.jakarta.tck</name>
+    <description><![CDATA[
+        DataNucleus Tests for Jakarta Persistence API adapted from TCK.
+        ]]></description>     
+
+    <parent>
+        <groupId>org.datanucleus</groupId>
+        <artifactId>datanucleus-test-maven-parent</artifactId>
+        <version>6.0</version>
+        <relativePath>../../maven.parent</relativePath>
+    </parent>
+
+    <!-- Software Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>jakarta.persistence</artifactId>
+            <version>[${jakarta.persistence.min.version}, ${jakarta.persistence.max.version})</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-api-jakarta</artifactId>
+            <version>[${api.jakarta.min.version}, ${api.jakarta.max.version})</version>
+        </dependency>
+	</dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>datanucleus-maven-plugin</artifactId>
+                <configuration>
+                    <api>Jakarta</api>
+                    <persistenceUnitName>JakartaTest</persistenceUnitName>
+                    <fork>false</fork>
+                    <verbose>false</verbose>
+                    <!-- 
+                        write all enhanced classes to target/classes, since by default enhancer
+                        tries to write them where it read them from, which doesn't work for jars
+                        (e.g. in test.jdo.general, we're enhancing class files from test.samples)
+                     -->
+                    <targetDirectory>${project.build.outputDirectory}</targetDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <reuseForks>true</reuseForks>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
