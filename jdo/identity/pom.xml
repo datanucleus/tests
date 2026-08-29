@@ -26,6 +26,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <artifactId>datanucleus-api-jdo</artifactId>
             <version>[${api.jdo.min.version}, ${api.jdo.max.version})</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.zabetak</groupId>
+            <artifactId>jdbc-faulty</artifactId>
+            <version>2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
