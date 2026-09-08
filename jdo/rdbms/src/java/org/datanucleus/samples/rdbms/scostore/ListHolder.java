@@ -28,9 +28,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 /**
- * Owner class with a join-table List of elements, for testing bulk shift ordering.
+ * Owner class with a join-table List of elements, for testing SCO store operations.
  */
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 @DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY)
 @FetchGroup(name = "items", members = { @Persistent(name = "items") })
 public class ListHolder

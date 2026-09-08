@@ -22,9 +22,9 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 
 /**
- * Element class for join-table List, for testing bulk shift ordering.
+ * Element class for join-table List, for testing SCO store operations.
  */
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 @DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY)
 public class ListElement
 {
